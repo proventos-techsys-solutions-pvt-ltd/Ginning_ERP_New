@@ -20,7 +20,7 @@ public int addCustomer(Customer c) {
 			e.printStackTrace();
 		}
 
-		String addCustomer = "{ ? = call ADD_CUSTOMER(?,?,?,?) }";
+		String addCustomer = "{ ? = call ADD_CUSTOMER(?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(addCustomer);

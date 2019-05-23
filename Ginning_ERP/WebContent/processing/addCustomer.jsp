@@ -2,9 +2,9 @@
 <%@page import="com.prov.bean.Customer" %>
 
 <% 
-    String CustomerName = request.getParameter("Name").toUpperCase();
-    String CustomerAddress = request.getParameter("Address").toUpperCase();
-    String CustomerCity = request.getParameter("Mobile").toUpperCase();
+    String CustomerName = request.getParameter("name").toUpperCase();
+    String CustomerAddress = request.getParameter("address").toUpperCase();
+    String CustomerCity = request.getParameter("mobile").toUpperCase();
    
 	
     AddCustomer ac = new AddCustomer();
@@ -15,6 +15,6 @@
     
    	ac.addCustomer(c);
    	
-   	response.sendRedirect("masters/PartyMaster.jsp");
+   	response.sendRedirect("../jsp/GenerateRST.jsp");
 %>
 
