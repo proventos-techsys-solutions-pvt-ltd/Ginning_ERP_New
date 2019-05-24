@@ -55,7 +55,7 @@
         </div>
         <div class="form-group col-md-3"><label>Mobile No</label></div>
         <div class="form-group col-md-3">
-            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="" onchange="getCustomerData()">
+            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="" >
         </div>
       </form>
       
@@ -183,7 +183,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary" onclick="submitNewCustomer()">Add Customer</button>
+		        <button type="button" class="btn btn-primary" onclick="submitNewCustomer()" data-dismiss="modal">Add Customer</button>
 		      </div>
 		    </div>
 		  </div>
@@ -246,17 +246,17 @@ function submitNewCustomer(){
 function saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress){
 	var url="../processing/addCustomer.jsp?name="+newCustomerName+"&mobile="+newCustomerMobile+"&address="+newCustomerAddress;
 	if(window.XMLHttpRequest){  
-		request=new XMLHttpRequest();  
+		newCustomerRequest=new XMLHttpRequest();  
 	}  
 	else if(window.ActiveXObject){  
-		request=new ActiveXObject("Microsoft.XMLHTTP");  
+		newCustomerRequest=new ActiveXObject("Microsoft.XMLHTTP");  
 	}  
   
 	try{  
-		request.onreadystatechange=setNewCustomerData;  
+		newCustomerRequest.onreadystatechange=setNewCustomerData;  
 		console.log("AJAX Req sent");
-		request.open("GET",url,true);  
-		request.send();  
+		newCustomerRequest.open("GET",url,true);  
+		newCustomerRequest.send();  
 	}catch(e){alert("Unable to connect to server");}
 }
 
@@ -264,7 +264,7 @@ function saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddres
 //Set data in RST form fields of newly added customer
 function setNewCustomerData(){
 	
-	if(request.readyState==4){
+	if(newCustomerRequest.readyState==4){
 		
 		console.log("New Customer Added");
 		
@@ -279,6 +279,12 @@ function setNewCustomerData(){
 
 
 //Check if the entered customer exists in DB
+document.getElementById("mobile").addEventListener('keypress',function(e){
+	if(e.keyCode === 13){
+		checkEnteredCustomer();
+	}
+	
+});
 function checkEnteredCustomer(){
 	
 	var customerName = document.getElementById("customer").value;
@@ -291,21 +297,20 @@ function checkEnteredCustomer(){
 
 //Create AJAX Req to get the customer data from DB if the customer exists in it
 function getCustomerData(customerName,mobile){
-	
 	var url="../processing/getCustomer.jsp?customerName="+customerName+"&mobileNo="+mobile;
 	
 	if(window.XMLHttpRequest){  
-		request=new XMLHttpRequest();  
+		checkRequest=new XMLHttpRequest();  
 	}  
 	else if(window.ActiveXObject){  
-		request=new ActiveXObject("Microsoft.XMLHTTP");  
+		checkRequest=new ActiveXObject("Microsoft.XMLHTTP");  
 	}  
   
 	try{  
-		request.onreadystatechange=checkCustomer;  
+		checkRequest.onreadystatechange=checkCustomer;  
 		console.log("AJAX Req sent");
-		request.open("GET",url,true);  
-		request.send();  
+		checkRequest.open("GET",url,true);  
+		checkRequest.send();  
 	}catch(e){alert("Unable to connect to server");}
 }
 
@@ -313,7 +318,7 @@ function getCustomerData(customerName,mobile){
 
 //Set data in RST form if the customer exists in the DB
 function checkCustomer(){
-	if(request.readyState==4){
+	if(checkRequest.readyState==4){
 		var res = this.response;
 		console.log(res);
 		if(res.toString().trim() === 'false')
