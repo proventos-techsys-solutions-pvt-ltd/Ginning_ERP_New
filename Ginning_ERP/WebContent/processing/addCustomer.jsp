@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="com.prov.dbinsertion.AddCustomer" %>
 <%@page import="com.prov.bean.Customer" %>
 
@@ -13,8 +14,14 @@
     c.setAddress(CustomerAddress);
     c.setMobile(CustomerCity);
     
-   	ac.addCustomer(c);
+   	int id = ac.addCustomer(c);
    	
-   	response.sendRedirect("../jsp/GenerateRST.jsp");
+   	c.setId(id);
+ 
+   	JSONObject newCustomerJson = new JSONObject(c);
+   	
+   	out.print(newCustomerJson);
+   	out.flush();
+   	
 %>
 

@@ -24,6 +24,7 @@
     <div class="col-md-8 custom-border">
       <h4 class="text-center custom-form-title" >Generate RST</h4>
       <form id="newRST">
+      	<input type="hidden" id="id" name="id" />
         <div class="form-group col-md-3"><label>RST No</label></div>
         <div class="form-group col-md-3">
             <input type="text" class="form-control" id="rst" name="rst" placeholder="Auto">
@@ -222,18 +223,74 @@
 </body>
 <script>
 
+//Submit RST Weigh Bridge Form
 function submitRSTEntry(){
 	document.getElementById("newRST").submit();	
 }
 
+
+//Submit New Customer Form
 function submitNewCustomer(){
-	document.getElementById("newCustomer").submit();
+	
+	var newCustomerName = document.getElementById("newCustomerName").value;
+	var newCustomerMobile = document.getElementById("newCustomerMobile").value;
+	var newCustomerAddress = document.getElementById("newCustomerAddress").value;
+	
+	//var newCustomerJson = {"name":newCustomerName,"moile":newCustomerMobile,"address":newCustomerAddress};
+	
+	saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress);
 }
 
-function getCustomerData(){
+
+//Create AJAX Request for new customer form submission
+function saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress){
+	var url="../processing/addCustomer.jsp?name="+newCustomerName+"&mobile="+newCustomerMobile+"&address="+newCustomerAddress;
+	if(window.XMLHttpRequest){  
+		request=new XMLHttpRequest();  
+	}  
+	else if(window.ActiveXObject){  
+		request=new ActiveXObject("Microsoft.XMLHTTP");  
+	}  
+  
+	try{  
+		request.onreadystatechange=setNewCustomerData;  
+		console.log("AJAX Req sent");
+		request.open("GET",url,true);  
+		request.send();  
+	}catch(e){alert("Unable to connect to server");}
+}
+
+
+//Set data in RST form fields of newly added customer
+function setNewCustomerData(){
+	
+	if(request.readyState==4){
+		
+		console.log("New Customer Added");
+		
+		var customer = JSON.parse(this.response);
+		
+		document.getElementById("id").value = customer.id;
+		document.getElementById("customer").value = customer.name;
+		document.getElementById("address").value = customer.address;
+		document.getElementById("mobile").value = customer.mobile;
+	}
+}
+
+
+//Check if the entered customer exists in DB
+function checkEnteredCustomer(){
 	
 	var customerName = document.getElementById("customer").value;
 	var mobile = document.getElementById("mobile").value;
+	
+	getCustomerData(customerName, mobile);
+	
+}
+
+
+//Create AJAX Req to get the customer data from DB if the customer exists in it
+function getCustomerData(customerName,mobile){
 	
 	var url="../processing/getCustomer.jsp?customerName="+customerName+"&mobileNo="+mobile;
 	
@@ -252,6 +309,9 @@ function getCustomerData(){
 	}catch(e){alert("Unable to connect to server");}
 }
 
+
+
+//Set data in RST form if the customer exists in the DB
 function checkCustomer(){
 	if(request.readyState==4){
 		var res = this.response;
@@ -264,7 +324,7 @@ function checkCustomer(){
 		else{
 			var customer = JSON.parse(res);
 			
-			//document.getElementById("id").value = customer.id;
+			document.getElementById("id").value = customer.id;
 			document.getElementById("customer").value = customer.name;
 			document.getElementById("address").value = customer.address;
 			document.getElementById("mobile").value = customer.mobile;
@@ -274,9 +334,19 @@ function checkCustomer(){
 	}
 }
 
+
+//Open Add new customer form popup
 function addNewCustomer(){
 	
+	var name = document.getElementById("customer").value;
+	var address = document.getElementById("address").value;
+	var mobile = document.getElementById("mobile").value;
+	
 	document.getElementById("addCustomer").click();
+	
+	document.getElementById("newCustomerName").value = name;
+	document.getElementById("newCustomerMobile").value = mobile;
+	document.getElementById("newCustomerAddress").value = address;
 	
 }
 

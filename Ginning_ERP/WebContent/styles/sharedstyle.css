@@ -1,0 +1,46 @@
+
+.custom-border{
+    border: 1px solid black;
+}
+.custom-table{
+    margin-top: 1rem;
+    overflow-y: auto;
+}
+
+.custom-navbar{
+    margin-bottom: 1rem;
+}
+
+.custom-btn{
+    margin-top: 32px;
+}
+@media only screen and (max-width:767px){
+    .custom-btn{
+        margin-top: 5px;
+    }
+}
+
+.custom-button-submit{
+    margin-left: 5px;
+}
+
+.custom-noborder-input{
+    border: none;
+    text-align: right;
+    width: 20%;
+}
+
+.custom-checkbox{
+    border-bottom: 1px solid #dee2e6;
+    border-top: 1px solid #dee2e6;
+    margin-bottom: 8px;
+}
+
+.custom-control{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+.custom-control-label{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
