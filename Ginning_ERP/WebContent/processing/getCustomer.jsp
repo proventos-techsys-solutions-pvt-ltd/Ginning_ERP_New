@@ -12,10 +12,8 @@
 	CustomerReport report = new CustomerReport();
 	
 	Customer customer = report.getCustomerData(customerName, customerMobile);
-	
 	if(customer.getId()>0){
 		JSONObject customerJson = new JSONObject(customer);
-		
 		out.print(customerJson);
 		out.flush();
 	}
