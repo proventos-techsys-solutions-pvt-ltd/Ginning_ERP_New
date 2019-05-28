@@ -2,10 +2,8 @@ package com.prov.bean;
 
 public class WeighMast {
 
-	private int rst, cid, vid, weighrate, gross, tare, net, graderrate; 
+	private int rst, cid, vid, weighRate; 
 	
-	private String material, grade, grosswttime, tarewttime;
-
 	public int getRst() {
 		return rst;
 	}
@@ -30,44 +28,44 @@ public class WeighMast {
 		this.vid = vid;
 	}
 
-	public int getWeighrate() {
-		return weighrate;
+	public int getWeighRate() {
+		return weighRate;
 	}
 
-	public void setWeighrate(int weighrate) {
-		this.weighrate = weighrate;
+	public void setWeighRate(int weighRate) {
+		this.weighRate = weighRate;
 	}
 
-	public int getGross() {
+	public float getGross() {
 		return gross;
 	}
 
-	public void setGross(int gross) {
+	public void setGross(float gross) {
 		this.gross = gross;
 	}
 
-	public int getTare() {
+	public float getTare() {
 		return tare;
 	}
 
-	public void setTare(int tare) {
+	public void setTare(float tare) {
 		this.tare = tare;
 	}
 
-	public int getNet() {
+	public float getNet() {
 		return net;
 	}
 
-	public void setNet(int net) {
+	public void setNet(float net) {
 		this.net = net;
 	}
 
-	public int getGraderrate() {
-		return graderrate;
+	public float getGradeRate() {
+		return gradeRate;
 	}
 
-	public void setGraderrate(int graderrate) {
-		this.graderrate = graderrate;
+	public void setGradeRate(float gradeRate) {
+		this.gradeRate = gradeRate;
 	}
 
 	public String getMaterial() {
@@ -86,23 +84,25 @@ public class WeighMast {
 		this.grade = grade;
 	}
 
-	public String getGrosswttime() {
-		return grosswttime;
+	public String getGrossWtTime() {
+		return grossWtTime;
 	}
 
-	public void setGrosswttime(String grosswttime) {
-		this.grosswttime = grosswttime;
+	public void setGrossWtTime(String grossWtTime) {
+		this.grossWtTime = grossWtTime;
 	}
 
-	public String getTarewttime() {
-		return tarewttime;
+	public String getTareWtTime() {
+		return tareWtTime;
 	}
 
-	public void setTarewttime(String tarewttime) {
-		this.tarewttime = tarewttime;
+	public void setTareWtTime(String tareWtTime) {
+		this.tareWtTime = tareWtTime;
 	}
+
+	private float gross, tare, net, gradeRate;
 	
-	
-	
-	
+	private String material, grade, grossWtTime, tareWtTime;
+
+		
 }

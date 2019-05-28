@@ -76,8 +76,8 @@
             <td><input type="text" class="form-control" id="tare" name="netWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly"></td>
           </tr>
           <tr scope="row">
-            <td><label>Charges :</label></td>
-            <td colspan="2"><input type="text" class="form-control"></td>
+            <td><label>Weigh Rate :</label></td>
+            <td colspan="2"><input type="text" class="form-control" name="weighRate"></td>
           </tr>
         </table>
         <div class="form-group col-md-2">

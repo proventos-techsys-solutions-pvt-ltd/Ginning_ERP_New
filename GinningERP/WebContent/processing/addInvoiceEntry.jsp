@@ -1,3 +1,5 @@
+<%@page import="com.prov.dbinsertion.AddWeighMast"%>
+<%@page import="com.prov.bean.WeighMast"%>
 <%@page import="com.prov.dbinsertion.AddCustomerVehicle"%>
 <%@page import="com.prov.bean.CustomerVehicle"%>
 <%@page import="com.prov.dbinsertion.AddInvoice" %>
@@ -20,9 +22,11 @@
  	String grossWt = request.getParameter("grossWtTime");
  	String tareWt = request.getParameter("tareWtTime");
  	String netWt = request.getParameter("netWtTime");
+ 	int weighRate = Integer.parseInt(request.getParameter("weighRate"));
  	
 	CustomerVehicle cv = new CustomerVehicle();
 	Invoice inv = new Invoice();
+	WeighMast w = new WeighMast();
 	
 	cv.setCid(cid);
 	cv.setVehicleNo(vehicleNo);
@@ -37,14 +41,28 @@
 	inv.setRst(rst);
 	inv.setCid(cid);
 	inv.setVid(vehicleId);
-	//inv.setGrossWeight(gross);
-	//inv.setTareWeight(tare);
-	//inv.setNetWeight(net);
+	
 	inv.setInvDate(date);
 	inv.setAmountPaid(0);
 	inv.setFinalRate(0);
 	inv.setPending(0);
 	inv.setTotal(0);
+	
+	w.setMaterial(material);
+	w.setWeighRate(weighRate);
+	w.setRst(rst);
+	w.setCid(cid);
+	w.setVid(vehicleId);
+	w.setGross(gross);
+	w.setTare(tare);
+	w.setNet(net);
+	w.setGrossWtTime(grossWt);
+	w.setTareWtTime(tareWt);
+	
+	AddWeighMast addWeigh = new AddWeighMast();
+	
+	int rstWeighMast = addWeigh.addWeighMast(w);
+	
 	
 	AddInvoice addInvoice = new AddInvoice();
 	
