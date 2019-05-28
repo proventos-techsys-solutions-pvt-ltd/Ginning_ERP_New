@@ -6,7 +6,7 @@ public class Invoice {
 	
 	private int rst, cid, vid;
 	
-	private double netWeight, tareWeight, grossWeight, finalRate, total, amountPaid, pending;
+	private double finalRate, total, amountPaid, pending;
 	private String invDate;
 
 
@@ -18,21 +18,6 @@ public class Invoice {
 		this.invDate = invDate;
 	}
 
-	public double getTareWeight() {
-		return tareWeight;
-	}
-
-	public void setTareWeight(double tareWeight) {
-		this.tareWeight = tareWeight;
-	}
-
-	public double getGrossWeight() {
-		return grossWeight;
-	}
-
-	public void setGrossWeight(double grossWeight) {
-		this.grossWeight = grossWeight;
-	}
 
 	public int getId() {
 		return id;
@@ -66,13 +51,6 @@ public class Invoice {
 		this.vid = vid;
 	}
 
-	public double getNetWeight() {
-		return netWeight;
-	}
-
-	public void setNetWeight(double netWeight) {
-		this.netWeight = netWeight;
-	}
 
 	public double getFinalRate() {
 		return finalRate;

@@ -22,18 +22,10 @@ public int addCustomerVehicle(CustomerVehicle cv) {
 			e.printStackTrace();
 		}
 
-		String addCustomerVehicle = "{ ? = call ADD_VEHICLE(?,?,?,?,?) }";
+		String addCustomerVehicle = "{ ? = call ADD_VEHICLE(?,?,?) }";
 		CallableStatement cs;
 		try {
 
-			Date grossTime = new SimpleDateFormat("yyyy-MM-dd").parse(cv.getGrossWtTime());
-			@SuppressWarnings({ "unused", "deprecation" })
-			java.sql.Date grossSqlTime = new java.sql.Date(grossTime.getDate());
-			
-			Date tareTime = new SimpleDateFormat("yyyy-MM-dd").parse(cv.getTareWtTime());
-			@SuppressWarnings({ "unused", "deprecation" })
-			java.sql.Date tareSqlTime = new java.sql.Date(tareTime.getDate());
-			
 			cs = con.prepareCall(addCustomerVehicle);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
@@ -41,8 +33,6 @@ public int addCustomerVehicle(CustomerVehicle cv) {
 			cs.setInt(2, cv.getCid() );
 			cs.setString(3, cv.getVehicleNo() );
 			cs.setString(4, cv.getVehicleType());
-			cs.setDate(5, grossSqlTime);
-			cs.setDate(6, tareSqlTime);
 			
 			cs.executeUpdate();
 			

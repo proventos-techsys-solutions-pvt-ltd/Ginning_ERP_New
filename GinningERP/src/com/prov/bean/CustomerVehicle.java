@@ -6,23 +6,7 @@ public class CustomerVehicle {
 	
     private int cid;
     
-	private String vehicleNo, vehicleType, grossWtTime, tareWtTime;
-
-	public String getGrossWtTime() {
-		return grossWtTime;
-	}
-
-	public void setGrossWtTime(String grossWtTime) {
-		this.grossWtTime = grossWtTime;
-	}
-
-	public String getTareWtTime() {
-		return tareWtTime;
-	}
-
-	public void setTareWtTime(String tareWtTime) {
-		this.tareWtTime = tareWtTime;
-	}
+	private String vehicleNo, vehicleType;
 
 
 	public int getId() {

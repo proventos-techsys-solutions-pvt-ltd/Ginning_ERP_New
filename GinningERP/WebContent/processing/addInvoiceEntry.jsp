@@ -27,19 +27,24 @@
 	cv.setCid(cid);
 	cv.setVehicleNo(vehicleNo);
 	cv.setVehicleType(vehicleType);
-	cv.setGrossWtTime(grossWt);
-	cv.setTareWtTime(tareWt);
+	//cv.setGrossWtTime(grossWt);
+	//cv.setTareWtTime(tareWt);
 	
 	AddCustomerVehicle addVehicle = new AddCustomerVehicle();
 	
 	int vehicleId = addVehicle.addCustomerVehicle(cv);
 	
+	inv.setRst(rst);
 	inv.setCid(cid);
 	inv.setVid(vehicleId);
-	inv.setGrossWeight(gross);
-	inv.setTareWeight(tare);
-	inv.setNetWeight(net);
+	//inv.setGrossWeight(gross);
+	//inv.setTareWeight(tare);
+	//inv.setNetWeight(net);
 	inv.setInvDate(date);
+	inv.setAmountPaid(0);
+	inv.setFinalRate(0);
+	inv.setPending(0);
+	inv.setTotal(0);
 	
 	AddInvoice addInvoice = new AddInvoice();
 	

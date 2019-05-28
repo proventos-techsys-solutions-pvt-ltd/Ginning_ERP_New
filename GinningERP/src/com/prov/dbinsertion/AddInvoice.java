@@ -22,12 +22,12 @@ public int addInvoice(Invoice i) {
 			e.printStackTrace();
 		}
 
-		String addInvoice = "{ ? = call ADD_INVOICE(?,?,?,?,?,?,?,?,?,?,?) }";
+		String addInvoice = "{ ? = call ADD_INVOICE(?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
 			Date invDate = new SimpleDateFormat("yyyy-MM-dd").parse(i.getInvDate());
-			@SuppressWarnings({ "unused", "deprecation" })
+			@SuppressWarnings({ "deprecation" })
 			java.sql.Date invSqlDate = new java.sql.Date(invDate.getDate());
 			
 			cs = con.prepareCall(addInvoice);
@@ -37,14 +37,11 @@ public int addInvoice(Invoice i) {
 			cs.setInt(2, i.getRst() );
 			cs.setInt(3, i.getCid() );
 			cs.setInt(4, i.getVid());
-			cs.setDouble(5, i.getNetWeight());
-			cs.setDouble(6, i.getFinalRate());
-			cs.setDouble(7, i.getTotal());
-			cs.setDouble(8, i.getAmountPaid());
-			cs.setDouble(9, i.getPending());
-			cs.setDouble(10, i.getGrossWeight());
-			cs.setDouble(11, i.getTareWeight());
-			cs.setDate(12, invSqlDate);
+			cs.setDouble(5, i.getFinalRate());
+			cs.setDouble(6, i.getTotal());
+			cs.setDouble(7, i.getAmountPaid());
+			cs.setDouble(8, i.getPending());
+			cs.setDate(9, invSqlDate);
 			
 			cs.executeUpdate();
 			
