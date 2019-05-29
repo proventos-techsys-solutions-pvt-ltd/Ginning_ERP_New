@@ -19,7 +19,12 @@
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <label for="">RST No :</label>
+                                    <div class="input-group">
                                     <input type="text" class="form-control form-control-sm" placeholder="Search RST">
+                                	<div class="input-group-append">
+				    				<button class="btn btn-outline-secondary btn-sm" type="button">Get RST</button>
+				    				</div>
+                                </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="">Record No :</label>
@@ -51,7 +56,7 @@
                                     <table class="table table-bordered custom-table">
                                         <thead>
                                         <tr>
-                                            <th>Sr No</th>
+                                            <th>RST No</th>
                                             <th>Material</th>
                                             <th>Quantity</th>
                                             <th>Grade</th>
