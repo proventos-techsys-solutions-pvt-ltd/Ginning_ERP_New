@@ -6,105 +6,95 @@
   <title>RST Form</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="../styles/bootstrap.min.css">	
   <link rel="stylesheet" href="../styles/WBStyle.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
-<body style="height:100%;">
-  <nav class="navbar navbar-default navbar-static-top cusotm-navbar">
-      <a class="navbar-brand" href="#">Company Logo</a>
-      
-        
-  </nav>
+<body>
+  <%@include file="../views/NavBar.html" %>
+  
   <div class="container-fluid">
-    <div class="row">
-    <div class="col-md-12"><h4 class="text-center custom-margin">Company name goes here</h4></div>
-    <div class="col-md-8 custom-border">
+   	<div class="row">
+    <div class="col-md-8 border-right">
       <h4 class="text-center custom-form-title" >Generate RST</h4>
       <form id="newRST" action="../processing/addInvoiceEntry.jsp">
+      <div class="form-row">
       	<input type="hidden" id="id" name="id" value="0" />
-        <div class="form-group col-md-3"><label>RST No</label></div>
-        <div class="form-group col-md-3">
-            <input type="text" class="form-control" id="rst" name="rst" placeholder="Auto">
+        <div class="col-md-3">
+        	<label>RST No</label>
+        	<input type="text" class="form-control form-control-sm" id="rst" name="rst" placeholder="Auto">
         </div>
-        <div class="form-group col-md-3"><label>Date</label></div>
-        <div class="form-group col-md-3">
-            <input type="date" class="form-control" id="date" name="date" placeholder="">
+       
+        <div class="col-md-3">
+        	<label>Date</label>
+        	<input type="date" class="form-control form-control-sm" id="date" name="date" placeholder="">
         </div>
-        <div class="form-group col-md-3"><label>Vehicle No</label></div>
-        <div class="form-group col-md-3">
-            <input type="email" class="form-control" id="vehicleNo" name="vehicleNo" placeholder="Vh No">
+
+        <div class="col-md-3">
+        	<label>Vehicle No</label>
+        	<input type="email" class="form-control form-control-sm" id="vehicleNo" name="vehicleNo" placeholder="Vh No">
         </div>
-        <div class="form-group col-md-3"><label>Vehicle Type</label></div>
-        <div class="form-group col-md-3">
-            <input type="text" class="form-control" id="vehicleType" name="vehicleType" placeholder="" >
+        <div class="col-md-3">
+        	<label>Vehicle Type</label>
+        	 <input type="text" class="form-control form-control-sm" id="vehicleType" name="vehicleType" placeholder="" >
         </div>
-        <div class="form-group col-md-3"><label>Customer</label></div>
-        <div class="form-group col-md-3">
-            <input type="text" class="form-control" name="customer" id="customer" placeholder="">
+        <div class="col-md-3">
+        	<label>Customer</label>
+        	<input type="text" class="form-control form-control-sm" name="customer" id="customer" placeholder="">
         </div>
-        <div class="form-group col-md-3"><label>Address</label></div>
-        <div class="form-group col-md-3">
-            <input type="textarea" class="form-control" id="address" name="address" placeholder="">
+        <div class="col-md-3">
+        	<label>Address</label>
+        	<textarea class="form-control form-control-sm" id="address" name="address"></textarea>
         </div>
-        <div class="form-group col-md-3"><label>Material</label></div>
-        <div class="form-group col-md-3">
-            <input type="text" class="form-control" id="material" name="material" placeholder="">
+        <div class="col-md-3">
+        	<label>Material</label>
+        	<input type="text" class="form-control form-control-sm" id="material" name="material" placeholder="">
         </div>
-        <div class="form-group col-md-3"><label>Mobile No</label></div>
-        <div class="form-group col-md-3">
-            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="" >
-        </div>
-      
-      
-        <table class="col-md-12 table table-borderless  custom-table">
-          <tr>
-            <td scope="row"><label>Gross Weight : </label></td>
-            <td><input type="text" class="form-control" id="gross" name="gross" placeholder="" value="0.0"></td>
-            <td><input type="text" class="form-control" id="tare" name="grossWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly"></td>
-          </tr>
-          <tr>
-            <td scope="row"><label>Tare Weight : </label></td>
-            <td><input type="text" class="form-control" id="tare" name="tare" placeholder="" value="0.0"></td>
-            <td><input type="text" class="form-control" id="tare" name="tareWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly"></td>
-          </tr>
-          <tr scope="row">
-            <td><label>Net Weight : </label> </td>
-            <td><input type="text" class="form-control" id="net" name="net" placeholder="" value="0.0"></td>
-            <td><input type="text" class="form-control" id="tare" name="netWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly"></td>
-          </tr>
-          <tr scope="row">
-            <td><label>Weigh Rate :</label></td>
-            <td colspan="2"><input type="text" class="form-control" name="weighRate"></td>
-          </tr>
-        </table>
-        <div class="form-group col-md-2">
-            <button type="button" class="btn btn-primary  custom-button">Fetch RST</button>
-        </div>
-        <div class="form-group col-md-2">    
-            <button type="button" class="btn btn-primary  custom-button" onclick="submitRSTEntry()">Submit</button>
-        </div>
-        <div class="form-group col-md-2">  
-            <button type="button" class="btn btn-primary  custom-button"
-            data-toggle="modal" data-target="#modalLoginForm"
-            >Reset</button>
-        </div>
-        <div class="form-group col-md-2">  
-            <button type="button" class="btn btn-primary  custom-button">Print</button>
-        </div>
-        <div class="form-group col-md-2">  
-            <button type="button" class="btn btn-primary  custom-button">PDF</button>
+        <div class="col-md-3">
+        	<label>Mobile No</label>
+        	<input type="text" class="form-control form-control-sm" id="mobile" name="mobile" placeholder="" >
         </div>
         
-         <div class="form-group col-md-2">  
-            <button id="addCustomer" type="button" class="btn btn-primary  custom-button" data-toggle="modal" data-target="#exampleModalCenter">call here</button>
+        <div class="col-md-4">
+        	<label>Gross Weight : </label>
+        	<input type="text" class="form-control form-control-sm form-control-radius" id="gross" name="gross" placeholder="" value="0.0">
+        	<input type="text" class="form-control form-control-sm form-control-radius" id="tare" name="grossWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
+        </div>
+        
+         <div class="col-md-4">
+        	<label>Tare Weight : </label>
+            <input type="text" class="form-control form-control-sm form-control-radius" id="tare" name="tare" placeholder="" value="0.0">
+            <input type="text" class="form-control form-control-sm form-control-radius" id="tare" name="tareWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
+        </div>
+        
+        <div class="col-md-4">
+            <label>Net Weight : </label>
+            <input type="text" class="form-control form-control-sm form-control-radius" id="net" name="net" placeholder="" value="0.0">
+            <input type="text" class="form-control form-control-sm form-control-radius" id="tare" name="netWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
+        </div>
+        
+        <div class="col-md-4">
+        	<label>Weigh Rate :</label>
+        	<input type="text" class="form-control form-control-sm" name="weighRate">
+        </div>
+        </div>
+        <div class="form-row">
+        <div class=col-md-12>
+        <div class="d-flex justify-content-end">
+        		<button type="button" class="btn btn-primary btn-sm btn-mr-rt">Fetch RST</button>
+  				<button type="button" class="btn btn-primary btn-sm btn-mr-rt" onclick="submitRSTEntry()">Submit</button>
+  				<button type="button" class="btn btn-primary btn-sm btn-mr-rt" data-toggle="modal" data-target="#modalLoginForm">Reset</button>
+  				<button type="button" class="btn btn-primary btn-sm btn-mr-rt">Print</button>
+  				<button type="button" class="btn btn-primary btn-sm btn-mr-rt">PDF</button>
+  				<button id="addCustomer" type="button" class="btn btn-primary btn-sm btn-mr-rt" data-toggle="modal" data-target="#exampleModalCenter">call here</button>
+        </div>
+        </div>
         </div>
         </form>
+        </div>
         
-  </div>
-    <div class="col-md-4 custom-border">
+  
+    <div class="col-md-4">
       <h4 class="text-center custom-form-title">RST Pending for Tare Weight</h4>
       <div class="col-md-12" >
         <input class="form-control mr-sm-2" type="search" placeholder="Enter RST To Search" aria-label="Search">
@@ -156,12 +146,13 @@
       </table>
       </div>
     </div>
+    </div>
   	<!-- Modal -->
 		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		  <div class="modal-dialog modal-dialog-centered" role="document">
+		  <div class="modal-dialog modal-dialog-top" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalCenterTitle">Add New Customer</h5>
+		        <h5 class="modal-title">Add New Customer</h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
@@ -169,59 +160,58 @@
 		      <div class="modal-body">
 		       <form id="newCustomer" action="../processing/addCustomer.jsp">
 		       	<div class="form-row">
-		       	<div class="col-md-auto">
-		       		<label>Name</label>
-		       		<input type="text" id="newCustomerName" class="form-control form-control-sm" name="name">
-		       		<label>Address</label>
-		       		<textarea class="form-control form-control-sm" name="address" id="newCustomerAddress"></textarea>
-		       	</div>	
-		       	<div class="col-md-auto">
-		       		<label>Mobile</label>
-		       		<input type="tel" class="form-control form-control-sm" name="mobile" id="newCustomerMobile">
-		       	</div>	
+			       	<div class="col-md-6">
+			       		<label>Name</label>
+			       		<input type="text" id="newCustomerName" class="form-control form-control-sm" name="name">
+			       	</div>	
+			       	<div class="col-md-6">
+			       		<label>Mobile</label>
+			       		<input type="tel" class="form-control form-control-sm" name="mobile" id="newCustomerMobile">
+			       	</div>
+			       	<div class="col-md-12">
+			       		<label>Address</label>
+		       			<textarea class="form-control form-control-sm" name="address" id="newCustomerAddress"></textarea>
+			       	</div>	
 		       	</div>
 		       </form>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary" onclick="submitNewCustomer()" data-dismiss="modal">Add Customer</button>
+		        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary btn-sm" onclick="submitNewCustomer()" data-dismiss="modal">Add Customer</button>
 		      </div>
 		    </div>
 		  </div>
 		</div>
   
   </div>
-</div>
-
 
 <!--Footer code starts here-->
-<nav class="navbar navbar-default navbar-static-bottom custom-footer">
+<nav class="navbar navbar-default navbar-static-bottom custom-footer border-top">
+ <div class="container">	
   <div class="row">
-    <div class="col-md-5">
-        <table class="table  custom-table">
-          <tr>
-            <td class="custom-table-font-color"><label> No of Vehicles Inside Premises :</label> </td>
-            <td><input type="text" class="" name="notgiven" value="" readonly></td>
-          </tr>
-          <tr>
-              <td class="custom-table-font-color"><label> No of RST Pending for Tare Weight :</label> </td>
-              <td><input type="text" class="" name="notgiven" value="" readonly></td>
-          </tr>
-          <tr>
-              <td class="custom-table-font-color"><label> No of RST Cleared for Tare Weight :</label> </td>
-              <td><input type="text" class="" name="notgiven" value="" readonly></td>
-          </tr>
-        </table>
-    </div>
-    <div class="col-md-12"><hr></div>
-    <div class="col-md-4">
-    
-    </div>
-    <div class="col-md-4"></div>
-    <div class="col-md-4"><p class="text-right">Designed & Developed by Proventos</p></div>
+	  	<div class="col-md-auto">
+	       <label> No of Vehicles Inside Premises :</label>
+	       <input type="text" class="form-control form-control-sm form-control-radius" name="notgiven" value="" readonly>
+	    </div>
+	    <div class="col-md-auto">
+	    	<label> No of RST Pending for Tare Weight :</label>
+	        <input type="text" class="form-control form-control-sm form-control-radius" name="notgiven" value="" readonly>
+	    </div>
+	    <div class="col-md-auto">
+	     	 <label> No of RST Cleared for Tare Weight :</label>
+	         <input type="text" class="form-control form-control-sm form-control-radius" name="notgiven" value="" readonly>
+	    </div>          
+   </div>
+  <div class="row">
+  	<div class="col-md-12">
+  		<p class="text-right">Designed & Developed by Proventos</p>
+  	</div>
+  </div>
   </div>
 </nav>
-</body>
+<script src="../js/jquery-3.3.1.slim.min.js" ></script>
+<script src="../js/popper.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
 <script>
 
 //Submit RST Weigh Bridge Form
@@ -357,4 +347,5 @@ function addNewCustomer(){
 }
 
 </script>
+</body>
 </html>
