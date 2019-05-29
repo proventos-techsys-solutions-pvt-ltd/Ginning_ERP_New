@@ -24,23 +24,26 @@
               <div class="col-md-4"> 
               	<label for="">Search RST</label>&nbsp;&nbsp;
               	<div class="input-group">
-                  	<input type="search" class="form-control form-control-sm" name="searchRst" placeholder="RST">
+                  	<input type="search" class="form-control form-control-sm" name="searchRst" placeholder="RST" id="searchRST">
               		<div class="input-group-append">
-    				<button class="btn btn-outline-secondary btn-sm" type="button">Fetch</button>
+    				<button class="btn btn-outline-secondary btn-sm" type="button" onclick="fetchData(document.getElementById('searchRST').value)">Fetch</button>
     				</div>
     			</div>
               </div>
             </div>
             <div class="form-row">
               <div class="col-md-6">
+              <input type="hidden" id="customerID" name="customerID" />
+              <input type="hidden" id="invoiceID" name="invoiceID" />
+              <input type="hidden" id="vehicleID" name="vehicleID" />
                 <label>Customer Name & Address</label>
-                <textarea class="form-control form-control-lg"></textarea>
+                <textarea class="form-control form-control-lg" id="customerData" name="customerData"></textarea>
               </div>
               <div class="col-md-4">
                 <label>Grade Record</label>
-                <input type="text" class="form-control form-control-sm" placeholder="">
+                <input type="text" class="form-control form-control-sm" placeholder="" id="gradeRST" name="gradeRST">
                 <label>Date</label>
-                <input type="date" class="form-control form-control-sm" placeholder="">
+                <input type="date" class="form-control form-control-sm" placeholder="" id="date" name="date">
               </div>
               </div>
               <div class="form-row">
@@ -56,19 +59,19 @@
                         <th>Total</th> 
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody  id="gradeTable">
                       <tr>
                         <td>01</td>
                         <td>Cotton</td>
                         <td>100 Qtl</td>
                         <td>
-                          <select name="" id="" class="form-control form-control-sm">
+                          <select name="grade" id="grade" class="form-control form-control-sm">
                             <option value="">Grade A</option>
                             <option value="">Grade B</option>
                             <option value="">Grade C</option>
                           </select>
                         </td>
-                        <td><input type="text" class="form-control form-control-sm"></td>
+                        <td><input type="text" class="form-control form-control-sm" id="rate" name="rate"></td>
                         <td>15000</td>
                       </tr>
                     </tbody>
@@ -109,5 +112,47 @@
  	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
+	<script>
+	
+	//Fetch data using RST
+	function fetchData(rst){
+		
+		url = "../processing/getGraderData.jsp?rst="+rst;
+		
+		if(window.XMLHttpRequest){  
+			fetchRequest=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+	  
+		try{  
+			fetchRequest.onreadystatechange=getData;  
+			console.log("AJAX Req sent");
+			fetchRequest.open("GET",url,true);  
+			fetchRequest.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	function getData(){
+		
+		if(fetchRequest.readyState == 4){
+			var response = this.response;
+			console.log(response);
+			
+			var data =  JSON.parse(response);
+			
+			document.getElementById("customerData").value = data.name + "\n" + data.address + "\n" + data.mobile;
+			document.getElementById("gradeTable").rows[0].cells[1].innerHTML = data.material;
+			document.getElementById("gradeTable").rows[0].cells[2].innerHTML = data.gross;
+			document.getElementById("customerID").value = data.cid
+			document.getElementById("vehicleID").value = data.vid
+			doument.getElementById("gradeRST").value = data.rst;
+			
+		}
+			
+	}
+	
+	</script>
   </body>
   </html>

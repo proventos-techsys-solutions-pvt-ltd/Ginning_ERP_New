@@ -3,6 +3,11 @@ package com.prov.bean;
 public class WeighMast {
 
 	private int rst, cid, vid, weighRate; 
+
+	private float gross, tare, net, gradeRate;
+	
+	private String material, grade, grossWtTime, tareWtTime;
+	
 	
 	public int getRst() {
 		return rst;
@@ -100,9 +105,7 @@ public class WeighMast {
 		this.tareWtTime = tareWtTime;
 	}
 
-	private float gross, tare, net, gradeRate;
 	
-	private String material, grade, grossWtTime, tareWtTime;
 
 		
 }
