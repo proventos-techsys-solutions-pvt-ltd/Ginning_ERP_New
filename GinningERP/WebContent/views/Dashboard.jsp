@@ -13,7 +13,7 @@
 <body>
    <%@include file="../views/NavBar.html" %>
         <div class="container-fluid">
-            <div class="row">
+            <div class="row col-md-margintop">
                 <div class="col-md-6">
                     <div class="d-flex justify-content-center">
                         <h4>Today's Purchase Rate</h4>&nbsp;&nbsp;

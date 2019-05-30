@@ -154,8 +154,8 @@
                                 </div>
                                 <div class="col-md-12 border-top">
                                     <div class="d-flex justify-content-end">
-                                        <button style="margin-bottom:8px;" type="button" class="btn btn-primary btn-sm btn-mr-rt">Amanat</button>
-                                        <button style="margin-bottom:8px;" type="button" class="btn btn-primary btn-sm btn-mr-rt">Approve</button>
+                                        <button style="margin-bottom:8px;" type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp">Amanat</button>
+                                        <button style="margin-bottom:8px;" type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp">Approve</button>
                                     </div>
                                 </div>
                             </div> 
@@ -196,6 +196,7 @@
                     </div>
                 </div>
             </div>
+            <div class="border-top">testing</div>
 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>

@@ -43,3 +43,32 @@ label{
 .btn-mr-rt{
 	margin-right:1rem;
 }
+.btn-mr-tp{
+	margin-top:1rem;
+}
+/***************************TABLE PROPERTIES*****************************************/
+
+.table tbody tr:hover{
+	cursor:pointer;
+	background:#108000;
+}
+.table td, .table th{
+	padding:.5rem;
+	vertical-align:middle;
+}
+/**********************************BORDER CLASSES************************************/
+.border{
+	padding:1rem;
+	}
+.border-mr-lt{
+	margin:1px;
+}	
+	
+/***********************************FORM CLASSES**************************************/
+form{
+	width:100%;
+}
+/***********************************HEADING CLASEES***********************************/
+.h3-mr-lt{
+	margin-left:1
+}	
