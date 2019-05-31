@@ -11,7 +11,7 @@
       <title>Amanat Invoices</title>
     </head>
 <body>
-</body>
+
 	<%@include file="../views/NavBar.html" %>
 	<div class="container-fluid">
 		<div class="row col-md-margintop">
