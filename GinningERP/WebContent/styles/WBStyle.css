@@ -61,8 +61,15 @@ label{
 	padding:1rem;
 	}
 .border-mr-lt{
-	margin:1px;
+	margin-left:1px;
+}
+.border-mr-tp{
+	margin-top:1px;
+}
+.border-mr-btm{
+	margin-bottom:1px;
 }	
+	
 	
 /***********************************FORM CLASSES**************************************/
 form{
@@ -72,3 +79,9 @@ form{
 .h3-mr-lt{
 	margin-left:1
 }	
+
+/******************************IMAGE CLASSES*************************************/
+.image{
+	width:"100px";
+	height:"100px;
+	}

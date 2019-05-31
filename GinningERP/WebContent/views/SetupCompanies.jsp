@@ -23,15 +23,12 @@
 				<div class="col-md-8">
 					<label>Company Name</label>
 					<input type="text" class="form-control form-control-sm form-control-radius" name="" id="">
+					<label>Company Address</label>
+					<textarea class="form-control form-control-lg form-control-radius" name="" id="">
+					</textarea>
 				</div>
 				<div class="col-md-4">
 					<img src="../property/img/logo.jpg" alt="Logo" class="img-thumbnail">
-				</div>
-				<div class="col-md-8">
-					<label>Company Address</label>
-					<textarea class="form-control form-control-sm form-control-radius" name="" id="">
-					
-					</textarea>
 				</div>
 			</div>
 			<div class="form-row">
@@ -91,6 +88,31 @@
 				<button type="button" class="btn btn-primary btn-sm btn-mr-tp">Reset</button>
 			</div>
 		</div>
+		</div>
+		<div class="col-md-6">
+			<ul class="list-unstyled">
+			  <li class="media">
+			    <img class="mr-3" src="../property/img/logo.jpg" alt="Company 1 Logo" width="100px" height="100px">
+			    <div class="media-body">
+			      <h5 class="mt-0 mb-1">Company 1</h5>
+			      		<p>Address :</p>
+			      		<p>Telephone :</p>
+			      		<p>Mobile</p>
+			    </div>
+			  </li>
+  			</ul>
+  			<div class="border-top border-mr-btm"></div>
+  				<ul class="list-unstyled">
+			  <li class="media">
+			    <img class="mr-3" src="../property/img/logo.jpg" alt="Company 1 Logo" width="100px" height="100px">
+			    <div class="media-body">
+			      <h5 class="mt-0 mb-1">Company 2</h5>
+			      		<p>Address :</p>
+			      		<p>Telephone :</p>
+			      		<p>Mobile</p>
+			    </div>
+			  </li>
+  			</ul>
 		</div>
 		</div>
 		</div>
