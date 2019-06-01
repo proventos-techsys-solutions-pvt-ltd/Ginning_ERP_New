@@ -36,6 +36,7 @@ public class CustomerReport {
 				System.out.println(customer.getId());
 			}
 			
+			rs.close();
 			stmt.close();
 			con.close();
 		} catch (Exception e) {
@@ -44,7 +45,38 @@ public class CustomerReport {
 		
 		return customer;
 		
+	}
+	
+	public Customer getReport(int id) {
+		ResultSet rs = null;
+		Connection con = null;
+		
+		Customer customer= new Customer();
+		
+		try {
+			con = OracleConnection.getConnection();
 			
+			String sql = "SELECT * FROM CUSTOMER_MAST WHERE id="+id;
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				customer.setId(rs.getInt(1));
+				customer.setName(rs.getString(2));
+				customer.setAddress(rs.getString(3));
+				customer.setMobile(rs.getString(4));
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return customer;
 	}
 
 }

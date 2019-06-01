@@ -20,9 +20,9 @@
                                 <div class="col-md-6">
                                     <label for="">RST No :</label>
                                     <div class="input-group">
-                                    <input type="text" class="form-control form-control-sm" placeholder="Search RST">
+                                    <input id="rst" type="text" class="form-control form-control-sm" placeholder="Search RST">
                                 	<div class="input-group-append">
-				    				<button class="btn btn-outline-secondary btn-sm" type="button">Get RST</button>
+				    				<button  class="btn btn-outline-secondary btn-sm" type="button" onclick="fetchData(document.getElementById('rst').value)">Get RST</button>
 				    				</div>
                                 </div>
                                 </div>
@@ -200,4 +200,36 @@
 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
+	
+	<script>
+	
+	function fetchData(rst){
+		console.log(rst);
+		url = "../processing/adminApproval.jsp?rst="+rst;
+		
+		if(window.XMLHttpRequest){  
+			fetchRequest=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+	  
+		try{  
+			fetchRequest.onreadystatechange=getData;  
+			console.log("AJAX Req sent");
+			fetchRequest.open("GET",url,true);  
+			fetchRequest.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	function getData(){
+		
+		if(fetchRequest.readyState == 4){
+			var response = this.response.trim();
+			console.log(response);
+		}
+	}
+	
+	</script>
+	
 </body>

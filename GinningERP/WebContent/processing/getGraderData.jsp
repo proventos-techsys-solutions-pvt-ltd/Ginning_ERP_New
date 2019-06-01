@@ -4,7 +4,7 @@
     pageEncoding="ISO-8859-1"%>
 <%
 	
-	String rst = request.getParameter("rst");
+	int rst = Integer.parseInt(request.getParameter("rst"));
 	
 	RstReport report = new RstReport();
 	

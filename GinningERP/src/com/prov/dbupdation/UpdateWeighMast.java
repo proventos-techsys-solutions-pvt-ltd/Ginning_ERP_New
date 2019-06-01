@@ -55,7 +55,7 @@ public int updateWeighMast(WeighMast wm) {
 			
 			id = cs.getInt(1);
 			
-			wm.setRst(id);;
+			wm.setRst(id);
 			
 			cs.close();
 			con.close();

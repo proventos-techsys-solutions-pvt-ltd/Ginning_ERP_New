@@ -12,7 +12,7 @@ import com.prov.db.OracleConnection;
 
 public class RstReport {
 	
-	public JSONObject getGraderData(String rst) {
+	public JSONObject getGraderData(int rst) {
 		
 		ResultSet rs = null;
 		Connection con = null;
@@ -54,13 +54,20 @@ public class RstReport {
 				c.setAddress(rs.getString(2));
 				c.setMobile(rs.getString(3));
 			}
-			c.setId(wm.getCid());
 			
-			 graderJson = new JSONObject(wm);
+			
+			c.setId(wm.getCid());
+			wm.setRst(rst);
+			
+			graderJson = new JSONObject(wm);
 			
 			graderJson.append("name", c.getName());
 			graderJson.append("address", c.getAddress());
 			graderJson.append("mobile", c.getMobile());
+			
+			rs.close();
+			stmt.close();
+			con.close();
 			
 		} catch (Exception e) {
 			e.printStackTrace();

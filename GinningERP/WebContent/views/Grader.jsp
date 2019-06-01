@@ -147,7 +147,7 @@
 			document.getElementById("gradeTable").rows[0].cells[2].innerHTML = data.gross;
 			document.getElementById("customerID").value = data.cid
 			document.getElementById("vehicleID").value = data.vid
-			doument.getElementById("gradeRST").value = data.rst;
+			document.getElementById("gradeRST").value = data.rst;
 			
 		}
 			
