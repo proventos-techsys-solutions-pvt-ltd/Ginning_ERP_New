@@ -1,8 +1,7 @@
-package com.prov.dbinsertion;
+package com.prov.dbupdation;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,9 +9,9 @@ import java.util.Date;
 import com.prov.bean.WeighMast;
 import com.prov.db.OracleConnection;
 
-public class AddWeighMast {
+public class UpdateWeighMast {
 	
-public int addWeighMast(WeighMast wm) {
+public int updateWeighMast(WeighMast wm) {
 		
 		Connection con = null;
 		int id = 0;
@@ -22,7 +21,7 @@ public int addWeighMast(WeighMast wm) {
 			e.printStackTrace();
 		}
 
-		String addWeighMast = "{ ? = call ADD_WEIGH(?,?,?,?,?,?,?,?,?,?,?,?) }";
+		String updateWeighMast = "{ ? = call UPDATE_WEIGHMAST(?,?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -34,7 +33,8 @@ public int addWeighMast(WeighMast wm) {
 			@SuppressWarnings({ "deprecation" })
 			java.sql.Date tareSqlDate = new java.sql.Date(sqlTareWtTime.getDate());
 			
-			cs = con.prepareCall(addWeighMast);
+			
+			cs = con.prepareCall(updateWeighMast);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
@@ -42,7 +42,7 @@ public int addWeighMast(WeighMast wm) {
 			cs.setInt(3, wm.getCid());
 			cs.setInt(4, wm.getVid());
 			cs.setString(5, wm.getMaterial());
-			cs.setInt(6, wm.getWeighRate());
+			cs.setFloat(6, wm.getWeighRate());
 			cs.setFloat(7, wm.getGross());
 			cs.setFloat(8, wm.getTare());
 			cs.setFloat(9, wm.getNet());
@@ -50,24 +50,23 @@ public int addWeighMast(WeighMast wm) {
 			cs.setFloat(11, wm.getGraderRate());
 			cs.setDate(12, grossSqlDate);
 			cs.setDate(13, tareSqlDate);
-
 			
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);
 			
-			wm.setRst(id);
+			wm.setRst(id);;
 			
 			cs.close();
 			con.close();
 			
-			System.out.println("Insertion Succesful"+id);
+			System.out.println("Updation Succesful"+id);
 			} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return id;
+		
 	}
-
 
 }

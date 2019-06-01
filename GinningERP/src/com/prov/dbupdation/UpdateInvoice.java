@@ -1,4 +1,4 @@
-package com.prov.dbinsertion;
+package com.prov.dbupdation;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -9,9 +9,9 @@ import java.util.Date;
 import com.prov.bean.Invoice;
 import com.prov.db.OracleConnection;
 
-public class AddInvoice {
+public class UpdateInvoice {
 	
-public int addInvoice(Invoice i) {
+public int updateInvoice(Invoice i) {
 		
 		Connection con = null;
 		int id = 0;
@@ -21,7 +21,7 @@ public int addInvoice(Invoice i) {
 			e.printStackTrace();
 		}
 
-		String addInvoice = "{ ? = call ADD_INVOICE(?,?,?,?,?,?,?,?) }";
+		String updateInvoice = "{ ? = call UPDATE_INVOICE(?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -29,18 +29,19 @@ public int addInvoice(Invoice i) {
 			@SuppressWarnings({ "deprecation" })
 			java.sql.Date invSqlDate = new java.sql.Date(invDate.getDate());
 			
-			cs = con.prepareCall(addInvoice);
+			cs = con.prepareCall(updateInvoice);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
-			cs.setInt(2, i.getRst() );
-			cs.setInt(3, i.getCid() );
-			cs.setInt(4, i.getVid());
-			cs.setDouble(5, i.getFinalRate());
-			cs.setDouble(6, i.getTotal());
-			cs.setDouble(7, i.getAmountPaid());
-			cs.setDouble(8, i.getPending());
-			cs.setDate(9, invSqlDate);
+			cs.setInt(2, i.getId());
+			cs.setInt(3, i.getRst() );
+			cs.setInt(4, i.getCid());
+			cs.setInt(5, i.getVid());
+			cs.setDouble(6, i.getFinalRate());
+			cs.setDouble(7, i.getTotal());
+			cs.setDouble(8, i.getAmountPaid());
+			cs.setDouble(9, i.getPending());
+			cs.setDate(10, invSqlDate);
 			
 			cs.executeUpdate();
 			
@@ -51,12 +52,13 @@ public int addInvoice(Invoice i) {
 			cs.close();
 			con.close();
 			
-			System.out.println("Insertion Succesful"+id);
+			System.out.println("Updation Succesful"+id);
 			} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return id;
+		
 	}
 
 }

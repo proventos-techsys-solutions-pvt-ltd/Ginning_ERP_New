@@ -4,7 +4,7 @@ public class WeighMast {
 
 	private int rst, cid, vid, weighRate; 
 
-	private float gross, tare, net, gradeRate;
+	private float gross, tare, net, graderRate;
 	
 	private String material, grade, grossWtTime, tareWtTime;
 	
@@ -65,12 +65,12 @@ public class WeighMast {
 		this.net = net;
 	}
 
-	public float getGradeRate() {
-		return gradeRate;
+	public float getGraderRate() {
+		return graderRate;
 	}
 
-	public void setGradeRate(float gradeRate) {
-		this.gradeRate = gradeRate;
+	public void setGradeRate(float graderRate) {
+		this.graderRate = graderRate;
 	}
 
 	public String getMaterial() {
