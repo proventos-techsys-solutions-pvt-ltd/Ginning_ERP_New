@@ -14,7 +14,7 @@
       <%@include file="../views/NavBar.html" %>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-8 col-md-margintop border-right">
+                    <div class="col-md-8 col-md-margintop border">
                         <form action="">
                             <div class="form-row">
                                 <div class="col-md-6">
@@ -22,7 +22,7 @@
                                     <div class="input-group">
                                     <input id="rst" type="text" class="form-control form-control-sm" placeholder="Search RST">
                                 	<div class="input-group-append">
-				    				<button  class="btn btn-outline-secondary btn-sm" type="button" onclick="fetchData(document.getElementById('rst').value)">Get RST</button>
+				    				<button class="btn btn-outline-secondary btn-sm" type="button" onclick="fetchData(document.getElementById('rst').value)">Get RST</button>
 				    				</div>
                                 </div>
                                 </div>
@@ -161,7 +161,7 @@
                             </div> 
                         </form>
                     </div>
-                    <div class="col-md-4 col-md-margintop">
+                    <div class="col-md-4 col-md-margintop border">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -196,12 +196,13 @@
                     </div>
                 </div>
             </div>
-            <div class="border-top">testing</div>
+			<nav class="navbar navbar-default navbar-static-bottom footer border-top">
+    
+    		</nav>
 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
-	
-	<script>
+		<script>
 	
 	function fetchData(rst){
 		console.log(rst);
@@ -231,5 +232,4 @@
 	}
 	
 	</script>
-	
 </body>

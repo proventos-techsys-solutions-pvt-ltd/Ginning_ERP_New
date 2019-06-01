@@ -20,41 +20,42 @@
       <form id="newRST" action="../processing/addInvoiceEntry.jsp">
       <div class="form-row">
       	<input type="hidden" id="id" name="id" value="0" />
-        <div class="col-md-3">
+        <div class="col-md-4">
         	<label>RST No</label>
         	<input type="text" class="form-control form-control-sm" id="rst" name="rst" placeholder="Auto">
         </div>
        
-        <div class="col-md-3">
+        <div class="col-md-4">
         	<label>Date</label>
         	<input type="date" class="form-control form-control-sm" id="date" name="date" placeholder="">
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-4">
         	<label>Vehicle No</label>
         	<input type="email" class="form-control form-control-sm" id="vehicleNo" name="vehicleNo" placeholder="Vh No">
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
         	<label>Vehicle Type</label>
         	 <input type="text" class="form-control form-control-sm" id="vehicleType" name="vehicleType" placeholder="" >
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
         	<label>Customer</label>
         	<input type="text" class="form-control form-control-sm" name="customer" id="customer" placeholder="">
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
         	<label>Address</label>
         	<textarea class="form-control form-control-sm" id="address" name="address"></textarea>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
         	<label>Material</label>
         	<input type="text" class="form-control form-control-sm" id="material" name="material" placeholder="">
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
         	<label>Mobile No</label>
         	<input type="text" class="form-control form-control-sm" id="mobile" name="mobile" placeholder="" >
         </div>
         
+        <div class="form-row">
         <div class="col-md-4">
         	<label>Gross Weight : </label>
         	<input type="text" class="form-control form-control-sm form-control-radius" id="gross" name="gross" placeholder="" value="0.0">
@@ -72,6 +73,7 @@
             <input type="text" class="form-control form-control-sm form-control-radius" id="net" name="net" placeholder="" value="0.0">
             <input type="text" class="form-control form-control-sm form-control-radius" id="tare" name="netWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
         </div>
+        </div>
         
         <div class="col-md-4">
         	<label>Weigh Rate :</label>
@@ -81,12 +83,12 @@
         <div class="form-row">
         <div class=col-md-12>
         <div class="d-flex justify-content-end">
-        		<button type="button" class="btn btn-primary btn-sm btn-mr-rt">Fetch RST</button>
-  				<button type="button" class="btn btn-primary btn-sm btn-mr-rt" onclick="submitRSTEntry()">Submit</button>
-  				<button type="button" class="btn btn-primary btn-sm btn-mr-rt" data-toggle="modal" data-target="#modalLoginForm">Reset</button>
-  				<button type="button" class="btn btn-primary btn-sm btn-mr-rt">Print</button>
-  				<button type="button" class="btn btn-primary btn-sm btn-mr-rt">PDF</button>
-  				<button id="addCustomer" type="button" class="btn btn-primary btn-sm btn-mr-rt" data-toggle="modal" data-target="#exampleModalCenter">call here</button>
+        		<button type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp">Fetch RST</button>
+  				<button type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp" onclick="submitRSTEntry()">Submit</button>
+  				<button type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp" data-toggle="modal" data-target="#modalLoginForm">Reset</button>
+  				<button type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp">Print</button>
+  				<button type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp">PDF</button>
+  				<button id="addCustomer" type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp" data-toggle="modal" data-target="#exampleModalCenter">call here</button>
         </div>
         </div>
         </div>
@@ -186,7 +188,7 @@
   </div>
 
 <!--Footer code starts here-->
-<nav class="navbar navbar-default navbar-static-bottom custom-footer border-top">
+<nav class="navbar navbar-default navbar-static-bottom footer border-top">
  <div class="container">	
   <div class="row">
 	  	<div class="col-md-auto">
