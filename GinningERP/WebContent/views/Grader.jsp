@@ -14,7 +14,7 @@
    <%@include file="../views/NavBar.html" %>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-8 border-right col-md-margintop">
+        <div class="col-md-8 border col-md-margintop">
           <form action="">
             <div class="form-row">
               <div class="col-md-6">
@@ -79,14 +79,14 @@
               </div>
               <div class="col-md-12">
                   <div class="d-inline-flex p-2 bd-highlight">
-                      <button type="button" class="btn btn-primary btn-sm custom-button-submit">Submit</button>
-                      <button type="button" class="btn btn-primary btn-sm custom-button-submit">PDF</button>
+                      <button type="button" class="btn btn-primary btn-sm btn-mr-rt">Submit</button>
+                      <button type="button" class="btn btn-primary btn-sm btn-mr-rt">PDF</button>
                   </div>
               </div>
             </div>
           </form>
         </div>
-        <div class="col-md-4 col-md-margintop">
+        <div class="col-md-4 border col-md-margintop">
           <input type="text" class="form-control form-control-sm" placeholder="search">
           <table class="table">
             <thead>
@@ -109,6 +109,9 @@
         </div>
       </div>
     </div>
+    <!--Footer code starts here-->
+	<nav class="navbar navbar-default navbar-static-bottom footer border-top">
+	</nav>
  	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>

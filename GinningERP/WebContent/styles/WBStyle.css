@@ -26,7 +26,7 @@
     padding: 5px;
     color: white;
     border-radius: 3px;
-    margin-top: 1.5rem;
+    margin-top: 0rem;
 }
 
 label{
@@ -39,6 +39,7 @@ label{
 .form-control-radius{
 	border-radius:0px;
 }
+/*************************************ROW MARGIN CLASSES*************************************/
 .col-md-margintop{
 	margin-top:1.5rem;
 }
@@ -50,7 +51,9 @@ label{
 	margin-top:1rem;
 }
 /***************************TABLE PROPERTIES*****************************************/
-
+.table{
+	overflow-x:auto;
+}
 .table tbody tr:hover{
 	cursor:pointer;
 	background:#108000;
@@ -59,10 +62,13 @@ label{
 	padding:.5rem;
 	vertical-align:middle;
 }
+.table-mr-top{
+	margin-top:1rem;
+}
 /**********************************BORDER CLASSES************************************/
 .border{
 	padding:1rem;
-	border:1px solid #108000 !important;
+	border:1.5px solid #393a3d !important;
 	}
 .border-mr-lt{
 	margin-left:1px;
@@ -108,4 +114,6 @@ body{
 .footer{
 	height:150px;
 	background:#393a3d;
+	margin-top:1rem;
 }
+

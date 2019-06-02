@@ -15,7 +15,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-8 col-md-margintop border">
-                        <form action="">
+                        <form action="" id="adminApprovalForm">
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <label for="">RST No :</label>
@@ -140,11 +140,11 @@
                                         </div>
                                         <div class="custom-control">
                                             <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                            <label class="custom-control-label" for="customCheck2">RTGS/NEFT</label>
+                                            <label class="custom-control-label" for="customCheck2">Cheque</label>
                                         </div>
                                         <div class="custom-control">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                                <label class="custom-control-label" for="customCheck3">Cheque</label>
+                                            <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                            <label class="custom-control-label" for="customCheck3">RTGS/NEFT</label>
                                         </div>
                                         <div class="custom-control">
                                             <input type="checkbox" class="custom-control-input" id="customCheck4">
@@ -152,6 +152,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                	<div class="col-md-12">
+                                		<table class="table table-bordered table-mr-top">
+                                			<tbody id="paymentDetailsTable">
+                                			
+                                			</tbody>
+                                		</table>
+                                	</div>
                                 <div class="col-md-12 border-top">
                                     <div class="d-flex justify-content-end">
                                         <button style="margin-bottom:8px;" type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp">Amanat</button>
@@ -169,7 +176,6 @@
                                     <th>Token No</th>
                                     <th>RST No</th>
                                     <th>Amount</th>
-                                    <th>Call</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -178,43 +184,135 @@
                                     <td>2541</td>
                                     <td>0451</td>
                                     <td>10000</td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn-sm custom-button-submit">Call</button>
-                                    </td>
                                 </tr>
                                 <tr>
                                     <td>02</td>
                                     <td>2542</td>
                                     <td>0452</td>
                                     <td>10500</td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn-sm custom-button-submit">Call</button>
-                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>
+             	
+             	<!-- *********************************CASH PAYMENT MODAL******************************************** -->
+             	<div class="modal fade" id="cashPaymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				      	<h4 class="modal-title" id="myModalLabel">Cash Payment Details</h4>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				      </div>
+				      <div class="modal-body">
+				       	<form>
+				       		<div class="form-row">
+				       			<div class="col-md-6">
+				       			<label>Cash Receipt No</label>
+				       			<input type="text" class="form-control form-control-sm" name="" id="cashReceiptNo" placeholder="Auto" readonly>
+				       			</div>
+				       			<div class="col-md-6">
+				       			<label>Cash Balance</label>
+				       			<input type="text" class="form-control form-control-sm" name="" id="" readonly>
+				       			</div>
+				       		</div>
+				       		<div class="form-row">
+				       			<div class="col-md-6">
+				       			<label>Vendor Name</label>
+				       			<input type="text" class="form-control form-control-sm" name="" id="vendorName" placeholder="Auto" value="Vendor 1" readonly>
+				       			</div>
+				       		</div>
+				       		<div class="form-row">
+				       			<div class="col-md-6">
+				       			<label>Amount to Pay</label>
+				       			<input type="text" class="form-control form-control-sm" name="" id="amountToPay">
+				       			</div>
+				       		</div>
+				       	</form>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default btn-sm" name="" id="cashPaymentClaseBtn" data-dismiss="modal">Close</button>
+				        <button type="button" class="btn btn-primary btn-sm" name="" id="cashPaymentSaveBtn" data-dismiss="modal">Save</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+             	</div>
+             	
+             	<!-- *********************************CHEQUE PAYMENT MODAL******************************************** -->
+             	<div class="modal fade" id="chequePaymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				      	<h4 class="modal-title" id="myModalLabel">Cheque Payment Details</h4>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				      </div>
+				      <div class="modal-body">
+				       	<form>
+				       		<div class="form-row">
+				       			<div class="col-md-6">
+				       			<label>Select Bank</label>
+				       			<select class="form-control form-control-sm">
+				       				<option value="">Bank 1</option>
+				       				<option value="">Bank 2</option>
+				       				<option value="">Bank 3</option>
+				       			</select>
+				       			</div>
+				       			<div class="col-md-6">
+				       			<label>Balance</label>
+				       			<input type="text" class="form-control form-control-sm" readonly>
+				       			</div>
+				       		</div>
+				       		<div class="form-row">
+				       			<div class="col-md-6">
+				       			<label>Vendor Name</label>
+				       			<input type="text" class="form-control form-control-sm" name="" id="" placeholder="Auto">
+				       			</div>
+				       			<div class="col-md-6">
+				       			<label>Amount to Pay</label>
+				       			<input type="text" class="form-control form-control-sm" name="" id="">
+				       			</div>
+				       		</div>
+				       		<div class="form-row">
+				       			<div class="col-md-6">
+				       			<label>Date</label>
+				       			<input type="date" class="form-control form-control-sm" name="" id="" placeholder="Auto">
+				       			</div>
+				       			<div class="col-md-6">
+				       			<label>Cheque No</label>
+				       			<input type="text" class="form-control form-control-sm" name="" id="">
+				       			</div>
+				       		</div>
+				       	</form>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+				        <button type="button" class="btn btn-primary btn-sm">Save</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+             	
+             	
 			<nav class="navbar navbar-default navbar-static-bottom footer border-top">
     
     		</nav>
+    		
 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
-		<script>
+	<script src="../js/modal.js"></script>
+	<script>
 	
 	function fetchData(rst){
 		console.log(rst);
 		url = "../processing/adminApproval.jsp?rst="+rst;
-		
 		if(window.XMLHttpRequest){  
 			fetchRequest=new XMLHttpRequest();  
 		}  
 		else if(window.ActiveXObject){  
 			fetchRequest=new ActiveXObject("Microsoft.XMLHTTP");  
 		}  
-	  
 		try{  
 			fetchRequest.onreadystatechange=getData;  
 			console.log("AJAX Req sent");
@@ -222,7 +320,6 @@
 			fetchRequest.send();  
 		}catch(e){alert("Unable to connect to server");}
 	}
-	
 	function getData(){
 		
 		if(fetchRequest.readyState == 4){
