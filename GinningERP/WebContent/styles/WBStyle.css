@@ -116,4 +116,10 @@ body{
 	background:#393a3d;
 	margin-top:1rem;
 }
-
+/******************************INPUT OVERRIDDEN***********************************/
+input{
+	margin-bottom:1rem;
+}
+select {
+	margin-bottom:1rem;
+}
