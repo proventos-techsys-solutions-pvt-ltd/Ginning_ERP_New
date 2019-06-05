@@ -13,7 +13,8 @@
    int maxFileSize = 5000 * 1024;
    int maxMemSize = 5000 * 1024;
    ServletContext context = pageContext.getServletContext();
-   String filePath = System.getProperty("user.dir")+"\\WebContent\\property\\logo\\";
+   String filePath = context.getInitParameter("file-upload");
+   Map<String, String> data = new TreeMap();
 
    // Verify the content type
    String contentType = request.getContentType();
@@ -24,7 +25,7 @@
       factory.setSizeThreshold(maxMemSize);
       
       // Location to save data that is larger than maxMemSize.
-      factory.setRepository(new File(System.getProperty("user.dir")+"\\WebContent\\property\\logo\\"));
+      factory.setRepository(new File(context.getInitParameter("file-upload")));
 
       // Create a new file upload handler
       ServletFileUpload upload = new ServletFileUpload(factory);
@@ -39,12 +40,6 @@
          // Process the uploaded file items
          Iterator i = fileItems.iterator();
 
-         out.println("<html>");
-         out.println("<head>");
-         out.println("<title>JSP File upload</title>");  
-         out.println("</head>");
-         out.println("<body>");
-         
          while ( i.hasNext () ) {
             FileItem fi = (FileItem)i.next();
             if ( !fi.isFormField () ) {
@@ -63,59 +58,47 @@
                   fileName.substring(fileName.lastIndexOf("\\")+1)) ;
                }
                fi.write( file ) ;
-               out.println("Uploaded Filename: " + filePath + 
-               fileName + "<br>");
                location = filePath+fileName;
             }
+            else{
+            	
+            	data.put(fi.getFieldName(), fi.getString());
+            	
+            }
          }
-         out.println("</body>");
-         out.println("</html>");
+         
+     	System.out.println(data);
+         
+    	
+    	Company c = new Company();
+    	
+     	c.setName(data.get("name"));
+    	c.setAddress(data.get("address"));
+    	c.setCity(data.get("city"));
+    	c.setState(data.get("state"));
+    	c.setPan(data.get("pan"));
+    	c.setTan(data.get("tan"));
+    	c.setCin(data.get("cin"));
+    	c.setGst(data.get("gst"));
+    	c.setTelephone(data.get("telephone"));
+    	c.setMobile(data.get("mobile"));
+    	c.setEmail(data.get("email"));
+    	c.setLogoPath(location); 
+    	
+    	AddCompany ac = new AddCompany();
+    	
+    	ac.addCompany(c);
+    	
+    	response.sendRedirect("../views/SetupCompanies.jsp");
       } catch(Exception ex) {
          System.out.println(ex);
+         
       }
-   } else {
-      out.println("<html>");
-      out.println("<head>");
-      out.println("<title>Servlet upload</title>");  
-      out.println("</head>");
-      out.println("<body>");
-      out.println("<p>No file uploaded</p>"); 
-      out.println("</body>");
-      out.println("</html>");
+      
    }
    
    
-   	String name = request.getParameter("name");
-	String address = request.getParameter("address");
-	String city = request.getParameter("city");
-	String state = request.getParameter("state");
-	String pan = request.getParameter("pan");
-	String tan = request.getParameter("tan");
-	String cin = request.getParameter("cin");
-	String gst = request.getParameter("gst");
-	String telephone = request.getParameter("telephone");
-	String mobile = request.getParameter("mobile");
-	String email = request.getParameter("email");
-	String logoLocation = location;
-	
-	Company c = new Company();
-	
-	c.setName(name);
-	c.setAddress(address);
-	c.setCity(city);
-	c.setState(state);
-	c.setPan(pan);
-	c.setTan(tan);
-	c.setCin(cin);
-	c.setGst(gst);
-	c.setTelephone(telephone);
-	c.setMobile(mobile);
-	c.setEmail(email);
-	c.setLogoPath(logoLocation);
-	
-	AddCompany ac = new AddCompany();
-	
-	ac.addCompany(c);
+   
 	
 	
 %>

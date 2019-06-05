@@ -18,7 +18,7 @@
 			<div class="col-md-auto">
 				<h3>Setup Companies</h3>
 			</div>
-		<form class="border" enctype="multipart/form-data" action="../processing/addCompany.jsp" method="post">
+		<form class="border" name="companyForm" enctype="multipart/form-data" action="../processing/addCompany.jsp" method="post">
 			<div class="form-row">
 				<div class="col-md-8">
 					<label>Company Name</label>
@@ -81,11 +81,10 @@
 					<input type="file" class="form-control form-control-sm form-control-radius" name="file" id="logo">
 				</div>
 			</div>
-			<input type="submit" />
 		</form>
 		<div class="row">
 			<div class="col-md-auto">
-				<button type="button" class="btn btn-primary btn-sm btn-mr-tp">Add</button>
+				<button type="button" class="btn btn-primary btn-sm btn-mr-tp" onclick="submitForm()">Add</button>
 				<button type="button" class="btn btn-primary btn-sm btn-mr-tp">Reset</button>
 			</div>
 		</div>
@@ -122,5 +121,10 @@
    		<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
+		<script>
+			function submitForm(){
+				document.getElementsByName("companyForm")[0].submit();
+			}
+		</script>
 </body>
 </html>
