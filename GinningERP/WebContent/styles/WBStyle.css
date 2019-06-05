@@ -31,6 +31,7 @@
 
 label{
     vertical-align: middle;
+    font-size:1.2rem;
 }
  /***********************************INPUT OVERRIDDEN**************************************/
 .form-control-sm{
@@ -67,7 +68,7 @@ label{
 }
 /**********************************BORDER CLASSES************************************/
 .border{
-	padding:1rem;
+	padding:0rem 1rem 1rem 1rem;
 	border:1.5px solid #393a3d !important;
 	}
 .border-mr-lt{
@@ -88,6 +89,7 @@ form{
 /***********************************HEADING CLASEES***********************************/
 .h3-mr-lt{
 	margin-left:1
+	
 }	
 
 /******************************IMAGE CLASSES*************************************/
@@ -106,9 +108,14 @@ body{
 .container-fluid{
 	background:#fff;
 }
-.row{
+row{
 	margin-right: 0;
 	margin-left: 0;
+}
+
+.tile-background{
+	background:#fff;
+	padding:.875rem;
 }
 /******************************FOOTER CLASSES*********************************/
 .footer{
@@ -122,4 +129,22 @@ input{
 }
 select {
 	margin-bottom:1rem;
+}
+/**************************TEST CLASSES********************************************/
+.test{
+	height:50px;
+	background:red;
+}
+.scroll{
+	height:200px;
+	overflow:auto;
+}
+h3{
+	background:#393a3d;
+	margin-bottom: 0rem;
+	padding:1rem;
+	color:#fff;
+}
+.form-row{
+	padding:.875rem;
 }

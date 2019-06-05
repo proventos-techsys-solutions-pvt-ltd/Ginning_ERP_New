@@ -9,31 +9,17 @@
 	  <link rel="stylesheet" href="../styles/bootstrap.min.css">	
 	  <link rel="stylesheet" href="../styles/WBStyle.css">
       <title>Daily Transactions Setup</title>
-      <style>
-      	
-     	
-			
-			.cat-inner {
-			  height: auto;
-			  padding: 10px;
-			  background-color: #fff;
-			}
-			h3{
-				background:#393a3d;
-				color:#fff;
-			}
-      </style>
+   
     </head>
 <body>
 	<%@include file="../views/NavBar.html" %>
 	 
 	<div class="container">
-		<div class="row mt-1">
+		<div class="row mt-3">
 			<div class="col-md-12">
-			<div class="cat-inner">
-				<div class="row">
-				<div class="col-md-6">
+			<div class="tile-background">
 				<label>Company</label>
+				<div class="col-md-6">
 				<select class="form-control form-control-sm" name="" id="">
 					<option value="">Company 1</option>
 					<option value="">Company 2</option>
@@ -42,14 +28,13 @@
 				</div>
 				</div>
 			</div>
-			</div>
 		</div>
 		<div class="row mt-1">
 			<div class="col-md-6">
-			<div class="cat-inner">
+			<div class="tile-background">
 				<h3 class="text-center">Cash</h3>
 				<div class="border">
-					<div class="row ">
+					<div class="form-row ">
 						<div class="col-md-4">
 							<label>Opening Balance</label>
 						</div>
@@ -57,7 +42,7 @@
 							<input type="text" class="form-control form-control-sm" name="" id="">
 						</div>
 					</div>
-					<div class="row">
+					<div class="form-row">
 						<div class="col-md-4">
 							<label>Addition</label>
 						</div>
@@ -65,7 +50,7 @@
 							<input type="text" class="form-control form-control-sm" name="" id="addCash">
 						</div>
 					</div>
-					<div class="row">
+					<div class="form-row">
 						<div class="col-md-4">
 							<label>Payments Made</label>
 						</div>
@@ -73,7 +58,7 @@
 							<input type="text" class="form-control form-control-sm" name="" id="">
 						</div>
 					</div>
-					<div class="row">
+					<div class="form-row">
 						<div class="col-md-4">
 							<label>Closing Balance</label>
 						</div>
@@ -86,10 +71,10 @@
 			</div>
 			<% for(int i = 0; i<=2 ; i++) {%>
 			<div class="col-md-6">
-			<div class="cat-inner">
+			<div class="tile-background">
 				<h3 class="text-center">Bank</h3>
 				<div class="border">
-					<div class="row">
+					<div class="form-row">
 						<div class="col-md-4">
 							<label>Opening Balance</label>
 						</div>
@@ -97,7 +82,7 @@
 							<input type="text" class="form-control form-control-sm" name="" id="">
 						</div>
 					</div>
-					<div class="row">
+					<div class="form-row">
 						<div class="col-md-4">
 							<label>Addition</label>
 						</div>
@@ -105,7 +90,7 @@
 							<input type="text" class="form-control form-control-sm" name="" id="">
 						</div>
 					</div>
-					<div class="row">
+					<div class="form-row">
 						<div class="col-md-4">
 							<label>Payments Made</label>
 						</div>
@@ -113,7 +98,7 @@
 							<input type="text" class="form-control form-control-sm" name="" id="">
 						</div>
 					</div>
-					<div class="row">
+					<div class="form-row">
 						<div class="col-md-4">
 							<label>Closing Balance</label>
 						</div>
