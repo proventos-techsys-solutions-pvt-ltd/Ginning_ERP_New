@@ -3,7 +3,7 @@ document.getElementById("adminApprovalForm").reset();
 
 
 /*********CALLING CASH PAYMENT MODAL*******************/
-$('#customCheck1').on('change', function(e){
+$('#cashCheckbox').on('change', function(e){
 		   if(e.target.checked){
 		     $('#cashPaymentModal').modal();
 		   }
@@ -23,15 +23,15 @@ function getCashModalData(){
 document.getElementById("cashPaymentSaveBtn").addEventListener("click",function(){
 	getCashModalData();
 	addPaymentDetailsToTable();
-	document.getElementById("customCheck1").disabled = true; 
+	document.getElementById("cashCheckbox").disabled = true; 
 })
 
 document.getElementById("cashPaymentClaseBtn").addEventListener("click",function(){
-		document.getElementById("customCheck1").checked = false; 
+		document.getElementById("cashCheckbox").checked = false; 
 })
 
 /*********CHEQUE PAYMENT MODAL*******************/
-$('#customCheck2').on('change', function(e){
+$('#chequeCheckbox').on('change', function(e){
 		   if(e.target.checked){
 		     $('#chequePaymentModal').modal();
 		   }

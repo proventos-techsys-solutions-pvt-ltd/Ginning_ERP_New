@@ -27,12 +27,12 @@
                                 </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="">Record No :</label>
-                                    <input type="text" class="form-control form-control-sm" placeholder="Record No">
+                                    <label for="">Invoice No :</label>
+                                    <input id="invoiceNo" name="invoiceNo" type="text" class="form-control form-control-sm" placeholder="Invoice No" >
                                 </div>
                                 <div class="col-md-6">
                                     <label for="">Company Name :</label>
-                                    <select name="" id="" class="form-control form-control-sm">
+                                    <select name="companyName" id="companyName" class="form-control form-control-sm">
                                         <option value="">Company 1</option>
                                         <option value="">Company 2</option>
                                         <option value="">Company 3</option>
@@ -40,17 +40,17 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="">Date :</label>
-                                    <input type="date" class="form-control form-control-sm" placeholder="Record No">
+                                    <input type="date" id="invoiceDate" name="invoiceDate" class="form-control form-control-sm" placeholder="Record No">
                                 </div>
                                 <div class="col-md-6">
                                     <label>Customer Name & Address</label>
-                                    <textarea class="form-control form-control-lg"></textarea>
+                                    <textarea id="customerData" name="customerData" class="form-control form-control-lg"></textarea>
                                     </div>
                                 <div class="col-md-6">
                                     <label>Authorized Grader</label>
-                                    <input type="text" class="form-control form-control-sm" placeholder="">
-                                    <label>Authorizer</label>
-                                    <input type="text" class="form-control form-control-sm" placeholder="">
+                                    <input id="grader" name="grader"  type="text" class="form-control form-control-sm" placeholder="">
+                                    <label>Operator Name</label>
+                                    <input type="text" id="operatorName" name="operatorName" class="form-control form-control-sm" placeholder="">
                                 </div>
                                 <div class="col-md-12 col-md-margintop">
                                     <table class="table table-bordered custom-table">
@@ -60,52 +60,20 @@
                                             <th>Material</th>
                                             <th>Quantity</th>
                                             <th>Grade</th>
+                                            <th>Moisture Content</th>
                                             <th>Rate</th>
                                             <th align="right">Amount</th> 
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <td>01</td>
-                                            <td>Cotton</td>
-                                            <td>100 Qtl</td>
-                                            <td>
-                                            <select name="" id="" class="form-control form-control-sm">
-                                                <option value="">Grade A</option>
-                                                <option value="">Grade B</option>
-                                                <option value="">Grade C</option>
-                                            </select>
-                                            </td>
-                                            <td><input type="text" class="form-control form-control-sm"></td>
-                                            <td align="right">15000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>01</td>
-                                            <td>Cotton</td>
-                                            <td>100 Qtl</td>
-                                            <td>
-                                            <select name="" id="" class="form-control form-control-sm">
-                                                <option value="">Grade A</option>
-                                                <option value="">Grade B</option>
-                                                <option value="">Grade C</option>
-                                            </select>
-                                            </td>
-                                            <td><input type="text" class="form-control form-control-sm"></td>
-                                            <td align="right">15000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>01</td>
-                                            <td>Cotton</td>
-                                            <td>100 Qtl</td>
-                                            <td>
-                                            <select name="" id="" class="form-control form-control-sm">
-                                                <option value="">Grade A</option>
-                                                <option value="">Grade B</option>
-                                                <option value="">Grade C</option>
-                                            </select>
-                                            </td>
-                                            <td><input type="text" class="form-control form-control-sm"></td>
-                                            <td align="right">15000</td>
+                                            <td id="tableRst">01</td>
+                                            <td id="material">Product Name</td>
+                                            <td id="quantity">0 Qtl</td>
+                                            <td id="grade">A</td>
+                                            <td id="moisture"><input type="text" id="moisture" name="moisture" /></td>
+                                            <td id="rate"><input type="text" id="rate" name="rate" class="form-control form-control-sm"></td>
+                                            <td id="amount" align="right">0.0</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -116,17 +84,17 @@
                                         <tr>
                                             <td rowspan="2">
                                                 <label>Note :</label>
-                                                <textarea class="form-control form-control-sm"></textarea>
+                                                <textarea id="note" name="note" class="form-control form-control-sm"></textarea>
                                             </td>
                                             <td align="right">
                                                 <label for="">Advance :</label> 
-                                                <input type="text" class="custom-noborder-input" value="10000">
+                                                <input type="text" id="advance" name="advance" class="custom-noborder-input" value="10000">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td align="right">
                                                 <label for="">Net Payable :</label> 
-                                                <input type="text" class="custom-noborder-input" value="35000">
+                                                <input type="text" id="net" name="net" class="custom-noborder-input" value="35000">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -135,20 +103,20 @@
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-around custom-checkbox">
                                         <div class="custom-control">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                            <label class="custom-control-label" for="customCheck1">Cash</label>
+                                            <input type="checkbox" class="custom-control-input" id="cashCheckbox">
+                                            <label class="custom-control-label" for="cashCheckbox">Cash</label>
                                         </div>
                                         <div class="custom-control">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                            <label class="custom-control-label" for="customCheck2">Cheque</label>
+                                            <input type="checkbox" class="custom-control-input" id="chequeCheckbox">
+                                            <label class="custom-control-label" for="chequeCheckbox">Cheque</label>
                                         </div>
                                         <div class="custom-control">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                            <label class="custom-control-label" for="customCheck3">RTGS/NEFT</label>
+                                            <input type="checkbox" class="custom-control-input" id="rtgsCheckbox">
+                                            <label class="custom-control-label" for="rtgsCheckbox">RTGS/NEFT</label>
                                         </div>
                                         <div class="custom-control">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck4">
-                                            <label class="custom-control-label" for="customCheck4">Other</label>
+                                            <input type="checkbox" class="custom-control-input" id="otherCheckbox">
+                                            <label class="custom-control-label" for="otherCheckbox">Other</label>
                                         </div>
                                     </div>
                                 </div>
@@ -209,23 +177,23 @@
 				       		<div class="form-row">
 				       			<div class="col-md-6">
 				       			<label>Cash Receipt No</label>
-				       			<input type="text" class="form-control form-control-sm" name="" id="cashReceiptNo" placeholder="Auto" readonly>
+				       			<input type="text" class="form-control form-control-sm" name="cashReceiptNo" id="cashReceiptNo" placeholder="Auto" readonly>
 				       			</div>
 				       			<div class="col-md-6">
 				       			<label>Cash Balance</label>
-				       			<input type="text" class="form-control form-control-sm" name="" id="" readonly>
+				       			<input type="text" class="form-control form-control-sm" name="cashBalance" id="cashBalance" readonly>
 				       			</div>
 				       		</div>
 				       		<div class="form-row">
 				       			<div class="col-md-6">
 				       			<label>Vendor Name</label>
-				       			<input type="text" class="form-control form-control-sm" name="" id="vendorName" placeholder="Auto" value="Vendor 1" readonly>
+				       			<input type="text" class="form-control form-control-sm" name="vendorNameCash" id="vendorNameCash" placeholder="Auto" value="Vendor 1" readonly>
 				       			</div>
 				       		</div>
 				       		<div class="form-row">
 				       			<div class="col-md-6">
 				       			<label>Amount to Pay</label>
-				       			<input type="text" class="form-control form-control-sm" name="" id="amountToPay">
+				       			<input type="text" class="form-control form-control-sm" name="amountToPayCash" id="amountToPayCash">
 				       			</div>
 				       		</div>
 				       	</form>
@@ -252,7 +220,7 @@
 				       		<div class="form-row">
 				       			<div class="col-md-6">
 				       			<label>Select Bank</label>
-				       			<select class="form-control form-control-sm">
+				       			<select name="bank" id="bank" class="form-control form-control-sm">
 				       				<option value="">Bank 1</option>
 				       				<option value="">Bank 2</option>
 				       				<option value="">Bank 3</option>
@@ -260,27 +228,27 @@
 				       			</div>
 				       			<div class="col-md-6">
 				       			<label>Balance</label>
-				       			<input type="text" class="form-control form-control-sm" readonly>
+				       			<input name="balanceCheque" id="balanceCheque" type="text" class="form-control form-control-sm" readonly>
 				       			</div>
 				       		</div>
 				       		<div class="form-row">
 				       			<div class="col-md-6">
 				       			<label>Vendor Name</label>
-				       			<input type="text" class="form-control form-control-sm" name="" id="" placeholder="Auto">
+				       			<input type="text" class="form-control form-control-sm" name="vendorNameCheque" id="vendorNameCheque" placeholder="Auto">
 				       			</div>
 				       			<div class="col-md-6">
 				       			<label>Amount to Pay</label>
-				       			<input type="text" class="form-control form-control-sm" name="" id="">
+				       			<input type="text" class="form-control form-control-sm" name="chequeAmount" id="chequeAmount">
 				       			</div>
 				       		</div>
 				       		<div class="form-row">
 				       			<div class="col-md-6">
 				       			<label>Date</label>
-				       			<input type="date" class="form-control form-control-sm" name="" id="" placeholder="Auto">
+				       			<input type="date" class="form-control form-control-sm" name="chequeDate" id="chequeDate" placeholder="Auto">
 				       			</div>
 				       			<div class="col-md-6">
 				       			<label>Cheque No</label>
-				       			<input type="text" class="form-control form-control-sm" name="" id="">
+				       			<input type="text" class="form-control form-control-sm" name="chequeNo" id="chequeNo">
 				       			</div>
 				       		</div>
 				       	</form>
@@ -320,12 +288,42 @@
 			fetchRequest.send();  
 		}catch(e){alert("Unable to connect to server");}
 	}
+	
+	
 	function getData(){
 		
 		if(fetchRequest.readyState == 4){
 			var response = this.response.trim();
 			console.log(response);
+			var data = JSON.parse(response);
+			setData(data);
 		}
+	}
+	
+	
+	function setData(data)
+	{
+		
+		document.getElementById("rst").value = data.invoice.rst;
+		document.getElementById("invoiceNo").value = data.invoice.id;
+		//document.getElementById("companyName").value = data.company.name;
+		//document.getElementById("date").value = data.
+		document.getElementById("customerData").value = data.customer.name + "\n" + data.customer.address + "\n" + data.customer.mobile;
+		//document.getElementById("grader").value = data.
+		//document.getElementById("operatorName").value = data.
+		document.getElementById("tableRst").innerHTML = data.invoice.rst;
+		document.getElementById("material").innerHTML = data.weight.material;
+		document.getElementById("quantity").innerHTML = data.weight.net;
+		document.getElementById("grade").innerHTML = data.weight.grade;
+		document.getElementById("moisture").innerHTML = data.weight.moisture;
+		document.getElementById("rate").value = data.weight.graderRate;
+		document.getElementById("amount").value = data.weight.graderRate * data.weight.net;
+		//document.getElementById("cashReceiptNo").value = data.
+		//document.getElementById("cashBalance").value = data.company.balance;
+		document.getElementById("vendorNameCash").value = data.customer.name;
+		document.getElementById("vendorNameCheque").value = data.customer.name;
+		
+		
 	}
 	
 	</script>

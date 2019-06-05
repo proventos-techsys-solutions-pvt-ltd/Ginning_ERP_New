@@ -37,8 +37,8 @@ public class WeighReport {
 			wm.setNet(rs.getFloat(8));
 			wm.setGrade(rs.getString(9));
 			wm.setGradeRate(rs.getFloat(10));
-			System.out.println(rs.getDate(11));
-			System.out.println(rs.getDate(1));
+			System.out.println(rs.getString(11));
+			System.out.println(rs.getString(1));
 			}
 		
 		stmt.close();

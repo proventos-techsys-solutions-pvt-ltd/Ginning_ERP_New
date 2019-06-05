@@ -18,13 +18,13 @@
 			<div class="col-md-auto">
 				<h3>Setup Companies</h3>
 			</div>
-		<form class="border">
+		<form class="border" enctype="multipart/form-data" action="../processing/addCompany.jsp" method="post">
 			<div class="form-row">
 				<div class="col-md-8">
 					<label>Company Name</label>
-					<input type="text" class="form-control form-control-sm form-control-radius" name="" id="">
+					<input type="text" class="form-control form-control-sm form-control-radius" name="name" id="name">
 					<label>Company Address</label>
-					<textarea class="form-control form-control-lg form-control-radius" name="" id="">
+					<textarea class="form-control form-control-lg form-control-radius" name="address" id="address">
 					</textarea>
 				</div>
 				<div class="col-md-4">
@@ -34,53 +34,54 @@
 			<div class="form-row">
 				<div class="col-md-6">
 					<label>City</label>
-					<input type="text" class="form-control form-control-sm form-control-radius" name="" id="">
+					<input type="text" class="form-control form-control-sm form-control-radius" name="city" id="city">
 				</div>
 				<div class="col-md-6">
 					<label>State</label>
-					<input type="text" class="form-control form-control-sm form-control-radius" name="" id="">
+					<input type="text" class="form-control form-control-sm form-control-radius" name="state" id="state">
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="col-md-6">
 					<label>PAN</label>
-					<input type="text" class="form-control form-control-sm form-control-radius" name="" id="">
+					<input type="text" class="form-control form-control-sm form-control-radius" name="pan" id="pan">
 				</div>
 				<div class="col-md-6">
 					<label>TAN</label>
-					<input type="text" class="form-control form-control-sm form-control-radius" name="" id="">
+					<input type="text" class="form-control form-control-sm form-control-radius" name="tan" id="tan">
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="col-md-6">
 					<label>CIN</label>
-					<input type="text" class="form-control form-control-sm form-control-radius" name="" id="">
+					<input type="text" class="form-control form-control-sm form-control-radius" name="cin" id="cin">
 				</div>
 				<div class="col-md-6">
 					<label>GST No</label>
-					<input type="text" class="form-control form-control-sm form-control-radius" name="" id="">
+					<input type="text" class="form-control form-control-sm form-control-radius" name="gst" id="gst">
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="col-md-6">
 					<label>Telephone</label>
-					<input type="text" class="form-control form-control-sm form-control-radius" name="" id="">
+					<input type="text" class="form-control form-control-sm form-control-radius" name="telephone" id="telephone">
 				</div>
 				<div class="col-md-6">
 					<label>Mobile</label>
-					<input type="text" class="form-control form-control-sm form-control-radius" name="" id="">
+					<input type="text" class="form-control form-control-sm form-control-radius" name="mobile" id="mobile">
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="col-md-6">
 					<label>Email</label>
-					<input type="text" class="form-control form-control-sm form-control-radius" name="" id="">
+					<input type="text" class="form-control form-control-sm form-control-radius" name="email" id="email">
 				</div>
 				<div class="col-md-6">
 					<label>Logo</label>
-					<input type="file" class="form-control form-control-sm form-control-radius" name="" id="">
+					<input type="file" class="form-control form-control-sm form-control-radius" name="file" id="logo">
 				</div>
 			</div>
+			<input type="submit" />
 		</form>
 		<div class="row">
 			<div class="col-md-auto">
