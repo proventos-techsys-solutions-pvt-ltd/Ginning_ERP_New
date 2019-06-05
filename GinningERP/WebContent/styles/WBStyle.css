@@ -37,9 +37,10 @@ label{
 .form-control-sm{
 	border-radius:0px;
 }
-.form-control-radius{
+.form-control{
 	border-radius:0px;
 }
+
 /*************************************ROW MARGIN CLASSES*************************************/
 .col-md-margintop{
 	margin-top:1.5rem;
@@ -106,7 +107,7 @@ body{
 	margin-bottom:1rem;
 }
 .container-fluid{
-	background:#fff;
+	background:#eceef1;
 }
 row{
 	margin-right: 0;

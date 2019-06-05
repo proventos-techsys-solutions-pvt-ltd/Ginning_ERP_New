@@ -13,18 +13,19 @@
   <body>
    <%@include file="../views/NavBar.html" %>
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-8 border col-md-margintop">
+      <div class="row mt-2">
+        <div class="col-md-8">
+        <div class="tile-background">
           <form action="">
             <div class="form-row">
               <div class="col-md-6">
                   <label>Authorized Grader Name</label>&nbsp;&nbsp;
-                  <input type="search" class="form-control form-control-sm" name="authoGradeName" placeholder="Mr. ABC XYZ" readonly>
+                  <input type="search" class="form-control " name="authoGradeName" placeholder="Mr. ABC XYZ" readonly>
               </div>
               <div class="col-md-4"> 
               	<label for="">Search RST</label>&nbsp;&nbsp;
               	<div class="input-group">
-                  	<input type="search" class="form-control form-control-sm" name="searchRst" placeholder="RST" id="searchRST">
+                  	<input type="search" class="form-control " name="searchRst" placeholder="RST" id="searchRST">
               		<div class="input-group-append">
     				<button class="btn btn-outline-secondary btn-sm" type="button" onclick="fetchData(document.getElementById('searchRST').value)">Fetch</button>
     				</div>
@@ -41,13 +42,13 @@
               </div>
               <div class="col-md-4">
                 <label>Grade Record</label>
-                <input type="text" class="form-control form-control-sm" placeholder="" id="gradeRST" name="gradeRST">
+                <input type="text" class="form-control " placeholder="" id="gradeRST" name="gradeRST">
                 <label>Date</label>
-                <input type="date" class="form-control form-control-sm" placeholder="" id="date" name="date">
+                <input type="date" class="form-control " placeholder="" id="date" name="date">
               </div>
               </div>
               <div class="form-row">
-              <div class="col-md-12 col-md-margintop">
+              <div class="col-md-12">
               <table class="table table-bordered custom-table">
                     <thead>
                       <tr>
@@ -65,13 +66,13 @@
                         <td>Cotton</td>
                         <td>100 Qtl</td>
                         <td>
-                          <select name="grade" id="grade" class="form-control form-control-sm">
+                          <select name="grade" id="grade" class="form-control ">
                             <option value="">Grade A</option>
                             <option value="">Grade B</option>
                             <option value="">Grade C</option>
                           </select>
                         </td>
-                        <td><input type="text" class="form-control form-control-sm" id="rate" name="rate"></td>
+                        <td><input type="text" class="form-control " id="rate" name="rate"></td>
                         <td>15000</td>
                       </tr>
                     </tbody>
@@ -85,9 +86,11 @@
               </div>
             </div>
           </form>
+          </div>
         </div>
-        <div class="col-md-4 border col-md-margintop">
-          <input type="text" class="form-control form-control-sm" placeholder="search">
+        <div class="col-md-4">
+        <div class="tile-background">
+          <input type="text" class="form-control " placeholder="search">
           <table class="table">
             <thead>
               <tr>
@@ -106,6 +109,7 @@
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </div>

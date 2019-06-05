@@ -14,74 +14,75 @@
   <%@include file="../views/NavBar.html" %>
   
   <div class="container-fluid">
-   	<div class="row">
-    <div class="col-md-8 border col-md-margintop">
-      <h4 class="text-center custom-form-title" >Generate RST</h4>
-      <form id="newRST" action="../processing/addInvoiceEntry.jsp">
-      <div class="form-row">
+   	<div class="row mt-2">
+    <div class="col-md-8">
+    <div class="tile-background">
+       	<h4 class="text-center custom-form-title" >Generate RST</h4>
+      	<form id="newRST" action="../processing/addInvoiceEntry.jsp">
+      	<div class="form-row">
 	      	<input type="hidden" id="id" name="id" value="0" />
 	        <div class="col-md-4">
 	        	<label>RST No</label>
-	        	<input type="text" class="form-control form-control-sm" id="rst" name="rst" placeholder="Auto">
+	        	<input type="text" class="form-control " id="rst" name="rst" placeholder="Auto">
 	        </div>
-	       
+
 	        <div class="col-md-4">
 	        	<label>Date</label>
-	        	<input type="date" class="form-control form-control-sm" id="date" name="date" placeholder="">
+	        	<input type="date" class="form-control " id="date" name="date" placeholder="">
 	        </div>
 	
 	        <div class="col-md-4">
 	        	<label>Vehicle No</label>
-	        	<input type="email" class="form-control form-control-sm" id="vehicleNo" name="vehicleNo" placeholder="Vh No">
+	        	<input type="email" class="form-control " id="vehicleNo" name="vehicleNo" placeholder="Vh No">
 	        </div>
         </div>
         <div class="form-row">
 	        <div class="col-md-4">
 	        	<label>Vehicle Type</label>
-	        	 <input type="text" class="form-control form-control-sm" id="vehicleType" name="vehicleType" placeholder="" >
+	        	 <input type="text" class="form-control " id="vehicleType" name="vehicleType" placeholder="" >
 	        </div>
 	        <div class="col-md-4">
 	        	<label>Customer</label>
-	        	<input type="text" class="form-control form-control-sm" name="customer" id="customer" placeholder="">
+	        	<input type="text" class="form-control " name="customer" id="customer" placeholder="">
 	        </div>
 	        <div class="col-md-4">
 	        	<label>Address</label>
-	        	<textarea class="form-control form-control-sm" id="address" name="address"></textarea>
+	        	<textarea class="form-control " id="address" name="address"></textarea>
 	        </div>
 	    </div>
 	    <div class="form-row">
 	        <div class="col-md-4">
 	        	<label>Mobile No</label>
-	        	<input type="text" class="form-control form-control-sm" id="mobile" name="mobile" placeholder="" >
+	        	<input type="text" class="form-control " id="mobile" name="mobile" placeholder="" >
 	        </div>
 	        <div class="col-md-4">
 	        	<label>Material</label>
-	        	<input type="text" class="form-control form-control-sm" id="material" name="material" placeholder="">
+	        	<input type="text" class="form-control " id="material" name="material" placeholder="">
 	        </div>
         </div>
         <div class="form-row">
 	        <div class="col-md-4">
 	        	<label>Gross Weight : </label>
-	        	<input type="text" class="form-control form-control-sm form-control-radius" id="gross" name="gross" placeholder="" value="0.0">
-	        	<input type="text" class="form-control form-control-sm form-control-radius" id="tare" name="grossWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
+	        	<input type="text" class="form-control  " id="gross" name="gross" placeholder="" value="0.0">
+	        	<input type="text" class="form-control  " id="tare" name="grossWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
 	        
 	         <div class="col-md-4">
 	        	<label>Tare Weight : </label>
-	            <input type="text" class="form-control form-control-sm form-control-radius" id="tare" name="tare" placeholder="" value="0.0">
-	            <input type="text" class="form-control form-control-sm form-control-radius" id="tare" name="tareWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
+	            <input type="text" class="form-control  " id="tare" name="tare" placeholder="" value="0.0">
+	            <input type="text" class="form-control  " id="tare" name="tareWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
 	        
 	        <div class="col-md-4">
 	            <label>Net Weight : </label>
-	            <input type="text" class="form-control form-control-sm form-control-radius" id="net" name="net" placeholder="" value="0.0">
-	            <input type="text" class="form-control form-control-sm form-control-radius" id="tare" name="netWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
+	            <input type="text" class="form-control  " id="net" name="net" placeholder="" value="0.0">
+	            <input type="text" class="form-control  " id="tare" name="netWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
         </div>
         <div class="form-row">
         <div class="col-md-4">
         	<label>Weigh Rate :</label>
-        	<input type="text" class="form-control form-control-sm" name="weighRate">
+        	<input type="text" class="form-control " name="weighRate">
         </div>
         </div>
         <div class="form-row">
@@ -98,9 +99,11 @@
         </div>
         </form>
         </div>
+        </div>
         
   
-    <div class="col-md-4 border col-md-margintop">
+    <div class="col-md-4">
+    <div class="tile-background">
       <h4 class="text-center custom-form-title">RST Pending for Tare Weight</h4>
       <div class="col-md-12" >
         <input class="form-control mr-sm-2" type="search" placeholder="Enter RST To Search" aria-label="Search">
@@ -153,6 +156,7 @@
       </div>
     </div>
     </div>
+    </div>
   	<!-- Modal -->
 		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		  <div class="modal-dialog modal-dialog-top" role="document">
@@ -168,22 +172,22 @@
 		       	<div class="form-row">
 			       	<div class="col-md-6">
 			       		<label>Name</label>
-			       		<input type="text" id="newCustomerName" class="form-control form-control-sm" name="name">
+			       		<input type="text" id="newCustomerName" class="form-control" name="name">
 			       	</div>	
 			       	<div class="col-md-6">
 			       		<label>Mobile</label>
-			       		<input type="tel" class="form-control form-control-sm" name="mobile" id="newCustomerMobile">
+			       		<input type="tel" class="form-control" name="mobile" id="newCustomerMobile">
 			       	</div>
 			       	<div class="col-md-12">
 			       		<label>Address</label>
-		       			<textarea class="form-control form-control-sm" name="address" id="newCustomerAddress"></textarea>
+		       			<textarea class="form-control" name="address" id="newCustomerAddress"></textarea>
 			       	</div>	
 		       	</div>
 		       </form>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary btn-sm" onclick="submitNewCustomer()" data-dismiss="modal">Add Customer</button>
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary" onclick="submitNewCustomer()" data-dismiss="modal">Add Customer</button>
 		      </div>
 		    </div>
 		  </div>
@@ -197,15 +201,15 @@
   <div class="row">
 	  	<div class="col-md-auto">
 	       <label> No of Vehicles Inside Premises :</label>
-	       <input type="text" class="form-control form-control-sm form-control-radius" name="notgiven" value="" readonly>
+	       <input type="text" class="form-control" name="notgiven" value="" readonly>
 	    </div>
 	    <div class="col-md-auto">
 	    	<label> No of RST Pending for Tare Weight :</label>
-	        <input type="text" class="form-control form-control-sm form-control-radius" name="notgiven" value="" readonly>
+	        <input type="text" class="form-control" name="notgiven" value="" readonly>
 	    </div>
 	    <div class="col-md-auto">
 	     	 <label> No of RST Cleared for Tare Weight :</label>
-	         <input type="text" class="form-control form-control-sm form-control-radius" name="notgiven" value="" readonly>
+	         <input type="text" class="form-control" name="notgiven" value="" readonly>
 	    </div>          
    </div>
   <div class="row">
