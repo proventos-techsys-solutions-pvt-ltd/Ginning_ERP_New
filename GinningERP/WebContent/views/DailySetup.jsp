@@ -9,12 +9,30 @@
 	  <link rel="stylesheet" href="../styles/bootstrap.min.css">	
 	  <link rel="stylesheet" href="../styles/WBStyle.css">
       <title>Daily Transactions Setup</title>
+      <style>
+      	
+     		 .cat {
+			 height: 100px;
+			}
+			
+			.cat-inner {
+			  height: auto;
+			  padding: 10px;
+			  background-color: #fff;
+			}
+			h3{
+				background:#393a3d;
+				color:#fff;
+			}
+      </style>
     </head>
 <body>
 	<%@include file="../views/NavBar.html" %>
+	 
 	<div class="container">
-		<div class="row">
-			<div class="col-md-auto">
+		<div class="row mt-1">
+			<div class="col-md-12 cat">
+			<div class="cat-inner">
 				<label>Company</label>
 				<select class="form-control form-control-sm" name="" id="">
 					<option value="">Company 1</option>
@@ -22,23 +40,11 @@
 					<option value="">Company 3</option>
 				</select>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<div class="custom-control">
-				<input type="checkbox" class="custom-control-input" id="cashSetup">
-                <label class="custom-control-label" for="cashSetup">Setup-Cash</label>
-                </div>
-			</div>
-			<div class="col-md-4">
-				<div class="custom-control">
-				<input type="checkbox" class="custom-control-input" id="bankSetup">
-                <label class="custom-control-label" for="bankSetup">Setup-Bank</label>
-                </div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-md-5">
+		<div class="row mt-1">
+			<div class="col-md-5 cat">
+			<div class="cat-inner">
 				<h3>Cash</h3>
 				<div class="border">
 					<div class="row">
@@ -46,7 +52,7 @@
 							<label>Opening Balance</label>
 						</div>
 						<div class="col-md-8">
-							<input type="text" class="form-control form-control-sm" name="" id"">
+							<input type="text" class="form-control form-control-sm" name="" id="">
 						</div>
 					</div>
 					<div class="row">
@@ -54,7 +60,7 @@
 							<label>Addition</label>
 						</div>
 						<div class="col-md-8">
-							<input type="text" class="form-control form-control-sm" name="" id"">
+							<input type="text" class="form-control form-control-sm" name="" id="">
 						</div>
 					</div>
 					<div class="row">
@@ -62,7 +68,7 @@
 							<label>Payments Made</label>
 						</div>
 						<div class="col-md-8">
-							<input type="text" class="form-control form-control-sm" name="" id"">
+							<input type="text" class="form-control form-control-sm" name="" id="">
 						</div>
 					</div>
 					<div class="row">
@@ -70,12 +76,14 @@
 							<label>Closing Balance</label>
 						</div>
 						<div class="col-md-8">
-							<input type="text" class="form-control form-control-sm" name="" id"">
+							<input type="text" class="form-control form-control-sm" name="" id="">
 						</div>
 					</div>
 				</div>
+				</div>
 			</div>
-			<div class="col-md-5 offset-md-2">
+			<div class="col-md-5 cat">
+			<div class="cat-inner">
 				<h3>Bank</h3>
 				<div class="border">
 					<div class="row">
@@ -83,7 +91,7 @@
 							<label>Opening Balance</label>
 						</div>
 						<div class="col-md-8">
-							<input type="text" class="form-control form-control-sm" name="" id"">
+							<input type="text" class="form-control form-control-sm" name="" id="">
 						</div>
 					</div>
 					<div class="row">
@@ -91,7 +99,7 @@
 							<label>Addition</label>
 						</div>
 						<div class="col-md-8">
-							<input type="text" class="form-control form-control-sm" name="" id"">
+							<input type="text" class="form-control form-control-sm" name="" id="">
 						</div>
 					</div>
 					<div class="row">
@@ -99,7 +107,7 @@
 							<label>Payments Made</label>
 						</div>
 						<div class="col-md-8">
-							<input type="text" class="form-control form-control-sm" name="" id"">
+							<input type="text" class="form-control form-control-sm" name="" id="">
 						</div>
 					</div>
 					<div class="row">
@@ -107,9 +115,10 @@
 							<label>Closing Balance</label>
 						</div>
 						<div class="col-md-8">
-							<input type="text" class="form-control form-control-sm" name="" id"">
+							<input type="text" class="form-control form-control-sm" name="" id="">
 						</div>
 					</div>
+				</div>
 				</div>
 			</div>
 		</div>
