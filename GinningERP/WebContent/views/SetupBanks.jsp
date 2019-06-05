@@ -15,7 +15,7 @@
        	<div class="container">
        		<div class="row col-md-margintop">
        		<div class="col-md-8">
-       		<div class="tile-background">
+       		<div class="tile-background" id="getHeight">
        		<div class="form-row">
        					<div class="col-md-12">
        						<h3>Setup Bank Accounts</h3>
@@ -67,7 +67,7 @@
 				<button type="button" class="btn btn-primary btn btn-mr-tp">Save</button>
        			</div>
        			<div class="col-md-4">
-       			<div class="tile-background">
+       			<div class="tile-background" id="setHeight">
        				<div class="form-row">
        					<div class="col-md-12">
        						<h3>Bank Accounts</h3>
@@ -84,7 +84,7 @@
        								</tr>
        							</thead>
        							<tbody>
-       							<% for(int i = 0; i<100 ; i++){ %>
+       							<% for(int i = 0; i<5 ; i++){ %>
        								<tr>
        									<td>Company 1</td>
        									<td>Bank 1</td>
@@ -106,5 +106,6 @@
        	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/dailysetup.js"></script>
 </body>
 </html>

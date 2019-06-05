@@ -136,7 +136,6 @@ select {
 	background:red;
 }
 .scroll{
-	height:200px;
 	overflow:auto;
 }
 h3{

@@ -1,6 +1,7 @@
 /*********CALLING CASH ADDITION MODAL*******************/
 
-document.getElementById("addCash").addEventListener('click',function(){
-		     $('#cashPaymentModal').modal();
-	
-});
+
+
+/******************GETTING HEIGHT OF ADJACENT PANEL*********************/
+var height = document.getElementById("getHeight").offsetHeight;
+document.getElementsByClassName("scroll")[0].style.height = (height-134.633) + "px";
