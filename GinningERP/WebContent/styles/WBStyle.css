@@ -57,11 +57,7 @@ label{
 	border: 1px solid #ced4da;
 	transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
-.form-control-chq{
-	border:0;
-	border-bottom:1px solid black;
-	width:100%;
-}
+
 
 
 /***************************BUTTON MARGIN EDIT***************************************/
@@ -186,8 +182,7 @@ h3{
 }
 /******************************CHEQUE CLASSES*******************************************/
 .cheque{
-	background:url(../property/img/cheque.png);
-	
+	background:url(../property/img/cheque.JPG);
 	width:100%;
 	height:auto;
 	border:2px solid black;
@@ -201,4 +196,11 @@ h3{
 	-ms-transform: rotate(-30deg); /* IE 9 */
   	-webkit-transform: rotate(-30deg); /* Safari 3-8 */
   	transform: rotate(-30deg);
+  	margin-left:-.5rem;
+}
+.form-control-chq{
+	background:url(../property/img/cheque.JPG);
+	border:0;
+	border-bottom:1px solid black;
+	width:100%;
 }

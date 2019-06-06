@@ -125,8 +125,9 @@
 		      <div class="modal-body">
 		      	<form>
 		      		<div class="cheque">
+		      		<div class="accP">Acc Payee</div>
 		      			<div class="form-row">
-							<div class="accP">Acc Payee</div>		      			
+									      			
 		      				<div class="col-md-1">
 		      					<label>Bank</label>
 		      				</div>
