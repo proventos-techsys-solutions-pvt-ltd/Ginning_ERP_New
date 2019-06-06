@@ -14,7 +14,7 @@
    int maxMemSize = 5000 * 1024;
    ServletContext context = pageContext.getServletContext();
    String filePath = context.getInitParameter("file-upload");
-   Map<String, String> data = new TreeMap();
+   Map<String, String> data = new TreeMap<String, String>();
 
    // Verify the content type
    String contentType = request.getContentType();
@@ -72,14 +72,14 @@
     	
     	Company c = new Company();
     	
-     	c.setName(data.get("name"));
-    	c.setAddress(data.get("address"));
-    	c.setCity(data.get("city"));
-    	c.setState(data.get("state"));
-    	c.setPan(data.get("pan"));
-    	c.setTan(data.get("tan"));
-    	c.setCin(data.get("cin"));
-    	c.setGst(data.get("gst"));
+     	c.setName(data.get("name").toUpperCase());
+    	c.setAddress(data.get("address").toUpperCase());
+    	c.setCity(data.get("city").toUpperCase());
+    	c.setState(data.get("state").toUpperCase());
+    	c.setPan(data.get("pan").toUpperCase());
+    	c.setTan(data.get("tan").toUpperCase());
+    	c.setCin(data.get("cin").toUpperCase());
+    	c.setGst(data.get("gst").toUpperCase());
     	c.setTelephone(data.get("telephone"));
     	c.setMobile(data.get("mobile"));
     	c.setEmail(data.get("email"));
@@ -97,8 +97,4 @@
       
    }
    
-   
-   
-	
-	
 %>

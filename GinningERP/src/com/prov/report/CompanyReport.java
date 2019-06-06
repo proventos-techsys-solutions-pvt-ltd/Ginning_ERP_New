@@ -3,29 +3,31 @@ package com.prov.report;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import com.prov.bean.Company;
-import com.prov.bean.Customer;
 import com.prov.db.OracleConnection;
 
 public class CompanyReport {
 	
-	public Company getReport() {
+	public ArrayList<Company> getReport() {
 		ResultSet rs = null;
 		Connection con = null;
-		
-		Company c = new Company();
+		ArrayList<Company> cList = new ArrayList<Company>();
 		
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT * FROM CUSTOMER_MAST ORDER BY ID";
+			String sql = "SELECT * FROM COMPANY_MASTER";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
 			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
+				
+				Company c = new Company();
+				
 				c.setId(rs.getInt(1));
 				c.setName(rs.getString(2));
 				c.setAddress(rs.getString(3));
@@ -39,6 +41,8 @@ public class CompanyReport {
 				c.setMobile(rs.getString(11));
 				c.setEmail(rs.getString(12));
 				c.setLogoPath(rs.getString(13));
+			
+				cList.add(c);
 				
 			}
 			
@@ -49,7 +53,7 @@ public class CompanyReport {
 			e.printStackTrace();
 		}
 		
-		return c;
+		return cList;
 	}
 
 }

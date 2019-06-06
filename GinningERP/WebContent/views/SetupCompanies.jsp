@@ -89,41 +89,76 @@
 			</div>
 		</div>
 		</div>
-		<div class="col-md-6">
-			<ul class="list-unstyled">
-			  <li class="media">
-			    <img class="mr-3" src="../property/img/logo.jpg" alt="Company 1 Logo" width="100px" height="100px">
-			    <div class="media-body">
-			      <h5 class="mt-0 mb-1">Company 1</h5>
-			      		<p>Address :</p>
-			      		<p>Telephone :</p>
-			      		<p>Mobile</p>
-			    </div>
-			  </li>
-  			</ul>
-  			<div class="border-top border-mr-btm"></div>
-  				<ul class="list-unstyled">
-			  <li class="media">
-			    <img class="mr-3" src="../property/img/logo.jpg" alt="Company 1 Logo" width="100px" height="100px">
-			    <div class="media-body">
-			      <h5 class="mt-0 mb-1">Company 2</h5>
-			      		<p>Address :</p>
-			      		<p>Telephone :</p>
-			      		<p>Mobile</p>
-			    </div>
-			  </li>
-  			</ul>
+		<div class="col-md-6" id="companyDataDisplay">
+			
 		</div>
 		</div>
 		</div>
-	
-
    		<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 		<script>
+		window.onload = function() {
+			  getCompanyData();
+			};
+			
 			function submitForm(){
 				document.getElementsByName("companyForm")[0].submit();
+			}
+			
+			function getCompanyData(){
+
+				url = "../processing/companyReport.jsp";
+				
+				if(window.XMLHttpRequest){  
+					fetchRequest=new XMLHttpRequest();  
+				}  
+				else if(window.ActiveXObject){  
+					fetchRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+				}  
+			  
+				try{  
+					fetchRequest.onreadystatechange=getData;  
+					console.log("AJAX Req sent");
+					fetchRequest.open("GET",url,true);  
+					fetchRequest.send();  
+				}catch(e){alert("Unable to connect to server");}
+			}
+			
+			function getData(){
+				
+				if(fetchRequest.readyState == 4){
+					var response = this.response.trim();
+					console.log(response)
+					
+					var element = document.getElementById("companyDataDisplay");
+					
+					var dataList = JSON.parse(response);
+					
+					
+					
+					var size = dataList.length;
+					console.log(size);
+					
+					for (i = 0; i < size; i++) {
+					
+						element.insertAdjacentHTML('beforeend','<ul class="list-unstyled companyList">'+
+						  '<li class="media">'+
+						  '<img class="mr-3" src="'+dataList[i].logoPath+'" alt="Company 1 Logo" width="100px" height="100px">'+
+						  '<div class="media-body">'+
+						  '  <h5 class="mt-0 mb-1 displayCompanyName">'+dataList[i].name+'</h5>'+
+						  '  		<p>Address : '+dataList[i].address+'</p>'+
+						  '  		<p>Telephone : '+dataList[i].telephone+'</p>'+
+						  '  		<p>Mobile : '+dataList[i].mobile+'</p>'+
+						  '</div>'+
+						  '</li>'+
+						  '</ul>'+
+						  '<div class="border-top border-mr-btm"></div>');
+					}
+					 
+					
+				}
+				
 			}
 		</script>
 </body>
