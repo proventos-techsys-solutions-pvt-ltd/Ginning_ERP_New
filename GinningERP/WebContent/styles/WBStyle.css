@@ -34,6 +34,9 @@ label{
     font-size:1.2rem;
     margin-right:1rem;
 }
+.label-align{
+	vertical-align:bottom;
+}
  /***********************************INPUT CLASSES OVERRIDDEN**************************************/
 .form-control-sm{
 	border-radius:0px;
@@ -53,6 +56,11 @@ label{
 	background-clip: padding-box;
 	border: 1px solid #ced4da;
 	transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.form-control-chq{
+	border:0;
+	border-bottom:1px solid black;
+	width:100%;
 }
 
 
@@ -176,4 +184,21 @@ h3{
 .img-set:hover{
 	cursor:pointer;
 }
-/******************************FLEX CLASSES*******************************************/
+/******************************CHEQUE CLASSES*******************************************/
+.cheque{
+	background:url(../property/img/cheque.png);
+	
+	width:100%;
+	height:auto;
+	border:2px solid black;
+	padding:.5rem;	
+}
+.accP{
+	width:10%;
+	border-top:1px solid black;
+	border-bottom:1px solid black;
+	height:25px;
+	-ms-transform: rotate(-30deg); /* IE 9 */
+  	-webkit-transform: rotate(-30deg); /* Safari 3-8 */
+  	transform: rotate(-30deg);
+}

@@ -114,7 +114,7 @@
 		
 		<!-- CHEQUE PRINT MODAL POP-UP STARTS HERE -->
 		<div class="modal fade" id="chequePrintModal" tabindex="-1" role="dialog">
-		  <div class="modal-dialog" role="document">
+		  <div class="modal-dialog modal-lg" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <h5 class="modal-title">Print Cheque</h5>
@@ -124,27 +124,54 @@
 		      </div>
 		      <div class="modal-body">
 		      	<form>
-					<div class="form-row">
-						<label>Cheque No</label>
-						<input type="text" class="form-control" name="cheque" id="chequeNo" >
-					</div>
-					<div class="form-row">
-						<label>Date</label>
-						<input type="text" class="form-control" name="cheque" id="chequeDate" >
-					</div>
-					<div class="form-row">
-						<label>Vendor</label>
-						<input type="text" class="form-control" name="cheque" id="chequeVendor" >
-					</div>
-					<div class="form-row">
-						<label>Amount</label>
-						<input type="text" class="form-control" name="cheque" id="chequeAmount" >
-					</div>
-		      	</form>
+		      		<div class="cheque">
+		      			<div class="form-row">
+							<div class="accP">Acc Payee</div>		      			
+		      				<div class="col-md-1">
+		      					<label>Bank</label>
+		      				</div>
+		      				<div class="col-md-3 ">
+			      				<select class="form-control form-control-sm">
+			      					<option>Bank of India</option>
+			      					<option>HDFC Bank</option>
+			      				</select>
+			      			</div>
+			      			<div class="col-md-2">
+			      				<label>Cheque No</label>
+			      			</div>
+			      			<div class="col-md-3 ">
+			      				<input type="text" class="form-control-chq" name="cheque" id="chequeNo" >
+			      			</div>
+			      			<div class="col-md-3">
+			      				<input type="text" class="form-control-chq" name="cheque" id="chequeNo" >
+			      			</div>
+		      			</div>
+		      			<div class="form-row">
+			      			<div class="col-md-2">
+			      				<label>Pay</label>
+			      			</div>
+			      			<div class="col-md-10">
+		      					<input type="text" class="form-control-chq" name="cheque" id="chequeNo" >
+		      				</div>
+		      			</div>
+		      			<div class="form-row">
+			      			<div class="col-md-2">
+			      				<label>Rupay</label>
+			      			</div>
+			      			<div class="col-md-8">
+		      					<input type="text" class="form-control-chq" name="cheque" id="chequeNo" >
+		      					<input type="text" class="form-control-chq" name="cheque" id="chequeNo" >
+		      				</div>
+		      				<div class="col-md-2">
+		      					<input type="text" class="form-control" name="cheque" id="chequeNo" >
+		      				</div>
+		      			</div>
+		      			</div>
+		      		</form>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Void</button>
+		        <button type="button" class="btn btn-primary" data-dismiss="modal">Print</button>
 		      </div>
 		    </div>
 		  </div>
