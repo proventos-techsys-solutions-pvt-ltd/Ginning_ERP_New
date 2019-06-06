@@ -12,10 +12,26 @@
     </head>
 <body>
 	<%@include file="../views/NavBar.html" %>
-	<div class="container">
-		<div class="row col-md-margintop">
+	<div class="container-fluid">
+		<div class="row mt-2 no-gutters">
+			<div class="col-md-12">
+				<div class="tile-background tile-background-ht">
+					<div class="d-flex flex-row align-items-center">
+					<label>Search</label>
+					<input type="text" class="form-control-ctm" name="" id="" placeholder="Cheque No">
+					<button type="button" class="btn btn-success">Search</button>
+					<button type="button" class="btn btn-danger" id="clearFilterBtn">Clear Filter</button>
+					<img src="../property/img/setting.png" alt="option" class="img-set" id="options">
+					<img src="../property/img/exportpdf.png" alt="option" class="img-set" id="exportToPdf">
+					<img src="../property/img/exportexcel.png" alt="option" class="img-set" id="exportToExcel">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-2 no-gutters">
 		<div class="col-md-12">
-			<table class="table table-bordered table-mr-top">
+		<div class="tile-background">
+			<table class="table table-bordered mt-2">
 				<thead>
 					<tr>
 						<th>Cheque No</th>
@@ -24,23 +40,129 @@
 						<th>Amount</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
-						<td>1403</td>
+				<tbody id="getChequeDetailsToPrint" data-toggle="modal" data-target="#chequePrintModal">
+				<%for(int i = 0 ; i<10 ; i++){ %>
+					<tr onclick="getTableDataOnRowClick('getChequeDetailsToPrint',this,'cheque')">
+						<td>140<%= i %></td>
 						<td>21/05/2019</td>
 						<td>XYZ</td>
 						<td>10000</td>
 					</tr>
+					<% } %>
 				</tbody>
 			</table>
 		</div>
 		</div>
+		</div>
+		
+		<!-- OPTIONS MODAL POP-UP STARTS HERE -->
+		<div class="modal fade" id="optionsModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Options</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <form>
+		        	<div class="form-row">
+		        		<div class="d-flex flex-row align-items-center">
+		        			<label>Period</label>
+		        			<input type="date" class="form-control form-control-sm " name="" id="">
+		        			<label>To</label>
+		        			<input type="date" class="form-control form-control-sm " name="" id="">
+		        		</div>
+		        	</div>
+		        	<div class="form-row">
+		        		<div class="d-flex flex-row align-items-center">
+		        			<label>Cheque Range</label>
+		        			<select class="form-control form-control-sm">
+		        				<option value=""> ChequeNo</option>
+		        				<option value=""> ChequeNo</option>
+		        				<option value=""> ChequeNo</option>
+		        			</select>
+		        			<label>To</label>
+		        			<select class="form-control form-control-sm">
+		        				<option value=""> ChequeNo</option>
+		        				<option value=""> ChequeNo</option>
+		        				<option value=""> ChequeNo</option>
+		        			</select>
+		        		</div>
+		        	</div>
+	        		<div class="form-row">
+		        		<div class="d-flex flex-row align-items-center">
+		        			<label>Vendor</label>
+		        			<select class="form-control form-control-sm">
+		        				<option value=""> vendor name</option>
+		        				<option value=""> vendor name</option>
+		        				<option value=""> vendor name</option>
+		        			</select>
+		        		</div>
+		        	</div>
+		        </form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary" data-dismiss="modal" id="filterBtn">OK</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- OPTIONS MODAL POP-UP ENDS HERE  -->
+		
+		<!-- CHEQUE PRINT MODAL POP-UP STARTS HERE -->
+		<div class="modal fade" id="chequePrintModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Print Cheque</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      	<form>
+					<div class="form-row">
+						<label>Cheque No</label>
+						<input type="text" class="form-control" name="cheque" id="chequeNo" >
+					</div>
+					<div class="form-row">
+						<label>Date</label>
+						<input type="text" class="form-control" name="cheque" id="chequeDate" >
+					</div>
+					<div class="form-row">
+						<label>Vendor</label>
+						<input type="text" class="form-control" name="cheque" id="chequeVendor" >
+					</div>
+					<div class="form-row">
+						<label>Amount</label>
+						<input type="text" class="form-control" name="cheque" id="chequeAmount" >
+					</div>
+		      	</form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- CHEQUE PRINT MODAL POP-UP ENDS HERE  -->
 	</div>
-
 
 
 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/commonjs.js"></script>
+	<script>
+	callModalPopup("options","optionsModal");//calling option pop-up
+	document.getElementById("clearFilterBtn").disabled = true;//disable clear filter button
+	document.getElementById("filterBtn").addEventListener("click",function(){
+		document.getElementById("clearFilterBtn").disabled = false;
+	})
+	</script>
 </body>
 </html>

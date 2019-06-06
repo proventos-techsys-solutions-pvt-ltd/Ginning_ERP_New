@@ -32,20 +32,34 @@
 label{
     vertical-align: middle;
     font-size:1.2rem;
+    margin-right:1rem;
 }
- /***********************************INPUT OVERRIDDEN**************************************/
+ /***********************************INPUT CLASSES OVERRIDDEN**************************************/
 .form-control-sm{
 	border-radius:0px;
 }
 .form-control{
 	border-radius:0px;
 }
-
-/*************************************ROW MARGIN CLASSES*************************************/
-.col-md-margintop{
-	margin-top:1.5rem;
+.form-control-ctm{
+	display: block;
+	height: calc(1.5em + .75rem + 2px);
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #495057;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+
+
 /***************************BUTTON MARGIN EDIT***************************************/
+.btn{
+	margin-left:1rem;
+}
 .btn-mr-rt{
 	margin-right:1rem;
 }
@@ -58,7 +72,7 @@ label{
 }
 .table tbody tr:hover{
 	cursor:pointer;
-	background:#108000;
+	background:#218838;
 }
 .table td, .table th{
 	padding:.5rem;
@@ -86,6 +100,9 @@ label{
 /***********************************FORM CLASSES**************************************/
 form{
 	width:100%;
+}
+.form-row{
+	padding:.875rem;
 }
 /***********************************HEADING CLASEES***********************************/
 .h3-mr-lt{
@@ -117,6 +134,11 @@ row{
 .tile-background{
 	background:#fff;
 	padding:.875rem;
+	width:100%;
+	
+}
+.tile-background-ht{
+	height:75px;
 }
 /******************************FOOTER CLASSES*********************************/
 .footer{
@@ -126,25 +148,32 @@ row{
 }
 /******************************INPUT OVERRIDDEN***********************************/
 input{
-	margin-bottom:1rem;
+	margin-bottom:.5rem;
+	margin-top:.5rem;
+	margin-right:.5rem;
 }
 select {
 	margin-bottom:1rem;
+	margin-right:.5rem;
 }
-/**************************TEST CLASSES********************************************/
-.test{
-	height:50px;
-	background:red;
-}
-.scroll{
-	overflow:auto;
-}
+/**************************HEADER CLASSES********************************************/
+
 h3{
 	background:#393a3d;
 	margin-bottom: 0rem;
 	padding:1rem;
 	color:#fff;
 }
-.form-row{
-	padding:.875rem;
+/**************************SCROLL CLASSES*********************************************/
+.scroll{
+	
+	overflow:auto;
 }
+/*****************************IMAGE SETTING CLASSES*************************************/
+.img-set{
+	margin-left:1rem;
+}
+.img-set:hover{
+	cursor:pointer;
+}
+/******************************FLEX CLASSES*******************************************/

@@ -16,8 +16,8 @@
   <div class="container-fluid">
    	<div class="row mt-2">
     <div class="col-md-8">
-    <div class="tile-background">
-       	<h4 class="text-center custom-form-title" >Generate RST</h4>
+    <div class="tile-background" id="getHeight">
+       	<h3 class="text-center" >Generate RST</h3>
       	<form id="newRST" action="../processing/addInvoiceEntry.jsp">
       	<div class="form-row">
 	      	<input type="hidden" id="id" name="id" value="0" />
@@ -104,8 +104,8 @@
   
     <div class="col-md-4">
     <div class="tile-background">
-      <h4 class="text-center custom-form-title">RST Pending for Tare Weight</h4>
-      <div class="col-md-12" >
+      <h3 class="text-center">RST Pending for Tare Weight</h3>
+      <div class="col-md-12 scroll" >
         <input class="form-control mr-sm-2" type="search" placeholder="Enter RST To Search" aria-label="Search">
         <table class="table">
           <thead class="thead-dark">
@@ -222,8 +222,9 @@
 <script src="../js/jquery-3.3.1.slim.min.js" ></script>
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
+<script src="../js/commonjs.js"></script>
 <script>
-
+	settingHeightofAdjacentPanels("getHeight","scroll");//getting & setting height of panels
 //Submit RST Weigh Bridge Form
 function submitRSTEntry(){
 	document.getElementById("newRST").submit();	
