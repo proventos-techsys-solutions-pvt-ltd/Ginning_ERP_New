@@ -1,7 +1,7 @@
 /******************GETTING HEIGHT OF ADJACENT PANEL*********************/
 function settingHeightofAdjacentPanels(getHeight,setHeight){
 	var height = document.getElementById(getHeight).offsetHeight;
-	document.getElementsByClassName(setHeight)[0].style.height = (height-134.633) + "px";
+	document.getElementsByClassName(setHeight)[0].style.height = (height-26.75) + "px";
 }
 
 /*****************CALL MODAL METHOD***********************************/

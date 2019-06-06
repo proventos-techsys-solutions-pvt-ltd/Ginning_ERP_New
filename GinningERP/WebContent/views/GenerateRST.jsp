@@ -16,8 +16,10 @@
   <div class="container-fluid">
    	<div class="row mt-2">
     <div class="col-md-8">
-    <div class="tile-background" id="getHeight">
-       	<h3 class="text-center" >Generate RST</h3>
+	    <div class="tile-background-g">
+	       	<h3>Generate RST</h3>
+	    </div>
+    <div class="tile-background mt-2 border" id="getHeight">
       	<form id="newRST" action="../processing/addInvoiceEntry.jsp">
       	<div class="form-row">
 	      	<input type="hidden" id="id" name="id" value="0" />
@@ -103,8 +105,10 @@
         
   
     <div class="col-md-4">
-    <div class="tile-background">
-      <h3 class="text-center">RST Pending for Tare Weight</h3>
+    <div class="tile-background-g">
+    	<h3>RST Pending for Tare Weight</h3>
+    </div>
+    <div class="tile-background mt-2 border">
       <div class="col-md-12 scroll" >
         <input class="form-control mr-sm-2" type="search" placeholder="Enter RST To Search" aria-label="Search">
         <table class="table">

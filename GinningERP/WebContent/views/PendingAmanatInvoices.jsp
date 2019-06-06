@@ -14,22 +14,31 @@
 
 	<%@include file="../views/NavBar.html" %>
 	<div class="container-fluid">
-		<div class="row col-md-margintop">
-			<div class="col-md-auto">
-			<label>Search : </label>
-			</div>
-			<div class="col-md-auto">
-			<input type="text" class="form-control form-control-sm form-control-radius" name="" id="" placeholder="Search">
+		<div class="row mt-2">
+			<div class="col-md-12">
+				<div class="tile-background tile-background-ht">
+					<div class="d-flex flex-row align-items-center">
+					<label>Search</label>
+					<input type="text" class="form-control-ctm" name="" id="" placeholder="Cheque No">
+					<button type="button" class="btn btn-success">Search</button>
+					<button type="button" class="btn btn-danger" id="clearFilterBtn">Clear Filter</button>
+					<img src="../property/img/setting.png" alt="option" class="img-set" id="options">
+					<img src="../property/img/exportpdf.png" alt="option" class="img-set" id="exportToPdf">
+					<img src="../property/img/exportexcel.png" alt="option" class="img-set" id="exportToExcel">
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="row col-md-margintop">
+		<div class="row mt-2 ">
+			<div class="col-md-12">
+			<div class="tile-background">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
 						<th>RST No</th>
 						<th>Date</th>
 						<th>Record No</th>
-						<th>Customer Name & Address</th>
+						<th>Vendor Name & Address</th>
 						<th>Material</th>
 						<th>Quantity</th>
 						<th>Contract Rate</th>
@@ -49,6 +58,8 @@
 					</tr>
 				</tbody>
 			</table>
+			</div>
+			</div>
 		</div>
 	</div>
         <script src="../js/jquery-3.3.1.slim.min.js" ></script>
