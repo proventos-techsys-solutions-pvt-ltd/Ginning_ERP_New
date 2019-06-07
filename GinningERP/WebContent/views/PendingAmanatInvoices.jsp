@@ -11,10 +11,16 @@
       <title>Amanat Invoices</title>
     </head>
 <body>
-
 	<%@include file="../views/NavBar.html" %>
 	<div class="container-fluid">
-		<div class="row mt-2">
+	<div class="row mt-2">
+		<div class="col-md-12">
+			<div class="tile-background">
+				<h3>Amanat Invoices </h3>
+			</div>
+		</div>
+	</div>
+		<div class="row">
 			<div class="col-md-12">
 				<div class="tile-background tile-background-ht">
 					<div class="d-flex flex-row align-items-center">
@@ -31,7 +37,7 @@
 		</div>
 		<div class="row mt-2 ">
 			<div class="col-md-12">
-			<div class="tile-background">
+			<div class="tile-background setHeight">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -46,6 +52,7 @@
 					</tr>
 				</thead>
 				<tbody>
+				<%for(int i = 0; i < 100; i++){ %>
 					<tr>
 						<td>2451</td>
 						<td>30-05-2019</td>
@@ -56,6 +63,7 @@
 						<td>5510</td>
 						<td>551000</td>
 					</tr>
+					<% } %>
 				</tbody>
 			</table>
 			</div>
@@ -65,5 +73,12 @@
         <script src="../js/jquery-3.3.1.slim.min.js" ></script>
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
+		<script>
+			var documentHeight = (function(){
+				var height = document.getElementsByTagName("html")[0].offsetHeight;
+				document.getElementsByClassName("setHeight")[0].style.height = ((height*2)/3) + "px";
+				document.getElementsByClassName("setHeight")[0].style.overflow = "auto";
+			})();
+		</script>
 </body>
 </html>

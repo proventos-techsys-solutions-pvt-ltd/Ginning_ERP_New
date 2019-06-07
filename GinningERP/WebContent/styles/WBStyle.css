@@ -1,7 +1,9 @@
 *{
 	font-size:.900rem;
 }
-
+html{
+	height:100%;
+}
 /**************************************NAV BAR EDIT*************************/
 .custom-navbar{
     background: #393a3d;
@@ -22,7 +24,7 @@
 label{
     vertical-align: middle;
     font-size:1.1rem;
-    margin-right:1rem;
+    margin:1rem;
 }
 .label-align{
 	vertical-align:bottom;
@@ -199,4 +201,8 @@ h3{
 	border:0;
 	border-bottom:1px solid black;
 	width:100%;
+}
+/***********************************BACKGROUND COLOR CLASSES**************************/
+.backcolor{
+	
 }

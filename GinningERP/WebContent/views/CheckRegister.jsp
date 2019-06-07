@@ -13,7 +13,14 @@
 <body>
 	<%@include file="../views/NavBar.html" %>
 	<div class="container-fluid">
-		<div class="row mt-2 no-gutters">
+		<div class="row mt-2">
+			<div class="col-md-12">
+				<div class="tile-background">
+					<h3>Check Register</h3>
+				</div>
+			</div>
+		</div>
+		<div class="row">
 			<div class="col-md-12">
 				<div class="tile-background tile-background-ht">
 					<div class="d-flex flex-row align-items-center">
@@ -28,7 +35,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row mt-2 no-gutters">
+		<div class="row mt-2 ">
 		<div class="col-md-12">
 		<div class="tile-background">
 			<table class="table table-bordered mt-2">

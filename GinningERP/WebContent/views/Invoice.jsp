@@ -13,8 +13,9 @@
 <body>
       <%@include file="../views/NavBar.html" %>
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-8 col-md-margintop border">
+                <div class="row mt-2">
+                    <div class="col-md-8">
+                    	<div class="tile-background border" id="getHeight">
                         <form action="" id="adminApprovalForm">
                             <div class="form-row">
                                 <div class="col-md-6">
@@ -24,7 +25,7 @@
                                 	<div class="input-group-append">
 				    				<button class="btn btn-outline-secondary btn-sm" type="button" onclick="fetchData(document.getElementById('rst').value)">Get RST</button>
 				    				</div>
-                                </div>
+                                	</div>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="">Invoice No :</label>
@@ -71,7 +72,7 @@
                                             <td id="material">Product Name</td>
                                             <td id="quantity">0 Qtl</td>
                                             <td id="grade">A</td>
-                                            <td id="moisture"><input type="text" id="moisture" name="moisture" /></td>
+                                            <td id="moisture"><input type="text" id="moisture" name="moisture" class="form-control form-control-sm" /></td>
                                             <td id="rate"><input type="text" id="rate" name="rate" class="form-control form-control-sm"></td>
                                             <td id="amount" align="right">0.0</td>
                                         </tr>
@@ -135,8 +136,10 @@
                                 </div>
                             </div> 
                         </form>
+                        </div>
                     </div>
-                    <div class="col-md-4 col-md-margintop border">
+                    <div class="col-md-4">
+                    	<div class="tile-background border setHeight">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -161,6 +164,7 @@
                                 </tr>
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
              	
@@ -270,8 +274,9 @@
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/modal.js"></script>
+	<script src="../js/commonjs.js"></script>
 	<script>
-	
+	settingHeightofAdjacentPanels("getHeight","setHeight");
 	function fetchData(rst){
 		console.log(rst);
 		url = "../processing/adminApproval.jsp?rst="+rst;

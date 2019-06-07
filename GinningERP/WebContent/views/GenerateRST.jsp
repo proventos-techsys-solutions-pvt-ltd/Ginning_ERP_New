@@ -16,7 +16,7 @@
   <div class="container-fluid">
    	<div class="row mt-2">
     <div class="col-md-8">
-	    <div class="tile-background-g">
+	    <div class="tile-background border">
 	       	<h3>Generate RST</h3>
 	    </div>
     <div class="tile-background mt-2 border" id="getHeight">
@@ -105,7 +105,7 @@
         
   
     <div class="col-md-4">
-    <div class="tile-background-g">
+    <div class="tile-background border">
     	<h3>RST Pending for Tare Weight</h3>
     </div>
     <div class="tile-background mt-2 border">
