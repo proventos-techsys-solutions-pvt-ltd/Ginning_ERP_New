@@ -8,7 +8,7 @@
 	  <!-- Bootstrap CSS -->
 	  <link rel="stylesheet" href="../styles/bootstrap.min.css">	
 	  <link rel="stylesheet" href="../styles/WBStyle.css">
-        <title>Final Purchase</title>
+        <title>Amanat</title>
     </head>
 <body>
       <%@include file="../views/NavBar.html" %>
@@ -16,21 +16,23 @@
                 <div class="row mt-2">
                     <div class="col-md-8">
                     	<div class="tile-background border" id="getHeight">
-                        <form action="../processing/approvedInvoiceEntry.jsp" id="adminApprovalForm">
-                        	<input type="hidden" name="id" value="" id="id" />
+                        <form action="" id="amanatForm">
+                        <input id="cid" name="cid" type="hidden" value="" />
+                        <input id="vid" name="cid" type="hidden" value="" />
+                        
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <label for="">RST No :</label>
                                     <div class="input-group">
-                                    <input id="rst" type="text" class="form-control form-control-sm" placeholder="Search RST">
+                                    <input id="rst" name="rst" type="text" class="form-control form-control-sm" placeholder="Search RST">
                                 	<div class="input-group-append">
 				    				<button class="btn btn-outline-secondary btn-sm" type="button" onclick="fetchData(document.getElementById('rst').value)">Get RST</button>
 				    				</div>
                                 	</div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="">Invoice No :</label>
-                                    <input id="invoiceNo" name="invoiceNo" type="text" class="form-control form-control-sm" placeholder="Invoice No" >
+                                    <label for="">Amanat No :</label>
+                                    <input id="amanatNo" name="amanatNo" type="text" class="form-control form-control-sm" placeholder="Invoice No" >
                                 </div>
                                 <div class="col-md-6">
                                     <label for="">Company Name :</label>
@@ -42,7 +44,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="">Date :</label>
-                                    <input type="date" id="invoiceDate" name="invoiceDate" class="form-control form-control-sm" placeholder="Record No">
+                                    <input type="date" id="amanatDate" name="amanatDate" class="form-control form-control-sm" placeholder="Record No">
                                 </div>
                                 <div class="col-md-6">
                                     <label>Customer Name & Address</label>
@@ -50,7 +52,7 @@
                                     </div>
                                 <div class="col-md-6">
                                     <label>Authorized Grader</label>
-                                    <input id="grader" name="grader"  type="text" class="form-control form-control-sm" placeholder="">
+                                    <input id="grader" name="grader" type="text" class="form-control form-control-sm" placeholder="">
                                     <label>Operator Name</label>
                                     <input type="text" id="operatorName" name="operatorName" class="form-control form-control-sm" placeholder="">
                                 </div>
@@ -63,19 +65,21 @@
                                             <th>Quantity</th>
                                             <th>Grade</th>
                                             <th>Moisture Content</th>
-                                            <th>Rate</th>
+                                            <th>Contract Rate</th>
                                             <th align="right">Amount</th> 
+                                            <th>Date</th> 
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr>
                                             <td id="tableRst">01</td>
                                             <td id="material">Product Name</td>
-                                            <td><input type="text" id="quantity" name="quantity" value="1" readonly="readonly"/></td>
+                                            <td id="quantity">0 Qtl</td>
                                             <td id="grade">A</td>
                                             <td id="moisture"><input type="text" id="moisture" name="moisture" class="form-control form-control-sm" /></td>
-                                            <td id="rate"><input type="text" id="rate" name="rate" class="form-control form-control-sm"></td>
-                                            <td id="amount" align="right">0.0</td>
+                                            <td id="contractRate"><input type="text" id="contractRate" name="contractRate" class="form-control form-control-sm"></td>
+                                            <td align="right"><input type="text" id="total" name="total" value="0" /></td>
+                                            <td align="right"><input id="dateOfExpiry" name="dateOfExpiry" type="date" /></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -131,7 +135,7 @@
                                 	</div>
                                 <div class="col-md-12 border-top">
                                     <div class="d-flex justify-content-end">
-                                        <button style="margin-bottom:8px;" type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp" >Amanat</button>
+                                        <button style="margin-bottom:8px;" type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp">Amanat</button>
                                         <button style="margin-bottom:8px;" type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp" onclick="submitForm()">Approve</button>
                                     </div>
                                 </div>
@@ -277,6 +281,11 @@
 	<script src="../js/modal.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script>
+	
+	function submitForm(){
+		document.getElementById("amanatForm").submit();
+	}
+	
 	settingHeightofAdjacentPanels("getHeight","setHeight");
 	function fetchData(rst){
 		console.log(rst);
@@ -311,8 +320,9 @@
 	{
 		
 		document.getElementById("rst").value = data.invoice.rst;
-		document.getElementById("id").value = data.invoice.id;
-		document.getElementById("invoiceNo").value = data.invoice.id;
+		document.getElementById("amanatNo").value = data.invoice.id;
+		document.getElementById("cid").value = data.customer.id;
+		document.getElementById("vid").value = data.weight.vid;
 		//document.getElementById("companyName").value = data.company.name;
 		//document.getElementById("date").value = data.
 		document.getElementById("customerData").value = data.customer.name + "\n" + data.customer.address + "\n" + data.customer.mobile;
@@ -323,18 +333,14 @@
 		document.getElementById("quantity").innerHTML = data.weight.net;
 		document.getElementById("grade").innerHTML = data.weight.grade;
 		document.getElementById("moisture").innerHTML = data.weight.moisture;
-		document.getElementById("rate").value = data.weight.graderRate;
-		document.getElementById("amount").value = data.weight.graderRate * data.weight.net;
+		document.getElementById("contractRate").value = data.weight.graderRate;
+		document.getElementById("total").value = data.weight.graderRate * data.weight.net;
 		//document.getElementById("cashReceiptNo").value = data.
 		//document.getElementById("cashBalance").value = data.company.balance;
 		document.getElementById("vendorNameCash").value = data.customer.name;
 		document.getElementById("vendorNameCheque").value = data.customer.name;
 		
 		
-	}
-	
-	function submitForm(){
-		document.getElementById("adminApprovalForm").submit();
 	}
 	
 	</script>

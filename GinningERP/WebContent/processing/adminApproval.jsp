@@ -1,3 +1,5 @@
+<%@page import="com.prov.bean.Amanat"%>
+<%@page import="com.prov.report.AmanatReport"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="com.prov.report.CustomerReport"%>
 <%@page import="com.prov.bean.Customer"%>
@@ -14,44 +16,44 @@
     	
     	int rst = Integer.parseInt(request.getParameter("rst"));
     
-    System.out.print(rst);
+        System.out.print(rst);
+        
     
-    	InvoiceReport ir = new InvoiceReport();
+	    	InvoiceReport ir = new InvoiceReport();
+	    	
+	    	Invoice inv = new Invoice();
+	    	
+	    	inv = ir.getInvoiceData(rst);
+	    	
+	    	CustomerVehicle cv = new CustomerVehicle();
+	    	
+	    	CustomerVehicleReport vr = new CustomerVehicleReport();
+	    	
+	    	cv = vr.getReport(inv.getVid());
+	    	
+	    	WeighReport wr = new WeighReport();
+	    	
+	    	WeighMast w= new WeighMast();
+	    	
+	    	w = wr.getReport(rst);
+	    	
+	    	Customer cust = new Customer();
+	    	
+	    	CustomerReport cr = new CustomerReport();
+	    	
+	    	cust = cr.getReport(inv.getCid());
+	    	
+	    	JSONObject invObj = new JSONObject(inv);
+	    	JSONObject vehicleObj = new JSONObject(cv);
+	    	JSONObject weighObj = new JSONObject(w);
+	    	JSONObject customerObj = new JSONObject(cust);
+	    	
+	    	JSONObject obj = new JSONObject();
+	    	obj.put("invoice", invObj);
+	    	obj.put("vehicle", vehicleObj);
+	    	obj.put("weight", weighObj);
+	    	obj.put("customer", customerObj);
+	    	
+	    	out.print(obj);
     	
-    	Invoice inv = new Invoice();
-    	
-    	inv = ir.getInvoiceData(rst);
-    	
-    	CustomerVehicle cv = new CustomerVehicle();
-    	
-    	CustomerVehicleReport vr = new CustomerVehicleReport();
-    	
-    	cv = vr.getReport(inv.getVid());
-    	
-    	WeighReport wr = new WeighReport();
-    	
-    	WeighMast w= new WeighMast();
-    	
-    	w = wr.getReport(rst);
-    	
-    	Customer cust = new Customer();
-    	
-    	CustomerReport cr = new CustomerReport();
-    	
-    	cust = cr.getReport(inv.getCid());
-    	
-    	JSONObject invObj = new JSONObject(inv);
-    	JSONObject vehicleObj = new JSONObject(cv);
-    	JSONObject weighObj = new JSONObject(w);
-    	JSONObject customerObj = new JSONObject(cust);
-    	
-    	JSONObject obj = new JSONObject();
-    	obj.put("invoice", invObj);
-    	obj.put("vehicle", vehicleObj);
-    	obj.put("weight", weighObj);
-    	obj.put("customer", customerObj);
-    	
-    	out.print(obj);
-    	
-    
     %>

@@ -7,8 +7,16 @@ public class Invoice {
 	private int rst, cid, vid;
 	
 	private double finalRate, total, amountPaid, pending;
-	private String invDate;
+	private String invDate, invoiceNo;
 
+
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
+	}
 
 	public String getInvDate() {
 		return invDate;

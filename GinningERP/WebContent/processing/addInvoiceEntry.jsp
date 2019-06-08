@@ -1,3 +1,4 @@
+<%@page import="com.prov.dbupdation.UpdateWeighMast"%>
 <%@page import="com.prov.dbinsertion.AddWeighMast"%>
 <%@page import="com.prov.bean.WeighMast"%>
 <%@page import="com.prov.dbinsertion.AddCustomerVehicle"%>
@@ -59,16 +60,29 @@
 	w.setGrossWtTime(grossWt);
 	w.setTareWtTime(tareWt);
 	
-	AddWeighMast addWeigh = new AddWeighMast();
+	if(w.getTare() == 0 && w.getNet() == 0){
 	
-	int rstWeighMast = addWeigh.addWeighMast(w);
+		AddWeighMast addWeigh = new AddWeighMast();
+		
+		int rstWeighMast = addWeigh.addWeighMast(w);
+		
+		
+		AddInvoice addInvoice = new AddInvoice();
+		
+		int invId = addInvoice.addInvoice(inv);
+		
+		response .sendRedirect("../views/GenerateRST.jsp");
+	}
 	
-	
-	AddInvoice addInvoice = new AddInvoice();
-	
-	int invId = addInvoice.addInvoice(inv);
-	
-	response .sendRedirect("../views/GenerateRST.jsp");
+	else{
+		
+		UpdateWeighMast uw = new UpdateWeighMast();
+		
+		int rstWeighMast = uw.updateWeighMast(w);
+		
+		response.sendRedirect("../views/GenerateRST.jsp");
+		
+	}
 	
 %>
 

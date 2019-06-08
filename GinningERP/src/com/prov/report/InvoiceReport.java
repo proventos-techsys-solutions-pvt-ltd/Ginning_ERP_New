@@ -36,7 +36,8 @@ public class InvoiceReport {
 				inv.setTotal(rs.getDouble(6));
 				inv.setAmountPaid(rs.getDouble(7));
 				inv.setPending(rs.getDouble(8));
-				System.out.println(rs.getString(9));
+				inv.setInvDate(rs.getString(9));
+				inv.setInvoiceNo(rs.getString(10));
 			}
 			
 			stmt.close();

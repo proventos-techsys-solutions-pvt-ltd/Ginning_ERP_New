@@ -2,6 +2,7 @@ package com.prov.dbupdation;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -61,4 +62,48 @@ public int updateInvoice(Invoice i) {
 		
 	}
 
+
+	public int updateRate(Invoice i){
+		
+		Connection con = null;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		String updateInvoice = " UPDATE INVOICE_MAST SET FINALRATE=?,"
+				+ "	TOTAL=?,"
+				+ "AMOUNTPAID=?,"
+				+ "PENDING=?,"
+				+ "INVOICE_NO=?"
+				+ "WHERE ID = ?";
+		
+		PreparedStatement stmt;
+		try {
+			stmt = con.prepareCall(updateInvoice);
+			
+			
+			stmt.setDouble(1, i.getFinalRate());
+			stmt.setDouble(2, i.getTotal());
+			stmt.setDouble(3, i.getAmountPaid());
+			stmt.setDouble(4, i.getPending());
+			stmt.setString(5, i.getInvoiceNo());
+			stmt.setInt(6, i.getId());
+			
+			stmt.executeUpdate();
+			
+			
+			stmt.close();
+			con.close();
+			
+			System.out.println("Updation Succesful-"+i.getId());
+			} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return i.getId();
+		
+	}
+	
 }
