@@ -22,7 +22,13 @@
     	String dateOfExpiry = request.getParameter("dateOfExpiry");
     	double finalRate = 0.0;
     	
-    	
+    	if(rst == 0 || cid == 0 || vid == 0 || contractRate == 0 || total == 0 || amanatDate == "" || amanatDate == null || 
+    	   dateOfExpiry == "" || dateOfExpiry == null)
+    	{
+    		out.println("Please enter valid information.");	
+    	}
+    	else{
+    		
     	Amanat a = new Amanat();
     	
     	AddAmanatEntry ae= new AddAmanatEntry();
@@ -40,5 +46,5 @@
     	
     	response.sendRedirect("../views/Amanat.jsp");
 
-    
+    	}
     %>

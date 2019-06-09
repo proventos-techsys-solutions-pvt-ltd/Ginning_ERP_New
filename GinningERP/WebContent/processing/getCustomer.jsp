@@ -9,6 +9,12 @@
 	String customerName = request.getParameter("customerName").toUpperCase();
 	String customerMobile = request.getParameter("mobileNo");
 	
+	if(customerName == "" || customerName == null || customerMobile == "" || customerMobile == null)
+	{
+		out.println("Please enter valid information.");
+	}
+	else{
+		
 	CustomerReport report = new CustomerReport();
 	
 	Customer customer = report.getCustomerData(customerName, customerMobile);
@@ -21,5 +27,5 @@
 		out.print(false);
 		out.flush();
 	}
-
+	}
 %>

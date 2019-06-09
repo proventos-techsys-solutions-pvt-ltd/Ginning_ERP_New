@@ -25,6 +25,15 @@
  	String netWt = request.getParameter("netWtTime");
  	int weighRate = Integer.parseInt(request.getParameter("weighRate"));
  	
+ 	if(cid == 0 || rst == 0 || date == null || vehicleNo == "" || vehicleNo == null || vehicleType == null || 
+ 	   vehicleType == "" || customer == "" || customer == null || address == "" || address == null || 
+ 	   material == null || material == "" || mobile == null || mobile == "" || gross == 0 || tare == 0 || net == 0 ||
+       grossWt == "" || grossWt == null || tareWt == "" || tareWt == null || netWt == "" || netWt == null || weighRate == 0)
+ 	{
+ 		out.println("Please enter valid information.");
+ 	}
+ 	else{
+ 	
 	CustomerVehicle cv = new CustomerVehicle();
 	Invoice inv = new Invoice();
 	WeighMast w = new WeighMast();
@@ -83,6 +92,6 @@
 		response.sendRedirect("../views/GenerateRST.jsp");
 		
 	}
-	
+ 	}
 %>
 
