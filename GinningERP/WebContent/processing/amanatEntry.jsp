@@ -19,8 +19,9 @@
     	double contractRate = Double.parseDouble(request.getParameter("contractRate"));
     	double total = Double.parseDouble(request.getParameter("total"));
     	String amanatDate = request.getParameter("amanatDate");
-    	String dateOfExpiry = request.getParameter("expiryDate");
+    	String dateOfExpiry = request.getParameter("dateOfExpiry");
     	double finalRate = 0.0;
+    	
     	
     	Amanat a = new Amanat();
     	

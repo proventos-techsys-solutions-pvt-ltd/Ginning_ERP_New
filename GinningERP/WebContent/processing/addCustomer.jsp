@@ -6,8 +6,7 @@
     String CustomerName = request.getParameter("name").toUpperCase();
     String CustomerAddress = request.getParameter("address").toUpperCase();
     String CustomerCity = request.getParameter("mobile").toUpperCase();
-   
-	
+    	
     AddCustomer ac = new AddCustomer();
     Customer c = new Customer();
     c.setName(CustomerName);

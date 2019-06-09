@@ -16,9 +16,9 @@
                 <div class="row mt-2">
                     <div class="col-md-8">
                     	<div class="tile-background border" id="getHeight">
-                        <form action="" id="amanatForm">
+                        <form action="../processing/amanatEntry.jsp" id="amanatForm">
                         <input id="cid" name="cid" type="hidden" value="" />
-                        <input id="vid" name="cid" type="hidden" value="" />
+                        <input id="vid" name="vid" type="hidden" value="" />
                         
                             <div class="form-row">
                                 <div class="col-md-6">
