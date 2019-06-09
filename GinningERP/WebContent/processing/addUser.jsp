@@ -7,8 +7,12 @@
     String UserPassword = request.getParameter("Password").toUpperCase();
     String UserRole = request.getParameter("Role").toUpperCase();
 
-   
-	
+    if(Username == null || Username == "" || UserName == null || UserName == "" || UserPassword == null || UserPassword == "" || UserRole == null || UserRole == "")
+    {
+    	out.println("Please enter valid information.");
+    }
+    else{
+    	
     AddUser au = new AddUser();
     User u = new User();
     u.setName(Username);
@@ -19,5 +23,7 @@
    	au.addUser(u);
    	
    	response.sendRedirect("masters/PartyMaster.jsp");
+   	
+    }
 %>
 
