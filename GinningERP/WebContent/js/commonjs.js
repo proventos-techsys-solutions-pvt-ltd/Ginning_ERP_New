@@ -1,3 +1,12 @@
+/*************************SET TITLE OF REPORT PAGE********************/
+function setTitle(title){
+	document.getElementById("report-title").style.padding = ".5rem .5rem .5rem 0";
+	document.getElementById("report-title").innerHTML = title;
+}
+function setSearchPlaceholder(placeholder){
+	document.getElementById("searchInput").placeholder = placeholder;
+}
+
 /******************GETTING HEIGHT OF ADJACENT PANEL*********************/
 function settingHeightofAdjacentPanels(getHeight,setHeight){
 	var height = document.getElementById(getHeight).offsetHeight;
@@ -9,6 +18,16 @@ function callModalPopup(callingId,calledId){
 	document.getElementById(callingId).addEventListener("click",function(){
 		$("#"+calledId).modal();
 	})
+}
+
+function callModalPopupWithIndex(calling,calledId){
+	var length = document.getElementsByName(calling).length;
+	
+	for(i=0; i<length; i++){
+		document.getElementsByName(calling)[i].addEventListener("click",function(){
+			$("#"+calledId).modal();
+		})
+	}
 }
 /********************ACCESSING TABLE ROW & CELL INDEX**********************/
 function getTableDataOnRowClick(tableBodyId,tableRow,className){

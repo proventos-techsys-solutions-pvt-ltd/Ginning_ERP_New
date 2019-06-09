@@ -13,31 +13,9 @@
 <body>
 	<%@include file="../views/NavBar.html" %>
 	<div class="container-fluid">
-		<div class="row mt-2">
-			<div class="col-md-12">
-				<div class="tile-background">
-					<h3>Check Register</h3>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="tile-background tile-background-ht">
-					<div class="d-flex flex-row align-items-center">
-					<label>Search</label>
-					<input type="text" class="form-control-ctm" name="" id="" placeholder="Cheque No">
-					<button type="button" class="btn btn-success">Search</button>
-					<button type="button" class="btn btn-danger" id="clearFilterBtn">Clear Filter</button>
-					<img src="../property/img/setting.png" alt="option" class="img-set" id="options">
-					<img src="../property/img/exportpdf.png" alt="option" class="img-set" id="exportToPdf">
-					<img src="../property/img/exportexcel.png" alt="option" class="img-set" id="exportToExcel">
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row mt-2 ">
+		<%@include file="../views/CommonSearchHeaderForReports.html" %>
+		<div class="row mt-2 tile-background-row">
 		<div class="col-md-12">
-		<div class="tile-background">
 			<table class="table table-bordered mt-2">
 				<thead>
 					<tr>
@@ -60,7 +38,6 @@
 			</table>
 		</div>
 		</div>
-		</div>
 		
 		<!-- OPTIONS MODAL POP-UP STARTS HERE -->
 		<div class="modal fade" id="optionsModal" tabindex="-1" role="dialog">
@@ -75,32 +52,46 @@
 		      <div class="modal-body">
 		        <form>
 		        	<div class="form-row">
-		        		<div class="d-flex flex-row align-items-center">
+		        		<div class="col-md-auto">
 		        			<label>Period</label>
+		        		</div>
+		        		<div class="col-md-auto">
 		        			<input type="date" class="form-control form-control-sm " name="" id="">
+		        		</div>
+		        		<div class="col-md-auto">
 		        			<label>To</label>
+		        		</div>	
+		        		<div class="col-md-auto">
 		        			<input type="date" class="form-control form-control-sm " name="" id="">
 		        		</div>
 		        	</div>
 		        	<div class="form-row">
-		        		<div class="d-flex flex-row align-items-center">
-		        			<label>Cheque Range</label>
-		        			<select class="form-control form-control-sm">
+		        			<div class="col-md-auto">
+		        				<label>Cheque Range</label>
+		        			</div>
+		        			<div class="col-md-auto">
+		        				<select class="form-control form-control-sm">
 		        				<option value=""> ChequeNo</option>
 		        				<option value=""> ChequeNo</option>
 		        				<option value=""> ChequeNo</option>
 		        			</select>
-		        			<label>To</label>
-		        			<select class="form-control form-control-sm">
+		        			</div>
+		        			<div class="col-md-auto">
+		        				<label>To</label>
+		        			</div>
+		        			<div class="col-md-auto">
+		        				<select class="form-control form-control-sm">
 		        				<option value=""> ChequeNo</option>
 		        				<option value=""> ChequeNo</option>
 		        				<option value=""> ChequeNo</option>
 		        			</select>
+		        			</div>
 		        		</div>
-		        	</div>
 	        		<div class="form-row">
-		        		<div class="d-flex flex-row align-items-center">
-		        			<label>Vendor</label>
+	        			<div class="col-md-auto">
+	        				<label>Vendor</label>
+	        			</div>
+		        		<div class="col-md-auto">
 		        			<select class="form-control form-control-sm">
 		        				<option value=""> vendor name</option>
 		        				<option value=""> vendor name</option>
@@ -193,6 +184,8 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script>
+	setTitle("Check Register");//Setting Title of Page
+	setSearchPlaceholder("Cheque");//Setting Placeholder of Search Input
 	callModalPopup("options","optionsModal");//calling option pop-up
 	document.getElementById("clearFilterBtn").disabled = true;//disable clear filter button
 	document.getElementById("filterBtn").addEventListener("click",function(){
