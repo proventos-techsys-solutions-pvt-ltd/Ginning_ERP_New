@@ -18,7 +18,13 @@
     
         System.out.print(rst);
         
-    
+        if(rst == 0)
+        {
+        	out.println("Please enter valid information.");	
+        }
+        
+        else{
+        	
 	    	InvoiceReport ir = new InvoiceReport();
 	    	
 	    	Invoice inv = new Invoice();
@@ -55,5 +61,5 @@
 	    	obj.put("customer", customerObj);
 	    	
 	    	out.print(obj);
-    	
+        }
     %>

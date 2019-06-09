@@ -7,9 +7,15 @@
     	String grade = request.getParameter("grade");
     	Float graderRate = Float.parseFloat(request.getParameter("graderRate"));
     	
+    	if(rst == 0 || grade == "" || grade == null || graderRate == 0 || graderRate == null)
+    	{
+    		out.println("Please enter valid information.");
+    	}
+    	else{
 		Grading obj = new Grading();
 		
 		obj.setGrading(grade, graderRate, rst);
 		
 		response.sendRedirect("../views/Grader.jsp");    
+    	}
     %>
