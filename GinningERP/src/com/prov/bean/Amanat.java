@@ -4,10 +4,44 @@ public class Amanat {
 	
 	private int id;
 	
-	private int rst, cid, vid;
+	private int rst, cid, vid, invId;
 	
-	private double contractRate, total, finalRate;
+	public int getInvId() {
+		return invId;
+	}
+	public void setInvId(int invId) {
+		this.invId = invId;
+	}
+	private double contractRate, total, finalRate, quantity;
 	
+	private String customerName, material,address;
+	
+	
+	
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public double getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(double quantity) {
+		this.quantity = quantity;
+	}
+	public String getCustomerName() {
+		return customerName;
+	}
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	public String getMaterial() {
+		return material;
+	}
+	public void setMaterial(String material) {
+		this.material = material;
+	}
 	public double getFinalRate() {
 		return finalRate;
 	}

@@ -51,19 +51,8 @@
 						<th>Amount Due</th>
 					</tr>
 				</thead>
-				<tbody>
-				<%for(int i = 0; i < 100; i++){ %>
-					<tr>
-						<td>2451</td>
-						<td>30-05-2019</td>
-						<td>01</td>
-						<td>Gurukrupa Cotton</td>
-						<td>Cotton</td>
-						<td>100qtl</td>
-						<td>5510</td>
-						<td>551000</td>
-					</tr>
-					<% } %>
+				<tbody id="tableBody">
+				
 				</tbody>
 			</table>
 			</div>
@@ -74,11 +63,69 @@
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 		<script>
+		
+		window.onload = function() {
+			amanatRequest();
+			};
+			
+		
 			var documentHeight = (function(){
 				var height = document.getElementsByTagName("html")[0].offsetHeight;
 				document.getElementsByClassName("setHeight")[0].style.height = ((height*2)/3) + "px";
 				document.getElementsByClassName("setHeight")[0].style.overflow = "auto";
 			})();
+			
+			
+			function amanatRequest(){
+				url = "../processing/pendingAmanatReport.jsp";
+				if(window.XMLHttpRequest){  
+					fetchRequest=new XMLHttpRequest();  
+				}  
+				else if(window.ActiveXObject){  
+					fetchRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+				}  
+				try{  
+					fetchRequest.onreadystatechange=getData;  
+					console.log("AJAX Req sent");
+					fetchRequest.open("GET",url,true);  
+					fetchRequest.send();  
+				}catch(e){alert("Unable to connect to server");}
+				
+			}
+			
+			function getData(){
+				if(fetchRequest.readyState == 4)
+					{
+						var response = this.response.trim();
+						var data = JSON.parse(response);
+						setData(data);
+					}
+			}
+			
+			function setData(data){
+				
+				console.log(data);
+				console.log(data.length);
+				
+				var element = document.getElementById("tableBody");
+				
+				for(i=0;i<data.length;i++){
+				
+				
+					
+					 element.insertAdjacentHTML('beforeend','<tr>'+
+							'<td>'+data[i].rst+'</td>'+
+							'<td>'+data[i].amanatDate+'</td>'+
+							'<td>'+data[i].id+'</td>'+
+							'<td>'+data[i].customerName+', '+data[i].address+'</td>'+
+							'<td>'+data[i].material+'</td>'+
+							'<td>'+data[i].quantity+'</td>'+
+							'<td>'+data[i].contractRate+'</td>'+
+							'<td>'+data[i].total+'</td>'+
+						'</tr>');
+				 
+				}
+			}
 		</script>
 </body>
 </html>

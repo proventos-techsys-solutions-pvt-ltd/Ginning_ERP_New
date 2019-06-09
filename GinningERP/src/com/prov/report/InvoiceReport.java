@@ -3,6 +3,8 @@ package com.prov.report;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.prov.bean.Invoice;
 import com.prov.db.OracleConnection;
@@ -36,7 +38,14 @@ public class InvoiceReport {
 				inv.setTotal(rs.getDouble(6));
 				inv.setAmountPaid(rs.getDouble(7));
 				inv.setPending(rs.getDouble(8));
-				inv.setInvDate(rs.getString(9));
+				
+				String date = rs.getString(9);
+				
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+				String properDate = format2.format(date1);
+
+				inv.setInvDate(properDate);
 				inv.setInvoiceNo(rs.getString(10));
 			}
 			

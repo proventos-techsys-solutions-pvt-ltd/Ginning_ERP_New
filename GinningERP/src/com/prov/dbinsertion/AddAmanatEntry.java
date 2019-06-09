@@ -21,7 +21,7 @@ public int addAmanat(Amanat a) {
 			e.printStackTrace();
 		}
 
-		String addAmanat = "{ ? = call ADD_AMANAT(?,?,?,?,?,?,?,?) }";
+		String addAmanat = "{ ? = call ADD_AMANAT(?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -45,7 +45,7 @@ public int addAmanat(Amanat a) {
 			cs.setDate(7, amanatSqlDate);
 			cs.setDate(8, expirySqlDate);
 			cs.setDouble(9, a.getFinalRate());
-			
+			cs.setInt(10, a.getInvId());
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);

@@ -106,4 +106,54 @@ public int updateInvoice(Invoice i) {
 		
 	}
 	
+public int createAmanatInvoice(Invoice i){
+		
+		Connection con = null;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		String updateInvoice = " UPDATE INVOICE_MAST SET FINALRATE=?,"
+				+ "	TOTAL=?,"
+				+ "AMOUNTPAID=?,"
+				+ "PENDING=?,"
+				+ "INVOICE_NO=?"
+				+ "INV_DATE=?"
+				+ "WHERE ID = ?";
+		
+		PreparedStatement stmt;
+		try {
+			
+			Date invDate = new SimpleDateFormat("yyyy-MM-dd").parse(i.getInvDate());
+			@SuppressWarnings({ "deprecation" })
+			java.sql.Date invSqlDate = new java.sql.Date(invDate.getDate());
+			
+			stmt = con.prepareCall(updateInvoice);
+			
+			
+			stmt.setDouble(1, i.getFinalRate());
+			stmt.setDouble(2, i.getTotal());
+			stmt.setDouble(3, i.getAmountPaid());
+			stmt.setDouble(4, i.getPending());
+			stmt.setString(5, i.getInvoiceNo());
+			stmt.setDate(6,invSqlDate );
+			stmt.setInt(7, i.getId());
+			
+			stmt.executeUpdate();
+			
+			
+			stmt.close();
+			con.close();
+			
+			System.out.println("Updation Succesful-"+i.getId());
+			} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return i.getId();
+		
+	}
+	
 }

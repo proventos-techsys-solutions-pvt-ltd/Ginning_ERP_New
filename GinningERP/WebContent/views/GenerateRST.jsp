@@ -115,46 +115,11 @@
           <thead class="thead-dark">
               <tr>
                 <th>RST</th>
+                <th>Customer Name</th>
                 <th>Gross Weight</th>
-                <th>Net Weight</th>
               </tr>
           </thead>
-          <tbody>
-        <tr>
-          <td>01</td>
-          <td>2000 kg</td>  
-          <td>1000 Kg</td>     
-        </tr>
-        <tr>
-            <td>01</td>
-            <td>2000 kg</td>  
-            <td>1000 Kg</td>     
-          </tr>
-          <tr>
-              <td>01</td>
-              <td>2000 kg</td>  
-              <td>1000 Kg</td>     
-            </tr>
-            <tr>
-                <td>01</td>
-                <td>2000 kg</td>  
-                <td>1000 Kg</td>     
-              </tr>
-              <tr>
-                  <td>01</td>
-                  <td>2000 kg</td>  
-                  <td>1000 Kg</td>     
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>2000 kg</td>  
-                    <td>1000 Kg</td>     
-                  </tr>
-                  <tr>
-                      <td>01</td>
-                      <td>2000 kg</td>  
-                      <td>1000 Kg</td>     
-                    </tr>
+          <tbody id="tableBody">
            </tbody>
       </table>
       </div>
@@ -228,6 +193,12 @@
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/commonjs.js"></script>
 <script>
+
+window.onload = function() {
+	pendingTareWt();
+	};
+
+
 	settingHeightofAdjacentPanels("getHeight","scroll");//getting & setting height of panels
 //Submit RST Weigh Bridge Form
 function submitRSTEntry(){
@@ -358,6 +329,54 @@ function addNewCustomer(){
 	document.getElementById("newCustomerName").value = name;
 	document.getElementById("newCustomerMobile").value = mobile;
 	document.getElementById("newCustomerAddress").value = address;
+	
+}
+
+
+function pendingTareWt(){
+	
+var url="../processing/pendingTareReport.jsp";
+	
+	if(window.XMLHttpRequest){  
+		dataRequest=new XMLHttpRequest();  
+	}  
+	else if(window.ActiveXObject){  
+		dataRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+	}  
+  
+	try{  
+		dataRequest.onreadystatechange=getRstData;  
+		console.log("AJAX Req sent");
+		dataRequest.open("GET",url,true);  
+		dataRequest.send();  
+	}catch(e){alert("Unable to connect to server");}
+	
+}
+
+function getRstData(){
+	
+	if(dataRequest.readyState == 4){
+		var pendingRst = this.response.trim();
+		console.log(pendingRst);
+		setPendingData(pendingRst);
+	}
+	
+}
+
+function setPendingData(pendingRst){
+	
+	 var element = document.getElementById("tableBody");
+   
+	 var jsonData = JSON.parse(pendingRst);
+	 
+	 for(i=0;i<jsonData.length;i++){
+	 
+	   element.insertAdjacentHTML('beforeend','<tr>'+
+			    '<td>'+jsonData[i].rst+'</td>'+
+			    '<td>'+jsonData[i].customerName+'</td>'+  
+			    '<td>'+jsonData[i].gross+'</td>'+     
+			   '</tr>');
+	 }
 	
 }
 

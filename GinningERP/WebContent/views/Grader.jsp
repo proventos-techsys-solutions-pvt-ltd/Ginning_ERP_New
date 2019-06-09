@@ -96,17 +96,12 @@
               <tr>
                 <th>#</th>
                 <th>RST No</th>
-                <th>Material</th>
-                <th>Qty</th>
+                <th>Customer Name</th>
+                <th>Cotton Qty</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>4357</td>
-                <td>Cotton</td>
-                <td>100 Qntl</td>
-              </tr>
+            <tbody id="tableBody">
+              
             </tbody>
           </table>
           </div>
@@ -120,6 +115,10 @@
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script>
+	
+	window.onload = function() {
+		pendingGrade();
+		};
 	
 	//Fetch data using RST
 	function fetchData(rst){
@@ -159,6 +158,55 @@
 		}
 			
 	}
+	
+	
+	function pendingGrade(){
+		
+		var url="../processing/pendingGradingReport.jsp";
+			
+			if(window.XMLHttpRequest){  
+				dataRequest=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				dataRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+		  
+			try{  
+				dataRequest.onreadystatechange=getRstData;  
+				console.log("AJAX Req sent");
+				dataRequest.open("GET",url,true);  
+				dataRequest.send();  
+			}catch(e){alert("Unable to connect to server");}
+			
+		}
+
+		function getRstData(){
+			
+			if(dataRequest.readyState == 4){
+				var pendingGrade = this.response.trim();
+				console.log(pendingGrade);
+				setPendingData(pendingGrade);
+			}
+			
+		}
+
+		function setPendingData(pendingGrade){
+			
+			 var element = document.getElementById("tableBody");
+		   
+			 var jsonData = JSON.parse(pendingGrade);
+			 
+			 for(i=0;i<jsonData.length;i++){
+			 
+			   element.insertAdjacentHTML('beforeend','<tr>'+
+					   '<td>'+(i+1)+'</td>'+
+					    '<td>'+jsonData[i].rst+'</td>'+
+					    '<td>'+jsonData[i].customerName+'</td>'+  
+					    '<td>'+jsonData[i].gross+'</td>'+     
+					   '</tr>');
+			 }
+			
+		}
 	
 	</script>
   </body>
