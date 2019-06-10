@@ -19,30 +19,83 @@
 		<div class="col-md-12">
 			<h4>Chart of Accounts</h4>
 		</div>
-		<div class="d-flex justify-content-md-center">
-			<div class="p-2 flex-md-grow-1">
-				<input type="text" class="form-control form-control-sm" name="" id="" placeholder="Filter">
+		</div>
+		<div class="row tile-background-row align-items-center">
+			<div class="col-md-auto ">
+				<input type="text" class="form-control form-control-sm " name="" id="" placeholder="Filter">
 			</div>
-			<div class="p-2 flex-md-grow-1">
-				<img src="../property/img/add.png" alt="add">
-			</div>
-			<div class="p-2 flex-md-grow-1">
-				<input type="text" class="form-control form-control-sm" name="" id="" placeholder="Filter">
-			</div>
-			<div class="p-2 flex-md-grow-1">
-				<input type="text" class="form-control form-control-sm" name="" id="" placeholder="Filter">
-			</div>
-			<div class="p-2 flex-md-grow-1">
-				<input type="text" class="form-control form-control-sm" name="" id="" placeholder="Filter">
+			<div class="col-md-auto ">
+				<img src="../property/img/add.png" alt="add" id="callAddAccount" class="ctm-hover" >
 			</div>
 		</div>
-	</div>
+		
+		<div class="row mt-2 tile-background-row">
+			<div class="col-md-12">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Account Name</th>
+							<th>Account Category</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+						
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<!--******************** Account Add Pop Up********************* -->
+		<div class="modal fade" id="addAccount" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Account</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <form id="charOfAccounts">
+		        	<div class="form-row">
+		        		<div class="col-md-6">
+		        			<label>Account Category</label> <!-- take value from table accounttype -->
+		        			<select class="form-control form-control-sm" name="accountType" id="accountType">
+		        			</select>
+		        		</div>
+		        		<div class="col-md-6">
+		        			<label>Account Name</label>
+							<input class="form-control form-control-sm" type="text" id="accountName" name="accountName">
+		        		</div>
+		        		<div class="col-md-12">
+		        			<label>Description</label>
+		        			<textarea class="form-control form-control-sm" name="accountDescription"></textarea>
+		        		</div>
+		        	</div>
+		        	
+		        </form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		        <button type="button" class="btn btn-primary" id="saveButton" onclick="addChartOfAccounts()">Save and Close</button>
+		        <button type="button" class="btn btn-primary" id="updateButton" onclick="updateChartOfAccounts()">Update</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
 	</div>
 
 
 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
-	<script src="../js/commonjs.js"></script>	
+	<script src="../js/commonjs.js"></script>
+	<script>
+	callModalPopup("callAddAccount","addAccount");//Calling account add popup
+	</script>	
 </body>
 </html>

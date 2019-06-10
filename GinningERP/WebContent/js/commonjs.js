@@ -58,4 +58,27 @@ function getTableDataOnRowClick(tableBodyId,tableRow,className){
 	document.getElementsByName(className)[4].value = "Only";;
 	document.getElementsByName(className)[5].value = rowData[3];
 }
-/*******************************/
+/********************************CREATE TABLE CODE***************************/
+function createTable(column,heading){
+	var table = document.createElement("table");
+	table.setAttribute("id", "dataTable");
+	document.body.appendChild(table);
+	
+	document.getElementById("dataTable").classList.add("table");
+	document.getElementById("dataTable").classList.add("table-bordered");
+	
+	var thead = document.createElement("thead");
+	thead.setAttribute("id", "dataTableHead");
+	document.getElementById("dataTable").appendChild(thead);
+	
+	var tbody = document.createElement("tbody");
+	tbody.setAttribute("id", "dataTableBody");
+	document.getElementById("dataTable").appendChild(tbody);
+	  
+	for(i=0;i<=(column-1);i++){
+		var th = document.createElement("th");
+		document.getElementById("dataTableHead").appendChild(th);
+		document.getElementsByTagName("th")[i].innerHTML = heading[i];
+	}
+ 
+}

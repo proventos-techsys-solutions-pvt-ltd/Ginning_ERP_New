@@ -142,6 +142,12 @@ body{
 	background:#fff;
 	padding:.875rem;
 }
+.tile-background-clm{
+	background:#fff;
+	padding:.875rem;
+	margin-right: -15px;
+	margin-left: -15px;
+}
 .tile-background-g{
 	background:#393a3d;
 	padding:.3rem;
