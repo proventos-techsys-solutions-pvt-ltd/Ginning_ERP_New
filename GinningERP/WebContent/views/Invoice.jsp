@@ -24,9 +24,15 @@
                         <input type="text" class="form-control form-control-sm" value="Average Purchase Price">
                     </div>   
                 </div>
+                
+                <div class="row mt-2 tile-background-row ">
+                	<div class="col-md-auto">
+                		<h2>Invoicing</h2>
+                	</div>
+                </div>
             
                 <div class="row mt-2 ">
-                    <div class="col-md-8 row-rm-pad">
+                    <div class="col-md-8">
                     	<div class="tile-background" id="getHeight">
                         <form action="../processing/approvedInvoiceEntry.jsp" id="adminApprovalForm">
                         	<input type="hidden" name="id" value="" id="id" />
@@ -151,7 +157,7 @@
                         </form>
                         </div>
                     </div>
-                    <div class="col-md-4 row-rm-pad">
+                    <div class="col-md-4">
                     	<div class="tile-background setHeight">
                         <table class="table">
                             <thead>
