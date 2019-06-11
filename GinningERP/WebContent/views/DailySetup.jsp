@@ -37,6 +37,10 @@
 						<option value="">Company 3</option>
 					</select>
 				</div>
+				<div class="col-md-2">
+					<label class="lbl-rm-l">Today's Cotton Rate</label>
+					<input type="text" class="form-control form-control-sm" name="" id="">
+				</div>
 			</div>
 			
 			<div class="row mt-2 tile-background-row">

@@ -250,3 +250,9 @@ img.ctm-hover:hover{
 	padding-right: 0;
 	padding-left: 0;
 }
+/********************************SPAN CLASS OVERRIDDEN**********************************/
+span{
+	font-size:2rem;
+	padding:.3rem .5rem .3rem .5rem;
+	border-radius:5px;
+}

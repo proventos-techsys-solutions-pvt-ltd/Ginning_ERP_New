@@ -16,13 +16,11 @@
    <%@include file="../views/NavBar.html" %>
         <div class="container-fluid">
             <div class="row justify-content-md-center mt-2 tile-background-row ">
-                <div class="col-md-3">
-                        <label class="lbl-rm-l">Today's Purchase Rate</label>
-                        <input type="text" class="form-control form-control-sm" value="Today's Purchase Rate">
+                <div class="col-md-5">
+                        <h2>Today's Purchase Rate &nbsp; <span id="tRate">5900.64</span></h2>
                     </div>
-                <div class="col-md-3">
-                        <label class="lbl-rm-l">Average Purchase Price</label>
-                        <input type="text" class="form-control form-control-sm" value="Average Purchase Price">
+                <div class="col-md-5">
+						    <h2>Average Purchase Rate &nbsp; <span id="aRate">5800.66</span></h2>
                     </div>   
                 </div>
              <div class="row mt-2 tile-background-row">
@@ -127,6 +125,17 @@
 		        }
 		    }
 		});
+		
+		var tRate = document.getElementById("tRate").innerHTML;
+		var aRate = document.getElementById("aRate").innerHTML;
+		if(tRate > aRate){
+			document.getElementById("aRate").style.background = "green";
+			document.getElementById("aRate").style.color = "#fff";
+		}else{
+			document.getElementById("aRate").style.background = "red";	
+			document.getElementById("aRate").style.color = "#fff";
+		}
+		
 		</script>
 		
 		

@@ -13,6 +13,24 @@
   <body>
    <%@include file="../views/NavBar.html" %>
     <div class="container-fluid">
+    
+    <div class="row justify-content-md-center mt-2 tile-background-row ">
+                <div class="col-md-3">
+                        <label class="lbl-rm-l">Today's Purchase Rate</label>
+                        <input type="text" class="form-control form-control-sm" value="Today's Purchase Rate">
+                    </div>
+                <div class="col-md-3">
+                        <label class="lbl-rm-l">Average Purchase Price</label>
+                        <input type="text" class="form-control form-control-sm" value="Average Purchase Price">
+                    </div>   
+                </div>
+            
+            <div class="row mt-2 tile-background-row">
+            	<div class="col-md-auto">
+            		<h2>Grading</h2>
+            	</div>
+            </div>
+    
       <div class="row mt-2">
         <div class="col-md-8">
         <div class="tile-background">
@@ -89,7 +107,7 @@
           </div>
         </div>
         <div class="col-md-4">
-        <div class="tile-background">
+        <div class="tile-background-row">
           <input type="text" class="form-control " placeholder="search">
           <table class="table">
             <thead>
