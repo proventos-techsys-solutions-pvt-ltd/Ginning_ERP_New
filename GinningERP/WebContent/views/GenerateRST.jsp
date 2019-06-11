@@ -14,12 +14,14 @@
   <%@include file="../views/NavBar.html" %>
   
   <div class="container-fluid">
+  	<div class="row mt-2 tile-background-row">
+  		<div class="col-md-12">
+  			<h2>Generate RST</h2>
+  		</div>
+  	</div>
    	<div class="row mt-2">
     <div class="col-md-8">
-	    <div class="tile-background border">
-	       	<h3>Generate RST</h3>
-	    </div>
-    <div class="tile-background mt-2 border" id="getHeight">
+    <div class="tile-background mt-2 " id="getHeight">
       	<form id="newRST" action="../processing/addInvoiceEntry.jsp">
       	<div class="form-row">
 	      	<input type="hidden" id="id" name="id" value="0" />
@@ -87,17 +89,25 @@
         	<input type="text" class="form-control " name="weighRate">
         </div>
         </div>
-        <div class="form-row">
-        <div class=col-md-12>
-        <div class="d-flex justify-content-end">
-        		<button type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp">Fetch RST</button>
-  				<button type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp" onclick="submitRSTEntry()">Submit</button>
-  				<button type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp" data-toggle="modal" data-target="#modalLoginForm">Reset</button>
-  				<button type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp">Print</button>
-  				<button type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp">PDF</button>
-  				<button id="addCustomer" type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp" data-toggle="modal" data-target="#exampleModalCenter">call here</button>
-        </div>
-        </div>
+        <div class="form-row justify-content-end border-top">
+	        <div class="col-md-auto">
+        		<button type="button" class="btn btn-primary change-button">Fetch RST</button>
+	  		</div>
+  			<div class="col-md-auto ">
+  				<button type="button" class="btn btn-primary change-button" onclick="submitRSTEntry()">Submit</button>
+  			</div>
+  			<div class="col-md-auto ">
+  				<button type="button" class="btn btn-primary change-button" data-toggle="modal" data-target="#modalLoginForm">Reset</button>
+  			</div>
+  			<div class="col-md-auto ">
+  				<button type="button" class="btn btn-primary change-button">Print</button>
+  			</div>
+  			<div class="col-md-auto ">
+  				<button type="button" class="btn btn-primary change-button">PDF</button>
+  			</div>
+  			<div class="col-md-auto ">
+  				<button id="addCustomer" type="button" class="btn btn-primary change-button" data-toggle="modal" data-target="#exampleModalCenter">call here</button>
+       		</div>
         </div>
         </form>
         </div>
@@ -105,10 +115,7 @@
         
   
     <div class="col-md-4">
-    <div class="tile-background border">
-    	<h3>RST Pending for Tare Weight</h3>
-    </div>
-    <div class="tile-background mt-2 border">
+    <div class="tile-background mt-2 ">
       <div class="col-md-12 scroll" >
         <input class="form-control mr-sm-2" type="search" placeholder="Enter RST To Search" aria-label="Search">
         <table class="table">
@@ -165,7 +172,7 @@
   </div>
 
 <!--Footer code starts here-->
-<nav class="navbar navbar-default navbar-static-bottom footer border-top">
+<nav class="navbar navbar-default navbar-static-bottom footer ">
  <div class="container">	
   <div class="row">
 	  	<div class="col-md-auto">
@@ -198,8 +205,9 @@ window.onload = function() {
 	pendingTareWt();
 	};
 
+	var height = new SettingHeightofAdjacentPanels("getHeight","scroll",0);//getting & setting height of panels
+	height.calcHeight();
 
-	settingHeightofAdjacentPanels("getHeight","scroll");//getting & setting height of panels
 //Submit RST Weigh Bridge Form
 function submitRSTEntry(){
 	document.getElementById("newRST").submit();	

@@ -13,31 +13,10 @@
 <body>
 	<%@include file="../views/NavBar.html" %>
 	<div class="container-fluid">
-	<div class="row mt-2">
-		<div class="col-md-12">
-			<div class="tile-background">
-				<h3>Amanat Invoices </h3>
-			</div>
-		</div>
-	</div>
-		<div class="row">
+	<%@include file="../views/CommonSearchHeaderForReports.html" %>
+		<div class="row mt-2 tile-background-row">
 			<div class="col-md-12">
-				<div class="tile-background tile-background-ht">
-					<div class="d-flex flex-row align-items-center">
-					<label>Search</label>
-					<input type="text" class="form-control-ctm" name="" id="" placeholder="Cheque No">
-					<button type="button" class="btn btn-success">Search</button>
-					<button type="button" class="btn btn-danger" id="clearFilterBtn">Clear Filter</button>
-					<img src="../property/img/setting.png" alt="option" class="img-set" id="options">
-					<img src="../property/img/exportpdf.png" alt="option" class="img-set" id="exportToPdf">
-					<img src="../property/img/exportexcel.png" alt="option" class="img-set" id="exportToExcel">
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row mt-2 ">
-			<div class="col-md-12">
-			<div class="tile-background setHeight">
+			<div class="setHeight">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -62,7 +41,11 @@
         <script src="../js/jquery-3.3.1.slim.min.js" ></script>
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/commonjs.js"></script>
 		<script>
+		setTitle("Pending Amanat");//Setting Title of Page
+		setSearchPlaceholder("Search");//Setting Placeholder of Search Input
+		
 		
 		window.onload = function() {
 			amanatRequest();

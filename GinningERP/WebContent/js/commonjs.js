@@ -8,11 +8,19 @@ function setSearchPlaceholder(placeholder){
 }
 
 /******************GETTING HEIGHT OF ADJACENT PANEL*********************/
-function settingHeightofAdjacentPanels(getHeight,setHeight){
+/*function settingHeightofAdjacentPanels(getHeight,setHeight){
 	var height = document.getElementById(getHeight).offsetHeight;
 	document.getElementsByClassName(setHeight)[0].style.height = (height-26.75) + "px";
-}
+}*/
 
+var SettingHeightofAdjacentPanels = function(getHeight,setHeight, value){
+	this.getHeight = document.getElementById(getHeight).offsetHeight;
+	this.setHeight = document.getElementsByClassName(setHeight);
+	this.value = value;
+}
+SettingHeightofAdjacentPanels.prototype.calcHeight = function(){
+	this.setHeight[0].style.height = (this.getHeight - this.value) + "px";
+}; 
 /*****************CALL MODAL METHOD***********************************/
 function callModalPopup(callingId,calledId){
 	document.getElementById(callingId).addEventListener("click",function(){

@@ -37,17 +37,19 @@
           <form action="">
             <div class="form-row">
               <div class="col-md-6">
-                  <label>Authorized Grader Name</label>&nbsp;&nbsp;
+                  <label>Authorized Grader Name</label>
                   <input type="search" class="form-control " name="authoGradeName" placeholder="Mr. ABC XYZ" readonly>
               </div>
               <div class="col-md-4"> 
-              	<label for="">Search RST</label>&nbsp;&nbsp;
+              	<label for="">Search RST</label>
               	<div class="input-group">
-                  	<input type="search" class="form-control " name="searchRst" placeholder="RST" id="searchRST">
+                  	<input type="text" class="form-control " name="searchRst" placeholder="RST" id="searchRST">
               		<div class="input-group-append">
-    				<button class="btn btn-outline-secondary btn-sm" type="button" onclick="fetchData(document.getElementById('searchRST').value)">Fetch</button>
+    				<button class="btn btn-outline-secondary" type="button" onclick="fetchData(document.getElementById('searchRST').value)">Fetch</button>
     				</div>
     			</div>
+    			
+    			
               </div>
             </div>
             <div class="form-row">
@@ -96,11 +98,13 @@
                     </tbody>
                 </table>
               </div>
-              <div class="col-md-12">
-                  <div class="d-inline-flex p-2 bd-highlight">
-                      <button type="button" class="btn btn-primary btn-sm btn-mr-rt">Submit</button>
-                      <button type="button" class="btn btn-primary btn-sm btn-mr-rt">PDF</button>
-                  </div>
+              </div>
+              <div class="form-row justify-content-md-end border-top">
+              <div class="col-md-auto offset-md-auto text-right">
+                 <button type="button" class="btn btn-primary btn-sm ">Submit</button>
+              </div>
+              <div class="col-md-auto text-right">
+                 <button type="button" class="btn btn-primary btn-sm ">PDF</button>
               </div>
             </div>
           </form>

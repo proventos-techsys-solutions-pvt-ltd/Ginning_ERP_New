@@ -64,7 +64,7 @@ label{
 
 /***************************BUTTON MARGIN EDIT***************************************/
 .btn{
-	margin-left:1rem;
+	
 }
 .btn-mr-rt{
 	margin-right:1rem;
@@ -170,7 +170,6 @@ body{
 input{
 	margin-bottom:.5rem;
 	margin-top:.5rem;
-	margin-right:.5rem;
 }
 .inpt-rm-t{
 	margin-top:.0rem;
@@ -255,4 +254,11 @@ span{
 	font-size:2rem;
 	padding:.3rem .5rem .3rem .5rem;
 	border-radius:5px;
+}
+/*******************/
+@media screen and (max-width: 768px){
+	.change-button{
+	width:100%;
+	margin-top:.5rem;
+}
 }
