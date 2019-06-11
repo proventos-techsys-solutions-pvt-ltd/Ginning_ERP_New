@@ -20,12 +20,16 @@
 			<h4>Chart of Accounts</h4>
 		</div>
 		</div>
-		<div class="row tile-background-row align-items-center">
-			<div class="col-md-auto ">
-				<input type="text" class="form-control form-control-sm " name="" id="" placeholder="Filter">
-			</div>
-			<div class="col-md-auto ">
-				<img src="../property/img/add.png" alt="add" id="callAddAccount" class="ctm-hover" >
+		<div class="row tile-background-row">
+			<div class="col-md-3 ">
+				<div class="d-flex flex-row flex-wrap align-items-center">
+					<div class="p-2">
+						<input type="text" class="form-control form-control-sm " name="" id="" placeholder="Filter">
+					</div>
+					<div class="p-2">
+						<img src="../property/img/add.png" alt="add" id="callAddAccount" class="ctm-hover" >
+					</div>
+				</div>
 			</div>
 		</div>
 		

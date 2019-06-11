@@ -241,3 +241,12 @@ img.ctm-hover:hover{
 .lbl-rm-l{
 	margin-left:0;
 }
+/*******************************FLEX ITEMS CLASSES***************************************/
+.p-2{
+	padding:0 !important;
+}
+/****************************Remove Padding**************************************/
+.row-rm-pad{
+	padding-right: 0;
+	padding-left: 0;
+}

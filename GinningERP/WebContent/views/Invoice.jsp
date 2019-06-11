@@ -13,9 +13,21 @@
 <body>
       <%@include file="../views/NavBar.html" %>
             <div class="container-fluid">
-                <div class="row mt-2">
-                    <div class="col-md-8">
-                    	<div class="tile-background border" id="getHeight">
+            
+            <div class="row justify-content-md-center mt-2 tile-background-row ">
+                <div class="col-md-3">
+                        <label class="lbl-rm-l">Today's Purchase Rate</label>
+                        <input type="text" class="form-control form-control-sm" value="Today's Purchase Rate">
+                    </div>
+                <div class="col-md-3">
+                        <label class="lbl-rm-l">Average Purchase Price</label>
+                        <input type="text" class="form-control form-control-sm" value="Average Purchase Price">
+                    </div>   
+                </div>
+            
+                <div class="row mt-2 ">
+                    <div class="col-md-8 row-rm-pad">
+                    	<div class="tile-background" id="getHeight">
                         <form action="../processing/approvedInvoiceEntry.jsp" id="adminApprovalForm">
                         	<input type="hidden" name="id" value="" id="id" />
                             <div class="form-row">
@@ -139,8 +151,8 @@
                         </form>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                    	<div class="tile-background border setHeight">
+                    <div class="col-md-4 row-rm-pad">
+                    	<div class="tile-background setHeight">
                         <table class="table">
                             <thead>
                                 <tr>
