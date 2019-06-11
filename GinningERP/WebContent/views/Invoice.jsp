@@ -89,7 +89,7 @@
                                         <tr>
                                             <td id="tableRst">01</td>
                                             <td id="material">Product Name</td>
-                                            <td><input type="text" id="quantity" name="quantity" value="1" readonly="readonly"/></td>
+                                            <td><input type="text" id="quantity" class="form-control form-control-sm" name="quantity" value="1" readonly="readonly"/></td>
                                             <td id="grade">A</td>
                                             <td id="moisture"><input type="text" id="moisture" name="moisture" class="form-control form-control-sm" /></td>
                                             <td id="rate"><input type="text" id="rate" name="rate" class="form-control form-control-sm"></td>
@@ -98,27 +98,18 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-md-12 ">
-                                   <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td rowspan="2">
-                                                <label>Note :</label>
-                                                <textarea id="note" name="note" class="form-control form-control-sm"></textarea>
-                                            </td>
-                                            <td align="right">
-                                                <label for="">Advance :</label> 
-                                                <input type="text" id="advance" name="advance" class="custom-noborder-input" value="10000">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td align="right">
-                                                <label for="">Net Payable :</label> 
-                                                <input type="text" id="net" name="net" class="custom-noborder-input" value="35000">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                   </table>
+                                	 <div class="col-md-9 ">
+	                                     <label class="lbl-rm-b lbl-rm-l">Note :</label>
+	                                     <textarea id="note" name="note" class="form-control form-control-lg"></textarea>
+									</div>
+									<div class="col-md-3">
+										<label for="" class="lbl-rm-b lbl-rm-l">Advance :</label> 
+	                                    <input type="text" id="advance" name="advance" class="form-control form-control-sm lbl-rm-b lbl-rm-t" value="10000">
+	                                    <label for="" class="lbl-rm-b lbl-rm-t lbl-rm-l">Net Payable :</label> 
+	                                    <input type="text" id="net" name="net" class="form-control form-control-sm lbl-rm-b lbl-rm-t" value="35000">
+									</div>
+                               
+                                                
                                 </div>
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-around custom-checkbox">
@@ -153,9 +144,8 @@
                                         <button style="margin-bottom:8px;" type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp" onclick="submitForm()">Approve</button>
                                     </div>
                                 </div>
+                                 </form>
                             </div> 
-                        </form>
-                        </div>
                     </div>
                     <div class="col-md-4">
                     	<div class="tile-background setHeight">
