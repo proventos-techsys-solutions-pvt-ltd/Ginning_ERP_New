@@ -4,7 +4,6 @@ public class Bank {
 	
 	private int id, companyId;
 	private String bankName, ifsc, micr, accountNo, date;
-	private double openingBal;
 	public int getId() {
 		return id;
 	}
@@ -46,12 +45,6 @@ public class Bank {
 	}
 	public void setDate(String date) {
 		this.date = date;
-	}
-	public double getOpeningBal() {
-		return openingBal;
-	}
-	public void setOpeningBal(double openingBal) {
-		this.openingBal = openingBal;
 	}
 
 }

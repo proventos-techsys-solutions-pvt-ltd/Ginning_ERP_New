@@ -6,12 +6,13 @@ import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.prov.bean.Bank;
+import com.prov.bean.CreditVoucher;
 import com.prov.db.OracleConnection;
 
-public class AddBank {
+public class AddCreditEntry {
 	
-	public int addBank(Bank b) {
+	public int addCreditEntry(CreditVoucher c)
+	{
 
 		Connection con = null;
 		int id = 0;
@@ -24,32 +25,35 @@ public class AddBank {
 		
 		
 		
-		String addBank = "{ ? = call ADD_BANK(?,?,?,?,?,?) }";
+		String addCreditEntry = "{ ? = call ADD_VOUCHER_CREDIT(?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
-			String date = b.getDate();
-			Date invDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+			Date voucherDate = new SimpleDateFormat("yyyy-MM-dd").parse(c.getVoucherDate());
 			@SuppressWarnings({ "deprecation" })
-			java.sql.Date sqlDate = new java.sql.Date(invDate.getDate());
+			java.sql.Date voucherSqlDate = new java.sql.Date(voucherDate.getDate());
 			
-			cs = con.prepareCall(addBank);
+			cs = con.prepareCall(addCreditEntry);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
-			cs.setInt(2, b.getCompanyId());
-			cs.setString(3, b.getBankName() );
-			cs.setString(4, b.getIfsc());
-			cs.setString(5, b.getMicr());
-			cs.setString(6, b.getAccountNo());
-			cs.setDate(7, sqlDate);
+			cs.setInt(2, c.getCompanyId());
+			cs.setString(3, c.getFinancialYear());
+			cs.setDate(4,voucherSqlDate);
+			cs.setString(5, c.getVoucherRef());
+			cs.setInt(6,c.getAccountNameId());
+			cs.setString(7, c.getDescription());
+			cs.setDouble(8,c.getCreditAmount());
+			cs.setString(9, c.getPreparedBy());
+			cs.setString(10,c.getAuthorizedBy());
+			
 			
 			
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);
 			
-			b.setId(id);
+			c.setId(id);
 			
 			cs.close();
 			con.close();

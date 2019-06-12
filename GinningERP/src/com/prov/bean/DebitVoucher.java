@@ -2,9 +2,9 @@ package com.prov.bean;
 
 public class DebitVoucher {
 
-	private int id, companyId;
-	private String financialYear, voucherDate, voucherNo, voucherRef, accountName, description, preparedBy, authorizedBy;
-	double creditAmount;
+	private int id, companyId, accountNameId;
+	private String financialYear, voucherDate, voucherNo, voucherRef, description, preparedBy, authorizedBy;
+	double debitAmount;
 	public int getId() {
 		return id;
 	}
@@ -41,11 +41,11 @@ public class DebitVoucher {
 	public void setVoucherRef(String voucherRef) {
 		this.voucherRef = voucherRef;
 	}
-	public String getAccountName() {
-		return accountName;
+	public int getAccountNameId() {
+		return accountNameId;
 	}
-	public void setAccountName(String accountName) {
-		this.accountName = accountName;
+	public void setAccountNameId(int accountNameId) {
+		this.accountNameId = accountNameId;
 	}
 	public String getDescription() {
 		return description;
@@ -65,11 +65,11 @@ public class DebitVoucher {
 	public void setAuthorizedBy(String authorizedBy) {
 		this.authorizedBy = authorizedBy;
 	}
-	public double getCreditAmount() {
-		return creditAmount;
+	public double getDebitAmount() {
+		return debitAmount;
 	}
-	public void setCreditAmount(double creditAmount) {
-		this.creditAmount = creditAmount;
+	public void setDebitAmount(double debitAmount) {
+		this.debitAmount = debitAmount;
 	}
 	
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <!doctype html>
 <html lang="en">
     <head>
@@ -21,50 +22,44 @@
        						<h3>Setup Bank Accounts</h3>
        					</div>
        				</div>
-				<form>
+				<form action="../processing/addBank.jsp" name="">
 					<div class="form-row">
 						<div class="form-group col-md-4">
 						<label>Company Name</label>
-						<select class="form-control form-control form-control-radius">
-							<option>Company 1</option>
-							<option>Company 2</option>
-							<option>Company 3</option>
+						<select class="form-control form-control form-control-radius" name="companyId" id="companyId">
+							<c:Company/>
 						</select>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
 						<label>Bank Name</label>
-						<input type="text" class="form-control form-control form-control-radius" name="" id="">
+						<input type="text" class="form-control form-control form-control-radius" name="bankName" id="bankName">
 						</div>
 						<div class="col-md-6">
 						<label>Account No</label>
-						<input type="text" class="form-control form-control form-control-radius" name="" id="">
+						<input type="text" class="form-control form-control form-control-radius" name="accountNo" id="accountNo">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
 						<label>IFSC Code</label>
-						<input type="text" class="form-control form-control form-control-radius" name="" id="">
+						<input type="text" class="form-control form-control form-control-radius" name="ifsc" id="ifsc">
 						</div>
 						<div class="form-group col-md-6">
 						<label>MICR Code</label>
-						<input type="text" class="form-control form-control form-control-radius" name="" id="">
+						<input type="text" class="form-control form-control form-control-radius" name="micr" id="micr">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
 						<label>Date</label>
-						<input type="date" class="form-control form-control form-control-radius" name="" id="">
-						</div>
-						<div class="form-group col-md-6">
-						<label>Opening Balance</label>
-						<input type="text" class="form-control form-control form-control-radius" name="" id="">
+						<input type="date" class="form-control form-control form-control-radius" name="date" id="date">
 						</div>
 					</div>
 				</form>
 				</div>
-				<button type="button" class="btn btn-primary btn btn-mr-tp">Save</button>
+				<button type="button" class="btn btn-primary btn btn-mr-tp" onclick="submitForm()">Save</button>
        			</div>
        			<div class="col-md-4">
        			<div class="tile-background" id="setHeight">
@@ -108,7 +103,12 @@
 		<script src="../js/bootstrap.min.js"></script>
 		<script src="../js/commonjs.js"></script>
 		<script>
-			settingHeightofAdjacentPanels("getHeight","scroll");
+	
+			function submitForm(){
+				document.getElementsByName("bankForm")[0].submit();
+			}
+			
+			
 		</script>
 </body>
 </html>

@@ -38,6 +38,10 @@
 						<label class="lbl-rm-it">Voucher No</label>
 						<input type="text" class="form-control form-control-sm" name="" id="" readonly>
 				</div>
+				<div class="col-md-2">
+						<label class="lbl-rm-it">Reference</label>
+						<input type="text" class="form-control form-control-sm" name="" id="">
+				</div>
 			</div>
 			
 			<div class="row mt-2 tile-background-row">

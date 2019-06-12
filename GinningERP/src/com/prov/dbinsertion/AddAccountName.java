@@ -3,16 +3,13 @@ package com.prov.dbinsertion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import com.prov.bean.Bank;
+import com.prov.bean.AccountName;
 import com.prov.db.OracleConnection;
 
-public class AddBank {
+public class AddAccountName {
 	
-	public int addBank(Bank b) {
-
+	public int addAccountName(AccountName a)
+	{
 		Connection con = null;
 		int id = 0;
 		try {
@@ -24,32 +21,25 @@ public class AddBank {
 		
 		
 		
-		String addBank = "{ ? = call ADD_BANK(?,?,?,?,?,?) }";
+		String addAccountName = "{ ? = call ADD_ACCOUNT_NAME(?,?,?) }";
 		CallableStatement cs;
 		try {
 			
-			String date = b.getDate();
-			Date invDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-			@SuppressWarnings({ "deprecation" })
-			java.sql.Date sqlDate = new java.sql.Date(invDate.getDate());
 			
-			cs = con.prepareCall(addBank);
+			cs = con.prepareCall(addAccountName);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
-			cs.setInt(2, b.getCompanyId());
-			cs.setString(3, b.getBankName() );
-			cs.setString(4, b.getIfsc());
-			cs.setString(5, b.getMicr());
-			cs.setString(6, b.getAccountNo());
-			cs.setDate(7, sqlDate);
+			cs.setInt(2, a.getCompanyId());
+			cs.setInt(3, a.getAccountCategoryId());
+			cs.setString(4,a.getAccountName());
 			
 			
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);
 			
-			b.setId(id);
+			a.setId(id);
 			
 			cs.close();
 			con.close();

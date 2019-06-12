@@ -4,6 +4,14 @@ public class AccountName {
 	
 	private int id, companyId, accountCategoryId;
 	private String accountName;
+	private double openingBalance;
+	
+	public double getOpeningBalance() {
+		return openingBalance;
+	}
+	public void setOpeningBalance(double openingBalance) {
+		this.openingBalance = openingBalance;
+	}
 	public int getId() {
 		return id;
 	}

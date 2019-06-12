@@ -20,6 +20,18 @@
 			<h4>Chart of Accounts</h4>
 		</div>
 		</div>
+		
+		<div class="row tile-background-row">
+			<div class="col-md-3">
+				<label class="lbl-rm-l lbl-rm-t">Company</label>
+				<select class="form-control form-control-sm" name="" id="">
+					<option>Company</option>
+					<option>Company</option>
+					<option>Company</option>
+				</select>
+			</div>
+		</div>
+		
 		<div class="row tile-background-row">
 			<div class="col-md-3 ">
 				<div class="d-flex flex-row flex-wrap align-items-center">
@@ -77,6 +89,12 @@
 		        		<div class="col-md-12">
 		        			<label>Description</label>
 		        			<textarea class="form-control form-control-sm" name="accountDescription"></textarea>
+		        		</div>
+		        	</div>
+		        	<div class="form-row">
+		        		<div class="col-md-6">
+		        			<label>Opening Balance</label>
+		        			<input class="form-control form-control-sm" type="text" id="openingBal" name="openingBal">
 		        		</div>
 		        	</div>
 		        	
