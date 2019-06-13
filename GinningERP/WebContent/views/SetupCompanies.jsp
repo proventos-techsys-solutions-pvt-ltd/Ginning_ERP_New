@@ -92,7 +92,6 @@
 				<h3>Company Details</h3>
 			</div>
 			<div class="tile-background border mt-2">
-			some text
 			</div>
 		</div>
 		</div>
@@ -100,6 +99,7 @@
    		<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/commonjs.js"></script>
 		<script>
 		window.onload = function() {
 			  getCompanyData();

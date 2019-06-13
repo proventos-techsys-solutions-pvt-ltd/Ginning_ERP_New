@@ -6,10 +6,10 @@
     <%
     
     int companyId = Integer.parseInt(request.getParameter("companyId"));
-    String bankName = request.getParameter("bankName");
+    String bankName = request.getParameter("bankName").toUpperCase();
     String accountNo = request.getParameter("accountNo");
-    String ifsc = request.getParameter("ifsc");
-    String micr = request.getParameter("micr");
+    String ifsc = request.getParameter("ifsc").toUpperCase();
+    String micr = request.getParameter("micr").toUpperCase();
     String date = request.getParameter("date");
     
     Bank b = new Bank();

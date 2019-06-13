@@ -55,5 +55,50 @@ public class CompanyReport {
 		
 		return cList;
 	}
+	
+	
+	public Company getCompanyData(int id) {
+		ResultSet rs = null;
+		Connection con = null;
+		Company c = new Company();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT * FROM COMPANY_MASTER WHERE ID=?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, id);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				c.setId(rs.getInt(1));
+				c.setName(rs.getString(2));
+				c.setAddress(rs.getString(3));
+				c.setCity(rs.getString(4));
+				c.setState(rs.getString(5));
+				c.setPan(rs.getString(6));
+				c.setTan(rs.getString(7));
+				c.setCin(rs.getString(8));
+				c.setGst(rs.getString(9));
+				c.setTelephone(rs.getString(10));
+				c.setMobile(rs.getString(11));
+				c.setEmail(rs.getString(12));
+				c.setLogoPath(rs.getString(13));
+			
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return c;
+	}
 
 }

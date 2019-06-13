@@ -11,7 +11,6 @@
  
  	ArrayList<Company> c = new ArrayList<Company>();
  	
- 	System.out.println(c);
  	
  	c = cr.getReport();
  	

@@ -22,7 +22,7 @@
        						<h3>Setup Bank Accounts</h3>
        					</div>
        				</div>
-				<form action="../processing/addBank.jsp" name="">
+				<form action="../processing/addBank.jsp" name="bankForm">
 					<div class="form-row">
 						<div class="form-group col-md-4">
 						<label>Company Name</label>
@@ -75,17 +75,9 @@
        								<tr>
        									<th>Company</th>
        									<th>Bank</th>
-       									<th>Balance</th>
        								</tr>
        							</thead>
-       							<tbody>
-       							<% for(int i = 0; i<5 ; i++){ %>
-       								<tr>
-       									<td>Company 1</td>
-       									<td>Bank 1</td>
-       									<td>10000</td>
-       								</tr>
-       								<%} %>
+       							<tbody id="tableBody">
        							</tbody>
        						</table>
        					</div>
@@ -106,6 +98,58 @@
 	
 			function submitForm(){
 				document.getElementsByName("bankForm")[0].submit();
+			}
+			
+			window.onload = function() {
+				  getBankData();
+				};
+			
+			function getBankData(){
+
+				url = "../processing/bankReport.jsp";
+				
+				if(window.XMLHttpRequest){  
+					fetchRequest=new XMLHttpRequest();  
+				}  
+				else if(window.ActiveXObject){  
+					fetchRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+				}  
+			  
+				try{  
+					fetchRequest.onreadystatechange=getData;  
+					console.log("AJAX Req sent");
+					fetchRequest.open("GET",url,true);  
+					fetchRequest.send();  
+				}catch(e){alert("Unable to connect to server");}
+			}
+			
+			function getData(){
+				
+				if(fetchRequest.readyState == 4){
+					var response = this.response.trim();
+					console.log(response)
+					
+					var element = document.getElementById("tableBody");
+					
+					var dataList = JSON.parse(response);
+					
+					
+					
+					var size = dataList.length;
+					console.log(size);
+					
+					for (i = 0; i < size; i++) {
+					
+						element.insertAdjacentHTML('beforeend',''+
+						'<tr>'+
+							'<td>'+dataList[i].companyName+'</td>'+
+							'<td>'+dataList[i].bankName+'</td>'+
+						'</tr>');
+					}
+					 
+					
+				}
+				
 			}
 			
 			

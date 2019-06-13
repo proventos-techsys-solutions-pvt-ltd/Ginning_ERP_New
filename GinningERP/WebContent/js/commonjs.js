@@ -1,3 +1,10 @@
+/**********************ACCEPT THE VALUES IN UPPER CASE****************/
+var input = document.getElementsByTagName("input");
+for(i=0;i<input.length;i++){
+	document.getElementsByTagName("input")[i].addEventListener("keyup",function(){
+			document.getElementsByTagName("input")[i].value.toUpperCase();
+	})
+}
 /*************************SET TITLE OF REPORT PAGE********************/
 function setTitle(title){
 	document.getElementById("report-title").style.padding = ".5rem .5rem .5rem 0";

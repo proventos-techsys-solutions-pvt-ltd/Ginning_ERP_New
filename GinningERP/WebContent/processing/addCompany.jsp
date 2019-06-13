@@ -90,6 +90,7 @@
     	ac.addCompany(c);
     	
     	response.sendRedirect("../views/SetupCompanies.jsp");
+    	
       } catch(Exception ex) {
          System.out.println(ex);
          
