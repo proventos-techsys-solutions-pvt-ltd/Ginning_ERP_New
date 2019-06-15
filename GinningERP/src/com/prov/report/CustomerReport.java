@@ -33,7 +33,6 @@ public class CustomerReport {
 				customer.setName(rs.getString(2));
 				customer.setAddress(rs.getString(3));
 				customer.setMobile(rs.getString(4));
-				System.out.println(customer.getId());
 			}
 			
 			rs.close();

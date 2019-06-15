@@ -80,7 +80,7 @@
 		      					<select class="form-control form-control-sm name="" id="">
 		      						<option value="">Equal To</option>
 		      						<option value="">Greater Than</option>
-		      						<option value="">Samller Than</option>
+		      						<option value="">Smaller Than</option>
 		      					</select>
 		      				</div>
 		      				<div class="col-md-auto">

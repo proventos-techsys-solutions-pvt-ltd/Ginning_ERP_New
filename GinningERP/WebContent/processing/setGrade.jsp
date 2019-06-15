@@ -3,9 +3,9 @@
     pageEncoding="ISO-8859-1"%>
 
     <% 
-    	int rst = Integer.parseInt(request.getParameter("rst"));
-    	String grade = request.getParameter("grade");
-    	Float graderRate = Float.parseFloat(request.getParameter("graderRate"));
+    	int rst = Integer.parseInt(request.getParameter("gradeRST"));
+    	String grade = request.getParameter("grade").toUpperCase();
+    	Float graderRate = Float.parseFloat(request.getParameter("rate"));
     	
     	if(rst == 0 || grade == "" || grade == null || graderRate == 0 || graderRate == null)
     	{

@@ -27,54 +27,53 @@
  	
  	if(cid == 0 || rst == 0 || date == null || vehicleNo == "" || vehicleNo == null || vehicleType == null || 
  	   vehicleType == "" || customer == "" || customer == null || address == "" || address == null || 
- 	   material == null || material == "" || mobile == null || mobile == "" || gross == 0 || tare == 0 || net == 0 ||
-       grossWt == "" || grossWt == null || tareWt == "" || tareWt == null || netWt == "" || netWt == null || weighRate == 0)
+ 	   material == null || material == "" || mobile == null || mobile == "" || gross == 0 ||
+       grossWt == "" || grossWt == null || weighRate == 0)
  	{
  		out.println("Please enter valid information.");
  	}
  	else{
  	
-	CustomerVehicle cv = new CustomerVehicle();
-	Invoice inv = new Invoice();
-	WeighMast w = new WeighMast();
-	
-	cv.setCid(cid);
-	cv.setVehicleNo(vehicleNo);
-	cv.setVehicleType(vehicleType);
-	//cv.setGrossWtTime(grossWt);
-	//cv.setTareWtTime(tareWt);
-	
-	AddCustomerVehicle addVehicle = new AddCustomerVehicle();
-	
-	int vehicleId = addVehicle.addCustomerVehicle(cv);
-	
-	inv.setRst(rst);
-	inv.setCid(cid);
-	inv.setVid(vehicleId);
-	
-	inv.setInvDate(date);
-	inv.setAmountPaid(0);
-	inv.setFinalRate(0);
-	inv.setPending(0);
-	inv.setTotal(0);
-	
-	w.setMaterial(material);
-	w.setWeighRate(weighRate);
-	w.setRst(rst);
-	w.setCid(cid);
-	w.setVid(vehicleId);
-	w.setGross(gross);
-	w.setTare(tare);
-	w.setNet(net);
-	w.setGrossWtTime(grossWt);
-	w.setTareWtTime(tareWt);
+		CustomerVehicle cv = new CustomerVehicle();
+		Invoice inv = new Invoice();
+		WeighMast w = new WeighMast();
+		
+		cv.setCid(cid);
+		cv.setVehicleNo(vehicleNo);
+		cv.setVehicleType(vehicleType);
+		//cv.setGrossWtTime(grossWt);
+		//cv.setTareWtTime(tareWt);
+		
+		AddCustomerVehicle addVehicle = new AddCustomerVehicle();
+		
+		int vehicleId = addVehicle.addCustomerVehicle(cv);
+		
+		inv.setRst(rst);
+		inv.setCid(cid);
+		inv.setVid(vehicleId);
+		
+		inv.setInvDate(date);
+		inv.setAmountPaid(0);
+		inv.setFinalRate(0);
+		inv.setPending(0);
+		inv.setTotal(0);
+		
+		w.setMaterial(material);
+		w.setWeighRate(weighRate);
+		w.setRst(rst);
+		w.setCid(cid);
+		w.setVid(vehicleId);
+		w.setGross(gross);
+		w.setTare(tare);
+		w.setNet(net);
+		w.setGrossWtTime(grossWt);
+		w.setTareWtTime(tareWt);
 	
 	if(w.getTare() == 0 && w.getNet() == 0){
 	
 		AddWeighMast addWeigh = new AddWeighMast();
 		
 		int rstWeighMast = addWeigh.addWeighMast(w);
-		
 		
 		AddInvoice addInvoice = new AddInvoice();
 		
@@ -91,7 +90,7 @@
 		
 		response.sendRedirect("../views/GenerateRST.jsp");
 		
-	}
+		}
  	}
 %>
 

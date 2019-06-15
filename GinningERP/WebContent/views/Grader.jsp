@@ -34,7 +34,7 @@
       <div class="row mt-2">
         <div class="col-md-8">
         <div class="tile-background">
-          <form action="">
+          <form action="../processing/setGrade.jsp" id="graderForm">
             <div class="form-row">
               <div class="col-md-6">
                   <label>Authorized Grader Name</label>
@@ -87,9 +87,11 @@
                         <td>100 Qtl</td>
                         <td>
                           <select name="grade" id="grade" class="form-control ">
-                            <option value="">Grade A</option>
-                            <option value="">Grade B</option>
-                            <option value="">Grade C</option>
+                            <option value="A">Grade A</option>
+                            <option value="B">Grade B</option>
+                            <option value="C">Grade C</option>
+                            <option value="D">Grade D</option>
+                            <option value="E">Grade E</option>
                           </select>
                         </td>
                         <td><input type="text" class="form-control " id="rate" name="rate"></td>
@@ -101,7 +103,7 @@
               </div>
               <div class="form-row justify-content-md-end border-top">
               <div class="col-md-auto offset-md-auto text-right">
-                 <button type="button" class="btn btn-primary btn-sm ">Submit</button>
+                 <button type="button" class="btn btn-primary btn-sm " onclick="submitForm()">Submit</button>
               </div>
               <div class="col-md-auto text-right">
                  <button type="button" class="btn btn-primary btn-sm ">PDF</button>
@@ -137,6 +139,10 @@
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script>
+	
+	function submitForm(){
+		document.getElementById("graderForm").submit();
+	}
 	
 	window.onload = function() {
 		pendingGrade();

@@ -2,45 +2,48 @@ package com.prov.dbops;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import com.prov.db.OracleConnection;
 
-public class Grading {
+public class CheckRST {
 	
-	public void setGrading(String grade, float rate, int rst) {
-		
+	public int checkRstExists(int rst) {
 		Connection con = null;
+		int flag=0;
 		try {
 			con = OracleConnection.getConnection();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 
-		String updateWeighMast = "UPDATE WEIGH_MAST SET GRADE = ?, GRADER_RATE=? WHERE RST=? ";
+		String checkRst = "SELECT COUNT(*) FROM INVOICE_MAST WHERE RST=?";
 		PreparedStatement stmt;
+		ResultSet rs=null;
 		try {
 			
-			stmt = con.prepareStatement(updateWeighMast);
+			stmt = con.prepareStatement(checkRst);
 			
-			stmt.setString(1, grade );
-			stmt.setFloat(2, rate);
-			stmt.setInt(3, rst);
+			stmt.setInt(1, rst );
 			
+			rs = stmt.executeQuery();
 			
-			int flag = stmt.executeUpdate();
+			while(rs.next()) {
+				flag=rs.getInt(1);
+			}
 			
 			stmt.close();
 			con.close();
 			
 			if(flag == 1) {
-				System.out.println("Grading Succesful-"+rst);
+				System.out.println("RST Exists-"+rst);
 			}else {
-				System.out.println("Grading Failed-"+rst);
+				System.out.println("RST doesn't exists-"+rst);
 			}
 			} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		return flag;
 	}
 
 }

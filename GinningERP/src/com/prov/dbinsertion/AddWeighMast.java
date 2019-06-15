@@ -2,7 +2,7 @@ package com.prov.dbinsertion;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.PreparedStatement;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -67,6 +67,56 @@ public int addWeighMast(WeighMast wm) {
 		}
 		
 		return id;
+	}
+
+
+	public int addSecondWeighment(WeighMast wm) {
+		Connection con = null;
+		int flag= 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		String updateWeighMast = " UPDATE WEIGH_MAST SET TARE = ?,"
+							+ " SET NET = ?"
+							+ " SET TAREWT_TIME = ?"
+							+ "WHERE RST = ?";
+		
+		PreparedStatement stmt;
+		try {
+			
+			Date sqlTareWtTime = new SimpleDateFormat("yyyy-MM-dd").parse(wm.getTareWtTime());
+			@SuppressWarnings({ "deprecation" })
+			java.sql.Date tareSqlDate = new java.sql.Date(sqlTareWtTime.getDate());
+			
+			stmt = con.prepareStatement(updateWeighMast);
+			
+			
+			stmt.setFloat(2, wm.getTare());
+			stmt.setFloat(3, wm.getNet());
+			stmt.setDate(4, tareSqlDate);
+			stmt.setInt(5, wm.getRst());
+
+			
+			flag = stmt.executeUpdate();
+			
+			stmt.close();
+			con.close();
+			
+			if(flag == 1) {
+				System.out.println("Updation Succesful"+flag);
+			}
+			else {
+				System.out.println("Updation Failed"+flag);
+			}
+			} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return flag;
+		
 	}
 
 

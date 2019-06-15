@@ -16,13 +16,13 @@
   <div class="container-fluid">
   	<div class="row mt-2 tile-background-row">
   		<div class="col-md-12">
-  			<h2>Generate RST</h2>
+  			<h2 id="title">Weighment</h2>
   		</div>
   	</div>
    	<div class="row mt-2">
     <div class="col-md-8">
     <div class="tile-background mt-2 " id="getHeight">
-      	<form id="newRST" action="../processing/addInvoiceEntry.jsp">
+      	<form id="newRST" action="">
       	<div class="form-row">
 	      	<input type="hidden" id="id" name="id" value="0" />
 	        <div class="col-md-4">
@@ -91,7 +91,7 @@
         </div>
         <div class="form-row justify-content-end border-top">
 	        <div class="col-md-auto">
-        		<button type="button" class="btn btn-primary change-button">Fetch RST</button>
+        		<button type="button" class="btn btn-primary change-button" onclick="fetchRst()">Fetch RST</button>
 	  		</div>
   			<div class="col-md-auto ">
   				<button type="button" class="btn btn-primary change-button" onclick="submitRSTEntry()">Submit</button>
@@ -200,6 +200,41 @@
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/commonjs.js"></script>
 <script>
+
+function decideWeighment(flag){
+
+	if(flag === 0){
+		document.getElementById("newRST").action = "../processing/addInvoiceEntry.jsp";
+	}else if(flag === 1){
+		document.getElementById("title").innerHTML = "Second Weighment";
+		document.getElementById("newRST").action = "../processing/secondWeighment.jsp";
+	}
+	
+}
+
+function fetchRst(){
+	
+	var url="../processing/readWeighBridgeData.jsp";
+	if(window.XMLHttpRequest){  
+		fetchData=new XMLHttpRequest();  
+	}  
+	else if(window.ActiveXObject){  
+		fetchData=new ActiveXObject("Microsoft.XMLHTTP");  
+	}  
+  
+	try{  
+		fetchData.onreadystatechange=fetchWeighData;  
+		console.log("AJAX Req sent");
+		fetchData.open("GET",url,true);  
+		fetchData.send();  
+	}catch(e){alert("Unable to connect to server");}
+}
+
+ function fetchWeighData(){
+	 if(fetchData.readyState == 4){
+		 console.log("Data Found!!!!!!!")
+	 }
+ }
 
 window.onload = function() {
 	pendingTareWt();

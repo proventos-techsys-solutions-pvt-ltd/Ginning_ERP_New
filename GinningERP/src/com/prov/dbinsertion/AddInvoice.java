@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import com.prov.bean.Invoice;
 import com.prov.db.OracleConnection;
 
@@ -21,7 +20,7 @@ public int addInvoice(Invoice i) {
 			e.printStackTrace();
 		}
 
-		String addInvoice = "{ ? = call ADD_INVOICE(?,?,?,?,?,?,?,?) }";
+		String addInvoice = "{ ? = call ADD_INVOICE(?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -41,6 +40,7 @@ public int addInvoice(Invoice i) {
 			cs.setDouble(7, i.getAmountPaid());
 			cs.setDouble(8, i.getPending());
 			cs.setDate(9, invSqlDate);
+			cs.setString(10, i.getInvoiceNo());
 			
 			cs.executeUpdate();
 			
