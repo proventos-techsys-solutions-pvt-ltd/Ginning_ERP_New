@@ -23,8 +23,6 @@ public class AddCreditEntry {
 		}
 	
 		
-		
-		
 		String addCreditEntry = "{ ? = call ADD_VOUCHER_CREDIT(?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {

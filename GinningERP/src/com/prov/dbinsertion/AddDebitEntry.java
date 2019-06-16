@@ -20,8 +20,6 @@ public class AddDebitEntry {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-	
-		
 		
 		
 		String addDebitEntry = "{ ? = call ADD_VOUCHER_DEBIT(?,?,?,?,?,?,?,?,?,?) }";
