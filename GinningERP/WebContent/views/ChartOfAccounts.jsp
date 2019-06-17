@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.Date"%>
+<%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -24,10 +26,8 @@
 		<div class="row tile-background-row">
 			<div class="col-md-3">
 				<label class="lbl-rm-l lbl-rm-t">Company</label>
-				<select class="form-control form-control-sm" name="" id="">
-					<option>Company</option>
-					<option>Company</option>
-					<option>Company</option>
+				<select class="form-control form-control-sm" name="company" id="company">
+					<c:Company/>					
 				</select>
 			</div>
 		</div>
@@ -80,6 +80,7 @@
 		        		<div class="col-md-6">
 		        			<label>Account Category</label> <!-- take value from table accounttype -->
 		        			<select class="form-control form-control-sm" name="accountType" id="accountType">
+		        				<option value="1">Test</option>
 		        			</select>
 		        		</div>
 		        		<div class="col-md-6">
@@ -88,7 +89,7 @@
 		        		</div>
 		        		<div class="col-md-12">
 		        			<label>Description</label>
-		        			<textarea class="form-control form-control-sm" name="accountDescription"></textarea>
+		        			<textarea class="form-control form-control-sm" name="accountDescription" id="accountDescription"></textarea>
 		        		</div>
 		        	</div>
 		        	<div class="form-row">
@@ -102,7 +103,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-		        <button type="button" class="btn btn-primary" id="saveButton" onclick="addChartOfAccounts()">Save and Close</button>
+		        <button type="button" class="btn btn-primary" id="saveButton" onclick="submitAccount()">Save and Close</button>
 		        <button type="button" class="btn btn-primary" id="updateButton" onclick="updateChartOfAccounts()">Update</button>
 		      </div>
 		    </div>
@@ -118,6 +119,32 @@
 	<script src="../js/commonjs.js"></script>
 	<script>
 	callModalPopup("callAddAccount","addAccount");//Calling account add popup
+	
+	function submitAccount(){
+		
+		var companyId = document.getElementById('company').value;
+		var accountType = document.getElementById('accountType').value;
+		var accountName = document.getElementById('accountName').value;
+		var description = document.getElementById('accountDescription').value;
+		var openingBalance = document.getElementById('openingBal').value;
+		
+		url = "../processing/addAccount.jsp?company="+companyId+"&accountType="+accountType+"&accountName="+accountName+"&description="+description+"&openingBalance="+openingBalance;
+		
+		if(window.XMLHttpRequest){  
+			submitReq=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			submitReq=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+	  
+		try{  
+			console.log("AJAX Req sent");
+			submitReq.open("GET",url,true);  
+			submitReq.send();  
+		}catch(e){alert("Unable to connect to server");}
+		
+	}
+	
 	</script>	
 </body>
 </html>

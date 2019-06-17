@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <!doctype html>
 <html lang="en">
     <head>
@@ -20,13 +21,11 @@
 			</div>
 			<div class="row tile-background-row">
 				<div class="col-md-3">
-						<label class="lbl-rm-l ">Select Company</label>
-						<select class="form-control form-control-sm" name="" id="">
-							<option value="">Company 1</option>
-							<option value="">Company 2</option>
-							<option value="">Company 3</option>
-						</select>
-				</div>
+						<label class="lbl-rm-l ">Select Company</label> 
+				<select class="form-control form-control-sm" name="" id="companyId" onchange="setBank()">
+					<c:Company />
+				</select>
+			</div>
 			</div>
 			
 			<div class="row tile-background-row">
@@ -48,9 +47,7 @@
 				<div class="col-md-2">
 						<label class="lbl-rm-l">Expense Account</label>
 						<select class="form-control form-control-sm" name="" id="">
-							<option value="">Expenses 1</option>
-							<option value="">Expenses 2</option>
-							<option value="">Expenses 3</option>
+							<c:Account/>
 						</select>
 				</div>
 				<div class="col-md-5">
@@ -64,8 +61,7 @@
 				<div class="col-md-3">
 						<label class="lbl-rm-l">Payment Mode</label>
 						<select class="form-control form-control-sm" name="" id="">
-							<option value="">Bank Name 1</option>
-							<option value="">Bank Name 2</option>
+							<c:Bank companyId="2" />
 							<option value="">Cash</option>
 						</select>
 				</div>
@@ -83,5 +79,13 @@
  	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
+	<script>
+		function setBank(){
+			var companyId = document.getElementById("companyId").value;
+			console.log(companyId);
+			return companyId;
+		}
+	
+	</script>
 </body>
 </html>

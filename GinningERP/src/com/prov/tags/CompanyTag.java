@@ -46,7 +46,6 @@ public class CompanyTag extends SimpleTagSupport {
 				String companyKey = (String)companyData.getValue();
 				int companyValue = (int)companyData.getKey();
 				out.println("<option value='"+companyValue+"'>"+companyKey+"</option>");
-				System.out.println(companyKey);
 			}
 		}
 	}

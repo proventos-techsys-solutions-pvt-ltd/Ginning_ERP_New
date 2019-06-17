@@ -20,7 +20,16 @@
      <name>Bank</name>
 	<tag-class>com.prov.tags.BankTag</tag-class>
 	<body-content>Empty</body-content>
+	<attribute>  
+	    <name>companyId</name>  
+	    <required>true</required>  
+    </attribute> 
    </tag>
      
+   <tag>
+    <name>Account</name>
+	<tag-class>com.prov.tags.AccountTag</tag-class>
+	<body-content>Empty</body-content>
+   </tag>
   
 </taglib>

@@ -16,6 +16,11 @@ import com.prov.db.OracleConnection;
 
 public class BankTag extends SimpleTagSupport {
 	
+	private static int companyId;
+	
+		public void setCompanyId(int companyId) {
+			 BankTag.companyId=companyId;
+		}
 		
 		public static TreeMap<String,Integer> getBanks() {			
 			Connection con=null;
@@ -23,7 +28,7 @@ public class BankTag extends SimpleTagSupport {
 			TreeMap<String,Integer> bankName = new TreeMap<String,Integer>();
 			try {
 				 con = OracleConnection.getConnection();
-				 String bankQuery = "Select * from Bank_mast order by name";
+				 String bankQuery = "Select * from Bank_mast where company_id ="+BankTag.companyId+" order by bank_name";
 				 Statement stmt = con.createStatement();
 				 bankResultSet = stmt.executeQuery(bankQuery);
 				 while(bankResultSet.next()) {
