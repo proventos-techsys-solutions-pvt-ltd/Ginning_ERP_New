@@ -38,12 +38,13 @@ public class AddCreditEntry {
 			cs.setInt(2, c.getCompanyId());
 			cs.setString(3, c.getFinancialYear());
 			cs.setDate(4,voucherSqlDate);
-			cs.setString(5, c.getVoucherRef());
-			cs.setInt(6,c.getAccountNameId());
-			cs.setString(7, c.getDescription());
-			cs.setDouble(8,c.getCreditAmount());
-			cs.setString(9, c.getPreparedBy());
-			cs.setString(10,c.getAuthorizedBy());
+			cs.setString(5, c.getVoucherNo());
+			cs.setString(6, c.getVoucherRef());
+			cs.setInt(7,c.getAccountNameId());
+			cs.setString(8, c.getDescription());
+			cs.setDouble(9,c.getCreditAmount());
+			cs.setString(10, c.getPreparedBy());
+			cs.setString(11,c.getAuthorizedBy());
 			
 			
 			

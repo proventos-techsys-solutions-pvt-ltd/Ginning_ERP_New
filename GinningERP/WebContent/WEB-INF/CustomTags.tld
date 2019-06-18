@@ -20,10 +20,6 @@
      <name>Bank</name>
 	<tag-class>com.prov.tags.BankTag</tag-class>
 	<body-content>Empty</body-content>
-	<attribute>  
-	    <name>companyId</name>  
-	    <required>true</required>  
-    </attribute> 
    </tag>
      
    <tag>

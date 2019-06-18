@@ -4,53 +4,53 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.Map.Entry;
-import java.util.Set;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.prov.db.OracleConnection;
 
 public class BankTag extends SimpleTagSupport {
 	
-	private static int companyId;
-	
-		public void setCompanyId(int companyId) {
-			 BankTag.companyId=companyId;
-		}
-		
-		public static TreeMap<String,Integer> getBanks() {			
+		public static JSONArray getBanks() {			
 			Connection con=null;
 			ResultSet bankResultSet = null;
-			TreeMap<String,Integer> bankName = new TreeMap<String,Integer>();
+			JSONArray jsonArray = new JSONArray();
 			try {
 				 con = OracleConnection.getConnection();
-				 String bankQuery = "Select * from Bank_mast where company_id ="+BankTag.companyId+" order by bank_name";
+				 String bankQuery = "Select * from Bank_mast order by bank_name";
 				 Statement stmt = con.createStatement();
 				 bankResultSet = stmt.executeQuery(bankQuery);
 				 while(bankResultSet.next()) {
-					  bankName.put(bankResultSet.getString("bank_name"),bankResultSet.getInt("id"));
+					  JSONObject obj = new JSONObject();
+					  obj.put("bankName", bankResultSet.getString("bank_name"));
+					  obj.put("bankId",bankResultSet.getString("id"));
+					  obj.put("companyId", bankResultSet.getString("company_id"));
+					  obj.put("accountNo", bankResultSet.getString("account_no"));
+					  
+					  jsonArray.put(obj);
 					}
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 			
-			return bankName;
+			return jsonArray;
 		}
 		
 		
 		public void doTag() throws IOException {
 			JspWriter out = getJspContext().getOut();
-			Set<Entry<String, Integer>> bankSet = getBanks().entrySet();
-			Iterator<Entry<String, Integer>> bankItr =bankSet.iterator();
-			while(bankItr.hasNext()) {
-				Map.Entry<String, Integer> bankData = (Map.Entry<String, Integer>)bankItr.next();
-				String bankKey = (String)bankData.getKey();
-				int bankValue = (int)bankData.getValue();
-				out.println("<option value='"+bankValue+"'>"+bankKey+"</option>");
+			JSONArray jsonArray = getBanks();
+			for(int i=0;i<jsonArray.length();i++) {
+				try {
+					out.println("<option class='bankOptions' data-company-id='"+jsonArray.getJSONObject(i).get("companyId")+"' value='"+jsonArray.getJSONObject(i).get("bankId")+"'>"+jsonArray.getJSONObject(i).get("bankName")+" - "+jsonArray.getJSONObject(i).get("accountNo")+"</option>");
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}

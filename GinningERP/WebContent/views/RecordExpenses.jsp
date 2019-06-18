@@ -15,14 +15,17 @@
 	<%@include file="../views/NavBar.html" %>
 		<div class="container-fluid">
 			<div class="row mt-2 tile-background-row">
+			
 				<div class="col-md-12">
 						<h4>Expenses</h4>
 				</div>
 			</div>
+		<form action="../processing/expenseEntry.jsp" >
 			<div class="row tile-background-row">
 				<div class="col-md-3">
 						<label class="lbl-rm-l ">Select Company</label> 
-				<select class="form-control form-control-sm" name="" id="companyId" onchange="setBank()">
+				<select class="form-control form-control-sm" name="companyId" id="companyId" onchange="setBank(this.value)">
+					<option selected="selected">Select</option>
 					<c:Company />
 				</select>
 			</div>
@@ -31,45 +34,46 @@
 			<div class="row tile-background-row">
 				<div class="col-md-2">
 						<label class="lbl-rm-l">Date</label>
-						<input type="date" class="form-control form-control-sm" name="" id="">
+						<input type="date" class="form-control form-control-sm" name="date" id="date">
 				</div>
 				<div class="col-md-2">
 						<label class="lbl-rm-it">Voucher No</label>
-						<input type="text" class="form-control form-control-sm" name="" id="" readonly>
+						<input type="text" class="form-control form-control-sm" name="voucherNo" id="voucherNo" value="V001" readonly>
 				</div>
 				<div class="col-md-2">
 						<label class="lbl-rm-it">Reference</label>
-						<input type="text" class="form-control form-control-sm" name="" id="">
+						<input type="text" class="form-control form-control-sm" name="voucherReference" id="voucherReference">
 				</div>
 			</div>
 			
 			<div class="row mt-2 tile-background-row">
 				<div class="col-md-2">
 						<label class="lbl-rm-l">Expense Account</label>
-						<select class="form-control form-control-sm" name="" id="">
+						<select class="form-control form-control-sm" name="accountId" id="accountId">
 							<c:Account/>
 						</select>
 				</div>
 				<div class="col-md-5">
 						<label class="lbl-rm-l">Description</label>
-						<input type="text" class="form-control form-control-sm" name="" id="">
+						<input type="text" class="form-control form-control-sm" name="description" id="description">
 				</div>
 				<div class="col-md-2">
 						<label class="lbl-rm-l">Amount</label>
-						<input type="text" class="form-control form-control-sm" name="" id="">
+						<input type="text" class="form-control form-control-sm" name="amount" id="amount" />
 				</div>
 				<div class="col-md-3">
 						<label class="lbl-rm-l">Payment Mode</label>
-						<select class="form-control form-control-sm" name="" id="">
-							<c:Bank companyId="2" />
-							<option value="">Cash</option>
+						<select class="form-control form-control-sm" name="paymentMode" id="paymentMode">
+							<option data-company-id="0" selected>Select</option>
+							<c:Bank />
+							<option data-company-id="0" value="">Cash</option>
 						</select>
 				</div>
 			</div>
-			
+			</form>
 			<div class="row tile-background-row">
 				<div class="col-md-2 offset-md-10 text-right">
-					<button type="button" class="btn btn-success">Save</button>
+					<button type="button" class="btn btn-success" onclick="expenseEntry()">Save</button>
 					<button type="button" class="btn btn-success">Save & Print</button>
 				</div>
 			</div>
@@ -80,11 +84,28 @@
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script>
-		function setBank(){
-			var companyId = document.getElementById("companyId").value;
-			console.log(companyId);
-			return companyId;
+	
+		function expenseEntry(){
+			
+			document.getElementsByTagName('form')[0].submit();
+			
 		}
+	
+		function setBank(companyId){
+			
+			var options = document.getElementById("paymentMode").options;
+			
+			for(i=0; i<options.length;i++)
+				{
+					if(options[i].getAttribute('data-company-id') != companyId && options[i].getAttribute('data-company-id') != 0){
+						options[i].hidden=true;
+					}else if(options[i].getAttribute('data-company-id') === companyId || options[i].getAttribute('data-company-id') === 0){
+						options[i].hidden=false;
+					}
+				}
+			
+		}
+		
 	
 	</script>
 </body>

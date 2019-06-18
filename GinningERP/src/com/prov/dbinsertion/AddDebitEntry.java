@@ -37,12 +37,14 @@ public class AddDebitEntry {
 			cs.setInt(2, d.getCompanyId());
 			cs.setString(3, d.getFinancialYear());
 			cs.setDate(4,voucherSqlDate);
-			cs.setString(5, d.getVoucherRef());
-			cs.setInt(6,d.getAccountNameId());
-			cs.setString(7, d.getDescription());
-			cs.setDouble(8,d.getDebitAmount());
-			cs.setString(9, d.getPreparedBy());
-			cs.setString(10,d.getAuthorizedBy());
+			cs.setString(5, d.getVoucherNo());
+			cs.setString(6, d.getVoucherRef());
+			cs.setInt(7,d.getAccountNameId());
+			cs.setString(8, d.getDescription());
+			cs.setDouble(9,d.getDebitAmount());
+			cs.setString(10, d.getPreparedBy());
+			cs.setString(11,d.getAuthorizedBy());
+			
 			
 			
 			

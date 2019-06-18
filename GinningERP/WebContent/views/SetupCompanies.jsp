@@ -87,11 +87,11 @@
 		</div>
 		</div>
 		</div>
-		<div class="col-md-5" id="companyDataDisplay">
+		<div class="col-md-5" >
 			<div class="tile-background-g">
 				<h3>Company Details</h3>
 			</div>
-			<div class="tile-background border mt-2">
+			<div class="tile-background border mt-2" id="companyDataDisplay">
 			</div>
 		</div>
 		</div>

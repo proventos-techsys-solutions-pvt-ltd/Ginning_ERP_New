@@ -19,9 +19,12 @@
 				<thead>
 					<tr>
 						<th>Date</th>
+						<th>Voucher No</th>
 						<th>Expense Category</th>
+						<th>Reference</th>
 						<th>Description</th>
 						<th>Amount</th>
+						<th>Mode Of Payment</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -29,6 +32,9 @@
 						<td>21/05/2019</td>
 						<td>Salary</td>
 						<td>Salary Paid To Emloyee</td>
+						<td>10000</td>
+						<td>10000</td>
+						<td>10000</td>
 						<td>10000</td>
 					</tr>
 				</tbody>
