@@ -38,7 +38,7 @@
 				</div>
 				<div class="col-md-2">
 						<label class="lbl-rm-it">Voucher No</label>
-						<input type="text" class="form-control form-control-sm" name="voucherNo" id="voucherNo" value="V001" readonly>
+						<input type="text" class="form-control form-control-sm" name="voucherNo" id="voucherNo" value="" placeholder="V001">
 				</div>
 				<div class="col-md-2">
 						<label class="lbl-rm-it">Reference</label>
