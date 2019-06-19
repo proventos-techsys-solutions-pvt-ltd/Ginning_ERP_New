@@ -13,7 +13,7 @@
 <body>
 	<%@include file="../views/NavBar.html" %>
 	<div class="container-fluid">
-		<%@include file="../views/CommonSearchHeaderForReports.html" %>
+		<%@include file="../views/CommonSearchHeaderForReports.jsp" %>
 		<div class="row mt-2 tile-background-row">
 			<table class="table table-bordered">
 				<thead>
@@ -27,16 +27,8 @@
 						<th>Mode Of Payment</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
-						<td>21/05/2019</td>
-						<td>Salary</td>
-						<td>Salary Paid To Emloyee</td>
-						<td>10000</td>
-						<td>10000</td>
-						<td>10000</td>
-						<td>10000</td>
-					</tr>
+				<tbody id="tableBody">
+				<tr>   </tr>
 				</tbody>
 			</table>
 		</div>
@@ -116,6 +108,59 @@
 		setTitle("Expense Register");//Setting Title of Page
 		setSearchPlaceholder("Search");//Setting Placeholder of Search Input
 		callModalPopup("options","optionsModal");//calling option pop-up
+		
+		document.getElementById("companyId").addEventListener("change",function(){
+			getExpenses(this.value);
+		})
+		
+		function getExpenses(companyId){
+			//console.log(companyId);
+			
+			document.getElementById('tableBody').
+			
+			url = "../processing/expenseReport.jsp?companyId="+companyId;
+			if(window.XMLHttpRequest){  
+				fetchRequest=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				fetchRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+			try{  
+				fetchRequest.onreadystatechange=getData;  
+				console.log("AJAX Req sent");
+				fetchRequest.open("GET",url,true);  
+				fetchRequest.send();  
+			}catch(e){alert("Unable to connect to server");}	
+		}
+		
+		function getData(){
+			
+			if(fetchRequest.readyState == 4){
+				var response = this.response.trim();
+				
+				
+				var element = document.getElementById('tableBody');
+				var tr = element.children;
+				console.log(element);
+				
+				var jsonResponse = JSON.parse(response);
+				console.log(jsonResponse);
+				
+				for(i=0;i<jsonResponse.length;i++){
+					
+					element.insertAdjacentHTML('beforeend','<tr>'+
+							'<td>'+jsonResponse[i].voucherDate+'</td>'+
+							'<td>'+jsonResponse[i].voucherNo+'</td>'+
+							'<td>'+jsonResponse[i].accountCategory+'</td>'+
+							'<td>'+jsonResponse[i].expenseReference+'</td>'+
+							'<td>'+jsonResponse[i].description+'</td>'+
+							'<td>'+jsonResponse[i].amount+'</td>'+
+							'<td>'+jsonResponse[i].modeOfPayment+'</td>'+
+						'</tr>')
+				}
+			}
+		}
+		
 	</script>
 </body>
 </html>

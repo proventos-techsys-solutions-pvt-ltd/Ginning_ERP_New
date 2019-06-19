@@ -1,13 +1,13 @@
+<%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <div class="row mt-2 tile-background-row">
 			<div class="col-md-12">
 					<h3 id="report-title" class="lbl-rm-l"></h3>
 			</div>
 			<div class="col-md-3">
 					<label class="lbl-rm-l">Company</label>
-					<select class="form-control form-control-sm" name="" id="">
-						<option>Company 1</option>
-						<option>Company 2</option>
-						<option>Company 3</option>
+					<select class="form-control form-control-sm" name="" id="companyId">
+						<option selected>Select</option>
+						<c:Company />
 					</select>
 			</div>
 		</div>

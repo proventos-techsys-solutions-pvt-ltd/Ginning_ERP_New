@@ -59,5 +59,47 @@ public class BankReport {
 		return bankList;
 	}
 
-
+	public Bank getReport(int id) {
+		ResultSet rs = null;
+		Connection con = null;
+		Bank b = new Bank();
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT * FROM BANK_MAST WHERE ID="+id;
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				
+				b.setId(rs.getInt(1));
+				b.setCompanyId(rs.getInt(2));
+				b.setBankName(rs.getString(3));
+				b.setIfsc(rs.getString(4));
+				b.setMicr(rs.getString(5));
+				b.setAccountNo(rs.getString(6));
+				
+				String date = rs.getString(7);
+				
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+				String properDate = format2.format(date1);
+				
+				b.setDate(properDate);
+			
+				
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return b;
+	}
 }

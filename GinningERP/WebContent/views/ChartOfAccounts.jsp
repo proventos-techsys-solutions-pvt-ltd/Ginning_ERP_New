@@ -80,7 +80,7 @@
 		        		<div class="col-md-6">
 		        			<label>Account Category</label> <!-- take value from table accounttype -->
 		        			<select class="form-control form-control-sm" name="accountType" id="accountType">
-		        				<option value="1">Test</option>
+		        				<c:AccountCategory/>
 		        			</select>
 		        		</div>
 		        		<div class="col-md-6">

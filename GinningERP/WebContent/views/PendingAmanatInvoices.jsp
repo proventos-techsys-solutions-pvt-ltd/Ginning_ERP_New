@@ -13,7 +13,7 @@
 <body>
 	<%@include file="../views/NavBar.html" %>
 	<div class="container-fluid">
-	<%@include file="../views/CommonSearchHeaderForReports.html" %>
+	<%@include file="../views/CommonSearchHeaderForReports.jsp" %>
 		<div class="row mt-2 tile-background-row">
 			<div class="col-md-12">
 			<div class="setHeight">

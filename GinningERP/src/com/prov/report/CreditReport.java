@@ -20,7 +20,7 @@ public class CreditReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT * FROM VOUCHER_credit ORDER BY VPUCHER_NO";
+			String sql = "SELECT * FROM VOUCHER_credit ORDER BY VOUCHER_NO";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			

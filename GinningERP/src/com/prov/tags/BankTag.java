@@ -33,6 +33,7 @@ public class BankTag extends SimpleTagSupport {
 					  
 					  jsonArray.put(obj);
 					}
+				 System.out.println(jsonArray);
 			}catch(Exception e) {
 				e.printStackTrace();
 			}

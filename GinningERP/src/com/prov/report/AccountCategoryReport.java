@@ -27,8 +27,8 @@ public class AccountCategoryReport {
 			while (rs.next()) {
 				
 				accountCat.setId(rs.getInt(1));
-				accountCat.setAccountCategory(rs.getString(2));
-				accountCat.setCompanyId(rs.getInt(3));
+				accountCat.setCompanyId(rs.getInt(2));
+				accountCat.setAccountCategory(rs.getString(3));
 				accountCat.setItemOf(rs.getString(4));
 				
 			}
