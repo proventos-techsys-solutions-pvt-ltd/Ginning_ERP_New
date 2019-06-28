@@ -27,6 +27,7 @@
 			<div class="col-md-3">
 				<label class="lbl-rm-l lbl-rm-t">Company</label>
 				<select class="form-control form-control-sm" name="company" id="company">
+					<option selected disabled>Select</option>
 					<c:Company/>					
 				</select>
 			</div>

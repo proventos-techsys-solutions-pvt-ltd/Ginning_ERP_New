@@ -236,9 +236,7 @@ function fetchRst(){
 	 }
  }
 
-window.onload = function() {
-	pendingTareWt();
-	};
+
 
 	var height = new SettingHeightofAdjacentPanels("getHeight","scroll",0);//getting & setting height of panels
 	height.calcHeight();
@@ -422,6 +420,10 @@ function setPendingData(pendingRst){
 	 }
 	
 }
+
+window.onload = function() {
+	pendingTareWt();
+	};
 
 </script>
 </body>

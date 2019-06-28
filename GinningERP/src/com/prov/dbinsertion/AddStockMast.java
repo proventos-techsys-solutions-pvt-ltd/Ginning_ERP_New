@@ -12,6 +12,11 @@ import com.prov.db.OracleConnection;
 public class AddStockMast {
 
 public int addStockMast(StockMast sm) {
+	
+		sm.setCottonBales(sm.getRawCotton()*0.35);
+		sm.setCottonSeed(sm.getRawCotton()*0.64);
+		sm.setCottonSeedOil(sm.getCottonSeed()*0.10);
+		sm.setCottonCakes(sm.getCottonSeed()-(sm.getCottonSeed()*0.12));
 		
 		Connection con = null;
 		int id = 0;
@@ -58,4 +63,5 @@ public int addStockMast(StockMast sm) {
 		
 		return id;
 	}
+
 }

@@ -25,7 +25,7 @@
 				<div class="col-md-3">
 						<label class="lbl-rm-l ">Select Company</label> 
 				<select class="form-control form-control-sm" name="companyId" id="companyId" onchange="setBank(this.value)">
-					<option selected="selected">Select</option>
+					<option selected="selected" disabled>Select</option>
 					<c:Company />
 				</select>
 			</div>
@@ -50,6 +50,7 @@
 				<div class="col-md-2">
 						<label class="lbl-rm-l">Expense Account</label>
 						<select class="form-control form-control-sm" name="accountId" id="accountId">
+							<option selected="selected" disabled>Select</option>
 							<c:Account/>
 						</select>
 				</div>
@@ -64,9 +65,8 @@
 				<div class="col-md-3">
 						<label class="lbl-rm-l">Payment Mode</label>
 						<select class="form-control form-control-sm" name="paymentMode" id="paymentMode">
-							<option data-company-id="0" selected>Select</option>
+							<option selected disabled>Select</option>
 							<c:Bank />
-							<option data-company-id="0" value="">Cash</option>
 						</select>
 				</div>
 			</div>

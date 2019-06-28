@@ -28,6 +28,10 @@
 		
 		<div class="row justify-content-md-center tile-background-row mt-2">
 			<div class="col-md-auto">
+				<label class="lbl-rm-l">Date</label>
+				<input type="date" class="form-control form-control-sm" name="" id="">
+			</div>
+			<div class="col-md-auto">
 				<label class="lbl-rm-l">Raw Material</label>
 				<input type="text" class="form-control form-control-sm" name="" id="">
 			</div>

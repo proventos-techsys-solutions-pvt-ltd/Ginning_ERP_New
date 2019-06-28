@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <!doctype html>
 <html lang="en">
     <head>
@@ -53,9 +54,8 @@
                                 <div class="col-md-6">
                                     <label for="">Company Name :</label>
                                     <select name="companyName" id="companyName" class="form-control form-control-sm">
-                                        <option value="">Company 1</option>
-                                        <option value="">Company 2</option>
-                                        <option value="">Company 3</option>
+                                        <option selected="selected" disabled="disabled">Select</option>
+                                        <c:Company/>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
@@ -89,10 +89,10 @@
                                         <tr>
                                             <td id="tableRst">01</td>
                                             <td id="material">Product Name</td>
-                                            <td><input type="text" id="quantity" class="form-control form-control-sm" name="quantity" value="1" readonly="readonly"/></td>
+                                            <td><input type="text" id="quantity" class="form-control form-control-sm" name="quantity" value="" ></td>
                                             <td id="grade">A</td>
                                             <td id="moisture"><input type="text" id="moisture" name="moisture" class="form-control form-control-sm" /></td>
-                                            <td id="rate"><input type="text" id="rate" name="rate" class="form-control form-control-sm"></td>
+                                            <td><input type="text" id="rate" name="rate" class="form-control form-control-sm" value="0"></td>
                                             <td id="amount" align="right">0.0</td>
                                         </tr>
                                         </tbody>
@@ -328,7 +328,7 @@
 		//document.getElementById("operatorName").value = data.
 		document.getElementById("tableRst").innerHTML = data.invoice.rst;
 		document.getElementById("material").innerHTML = data.weight.material;
-		document.getElementById("quantity").innerHTML = data.weight.net;
+		document.getElementById("quantity").value = data.weight.net;
 		document.getElementById("grade").innerHTML = data.weight.grade;
 		document.getElementById("moisture").innerHTML = data.weight.moisture;
 		document.getElementById("rate").value = data.weight.graderRate;
