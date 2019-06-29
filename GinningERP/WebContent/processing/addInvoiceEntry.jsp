@@ -1,3 +1,4 @@
+<%@page import="com.prov.dbops.CheckRST"%>
 <%@page import="com.prov.dbupdation.UpdateWeighMast"%>
 <%@page import="com.prov.dbinsertion.AddWeighMast"%>
 <%@page import="com.prov.bean.WeighMast"%>
@@ -7,9 +8,14 @@
 <%@page import="com.prov.bean.Invoice" %>
 
 <% 
-   
-	int cid = 0;
- 	int rst = Integer.parseInt(request.getParameter("rst"));
+
+int rst = Integer.parseInt(request.getParameter("rst"));
+
+CheckRST checkRst = new CheckRST();
+
+if(checkRst.checkRstExists(rst)==0){
+	
+	int cid = Integer.parseInt(request.getParameter("id"));
  	String date = request.getParameter("date");
  	String vehicleNo = request.getParameter("vehicleNo").toUpperCase();
  	String vehicleType = request.getParameter("vehicleType").toUpperCase();
@@ -20,15 +26,15 @@
  	float gross = Float.parseFloat(request.getParameter("gross"));
  	float tare = Float.parseFloat(request.getParameter("tare"));
  	float net = Float.parseFloat(request.getParameter("net"));
- 	String grossWt = request.getParameter("grossWtTime");
- 	String tareWt = request.getParameter("tareWtTime");
- 	String netWt = request.getParameter("netWtTime");
+ 	String grossWtTime = request.getParameter("grossWtTime");
+ 	String tareWtTime = request.getParameter("tareWtTime");
+ 	String netWtTime = request.getParameter("netWtTime");
  	int weighRate = Integer.parseInt(request.getParameter("weighRate"));
  	
- 	if( rst == 0 || date == null || vehicleNo == "" || vehicleNo == null || vehicleType == null || 
+ 	if(cid == 0 || rst == 0 || date == null || vehicleNo == "" || vehicleNo == null || vehicleType == null || 
  	   vehicleType == "" || customer == "" || customer == null || address == "" || address == null || 
  	   material == null || material == "" || mobile == null || mobile == "" || gross == 0 ||
-       grossWt == "" || grossWt == null || weighRate == 0)
+ 	   grossWtTime == "" || grossWtTime == null || weighRate == 0)
  	{
  		out.println("Please enter valid information.");
  	}
@@ -41,8 +47,6 @@
 		cv.setCid(cid);
 		cv.setVehicleNo(vehicleNo);
 		cv.setVehicleType(vehicleType);
-		//cv.setGrossWtTime(grossWt);
-		//cv.setTareWtTime(tareWt);
 		
 		AddCustomerVehicle addVehicle = new AddCustomerVehicle();
 		
@@ -66,10 +70,9 @@
 		w.setGross(gross);
 		w.setTare(tare);
 		w.setNet(net);
-		w.setGrossWtTime(grossWt);
-		w.setTareWtTime(tareWt);
+		w.setGrossWtTime(grossWtTime);
+		w.setTareWtTime(tareWtTime);
 	
-	if(w.getTare() == 0 && w.getNet() == 0){
 	
 		AddWeighMast addWeigh = new AddWeighMast();
 		
@@ -80,17 +83,32 @@
 		int invId = addInvoice.addInvoice(inv);
 		
 		response .sendRedirect("../views/GenerateRST.jsp");
+	
 	}
+}
 	
 	else{
 		
+		float tare = Float.parseFloat(request.getParameter("tare"));
+	 	float net = Float.parseFloat(request.getParameter("net"));
+	 	String tareWtTime = request.getParameter("tareWtTime");
+	 	String netWtTime = request.getParameter("netWtTime");
+	 	
+	 	WeighMast w = new WeighMast();
+	 	
+	 	w.setRst(rst);
+		w.setTare(tare);
+		w.setNet(net);
+		w.setTareWtTime(tareWtTime);
+		
 		UpdateWeighMast uw = new UpdateWeighMast();
 		
-		int rstWeighMast = uw.updateWeighMast(w);
+		int rstWeighMast = uw.secondWeighment(w);
 		
 		response.sendRedirect("../views/GenerateRST.jsp");
 		
 		}
- 	}
+	
+
 %>
 

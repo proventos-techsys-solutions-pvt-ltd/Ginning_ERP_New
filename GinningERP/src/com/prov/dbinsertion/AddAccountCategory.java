@@ -3,8 +3,6 @@ package com.prov.dbinsertion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.prov.bean.AccountCategory;
 import com.prov.db.OracleConnection;
@@ -21,8 +19,6 @@ public class AddAccountCategory {
 			e.printStackTrace();
 		}
 	
-		
-		
 		
 		String addAccountCategory = "{ ? = call ADD_ACCOUNT_CATEGORY(?,?,?) }";
 		CallableStatement cs;

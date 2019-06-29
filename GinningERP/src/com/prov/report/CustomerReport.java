@@ -3,6 +3,7 @@ package com.prov.report;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import com.prov.bean.Customer;
 import com.prov.db.OracleConnection;
@@ -78,4 +79,40 @@ public class CustomerReport {
 		return customer;
 	}
 
+	public ArrayList<Customer> getReport() {
+		ResultSet rs = null;
+		Connection con = null;
+		ArrayList<Customer> customerList = new ArrayList<Customer>();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT * FROM CUSTOMER_MAST ORDER BY NAME";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				Customer customer= new Customer();
+
+				customer.setId(rs.getInt(1));
+				customer.setName(rs.getString(2));
+				customer.setAddress(rs.getString(3));
+				customer.setMobile(rs.getString(4));
+				
+				customerList.add(customer);
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return customerList;
+	}
+	
 }

@@ -22,7 +22,7 @@ public int updateInvoice(Invoice i) {
 			e.printStackTrace();
 		}
 
-		String updateInvoice = "{ ? = call UPDATE_INVOICE(?,?,?,?,?,?,?,?,?) }";
+		String updateInvoice = "{ ? = call UPDATE_INVOICE(?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -43,6 +43,8 @@ public int updateInvoice(Invoice i) {
 			cs.setDouble(8, i.getAmountPaid());
 			cs.setDouble(9, i.getPending());
 			cs.setDate(10, invSqlDate);
+			cs.setString(11, i.getInvoiceNo());
+			cs.setInt(12, i.getCompanyId());
 			
 			cs.executeUpdate();
 			
@@ -76,7 +78,8 @@ public int updateInvoice(Invoice i) {
 				+ "	TOTAL=?,"
 				+ "AMOUNTPAID=?,"
 				+ "PENDING=?,"
-				+ "INVOICE_NO=?"
+				+ "INVOICE_NO=?,"
+				+ "COMPANY_ID=?"
 				+ "WHERE ID = ?";
 		
 		PreparedStatement stmt;
@@ -89,7 +92,8 @@ public int updateInvoice(Invoice i) {
 			stmt.setDouble(3, i.getAmountPaid());
 			stmt.setDouble(4, i.getPending());
 			stmt.setString(5, i.getInvoiceNo());
-			stmt.setInt(6, i.getId());
+			stmt.setInt(6, i.getCompanyId());
+			stmt.setInt(7, i.getId());
 			
 			stmt.executeUpdate();
 			
@@ -119,8 +123,9 @@ public int createAmanatInvoice(Invoice i){
 				+ "	TOTAL=?,"
 				+ "AMOUNTPAID=?,"
 				+ "PENDING=?,"
-				+ "INVOICE_NO=?"
-				+ "INV_DATE=?"
+				+ "INVOICE_NO=?,"
+				+ "INV_DATE=?,"
+				+ "COMPANY_ID=?"
 				+ "WHERE ID = ?";
 		
 		PreparedStatement stmt;
@@ -138,8 +143,9 @@ public int createAmanatInvoice(Invoice i){
 			stmt.setDouble(3, i.getAmountPaid());
 			stmt.setDouble(4, i.getPending());
 			stmt.setString(5, i.getInvoiceNo());
-			stmt.setDate(6,invSqlDate );
-			stmt.setInt(7, i.getId());
+			stmt.setDate(6,invSqlDate);
+			stmt.setInt(7, i.getCompanyId());
+			stmt.setInt(8, i.getId());
 			
 			stmt.executeUpdate();
 			

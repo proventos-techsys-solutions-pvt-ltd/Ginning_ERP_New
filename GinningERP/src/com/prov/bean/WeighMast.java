@@ -4,7 +4,7 @@ public class WeighMast {
 
 	private int rst, cid, vid, weighRate; 
 
-	private float gross, tare, net, graderRate;
+	private float gross, tare, net, graderRate, moisture;
 	
 	private String material, grade, grossWtTime, tareWtTime;
 	
@@ -15,6 +15,18 @@ public class WeighMast {
 
 	public void setRst(int rst) {
 		this.rst = rst;
+	}
+
+	public float getMoisture() {
+		return moisture;
+	}
+
+	public void setMoisture(float moisture) {
+		this.moisture = moisture;
+	}
+
+	public void setGraderRate(float graderRate) {
+		this.graderRate = graderRate;
 	}
 
 	public int getCid() {

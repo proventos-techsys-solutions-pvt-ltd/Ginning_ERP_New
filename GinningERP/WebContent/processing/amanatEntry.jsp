@@ -1,8 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <%@page import="com.prov.dbinsertion.AddAmanatEntry"%>
 <%@page import="com.prov.bean.Amanat"%>
 <%@page import="com.prov.report.AmanatReport"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="com.prov.report.CustomerReport"%>
 <%@page import="com.prov.bean.Customer"%>
@@ -21,6 +21,7 @@
     	String amanatDate = request.getParameter("amanatDate");
     	String dateOfExpiry = request.getParameter("dateOfExpiry");
     	double finalRate = 0.0;
+    	int companyId = Integer.parseInt(request.getParameter("companyId"));
     	
     	if(rst == 0 || cid == 0 || vid == 0 || contractRate == 0 || total == 0 || amanatDate == "" || amanatDate == null || 
     	   dateOfExpiry == "" || dateOfExpiry == null)

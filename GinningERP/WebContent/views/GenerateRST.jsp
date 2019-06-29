@@ -22,7 +22,7 @@
    	<div class="row mt-2">
     <div class="col-md-8">
     <div class="tile-background mt-2 " id="getHeight">
-      	<form id="newRST" action="">
+      	<form id="newRST" action="../processing/addInvoiceEntry.jsp">
       	<div class="form-row">
 	      	<input type="hidden" id="id" name="id" value="0" />
 	        <div class="col-md-4">
@@ -86,7 +86,7 @@
         <div class="form-row">
         <div class="col-md-4">
         	<label>Weigh Rate :</label>
-        	<input type="text" class="form-control " name="weighRate">
+        	<input type="text" class="form-control " name="weighRate" value='0'>
         </div>
         </div>
         <div class="form-row justify-content-end border-top">
@@ -232,7 +232,8 @@ function fetchRst(){
 
  function fetchWeighData(){
 	 if(fetchData.readyState == 4){
-		 console.log("Data Found!!!!!!!")
+		 console.log(this.response.trim());
+		 console.log("Data Found!!!!!!!");
 	 }
  }
 

@@ -34,6 +34,7 @@
 		i.setAmountPaid(amountPaid);
 		i.setPending(pending);
 		i.setTotal(finalRate*totalWeight);
+		i.setCompanyId(companyId);
 		
 		UpdateInvoice ui =new UpdateInvoice();
 		

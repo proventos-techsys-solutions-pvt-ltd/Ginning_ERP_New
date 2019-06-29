@@ -104,9 +104,9 @@
 									</div>
 									<div class="col-md-3">
 										<label for="" class="lbl-rm-b lbl-rm-l">Advance :</label> 
-	                                    <input type="text" id="advance" name="advance" class="form-control form-control-sm lbl-rm-b lbl-rm-t" value="10000">
+	                                    <input type="text" id="advance" name="advance" class="form-control form-control-sm lbl-rm-b lbl-rm-t" value="0">
 	                                    <label for="" class="lbl-rm-b lbl-rm-t lbl-rm-l">Net Payable :</label> 
-	                                    <input type="text" id="net" name="net" class="form-control form-control-sm lbl-rm-b lbl-rm-t" value="35000">
+	                                    <input type="text" id="net" name="net" class="form-control form-control-sm lbl-rm-b lbl-rm-t" value="0">
 									</div>
                                
                                                 
@@ -321,7 +321,6 @@
 		document.getElementById("rst").value = data.invoice.rst;
 		document.getElementById("id").value = data.invoice.id;
 		document.getElementById("invoiceNo").value = data.invoice.id;
-		//document.getElementById("companyName").value = data.company.name;
 		//document.getElementById("date").value = data.
 		document.getElementById("customerData").value = data.customer.name + "\n" + data.customer.address + "\n" + data.customer.mobile;
 		//document.getElementById("grader").value = data.
@@ -332,11 +331,12 @@
 		document.getElementById("grade").innerHTML = data.weight.grade;
 		document.getElementById("moisture").innerHTML = data.weight.moisture;
 		document.getElementById("rate").value = data.weight.graderRate;
-		document.getElementById("amount").value = data.weight.graderRate * data.weight.net;
+		document.getElementById("amount").innerHTML = data.weight.graderRate * data.weight.net;
 		//document.getElementById("cashReceiptNo").value = data.
 		//document.getElementById("cashBalance").value = data.company.balance;
 		document.getElementById("vendorNameCash").value = data.customer.name;
 		document.getElementById("vendorNameCheque").value = data.customer.name;
+		document.getElementById("net").value = data.weight.graderRate * data.weight.net;
 		
 		
 	}

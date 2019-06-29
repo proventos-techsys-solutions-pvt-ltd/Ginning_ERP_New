@@ -4,8 +4,16 @@ public class Invoice {
 	
 	private int id;
 	
-	private int rst, cid, vid;
+	private int rst, cid, vid, companyId;
 	
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
+	}
+
 	private double finalRate, total, amountPaid, pending;
 	private String invDate, invoiceNo;
 

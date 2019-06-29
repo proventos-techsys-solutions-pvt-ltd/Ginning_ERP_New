@@ -16,7 +16,7 @@
 		String invoiceNo = request.getParameter("invoiceNo");
 		int invoiceId = Integer.parseInt(request.getParameter("invoiceId"));
 		String date = request.getParameter("date");
-		
+		int companyId = Integer.parseInt(request.getParameter("companyId"));
 		
 		Amanat a = new Amanat();
 		a.setId(id);
@@ -31,6 +31,7 @@
 		i.setPending(pending);
 		i.setInvoiceNo(invoiceNo);
 		i.setInvDate(date);
+		i.setCompanyId(companyId);
 		
 		UpdateAmanat ua = new UpdateAmanat();
 		

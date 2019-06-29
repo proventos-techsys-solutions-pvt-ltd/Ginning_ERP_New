@@ -52,6 +52,7 @@ public class WeighReport {
 			date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(tareTime); 
 			properDate = format2.format(date1);
 			wm.setTareWtTime(properDate);
+			wm.setMoisture(rs.getFloat(13));
 
 			}
 		

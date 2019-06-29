@@ -7,7 +7,7 @@ import com.prov.db.OracleConnection;
 
 public class Grading {
 	
-	public void setGrading(String grade, float rate, int rst) {
+	public void setGrading(String grade,float moisture, float rate, int rst) {
 		
 		Connection con = null;
 		try {
@@ -16,15 +16,16 @@ public class Grading {
 			e.printStackTrace();
 		}
 
-		String updateWeighMast = "UPDATE WEIGH_MAST SET GRADE = ?, GRADER_RATE=? WHERE RST=? ";
+		String updateWeighMast = "UPDATE WEIGH_MAST SET GRADE = ?, MOISTURE = ?, GRADER_RATE=? WHERE RST=? ";
 		PreparedStatement stmt;
 		try {
 			
 			stmt = con.prepareStatement(updateWeighMast);
 			
 			stmt.setString(1, grade );
-			stmt.setFloat(2, rate);
-			stmt.setInt(3, rst);
+			stmt.setFloat(2, moisture );
+			stmt.setFloat(3, rate);
+			stmt.setInt(4, rst);
 			
 			
 			int flag = stmt.executeUpdate();

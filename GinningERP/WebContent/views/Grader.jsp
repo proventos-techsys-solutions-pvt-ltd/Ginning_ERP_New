@@ -76,6 +76,7 @@
                         <th>Material</th>
                         <th>Quantity</th>
                         <th>Grade</th>
+                        <th>Moisture Content</th>
                         <th>Rate</th>
                         <th>Total</th> 
                       </tr>
@@ -84,7 +85,7 @@
                       <tr>
                         <td>01</td>
                         <td>Cotton</td>
-                        <td>100 Qtl</td>
+                        <td id="quantity">100 Qtl</td>
                         <td>
                           <select name="grade" id="grade" class="form-control ">
                             <option value="A">Grade A</option>
@@ -94,8 +95,9 @@
                             <option value="E">Grade E</option>
                           </select>
                         </td>
-                        <td><input type="text" class="form-control " id="rate" name="rate"></td>
-                        <td>15000</td>
+                        <td id="moistureContent"><input type="text" class="form-control " id="moistureContent" name="moistureContent" placeholder="0.0" /></td>
+                        <td><input type="text" class="form-control " id="rate" name="rate" onchange="calculateTotal(this.value)"></td>
+                        <td id="total">0</td>
                       </tr>
                     </tbody>
                 </table>
@@ -233,6 +235,17 @@
 					    '<td>'+jsonData[i].gross+'</td>'+     
 					   '</tr>');
 			 }
+			
+		}
+		
+		
+		function calculateTotal(rate){
+			
+			var quantity = document.getElementById("quantity").innerHTML;
+			
+			var totalAmount = rate*quantity;
+			
+			document.getElementById("total").innerHTML = totalAmount;
 			
 		}
 	
