@@ -9,26 +9,27 @@
 	  <!-- Bootstrap CSS -->
 	  <link rel="stylesheet" href="../styles/bootstrap.min.css">	
 	  <link rel="stylesheet" href="../styles/WBStyle.css">
-        <title>Final Purchase</title>
+        <title>Purchase Invoicing</title>
     </head>
 <body>
       <%@include file="../views/NavBar.html" %>
             <div class="container-fluid">
             
             <div class="row justify-content-md-center mt-2 tile-background-row ">
-                <div class="col-md-3">
-                        <label class="lbl-rm-l">Today's Purchase Rate</label>
-                        <input type="text" class="form-control form-control-sm" value="Today's Purchase Rate">
+                <div class="col-md-5">
+                        <h2>Today's Purchase Rate &nbsp; <span id="tRate">5900.64</span></h2>
                     </div>
-                <div class="col-md-3">
-                        <label class="lbl-rm-l">Average Purchase Price</label>
-                        <input type="text" class="form-control form-control-sm" value="Average Purchase Price">
+                <div class="col-md-5">
+						    <h2>Average Purchase Rate &nbsp; <span id="aRate">5800.66</span></h2>
                     </div>   
                 </div>
                 
                 <div class="row mt-2 tile-background-row ">
                 	<div class="col-md-auto">
-                		<h2>Invoicing</h2>
+                		<div class="d-flex justify-content-between">
+                			<h2>Invoicing</h2>
+                			<img src="../property/img/invoicing.png" alt="Invoicing">
+                		</div>
                 	</div>
                 </div>
             
@@ -111,7 +112,7 @@
                                
                                                 
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12 border-top">
                                     <div class="d-flex justify-content-around custom-checkbox">
                                         <div class="custom-control">
                                             <input type="checkbox" class="custom-control-input" id="cashCheckbox">
@@ -125,14 +126,10 @@
                                             <input type="checkbox" class="custom-control-input" id="rtgsCheckbox">
                                             <label class="custom-control-label" for="rtgsCheckbox">RTGS/NEFT</label>
                                         </div>
-                                        <div class="custom-control">
-                                            <input type="checkbox" class="custom-control-input" id="otherCheckbox">
-                                            <label class="custom-control-label" for="otherCheckbox">Other</label>
-                                        </div>
                                     </div>
                                 </div>
                                 	<div class="col-md-12">
-                                		<table class="table table-bordered table-mr-top">
+                                		<table class="table table-bordered ">
                                 			<tbody id="paymentDetailsTable">
                                 			
                                 			</tbody>
@@ -286,6 +283,7 @@
 	<script src="../js/commonjs.js"></script>
 	<script>
 	settingHeightofAdjacentPanels("getHeight","setHeight");
+	
 	function fetchData(rst){
 		console.log(rst);
 		url = "../processing/adminApproval.jsp?rst="+rst;

@@ -74,7 +74,7 @@ label{
 }
 /***************************TABLE PROPERTIES*****************************************/
 .table{
-	overflow-x:auto;
+	overflow-y:auto;
 }
 .table tbody tr:hover{
 	cursor:pointer;
@@ -255,6 +255,33 @@ span{
 	padding:.3rem .5rem .3rem .5rem;
 	border-radius:5px;
 }
+
+
+/****************************Custom Classes************************************/
+.pending-invoices{
+	background:#fa8310;
+	height:100%;
+	padding:1rem;
+	box-sizing:border-box;
+	color:white;
+	font-weight:bolder;
+	text-align:center;
+	vertical-align:middle;
+}
+
+.paid-invoices{
+	background:#7dcd00;
+	height:100%;
+	padding:1rem;
+	box-sizing:border-box;
+	color:white;
+	font-weight:bolder;
+	text-align:center;
+	vertical-align:middle;
+}
+h6{
+	font-weight:bolder;
+}
 /*******************/
 @media screen and (max-width: 768px){
 	.change-button{
@@ -262,3 +289,4 @@ span{
 	margin-top:.5rem;
 }
 }
+
