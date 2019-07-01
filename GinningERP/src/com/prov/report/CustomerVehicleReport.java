@@ -32,6 +32,7 @@ public class CustomerVehicleReport {
 				cv.setCid(rs.getInt(2));
 				cv.setVehicleNo(rs.getString(3));
 				cv.setVehicleType(rs.getString(4));
+				cv.setRst(rs.getInt(5));
 				
 			}
 			

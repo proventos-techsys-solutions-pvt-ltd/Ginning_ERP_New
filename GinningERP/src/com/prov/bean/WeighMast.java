@@ -2,7 +2,23 @@ package com.prov.bean;
 
 public class WeighMast {
 
-	private int rst, cid, vid, weighRate; 
+	private int rst, cid, vid, weighRate, invId, id; 
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getInvId() {
+		return invId;
+	}
+
+	public void setInvId(int invId) {
+		this.invId = invId;
+	}
 
 	private float gross, tare, net, graderRate, moisture;
 	
@@ -23,10 +39,6 @@ public class WeighMast {
 
 	public void setMoisture(float moisture) {
 		this.moisture = moisture;
-	}
-
-	public void setGraderRate(float graderRate) {
-		this.graderRate = graderRate;
 	}
 
 	public int getCid() {
@@ -81,7 +93,7 @@ public class WeighMast {
 		return graderRate;
 	}
 
-	public void setGradeRate(float graderRate) {
+	public void setGraderRate(float graderRate) {
 		this.graderRate = graderRate;
 	}
 

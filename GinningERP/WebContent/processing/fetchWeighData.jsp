@@ -24,22 +24,16 @@
         }
         
         else{
-        	
-	    	InvoiceReport ir = new InvoiceReport();
+			
+        	WeighReport wr = new WeighReport();
 	    	
-	    	Invoice inv = new Invoice();
-	    	
-	    	inv = ir.getInvoiceData(rst);
+	    	WeighMast w= new WeighMast();
 	    	
 	    	CustomerVehicle cv = new CustomerVehicle();
 	    	
 	    	CustomerVehicleReport vr = new CustomerVehicleReport();
 	    	
-	    	cv = vr.getReport(inv.getVid());
-	    	
-	    	WeighReport wr = new WeighReport();
-	    	
-	    	WeighMast w= new WeighMast();
+	    	cv = vr.getReport(w.getVid());
 	    	
 	    	w = wr.getReport(rst);
 	    	
@@ -47,15 +41,13 @@
 	    	
 	    	CustomerReport cr = new CustomerReport();
 	    	
-	    	cust = cr.getReport(inv.getCid());
+	    	cust = cr.getReport(w.getCid());
 	    	
-	    	JSONObject invObj = new JSONObject(inv);
 	    	JSONObject vehicleObj = new JSONObject(cv);
 	    	JSONObject weighObj = new JSONObject(w);
 	    	JSONObject customerObj = new JSONObject(cust);
 	    	
 	    	JSONObject obj = new JSONObject();
-	    	obj.put("invoice", invObj);
 	    	obj.put("vehicle", vehicleObj);
 	    	obj.put("weight", weighObj);
 	    	obj.put("customer", customerObj);

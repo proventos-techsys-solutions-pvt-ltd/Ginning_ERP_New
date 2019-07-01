@@ -2,10 +2,7 @@ package com.prov.dbinsertion;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.prov.bean.CustomerVehicle;
 import com.prov.db.OracleConnection;
@@ -22,7 +19,7 @@ public int addCustomerVehicle(CustomerVehicle cv) {
 			e.printStackTrace();
 		}
 
-		String addCustomerVehicle = "{ ? = call ADD_VEHICLE(?,?,?) }";
+		String addCustomerVehicle = "{ ? = call ADD_VEHICLE(?,?,?,?) }";
 		CallableStatement cs;
 		try {
 
@@ -33,6 +30,7 @@ public int addCustomerVehicle(CustomerVehicle cv) {
 			cs.setInt(2, cv.getCid() );
 			cs.setString(3, cv.getVehicleNo() );
 			cs.setString(4, cv.getVehicleType());
+			cs.setInt(5, cv.getRst());
 			
 			cs.executeUpdate();
 			

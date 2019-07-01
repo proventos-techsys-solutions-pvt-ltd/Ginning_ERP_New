@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+     <%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <!doctype html>
 <html lang="en">
     <head>
@@ -27,9 +28,7 @@
              	<div class="col-md-2">
              		<label class="lbl-rm-l">Company</label>
              		<select class="form-control form-control-sm">
-             			<option value="">Company Name 1 </option>
-             			<option value="">Company Name 2 </option>
-             			<option value="">Company Name 3 </option>
+             			<c:Company/>
              		</select>
              	</div>
              		<div class="col-md-2">

@@ -22,7 +22,7 @@ public int updateWeighMast(WeighMast wm) {
 			e.printStackTrace();
 		}
 
-		String updateWeighMast = "{ ? = call UPDATE_WEIGHMAST(?,?,?,?,?,?,?,?,?,?,?,?,?) }";
+		String updateWeighMast = "{ ? = call UPDATE_WEIGHMAST(?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -52,6 +52,7 @@ public int updateWeighMast(WeighMast wm) {
 			cs.setDate(12, grossSqlDate);
 			cs.setDate(13, tareSqlDate);
 			cs.setFloat(14, wm.getMoisture());
+			cs.setInt(15, wm.getInvId());
 			
 			cs.executeUpdate();
 			
@@ -92,7 +93,6 @@ public int secondWeighment(WeighMast wm) {
 		Date sqlTareWtTime = new SimpleDateFormat("yyyy-MM-dd").parse(wm.getTareWtTime());
 		@SuppressWarnings({ "deprecation" })
 		java.sql.Date tareSqlDate = new java.sql.Date(sqlTareWtTime.getDate());
-		
 		
 		stmt = con.prepareCall(updateWeighMast);
 		

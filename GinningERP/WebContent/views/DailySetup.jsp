@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.Date"%>
+ <%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <!doctype html>
 <html lang="en">
     <head>
@@ -32,9 +33,7 @@
 				<div class="col-md-3">
 					<label class="lbl-rm-l">Setup Company</label>
 					<select class="form-control form-control-sm">
-						<option value="">Company 1</option>
-						<option value="">Company 2</option>
-						<option value="">Company 3</option>
+						<c:Company/>
 					</select>
 				</div>
 				<div class="col-md-2">

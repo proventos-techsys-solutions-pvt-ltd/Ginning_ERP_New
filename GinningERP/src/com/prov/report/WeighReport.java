@@ -39,7 +39,7 @@ public class WeighReport {
 			wm.setTare(rs.getFloat(7));
 			wm.setNet(rs.getFloat(8));
 			wm.setGrade(rs.getString(9));
-			wm.setGradeRate(rs.getFloat(10));
+			wm.setGraderRate(rs.getFloat(10));
 			String grossTime = rs.getString(11);
 			
 			Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(grossTime);
@@ -53,6 +53,7 @@ public class WeighReport {
 			properDate = format2.format(date1);
 			wm.setTareWtTime(properDate);
 			wm.setMoisture(rs.getFloat(13));
+			wm.setInvId(rs.getInt(14));
 
 			}
 		
@@ -87,29 +88,33 @@ public class WeighReport {
 			
 			while(rs.next()) {
 				WeighMast wm = new WeighMast();
-				wm.setRst(rs.getInt(1));
-				wm.setCid(rs.getInt(2));
-				wm.setVid(rs.getInt(3));
-				wm.setMaterial(rs.getString(4));
-				wm.setWeighRate(rs.getInt(5));
-				wm.setGross(rs.getFloat(6));
-				wm.setTare(rs.getFloat(7));
-				wm.setNet(rs.getFloat(8));
-				wm.setGrade(rs.getString(9));
-				wm.setGradeRate(rs.getFloat(10));
-				String grossTime = rs.getString(11);
+				wm.setId(rs.getInt(1));
+				wm.setRst(rs.getInt(2));
+				wm.setCid(rs.getInt(3));
+				wm.setVid(rs.getInt(4));
+				wm.setMaterial(rs.getString(5));
+				wm.setWeighRate(rs.getInt(6));
+				wm.setGross(rs.getFloat(7));
+				wm.setTare(rs.getFloat(8));
+				wm.setNet(rs.getFloat(9));
+				wm.setGrade(rs.getString(10));
+				wm.setGraderRate(rs.getFloat(11));
+				String grossTime = rs.getString(12);
 				
 				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(grossTime);
 				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 				String properDate = format2.format(date1);
 				wm.setGrossWtTime(properDate);
 				
-				String tareTime = rs.getString(12);
+				String tareTime = rs.getString(13);
 				
 				date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(tareTime); 
 				properDate = format2.format(date1);
 				wm.setTareWtTime(properDate);
-
+				
+				wm.setMoisture(rs.getFloat(14));
+				wm.setInvId(rs.getInt(15));
+				
 				list.add(wm);				
 				}
 			
