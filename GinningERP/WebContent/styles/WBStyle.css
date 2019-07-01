@@ -78,7 +78,7 @@ label{
 }
 .table tbody tr:hover{
 	cursor:pointer;
-	background:#218838;
+	background:#f2f2f2;
 }
 .table td, .table th{
 	padding:.5rem;
@@ -86,6 +86,10 @@ label{
 }
 .table-mr-top{
 	margin-top:1rem;
+}
+.table-back{
+	background:#393a3d;
+	color:#fff;
 }
 /**********************************BORDER CLASSES************************************/
 .border{
@@ -109,6 +113,10 @@ form{
 }
 .form-row{
 	padding:.875rem;
+}
+.form-row-ctm{
+	margin-right: -15px;
+	margin-left: -15px;
 }
 /***********************************HEADING CLASEES***********************************/
 .h3-mr-lt{
@@ -270,7 +278,7 @@ span{
 }
 
 .paid-invoices{
-	background:#7dcd00;
+	background:#4caf50;
 	height:100%;
 	padding:1rem;
 	box-sizing:border-box;
@@ -282,7 +290,26 @@ span{
 h6{
 	font-weight:bolder;
 }
-/*******************/
+
+/*******************************COMMON CLASESS****************************************************/
+.r-p-t{
+	padding-top:0;
+}
+.r-p-r{
+	padding-right:0;
+}
+.r-p-b{
+	padding-bottom:0;
+}
+.r-p-l{
+	padding-left:0;
+}
+.r-p-all{
+	padding:0;
+}
+
+
+/*******************RESPONSIVE CLASSESS*******************************/
 @media screen and (max-width: 768px){
 	.change-button{
 	width:100%;
