@@ -72,6 +72,9 @@ label{
 .btn-mr-tp{
 	margin-top:1rem;
 }
+.btn-no-radius{
+	border-radius:0;
+}
 /***************************TABLE PROPERTIES*****************************************/
 .table{
 	overflow-y:auto;
@@ -112,7 +115,7 @@ form{
 	width:100%;
 }
 .form-row{
-	padding:.875rem;
+	padding:.575rem;
 }
 .form-row-ctm{
 	margin-right: -15px;
@@ -247,6 +250,9 @@ img.ctm-hover:hover{
 }
 .lbl-rm-l{
 	margin-left:0;
+}
+.lbl-rm-all{
+	margin:0;
 }
 /*******************************FLEX ITEMS CLASSES***************************************/
 .p-2{

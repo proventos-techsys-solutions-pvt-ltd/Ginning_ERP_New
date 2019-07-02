@@ -286,7 +286,7 @@
 	
 	function fetchData(rst){
 		console.log(rst);
-		url = "../processing/fetchWeighData.jsp?rst="+rst;
+		url = "../processing/adminApproval.jsp?rst="+rst;
 		if(window.XMLHttpRequest){  
 			fetchRequest=new XMLHttpRequest();  
 		}  
@@ -316,12 +316,14 @@
 	function setData(data)
 	{
 		
-		document.getElementById("rst").value = data.weight.rst;
+		document.getElementById("rst").value = data.invoice.rst;
+		document.getElementById("id").value = data.invoice.id;
+		document.getElementById("invoiceNo").value = data.invoice.id;
 		//document.getElementById("date").value = data.
 		document.getElementById("customerData").value = data.customer.name + "\n" + data.customer.address + "\n" + data.customer.mobile;
 		//document.getElementById("grader").value = data.
 		//document.getElementById("operatorName").value = data.
-		document.getElementById("tableRst").innerHTML = data.weight.rst;
+		document.getElementById("tableRst").innerHTML = data.invoice.rst;
 		document.getElementById("material").innerHTML = data.weight.material;
 		document.getElementById("quantity").value = data.weight.net;
 		document.getElementById("grade").innerHTML = data.weight.grade;

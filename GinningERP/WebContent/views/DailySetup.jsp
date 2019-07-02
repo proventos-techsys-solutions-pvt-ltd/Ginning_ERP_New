@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.Date"%>
- <%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <!doctype html>
 <html lang="en">
     <head>
@@ -31,26 +30,44 @@
 			
 			<div class="row tile-background-row">
 				<div class="col-md-3">
-					<label class="lbl-rm-l">Setup Company</label>
+					<div class="d-flex justify-content-start align-items-center">
+						<img src="../property/img/factory.png" alt="warehouse">&nbsp;
+						<label class="lbl-rm-l">Setup Company</label>
+					</div>
 					<select class="form-control form-control-sm">
-						<c:Company/>
+						<option value="">Company 1</option>
+						<option value="">Company 2</option>
+						<option value="">Company 3</option>
 					</select>
 				</div>
 				<div class="col-md-2">
 					<label class="lbl-rm-l">Today's Cotton Rate</label>
 					<input type="text" class="form-control form-control-sm" name="" id="">
 				</div>
+				<div class="col-md-2">
+					<label class="lbl-rm-l">Grade</label>
+					<select class="form-control form-control-sm">
+						<option value="">Grade A</option>
+						<option value="">Grade B</option>
+						<option value="">Grade C</option>
+					</select>
+				</div>
+				<div class="col-md-2">
+					<label class="lbl-rm-l">Grade Rate</label>
+					<input type="text" class="form-control form-control-sm" name="" id="">
+				</div>
 			</div>
 			
 			<div class="row mt-2 tile-background-row">
-				<div class="col-md-auto">
-					<h4>Stock Details</h4>
-				</div>
+					<div class="d-flex justify-content-between align-items-center">
+						<img src="../property/img/warehouse.png" alt="warehouse">&nbsp;
+						<h4  class="lbl-rm-b">Stock Details</h4>
+					</div>
 			</div>
 			
 			<div class="row tile-background-row">
 				<div class="col-md-3">
-					<label class="lbl-rm-l">Cotton Bells</label>
+					<label class="lbl-rm-l">Cotton Bells/Lint</label>
 					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
 				</div>
 				<div class="col-md-3">
@@ -58,18 +75,19 @@
 					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
 				</div>
 				<div class="col-md-3">
-					<label class="lbl-rm-l">Cotton Xyz</label>
+					<label class="lbl-rm-l">Cotton Oil</label>
 					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
 				</div>
 				<div class="col-md-3">
-					<label class="lbl-rm-l">Cotton Residue</label>
+					<label class="lbl-rm-l">Cotton Cake</label>
 					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
 				</div>
 			</div>
 			
 			<div class="row mt-2 tile-background-row">
-				<div class="col-md-auto">
-					<h4>Cash Details</h4>
+				<div class="d-flex justify-content-between align-items-center">
+					<img src="../property/img/purse.png" alt="warehouse">&nbsp;
+					<h4  class="lbl-rm-b">Cash Details</h4>
 				</div>
 			</div>
 			
@@ -93,8 +111,9 @@
 			</div>
 			
 			<div class="row mt-2 tile-background-row">
-				<div class="col-md-auto">
-					<h4>Bank Details</h4>
+				<div class="d-flex justify-content-between align-items-center">
+					<img src="../property/img/account.png" alt="warehouse">&nbsp;
+					<h4  class="lbl-rm-b">Bank Details</h4>
 				</div>
 			</div>
 			

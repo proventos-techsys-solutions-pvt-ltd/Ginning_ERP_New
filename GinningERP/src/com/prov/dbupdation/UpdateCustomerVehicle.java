@@ -19,7 +19,7 @@ public class UpdateCustomerVehicle {
 			e.printStackTrace();
 		}
 
-		String updateCustomerVehicle = "{ ? = call UPDATE_CUSTOMERVEHICLE(?,?,?,?,?) }";
+		String updateCustomerVehicle = "{ ? = call UPDATE_CUSTOMERVEHICLE(?,?,?,?) }";
 		CallableStatement cs;
 		try {
 
@@ -31,7 +31,6 @@ public class UpdateCustomerVehicle {
 			cs.setInt(3, cv.getCid() );
 			cs.setString(4, cv.getVehicleNo() );
 			cs.setString(5, cv.getVehicleType());
-			cs.setInt(6, cv.getRst());
 			
 			cs.executeUpdate();
 			

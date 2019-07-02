@@ -114,13 +114,11 @@
 		})
 		
 		function getExpenses(companyId){
-			console.log(companyId);
+			//console.log(companyId);
 			
-			document.getElementById('tableBody');
+			document.getElementById('tableBody').
 			
-			//url = "../processing/expenseReport.jsp?companyId="+companyId;
-			var url = "../processing/expenseReport.jsp?companyId="+companyId;
-			console.log(url);
+			url = "../processing/expenseReport.jsp?companyId="+companyId;
 			if(window.XMLHttpRequest){  
 				fetchRequest=new XMLHttpRequest();  
 			}  
@@ -132,7 +130,7 @@
 				console.log("AJAX Req sent");
 				fetchRequest.open("GET",url,true);  
 				fetchRequest.send();  
-			}catch(e){alert(e);}	
+			}catch(e){alert("Unable to connect to server");}	
 		}
 		
 		function getData(){

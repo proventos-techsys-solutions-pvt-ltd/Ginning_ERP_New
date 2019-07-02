@@ -22,7 +22,7 @@
    	<div class="row mt-2">
     <div class="col-md-8">
     <div class="tile-background mt-2 " id="getHeight">
-      	<form id="newRST" action="../processing/addWeighmentEntry.jsp">
+      	<form id="newRST" action="../processing/addInvoiceEntry.jsp">
       	<div class="form-row">
 	      	<input type="hidden" id="id" name="id" value="0" />
 	        <div class="col-md-4">

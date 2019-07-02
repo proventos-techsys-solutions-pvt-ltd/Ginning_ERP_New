@@ -4,16 +4,8 @@ public class CustomerVehicle {
 	
 	private int id;
 	
-    private int cid, rst;
+    private int cid;
     
-	public int getRst() {
-		return rst;
-	}
-
-	public void setRst(int rst) {
-		this.rst = rst;
-	}
-
 	private String vehicleNo, vehicleType;
 
 
