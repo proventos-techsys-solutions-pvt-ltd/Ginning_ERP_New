@@ -22,7 +22,7 @@ public int addCustomerVehicle(CustomerVehicle cv) {
 			e.printStackTrace();
 		}
 
-		String addCustomerVehicle = "{ ? = call ADD_VEHICLE(?,?,?) }";
+		String addCustomerVehicle = "{ ? = call ADD_VEHICLE(?,?,?,?) }";
 		CallableStatement cs;
 		try {
 
@@ -33,6 +33,7 @@ public int addCustomerVehicle(CustomerVehicle cv) {
 			cs.setInt(2, cv.getCid() );
 			cs.setString(3, cv.getVehicleNo() );
 			cs.setString(4, cv.getVehicleType());
+			cs.setInt(5, cv.getRst());
 			
 			cs.executeUpdate();
 			

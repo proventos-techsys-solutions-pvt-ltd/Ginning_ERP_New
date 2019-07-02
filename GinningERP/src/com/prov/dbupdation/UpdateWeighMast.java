@@ -22,7 +22,7 @@ public int updateWeighMast(WeighMast wm) {
 			e.printStackTrace();
 		}
 
-		String updateWeighMast = "{ ? = call UPDATE_WEIGHMAST(?,?,?,?,?,?,?,?,?,?,?,?,?) }";
+		String updateWeighMast = "{ ? = call UPDATE_WEIGHMAST(?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -39,19 +39,21 @@ public int updateWeighMast(WeighMast wm) {
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
-			cs.setInt(2, wm.getRst());
-			cs.setInt(3, wm.getCid());
-			cs.setInt(4, wm.getVid());
-			cs.setString(5, wm.getMaterial());
-			cs.setFloat(6, wm.getWeighRate());
-			cs.setFloat(7, wm.getGross());
-			cs.setFloat(8, wm.getTare());
-			cs.setFloat(9, wm.getNet());
-			cs.setString(10, wm.getGrade());
-			cs.setFloat(11, wm.getGraderRate());
-			cs.setDate(12, grossSqlDate);
-			cs.setDate(13, tareSqlDate);
-			cs.setFloat(14, wm.getMoisture());
+			cs.setInt(2, wm.getId());
+			cs.setInt(3, wm.getRst());
+			cs.setInt(4, wm.getCid());
+			cs.setInt(5, wm.getVid());
+			cs.setString(6, wm.getMaterial());
+			cs.setFloat(7, wm.getWeighRate());
+			cs.setFloat(8, wm.getGross());
+			cs.setFloat(9, wm.getTare());
+			cs.setFloat(10, wm.getNet());
+			cs.setString(11, wm.getGrade());
+			cs.setFloat(12, wm.getGraderRate());
+			cs.setDate(13, grossSqlDate);
+			cs.setDate(14, tareSqlDate);
+			cs.setFloat(15, wm.getMoisture());
+			cs.setFloat(16, wm.getInvoiceId());
 			
 			cs.executeUpdate();
 			

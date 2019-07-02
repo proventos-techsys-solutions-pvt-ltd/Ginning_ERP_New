@@ -22,7 +22,7 @@ public int addWeighMast(WeighMast wm) {
 			e.printStackTrace();
 		}
 
-		String addWeighMast = "{ ? = call ADD_WEIGH(?,?,?,?,?,?,?,?,?,?,?,?,?) }";
+		String addWeighMast = "{ ? = call ADD_WEIGH(?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -51,7 +51,12 @@ public int addWeighMast(WeighMast wm) {
 			cs.setDate(12, grossSqlDate);
 			cs.setDate(13, tareSqlDate);
 			cs.setFloat(14, wm.getMoisture());
-
+			
+			if(wm.getInvoiceId() == 0) {
+				cs.setNull(15, Types.NUMERIC);
+			}else {
+				cs.setInt(15, wm.getInvoiceId());
+			}
 			
 			cs.executeUpdate();
 			

@@ -66,7 +66,7 @@
 			w.setGrossWtTime(grossWtTime);
 			w.setTareWtTime(tareWtTime);	
 			w.setMoisture(0);
-			w.setInvId(0);
+			w.setInvoiceId(0);
 			
 			AddWeighMast addWeigh = new AddWeighMast();
 			

@@ -84,9 +84,14 @@
 						</div>
 					</div>
 					<div class="form-row form-row-ctm border-top">
-						<div class="col-md-12">
+						<div class="col-md-1 offset-md-10">
 							<div class="d-flex justify-content-end align-items-center">
 								<button type="button" class="btn btn-success btn-sm change-button">Save</button>
+							</div>
+						</div>
+						<div class="col-md-1">
+							<div class="d-flex justify-content-end align-items-center">
+								<button type="button" class="btn btn-success btn-sm change-button">Save & Print</button>
 							</div>
 						</div>
 					</div>

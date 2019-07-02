@@ -2,7 +2,23 @@ package com.prov.bean;
 
 public class WeighMast {
 
-	private int rst, cid, vid, weighRate; 
+	private int rst, cid, vid, weighRate, id, invoiceId; 
+
+	public int getInvoiceId() {
+		return invoiceId;
+	}
+
+	public void setInvoiceId(int invoiceId) {
+		this.invoiceId = invoiceId;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	private float gross, tare, net, graderRate, moisture;
 	

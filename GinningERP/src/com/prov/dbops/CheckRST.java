@@ -17,7 +17,7 @@ public class CheckRST {
 			e.printStackTrace();
 		}
 
-		String checkRst = "SELECT COUNT(*) FROM INVOICE_MAST WHERE RST=?";
+		String checkRst = "SELECT COUNT(*) FROM WEIGH_MAST WHERE RST=?";
 		PreparedStatement stmt;
 		ResultSet rs=null;
 		try {
