@@ -4,15 +4,13 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import com.prov.bean.CustomerVehicle;
+import com.prov.bean.GradeDetails;
 import com.prov.db.OracleConnection;
 
-public class AddCustomerVehicle {
+public class AddGradeDetails {
 	
-public int addCustomerVehicle(CustomerVehicle cv) {
+public int addGradeDetails(GradeDetails gd) {
 		
 		Connection con = null;
 		int id = 0;
@@ -22,37 +20,37 @@ public int addCustomerVehicle(CustomerVehicle cv) {
 			e.printStackTrace();
 		}
 
-		String addCustomerVehicle = "{ ? = call ADD_VEHICLE(?,?,?,?) }";
+		String addGradeDetails = "{ ? = call ADD_GRADEDETAILS(?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
-
-			cs = con.prepareCall(addCustomerVehicle);
+			cs = con.prepareCall(addGradeDetails);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
-			cs.setInt(2, cv.getCid() );
-			cs.setString(3, cv.getVehicleNo() );
-			cs.setInt(4, cv.getRst());
-			cs.setInt(5, cv.getvTypeId());
-			cs.setDouble(6, cv.getWeighRate());
-			
+			cs.setInt(2, gd.getWeighmentId() );
+			cs.setInt(3, gd.getRst() );
+			cs.setString(4, gd.getMaterial());
+			cs.setDouble(5, gd.getQuantity());
+			cs.setString(6, gd.getGrade());
+			cs.setDouble(7, gd.getRate());
+			cs.setString(8, gd.getAuthorizedBy());
+
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);
 			
-			cv.setId(id);
+			gd.setId(id);
 			
 			cs.close();
 			con.close();
 			
 			System.out.println("Insertion Succesful"+id);
-			} catch (Exception e) {
+			} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 		return id;
 	}
-
 
 
 }

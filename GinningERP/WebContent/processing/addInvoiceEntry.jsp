@@ -82,7 +82,7 @@ if(checkRst.checkRstExists(rst)==0){
 		
 		int invId = addInvoice.addInvoice(inv);
 		
-		response .sendRedirect("../views/GenerateRST.jsp");
+		response.sendRedirect("../views/GenerateRST.jsp");
 	
 	}
 }

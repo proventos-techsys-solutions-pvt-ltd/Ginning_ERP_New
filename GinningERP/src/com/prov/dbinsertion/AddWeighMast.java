@@ -22,7 +22,7 @@ public int addWeighMast(WeighMast wm) {
 			e.printStackTrace();
 		}
 
-		String addWeighMast = "{ ? = call ADD_WEIGH(?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
+		String addWeighMast = "{ ? = call ADD_WEIGH(?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -39,23 +39,19 @@ public int addWeighMast(WeighMast wm) {
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
 			cs.setInt(2, wm.getRst());
-			cs.setInt(3, wm.getCid());
-			cs.setInt(4, wm.getVid());
-			cs.setString(5, wm.getMaterial());
-			cs.setInt(6, wm.getWeighRate());
-			cs.setFloat(7, wm.getGross());
-			cs.setFloat(8, wm.getTare());
-			cs.setFloat(9, wm.getNet());
-			cs.setString(10, wm.getGrade());
-			cs.setFloat(11, wm.getGraderRate());
-			cs.setDate(12, grossSqlDate);
-			cs.setDate(13, tareSqlDate);
-			cs.setFloat(14, wm.getMoisture());
+			cs.setInt(3, wm.getVid());
+			cs.setString(4, wm.getMaterial());
+			cs.setFloat(5, wm.getGross());
+			cs.setFloat(6, wm.getTare());
+			cs.setFloat(7, wm.getNet());
+			cs.setDate(8, grossSqlDate);
+			cs.setDate(9, tareSqlDate);
+			cs.setString(10, wm.getWeighmentDate());
 			
-			if(wm.getInvoiceId() == 0) {
+			if(wm.getId() == 0) {
 				cs.setNull(15, Types.NUMERIC);
 			}else {
-				cs.setInt(15, wm.getInvoiceId());
+				cs.setInt(15, wm.getId());
 			}
 			
 			cs.executeUpdate();

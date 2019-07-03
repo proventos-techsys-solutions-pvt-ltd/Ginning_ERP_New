@@ -32,28 +32,29 @@ public class WeighReport {
 		while(rs.next()) {
 			wm.setId(rs.getInt(1));
 			wm.setRst(rs.getInt(2));
-			wm.setCid(rs.getInt(3));
-			wm.setVid(rs.getInt(4));
-			wm.setMaterial(rs.getString(5));
-			wm.setWeighRate(rs.getInt(6));
-			wm.setGross(rs.getFloat(7));
-			wm.setTare(rs.getFloat(8));
-			wm.setNet(rs.getFloat(9));
-			wm.setGrade(rs.getString(10));
-			wm.setGradeRate(rs.getFloat(11));
-			String grossTime = rs.getString(12);
+			wm.setVid(rs.getInt(3));
+			wm.setMaterial(rs.getString(4));
+			wm.setGross(rs.getFloat(5));
+			wm.setTare(rs.getFloat(6));
+			wm.setNet(rs.getFloat(7));
+			String grossTime = rs.getString(8);
 			
 			Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(grossTime);
 			SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 			String properDate = format2.format(date1);
 			wm.setGrossWtTime(properDate);
 			
-			String tareTime = rs.getString(13);
+			String tareTime = rs.getString(9);
 			
 			date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(tareTime); 
 			properDate = format2.format(date1);
 			wm.setTareWtTime(properDate);
-			wm.setMoisture(rs.getFloat(14));
+			
+			String weighmentDate = rs.getString(10);
+			
+			date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(weighmentDate); 
+			properDate = format2.format(date1);
+			wm.setWeighmentDate(properDate);
 
 			}
 		
@@ -91,29 +92,30 @@ public class WeighReport {
 				
 				wm.setId(rs.getInt(1));
 				wm.setRst(rs.getInt(2));
-				wm.setCid(rs.getInt(3));
-				wm.setVid(rs.getInt(4));
-				wm.setMaterial(rs.getString(5));
-				wm.setWeighRate(rs.getInt(6));
-				wm.setGross(rs.getFloat(7));
-				wm.setTare(rs.getFloat(8));
-				wm.setNet(rs.getFloat(9));
-				wm.setGrade(rs.getString(10));
-				wm.setGradeRate(rs.getFloat(11));
-				String grossTime = rs.getString(12);
+				wm.setVid(rs.getInt(3));
+				wm.setMaterial(rs.getString(4));
+				wm.setGross(rs.getFloat(5));
+				wm.setTare(rs.getFloat(6));
+				wm.setNet(rs.getFloat(7));
+				String grossTime = rs.getString(8);
 				
 				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(grossTime);
 				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 				String properDate = format2.format(date1);
 				wm.setGrossWtTime(properDate);
 				
-				String tareTime = rs.getString(13);
+				String tareTime = rs.getString(9);
 				
 				date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(tareTime); 
 				properDate = format2.format(date1);
 				wm.setTareWtTime(properDate);
-				wm.setMoisture(rs.getFloat(14));
-				wm.setInvoiceId(rs.getInt(14));
+				
+				String weighmentDate = rs.getString(10);
+				
+				date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(weighmentDate); 
+				properDate = format2.format(date1);
+				wm.setWeighmentDate(properDate);
+
 
 				list.add(wm);				
 				}

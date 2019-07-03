@@ -31,7 +31,9 @@ public class CustomerVehicleReport {
 				cv.setId(rs.getInt(1));
 				cv.setCid(rs.getInt(2));
 				cv.setVehicleNo(rs.getString(3));
-				cv.setVehicleType(rs.getString(4));
+				cv.setRst(rs.getInt(4));
+				cv.setvTypeId(rs.getInt(5));
+				cv.setWeighRate(rs.getDouble(6));
 				
 			}
 			

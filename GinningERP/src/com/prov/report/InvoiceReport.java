@@ -32,23 +32,20 @@ public Invoice getInvoiceData(int rst) {
 			
 			while (rs.next()) {
 				inv.setId(rs.getInt(1));
-				inv.setRst(rs.getInt(2));
-				inv.setCid(rs.getInt(3));
-				inv.setVid(rs.getInt(4));
-				inv.setFinalRate(rs.getDouble(5));
-				inv.setTotal(rs.getDouble(6));
-				inv.setAmountPaid(rs.getDouble(7));
-				inv.setPending(rs.getDouble(8));
+				inv.setWeighmentId(rs.getInt(2));
+				inv.setInvoiceNo(rs.getString(3));
+				inv.setTotal(rs.getDouble(4));
+				inv.setAmountPaid(rs.getDouble(5));
+				inv.setPending(rs.getDouble(6));
 				
-				String date = rs.getString(9);
+				String date = rs.getString(7);
 				
 				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
 				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 				String properDate = format2.format(date1);
 
 				inv.setInvDate(properDate);
-				inv.setInvoiceNo(rs.getString(10));
-				inv.setCompanyId(rs.getInt(11));
+				inv.setCompanyId(rs.getInt(8));
 			}
 			
 			stmt.close();
@@ -83,23 +80,20 @@ public ArrayList<Invoice> getInvoiceReport() {
 			Invoice inv = new Invoice();
 			
 			inv.setId(rs.getInt(1));
-			inv.setRst(rs.getInt(2));
-			inv.setCid(rs.getInt(3));
-			inv.setVid(rs.getInt(4));
-			inv.setFinalRate(rs.getDouble(5));
-			inv.setTotal(rs.getDouble(6));
-			inv.setAmountPaid(rs.getDouble(7));
-			inv.setPending(rs.getDouble(8));
+			inv.setWeighmentId(rs.getInt(2));
+			inv.setInvoiceNo(rs.getString(3));
+			inv.setTotal(rs.getDouble(4));
+			inv.setAmountPaid(rs.getDouble(5));
+			inv.setPending(rs.getDouble(6));
 			
-			String date = rs.getString(9);
+			String date = rs.getString(7);
 			
 			Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
 			SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 			String properDate = format2.format(date1);
 
 			inv.setInvDate(properDate);
-			inv.setInvoiceNo(rs.getString(10));
-			inv.setCompanyId(rs.getInt(11));
+			inv.setCompanyId(rs.getInt(8));
 			
 			reportList.add(inv);
 			

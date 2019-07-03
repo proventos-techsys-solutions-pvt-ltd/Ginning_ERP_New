@@ -32,7 +32,7 @@ public class RstReport {
 			WeighMast wm = new WeighMast();
 			
 			while(rs.next()) {
-				wm.setCid(rs.getInt(1));
+				//wm.setCid(rs.getInt(1));
 				wm.setMaterial(rs.getString(2));
 				wm.setGross(rs.getFloat(3));
 				wm.setTare(rs.getFloat(4));
@@ -43,7 +43,7 @@ public class RstReport {
 			
 			stmt = con.prepareStatement(customerSql);
 			
-			stmt.setInt(1, wm.getCid());
+		//	stmt.setInt(1, wm.getCid());
 			
 			rs = stmt.executeQuery();
 			
@@ -56,7 +56,7 @@ public class RstReport {
 			}
 			
 			
-			c.setId(wm.getCid());
+			//c.setId(wm.getCid());
 			wm.setRst(rst);
 			
 			graderJson = new JSONObject(wm);

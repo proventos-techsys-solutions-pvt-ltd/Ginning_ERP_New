@@ -2,15 +2,17 @@ package com.prov.dbupdation;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Types;
 
-import com.prov.bean.CustomerVehicle;
+import com.prov.bean.PaymentDetails;
 import com.prov.db.OracleConnection;
 
-public class UpdateCustomerVehicle {
+public class UpdatePaymentDetails {
 	
-	public int updateCustomerVehicle(CustomerVehicle cv)
+	public int updatePaymentDetails(PaymentDetails pd)
 	{
+		
 		Connection con = null;
 		int id = 0;
 		try {
@@ -19,38 +21,37 @@ public class UpdateCustomerVehicle {
 			e.printStackTrace();
 		}
 
-		String updateCustomerVehicle = "{ ? = call UPDATE_CUSTOMERVEHICLE(?,?,?,?) }";
+		String updatePaymentDetails = "{ ? = call UPDATE_PAYMENTDETAILS(?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
-
-			cs = con.prepareCall(updateCustomerVehicle);
+			cs = con.prepareCall(updatePaymentDetails);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
-			
-			cs.setInt(2, cv.getId() );
-			cs.setInt(3, cv.getCid() );
-			cs.setString(4, cv.getVehicleNo() );
-			cs.setInt(5, cv.getRst());
-			cs.setInt(6, cv.getvTypeId());
-			cs.setDouble(7, cv.getWeighRate());
-			
-			
+		
+			cs.setInt(2, pd.getId() );
+			cs.setInt(2, pd.getInvoiceId() );
+			cs.setString(3, pd.getPaymentMode() );
+			cs.setString(4, pd.getAccountName());
+			cs.setDouble(5, pd.getAmount());
+			cs.setInt(6, pd.getRtgsNo());
+			cs.setInt(7, pd.getChequeNo());
 			
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);
 			
-			cv.setId(id);
+			pd.setId(id);
 			
 			cs.close();
 			con.close();
 			
 			System.out.println("Updation Succesful-"+id);
-			} catch (Exception e) {
+			} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 		return id;
+		
 	}
-
+	
 }

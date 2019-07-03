@@ -4,15 +4,13 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import com.prov.bean.CustomerVehicle;
+import com.prov.bean.PaymentDetails;
 import com.prov.db.OracleConnection;
 
-public class AddCustomerVehicle {
-	
-public int addCustomerVehicle(CustomerVehicle cv) {
+public class AddPaymentDetails {
+
+public int addPaymentDetails(PaymentDetails pd) {
 		
 		Connection con = null;
 		int id = 0;
@@ -22,37 +20,34 @@ public int addCustomerVehicle(CustomerVehicle cv) {
 			e.printStackTrace();
 		}
 
-		String addCustomerVehicle = "{ ? = call ADD_VEHICLE(?,?,?,?) }";
+		String addPaymentDetails = "{ ? = call ADD_PAYMENTDETAILS(?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
-
-			cs = con.prepareCall(addCustomerVehicle);
+			cs = con.prepareCall(addPaymentDetails);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
-			cs.setInt(2, cv.getCid() );
-			cs.setString(3, cv.getVehicleNo() );
-			cs.setInt(4, cv.getRst());
-			cs.setInt(5, cv.getvTypeId());
-			cs.setDouble(6, cv.getWeighRate());
-			
+			cs.setInt(2, pd.getInvoiceId() );
+			cs.setString(3, pd.getPaymentMode() );
+			cs.setString(4, pd.getAccountName());
+			cs.setDouble(5, pd.getAmount());
+			cs.setInt(6, pd.getRtgsNo());
+			cs.setInt(7, pd.getChequeNo());
+					
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);
 			
-			cv.setId(id);
+			pd.setId(id);
 			
 			cs.close();
 			con.close();
 			
 			System.out.println("Insertion Succesful"+id);
-			} catch (Exception e) {
+			} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 		return id;
 	}
-
-
-
 }
