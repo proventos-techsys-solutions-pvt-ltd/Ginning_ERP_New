@@ -6,64 +6,49 @@ import java.sql.ResultSet;
 
 import org.json.JSONObject;
 
-import com.prov.bean.Customer;
-import com.prov.bean.WeighMast;
 import com.prov.db.OracleConnection;
 
 public class RstReport {
 	
-	public JSONObject getGraderData(int rst) {
+	public JSONObject getWeighmentData(int rst) {
 		
 		ResultSet rs = null;
 		Connection con = null;
-		JSONObject graderJson = null;
+		JSONObject jsonObj = new JSONObject();
 		
 		try {
 			con = OracleConnection.getConnection();
 			
-			String weighSql = "SELECT CID, MATERIAL, GROSS, TARE, NET FROM WEIGH_MAST WHERE RST="+rst;
+			String sql = "SELECT \r\n" + 
+					"    CM.NAME, \r\n" + 
+					"    CM, ADDRESS, \r\n" + 
+					"    CM.MOBILE, \r\n" + 
+					"    WM.ID, \r\n" + 
+					"    WM.MATERIAL, \r\n" + 
+					"    WM.NET\r\n" + 
+					"FROM \r\n" + 
+					"    customer_mast CM, \r\n" + 
+					"    customer_vehicle_mast CVM, \r\n" + 
+					"    WEIGH_MAST WM\r\n" + 
+					"WHERE \r\n" + 
+					"WM.VID = CVM.ID AND\r\n" + 
+					"CVM.CID = CM.ID AND\r\n" + 
+					"WM.RST="+rst;
 			
-			String customerSql = "SELECT NAME, ADDRESS, MOBILE FROM CUSTOMER_MAST WHERE ID=?";
-			
-			PreparedStatement stmt = con.prepareStatement(weighSql);
-			
-			rs = stmt.executeQuery();
-			
-			WeighMast wm = new WeighMast();
-			
-			while(rs.next()) {
-				//wm.setCid(rs.getInt(1));
-				wm.setMaterial(rs.getString(2));
-				wm.setGross(rs.getFloat(3));
-				wm.setTare(rs.getFloat(4));
-				wm.setNet(rs.getFloat(5));
-			}
-			
-			rs = null;
-			
-			stmt = con.prepareStatement(customerSql);
-			
-		//	stmt.setInt(1, wm.getCid());
+			PreparedStatement stmt = con.prepareStatement(sql);
 			
 			rs = stmt.executeQuery();
 			
-			Customer c = new Customer();
-			
 			while(rs.next()) {
-				c.setName(rs.getString(1));
-				c.setAddress(rs.getString(2));
-				c.setMobile(rs.getString(3));
+				
+				jsonObj.put("vendorName", rs.getString(1));
+				jsonObj.put("vendorAddress", rs.getString(2));
+				jsonObj.put("vendorMobile", rs.getString(3));
+				jsonObj.put("weighMentId", rs.getString(4));
+				jsonObj.put("material", rs.getString(5));
+				jsonObj.put("netWeight", rs.getString(6));
+				
 			}
-			
-			
-			//c.setId(wm.getCid());
-			wm.setRst(rst);
-			
-			graderJson = new JSONObject(wm);
-			
-			graderJson.append("name", c.getName());
-			graderJson.append("address", c.getAddress());
-			graderJson.append("mobile", c.getMobile());
 			
 			rs.close();
 			stmt.close();
@@ -73,7 +58,7 @@ public class RstReport {
 			e.printStackTrace();
 		}
 		
-		return graderJson;
+		return jsonObj;
 		
 	}
 

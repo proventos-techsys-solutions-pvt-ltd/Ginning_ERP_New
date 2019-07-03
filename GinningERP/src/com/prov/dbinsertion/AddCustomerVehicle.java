@@ -2,10 +2,7 @@ package com.prov.dbinsertion;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.prov.bean.CustomerVehicle;
 import com.prov.db.OracleConnection;

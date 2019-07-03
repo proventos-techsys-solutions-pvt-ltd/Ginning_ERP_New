@@ -11,11 +11,11 @@
 		out.println("Please enter valid information.");
 	}
 	else{
-	RstReport report = new RstReport();
+		RstReport report = new RstReport();
+		
+		JSONObject obj = report.getWeighmentData(rst);
 	
-	JSONObject obj = report.getGraderData(rst);
-
-	out.print(obj);
-	out.flush();
+		out.print(obj);
+		out.flush();
 	}
 %>

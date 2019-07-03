@@ -71,7 +71,6 @@ public int addWeighMast(WeighMast wm) {
 		return id;
 	}
 
-
 	public int addSecondWeighment(WeighMast wm) {
 		Connection con = null;
 		int flag= 0;

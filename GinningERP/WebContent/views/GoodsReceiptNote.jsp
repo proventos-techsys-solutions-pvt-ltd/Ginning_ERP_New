@@ -27,31 +27,36 @@
         <div class="row mt-2 tile-background-row">
 			<div class="col-md-12">
 				<form>
+				<input id="weighmentId" name="weighmentId" hidden="hidden" value="" />
 					<div class="form-row form-row-ctm">
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">RST No/GRN No</label>
 							<div class="d-flex justify-content align-items-center">
-								<input type="text" class="form-control form-control-sm" id="" name="">
-								<button type="button" class="btn btn-success btn-sm btn-no-radius">Fetch</button>
+								<input type="text" class="form-control form-control-sm" id="rst" name="rst">
+								<button type="button" class="btn btn-success btn-sm btn-no-radius" onclick="fetchData(this.value)">Fetch</button>
 							</div>
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Material</label>
-							<input type="text" class="form-control form-control-sm" id="" name="" readonly>
+							<input type="text" class="form-control form-control-sm" id="material" name="material" readonly>
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Quantity in Kg</label>
-							<input type="text" class="form-control form-control-sm" id="quantity" name="" >
+							<input type="text" class="form-control form-control-sm" id="quantity" name="quantity" >
 						</div>
 					</div>
 					<div class="form-row form-row-ctm">
 						<div class="col-md-2">
 							<label class="lbl-rm-all">Vendor Name</label>
-							<input type="text" class="form-control form-control-sm" id="" name="" readonly>
+							<input type="text" class="form-control form-control-sm" id="vendorName" name="vendorName" readonly>
+						</div>
+						<div class="col-md-2">
+							<label class="lbl-rm-all">Vendor Address</label>
+							<input type="text" class="form-control form-control-sm" id="vendorAddress" name="vendorAddress" readonly>
 						</div>
 						<div class="col-md-2">
 							<label class="lbl-rm-all">Mobile No</label>
-							<input type="text" class="form-control form-control-sm" id="" name="" readonly>
+							<input type="text" class="form-control form-control-sm" id="vendorMobile" name="vendorMobile" readonly>
 						</div>
 					</div>
 					<div class="form-row form-row-ctm">
@@ -78,7 +83,7 @@
 											</select>
 										</td>
 										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="" name="description" ></td>
-										<td><img src='../property/img/delete.png' alt='delete'></td>
+										<td></td>
 									</tr> 
 								</tbody>
 							</table>
@@ -109,6 +114,8 @@
 	//Global variables
 	var totalQuantity = 0;
 	var tableQuantityGlobal = 0;
+	
+	//Set data in the first row
 	document.getElementById("quantity").addEventListener("change",function(){
 		/*USING AJAX BRING THE DEFUALT GRADE VALUE FROM DATABASE*/
 		var defaultGrade ="Grade A";
@@ -120,14 +127,16 @@
 		
 			
 	})
-	var noOfRows = document.getElementsByName("dividedQuantity").length;
 	
+	
+	
+	//Add  rows to the Grading table dynamically
 	document.addEventListener("change",function(e){
-		if(e.srcElement.id == 'tblQty'){
+		if(e.srcElement.id == 'tblQty' && e.srcElement.value != "0" && e.srcElement.value != ""){
 	
 		console.log("total QTY --- "+totalQuantity );
 				var table = document.getElementById("tableBody");
-				var noOfRows = tableBody.children.length; 
+				var noOfRows = document.getElementsByName("dividedQuantity").length;
 				var remainingQuantity = totalQuantity;
 				
 				
@@ -136,7 +145,7 @@
 					remainingQuantity = remainingQuantity - document.getElementsByName("dividedQuantity")[i].value ;
 				}
 				console.log("Remaining Qty --- "+remainingQuantity);
-				if(remainingQuantity > 0){
+				if(remainingQuantity >= 0){
 					var row = table.insertRow(tableBody.children.length);
 					var cell1 = row.insertCell(0);
 					var cell2 = row.insertCell(1);
@@ -159,7 +168,51 @@
 		}	
 	
 	})
+	
+	//Fetch data for grading using RST
+	function fetchData(rst){
 		
+		url = "../processing/getWeighmentData.jsp?rst="+rst;
+		
+		if(window.XMLHttpRequest){  
+			fetchRequest=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+	  
+		try{  
+			fetchRequest.onreadystatechange=getData;  
+			console.log("AJAX Req sent");
+			fetchRequest.open("GET",url,true);  
+			fetchRequest.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	//Set data in form fields of the page
+	function getData(){
+		
+		if(fetchRequest.readyState == 4){
+			var response = this.response;
+			console.log(response);
+			
+			var data =  JSON.parse(response);
+			
+			document.getElementById("vendorName").value = data.vendorName;
+			document.getElementById("vendorAddress").value = data.vendorAddress;
+			document.getElementById("vendorMobile").value = data.vendorMobile;
+			document.getElementById("material").value = data.material;
+			document.getElementById("quantity").value = data.netWeight;
+			document.getElementById("weighmentId").value = data.weighmentId;
+		}
+	}
+	
+	function submitGradingData(){
+		
+		JSONObject
+	}
+	
+	
 	</script>
   </body>
   </html>

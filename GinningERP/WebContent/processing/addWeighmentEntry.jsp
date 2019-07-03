@@ -18,7 +18,7 @@
 		int cid = Integer.parseInt(request.getParameter("id"));
 	 	String date = request.getParameter("date");
 	 	String vehicleNo = request.getParameter("vehicleNo").toUpperCase();
-	 	String vehicleType = request.getParameter("vehicleType").toUpperCase();
+	 	int vehicleTypeId = Integer.parseInt(request.getParameter("vehicleType"));
 	 	String customer = request.getParameter("customer").toUpperCase();
 	 	String address = request.getParameter("address").toUpperCase();
 	 	String material = request.getParameter("material").toUpperCase();
@@ -29,10 +29,10 @@
 	 	String grossWtTime = request.getParameter("grossWtTime");
 	 	String tareWtTime = request.getParameter("tareWtTime");
 	 	String netWtTime = request.getParameter("netWtTime");
-	 	int weighRate = Integer.parseInt(request.getParameter("weighRate"));
+	 	double weighRate = Double.parseDouble(request.getParameter("weighRate"));
 	 	
-	 	if(cid == 0 || rst == 0 || date == null || vehicleNo == "" || vehicleNo == null || vehicleType == null || 
-	 	   vehicleType == "" || customer == "" || customer == null || address == "" || address == null || 
+	 	if(cid == 0 || rst == 0 || date == null || vehicleNo == "" || vehicleNo == null || 
+	 	   vehicleTypeId == 0 || customer == "" || customer == null || address == "" || address == null || 
 	 	   material == null || material == "" || mobile == null || mobile == "" || gross == 0 ||
 	 	   grossWtTime == "" || grossWtTime == null || weighRate == 0)
 	 	{
@@ -46,27 +46,22 @@
 			
 			cv.setCid(cid);
 			cv.setVehicleNo(vehicleNo);
-			cv.setVehicleType(vehicleType);
+			cv.setvTypeId(vehicleTypeId);
 			cv.setRst(rst);
+			cv.setWeighRate(weighRate);
 			
 			AddCustomerVehicle addVehicle = new AddCustomerVehicle();
 			
 			int vehicleId = addVehicle.addCustomerVehicle(cv);
 			
 			w.setRst(rst);
-			w.setCid(cid);
 			w.setVid(vehicleId);
 			w.setMaterial(material);
-			w.setWeighRate(weighRate);
 			w.setGross(gross);
 			w.setTare(tare);
 			w.setNet(net);
-			w.setGrade(null);
-			w.setGraderRate(0);
 			w.setGrossWtTime(grossWtTime);
 			w.setTareWtTime(tareWtTime);	
-			w.setMoisture(0);
-			w.setInvoiceId(0);
 			
 			AddWeighMast addWeigh = new AddWeighMast();
 			
@@ -76,7 +71,6 @@
 		
 			}
 	}
-	
 	else{
 		
 		float tare = Float.parseFloat(request.getParameter("tare"));
