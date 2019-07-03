@@ -67,18 +67,19 @@
 									</tr>
 								</thead>
 								<tbody id="tableBody">
-									<tr>
-										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="" name="tableData" ></td>
-										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="tblQty" name="tableData" ></td>
+									 <tr>
+										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="" name="srNo" value="1" ></td>
+										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="tblQty" name="dividedQuantity" value="" ></td>
 										<td>
-											<select class="form-control form-control-sm lbl-rm-all" id="" name="tableData">
+											<select class="form-control form-control-sm lbl-rm-all" id="" name="grade">
 												<option>Grade A</option>
 												<option>Grade B</option>
 												<option>Grade C</option>
 											</select>
 										</td>
-										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="" name="tableData" ></td>
-									</tr>
+										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="" name="description" ></td>
+										<td><img src='../property/img/delete.png' alt='delete'></td>
+									</tr> 
 								</tbody>
 							</table>
 						</div>
@@ -108,51 +109,54 @@
 	//Global variables
 	var totalQuantity = 0;
 	var tableQuantityGlobal = 0;
-	
 	document.getElementById("quantity").addEventListener("change",function(){
 		/*USING AJAX BRING THE DEFUALT GRADE VALUE FROM DATABASE*/
 		var defaultGrade ="Grade A";
 		var defaultGradeDescription = "Grade A Description";
 		totalQuantity = document.getElementById("quantity").value;
 		
-		var tableData = document.getElementsByName("tableData");
-		tableData[0].value = 001;
-		tableData[1].value = totalQuantity;
-		tableData[2].value = defaultGrade;
-		tableData[3].value = defaultGradeDescription;
+		var table = document.getElementById("tableBody");
+		document.getElementById("tblQty").value = totalQuantity;
 		
-		tableQuantityGlobal = tableData[1].value;
-		console.log(tableQuantityGlobal + "Global");
+			
 	})
+	var noOfRows = document.getElementsByName("dividedQuantity").length;
 	
-	document.getElementById("tblQty").addEventListener("change",function(){
-		var tableQuantity = document.getElementById("tblQty").value;
-		console.log(tableQuantity + "table QTY");
-		console.log(totalQuantity + "total QTY")
-		
-			if(tableQuantity < totalQuantity){
+	document.addEventListener("change",function(e){
+		if(e.srcElement.id == 'tblQty'){
+	
+		console.log("total QTY --- "+totalQuantity );
 				var table = document.getElementById("tableBody");
 				var noOfRows = tableBody.children.length; 
-				if(noOfRows === 1){
-					var row = table.insertRow(1);
+				var remainingQuantity = totalQuantity;
+				
+				
+				for(var i=0;i<document.getElementsByName("dividedQuantity").length;i++){
+					
+					remainingQuantity = remainingQuantity - document.getElementsByName("dividedQuantity")[i].value ;
+				}
+				console.log("Remaining Qty --- "+remainingQuantity);
+				if(remainingQuantity > 0){
+					var row = table.insertRow(tableBody.children.length);
 					var cell1 = row.insertCell(0);
 					var cell2 = row.insertCell(1);
 					var cell3 = row.insertCell(2);
 					var cell4 = row.insertCell(3);
 					var cell5 = row.insertCell(4);
 				
-					cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='' name='tableData'>";
-					cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='' name='tableData'>";
-					cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='' name='tableData'>"
+					cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='' name='srNo' value="+(noOfRows+1)+">";
+					cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty' name='dividedQuantity' value="+remainingQuantity+">";
+					cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='' name='grade'>"
 										+	"<option>Grade A</option>"
 										+	"<option>Grade B</option>"
 										+	"<option>Grade C</option>"
 										+	"</select>";
-					cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='' name='tableData'>";
+					cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='' name='description'>";
 					cell5.innerHTML = "<img src='../property/img/delete.png' alt='delete'>";
-				}
-			}
 				
+				}
+				noOfRows = document.getElementsByName("dividedQuantity").length;
+		}	
 	
 	})
 		
