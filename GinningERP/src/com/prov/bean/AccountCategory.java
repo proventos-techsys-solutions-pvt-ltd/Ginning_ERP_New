@@ -28,5 +28,4 @@ public class AccountCategory {
 	public void setItemOf(String itemOf) {
 		this.itemOf = itemOf;
 	}
-	
 }
