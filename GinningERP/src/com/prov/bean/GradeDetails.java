@@ -6,7 +6,15 @@ public class GradeDetails {
 	
 	private String material, grade, authorizedBy;
 	
-	private double quantity, rate;
+	private double quantity, rate, moisture;
+
+	public double getMoisture() {
+		return moisture;
+	}
+
+	public void setMoisture(double moisture) {
+		this.moisture = moisture;
+	}
 
 	public int getId() {
 		return id;

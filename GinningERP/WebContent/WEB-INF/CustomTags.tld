@@ -33,5 +33,11 @@
 	<tag-class>com.prov.tags.AccountCategoryTag</tag-class>
 	<body-content>Empty</body-content>
    </tag>
+   
+   <tag>
+    <name>VehicleCategoryTag</name>
+	<tag-class>com.prov.tags.VehicleCategoryTag</tag-class>
+	<body-content>Empty</body-content>
+   </tag>
   
 </taglib>

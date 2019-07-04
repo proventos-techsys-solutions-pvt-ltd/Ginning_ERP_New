@@ -31,7 +31,7 @@
         </div>
         <div class="row mt-2 tile-background-row">
 			<div class="col-md-12">
-				<form>
+				<form action='../processing/setGrade.jsp'>
 				<input id="weighmentId" name="weighmentId" hidden="hidden" value="" />
 					<div class="form-row form-row-ctm">
 						<div class="col-md-auto">
@@ -74,22 +74,24 @@
 										<th width="20%">Grade</th>
 										<th>Grade Description</th>
 										<th width="7%">Moisture</th>
+										<th width="7%">Rate</th>
 										<th width="5%"></th>
 									</tr>
 								</thead>
 								<tbody id="tableBody">
 									 <tr>
-										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="" name="srNo" value="1" ></td>
-										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="tblQty" name="dividedQuantity" value="" ></td>
+										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="srNo1" name="srNo1" value="1" ></td>
+										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="tblQty1" name="dividedQuantity" value="" ></td>
 										<td>
-											<select class="form-control form-control-sm lbl-rm-all" id="" name="grade">
+											<select class="form-control form-control-sm lbl-rm-all" id="grade1" name="grade1">
 												<option>Grade A</option>
 												<option>Grade B</option>
 												<option>Grade C</option>
 											</select>
 										</td>
-										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="" name="description" ></td>
-										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="" name="moisture" ></td>
+										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="description1" name="description1" ></td>
+										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="moisture1" name="moisture1" ></td>
+										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="rate1" name="rate1" ></td>
 										<td></td>
 									</tr> 
 								</tbody>
@@ -99,7 +101,7 @@
 					<div class="form-row form-row-ctm border-top">
 						<div class="col-md-1 offset-md-10 r-p-all">
 							<div class="d-flex justify-content-end align-items-center">
-								<button type="button" class="btn btn-success btn-sm change-button ">Save</button>
+								<button type="button" class="btn btn-success btn-sm change-button " onclick="submitGradingData()">Save</button>
 							</div>
 						</div>
 						<div class="col-md-1 r-p-all">
@@ -108,6 +110,7 @@
 							</div>
 						</div>
 					</div>
+					<input hidden="hidden" id="output" name="output" value=""/>
 				</form>
 			</div>
         </div>
@@ -130,7 +133,7 @@
 		totalQuantity = document.getElementById("quantity").value;
 		
 		var table = document.getElementById("tableBody");
-		document.getElementById("tblQty").value = totalQuantity;
+		document.getElementById("tblQty1").value = totalQuantity;
 		
 			
 	})
@@ -139,13 +142,14 @@
 	
 	//Add  rows to the Grading table dynamically
 	document.addEventListener("change",function(e){
-		if(e.srcElement.id == 'tblQty' && e.srcElement.value != "0" && e.srcElement.value != ""){
+			
+		var id = e.srcElement.id.toString();
+		if(id.includes('tblQty') && e.srcElement.value != "0" && e.srcElement.value != ""){
 	
 		console.log("total QTY --- "+totalQuantity );
 				var table = document.getElementById("tableBody");
 				var noOfRows = document.getElementsByName("dividedQuantity").length;
 				var remainingQuantity = totalQuantity;
-				
 				
 				for(var i=0;i<document.getElementsByName("dividedQuantity").length;i++){
 					
@@ -161,16 +165,17 @@
 					var cell5 = row.insertCell(4);
 					var cell6 = row.insertCell(5);
 				
-					cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='' name='srNo' value="+(noOfRows+1)+">";
-					cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty' name='dividedQuantity' value="+remainingQuantity+">";
-					cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='' name='grade'>"
+					cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(noOfRows+1)+"' name='srNo"+(noOfRows+1)+"' value="+(noOfRows+1)+">";
+					cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty"+(noOfRows+1)+"' name='dividedQuantity' value="+remainingQuantity+">";
+					cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='grade"+(noOfRows+1)+"' name='grade"+(noOfRows+1)+"'>"
 										+	"<option>Grade A</option>"
 										+	"<option>Grade B</option>"
 										+	"<option>Grade C</option>"
 										+	"</select>";
-					cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='' name='description'>";
-					cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='' name='moisture'>";
-					cell6.innerHTML = "<img src='../property/img/delete.png' alt='delete'>";
+					cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(noOfRows+1)+"' name='description"+(noOfRows+1)+"'>";
+					cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(noOfRows+1)+"' name='moisture"+(noOfRows+1)+"'>";
+					cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate"+(noOfRows+1)+"' name='rate"+(noOfRows+1)+"'>";
+					cell7.innerHTML = "<img src='../property/img/delete.png' alt='delete'>";
 				
 				}
 				noOfRows = document.getElementsByName("dividedQuantity").length;
@@ -218,7 +223,45 @@
 	
 	function submitGradingData(){
 		
-		JSONObject
+		var jsonObj = {};
+		
+		jsonObj['rst'] = document.getElementById('rst').value;
+		jsonObj['material'] = document.getElementById("material").value;
+		jsonObj['totalQuantity'] = document.getElementById("quantity").value;
+		jsonObj['vendorName'] = document.getElementById("vendorName").value;
+		jsonObj['vendorAddress'] = document.getElementById("vendorAddress").value;
+		jsonObj['vendorMobile'] = document.getElementById("vendorMobile").value;
+		jsonObj['weighmentId'] = document.getElementById("weighmentId").value;
+		//jsonObj['auhtorizer'] = document.getElementById("auhtorizer").value;
+		
+		
+		var noOfRows = document.getElementById('tableBody').childElementCount;
+		console.log('no of Rows --- '+noOfRows);
+		
+		var gradeList=[];
+		
+		for(i=0;i<noOfRows;i++){
+			grade={};
+			
+			 grade['srNo'] = document.getElementById('srNo'+(i+1)).value;
+			 grade['quantity'] = document.getElementById('tblQty'+(i+1)).value;
+			 grade['grade'] = document.getElementById('grade'+(i+1)).value;
+			 grade['description'] = document.getElementById('description'+(i+1)).value;
+			 grade['moisture'] = document.getElementById('moisture'+(i+1)).value;
+			//grade['rate'] = document.getElementById('rate'+(i+1)).value;
+		    gradeList.push(grade);
+			 
+		}
+		jsonObj['gradeList']=gradeList;
+		
+		console.log(jsonObj);
+		
+		var jsonStr = JSON.stringify(jsonObj);
+		
+		document.getElementById('output').value=jsonStr;
+		
+		document.getElementsByTagName('form')[0].submit();
+		
 	}
 	
 	

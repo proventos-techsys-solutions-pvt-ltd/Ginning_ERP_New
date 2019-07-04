@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +47,9 @@
         <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Vehicle Type</label>
-	        	 <input type="text" class="form-control " id="vehicleType" name="vehicleType" placeholder="" >
+	        	 <select class="form-control " id="vehicleType" name="vehicleType" >
+	        	 	<c:VehicleCategoryTag />
+	        	 </select>
 	        </div>
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Customer</label>
