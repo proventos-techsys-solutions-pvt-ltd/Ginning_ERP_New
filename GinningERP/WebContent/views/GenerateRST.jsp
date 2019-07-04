@@ -14,100 +14,100 @@
   <%@include file="../views/NavBar.html" %>
   
   <div class="container-fluid">
-  	<div class="row mt-2 tile-background-row">
+  	<div class="row mt-2 ">
   		<div class="col-md-12">
-  			<h2 id="title">Weighment</h2>
+  			<div class="d-flex justify-content-start align-items-center tile-background-row">
+  				<img src="../property/img/weight.png" alt="weight" >&nbsp;
+  				<h4 class="lbl-rm-all">Weighment</h4>
+  			</div>
   		</div>
   	</div>
-   	<div class="row mt-2">
+   	<div class="row mt-2 ">
     <div class="col-md-8">
-    <div class="tile-background mt-2 " id="getHeight">
+    <div class="tile-background-row" id="getHeight">
       	<form id="newRST" action="../processing/addWeighmentEntry.jsp">
-      	<div class="form-row">
+      	<div class="form-row form-row-ctm">
 	      	<input type="hidden" id="id" name="id" value="0" />
 	        <div class="col-md-4">
-	        	<label>RST No</label>
+	        	<label class="lbl-rm-all">RST No</label>
 	        	<input type="text" class="form-control " id="rst" name="rst" placeholder="Auto">
 	        </div>
 
 	        <div class="col-md-4">
-	        	<label>Date</label>
+	        	<label class="lbl-rm-all">Date</label>
 	        	<input type="date" class="form-control " id="date" name="date" placeholder="">
 	        </div>
 	
 	        <div class="col-md-4">
-	        	<label>Vehicle No</label>
+	        	<label class="lbl-rm-all">Vehicle No</label>
 	        	<input type="email" class="form-control " id="vehicleNo" name="vehicleNo" placeholder="Vh No">
 	        </div>
         </div>
-        <div class="form-row">
+        <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
-	        	<label>Vehicle Type</label>
+	        	<label class="lbl-rm-all">Vehicle Type</label>
 	        	 <input type="text" class="form-control " id="vehicleType" name="vehicleType" placeholder="" >
 	        </div>
 	        <div class="col-md-4">
-	        	<label>Customer</label>
+	        	<label class="lbl-rm-all">Customer</label>
 	        	<input type="text" class="form-control " name="customer" id="customer" placeholder="">
 	        </div>
 	        <div class="col-md-4">
-	        	<label>Address</label>
+	        	<label class="lbl-rm-all">Address</label>
 	        	<textarea class="form-control " id="address" name="address"></textarea>
 	        </div>
 	    </div>
-	    <div class="form-row">
+	    <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
-	        	<label>Mobile No</label>
+	        	<label class="lbl-rm-all">Mobile No</label>
 	        	<input type="text" class="form-control " id="mobile" name="mobile" placeholder="" >
 	        </div>
 	        <div class="col-md-4">
-	        	<label>Material</label>
+	        	<label class="lbl-rm-all">Material</label>
 	        	<input type="text" class="form-control " id="material" name="material" placeholder="">
 	        </div>
         </div>
-        <div class="form-row">
+        <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
-	        	<label>Gross Weight : </label>
+	        	<label class="lbl-rm-all">Gross Weight : </label>
 	        	<input type="text" class="form-control  " id="gross" name="gross" placeholder="" value="0.0">
 	        	<input type="text" class="form-control  " id="tare" name="grossWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
 	        
 	         <div class="col-md-4">
-	        	<label>Tare Weight : </label>
+	        	<label class="lbl-rm-all">Tare Weight : </label>
 	            <input type="text" class="form-control  " id="tare" name="tare" placeholder="" value="0.0">
 	            <input type="text" class="form-control  " id="tare" name="tareWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
 	        
 	        <div class="col-md-4">
-	            <label>Net Weight : </label>
+	            <label class="lbl-rm-all">Net Weight : </label>
 	            <input type="text" class="form-control  " id="net" name="net" placeholder="" value="0.0">
 	            <input type="text" class="form-control  " id="tare" name="netWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
         </div>
-        <div class="form-row">
+        <div class="form-row form-row-ctm">
         <div class="col-md-4">
-        	<label>Weigh Rate :</label>
+        	<label class="lbl-rm-all">Weigh Rate :</label>
         	<input type="text" class="form-control " name="weighRate" value='0'>
         </div>
         </div>
         <div class="form-row justify-content-end border-top">
 	        <div class="col-md-auto">
-        		<button type="button" class="btn btn-primary change-button" onclick="fetchRst()">Fetch RST</button>
+        		<button type="button" class="btn btn-success change-button" onclick="fetchRst()">Fetch RST</button>
 	  		</div>
   			<div class="col-md-auto ">
-  				<button type="button" class="btn btn-primary change-button" onclick="submitRSTEntry()">Submit</button>
+  				<button type="button" class="btn btn-success change-button" onclick="submitRSTEntry()">Submit</button>
   			</div>
   			<div class="col-md-auto ">
-  				<button type="button" class="btn btn-primary change-button" data-toggle="modal" data-target="#modalLoginForm">Reset</button>
+  				<button type="button" class="btn btn-success change-button" data-toggle="modal" data-target="#modalLoginForm">Reset</button>
   			</div>
   			<div class="col-md-auto ">
-  				<button type="button" class="btn btn-primary change-button">Print</button>
+  				<button type="button" class="btn btn-success change-button">Print</button>
   			</div>
   			<div class="col-md-auto ">
-  				<button type="button" class="btn btn-primary change-button">PDF</button>
+  				<button type="button" class="btn btn-success change-button">PDF</button>
   			</div>
-  			<div class="col-md-auto ">
-  				<button id="addCustomer" type="button" class="btn btn-primary change-button" data-toggle="modal" data-target="#exampleModalCenter">call here</button>
-       		</div>
         </div>
         </form>
         </div>
@@ -115,8 +115,7 @@
         
   
     <div class="col-md-4">
-    <div class="tile-background mt-2 ">
-      <div class="col-md-12 scroll" >
+      <div class="col-md-12 scroll tile-background-row" >
         <input class="form-control mr-sm-2" type="search" placeholder="Enter RST To Search" aria-label="Search">
         <table class="table">
           <thead class="thead-dark">
@@ -130,7 +129,6 @@
            </tbody>
       </table>
       </div>
-    </div>
     </div>
     </div>
   	<!-- Modal -->

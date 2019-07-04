@@ -96,8 +96,8 @@ label{
 }
 /**********************************BORDER CLASSES************************************/
 .border{
-	padding:0rem 1rem 1rem 1rem;
-	border:1.5px solid #393a3d !important;
+	padding:.40rem;
+	border:1.5px solid #ced4da !important;
 	}
 .border-mr-lt{
 	margin-left:1px;
@@ -178,7 +178,7 @@ body{
 	margin-top:1rem;
 }
 /******************************INPUT OVERRIDDEN***********************************/
-input{
+input, textarea, select{
 	margin-bottom:.5rem;
 	margin-top:.5rem;
 }
@@ -293,6 +293,11 @@ span{
 	text-align:center;
 	vertical-align:middle;
 }
+
+.receipt-no{
+	background: #28a745;
+	color: #fff;
+}
 h6{
 	font-weight:bolder;
 }
@@ -320,6 +325,6 @@ h6{
 	.change-button{
 	width:100%;
 	margin-top:.5rem;
-}
+	}
 }
 

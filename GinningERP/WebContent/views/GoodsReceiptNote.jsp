@@ -14,14 +14,19 @@
    <%@include file="../views/NavBar.html" %>
     <div class="container-fluid">
         <div class="row mt-2 tile-background-row">
-        	<div class="col-md-3">
-	        	<div class="d-flex justify-content-start align-items-center">
-	        		<img src="../property/img/bill.png" alt="recipt">&nbsp;
-	        		<h4>Goods Receipt Note</h4>
+        	<div class="col-md-12">
+        		<div class="d-flex justify-content-between align-items-center">
+		        	<div class="d-flex justify-content-start align-items-center">
+		        		<img src="../property/img/bill.png" alt="recipt">&nbsp;
+		        		<h4 class="lbl-rm-all">Goods Grading Note</h4>&nbsp;&nbsp;
+		        	</div>
+		        	<div class="d-flex justify-content-between align-items-center">	
+		        		<h4 class="lbl-rm-all border receipt-no">GGN No : 0001</h4>
+		        	</div>
 	        	</div>
 	        </div>
 	        <div class="col-md-1 offset-md-8">
-	        	<h4>0001</h4>
+	        	
 	        </div>
         </div>
         <div class="row mt-2 tile-background-row">
@@ -68,6 +73,7 @@
 										<th width="10%">Quantity</th>
 										<th width="20%">Grade</th>
 										<th>Grade Description</th>
+										<th width="7%">Moisture</th>
 										<th width="5%"></th>
 									</tr>
 								</thead>
@@ -83,6 +89,7 @@
 											</select>
 										</td>
 										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="" name="description" ></td>
+										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="" name="moisture" ></td>
 										<td></td>
 									</tr> 
 								</tbody>
@@ -90,14 +97,14 @@
 						</div>
 					</div>
 					<div class="form-row form-row-ctm border-top">
-						<div class="col-md-1 offset-md-10">
+						<div class="col-md-1 offset-md-10 r-p-all">
 							<div class="d-flex justify-content-end align-items-center">
-								<button type="button" class="btn btn-success btn-sm change-button">Save</button>
+								<button type="button" class="btn btn-success btn-sm change-button ">Save</button>
 							</div>
 						</div>
-						<div class="col-md-1">
+						<div class="col-md-1 r-p-all">
 							<div class="d-flex justify-content-end align-items-center">
-								<button type="button" class="btn btn-success btn-sm change-button">Save & Print</button>
+								<button type="button" class="btn btn-success btn-sm change-button ">Save & Print</button>
 							</div>
 						</div>
 					</div>
@@ -152,6 +159,7 @@
 					var cell3 = row.insertCell(2);
 					var cell4 = row.insertCell(3);
 					var cell5 = row.insertCell(4);
+					var cell6 = row.insertCell(5);
 				
 					cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='' name='srNo' value="+(noOfRows+1)+">";
 					cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty' name='dividedQuantity' value="+remainingQuantity+">";
@@ -161,7 +169,8 @@
 										+	"<option>Grade C</option>"
 										+	"</select>";
 					cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='' name='description'>";
-					cell5.innerHTML = "<img src='../property/img/delete.png' alt='delete'>";
+					cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='' name='moisture'>";
+					cell6.innerHTML = "<img src='../property/img/delete.png' alt='delete'>";
 				
 				}
 				noOfRows = document.getElementsByName("dividedQuantity").length;

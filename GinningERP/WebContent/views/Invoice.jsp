@@ -14,104 +14,103 @@
 <body>
       <%@include file="../views/NavBar.html" %>
             <div class="container-fluid">
-            
-            <div class="row justify-content-md-center mt-2 tile-background-row ">
-                <div class="col-md-5">
-                        <h2>Today's Purchase Rate &nbsp; <span id="tRate">5900.64</span></h2>
-                    </div>
-                <div class="col-md-5">
-						    <h2>Average Purchase Rate &nbsp; <span id="aRate">5800.66</span></h2>
-                    </div>   
-                </div>
                 
-                <div class="row mt-2 tile-background-row ">
+                <div class="row mt-2 tile-background-row">
                 	<div class="col-md-auto">
-                		<div class="d-flex justify-content-between">
-                			<h2>Invoicing</h2>
+               			<div class="d-flex justify-content-start align-items-center">
                 			<img src="../property/img/invoicing.png" alt="Invoicing">
-                		</div>
-                	</div>
+                			<h4 class="lbl-rm-all ">Invoicing</h4>
+               			</div>
+               		</div>
                 </div>
             
-                <div class="row mt-2 ">
-                    <div class="col-md-8">
-                    	<div class="tile-background" id="getHeight">
+                <div class="row mt-2 tile-background-row">
                         <form action="../processing/approvedInvoiceEntry.jsp" id="adminApprovalForm">
                         	<input type="hidden" name="id" value="" id="id" />
+                        	<div class="form-row">
+                        		<div class="col-md-3">
+                       			  <label for="" class="lbl-rm-all">Company Name </label>
+                                  <select name="companyName" id="companyName" class="form-control form-control-sm">
+                                      <option selected="selected" disabled="disabled">Select</option>
+                                      <c:Company/>
+                                  </select>
+                        		</div>
+                        		<div class="col-md-3 offset-md-6">
+                        			<label class="lbl-rm-all">Authorized By</label>
+                                    <input id="grader" name="grader"  type="text" class="form-control form-control-sm" placeholder="">
+                        		</div>
+                        	</div>
                             <div class="form-row">
-                                <div class="col-md-6">
-                                    <label for="">RST No :</label>
-                                    <div class="input-group">
-                                    <input id="rst" type="text" class="form-control form-control-sm" placeholder="Search RST">
-                                	<div class="input-group-append">
-				    				<button class="btn btn-outline-secondary btn-sm" type="button" onclick="fetchData(document.getElementById('rst').value)">Get RST</button>
-				    				</div>
+                                <div class="col-md-auto">
+                                	<label for="" class="lbl-rm-all">RST No </label>
+                                	<div class="d-flex justify-content-start align-items-center">
+	                                    <input id="rst" type="text" class="form-control form-control-sm" placeholder="Search RST">
+					    				<button class="btn btn-success btn-sm btn-no-radius" type="button" onclick="fetchData(document.getElementById('rst').value)">Fetch</button>
                                 	</div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="">Invoice No :</label>
+                               </div>
+                            <div class="form-row">
+                                <div class="col-md-2">
+                                    <label for="" class="lbl-rm-all">Invoice No </label>
                                     <input id="invoiceNo" name="invoiceNo" type="text" class="form-control form-control-sm" placeholder="Invoice No" >
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="">Company Name :</label>
-                                    <select name="companyName" id="companyName" class="form-control form-control-sm">
-                                        <option selected="selected" disabled="disabled">Select</option>
-                                        <c:Company/>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="">Date :</label>
+                                
+                                 <div class="col-md-2">
+                                    <label for="" class="lbl-rm-all">Date </label>
                                     <input type="date" id="invoiceDate" name="invoiceDate" class="form-control form-control-sm" placeholder="Record No">
                                 </div>
-                                <div class="col-md-6">
-                                    <label>Customer Name & Address</label>
-                                    <textarea id="customerData" name="customerData" class="form-control form-control-lg"></textarea>
-                                    </div>
-                                <div class="col-md-6">
-                                    <label>Authorized Grader</label>
-                                    <input id="grader" name="grader"  type="text" class="form-control form-control-sm" placeholder="">
-                                    <label>Operator Name</label>
-                                    <input type="text" id="operatorName" name="operatorName" class="form-control form-control-sm" placeholder="">
+                                
+                                <div class="col-md-3 offset-md-5">
+                                   <label class="lbl-rm-all">Customer Name & Address</label>
+                                   <textarea id="customerData" name="customerData" class="form-control form-control-sm"></textarea>
                                 </div>
+                             </div>
+                              
+                              <div class="form-row">
                                 <div class="col-md-12 col-md-margintop">
                                     <table class="table table-bordered custom-table">
                                         <thead>
-                                        <tr>
-                                            <th>RST No</th>
-                                            <th>Material</th>
-                                            <th>Quantity</th>
-                                            <th>Grade</th>
-                                            <th>Moisture Content</th>
-                                            <th>Rate</th>
-                                            <th align="right">Amount</th> 
+                                        <tr class="table-back">
+                                            <th width="7%">RST No</th>
+                                            <th width="20%">Material</th>
+                                            <th width="10%">Quantity</th>
+                                            <th width="20%">Grade</th>
+                                            <th width="7%">Moisture</th>
+                                            <th width="7%">Rate</th>
+                                            <th width="10%">Amount</th>
+                                            <th width="5%" class="text-center">Amanat</th>  
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <td id="tableRst">01</td>
-                                            <td id="material">Product Name</td>
+                                            <td><input type="text" id="tableRst" class="form-control form-control-sm" name="" value="" ></td>
+                                            <td><input type="text" id="material" class="form-control form-control-sm" name="" value="" ></td>
                                             <td><input type="text" id="quantity" class="form-control form-control-sm" name="quantity" value="" ></td>
-                                            <td id="grade">A</td>
-                                            <td id="moisture"><input type="text" id="moisture" name="moisture" class="form-control form-control-sm" /></td>
+                                            <td><input type="text" id="grade" class="form-control form-control-sm" name="" value="" ></td>
+                                            <td><input type="text" id="moisture" name="moisture" class="form-control form-control-sm" /></td>
                                             <td><input type="text" id="rate" name="rate" class="form-control form-control-sm" value="0"></td>
-                                            <td id="amount" align="right">0.0</td>
+                                            <td><input type="text" id="amount" class="form-control form-control-sm" name="" value="" ></td>
+                                            <td class="text-center"><input type="checkbox" id="" class="lbl-rm-all" value="" ></td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                	 <div class="col-md-9 ">
-	                                     <label class="lbl-rm-b lbl-rm-l">Note :</label>
-	                                     <textarea id="note" name="note" class="form-control form-control-lg"></textarea>
+                                </div>
+                                <div class="form-row">
+	                               	 <div class="col-md-4 ">
+	                                     <label class="lbl-rm-all">Note :</label>
+	                                     <textarea id="note" name="note" class="form-control form-control-sm"></textarea>
 									</div>
-									<div class="col-md-3">
-										<label for="" class="lbl-rm-b lbl-rm-l">Advance :</label> 
-	                                    <input type="text" id="advance" name="advance" class="form-control form-control-sm lbl-rm-b lbl-rm-t" value="0">
-	                                    <label for="" class="lbl-rm-b lbl-rm-t lbl-rm-l">Net Payable :</label> 
-	                                    <input type="text" id="net" name="net" class="form-control form-control-sm lbl-rm-b lbl-rm-t" value="0">
+									<div class="col-md-2 offset-md-6">
+										<label for="" class="lbl-rm-all">Advance </label> 
+	                                    <input type="text" id="advance" name="advance" class="form-control form-control-sm" value="0">
+	                                    <label for="" class="lbl-rm-all">Net Payable </label> 
+	                                    <input type="text" id="net" name="net" class="form-control form-control-sm" value="0">
 									</div>
+								</div>
+									
                                
                                                 
-                                </div>
                                 <div class="col-md-12 border-top">
                                     <div class="d-flex justify-content-around custom-checkbox">
                                         <div class="custom-control">
@@ -128,50 +127,20 @@
                                         </div>
                                     </div>
                                 </div>
-                                	<div class="col-md-12">
-                                		<table class="table table-bordered ">
-                                			<tbody id="paymentDetailsTable">
-                                			
-                                			</tbody>
+                                <!-- ********************HIDDEN TABLE FOR COLLECTING PAYMENT INFORMATION**************************** -->
+                                	<div class="col-md-12 mt-2 border-top">
+                                		<table class="table table-bordered mt-2 ">
+                                			<thead id="paymentDetailsTableHead"></thead>
+                                			<tbody id="paymentDetailsTableBody"></tbody>                     			
                                 		</table>
                                 	</div>
-                                <div class="col-md-12 border-top">
+                                <div class="col-md-12 ">
                                     <div class="d-flex justify-content-end">
-                                        <button style="margin-bottom:8px;" type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp" >Amanat</button>
-                                        <button style="margin-bottom:8px;" type="button" class="btn btn-primary btn-sm btn-mr-rt btn-mr-tp" onclick="submitForm()">Approve</button>
+                                        <button style="margin-bottom:8px;" type="button" class="btn btn-success btn-sm btn-mr-rt btn-mr-tp" >Amanat</button>
+                                        <button style="margin-bottom:8px;" type="button" class="btn btn-success btn-sm btn-mr-rt btn-mr-tp" onclick="submitForm()">Approve</button>
                                     </div>
                                 </div>
                                  </form>
-                            </div> 
-                    </div>
-                    <div class="col-md-4">
-                    	<div class="tile-background setHeight">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Token No</th>
-                                    <th>RST No</th>
-                                    <th>Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>01</td>
-                                    <td>2541</td>
-                                    <td>0451</td>
-                                    <td>10000</td>
-                                </tr>
-                                <tr>
-                                    <td>02</td>
-                                    <td>2542</td>
-                                    <td>0452</td>
-                                    <td>10500</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
                 </div>
              	
              	<!-- *********************************CASH PAYMENT MODAL******************************************** -->
@@ -264,14 +233,69 @@
 				       	</form>
 				      </div>
 				      <div class="modal-footer">
-				        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary btn-sm">Save</button>
+				        <button type="button" class="btn btn-default btn-sm" id="chequePaymentCloseBtn" data-dismiss="modal">Close</button>
+				        <button type="button" class="btn btn-primary btn-sm" id="chequePaymentSaveBtn" data-dismiss="modal">Save</button>
 				      </div>
 				    </div>
 				  </div>
 				</div>
              	
-             	
+             	<!-- *********************************RTSG/NEFT PAYMENT MODAL******************************************** -->
+             	<div class="modal fade" id="transferPaymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				      	<h4 class="modal-title" id="myModalLabel">RTGS/NEFT Payment Details</h4>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				      </div>
+				      <div class="modal-body">
+				       	<form>
+				       		<div class="form-row">
+				       			<div class="col-md-6">
+				       			<label>Select Bank</label>
+				       			<select name="bank" id="bank" class="form-control form-control-sm">
+				       				<option value="">Bank 1</option>
+				       				<option value="">Bank 2</option>
+				       				<option value="">Bank 3</option>
+				       			</select>
+				       			</div>
+				       			<div class="col-md-6">
+				       			<label>Balance</label>
+				       			<input name="balanceCheque" id="balanceCheque" type="text" class="form-control form-control-sm" readonly>
+				       			</div>
+				       		</div>
+				       		<div class="form-row">
+				       			<div class="col-md-6">
+				       			<label>Vendor Name</label>
+				       			<input type="text" class="form-control form-control-sm" name="vendorNameCheque" id="vendorNameCheque" placeholder="Auto">
+				       			</div>
+				       			<div class="col-md-6">
+				       			<label>Amount to Pay</label>
+				       			<input type="text" class="form-control form-control-sm" name="chequeAmount" id="chequeAmount">
+				       			</div>
+				       		</div>
+				       		<div class="form-row">
+				       			<div class="col-md-6">
+				       			<label>Date</label>
+				       			<input type="date" class="form-control form-control-sm" name="chequeDate" id="chequeDate" placeholder="Auto">
+				       			</div>
+				       			<div class="col-md-6">
+				       			<label>RTGS/NEFT No</label>
+				       			<input type="text" class="form-control form-control-sm" name="chequeNo" id="chequeNo">
+				       			</div>
+				       		</div>
+				       	</form>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default btn-sm" id="transferPaymentCloseBtn" data-dismiss="modal">Close</button>
+				        <button type="button" class="btn btn-primary btn-sm" id="transferPaymentSaveBtn" data-dismiss="modal">Save</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				
+				
+				
 			<nav class="navbar navbar-default navbar-static-bottom footer border-top">
     
     		</nav>
@@ -280,9 +304,7 @@
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/modal.js"></script>
-	<script src="../js/commonjs.js"></script>
 	<script>
-	settingHeightofAdjacentPanels("getHeight","setHeight");
 	
 	function fetchData(rst){
 		console.log(rst);

@@ -15,14 +15,21 @@
 <body>
    <%@include file="../views/NavBar.html" %>
         <div class="container-fluid">
-            <div class="row justify-content-md-center mt-2 tile-background-row ">
-                <div class="col-md-5">
-                        <h2>Today's Purchase Rate &nbsp; <span id="tRate">5900.64</span></h2>
+             <div class="row mt-2 tile-background-row">
+                	<div class="col-md-6">
+                		<div class="d-flex justify-content-center ">
+                        	<h4 class="lbl-rm-all">Today's Purchase Rate</h4>&nbsp;
+                        	<h4 id="tRate">5900.64</h4>
+                        </div>
                     </div>
-                <div class="col-md-5">
-						    <h2>Average Purchase Rate &nbsp; <span id="aRate">5800.66</span></h2>
+                	<div class="col-md-6">
+                		<div class="d-flex justify-content-center ">
+							<h4 class="lbl-rm-all">Average Purchase Rate</h4>&nbsp;
+							<h4 id="aRate">5800.66</h4>
+                    	</div>
                     </div>   
                 </div>
+                
              <div class="row mt-2 tile-background-row">
              	<div class="col-md-2">
              		<label class="lbl-rm-l">Company</label>

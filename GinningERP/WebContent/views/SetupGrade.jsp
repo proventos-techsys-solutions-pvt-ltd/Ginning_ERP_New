@@ -59,7 +59,7 @@
 							<td>Description of Grade A</td>
 							<td id="callModal" class="text-center"><img src="../property/img/edit.png" alt="edit"></td>
 							<td class="text-center"><img src="../property/img/delete.png" alt="delete"></td>
-							<td class="text-center"><input type="checkbox" class="" id="" name=""  value=""></td>
+							<td class="text-center"><input type="radio" class="" id="" name=""  value=""></td>
 						</tr>
 					</tbody>
 				</table>
