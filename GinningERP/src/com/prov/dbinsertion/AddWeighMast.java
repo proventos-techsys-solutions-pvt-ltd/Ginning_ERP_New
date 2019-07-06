@@ -48,12 +48,6 @@ public int addWeighMast(WeighMast wm) {
 			cs.setDate(9, tareSqlDate);
 			cs.setString(10, wm.getWeighmentDate());
 			
-			if(wm.getId() == 0) {
-				cs.setNull(15, Types.NUMERIC);
-			}else {
-				cs.setInt(15, wm.getId());
-			}
-			
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);

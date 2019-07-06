@@ -15,10 +15,10 @@
     	JSONParser parser = new JSONParser();
     	
     	JSONObject json = (JSONObject) parser.parse(gradeData);
-    	
-    	
 
     	JSONArray jsonArray = (JSONArray)json.get("gradeList");
+    	
+    	System.out.println(jsonArray);
     	
     	ArrayList<GradeDetails> gradeList = new ArrayList<GradeDetails>();
     	
@@ -26,37 +26,42 @@
     	{
     		GradeDetails grade = new GradeDetails();
         	
-        	grade.setWeighmentId((int)json.get("weighmentId"));
+        	grade.setWeighmentId(Integer.parseInt((String)json.get("weighmentId")));
         	grade.setMaterial((String)json.get("material"));
-        	grade.setRst((int)json.get("rst"));
+        	grade.setRst(Integer.parseInt((String)json.get("rst")));
         	grade.setAuthorizedBy((String)json.get("authorizer"));
         	
         	JSONObject gradeJson = (JSONObject)jsonArray.get(i);
         	
-        	grade.setQuantity((double)gradeJson.get("quantity"));
+        	grade.setQuantity(Float.parseFloat((String)gradeJson.get("quantity")));
         	grade.setGrade((String)gradeJson.get("grade"));
-        	grade.setMoisture((double)json.get("moisture"));
-        	grade.setMoisture((double)json.get("rate"));
+        	grade.setMoisture(Float.parseFloat((String)gradeJson.get("moisture")));
+        	grade.setRate(Float.parseFloat((String)gradeJson.get("rate")));
         	
         	gradeList.add(grade);
         	
     	}
     	
     	AddGradeDetails addGrades = new AddGradeDetails();
-    	
-    	int ids[] = null;
     	int i=0;
+    	ArrayList<Integer> ids = new ArrayList<Integer>();
     	
     	for(GradeDetails grade: gradeList){
     		
-    		ids[0] = addGrades.addGradeDetails(grade);
+    		ids.add(i, addGrades.addGradeDetails(grade));
     		i++;
     		
     	}
 
-    	boolean contains = IntStream.of(ids).anyMatch(x -> x == 0);
+    	boolean contains = false;
+    	for(int j=0;j<ids.size();j++)
+    	{
+    		if(ids.get(j)!=0){
+    			contains=true;
+    		}
+    	}	
     	
-    	if(contains){
+    	if(!contains){
     		response.sendRedirect("errorPage.html");
     	}
     	else{

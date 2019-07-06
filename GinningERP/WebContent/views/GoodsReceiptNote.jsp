@@ -32,13 +32,13 @@
         <div class="row mt-2 tile-background-row">
 			<div class="col-md-12">
 				<form action='../processing/setGrade.jsp'>
-				<input id="weighmentId" name="weighmentId" hidden="hidden" value="" />
+				<input type="hidden" id="weighmentId" name="weighmentId"  value="0" />
 					<div class="form-row form-row-ctm">
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">RST No/GRN No</label>
 							<div class="d-flex justify-content align-items-center">
 								<input type="text" class="form-control form-control-sm" id="rst" name="rst">
-								<button type="button" class="btn btn-success btn-sm btn-no-radius" onclick="fetchData(this.value)">Fetch</button>
+								<button type="button" class="btn btn-success btn-sm btn-no-radius" onclick="fetchData(document.getElementById('rst').value)">Fetch</button>
 							</div>
 						</div>
 						<div class="col-md-auto">
@@ -47,7 +47,11 @@
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Quantity in Kg</label>
-							<input type="text" class="form-control form-control-sm" id="quantity" name="quantity" >
+							<input type="text" class="form-control form-control-sm" id="quantity" name="quantity" value="" />
+						</div>
+						<div class="col-md-auto">
+							<label class="lbl-rm-all">Authorizer</label>
+							<input type="text" class="form-control form-control-sm" id="authorizer" name="authorizer" >
 						</div>
 					</div>
 					<div class="form-row form-row-ctm">
@@ -128,6 +132,10 @@
 	//Set data in the first row
 	document.getElementById("quantity").addEventListener("change",function(){
 		/*USING AJAX BRING THE DEFUALT GRADE VALUE FROM DATABASE*/
+		setFirstRowData()
+	})
+	
+	function setFirstRowData(){
 		var defaultGrade ="Grade A";
 		var defaultGradeDescription = "Grade A Description";
 		totalQuantity = document.getElementById("quantity").value;
@@ -135,8 +143,7 @@
 		var table = document.getElementById("tableBody");
 		document.getElementById("tblQty1").value = totalQuantity;
 		
-			
-	})
+		}	
 	
 	
 	
@@ -152,11 +159,11 @@
 				var remainingQuantity = totalQuantity;
 				
 				for(var i=0;i<document.getElementsByName("dividedQuantity").length;i++){
-					
+					//console.log(document.getElementsByName("dividedQuantity")[i].value);
 					remainingQuantity = remainingQuantity - document.getElementsByName("dividedQuantity")[i].value ;
 				}
 				console.log("Remaining Qty --- "+remainingQuantity);
-				if(remainingQuantity >= 0){
+				if(remainingQuantity > 0){
 					var row = table.insertRow(tableBody.children.length);
 					var cell1 = row.insertCell(0);
 					var cell2 = row.insertCell(1);
@@ -164,6 +171,7 @@
 					var cell4 = row.insertCell(3);
 					var cell5 = row.insertCell(4);
 					var cell6 = row.insertCell(5);
+					var cell7 = row.insertCell(6);
 				
 					cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(noOfRows+1)+"' name='srNo"+(noOfRows+1)+"' value="+(noOfRows+1)+">";
 					cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty"+(noOfRows+1)+"' name='dividedQuantity' value="+remainingQuantity+">";
@@ -217,8 +225,11 @@
 			document.getElementById("vendorMobile").value = data.vendorMobile;
 			document.getElementById("material").value = data.material;
 			document.getElementById("quantity").value = data.netWeight;
+			console.log(data.weighmentId);
 			document.getElementById("weighmentId").value = data.weighmentId;
 		}
+		
+		setFirstRowData();
 	}
 	
 	function submitGradingData(){
@@ -232,7 +243,7 @@
 		jsonObj['vendorAddress'] = document.getElementById("vendorAddress").value;
 		jsonObj['vendorMobile'] = document.getElementById("vendorMobile").value;
 		jsonObj['weighmentId'] = document.getElementById("weighmentId").value;
-		//jsonObj['auhtorizer'] = document.getElementById("auhtorizer").value;
+		jsonObj['authorizer'] = document.getElementById("authorizer").value;
 		
 		
 		var noOfRows = document.getElementById('tableBody').childElementCount;
@@ -248,8 +259,9 @@
 			 grade['grade'] = document.getElementById('grade'+(i+1)).value;
 			 grade['description'] = document.getElementById('description'+(i+1)).value;
 			 grade['moisture'] = document.getElementById('moisture'+(i+1)).value;
-			//grade['rate'] = document.getElementById('rate'+(i+1)).value;
-		    gradeList.push(grade);
+			 grade['rate'] = document.getElementById('rate'+(i+1)).value;
+		    
+			 gradeList.push(grade);
 			 
 		}
 		jsonObj['gradeList']=gradeList;

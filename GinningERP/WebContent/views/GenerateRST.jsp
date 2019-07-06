@@ -47,7 +47,8 @@
         <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Vehicle Type</label>
-	        	 <select class="form-control " id="vehicleType" name="vehicleType" >
+	        	 <select class="form-control " id="vehicleType" name="vehicleType" onchange="setWeighRate(this)">
+	        	    <option>Select</option>
 	        	 	<c:VehicleCategoryTag />
 	        	 </select>
 	        </div>
@@ -299,10 +300,10 @@ function setNewCustomerData(){
 
 
 //Check if the entered customer exists in DB
-document.getElementById("mobile").addEventListener('keypress',function(e){
-	if(e.keyCode === 13){
+document.getElementById("mobile").addEventListener('change',function(e){
+	//if(e.keyCode === 13){
 		checkEnteredCustomer();
-	}
+	//}
 	
 });
 function checkEnteredCustomer(){
@@ -417,7 +418,7 @@ function setPendingData(pendingRst){
 	   element.insertAdjacentHTML('beforeend','<tr>'+
 			    '<td>'+jsonData[i].rst+'</td>'+
 			    '<td>'+jsonData[i].customerName+'</td>'+  
-			    '<td>'+jsonData[i].gross+'</td>'+     
+			    '<td>'+jsonData[i].grossWt+'</td>'+     
 			   '</tr>');
 	 }
 	
@@ -426,6 +427,12 @@ function setPendingData(pendingRst){
 window.onload = function() {
 	pendingTareWt();
 	};
+	
+	
+
+function setWeighRate(event) {
+	document.getElementsByName("weighRate")[0].value = event.selectedOptions[0].getAttribute('data-weighRate'); 
+}
 
 </script>
 </body>

@@ -19,7 +19,7 @@ public int addCustomerVehicle(CustomerVehicle cv) {
 			e.printStackTrace();
 		}
 
-		String addCustomerVehicle = "{ ? = call ADD_VEHICLE(?,?,?,?) }";
+		String addCustomerVehicle = "{ ? = call ADD_CUSTOMERVEHICLE(?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 

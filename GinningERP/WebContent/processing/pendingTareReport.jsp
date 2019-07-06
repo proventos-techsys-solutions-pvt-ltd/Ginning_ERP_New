@@ -18,22 +18,7 @@
 
 	list = wr.getReport();
 	
-	JSONArray jsonList = new JSONArray();
-	
-	for(WeighMast wm : list){
-		
-		if(wm.getNet() == 0.0 && wm.getTare()== 0.0){
-			
-			Customer c = cr.getReport(wm.getCid());
-			
-			JSONObject jsonObj = new JSONObject(wm);
-			
-			jsonObj.put("customerName", c.getName());
-			
-			jsonList.put(jsonObj);
-		}
-		
-	}
+	JSONArray jsonList = wr.pendingTareReport(); 
 	
 	out.print(jsonList);
 	out.flush();

@@ -23,11 +23,11 @@ public class VehicleCategoryTag extends SimpleTagSupport  {
 		TreeMap<Integer,String> vehicleCategory = new TreeMap<Integer,String>();
 		try {
 			 con = OracleConnection.getConnection();
-			 String vehicleCategoryQuery = "Select * from weigh_rate_mast order by vehicle_name";
+			 String vehicleCategoryQuery = "SELECT * FROM WEIGH_RATE_MAST ORDER BY VEHICLE_NAME";
 			 Statement stmt = con.createStatement();
 			 vehicleResultSet = stmt.executeQuery(vehicleCategoryQuery);
 			 while(vehicleResultSet.next()) {
-				 vehicleCategory.put(vehicleResultSet.getInt("id"),vehicleResultSet.getString("vehicle_name"));
+				 vehicleCategory.put(vehicleResultSet.getInt("ID"),vehicleResultSet.getString("VEHICLE_NAME")+"-"+vehicleResultSet.getString("WEIGH_RATE"));
 			 }
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -43,8 +43,11 @@ public class VehicleCategoryTag extends SimpleTagSupport  {
 		while(compItr.hasNext()) {
 			Map.Entry<Integer,String> vehicleCategoryData = (Map.Entry<Integer,String>)compItr.next();
 			String vehicleKey = (String)vehicleCategoryData.getValue();
-			int vehicleValue = (int)vehicleCategoryData.getKey();
-			out.println("<option value='"+vehicleValue+"'>"+vehicleKey+"</option>");
+			String[] data = vehicleKey.split("-");
+			String vehicleCategory = data[0];
+			int weighRate = Integer.parseInt(data[1]);
+			int vehicleTypeId = (int)vehicleCategoryData.getKey();
+			out.println("<option value='"+vehicleTypeId+"' data-weighRate = '"+weighRate+"'>"+vehicleCategory+"</option>");
 		}
 	}
 

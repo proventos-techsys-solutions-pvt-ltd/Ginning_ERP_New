@@ -7,6 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.prov.bean.WeighMast;
 import com.prov.db.OracleConnection;
 
@@ -130,4 +133,46 @@ public class WeighReport {
 			return list;
 		
 		}
+	
+	public JSONArray pendingTareReport() {
+		ResultSet rs = null;
+		Connection con = null;
+		
+		JSONArray jsonArray = new JSONArray();
+		
+		try {
+			
+			con=OracleConnection.getConnection();
+				
+			String weighSql = "SELECT WM.RST , WM.GROSS, CM.NAME \r\n" + 
+							"FROM WEIGH_MAST WM, CUSTOMER_VEHICLE_MAST CVM, CUSTOMER_MAST CM\r\n" + 
+							"WHERE WM.VID = CVM.ID AND\r\n" + 
+							"CVM.CID = CM.ID AND\r\n" + 
+							"WM.NET=0";
+			
+			PreparedStatement stmt = con.prepareStatement(weighSql);
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				JSONObject obj = new JSONObject();
+				
+				obj.put("rst", rs.getInt(1));
+				obj.put("grossWt",rs.getDouble(2));
+				obj.put("customerName", rs.getString(3));
+
+
+				jsonArray.put(obj);		
+			}
+			
+			stmt.close();
+			rs.close();
+			con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+		return jsonArray;
+	}
+	
 }

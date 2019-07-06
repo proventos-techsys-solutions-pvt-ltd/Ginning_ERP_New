@@ -61,7 +61,8 @@
 			w.setTare(tare);
 			w.setNet(net);
 			w.setGrossWtTime(grossWtTime);
-			w.setTareWtTime(tareWtTime);	
+			w.setTareWtTime(tareWtTime);
+			w.setWeighmentDate(date);
 			
 			AddWeighMast addWeigh = new AddWeighMast();
 			
