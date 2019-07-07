@@ -2,9 +2,10 @@ package com.prov.bean;
 
 public class WeighRateMast {
 	
-	int id;
-	String vehicle_name, vehcile_Desc;
-	double weighrate;
+	private int id;
+	private String vehicle_name, vehcile_Desc;
+	private double weighrate;
+	
 	public int getId() {
 		return id;
 	}
@@ -30,7 +31,4 @@ public class WeighRateMast {
 		this.weighrate = weighrate;
 	}
 	
-	
-	
-
 }
