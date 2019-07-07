@@ -62,7 +62,7 @@
                                 
                                 <div class="col-md-3 offset-md-5">
                                    <label class="lbl-rm-all">Customer Name & Address</label>
-                                   <textarea id="customerData" name="customerData" class="form-control form-control-sm"></textarea>
+                                   <textarea id="customerData" name="customerData" class="form-control form-control-sm" rows="3"></textarea>
                                 </div>
                              </div>
                               
@@ -81,17 +81,17 @@
                                             <th width="5%" class="text-center">Amanat</th>  
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td><input type="text" id="tableRst" class="form-control form-control-sm" name="" value="" ></td>
-                                            <td><input type="text" id="material" class="form-control form-control-sm" name="" value="" ></td>
-                                            <td><input type="text" id="quantity" class="form-control form-control-sm" name="quantity" value="" ></td>
-                                            <td><input type="text" id="grade" class="form-control form-control-sm" name="" value="" ></td>
-                                            <td><input type="text" id="moisture" name="moisture" class="form-control form-control-sm" /></td>
-                                            <td><input type="text" id="rate" name="rate" class="form-control form-control-sm" value="0"></td>
-                                            <td><input type="text" id="amount" class="form-control form-control-sm" name="" value="" ></td>
-                                            <td class="text-center"><input type="checkbox" id="" class="lbl-rm-all" value="" ></td>
-                                        </tr>
+                                        <tbody id='tableBody'>
+                                        <!-- <tr>
+                                            <td><input type="text" id="tableRst1" class="form-control form-control-sm" name="tableRst1" value="" ></td>
+                                            <td><input type="text" id="material1" class="form-control form-control-sm" name="material1" value="" ></td>
+                                            <td><input type="text" id="quantity1" class="form-control form-control-sm" name="quantity1" value="" ></td>
+                                            <td><input type="text" id="grade1" class="form-control form-control-sm" name="grade1" value="" ></td>
+                                            <td><input type="text" id="moisture1" class="form-control form-control-sm" name="moisture1" value="" ></td>
+                                            <td><input type="text" id="rate1" class="form-control form-control-sm"  name="rate1" value="" ></td>
+                                            <td><input type="text" id="amount1" class="form-control form-control-sm" name="amount1" value="" ></td>
+                                            <td class="text-center"><input type="checkbox" id="amanatCheck1" class="lbl-rm-all" name="amanatCheck1" value="" ></td>
+                                        </tr> -->
                                         </tbody>
                                     </table>
                                 </div>
@@ -338,26 +338,39 @@
 	function setData(data)
 	{
 		
-		document.getElementById("rst").value = data.invoice.rst;
-		document.getElementById("id").value = data.invoice.id;
-		document.getElementById("invoiceNo").value = data.invoice.id;
-		//document.getElementById("date").value = data.
-		document.getElementById("customerData").value = data.customer.name + "\n" + data.customer.address + "\n" + data.customer.mobile;
-		//document.getElementById("grader").value = data.
-		//document.getElementById("operatorName").value = data.
-		document.getElementById("tableRst").innerHTML = data.invoice.rst;
-		document.getElementById("material").innerHTML = data.weight.material;
-		document.getElementById("quantity").value = data.weight.net;
-		document.getElementById("grade").innerHTML = data.weight.grade;
-		document.getElementById("moisture").innerHTML = data.weight.moisture;
-		document.getElementById("rate").value = data.weight.graderRate;
-		document.getElementById("amount").innerHTML = data.weight.graderRate * data.weight.net;
-		//document.getElementById("cashReceiptNo").value = data.
-		//document.getElementById("cashBalance").value = data.company.balance;
-		document.getElementById("vendorNameCash").value = data.customer.name;
-		document.getElementById("vendorNameCheque").value = data.customer.name;
-		document.getElementById("net").value = data.weight.graderRate * data.weight.net;
+		var noOfRows = data.length;
 		
+		var table = document.getElementById("tableBody");
+		
+		for(i=0; i<noOfRows; i++ ){
+		
+			document.getElementById("rst").value = data[i].rst;
+			document.getElementById("customerData").value = data[i].customerName + "\n" + data[i].customerAddress + "\n" + data[i].customerMobile;
+			
+			var rowNo = tableBody.children.length;
+			
+			var row = table.insertRow(rowNo);
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
+			var cell6 = row.insertCell(5);
+			var cell7 = row.insertCell(6);
+			var cell8 = row.insertCell(7);
+		
+			cell1.innerHTML = '<input type="text" id="tableRst'+(rowNo+1)+'" class="form-control form-control-sm" name="tableRst'+(rowNo+1)+'" value="'+data[i].rst+'" >';
+			cell2.innerHTML = '<input type="text" id="material'+(rowNo+1)+'" class="form-control form-control-sm" name="material'+(rowNo+1)+'" value="'+data[i].material+'" >';
+			cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity'+(rowNo+1)+'" value="'+data[i].quantity+'" >';
+			cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade'+(rowNo+1)+'" value="'+data[i].grade+'" >';
+			cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture'+(rowNo+1)+'" value="'+data[i].moisture+'" >';
+			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate'+(rowNo+1)+'" value="'+data[i].rate+'" >';
+			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm" name="amount'+(rowNo+1)+'" value="'+(data[i].rate * data[i].quantity)+'" >';
+			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck'+(rowNo+1)+'" value="" >';
+			
+			document.getElementById("vendorNameCash").value = data[i].customerName;
+			document.getElementById("vendorNameCheque").value = data[i].customerName;
+ 		}
 		
 	}
 	

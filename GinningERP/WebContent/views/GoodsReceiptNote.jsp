@@ -183,7 +183,7 @@
 					cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(noOfRows+1)+"' name='description"+(noOfRows+1)+"'>";
 					cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(noOfRows+1)+"' name='moisture"+(noOfRows+1)+"'>";
 					cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate"+(noOfRows+1)+"' name='rate"+(noOfRows+1)+"'>";
-					cell7.innerHTML = "<img src='../property/img/delete.png' alt='delete'>";
+					cell7.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow'>";
 				
 				}
 				noOfRows = document.getElementsByName("dividedQuantity").length;
@@ -275,6 +275,24 @@
 		document.getElementsByTagName('form')[0].submit();
 		
 	}
+	
+	function deleteGradeEntry(index){
+		
+		var qty1 = Number(document.getElementById('tblQty'+(index-1)).value);
+		
+		var qty2 = Number(document.getElementById('tblQty'+(index)).value);
+		
+		document.getElementById('tblQty'+(index-1)).value = (qty1+qty2);
+		
+		document.getElementById('tableBody').deleteRow(index-1);
+		
+	}
+	
+	document.addEventListener('click',function(e){
+		if(e.srcElement.tagName.toString().includes("img") || e.srcElement.id.toString().includes("deleteRow")){
+			deleteGradeEntry(e.srcElement.parentNode.parentNode.rowIndex);
+		}
+	});
 	
 	
 	</script>

@@ -1,3 +1,5 @@
+<%@page import="org.json.JSONArray"%>
+<%@page import="com.prov.report.RstReport"%>
 <%@page import="com.prov.bean.Amanat"%>
 <%@page import="com.prov.report.AmanatReport"%>
 <%@page import="org.json.JSONObject"%>
@@ -14,52 +16,24 @@
     
     <%
     	
-    	int rst = Integer.parseInt(request.getParameter("rst"));
+    	String rstString = request.getParameter("rst");
     
-        System.out.print(rst);
+        System.out.print(rstString);
         
-        if(rst == 0)
+        if(rstString.equals("0") || rstString == "")
         {
         	out.println("Please enter valid information.");	
         }
         
         else{
         	
-	    	InvoiceReport ir = new InvoiceReport();
-	    	
-	    	Invoice inv = new Invoice();
-	    	
-	    	inv = ir.getInvoiceData(rst);
-	    	
-	    	CustomerVehicle cv = new CustomerVehicle();
-	    	
-	    	CustomerVehicleReport vr = new CustomerVehicleReport();
-	    	
-	    	cv = vr.getReport(inv.getVid());
-	    	
-	    	WeighReport wr = new WeighReport();
-	    	
-	    	WeighMast w= new WeighMast();
-	    	
-	    	w = wr.getReport(rst);
-	    	
-	    	Customer cust = new Customer();
-	    	
-	    	CustomerReport cr = new CustomerReport();
-	    	
-	    	cust = cr.getReport(inv.getCid());
-	    	
-	    	JSONObject invObj = new JSONObject(inv);
-	    	JSONObject vehicleObj = new JSONObject(cv);
-	    	JSONObject weighObj = new JSONObject(w);
-	    	JSONObject customerObj = new JSONObject(cust);
-	    	
-	    	JSONObject obj = new JSONObject();
-	    	obj.put("invoice", invObj);
-	    	obj.put("vehicle", vehicleObj);
-	    	obj.put("weight", weighObj);
-	    	obj.put("customer", customerObj);
-	    	
-	    	out.print(obj);
+        	int rst = Integer.parseInt(rstString);
+        	
+	    	RstReport report = new RstReport();
+        	
+        	JSONArray jsonArray =  report.getDataForInvoicing(rst);
+        	
+	    	out.print(jsonArray);
+	    	out.flush();
         }
     %>
