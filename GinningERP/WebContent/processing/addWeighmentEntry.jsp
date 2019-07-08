@@ -13,7 +13,7 @@
 
 	CheckRST cr = new CheckRST();
 	
-	if(cr.checkRstExists(rst)==0){
+	if(cr.checkRstExistsInWeighMast(rst)==0){
 	
 		int cid = Integer.parseInt(request.getParameter("id"));
 	 	String date = request.getParameter("date");

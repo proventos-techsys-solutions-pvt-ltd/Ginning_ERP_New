@@ -17,7 +17,7 @@ import com.prov.db.OracleConnection;
 
 public class VehicleCategoryTag extends SimpleTagSupport  {
 	
-	public static TreeMap<Integer,String> getBanks() {			
+	public static TreeMap<Integer,String> getVehicleCats() {			
 		Connection con=null;
 		ResultSet vehicleResultSet = null;
 		TreeMap<Integer,String> vehicleCategory = new TreeMap<Integer,String>();
@@ -38,7 +38,7 @@ public class VehicleCategoryTag extends SimpleTagSupport  {
 	
 	public void doTag() throws IOException {
 		JspWriter out = getJspContext().getOut();
-		Set<Entry<Integer,String>> vehicleCategorySet = getBanks().entrySet();
+		Set<Entry<Integer,String>> vehicleCategorySet = getVehicleCats().entrySet();
 		Iterator<Entry<Integer,String>> compItr =vehicleCategorySet.iterator();
 		while(compItr.hasNext()) {
 			Map.Entry<Integer,String> vehicleCategoryData = (Map.Entry<Integer,String>)compItr.next();

@@ -136,7 +136,7 @@
     </div>
     </div>
   	<!-- Modal -->
-		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal fade" id="newCustomerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		  <div class="modal-dialog modal-dialog-top" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -289,7 +289,7 @@ function setNewCustomerData(){
 		
 		console.log("New Customer Added");
 		
-		var customer = JSON.parse(this.response);
+		var customer = JSON.parse(this.response.trim());
 		
 		document.getElementById("id").value = customer.id;
 		document.getElementById("customer").value = customer.name;
@@ -340,9 +340,9 @@ function getCustomerData(customerName,mobile){
 //Set data in RST form if the customer exists in the DB
 function checkCustomer(){
 	if(checkRequest.readyState==4){
-		var res = this.response;
+		var res = this.response.trim();
 		console.log(res);
-		if(res.toString().trim() === 'false')
+		if(res.toString() === 'false')
 		{
 			console.log("Customer not found, please add new customer!");
 			addNewCustomer();
@@ -368,7 +368,9 @@ function addNewCustomer(){
 	var address = document.getElementById("address").value;
 	var mobile = document.getElementById("mobile").value;
 	
-	document.getElementById("addCustomer").click();
+	$("#newCustomerModal").modal();
+	
+
 	
 	document.getElementById("newCustomerName").value = name;
 	document.getElementById("newCustomerMobile").value = mobile;

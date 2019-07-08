@@ -7,7 +7,7 @@
 
 	CheckRST cr = new CheckRST();
 	
-	int flag = cr.checkRstExists(rst);
+	int flag = cr.checkRstExistsInWeighMast(rst);
 	
 	out.print(rst);
 

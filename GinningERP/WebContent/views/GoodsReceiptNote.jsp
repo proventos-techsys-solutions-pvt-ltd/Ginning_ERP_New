@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <!doctype html>
 <html lang="en">
   <head>
@@ -83,21 +84,20 @@
 									</tr>
 								</thead>
 								<tbody id="tableBody">
-									 <tr>
+									 <%-- <tr>
 										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="srNo1" name="srNo1" value="1" ></td>
 										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="tblQty1" name="dividedQuantity" value="" ></td>
 										<td>
 											<select class="form-control form-control-sm lbl-rm-all" id="grade1" name="grade1">
-												<option>Grade A</option>
-												<option>Grade B</option>
-												<option>Grade C</option>
+												<option>Select</option>
+												<c:Grade />
 											</select>
 										</td>
 										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="description1" name="description1" ></td>
 										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="moisture1" name="moisture1" ></td>
 										<td><input type="text" class="form-control form-control-sm lbl-rm-all" id="rate1" name="rate1" ></td>
 										<td></td>
-									</tr> 
+									</tr> --%> 
 								</tbody>
 							</table>
 						</div>
@@ -135,13 +135,41 @@
 		setFirstRowData()
 	})
 	
-	function setFirstRowData(){
-		var defaultGrade ="Grade A";
-		var defaultGradeDescription = "Grade A Description";
+	function setDataForNewGrading(data){
+		
+		document.getElementById("vendorName").value = data[0].vendorName;
+		document.getElementById("vendorAddress").value = data[0].vendorAddress;
+		document.getElementById("vendorMobile").value = data[0].vendorMobile;
+		document.getElementById("material").value = data[0].material;
+		document.getElementById("quantity").value = data[0].netWeight;
+		document.getElementById("weighmentId").value = data[0].weighmentId;
+		
+		
 		totalQuantity = document.getElementById("quantity").value;
 		
 		var table = document.getElementById("tableBody");
 		document.getElementById("tblQty1").value = totalQuantity;
+		
+		var row = table.insertRow(tableBody.children.length);
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var cell3 = row.insertCell(2);
+		var cell4 = row.insertCell(3);
+		var cell5 = row.insertCell(4);
+		var cell6 = row.insertCell(5);
+		var cell7 = row.insertCell(6);
+	
+		cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(noOfRows+1)+"' name='srNo"+(noOfRows+1)+"' value="+(noOfRows+1)+">";
+		cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty"+(noOfRows+1)+"' name='dividedQuantity' value="+data[i].quantity+">";
+		cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='grade"+(noOfRows+1)+"' name='grade"+(noOfRows+1)+"'>"
+							+	"<option>Select</option>"
+							+	"<c:Grade />"
+							+	"</select>";
+		cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(noOfRows+1)+"' name='description"+(noOfRows+1)+"'>";
+		cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(noOfRows+1)+"' name='moisture"+(noOfRows+1)+"' value='"+data[i].moisture+"'>";
+		cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate"+(noOfRows+1)+"' name='rate"+(noOfRows+1)+"' value='"+data[i].rate+"'>";
+		cell7.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow'>";
+		
 		
 		}	
 	
@@ -152,7 +180,7 @@
 			
 		var id = e.srcElement.id.toString();
 		if(id.includes('tblQty') && e.srcElement.value != "0" && e.srcElement.value != ""){
-	
+		totalQuantity = document.getElementById("quantity").value;
 		console.log("total QTY --- "+totalQuantity );
 				var table = document.getElementById("tableBody");
 				var noOfRows = document.getElementsByName("dividedQuantity").length;
@@ -176,9 +204,8 @@
 					cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(noOfRows+1)+"' name='srNo"+(noOfRows+1)+"' value="+(noOfRows+1)+">";
 					cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty"+(noOfRows+1)+"' name='dividedQuantity' value="+remainingQuantity+">";
 					cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='grade"+(noOfRows+1)+"' name='grade"+(noOfRows+1)+"'>"
-										+	"<option>Grade A</option>"
-										+	"<option>Grade B</option>"
-										+	"<option>Grade C</option>"
+										+	"<option>Select</option>"
+										+	"<c:Grade />"
 										+	"</select>";
 					cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(noOfRows+1)+"' name='description"+(noOfRows+1)+"'>";
 					cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(noOfRows+1)+"' name='moisture"+(noOfRows+1)+"'>";
@@ -215,21 +242,18 @@
 	function getData(){
 		
 		if(fetchRequest.readyState == 4){
-			var response = this.response;
+			var response = this.response.trim();
 			console.log(response);
 			
-			var data =  JSON.parse(response);
+			var data = JSON.parse(response);
 			
-			document.getElementById("vendorName").value = data.vendorName;
-			document.getElementById("vendorAddress").value = data.vendorAddress;
-			document.getElementById("vendorMobile").value = data.vendorMobile;
-			document.getElementById("material").value = data.material;
-			document.getElementById("quantity").value = data.netWeight;
-			console.log(data.weighmentId);
-			document.getElementById("weighmentId").value = data.weighmentId;
+			if(Number(data[0].flag) === 0){
+				setDataForNewGrading(data);
+			}
+			else if(Number(data[0].flag) > 0){
+				setGradeUpdationData(data);
+			}
 		}
-		
-		setFirstRowData();
 	}
 	
 	function submitGradingData(){
@@ -293,6 +317,66 @@
 			deleteGradeEntry(e.srcElement.parentNode.parentNode.rowIndex);
 		}
 	});
+	
+	
+	function setGradeUpdationData(data)
+	{
+		
+		document.getElementById("vendorName").value = data[0].customerName;
+		document.getElementById("vendorAddress").value = data[0].customerAddress;
+		document.getElementById("vendorMobile").value = data[0].customerMobile;
+		document.getElementById("material").value = data[0].material;
+		document.getElementById("quantity").value = data[0].netWeight;
+		document.getElementById("weighmentId").value = data[0].weighmentId;
+		document.getElementById("authorizer").value = data[0].authorizer;
+		
+		var noOfRows = data.length;
+		console.log(noOfRows);
+		
+		var table = document.getElementById("tableBody");
+		
+		var totalQty = 0
+		
+		for(i=0; i<noOfRows; i++ ){
+		
+			var row = table.insertRow(i);
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
+			var cell6 = row.insertCell(5);
+			var cell7 = row.insertCell(6);
+		
+			cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(i+1)+"' name='srNo"+(i+1)+"' value="+(i+1)+">";
+			cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty"+(i+1)+"' name='dividedQuantity' value="+data[i].quantity+">";
+			cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='grade"+(i+1)+"' name='grade"+(i+1)+"'>"
+								+	"<option>Select</option>"
+								+	"<c:Grade />"
+								+	"</select>";
+			var textToFind = data[i].grade;	
+			var dd = document.getElementById("grade"+(i+1)+"");
+			loop1:
+			for ( j = 0; i < dd.options.length; j++) {
+			    if (dd.options[j].text === textToFind) {
+			        dd.selectedIndex = j;
+			        var description = dd.options[j].getAttribute('data-description');
+			        break loop1;
+			    }
+			}
+			
+			cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(i+1)+"' name='description"+(i+1)+"' value='"+description+"'>";
+			cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(i+1)+"' name='moisture"+(i+1)+"' value="+data[i].moisture+">";
+			cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate"+(i+1)+"' name='rate"+(i+1)+"' value="+data[i].rate+">";
+			if(i>0){
+				cell7.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow'>";
+			}
+			totalQty = totalQty + Number(data[i].quantity);
+			
+		}
+		
+		document.getElementById("quantity").value = totalQty;
+	}
 	
 	
 	</script>

@@ -21,6 +21,12 @@
 	<tag-class>com.prov.tags.BankTag</tag-class>
 	<body-content>Empty</body-content>
    </tag>
+   
+   <tag>
+     <name>Grade</name>
+	<tag-class>com.prov.tags.GradeTag</tag-class>
+	<body-content>Empty</body-content>
+   </tag>
      
    <tag>
     <name>Account</name>

@@ -83,14 +83,14 @@
                                         </thead>
                                         <tbody id='tableBody'>
                                         <!-- <tr>
-                                            <td><input type="text" id="tableRst1" class="form-control form-control-sm" name="tableRst1" value="" ></td>
-                                            <td><input type="text" id="material1" class="form-control form-control-sm" name="material1" value="" ></td>
-                                            <td><input type="text" id="quantity1" class="form-control form-control-sm" name="quantity1" value="" ></td>
-                                            <td><input type="text" id="grade1" class="form-control form-control-sm" name="grade1" value="" ></td>
-                                            <td><input type="text" id="moisture1" class="form-control form-control-sm" name="moisture1" value="" ></td>
-                                            <td><input type="text" id="rate1" class="form-control form-control-sm"  name="rate1" value="" ></td>
-                                            <td><input type="text" id="amount1" class="form-control form-control-sm" name="amount1" value="" ></td>
-                                            <td class="text-center"><input type="checkbox" id="amanatCheck1" class="lbl-rm-all" name="amanatCheck1" value="" ></td>
+                                            <td><input type="text" id="tableRst1" class="form-control form-control-sm" name="tableRst" value="" ></td>
+                                            <td><input type="text" id="material1" class="form-control form-control-sm" name="material" value="" ></td>
+                                            <td><input type="text" id="quantity1" class="form-control form-control-sm" name="quantity" value="" ></td>
+                                            <td><input type="text" id="grade1" class="form-control form-control-sm" name="grade" value="" ></td>
+                                            <td><input type="text" id="moisture1" class="form-control form-control-sm" name="moisture" value="" ></td>
+                                            <td><input type="text" id="rate1" class="form-control form-control-sm"  name="rate" value="" ></td>
+                                            <td><input type="text" id="amount1" class="form-control form-control-sm" name="amount" value="" ></td>
+                                            <td class="text-center"><input type="checkbox" id="amanatCheck1" class="lbl-rm-all" name="amanatCheck" value="" ></td>
                                         </tr> -->
                                         </tbody>
                                     </table>
@@ -358,19 +358,35 @@
 			var cell6 = row.insertCell(5);
 			var cell7 = row.insertCell(6);
 			var cell8 = row.insertCell(7);
+			var cell9 = row.insertCell(8);
+			cell9.setAttribute('hidden','hidden');
 		
-			cell1.innerHTML = '<input type="text" id="tableRst'+(rowNo+1)+'" class="form-control form-control-sm" name="tableRst'+(rowNo+1)+'" value="'+data[i].rst+'" >';
-			cell2.innerHTML = '<input type="text" id="material'+(rowNo+1)+'" class="form-control form-control-sm" name="material'+(rowNo+1)+'" value="'+data[i].material+'" >';
-			cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity'+(rowNo+1)+'" value="'+data[i].quantity+'" >';
-			cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade'+(rowNo+1)+'" value="'+data[i].grade+'" >';
-			cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture'+(rowNo+1)+'" value="'+data[i].moisture+'" >';
-			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate'+(rowNo+1)+'" value="'+data[i].rate+'" >';
-			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm" name="amount'+(rowNo+1)+'" value="'+(data[i].rate * data[i].quantity)+'" >';
-			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck'+(rowNo+1)+'" value="" >';
+			cell1.innerHTML = '<input type="text" id="tableRst'+(rowNo+1)+'" class="form-control form-control-sm" name="tableRst" value="'+data[i].rst+'" >';
+			cell2.innerHTML = '<input type="text" id="material'+(rowNo+1)+'" class="form-control form-control-sm" name="material" value="'+data[i].material+'" >';
+			cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+data[i].quantity+'" >';
+			cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+data[i].grade+'" >';
+			cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+data[i].moisture+'" >';
+			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+data[i].rate+'" >';
+			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+(data[i].rate * data[i].quantity)+'" >';
+			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="" >';
+			cell9.innerHTML = '<input type="hidden" id="gradeId'+(rowNo+1)+'" class="lbl-rm-all" name="gradeId" value="'+data[i].gradeId+'" >';
 			
 			document.getElementById("vendorNameCash").value = data[i].customerName;
 			document.getElementById("vendorNameCheque").value = data[i].customerName;
  		}
+		
+		calculateTotal();
+		
+	}
+	
+	function calculateTotal(){
+		var rates = document.getElementsByName("amount");
+		var total = 0;
+		for(i=0; i<rates.length; i++){
+			total = total + Number(rates[i].value);
+		}
+		
+		document.getElementById("net").value = total;
 		
 	}
 	

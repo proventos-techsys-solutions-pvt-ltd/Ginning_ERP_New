@@ -27,14 +27,14 @@
     		GradeDetails grade = new GradeDetails();
         	
         	grade.setWeighmentId(Integer.parseInt((String)json.get("weighmentId")));
-        	grade.setMaterial((String)json.get("material"));
+        	grade.setMaterial(((String)json.get("material")).toUpperCase());
         	grade.setRst(Integer.parseInt((String)json.get("rst")));
-        	grade.setAuthorizedBy((String)json.get("authorizer"));
+        	grade.setAuthorizedBy(((String)json.get("authorizer")).toUpperCase());
         	
         	JSONObject gradeJson = (JSONObject)jsonArray.get(i);
         	
         	grade.setQuantity(Float.parseFloat((String)gradeJson.get("quantity")));
-        	grade.setGrade((String)gradeJson.get("grade"));
+        	grade.setGrade(((String)gradeJson.get("grade")).toUpperCase());
         	grade.setMoisture(Float.parseFloat((String)gradeJson.get("moisture")));
         	grade.setRate(Float.parseFloat((String)gradeJson.get("rate")));
         	

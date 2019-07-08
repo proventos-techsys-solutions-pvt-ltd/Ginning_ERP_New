@@ -26,13 +26,17 @@ public int addWeighMast(WeighMast wm) {
 		CallableStatement cs;
 		try {
 			
-			Date sqlGrossWtTime = new SimpleDateFormat("yyyy-MM-dd").parse(wm.getGrossWtTime());
+			Date GrossWtTime = new SimpleDateFormat("yyyy-MM-dd").parse(wm.getGrossWtTime());
 			@SuppressWarnings({ "deprecation" })
-			java.sql.Date grossSqlDate = new java.sql.Date(sqlGrossWtTime.getDate());
+			java.sql.Date grossSqlDate = new java.sql.Date(GrossWtTime.getDate());
 			
-			Date sqlTareWtTime = new SimpleDateFormat("yyyy-MM-dd").parse(wm.getTareWtTime());
+			Date TareWtTime = new SimpleDateFormat("yyyy-MM-dd").parse(wm.getTareWtTime());
 			@SuppressWarnings({ "deprecation" })
-			java.sql.Date tareSqlDate = new java.sql.Date(sqlTareWtTime.getDate());
+			java.sql.Date tareSqlDate = new java.sql.Date(TareWtTime.getDate());
+			
+			Date WeighmentDate = new SimpleDateFormat("yyyy-MM-dd").parse(wm.getWeighmentDate());
+			@SuppressWarnings({ "deprecation" })
+			java.sql.Date sqlWeighmentDate = new java.sql.Date(WeighmentDate.getDate());
 			
 			cs = con.prepareCall(addWeighMast);
 			
@@ -46,7 +50,7 @@ public int addWeighMast(WeighMast wm) {
 			cs.setFloat(7, wm.getNet());
 			cs.setDate(8, grossSqlDate);
 			cs.setDate(9, tareSqlDate);
-			cs.setString(10, wm.getWeighmentDate());
+			cs.setDate(10, sqlWeighmentDate);
 			
 			cs.executeUpdate();
 			

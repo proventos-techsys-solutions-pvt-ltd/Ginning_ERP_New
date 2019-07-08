@@ -17,7 +17,7 @@ import com.prov.db.OracleConnection;
 
 public class AccountCategoryTag extends SimpleTagSupport {
 
-	public static TreeMap<Integer,String> getBanks() {			
+	public static TreeMap<Integer,String> getAccountCats() {			
 		Connection con=null;
 		ResultSet accountCatResultSet = null;
 		TreeMap<Integer,String> accountCategory = new TreeMap<Integer,String>();
@@ -39,7 +39,7 @@ public class AccountCategoryTag extends SimpleTagSupport {
 	
 	public void doTag() throws IOException {
 		JspWriter out = getJspContext().getOut();
-		Set<Entry<Integer,String>> accountSet = getBanks().entrySet();
+		Set<Entry<Integer,String>> accountSet = getAccountCats().entrySet();
 		Iterator<Entry<Integer,String>> compItr = accountSet.iterator();
 		while(compItr.hasNext()) {
 			Map.Entry<Integer,String> accountData = (Map.Entry<Integer,String>)compItr.next();
