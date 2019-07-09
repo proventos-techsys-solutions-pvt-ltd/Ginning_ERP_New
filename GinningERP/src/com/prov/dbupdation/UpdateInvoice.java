@@ -35,13 +35,13 @@ public int updateInvoice(Invoice i) {
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
 			cs.setInt(2, i.getId());
-			cs.setInt(3, i.getWeighmentId() );
-			cs.setString(4, i.getInvoiceNo());
-			cs.setDouble(5, i.getTotal());
-			cs.setDouble(6, i.getAmountPaid());
-			cs.setDouble(7, i.getPending());
-			cs.setDate(8, invSqlDate);
-			cs.setInt(9, i.getCompanyId());
+			cs.setString(3, i.getInvoiceNo());
+			cs.setDouble(4, i.getTotal());
+			cs.setDouble(5, i.getAmountPaid());
+			cs.setDouble(6, i.getPending());
+			cs.setDate(7, invSqlDate);
+			cs.setInt(8, i.getCompanyId());
+			cs.setInt(9, i.getCustomerId() );
 			
 			cs.executeUpdate();
 			

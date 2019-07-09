@@ -32,11 +32,12 @@ public Invoice getInvoiceData(int rst) {
 			
 			while (rs.next()) {
 				inv.setId(rs.getInt(1));
-				inv.setWeighmentId(rs.getInt(2));
-				inv.setInvoiceNo(rs.getString(3));
-				inv.setTotal(rs.getDouble(4));
-				inv.setAmountPaid(rs.getDouble(5));
-				inv.setPending(rs.getDouble(6));
+				inv.setInvoiceNo(rs.getString(2));
+				inv.setTotal(rs.getDouble(3));
+				inv.setAmountPaid(rs.getDouble(4));
+				inv.setPending(rs.getDouble(5));
+				inv.setCustomerId(rs.getInt(6));
+
 				
 				String date = rs.getString(7);
 				
@@ -80,11 +81,12 @@ public ArrayList<Invoice> getInvoiceReport() {
 			Invoice inv = new Invoice();
 			
 			inv.setId(rs.getInt(1));
-			inv.setWeighmentId(rs.getInt(2));
-			inv.setInvoiceNo(rs.getString(3));
-			inv.setTotal(rs.getDouble(4));
-			inv.setAmountPaid(rs.getDouble(5));
-			inv.setPending(rs.getDouble(6));
+			inv.setInvoiceNo(rs.getString(2));
+			inv.setTotal(rs.getDouble(3));
+			inv.setAmountPaid(rs.getDouble(4));
+			inv.setPending(rs.getDouble(5));
+			inv.setCustomerId(rs.getInt(6));
+
 			
 			String date = rs.getString(7);
 			

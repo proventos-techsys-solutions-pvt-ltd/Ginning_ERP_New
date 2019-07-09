@@ -2,7 +2,7 @@ package com.prov.bean;
 
 public class Invoice {
 	
-	private int id, weighmentId, companyId ;
+	private int id, customerId, companyId ;
 	private double total, amountPaid, pending;
 	private String invoiceNo, invDate;
 	
@@ -12,11 +12,11 @@ public class Invoice {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getWeighmentId() {
-		return weighmentId;
+	public int getCustomerId() {
+		return customerId;
 	}
-	public void setWeighmentId(int weighmentId) {
-		this.weighmentId = weighmentId;
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 	public int getCompanyId() {
 		return companyId;
