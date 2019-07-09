@@ -129,15 +129,15 @@
                                 </div>
                                 <!-- ********************HIDDEN TABLE FOR COLLECTING PAYMENT INFORMATION**************************** -->
                                 	<div class="col-md-12 mt-2 border-top">
-                                		<table class="table table-bordered mt-2 ">
+                                		<table class="table table-bordered mt-2 " id="paymentTable">
                                 			<thead id="paymentDetailsTableHead"></thead>
                                 			<tbody id="paymentDetailsTableBody"></tbody>                     			
                                 		</table>
                                 	</div>
                                 <div class="col-md-12 ">
                                     <div class="d-flex justify-content-end">
-                                        <button style="margin-bottom:8px;" type="button" class="btn btn-success btn-sm btn-mr-rt btn-mr-tp" >Amanat</button>
-                                        <button style="margin-bottom:8px;" type="button" class="btn btn-success btn-sm btn-mr-rt btn-mr-tp" onclick="submitForm()">Approve</button>
+                                        <button style="margin-bottom:8px;" type="button" class="btn btn-success btn-sm btn-mr-rt btn-mr-tp" >Save</button>
+                                        <button style="margin-bottom:8px;" type="button" class="btn btn-success btn-sm btn-mr-rt btn-mr-tp" onclick="submitForm()">Save & Print</button>
                                     </div>
                                 </div>
                                  </form>
@@ -267,21 +267,21 @@
 				       		<div class="form-row">
 				       			<div class="col-md-6">
 				       			<label>Vendor Name</label>
-				       			<input type="text" class="form-control form-control-sm" name="vendorNameCheque" id="vendorNameCheque" placeholder="Auto">
+				       			<input type="text" class="form-control form-control-sm" name="vendorNameRN" id="vendorNameRN" placeholder="Auto">
 				       			</div>
 				       			<div class="col-md-6">
 				       			<label>Amount to Pay</label>
-				       			<input type="text" class="form-control form-control-sm" name="chequeAmount" id="chequeAmount">
+				       			<input type="text" class="form-control form-control-sm" name="rnAmount" id="rnAmount">
 				       			</div>
 				       		</div>
 				       		<div class="form-row">
 				       			<div class="col-md-6">
 				       			<label>Date</label>
-				       			<input type="date" class="form-control form-control-sm" name="chequeDate" id="chequeDate" placeholder="Auto">
+				       			<input type="date" class="form-control form-control-sm" name="rnDate" id="rnDate" placeholder="Auto">
 				       			</div>
 				       			<div class="col-md-6">
 				       			<label>RTGS/NEFT No</label>
-				       			<input type="text" class="form-control form-control-sm" name="chequeNo" id="chequeNo">
+				       			<input type="text" class="form-control form-control-sm" name="rnno" id="rnno">
 				       			</div>
 				       		</div>
 				       	</form>
