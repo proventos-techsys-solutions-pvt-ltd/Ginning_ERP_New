@@ -36,17 +36,15 @@ public Invoice getInvoiceData(int rst) {
 				inv.setTotal(rs.getDouble(3));
 				inv.setAmountPaid(rs.getDouble(4));
 				inv.setPending(rs.getDouble(5));
-				inv.setCustomerId(rs.getInt(6));
-
 				
-				String date = rs.getString(7);
-				
+				String date = rs.getString(6);
 				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
 				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 				String properDate = format2.format(date1);
-
 				inv.setInvDate(properDate);
-				inv.setCompanyId(rs.getInt(8));
+				
+				inv.setCompanyId(rs.getInt(7));
+				inv.setCustomerId(rs.getInt(8));
 			}
 			
 			stmt.close();

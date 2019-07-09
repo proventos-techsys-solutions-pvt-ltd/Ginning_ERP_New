@@ -1,3 +1,9 @@
+<%@page import="com.prov.dbinsertion.AddInvoiceItems"%>
+<%@page import="com.prov.bean.InvoiceItems"%>
+<%@page import="com.prov.dbinsertion.AddInvoice"%>
+<%@page import="org.json.simple.JSONArray"%>
+<%@page import="org.json.simple.JSONObject"%>
+<%@page import="org.json.simple.parser.JSONParser"%>
 <%@page import="com.prov.dbinsertion.AddStockMast"%>
 <%@page import="com.prov.bean.StockMast"%>
 <%@page import="com.prov.dbupdation.UpdateInvoice"%>
@@ -9,49 +15,58 @@
 
 <%
 
-	int id = Integer.parseInt(request.getParameter("id"));
- 	int companyId = Integer.parseInt(request.getParameter("companyId")); 
-	String invoiceNo = request.getParameter("invoiceNo").toUpperCase();
-	Double finalRate = Double.parseDouble(request.getParameter("rate"));
-	Double amountPaid = Double.parseDouble(request.getParameter("advance"));
-	Double pending = Double.parseDouble(request.getParameter("net"));
-	Double totalWeight = Double.parseDouble(request.getParameter("quantity"));
-	String date = request.getParameter("date");
+	String invoiceData = request.getParameter("output");
+
+	JSONParser parser = new JSONParser();
+	
+	JSONObject json = (JSONObject) parser.parse(invoiceData);
+	
+	JSONArray jsonArray = (JSONArray)json.get("itemList");
+	
+	System.out.println(jsonArray);
+	
 		
-	if(id == 0 || invoiceNo == "" || invoiceNo == null || finalRate == 0 || finalRate == null || amountPaid == 0 || amountPaid == null
-	   || pending == 0 || pending == null || totalWeight == 0 || totalWeight == null)
-	{
-		out.println("Please enter valid information.");
-	}
-	else{
+		Invoice invoice = new Invoice();
 		
-		Invoice i = new Invoice();
+		invoice.setCompanyId(Integer.parseInt((String)json.get("comapnyId")));
+		invoice.setInvoiceNo((String)json.get("invoiceNo"));
+		invoice.setTotal(Double.parseDouble((String)json.get("total")));
+		invoice.setAmountPaid(Double.parseDouble((String)json.get("amountPaid")));
+		invoice.setPending(Double.parseDouble((String)json.get("pending")));
+		invoice.setInvDate((String)json.get("invoiceDate"));
 		
-		i.setId(id);
-		i.setCid(companyId);
-		i.setInvoiceNo(invoiceNo);
-		i.setFinalRate(finalRate);
-		i.setAmountPaid(amountPaid);
-		i.setPending(pending);
-		i.setTotal(finalRate*totalWeight);
-		i.setCompanyId(companyId);
+		AddInvoice addinvoice = new AddInvoice();
 		
-		UpdateInvoice ui =new UpdateInvoice();
+		int invoiceId = addinvoice.addInvoice(invoice); 
 		
-		ui.updateRate(i);
+		AddInvoiceItems addItems = new AddInvoiceItems();
+		
+		for(int i=0; i<jsonArray.size(); i++){
+			JSONObject obj = (JSONObject)jsonArray.get(i);
+			
+			InvoiceItems items = new InvoiceItems();
+			
+			items.setInvoiceId(invoiceId);
+			items.setWeighmentId(Integer.parseInt((String)json.get("weighmentId")));
+			
+			addItems.addInvoiceItems(items);
+			
+		}
+		
+		
 		
 		StockMast stock = new StockMast();
 		
-		stock.setCompanyId(companyId);
+		/* stock.setCompanyId(companyId);
 		stock.setStockDate(date);
 		stock.setRawCotton(totalWeight);
-		stock.setAvgRate(i.getTotal());
+		stock.setAvgRate(i.getTotal()); */
 		
-		AddStockMast addStock = new AddStockMast();
+		/* AddStockMast addStock = new AddStockMast();
 		
-		addStock.addStockMast(stock);
+		addStock.addStockMast(stock); */
 		
 		response.sendRedirect("../views/Invoice.jsp");
 	
-	}
+
 %>

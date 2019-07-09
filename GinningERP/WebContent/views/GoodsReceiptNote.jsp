@@ -33,6 +33,8 @@
         <div class="row mt-2 tile-background-row">
 			<div class="col-md-12">
 				<form action='../processing/setGrade.jsp'>
+					<input hidden="hidden" id="output" name="output" value=""/>
+				</form>
 				<input type="hidden" id="weighmentId" name="weighmentId"  value="0" />
 					<div class="form-row form-row-ctm">
 						<div class="col-md-auto">
@@ -114,8 +116,7 @@
 							</div>
 						</div>
 					</div>
-					<input hidden="hidden" id="output" name="output" value=""/>
-				</form>
+					
 			</div>
         </div>
    </div>

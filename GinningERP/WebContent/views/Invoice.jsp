@@ -24,32 +24,33 @@
                		</div>
                 </div>
             
-                <div class="row mt-2 tile-background-row">
                         <form action="../processing/approvedInvoiceEntry.jsp" id="adminApprovalForm">
-                        	<input type="hidden" name="id" value="" id="id" />
-                        	<div class="form-row">
+                        	<input type="hidden" name="output" id="output" value="" />
+                        </form>
+                        	<input type="hidden" name="customerId" value="" id="customerId" />
+                        	<div class="row tile-background-row mt-2">
                         		<div class="col-md-3">
                        			  <label for="" class="lbl-rm-all">Company Name </label>
-                                  <select name="companyName" id="companyName" class="form-control form-control-sm">
+                                  <select name="companyId" id="companyId" class="form-control form-control-sm" >
                                       <option selected="selected" disabled="disabled">Select</option>
                                       <c:Company/>
                                   </select>
                         		</div>
                         		<div class="col-md-3 offset-md-6">
                         			<label class="lbl-rm-all">Authorized By</label>
-                                    <input id="grader" name="grader"  type="text" class="form-control form-control-sm" placeholder="">
+                                    <input id="authorizer" name="authorizer"  type="text" class="form-control form-control-sm" placeholder="">
                         		</div>
                         	</div>
-                            <div class="form-row">
+                            <div class="row tile-background-row">
                                 <div class="col-md-auto">
                                 	<label for="" class="lbl-rm-all">RST No </label>
                                 	<div class="d-flex justify-content-start align-items-center">
-	                                    <input id="rst" type="text" class="form-control form-control-sm" placeholder="Search RST">
+	                                    <input id="rst" name="rst" type="text" class="form-control form-control-sm" placeholder="Search RST">
 					    				<button class="btn btn-success btn-sm btn-no-radius" type="button" onclick="fetchData(document.getElementById('rst').value)">Fetch</button>
                                 	</div>
                                 </div>
                                </div>
-                            <div class="form-row">
+                            <div class="row tile-background-row">
                                 <div class="col-md-2">
                                     <label for="" class="lbl-rm-all">Invoice No </label>
                                     <input id="invoiceNo" name="invoiceNo" type="text" class="form-control form-control-sm" placeholder="Invoice No" >
@@ -66,7 +67,7 @@
                                 </div>
                              </div>
                               
-                              <div class="form-row">
+                              <div class="row tile-background-row">
                                 <div class="col-md-12 col-md-margintop">
                                     <table class="table table-bordered custom-table">
                                         <thead>
@@ -96,7 +97,7 @@
                                     </table>
                                 </div>
                                 </div>
-                                <div class="form-row">
+                                <div class="row tile-background-row">
 	                               	 <div class="col-md-4 ">
 	                                     <label class="lbl-rm-all">Note :</label>
 	                                     <textarea id="note" name="note" class="form-control form-control-sm"></textarea>
@@ -112,7 +113,7 @@
                                
                                                 
                                 <div class="col-md-12 border-top">
-                                    <div class="d-flex justify-content-around custom-checkbox">
+                                    <div class="d-flex justify-content-around custom-checkbox tile-background-row">
                                         <div class="custom-control">
                                             <input type="checkbox" class="custom-control-input" id="cashCheckbox">
                                             <label class="custom-control-label" for="cashCheckbox">Cash</label>
@@ -128,7 +129,7 @@
                                     </div>
                                 </div>
                                 <!-- ********************HIDDEN TABLE FOR COLLECTING PAYMENT INFORMATION**************************** -->
-                                	<div class="col-md-12 mt-2 border-top">
+                                	<div class="col-md-12 mt-2 border-top tile-background-row">
                                 		<table class="table table-bordered mt-2 " id="paymentTable">
                                 			<thead id="paymentDetailsTableHead"></thead>
                                 			<tbody id="paymentDetailsTableBody"></tbody>                     			
@@ -140,8 +141,6 @@
                                         <button style="margin-bottom:8px;" type="button" class="btn btn-success btn-sm btn-mr-rt btn-mr-tp" onclick="submitForm()">Save & Print</button>
                                     </div>
                                 </div>
-                                 </form>
-                </div>
              	
              	<!-- *********************************CASH PAYMENT MODAL******************************************** -->
              	<div class="modal fade" id="cashPaymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -199,10 +198,9 @@
 				       		<div class="form-row">
 				       			<div class="col-md-6">
 				       			<label>Select Bank</label>
-				       			<select name="bank" id="bank" class="form-control form-control-sm">
-				       				<option value="">Bank 1</option>
-				       				<option value="">Bank 2</option>
-				       				<option value="">Bank 3</option>
+				       			<select name="chequeBank" id="chequeBank" class="form-control form-control-sm bank" >
+				       				<option selected disabled>Select</option>
+				       				<c:Bank/>
 				       			</select>
 				       			</div>
 				       			<div class="col-md-6">
@@ -253,10 +251,9 @@
 				       		<div class="form-row">
 				       			<div class="col-md-6">
 				       			<label>Select Bank</label>
-				       			<select name="bank" id="bank" class="form-control form-control-sm">
-				       				<option value="">Bank 1</option>
-				       				<option value="">Bank 2</option>
-				       				<option value="">Bank 3</option>
+				       			<select name="rtgsBank" id="rtgsBank" class="form-control form-control-sm bank">
+				       				<option selected disabled>Select</option>
+				       				<c:Bank />
 				       			</select>
 				       			</div>
 				       			<div class="col-md-6">
@@ -306,6 +303,7 @@
 	<script src="../js/modal.js"></script>
 	<script>
 	
+	//Send the AJAX Request to fetch data
 	function fetchData(rst){
 		console.log(rst);
 		url = "../processing/adminApproval.jsp?rst="+rst;
@@ -324,6 +322,7 @@
 	}
 	
 	
+	//Get data from AJAX request
 	function getData(){
 		
 		if(fetchRequest.readyState == 4){
@@ -335,6 +334,7 @@
 	}
 	
 	
+	//Set data in the table
 	function setData(data)
 	{
 		
@@ -346,6 +346,8 @@
 		
 			document.getElementById("rst").value = data[i].rst;
 			document.getElementById("customerData").value = data[i].customerName + "\n" + data[i].customerAddress + "\n" + data[i].customerMobile;
+			document.getElementById("customerId").value = data[i].customerId;
+			
 			
 			var rowNo = tableBody.children.length;
 			
@@ -359,8 +361,10 @@
 			var cell7 = row.insertCell(6);
 			var cell8 = row.insertCell(7);
 			var cell9 = row.insertCell(8);
+			var cell10 = row.insertCell(9);
 			cell9.setAttribute('hidden','hidden');
-		
+			cell10.setAttribute('hidden','hidden');
+			
 			cell1.innerHTML = '<input type="text" id="tableRst'+(rowNo+1)+'" class="form-control form-control-sm" name="tableRst" value="'+data[i].rst+'" >';
 			cell2.innerHTML = '<input type="text" id="material'+(rowNo+1)+'" class="form-control form-control-sm" name="material" value="'+data[i].material+'" >';
 			cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+data[i].quantity+'" >';
@@ -370,15 +374,15 @@
 			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+(data[i].rate * data[i].quantity)+'" >';
 			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="" >';
 			cell9.innerHTML = '<input type="hidden" id="gradeId'+(rowNo+1)+'" class="lbl-rm-all" name="gradeId" value="'+data[i].gradeId+'" >';
+			cell10.innerHTML = '<input type="hidden" id="weighmentId'+(rowNo+1)+'" class="lbl-rm-all" name="weighmentId" value="'+data[i].weighmentId+'" >';
 			
 			document.getElementById("vendorNameCash").value = data[i].customerName;
 			document.getElementById("vendorNameCheque").value = data[i].customerName;
  		}
-		
 		calculateTotal();
-		
 	}
 	
+	//calculate total amount to be paid
 	function calculateTotal(){
 		var rates = document.getElementsByName("amount");
 		var total = 0;
@@ -390,8 +394,72 @@
 		
 	}
 	
+	//Set Bank options as per the company selected
+	document.getElementById("companyId").addEventListener("change", function(e){
+
+		var noOfOptions = document.getElementById("chequeBank").length;
+		var companyId = Number(e.srcElement.value);
+		var bankTags = document.getElementsByClassName("bank");
+		
+		for(j=0; j<bankTags.length; j++){
+			for(i=0; i<noOfOptions; i++){
+					bankTags[j].options[i].hidden = false;
+			}
+			bankTags[j].options[0].selected = true;
+		}
+		
+		for(j=0; j<bankTags.length; j++){
+			for(i=0; i<noOfOptions; i++){
+				if(companyId != Number(bankTags[j].options[i].getAttribute("data-company-id"))){
+					bankTags[j].options[i].hidden = true;
+				}
+			}
+		}
+	})
+	
+	//Submit invoice form
 	function submitForm(){
-		document.getElementById("adminApprovalForm").submit();
+		
+		var jsonObj = {};
+		
+		jsonObj['authorizer'] = document.getElementById('authorizer').value;
+		jsonObj['invoiceNo'] = document.getElementById('invoiceNo').value;
+		jsonObj['customerId'] = document.getElementById('customerId').value;
+		jsonObj['total'] = Number(document.getElementById('advance').value * document.getElementById('net').value);
+		jsonObj['amountPaid'] = document.getElementById('advance').value;
+		jsonObj['pending'] = document.getElementById('net').value;
+		jsonObj['invoiceDate'] = document.getElementById('invoiceDate').value;
+		jsonObj['companyId'] = document.getElementById('companyId').value;
+		
+		var noOfRows = document.getElementById('tableBody').childElementCount;
+		console.log('no of Rows --- '+noOfRows);
+		
+		var itemList = [];
+		
+		for(i=0; i<noOfRows; i++){
+			item = {};
+			var weighmentIdValue = document.getElementById('weighmentId'+(i+1)).value
+			if(itemList.length === 0){
+				item['weighmentId'] = weighmentIdValue;
+				itemList.push(item);
+			}
+			else{
+				var found = itemList.some(el => el.weighmentId === weighmentIdValue);
+				if (!found) itemList.push({weighmentId: weighmentIdValue });
+			}
+			
+		}
+		
+		jsonObj['items'] = itemList;
+		
+		console.log(jsonObj);
+		
+		var jsonStr = JSON.stringify(jsonObj);
+		
+		document.getElementById('output').value=jsonStr;
+		
+		//document.getElementsByTagName('form')[0].submit();
+		
 	}
 	
 	</script>
