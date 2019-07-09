@@ -45,6 +45,14 @@
 					<input type="text" class="form-control form-control-sm" name="" id="">
 				</div>
 				<div class="col-md-2">
+					<label class="lbl-rm-l">Heap</label>
+					<select class="form-control form-control-sm">
+						<option value="">Heap A</option>
+						<option value="">Heap B</option>
+						<option value="">Heap C</option>
+					</select>
+				</div>
+				<div class="col-md-2">
 					<label class="lbl-rm-l">Grade</label>
 					<select class="form-control form-control-sm">
 						<option value="">Grade A</option>

@@ -13,15 +13,18 @@
     </head>
 <body>
    <%@include file="../views/NavBar.html" %>
-       	<div class="container">
-       		<div class="row col-md-margintop">
-       		<div class="col-md-8">
-       		<div class="tile-background" id="getHeight">
-       		<div class="form-row">
-       					<div class="col-md-12">
-       						<h3>Setup Bank Accounts</h3>
-       					</div>
+       	<div class="container-fluid">
+       		<div class="row mt-2">
+       			<div class="col-md-12">
+       				<div class="d-flex justify-content-start align-items-center tile-background-row">
+	       				<img src="../property/img/money-bag.png" alt="banks">
+	       				<h4 class="lbl-rm-all">Setup Bank Accounts</h4>
        				</div>
+       			</div>
+       		</div>
+       		<div class="row mt-1">
+       		<div class="col-md-8">
+       		<div class="tile-background-row" id="getHeight">
 				<form action="../processing/addBank.jsp" name="bankForm">
 					<div class="form-row">
 						<div class="form-group col-md-4">
@@ -58,19 +61,15 @@
 						</div>
 					</div>
 				</form>
+					<div class="d-flex justify-content-end align-items-center">
+						<button type="button" class="btn btn-success btn btn-mr-tp change-button" onclick="submitForm()">Save</button>
+					</div>
 				</div>
-				<button type="button" class="btn btn-primary btn btn-mr-tp" onclick="submitForm()">Save</button>
        			</div>
        			<div class="col-md-4">
-       			<div class="tile-background" id="setHeight">
-       				<div class="form-row">
-       					<div class="col-md-12">
-       						<h3>Bank Accounts</h3>
-       					</div>
-       				</div>
-       				<div class="form-row">
-       					<div class="col-md-12 scroll">
-       						<table class="table">
+       			<div class="tile-background-row scroll">
+       					<div class="col-md-12 ">
+       						<table class="table ">
        							<thead>
        								<tr>
        									<th>Company</th>
@@ -81,7 +80,6 @@
        							</tbody>
        						</table>
        					</div>
-       				</div>
        				</div>
        			</div>
        		</div>
@@ -95,7 +93,10 @@
 		<script src="../js/bootstrap.min.js"></script>
 		<script src="../js/commonjs.js"></script>
 		<script>
-	
+		var height = new SettingHeightofAdjacentPanels("getHeight","scroll",0);//getting & setting height of panels
+		height.calcHeight();
+		
+		
 			function submitForm(){
 				document.getElementsByName("bankForm")[0].submit();
 			}
