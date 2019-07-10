@@ -4,8 +4,20 @@ public class Invoice {
 	
 	private int id, customerId, companyId ;
 	private double total, amountPaid, pending;
-	private String invoiceNo, invDate;
+	private String invoiceNo, invDate, authorizer, note;
 	
+	public String getAuthorizer() {
+		return authorizer;
+	}
+	public void setAuthorizer(String authorizer) {
+		this.authorizer = authorizer;
+	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
 	public int getId() {
 		return id;
 	}

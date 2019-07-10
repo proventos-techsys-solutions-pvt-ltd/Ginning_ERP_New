@@ -1,3 +1,6 @@
+<%@page import="com.prov.dbinsertion.AddAmanatEntry"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="org.omg.CORBA.INV_POLICY"%>
 <%@page import="com.prov.dbinsertion.AddInvoiceItems"%>
 <%@page import="com.prov.bean.InvoiceItems"%>
 <%@page import="com.prov.dbinsertion.AddInvoice"%>
@@ -21,19 +24,48 @@
 	
 	JSONObject json = (JSONObject) parser.parse(invoiceData);
 	
-	JSONArray jsonArray = (JSONArray)json.get("itemList");
+	JSONArray jsonArray = (JSONArray)json.get("items");
 	
 	System.out.println(jsonArray);
 	
 		
 		Invoice invoice = new Invoice();
 		
-		invoice.setCompanyId(Integer.parseInt((String)json.get("comapnyId")));
-		invoice.setInvoiceNo((String)json.get("invoiceNo"));
+	ArrayList<InvoiceItems> invoiceItemList = new ArrayList<InvoiceItems>();	
+	ArrayList<InvoiceItems> amanatItemList = new ArrayList<InvoiceItems>();	
+		
+		for(int i=0; i<jsonArray.size(); i++){
+			
+			JSONObject obj = (JSONObject)jsonArray.get(i);
+			
+			if(((String)obj.get("amanatCheck")).equals("false")){
+				InvoiceItems item = new InvoiceItems();
+				
+				item.setWeighmentId(Integer.parseInt((String)obj.get("weighmentId")));
+				item.setGradeId(Integer.parseInt((String)obj.get("gradeId")));
+				item.setRst(Integer.parseInt((String)obj.get("rst")));
+				invoiceItemList.add(item);
+			}
+			else if(((String)obj.get("amanatCheck")).equals("true")){
+				Ama item = new InvoiceItems();
+				
+				item.setWeighmentId(Integer.parseInt((String)obj.get("weighmentId")));
+				item.setGradeId(Integer.parseInt((String)obj.get("gradeId")));
+				item.setRst(Integer.parseInt((String)obj.get("rst")));
+				amanatItemList.add(item);
+			}
+			
+		}
+		
+		invoice.setCompanyId(Integer.parseInt((String)json.get("companyId")));
+		invoice.setInvoiceNo((String)json.get("invoiceNo").toString().toUpperCase());
 		invoice.setTotal(Double.parseDouble((String)json.get("total")));
 		invoice.setAmountPaid(Double.parseDouble((String)json.get("amountPaid")));
 		invoice.setPending(Double.parseDouble((String)json.get("pending")));
 		invoice.setInvDate((String)json.get("invoiceDate"));
+		invoice.setCustomerId(Integer.parseInt((String)json.get("customerId")));
+		invoice.setAuthorizer((String)json.get("authorizer").toString().toUpperCase());
+		invoice.setNote((String)json.get("note").toString().toUpperCase());
 		
 		AddInvoice addinvoice = new AddInvoice();
 		
@@ -41,20 +73,18 @@
 		
 		AddInvoiceItems addItems = new AddInvoiceItems();
 		
-		for(int i=0; i<jsonArray.size(); i++){
-			JSONObject obj = (JSONObject)jsonArray.get(i);
+		for(int i=0; i<invoiceItemList.size(); i++){
 			
-			InvoiceItems items = new InvoiceItems();
-			
-			items.setInvoiceId(invoiceId);
-			items.setWeighmentId(Integer.parseInt((String)json.get("weighmentId")));
-			
-			addItems.addInvoiceItems(items);
+			invoiceItemList.get(i).setInvoiceId(invoiceId);
+			addItems.addInvoiceItems(invoiceItemList.get(i));
 			
 		}
 		
+		AddAmanatEntry addAmanat = new AddAmanatEntry();
 		
-		
+		for(int i=0; i<amanatItemList.size(); i++){
+			addAmanat.addAmanat(invoiceItemList.get(i));
+		}
 		StockMast stock = new StockMast();
 		
 		/* stock.setCompanyId(companyId);

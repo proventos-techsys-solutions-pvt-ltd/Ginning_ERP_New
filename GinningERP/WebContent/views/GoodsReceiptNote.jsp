@@ -380,6 +380,24 @@
 	}
 	
 	
+	document.addEventListener("change",function(e){
+		
+		if(e.srcElement.id.includes("grade"))
+		{
+			
+			var selectedGrade = e.srcElement.options[e.srcElement.selectedIndex];
+			var gradeId = selectedGrade.getAttribute('data-gradeId');
+			//console.log("gradeId --- "+gradeId);
+			var rowNo = e.srcElement.parentElement.parentElement.rowIndex;
+			//console.log("rowNo -- "+rowNo);
+			
+			document.getElementById("description"+rowNo).value = selectedGrade.getAttribute('data-description');
+			
+			
+		}
+		
+	});
+	
 	</script>
   </body>
   </html>

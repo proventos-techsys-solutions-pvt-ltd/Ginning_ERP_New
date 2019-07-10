@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -15,7 +17,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 import com.prov.db.OracleConnection;
 
-public class GradeTag extends SimpleTagSupport {
+public class GradeRateTag extends SimpleTagSupport{
 	
 	public static TreeMap<String,String> getGrades() {			
 		Connection con=null;
@@ -23,11 +25,17 @@ public class GradeTag extends SimpleTagSupport {
 		TreeMap<String,String> gradeName = new TreeMap<String,String>();
 		try {
 			 con = OracleConnection.getConnection();
-			 String accountQuery = "Select * from grade_master order by GRADE";
+			 
+			 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			 String date = simpleDateFormat.format(new Date());
+			 Date date1 =  simpleDateFormat.parse(date);  
+			 java.sql.Date voucherSqlDate = new java.sql.Date(date1.getDate());
+			 
+			 String accountQuery = "Select * from GRADE_RATE_MASTER WHERE RATE_DATE = "+ voucherSqlDate +" order by GRADE_ID";
 			 Statement stmt = con.createStatement();
 			 gradeResultSet = stmt.executeQuery(accountQuery);
 			 while(gradeResultSet.next()) {
-				 gradeName.put(gradeResultSet.getString("GRADE")+"-"+gradeResultSet.getInt("ID"),gradeResultSet.getString("DECRIPTION"));
+				 gradeName.put(gradeResultSet.getString("GRADE_ID"),gradeResultSet.getString("RATE"));
 				}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -50,6 +58,5 @@ public class GradeTag extends SimpleTagSupport {
 			out.print("<option value='"+gradeName+"' data-gradeId='"+gradeId+"' data-description='"+gradeDesc+"'>"+gradeName+"</option>");
 		}
 	}
-
 
 }

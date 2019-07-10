@@ -20,7 +20,7 @@ public int addInvoiceItems(InvoiceItems ii) {
 			e.printStackTrace();
 		}
 
-		String addInvoiceItems = "{ ? = call ADD_INVOICEITEMS(?,?) }";
+		String addInvoiceItems = "{ ? = call ADD_INVOICEITEMS(?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(addInvoiceItems);
@@ -29,6 +29,8 @@ public int addInvoiceItems(InvoiceItems ii) {
 			
 			cs.setInt(2, ii.getInvoiceId());
 			cs.setInt(3, ii.getWeighmentId());
+			cs.setInt(4, ii.getGradeId());
+			cs.setInt(5, ii.getRst());
 			
 			cs.executeUpdate();
 			

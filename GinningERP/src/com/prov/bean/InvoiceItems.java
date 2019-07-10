@@ -2,7 +2,23 @@ package com.prov.bean;
 
 public class InvoiceItems {
 	
-	int id, invoiceId, weighmentId;
+	int id, invoiceId, weighmentId, gradeId, rst;
+
+	public int getGradeId() {
+		return gradeId;
+	}
+
+	public void setGradeId(int gradeId) {
+		this.gradeId = gradeId;
+	}
+
+	public int getRst() {
+		return rst;
+	}
+
+	public void setRst(int rst) {
+		this.rst = rst;
+	}
 
 	public int getId() {
 		return id;

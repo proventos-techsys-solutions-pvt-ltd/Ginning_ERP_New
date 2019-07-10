@@ -45,6 +45,8 @@ public Invoice getInvoiceData(int rst) {
 				
 				inv.setCompanyId(rs.getInt(7));
 				inv.setCustomerId(rs.getInt(8));
+				inv.setAuthorizer(rs.getString(9));
+				inv.setNote(rs.getString(10));
 			}
 			
 			stmt.close();

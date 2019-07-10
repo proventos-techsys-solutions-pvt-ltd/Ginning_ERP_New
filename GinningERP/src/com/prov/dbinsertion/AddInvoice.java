@@ -20,7 +20,7 @@ public int addInvoice(Invoice i) {
 			e.printStackTrace();
 		}
 
-		String addInvoice = "{ ? = call ADD_INVOICE(?,?,?,?,?,?,?,?,?,?) }";
+		String addInvoice = "{ ? = call ADD_INVOICE(?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -38,7 +38,9 @@ public int addInvoice(Invoice i) {
 			cs.setDouble(5, i.getPending());
 			cs.setDate(6, invSqlDate);
 			cs.setInt(7, i.getCompanyId());
-			cs.setInt(8, i.getCustomerId() );
+			cs.setInt(8, i.getCustomerId());
+			cs.setString(9, i.getAuthorizer());
+			cs.setString(10, i.getNote());
 			
 			cs.executeUpdate();
 			

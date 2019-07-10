@@ -2,7 +2,6 @@ package com.prov.dbupdation;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,7 +21,7 @@ public int updateInvoice(Invoice i) {
 			e.printStackTrace();
 		}
 
-		String updateInvoice = "{ ? = call UPDATE_INVOICE(?,?,?,?,?,?,?,?,?,?,?) }";
+		String updateInvoice = "{ ? = call UPDATE_INVOICE(?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -42,6 +41,8 @@ public int updateInvoice(Invoice i) {
 			cs.setDate(7, invSqlDate);
 			cs.setInt(8, i.getCompanyId());
 			cs.setInt(9, i.getCustomerId() );
+			cs.setString(10, i.getAuthorizer() );
+			cs.setString(11, i.getNote() );
 			
 			cs.executeUpdate();
 			

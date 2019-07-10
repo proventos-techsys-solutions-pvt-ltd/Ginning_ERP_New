@@ -372,7 +372,7 @@
 			cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+data[i].moisture+'" >';
 			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+data[i].rate+'" >';
 			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+(data[i].rate * data[i].quantity)+'" >';
-			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="" >';
+			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" >';
 			cell9.innerHTML = '<input type="hidden" id="gradeId'+(rowNo+1)+'" class="lbl-rm-all" name="gradeId" value="'+data[i].gradeId+'" >';
 			cell10.innerHTML = '<input type="hidden" id="weighmentId'+(rowNo+1)+'" class="lbl-rm-all" name="weighmentId" value="'+data[i].weighmentId+'" >';
 			
@@ -381,6 +381,22 @@
  		}
 		calculateTotal();
 	}
+	
+	//Set Amanat checkbox value
+	document.addEventListener('change', function(e){
+		if(e.srcElement.id.includes('amanatCheck')){
+			if(e.srcElement.value === 'false'){
+				e.srcElement.value = 'true'
+				console.log('Amanat check --- '+e.srcElement.value);
+			}
+			else if(e.srcElement.value === 'true'){
+				e.srcElement.value = 'false'
+				console.log('Amanat check --- '+e.srcElement.value);
+			}
+		}
+	})
+		
+	
 	
 	//calculate total amount to be paid
 	function calculateTotal(){
@@ -425,11 +441,13 @@
 		jsonObj['authorizer'] = document.getElementById('authorizer').value;
 		jsonObj['invoiceNo'] = document.getElementById('invoiceNo').value;
 		jsonObj['customerId'] = document.getElementById('customerId').value;
-		jsonObj['total'] = Number(document.getElementById('advance').value * document.getElementById('net').value);
+		var total = (Number(document.getElementById('advance').value) + Number(document.getElementById('net').value));
+		jsonObj['total'] = total.toString();
 		jsonObj['amountPaid'] = document.getElementById('advance').value;
 		jsonObj['pending'] = document.getElementById('net').value;
 		jsonObj['invoiceDate'] = document.getElementById('invoiceDate').value;
 		jsonObj['companyId'] = document.getElementById('companyId').value;
+		jsonObj['note'] = document.getElementById('note').value
 		
 		var noOfRows = document.getElementById('tableBody').childElementCount;
 		console.log('no of Rows --- '+noOfRows);
@@ -438,27 +456,23 @@
 		
 		for(i=0; i<noOfRows; i++){
 			item = {};
-			var weighmentIdValue = document.getElementById('weighmentId'+(i+1)).value
-			if(itemList.length === 0){
-				item['weighmentId'] = weighmentIdValue;
+			 
+				item['weighmentId'] = document.getElementById('weighmentId'+(i+1)).value;
+				item['gradeId'] = document.getElementById('gradeId'+(i+1)).value;
+				item['rst'] = document.getElementById('tableRst'+(i+1)).value;
+				item['amanat'] = document.getElementById('amanatCheck'+(i+1)).value;
 				itemList.push(item);
-			}
-			else{
-				var found = itemList.some(el => el.weighmentId === weighmentIdValue);
-				if (!found) itemList.push({weighmentId: weighmentIdValue });
-			}
 			
 		}
 		
 		jsonObj['items'] = itemList;
 		
-		console.log(jsonObj);
-		
 		var jsonStr = JSON.stringify(jsonObj);
+		console.log(jsonStr);
 		
 		document.getElementById('output').value=jsonStr;
 		
-		//document.getElementsByTagName('form')[0].submit();
+		document.getElementsByTagName('form')[0].submit();
 		
 	}
 	
