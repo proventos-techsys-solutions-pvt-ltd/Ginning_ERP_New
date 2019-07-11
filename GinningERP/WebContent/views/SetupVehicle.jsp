@@ -63,7 +63,7 @@
 							<td>100 Kg capacity</td>
 							<td>Rs.100</td>
 							<td id="callModal" class="text-center"><img src="../property/img/edit.png" alt="edit"></td>
-							<td class="text-center"><img src="../property/img/delete.png" alt="delete"></td>
+							<td class="text-center"><img src="../property/img/delete.png" alt="delete" id="deleteRow"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -116,11 +116,10 @@
 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
-	<script src="../js/modal.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script>
 		callModalPopup("callModal","calledModal");//Calling pop up for editing
-	
+		
 	</script>
 </body>
 </html>

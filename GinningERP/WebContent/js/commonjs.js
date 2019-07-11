@@ -97,3 +97,5 @@ function createTable(column,heading){
 	}
  
 }
+//*************************************Row delete code*************************
+
