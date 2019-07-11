@@ -301,6 +301,29 @@ span{
 h6{
 	font-weight:bolder;
 }
+.stock-block-heading{
+	background:#0073b7;
+	width:100%;
+	height:70px;
+	color:#fff;
+	font-size:2rem;
+}
+.stock-block-content{
+	background:#fff;
+	width:100%;
+	height:200px;
+	color:black;
+	font-size:2rem;
+	padding:1rem;
+}
+.stock-block-contents{
+	background:#39cccc;
+	width:100%;
+	height:150px;
+	color:#fff;
+	font-size:1rem;
+	padding:.5rem;
+}
 
 /*******************************COMMON CLASESS****************************************************/
 .r-p-t{
