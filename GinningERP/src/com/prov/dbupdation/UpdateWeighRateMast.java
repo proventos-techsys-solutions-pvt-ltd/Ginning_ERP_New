@@ -30,7 +30,7 @@ public class UpdateWeighRateMast {
 		
 			cs.setInt(2, wrm.getId() );
 			cs.setString(3, wrm.getVehicle_name());
-			cs.setString(4, wrm.getVehcile_Desc() );
+			cs.setString(4, wrm.getVehicle_Desc() );
 			cs.setDouble(5, wrm.getWeighrate());
 			
 			cs.executeUpdate();

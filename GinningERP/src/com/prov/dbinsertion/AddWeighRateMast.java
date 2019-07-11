@@ -28,7 +28,7 @@ public int addWeighRateMast(WeighRateMast wrm) {
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
 			cs.setString(2, wrm.getVehicle_name() );
-			cs.setString(3, wrm.getVehcile_Desc() );
+			cs.setString(3, wrm.getVehicle_Desc() );
 			cs.setDouble(4, wrm.getWeighrate());
 			
 			cs.executeUpdate();
