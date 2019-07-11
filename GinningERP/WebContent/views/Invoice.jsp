@@ -111,9 +111,9 @@
 								</div>
 									
                                
-                                                
-                                <div class="col-md-12 border-top">
-                                    <div class="d-flex justify-content-around custom-checkbox tile-background-row">
+                                <div class="row tile-background-row">                
+                                <div class="col-md-12 border-top border-bottom">
+                                    <div class="d-flex justify-content-around custom-checkbox">
                                         <div class="custom-control">
                                             <input type="checkbox" class="custom-control-input" id="cashCheckbox">
                                             <label class="custom-control-label" for="cashCheckbox">Cash</label>
@@ -128,18 +128,23 @@
                                         </div>
                                     </div>
                                 </div>
+                                </div>
                                 <!-- ********************HIDDEN TABLE FOR COLLECTING PAYMENT INFORMATION**************************** -->
-                                	<div class="col-md-12 mt-2 border-top tile-background-row">
+                                	<div class="row tile-background-row">
+                                	<div class="col-md-12 mt-2">
                                 		<table class="table table-bordered mt-2 " id="paymentTable">
                                 			<thead id="paymentDetailsTableHead"></thead>
                                 			<tbody id="paymentDetailsTableBody"></tbody>                     			
                                 		</table>
                                 	</div>
+                                	</div>
+                                <div class="row tile-background-row">
                                 <div class="col-md-12 ">
                                     <div class="d-flex justify-content-end">
                                         <button style="margin-bottom:8px;" type="button" class="btn btn-success btn-sm btn-mr-rt btn-mr-tp" >Save</button>
                                         <button style="margin-bottom:8px;" type="button" class="btn btn-success btn-sm btn-mr-rt btn-mr-tp" onclick="submitForm()">Save & Print</button>
                                     </div>
+                                </div>
                                 </div>
              	
              	<!-- *********************************CASH PAYMENT MODAL******************************************** -->

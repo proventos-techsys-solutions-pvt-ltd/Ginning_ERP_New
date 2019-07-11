@@ -115,6 +115,17 @@ function addPaymentDetailsToTable(){
 /*******************************DELETING TABLE ROW***********************************************/
 function deleteRow(r) {
 	  var rowNo = r.parentNode.parentNode.rowIndex;
+	  var modeOfPayment = document.getElementById("paymentTable").rows[rowNo].cells[0].innerHTML;
+		if(modeOfPayment === "Cash Payment"){
+			document.getElementById("cashCheckbox").disabled = false;
+			document.getElementById("cashCheckbox").checked = false;
+		}else if(modeOfPayment === "Bank Payment"){
+			document.getElementById("chequeCheckbox").disabled = false;
+			document.getElementById("chequeCheckbox").checked = false;
+		}else if(modeOfPayment === "RTGS/NEFT Payment"){
+			document.getElementById("rtgsCheckbox").disabled = false;
+			document.getElementById("rtgsCheckbox").checked = false;
+		}
 	  document.getElementById("paymentTable").deleteRow(rowNo);
 	}
 
