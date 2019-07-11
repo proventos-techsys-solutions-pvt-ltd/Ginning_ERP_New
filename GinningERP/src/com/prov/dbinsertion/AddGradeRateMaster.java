@@ -27,7 +27,7 @@ public int addGradeRateMaster(GradeRateMaster grm) {
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
 			cs.setString(2, grm.getRateDate() );
-			cs.setString(3, grm.getGradeID() );
+			cs.setInt(3, grm.getGradeId() );
 			cs.setDouble(4, grm.getRate());
 			
 			cs.executeUpdate();

@@ -53,14 +53,8 @@
 							<th width="5%" class="text-center">Default</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>Grade A</td>
-							<td>Description of Grade A</td>
-							<td id="callModal" class="text-center"><img src="../property/img/edit.png" alt="edit"></td>
-							<td class="text-center"><img src="../property/img/delete.png" alt="delete"></td>
-							<td class="text-center"><input type="radio" class="" id="" name=""  value=""></td>
-						</tr>
+					<tbody id="tableBody">
+						
 					</tbody>
 				</table>
 			</div>
@@ -111,7 +105,61 @@
 	<script src="../js/modal.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script>
-		callModalPopup("callModal","calledModal");//Calling pop up for editing
+	
+	window.onload = function() {
+		gradeReport();
+	};
+	
+	//Calling pop up for editing
+	callModalPopup("callModal","calledModal");
+		
+		
+		
+		function gradeReport(){
+			console.log("132141514616");
+			var url="../processing/gradeReport.jsp";
+			
+			if(window.XMLHttpRequest){  
+				dataRequest=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				dataRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+		  
+			try{  
+				dataRequest.onreadystatechange=getGradeData;  
+				console.log("AJAX Req sent");
+				dataRequest.open("GET",url,true);  
+				dataRequest.send();  
+			}catch(e){alert("Unable to connect to server");}
+		}
+		
+		
+	function getGradeData(){
+		
+		if(dataRequest.readyState == 4){
+			var gradeData = this.response.trim();
+			console.log(gradeData);
+			setData(gradeData);
+		}
+	}
+	
+	function setData(gradeData){
+		var json = JSON.parse(gradeData);
+		var element = document.getElementById('tableBody');
+		for(i=0; i< json.length; i++){
+			element.insertAdjacentHTML('beforeend','<tr>'+
+					'<td hidden>'+json[i].id+'</td>'+
+					'<td>'+json[i].grade+'</td>'+
+					'<td>'+json[i].desc+'</td>'+
+					'<td id="callModal" class="text-center"><img src="../property/img/edit.png" alt="edit"></td>'+
+					'<td class="text-center"><img src="../property/img/delete.png" alt="delete"></td>'+
+					'<td class="text-center"><input type="radio" class="" id="" name=""  value=""></td>'+
+				'</tr>');
+		}
+		
+	}
+			
 	
 	</script>
 </body>

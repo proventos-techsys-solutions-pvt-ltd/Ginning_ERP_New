@@ -22,7 +22,7 @@ public int updateAmanat(Amanat a) {
 			e.printStackTrace();
 		}
 
-		String updateInvoice = "{ ? = call UPDATE_AMANAT(?,?,?,?,?,?,?,?,?,?) }";
+		String updateInvoice = "{ ? = call UPDATE_AMANAT(?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -30,25 +30,15 @@ public int updateAmanat(Amanat a) {
 			@SuppressWarnings({ "deprecation" })
 			java.sql.Date invSqlDate = new java.sql.Date(amanatDate.getDate());
 			
-			Date expiryDate = new SimpleDateFormat("yyyy-MM-dd").parse(a.getDateOfExpiry());
-			@SuppressWarnings({ "deprecation" })
-			java.sql.Date expirySqlDate = new java.sql.Date(expiryDate.getDate());
-			
-			
 			cs = con.prepareCall(updateInvoice);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
 			cs.setInt(2, a.getId());
-			cs.setInt(3, a.getRst() );
-			cs.setInt(4, a.getCid());
-			cs.setInt(5, a.getVid());
-			cs.setDouble(6, a.getContractRate());
-			cs.setDouble(7, a.getTotal());
-			cs.setDate(8, invSqlDate);
-			cs.setDate(9, expirySqlDate);
-			cs.setDouble(10, a.getFinalRate());
-			cs.setInt(11, a.getInvId());
+			cs.setInt(3, a.getGradeId());
+			cs.setInt(4, a.getCustomerId());
+			cs.setDate(5, invSqlDate);
+			cs.setDouble(6, a.getFinalRate());	
 			
 			cs.executeUpdate();
 			
@@ -59,7 +49,7 @@ public int updateAmanat(Amanat a) {
 			cs.close();
 			con.close();
 			
-			System.out.println("Updation Succesful-"+id);
+			System.out.println("Updation Successful-"+id);
 			} catch (Exception e) {
 			e.printStackTrace();
 		}

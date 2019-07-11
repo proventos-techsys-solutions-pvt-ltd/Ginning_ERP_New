@@ -168,7 +168,10 @@
 							+	"</select>";
 		cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(noOfRows+1)+"' name='description"+(noOfRows+1)+"'>";
 		cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(noOfRows+1)+"' name='moisture"+(noOfRows+1)+"' value='"+data[i].moisture+"'>";
-		cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate"+(noOfRows+1)+"' name='rate"+(noOfRows+1)+"' value='"+data[i].rate+"'>";
+		cell6.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='rate"+(noOfRows+1)+"' name='rate"+(noOfRows+1)+">"
+							+	"<option>Select</option>"
+							+	"<c:GradeRate />"
+							+	"</select>";
 		cell7.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow'>";
 		
 		
@@ -368,7 +371,11 @@
 			
 			cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(i+1)+"' name='description"+(i+1)+"' value='"+description+"'>";
 			cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(i+1)+"' name='moisture"+(i+1)+"' value="+data[i].moisture+">";
-			cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate"+(i+1)+"' name='rate"+(i+1)+"' value="+data[i].rate+">";
+			cell6.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='rate"+(i+1)+"' name='rate"+(i+1)+"' >"
+								+	"<option>"+data[i].rate+"</option>"
+								+	"<c:GradeRate />"
+								+	"</select>";
+								
 			if(i>0){
 				cell7.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow'>";
 			}

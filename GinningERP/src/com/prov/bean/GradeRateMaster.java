@@ -2,8 +2,8 @@ package com.prov.bean;
 
 public class GradeRateMaster {
 	
-	private int id;
-	private String rateDate, gradeID;
+	private int id, gradeId;
+	private String rateDate ;
 	private Double rate;
 	public int getId() {
 		return id;
@@ -17,11 +17,11 @@ public class GradeRateMaster {
 	public void setRateDate(String rateDate) {
 		this.rateDate = rateDate;
 	}
-	public String getGradeID() {
-		return gradeID;
+	public int getGradeId() {
+		return gradeId;
 	}
-	public void setGradeID(String gradeID) {
-		this.gradeID = gradeID;
+	public void setGradeId(int gradeId) {
+		this.gradeId = gradeId;
 	}
 	public Double getRate() {
 		return rate;

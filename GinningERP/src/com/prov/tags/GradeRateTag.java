@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -26,14 +24,9 @@ public class GradeRateTag extends SimpleTagSupport{
 		try {
 			 con = OracleConnection.getConnection();
 			 
-			 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			 String date = simpleDateFormat.format(new Date());
-			 Date date1 =  simpleDateFormat.parse(date);  
-			 java.sql.Date voucherSqlDate = new java.sql.Date(date1.getDate());
-			 
-			 String accountQuery = "Select * from GRADE_RATE_MASTER WHERE RATE_DATE = "+ voucherSqlDate +" order by GRADE_ID";
+			 String rateQuery = "SELECT * FROM GRADE_RATE_MASTER WHERE RATE_DATE = (SELECT MAX(RATE_DATE) FROM GRADE_RATE_MASTER)";
 			 Statement stmt = con.createStatement();
-			 gradeResultSet = stmt.executeQuery(accountQuery);
+			 gradeResultSet = stmt.executeQuery(rateQuery);
 			 while(gradeResultSet.next()) {
 				 gradeName.put(gradeResultSet.getString("GRADE_ID"),gradeResultSet.getString("RATE"));
 				}
@@ -51,11 +44,9 @@ public class GradeRateTag extends SimpleTagSupport{
 		Iterator<Entry<String,String>> compItr = gradeSet.iterator();
 		while(compItr.hasNext()) {
 			Map.Entry<String,String> gradeData = (Map.Entry<String,String>)compItr.next();
-			String gradeDesc = (String)gradeData.getValue();
-			String[] gradeArr =  gradeData.getKey().split("-");
-			String gradeName = gradeArr[0];
-			int gradeId = Integer.parseInt(gradeArr[1]);
-			out.print("<option value='"+gradeName+"' data-gradeId='"+gradeId+"' data-description='"+gradeDesc+"'>"+gradeName+"</option>");
+			String gradeId = gradeData.getKey();
+			String gradeRate =  (String)gradeData.getValue();
+			out.print("<option value='"+gradeRate+"' data-gradeId='"+gradeId+"'>"+gradeRate+"</option>");
 		}
 	}
 

@@ -23,6 +23,12 @@
    </tag>
    
    <tag>
+     <name>GradeRate</name>
+	<tag-class>com.prov.tags.GradeRateTag</tag-class>
+	<body-content>Empty</body-content>
+   </tag>
+   
+   <tag>
      <name>Grade</name>
 	<tag-class>com.prov.tags.GradeTag</tag-class>
 	<body-content>Empty</body-content>

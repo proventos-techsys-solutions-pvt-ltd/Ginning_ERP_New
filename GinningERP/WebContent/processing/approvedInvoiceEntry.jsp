@@ -32,7 +32,7 @@
 		Invoice invoice = new Invoice();
 		
 	ArrayList<InvoiceItems> invoiceItemList = new ArrayList<InvoiceItems>();	
-	ArrayList<InvoiceItems> amanatItemList = new ArrayList<InvoiceItems>();	
+	ArrayList<Amanat> amanatItemList = new ArrayList<Amanat>();	
 		
 		for(int i=0; i<jsonArray.size(); i++){
 			
@@ -47,11 +47,11 @@
 				invoiceItemList.add(item);
 			}
 			else if(((String)obj.get("amanatCheck")).equals("true")){
-				Ama item = new InvoiceItems();
+				Amanat item = new Amanat();
 				
-				item.setWeighmentId(Integer.parseInt((String)obj.get("weighmentId")));
+				item.setCustomerId(Integer.parseInt((String)obj.get("customerId")));
 				item.setGradeId(Integer.parseInt((String)obj.get("gradeId")));
-				item.setRst(Integer.parseInt((String)obj.get("rst")));
+				item.setAmanatDate((String)obj.get("invoiceDate"));
 				amanatItemList.add(item);
 			}
 			
@@ -83,18 +83,18 @@
 		AddAmanatEntry addAmanat = new AddAmanatEntry();
 		
 		for(int i=0; i<amanatItemList.size(); i++){
-			addAmanat.addAmanat(invoiceItemList.get(i));
+			addAmanat.addAmanat(amanatItemList.get(i));
 		}
-		StockMast stock = new StockMast();
+		/* StockMast stock = new StockMast();
 		
-		/* stock.setCompanyId(companyId);
-		stock.setStockDate(date);
-		stock.setRawCotton(totalWeight);
-		stock.setAvgRate(i.getTotal()); */
+		stock.setCompanyId(Integer.parseInt((String)json.get("companyId")));
+		stock.setStockDate((String)json.get("invoiceDate"));
+		stock.setRawCotton(Double.parseDouble((String)json.get("companyId")));
+		stock.setAvgRate(i.getTotal()); 
 		
-		/* AddStockMast addStock = new AddStockMast();
+		AddStockMast addStock = new AddStockMast();
 		
-		addStock.addStockMast(stock); */
+		addStock.addStockMast(stock);  */
 		
 		response.sendRedirect("../views/Invoice.jsp");
 	

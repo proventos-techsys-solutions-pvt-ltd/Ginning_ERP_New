@@ -21,7 +21,7 @@ public int addAmanat(Amanat a) {
 			e.printStackTrace();
 		}
 
-		String addAmanat = "{ ? = call ADD_AMANAT(?,?,?,?,?,?,?,?,?) }";
+		String addAmanat = "{ ? = call ADD_AMANAT(?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -29,23 +29,15 @@ public int addAmanat(Amanat a) {
 			@SuppressWarnings({ "deprecation" })
 			java.sql.Date amanatSqlDate = new java.sql.Date(amanatDate.getDate());
 			
-			Date expiryDate = new SimpleDateFormat("yyyy-MM-dd").parse(a.getDateOfExpiry());
-			@SuppressWarnings({ "deprecation" })
-			java.sql.Date expirySqlDate = new java.sql.Date(expiryDate.getDate());
-			
 			cs = con.prepareCall(addAmanat);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
-			cs.setInt(2, a.getRst() );
-			cs.setInt(3, a.getCid() );
-			cs.setInt(4, a.getVid());
-			cs.setDouble(5, a.getContractRate());
-			cs.setDouble(6, a.getTotal());
-			cs.setDate(7, amanatSqlDate);
-			cs.setDate(8, expirySqlDate);
-			cs.setDouble(9, a.getFinalRate());
-			cs.setInt(10, a.getInvId());
+			cs.setInt(2, a.getGradeId());
+			cs.setInt(3, a.getCustomerId());
+			cs.setDate(4, amanatSqlDate);
+			cs.setDouble(5, a.getFinalRate());
+			
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);

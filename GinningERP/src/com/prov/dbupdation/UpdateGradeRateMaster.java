@@ -30,7 +30,7 @@ public class UpdateGradeRateMaster {
 		
 			cs.setInt(2, grm.getId() );
 			cs.setString(3, grm.getRateDate() );
-			cs.setString(4, grm.getGradeID());
+			cs.setInt(4, grm.getGradeId());
 			cs.setDouble(5, grm.getRate());
 			
 			cs.executeUpdate();

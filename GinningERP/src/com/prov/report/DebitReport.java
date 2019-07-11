@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.prov.bean.Bank;
 import com.prov.bean.DebitVoucher;
 import com.prov.db.OracleConnection;
 

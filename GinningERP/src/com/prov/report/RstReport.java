@@ -73,7 +73,7 @@ public class RstReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT GD.ID, GD.WEIGHMENT_ID, GD.MATERIAL, GD.QUANTITY, GD.GRADE, GD.RATE, GD.AUTHORIZED_BY, GD.MOISTURE, WM.VID, WM.RST, CVM.CID, CM.NAME, CM.ADDRESS, CM.MOBILE\r\n" + 
+			String sql = "SELECT GD.ID, GD.WEIGHMENT_ID, GD.MATERIAL, GD.QUANTITY, GD.GRADE, GD.RATE, GD.AUTHORIZED_BY, GD.MOISTURE, WM.VID, WM.RST, WM.NET, CVM.CID, CM.NAME, CM.ADDRESS, CM.MOBILE\r\n" + 
 					"FROM GRADE_DETAILS GD, WEIGH_MAST WM, CUSTOMER_VEHICLE_MAST CVM, CUSTOMER_MAST CM \r\n" + 
 					"WHERE\r\n" + 
 					"GD.WEIGHMENT_ID = WM.ID AND\r\n" + 
@@ -99,10 +99,11 @@ public class RstReport {
 				jsonObj.put("moisture", rs.getString(8));
 				jsonObj.put("vehicleId", rs.getString(9));
 				jsonObj.put("rst", rs.getString(10));
-				jsonObj.put("customerId", rs.getString(11));
-				jsonObj.put("customerName", rs.getString(12));
-				jsonObj.put("customerAddress", rs.getString(13));
-				jsonObj.put("customerMobile", rs.getString(14));
+				jsonObj.put("netQuantity", rs.getString(11));
+				jsonObj.put("customerId", rs.getString(12));
+				jsonObj.put("customerName", rs.getString(13));
+				jsonObj.put("customerAddress", rs.getString(14));
+				jsonObj.put("customerMobile", rs.getString(15));
 				
 				jsonArray.put(jsonObj);
 			}
