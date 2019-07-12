@@ -36,14 +36,13 @@ public class UpdateStockMast {
 		
 			cs.setInt(2, sm.getId());
 			cs.setDate(3, stockSqlDate);
-			cs.setInt(4, sm.getStockDetId());
-			cs.setInt(5, sm.getCompanyId());
-			cs.setDouble(6, sm.getRawCotton());
-			cs.setDouble(7, sm.getCottonBales());
-			cs.setDouble(8, sm.getCottonSeed());
-			cs.setDouble(9, sm.getCottonSeedOil());
-			cs.setDouble(10, sm.getCottonCakes());
-			cs.setDouble(11, sm.getAvgRate());
+			cs.setInt(4, sm.getCompanyId());
+			cs.setDouble(5, sm.getRawCotton());
+			cs.setDouble(6, sm.getCottonBales());
+			cs.setDouble(7, sm.getCottonSeed());
+			cs.setDouble(8, sm.getCottonSeedOil());
+			cs.setDouble(9, sm.getCottonCakes());
+			cs.setDouble(10, sm.getAvgRate());
 			
 			cs.executeUpdate();
 			

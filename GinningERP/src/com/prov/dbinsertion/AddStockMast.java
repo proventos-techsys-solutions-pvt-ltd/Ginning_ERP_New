@@ -3,9 +3,8 @@ package com.prov.dbinsertion;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.prov.bean.StockMast;
 import com.prov.db.OracleConnection;
@@ -27,27 +26,25 @@ public int addStockMast(StockMast sm) {
 			e.printStackTrace();
 		}
 
-		String addStock = "{ ? = call ADD_STOCK(?,?,?,?,?,?,?,?,?) }";
+		String addStock = "{ ? = call ADD_STOCK(?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
-			Date stockDate = new SimpleDateFormat("yyyy-MM-dd").parse(sm.getStockDate());
-			@SuppressWarnings({ "deprecation" })
-			java.sql.Date stockSqlDate = new java.sql.Date(stockDate.getDate());
+			Date stockSqlDate=Date.valueOf(sm.getStockDate());
+
 			
 			cs = con.prepareCall(addStock);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
 			cs.setDate(2, stockSqlDate);
-			cs.setInt(3, sm.getStockDetId());
-			cs.setInt(4, sm.getCompanyId());
-			cs.setDouble(5, sm.getRawCotton());
-			cs.setDouble(6, sm.getCottonBales());
-			cs.setDouble(7, sm.getCottonSeed());
-			cs.setDouble(8, sm.getCottonSeedOil());
-			cs.setDouble(9, sm.getCottonCakes());
-			cs.setDouble(10, sm.getAvgRate());
+			cs.setInt(3, sm.getCompanyId());
+			cs.setDouble(4, sm.getRawCotton());
+			cs.setDouble(5, sm.getCottonBales());
+			cs.setDouble(6, sm.getCottonSeed());
+			cs.setDouble(7, sm.getCottonSeedOil());
+			cs.setDouble(8, sm.getCottonCakes());
+			cs.setDouble(9, sm.getAvgRate());
 			
 			cs.executeUpdate();
 			

@@ -149,7 +149,7 @@
 		totalQuantity = document.getElementById("quantity").value;
 		
 		var table = document.getElementById("tableBody");
-		document.getElementById("tblQty1").value = totalQuantity;
+		
 		
 		var row = table.insertRow(tableBody.children.length);
 		var cell1 = row.insertCell(0);
@@ -160,20 +160,21 @@
 		var cell6 = row.insertCell(5);
 		var cell7 = row.insertCell(6);
 	
-		cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(noOfRows+1)+"' name='srNo"+(noOfRows+1)+"' value="+(noOfRows+1)+">";
-		cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty"+(noOfRows+1)+"' name='dividedQuantity' value="+data[i].quantity+">";
-		cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='grade"+(noOfRows+1)+"' name='grade"+(noOfRows+1)+"'>"
+		cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo1' name='srNo1' value='1'>";
+		cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty1' name='dividedQuantity' value=''>";
+		cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='grade1' name='grade1'>"
 							+	"<option>Select</option>"
 							+	"<c:Grade />"
 							+	"</select>";
-		cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(noOfRows+1)+"' name='description"+(noOfRows+1)+"'>";
-		cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(noOfRows+1)+"' name='moisture"+(noOfRows+1)+"' value='"+data[i].moisture+"'>";
-		cell6.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='rate"+(noOfRows+1)+"' name='rate"+(noOfRows+1)+">"
+		cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description1' name='description1'>";
+		cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture1' name='moisture1' value=''>";
+		cell6.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='rate1' name='rate1'>"
 							+	"<option>Select</option>"
 							+	"<c:GradeRate />"
 							+	"</select>";
 		cell7.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow'>";
 		
+		document.getElementById("tblQty1").value = totalQuantity;
 		
 		}	
 	
@@ -213,7 +214,10 @@
 										+	"</select>";
 					cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(noOfRows+1)+"' name='description"+(noOfRows+1)+"'>";
 					cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(noOfRows+1)+"' name='moisture"+(noOfRows+1)+"'>";
-					cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate"+(noOfRows+1)+"' name='rate"+(noOfRows+1)+"'>";
+					cell6.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='rate"+(noOfRows+1)+"' name='rate"+(noOfRows+1)+"' >"
+										+	"<option>Select</option>"
+										+	"<c:GradeRate />"
+										+	"</select>";
 					cell7.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow'>";
 				
 				}
@@ -400,6 +404,15 @@
 			
 			document.getElementById("description"+rowNo).value = selectedGrade.getAttribute('data-description');
 			
+			var options = document.getElementById("rate"+rowNo).options;
+			var noOfOptions = options.length;
+			
+			for(i=0; i< noOfOptions; i++){
+				if(options[i].getAttribute('data-gradeid') === gradeId){
+					options[i].selected = 'selected';
+					break;
+				}
+			}
 			
 		}
 		

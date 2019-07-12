@@ -1,3 +1,6 @@
+<%@page import="com.prov.report.StockMasterReport"%>
+<%@page import="com.prov.dbinsertion.AddStockDetails"%>
+<%@page import="com.prov.bean.StockDetails"%>
 <%@page import="com.prov.dbinsertion.AddAmanatEntry"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="org.omg.CORBA.INV_POLICY"%>
@@ -28,8 +31,7 @@
 	
 	System.out.println(jsonArray);
 	
-		
-		Invoice invoice = new Invoice();
+	Invoice invoice = new Invoice();
 		
 	ArrayList<InvoiceItems> invoiceItemList = new ArrayList<InvoiceItems>();	
 	ArrayList<Amanat> amanatItemList = new ArrayList<Amanat>();	
@@ -38,7 +40,7 @@
 			
 			JSONObject obj = (JSONObject)jsonArray.get(i);
 			
-			if(((String)obj.get("amanatCheck")).equals("false")){
+			if(((String)obj.get("amanat")).equals("false")){
 				InvoiceItems item = new InvoiceItems();
 				
 				item.setWeighmentId(Integer.parseInt((String)obj.get("weighmentId")));
@@ -46,7 +48,7 @@
 				item.setRst(Integer.parseInt((String)obj.get("rst")));
 				invoiceItemList.add(item);
 			}
-			else if(((String)obj.get("amanatCheck")).equals("true")){
+			else if(((String)obj.get("amanat")).equals("true")){
 				Amanat item = new Amanat();
 				
 				item.setCustomerId(Integer.parseInt((String)obj.get("customerId")));
@@ -66,6 +68,7 @@
 		invoice.setCustomerId(Integer.parseInt((String)json.get("customerId")));
 		invoice.setAuthorizer((String)json.get("authorizer").toString().toUpperCase());
 		invoice.setNote((String)json.get("note").toString().toUpperCase());
+		invoice.setTotalQuanity(Double.parseDouble((String)json.get("totalQuantity")));
 		
 		AddInvoice addinvoice = new AddInvoice();
 		
@@ -85,16 +88,27 @@
 		for(int i=0; i<amanatItemList.size(); i++){
 			addAmanat.addAmanat(amanatItemList.get(i));
 		}
-		/* StockMast stock = new StockMast();
 		
+		StockMasterReport stockMast = new StockMasterReport();
+		
+		int stockMastId = stockMast.getTodaysStockId((String)json.get("invoiceDate"));
+		
+		System.out.println("Stock ID ---- "+stockMastId);
+		
+		StockDetails stock = new StockDetails();
+		double totalQuantity = invoice.getTotalQuanity();
+		double totalAmount = invoice.getTotal();
+		double averageRate = totalAmount/totalQuantity;
+		System.out.println("Average rate ---- "+averageRate);
+		stock.setInvId(invoiceId);
+		stock.setTotalQuantity(totalQuantity);
+		stock.setAverageRate(averageRate);
+		stock.setStockMastId(stockMastId);
 		stock.setCompanyId(Integer.parseInt((String)json.get("companyId")));
-		stock.setStockDate((String)json.get("invoiceDate"));
-		stock.setRawCotton(Double.parseDouble((String)json.get("companyId")));
-		stock.setAvgRate(i.getTotal()); 
 		
-		AddStockMast addStock = new AddStockMast();
+		AddStockDetails addStock = new AddStockDetails();
 		
-		addStock.addStockMast(stock);  */
+		addStock.addStockDetails(stock);
 		
 		response.sendRedirect("../views/Invoice.jsp");
 	

@@ -2,9 +2,8 @@ package com.prov.dbinsertion;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import com.prov.bean.Invoice;
 import com.prov.db.OracleConnection;
 
@@ -20,14 +19,11 @@ public int addInvoice(Invoice i) {
 			e.printStackTrace();
 		}
 
-		String addInvoice = "{ ? = call ADD_INVOICE(?,?,?,?,?,?,?,?,?) }";
+		String addInvoice = "{ ? = call ADD_INVOICE(?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
-			Date invDate = new SimpleDateFormat("yyyy-MM-dd").parse(i.getInvDate());
-			@SuppressWarnings({ "deprecation" })
-			java.sql.Date invSqlDate = new java.sql.Date(invDate.getDate());
-			
+			Date date=Date.valueOf(i.getInvDate());			
 			cs = con.prepareCall(addInvoice);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
@@ -36,11 +32,12 @@ public int addInvoice(Invoice i) {
 			cs.setDouble(3, i.getTotal());
 			cs.setDouble(4, i.getAmountPaid());
 			cs.setDouble(5, i.getPending());
-			cs.setDate(6, invSqlDate);
+			cs.setDate(6, date);
 			cs.setInt(7, i.getCompanyId());
 			cs.setInt(8, i.getCustomerId());
 			cs.setString(9, i.getAuthorizer());
 			cs.setString(10, i.getNote());
+			cs.setDouble(11, i.getTotalQuanity());
 			
 			cs.executeUpdate();
 			

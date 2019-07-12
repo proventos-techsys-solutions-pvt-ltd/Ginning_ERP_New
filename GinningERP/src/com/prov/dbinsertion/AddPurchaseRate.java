@@ -2,9 +2,8 @@ package com.prov.dbinsertion;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.prov.bean.PurchaseRate;
 import com.prov.db.OracleConnection;
@@ -25,9 +24,7 @@ public int addPurchaseRate(PurchaseRate pr) {
 		CallableStatement cs;
 		try {
 			
-			Date purchaseDate = new SimpleDateFormat("yyyy-MM-dd").parse(pr.getpDate());
-			@SuppressWarnings({ "deprecation" })
-			java.sql.Date purchaseSqlDate = new java.sql.Date(purchaseDate.getDate());
+			Date purchaseSqlDate=Date.valueOf(pr.getpDate());
 			
 			cs = con.prepareCall(addPurchaseRate);
 			

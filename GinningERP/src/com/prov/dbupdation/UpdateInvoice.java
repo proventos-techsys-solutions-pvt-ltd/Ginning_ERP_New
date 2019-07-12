@@ -21,7 +21,7 @@ public int updateInvoice(Invoice i) {
 			e.printStackTrace();
 		}
 
-		String updateInvoice = "{ ? = call UPDATE_INVOICE(?,?,?,?,?,?,?,?,?,?) }";
+		String updateInvoice = "{ ? = call UPDATE_INVOICE(?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -43,6 +43,7 @@ public int updateInvoice(Invoice i) {
 			cs.setInt(9, i.getCustomerId() );
 			cs.setString(10, i.getAuthorizer() );
 			cs.setString(11, i.getNote() );
+			cs.setDouble(12, i.getTotalQuanity() );
 			
 			cs.executeUpdate();
 			

@@ -12,24 +12,9 @@
     	
    		InvoiceReport ir = new InvoiceReport();
     
-    	ArrayList<Invoice> invoiceReport = ir.getInvoiceReport(); 
+    	JSONArray invoiceReport = ir.getInvoiceReport(); 
     
-    	CustomerReport cr = new CustomerReport();
-    
-    	JSONArray jsonArray = new JSONArray();
-    	
-    	for(int i=0;i<invoiceReport.size();i++){
-    		Customer c = cr.getReport(invoiceReport.get(i).getCid());
-    		
-    		JSONObject jsonObj = new JSONObject(invoiceReport.get(i));
-    		jsonObj.put("customerName", c.getName());
-    		jsonObj.put("customerAddress", c.getAddress());
-    		jsonObj.put("customerMobile", c.getMobile());
-    		
-    		jsonArray.put(jsonObj);
-    		
-    	}
-    	
-    	out.println(jsonArray);
+    	out.println(invoiceReport);
+    	out.flush();
     
     %>

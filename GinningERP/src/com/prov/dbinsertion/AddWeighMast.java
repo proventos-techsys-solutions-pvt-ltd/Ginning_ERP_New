@@ -2,10 +2,9 @@ package com.prov.dbinsertion;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.prov.bean.WeighMast;
 import com.prov.db.OracleConnection;
@@ -26,17 +25,14 @@ public int addWeighMast(WeighMast wm) {
 		CallableStatement cs;
 		try {
 			
-			Date GrossWtTime = new SimpleDateFormat("yyyy-MM-dd").parse(wm.getGrossWtTime());
-			@SuppressWarnings({ "deprecation" })
-			java.sql.Date grossSqlDate = new java.sql.Date(GrossWtTime.getDate());
+			Date grossSqlDate=Date.valueOf(wm.getGrossWtTime());
+
 			
-			Date TareWtTime = new SimpleDateFormat("yyyy-MM-dd").parse(wm.getTareWtTime());
-			@SuppressWarnings({ "deprecation" })
-			java.sql.Date tareSqlDate = new java.sql.Date(TareWtTime.getDate());
+			Date tareSqlDate=Date.valueOf(wm.getTareWtTime());
+
 			
-			Date WeighmentDate = new SimpleDateFormat("yyyy-MM-dd").parse(wm.getWeighmentDate());
-			@SuppressWarnings({ "deprecation" })
-			java.sql.Date sqlWeighmentDate = new java.sql.Date(WeighmentDate.getDate());
+			Date sqlWeighmentDate=Date.valueOf(wm.getWeighmentDate());
+
 			
 			cs = con.prepareCall(addWeighMast);
 			
@@ -86,9 +82,7 @@ public int addWeighMast(WeighMast wm) {
 		PreparedStatement stmt;
 		try {
 			
-			Date sqlTareWtTime = new SimpleDateFormat("yyyy-MM-dd").parse(wm.getTareWtTime());
-			@SuppressWarnings({ "deprecation" })
-			java.sql.Date tareSqlDate = new java.sql.Date(sqlTareWtTime.getDate());
+			Date tareSqlDate=Date.valueOf(wm.getTareWtTime());
 			
 			stmt = con.prepareStatement(updateWeighMast);
 			

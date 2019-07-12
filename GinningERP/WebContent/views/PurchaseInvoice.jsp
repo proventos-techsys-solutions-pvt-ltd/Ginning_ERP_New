@@ -83,16 +83,17 @@
 					
 					
 					for(i=0;i<jsonResponse.length;i++){
-						if(jsonResponse[i].pending <= 0){
+						if(jsonResponse[i].pendingAmount <= 0){
 							status = "Paid"; 
 						}
-						else if(jsonResponse[i].pending > 0){
+						else if(jsonResponse[i].pendingAmount > 0){
 							status = "Pending";
 						}
 						
 						element.insertAdjacentHTML('beforeend','<tr>'+
 								'<td hidden>'+jsonResponse[i].companyId+'</td>'+
-								'<td>'+jsonResponse[i].invDate+'</td>'+
+								'<td hidden>'+jsonResponse[i].invoiceId+'</td>'+
+								'<td>'+jsonResponse[i].invoiceDate+'</td>'+
 								'<td>'+jsonResponse[i].invoiceNo+'</td>'+
 								'<td>'+jsonResponse[i].customerName+'</td>'+
 								'<td>'+jsonResponse[i].customerAddress+'</td>'+

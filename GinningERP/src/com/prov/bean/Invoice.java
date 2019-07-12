@@ -3,7 +3,13 @@ package com.prov.bean;
 public class Invoice {
 	
 	private int id, customerId, companyId ;
-	private double total, amountPaid, pending;
+	private double total, amountPaid, pending, totalQuanity;
+	public double getTotalQuanity() {
+		return totalQuanity;
+	}
+	public void setTotalQuanity(double totalQuanity) {
+		this.totalQuanity = totalQuanity;
+	}
 	private String invoiceNo, invDate, authorizer, note;
 	
 	public String getAuthorizer() {

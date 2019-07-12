@@ -458,7 +458,7 @@
 		console.log('no of Rows --- '+noOfRows);
 		
 		var itemList = [];
-		
+		var totalQuantity=0;
 		for(i=0; i<noOfRows; i++){
 			item = {};
 			 
@@ -467,10 +467,11 @@
 				item['rst'] = document.getElementById('tableRst'+(i+1)).value;
 				item['amanat'] = document.getElementById('amanatCheck'+(i+1)).value;
 				itemList.push(item);
-			
+				totalQuantity = totalQuantity+ Number(document.getElementById('quantity'+(i+1)).value);
 		}
 		
 		jsonObj['items'] = itemList;
+		jsonObj['totalQuantity'] = totalQuantity.toString();
 		
 		var jsonStr = JSON.stringify(jsonObj);
 		console.log(jsonStr);

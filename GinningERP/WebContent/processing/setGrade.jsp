@@ -65,7 +65,7 @@
     		response.sendRedirect("errorPage.html");
     	}
     	else{
-    		response.sendRedirect("../processing/GoodsReceiptNote.jsp");
+    		response.sendRedirect("../views/GoodsReceiptNote.jsp");
     	}
     	
     %>

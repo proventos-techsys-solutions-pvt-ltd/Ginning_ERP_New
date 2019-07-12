@@ -2,9 +2,8 @@ package com.prov.dbinsertion;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.prov.bean.DebitVoucher;
 import com.prov.db.OracleConnection;
@@ -26,9 +25,7 @@ public class AddDebitEntry {
 		CallableStatement cs;
 		try {
 			
-			Date voucherDate = new SimpleDateFormat("yyyy-MM-dd").parse(d.getVoucherDate());
-			@SuppressWarnings({ "deprecation" })
-			java.sql.Date voucherSqlDate = new java.sql.Date(voucherDate.getDate());
+			Date voucherSqlDate=Date.valueOf(d.getVoucherDate());
 			
 			cs = con.prepareCall(addDebitEntry);
 			

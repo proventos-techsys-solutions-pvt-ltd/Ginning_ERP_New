@@ -2,9 +2,9 @@ package com.prov.dbinsertion;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.prov.bean.Bank;
 import com.prov.db.OracleConnection;
@@ -29,9 +29,7 @@ public class AddBank {
 		try {
 			
 			String date = b.getDate();
-			Date invDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-			@SuppressWarnings({ "deprecation" })
-			java.sql.Date sqlDate = new java.sql.Date(invDate.getDate());
+			Date sqlDate=Date.valueOf(date);
 			
 			cs = con.prepareCall(addBank);
 			
