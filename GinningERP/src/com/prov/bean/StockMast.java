@@ -2,11 +2,20 @@ package com.prov.bean;
 
 public class StockMast {
 	
-	private int id, companyId;
+	private int id, companyId, stockDetId;
 	
 	private String stockDate;
 	
 	private double rawCotton, cottonBales, cottonSeed, cottonSeedOil, cottonCakes, avgRate;
+	
+
+	public int getStockDetId() {
+		return stockDetId;
+	}
+
+	public void setStockDetId(int stockDetId) {
+		this.stockDetId = stockDetId;
+	}
 
 	public int getId() {
 		return id;

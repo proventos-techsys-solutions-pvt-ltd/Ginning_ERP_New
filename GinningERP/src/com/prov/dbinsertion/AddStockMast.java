@@ -27,7 +27,7 @@ public int addStockMast(StockMast sm) {
 			e.printStackTrace();
 		}
 
-		String addStock = "{ ? = call ADD_STOCK(?,?,?,?,?,?,?,?) }";
+		String addStock = "{ ? = call ADD_STOCK(?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -39,14 +39,15 @@ public int addStockMast(StockMast sm) {
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
-			cs.setInt(2, sm.getCompanyId());
-			cs.setDate(3, stockSqlDate);
-			cs.setDouble(4, sm.getRawCotton());
-			cs.setDouble(5, sm.getCottonBales());
-			cs.setDouble(6, sm.getCottonSeed());
-			cs.setDouble(7, sm.getCottonSeedOil());
-			cs.setDouble(8, sm.getCottonCakes());
-			cs.setDouble(9, sm.getAvgRate());
+			cs.setDate(2, stockSqlDate);
+			cs.setInt(3, sm.getStockDetId());
+			cs.setInt(4, sm.getCompanyId());
+			cs.setDouble(5, sm.getRawCotton());
+			cs.setDouble(6, sm.getCottonBales());
+			cs.setDouble(7, sm.getCottonSeed());
+			cs.setDouble(8, sm.getCottonSeedOil());
+			cs.setDouble(9, sm.getCottonCakes());
+			cs.setDouble(10, sm.getAvgRate());
 			
 			cs.executeUpdate();
 			
