@@ -1,3 +1,4 @@
+<%@page import="com.prov.dbupdation.UpdateStockMast"%>
 <%@page import="com.prov.report.StockMasterReport"%>
 <%@page import="com.prov.dbinsertion.AddStockDetails"%>
 <%@page import="com.prov.bean.StockDetails"%>
@@ -59,7 +60,9 @@
 			
 		}
 		
-		invoice.setCompanyId(Integer.parseInt((String)json.get("companyId")));
+		int companyId = Integer.parseInt((String)json.get("companyId"));
+		
+		invoice.setCompanyId(companyId);
 		invoice.setInvoiceNo((String)json.get("invoiceNo").toString().toUpperCase());
 		invoice.setTotal(Double.parseDouble((String)json.get("total")));
 		invoice.setAmountPaid(Double.parseDouble((String)json.get("amountPaid")));
@@ -91,7 +94,7 @@
 		
 		StockMasterReport stockMast = new StockMasterReport();
 		
-		int stockMastId = stockMast.getTodaysStockId((String)json.get("invoiceDate"));
+		int stockMastId = stockMast.getTodaysStockId((String)json.get("invoiceDate"), companyId);
 		
 		System.out.println("Stock ID ---- "+stockMastId);
 		
@@ -99,7 +102,6 @@
 		double totalQuantity = invoice.getTotalQuanity();
 		double totalAmount = invoice.getTotal();
 		double averageRate = totalAmount/totalQuantity;
-		System.out.println("Average rate ---- "+averageRate);
 		stock.setInvId(invoiceId);
 		stock.setTotalQuantity(totalQuantity);
 		stock.setAverageRate(averageRate);
@@ -110,7 +112,18 @@
 		
 		addStock.addStockDetails(stock);
 		
+		StockMast sm = new StockMast();
+		
+		sm.setId(stockMastId);
+		sm.setRawCotton(totalQuantity);
+		sm.setCompanyId(companyId);
+		sm.setStockDate((String)json.get("invoiceDate"));
+		sm.setAvgRate(averageRate);
+		
+		UpdateStockMast us = new UpdateStockMast();
+		
+		us.updateStockOnEntry(sm);
+		
 		response.sendRedirect("../views/Invoice.jsp");
-	
 
 %>

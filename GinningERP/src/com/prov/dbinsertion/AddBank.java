@@ -4,7 +4,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
 
 import com.prov.bean.Bank;
 import com.prov.db.OracleConnection;
