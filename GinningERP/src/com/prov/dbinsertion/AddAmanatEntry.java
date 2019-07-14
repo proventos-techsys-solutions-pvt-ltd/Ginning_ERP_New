@@ -3,8 +3,6 @@ package com.prov.dbinsertion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.prov.bean.Amanat;
 import com.prov.db.OracleConnection;
@@ -25,9 +23,9 @@ public int addAmanat(Amanat a) {
 		CallableStatement cs;
 		try {
 			
-			Date amanatDate = new SimpleDateFormat("yyyy-MM-dd").parse(a.getAmanatDate());
-			@SuppressWarnings({ "deprecation" })
-			java.sql.Date amanatSqlDate = new java.sql.Date(amanatDate.getDate());
+			System.out.println(a.getAmanatDate());
+			
+			java.sql.Date amanatSqlDate = java.sql.Date.valueOf(a.getAmanatDate());
 			
 			cs = con.prepareCall(addAmanat);
 			

@@ -33,6 +33,7 @@
 	System.out.println(jsonArray);
 	
 	Invoice invoice = new Invoice();
+	int invoiceId =0;
 		
 	ArrayList<InvoiceItems> invoiceItemList = new ArrayList<InvoiceItems>();	
 	ArrayList<Amanat> amanatItemList = new ArrayList<Amanat>();	
@@ -52,9 +53,9 @@
 			else if(((String)obj.get("amanat")).equals("true")){
 				Amanat item = new Amanat();
 				
-				item.setCustomerId(Integer.parseInt((String)obj.get("customerId")));
+				item.setCustomerId(Integer.parseInt((String)json.get("customerId")));
 				item.setGradeId(Integer.parseInt((String)obj.get("gradeId")));
-				item.setAmanatDate((String)obj.get("invoiceDate"));
+				item.setAmanatDate((String)json.get("invoiceDate"));
 				amanatItemList.add(item);
 			}
 			
@@ -62,36 +63,39 @@
 		
 		int companyId = Integer.parseInt((String)json.get("companyId"));
 		
-		invoice.setCompanyId(companyId);
-		invoice.setInvoiceNo((String)json.get("invoiceNo").toString().toUpperCase());
-		invoice.setTotal(Double.parseDouble((String)json.get("total")));
-		invoice.setAmountPaid(Double.parseDouble((String)json.get("amountPaid")));
-		invoice.setPending(Double.parseDouble((String)json.get("pending")));
-		invoice.setInvDate((String)json.get("invoiceDate"));
-		invoice.setCustomerId(Integer.parseInt((String)json.get("customerId")));
-		invoice.setAuthorizer((String)json.get("authorizer").toString().toUpperCase());
-		invoice.setNote((String)json.get("note").toString().toUpperCase());
-		invoice.setTotalQuanity(Double.parseDouble((String)json.get("totalQuantity")));
-		
-		AddInvoice addinvoice = new AddInvoice();
-		
-		int invoiceId = addinvoice.addInvoice(invoice); 
-		
-		AddInvoiceItems addItems = new AddInvoiceItems();
-		
-		for(int i=0; i<invoiceItemList.size(); i++){
+		if(invoiceItemList.size()>0){
+			invoice.setCompanyId(companyId);
+			invoice.setInvoiceNo((String)json.get("invoiceNo").toString().toUpperCase());
+			invoice.setTotal(Double.parseDouble((String)json.get("total")));
+			invoice.setAmountPaid(Double.parseDouble((String)json.get("amountPaid")));
+			invoice.setPending(Double.parseDouble((String)json.get("pending")));
+			invoice.setInvDate((String)json.get("invoiceDate"));
+			invoice.setCustomerId(Integer.parseInt((String)json.get("customerId")));
+			invoice.setAuthorizer((String)json.get("authorizer").toString().toUpperCase());
+			invoice.setNote((String)json.get("note").toString().toUpperCase());
+			invoice.setTotalQuanity(Double.parseDouble((String)json.get("totalQuantity")));
 			
-			invoiceItemList.get(i).setInvoiceId(invoiceId);
-			addItems.addInvoiceItems(invoiceItemList.get(i));
+			AddInvoice addinvoice = new AddInvoice();
 			
+			invoiceId = addinvoice.addInvoice(invoice); 
+			
+			AddInvoiceItems addItems = new AddInvoiceItems();
+			
+			for(int i=0; i<invoiceItemList.size(); i++){
+				
+				invoiceItemList.get(i).setInvoiceId(invoiceId);
+				addItems.addInvoiceItems(invoiceItemList.get(i));
+			}
+		
 		}
 		
-		AddAmanatEntry addAmanat = new AddAmanatEntry();
-		
-		for(int i=0; i<amanatItemList.size(); i++){
-			addAmanat.addAmanat(amanatItemList.get(i));
+		if(amanatItemList.size()>0){
+			AddAmanatEntry addAmanat = new AddAmanatEntry();
+			
+			for(int i=0; i<amanatItemList.size(); i++){
+				addAmanat.addAmanat(amanatItemList.get(i));
+			}
 		}
-		
 		StockMasterReport stockMast = new StockMasterReport();
 		
 		int stockMastId = stockMast.getTodaysStockId((String)json.get("invoiceDate"), companyId);
@@ -99,8 +103,8 @@
 		System.out.println("Stock ID ---- "+stockMastId);
 		
 		StockDetails stock = new StockDetails();
-		double totalQuantity = invoice.getTotalQuanity();
-		double totalAmount = invoice.getTotal();
+		double totalQuantity = Double.parseDouble((String)json.get("totalQuantity"));
+		double totalAmount = Double.parseDouble((String)json.get("total"));
 		double averageRate = totalAmount/totalQuantity;
 		stock.setInvId(invoiceId);
 		stock.setTotalQuantity(totalQuantity);

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.Date"%>
+<%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <!doctype html>
 <html lang="en">
     <head>
@@ -23,22 +24,24 @@
 		</div>
 		<div class="row mt-2 tile-background-row">
 			<div class="col-md-12">
-				<form>
+				<form action='../processing/addGradeLevels.jsp' id="form">
+					<input type="hidden" name="output" id="output"/>
+				</form>
 					<div class="form-row form-row-ctm">
 						<div class="col-md-2">
 							<label class="lbl-rm-l lbl-rm-t">Grading Nomenclature</label>
-							<input type="text" class="form-control form-control-sm id="" name="">
+							<input type="text" class="form-control form-control-sm" id="gradeName" name="gradeName" />
 						</div>
 						<div class="col-md-8">
 							<label class="lbl-rm-l lbl-rm-t">Description</label>
 							<div class="d-flex justify-content-between align-items-center">
-								<input type="text" class="form-control form-control-sm id="" name="">
+								<input type="text" class="form-control form-control-sm" id="description" name="description">
 								&nbsp;
-								<button type="button" class="btn btn-success btn-sm">Add</button>
+								<button type="button" class="btn btn-success btn-sm" id="submitButton">Add</button>
 							</div>
 						</div>
 					</div>
-				</form>
+				
 			</div>
 		</div>
 		<div class="row mt-2 tile-background-row">
@@ -71,26 +74,30 @@
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		    	<form>
+		    	<form action="../processing/updateGradeLevels.jsp">
+		    		<input type="hidden" id="outputUpdate" name="outputUpdate" />
+		    	</form>
 		    		<div class="form-row r-p-all">
 		    			<div class="col-md-6">
 		    				<label class="lbl-rm-l lbl-rm-t">Grade</label>
-		    				<input type="text" class="form-control form-control-sm" id="" name="">
+		    				<select class="form-control form-control-sm" id="gradeNameUpdate" name="gradeNameUpdate">
+								<option disabled selected>Select</option>
+								<c:Grade />
+							</select>
 		    			</div>
 		    		</div>
 		    		<div class="form-row r-p-all">
 		    			<div class="col-md-12">
 		    				<label class="lbl-rm-l lbl-rm-t">Description</label>
-		    				<textarea class="form-control form-control-sm">
+		    				<textarea class="form-control form-control-sm" id="descriptionUpdate" name="descriptionUpdate">
 		    				
 		    				</textarea>
 		    			</div>
 		    		</div>
-		    	</form>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-		        <button type="button" class="btn btn-success" data-dismiss="modal" >Save & Update</button>
+		        <button type="button" class="btn btn-success" data-dismiss="modal" id="submitUpdate" >Save & Update</button>
 		      </div>
 		    </div>
 		  </div>
@@ -110,13 +117,45 @@
 		gradeReport();
 	};
 	
+	document.getElementById('submitUpdate').addEventListener('click',function(e){
+		submitDataToUpdate();
+	})
+	
+	document.getElementById('submitButton').addEventListener('click',function(e){
+		submitDataNewEntry();
+	})
+	
+	function submitDataToUpdate(){
+		var json={};
+		
+		var element = document.getElementById('gradeNameUpdate');
+		
+		json['gradeId'] = element.options[element.selectedIndex].getAttribute('data-gradeid');
+		json['gradeName'] = element.options[element.selectedIndex].value;
+		json['description'] = document.getElementById('descriptionUpdate').value;
+		
+		document.getElementById('outputUpdate').value = JSON.stringify(json);
+		
+		document.getElementsByTagName('form')[1].submit();
+	}
+	
+	
+	function submitDataNewEntry(){
+		var json={};
+		
+		json['gradeName'] =  document.getElementById('gradeName').value;
+		json['description'] = document.getElementById('description').value;
+		
+		document.getElementById('output').value = JSON.stringify(json);
+		
+		document.getElementsByTagName('form')[0].submit();
+	}
+
+	
 	//Calling pop up for editing
 	callModalPopup("callModal","calledModal");
 		
-		
-		
 		function gradeReport(){
-			console.log("132141514616");
 			var url="../processing/gradeReport.jsp";
 			
 			if(window.XMLHttpRequest){  

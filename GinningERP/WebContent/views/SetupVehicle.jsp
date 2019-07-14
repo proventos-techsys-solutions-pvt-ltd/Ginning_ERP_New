@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.Date"%>
+<%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <!doctype html>
 <html lang="en">
     <head>
@@ -23,26 +24,28 @@
 		</div>
 		<div class="row mt-2 tile-background-row">
 			<div class="col-md-12">
-				<form>
+				<form action="../processing/addVehiclesRate.jsp">
+					<input type="hidden" id="output" name="output" />
+				</form>
 					<div class="form-row form-row-ctm">
 						<div class="col-md-2">
 							<label class="lbl-rm-l lbl-rm-t">Vehicle Name</label>
-							<input type="text" class="form-control form-control-sm id="" name="">
+							<input type="text" class="form-control form-control-sm" id="vehicleName" name="vehicleName">
 						</div>
 						<div class="col-md-5">
 							<label class="lbl-rm-l lbl-rm-t">Description</label>
-								<input type="text" class="form-control form-control-sm id="" name="">
+								<input type="text" class="form-control form-control-sm" id="description" name="description">
 						</div>
 						<div class="col-md-2">
 							<label class="lbl-rm-l lbl-rm-t">Rate</label>
 							<div class="d-flex justify-content-between align-items-center">
-								<input type="text" class="form-control form-control-sm id="" name="">
+								<input type="text" class="form-control form-control-sm" id="rate" name="rate">
 								&nbsp;
-								<button type="button" class="btn btn-success btn-sm">Add</button>
+								<button type="button" class="btn btn-success btn-sm" id="submitButton">Add</button>
 							</div>
 						</div>
 					</div>
-				</form>
+				
 			</div>
 		</div>
 		<div class="row mt-2 tile-background-row">
@@ -57,14 +60,8 @@
 							<th width="5%" class="text-center">Delete</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>Tata Ace</td>
-							<td>100 Kg capacity</td>
-							<td>Rs.100</td>
-							<td id="callModal" class="text-center"><img src="../property/img/edit.png" alt="edit"></td>
-							<td class="text-center"><img src="../property/img/delete.png" alt="delete" id="deleteRow"></td>
-						</tr>
+					<tbody id="tableBody">
+						
 					</tbody>
 				</table>
 			</div>
@@ -82,29 +79,34 @@
 		      </div>
 		      <div class="modal-body">
 		    	<form>
+		    	<input type="hidden" id="outputUpdate" name="outputUpdate" />
+		    	</form>
 		    		<div class="form-row r-p-all">
 		    			<div class="col-md-6">
 		    				<label class="lbl-rm-l lbl-rm-t lbl-rm-b">Vehicle</label>
-		    				<input type="text" class="form-control form-control-sm" id="" name="">
+		    				<select class="form-control form-control-sm" id="vehicleNameUpdate" name="vehicleNameUpdate">
+								<option disabled selected>Select</option>
+								<c:VehicleCategoryTag />
+							</select>
 		    			</div>
 		    			<div class="col-md-6">
 		    				<label class="lbl-rm-l lbl-rm-t lbl-rm-b">Rate</label>
-		    				<input type="text" class="form-control form-control-sm" id="" name="">
+		    				<input type="text" class="form-control form-control-sm" id="updateRate" name="updateRate">
 		    			</div>
 		    		</div>
 		    		<div class="form-row r-p-all">
 		    			<div class="col-md-12">
 		    				<label class="lbl-rm-l lbl-rm-t">Description</label>
-		    				<textarea class="form-control form-control-sm">
+		    				<textarea class="form-control form-control-sm" id="updateDescription" name="updateDescription">
 		    				
 		    				</textarea>
 		    			</div>
 		    		</div>
-		    	</form>
+		    	
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-		        <button type="button" class="btn btn-success" data-dismiss="modal" >Save & Update</button>
+		        <button type="button" class="btn btn-success" data-dismiss="modal" id="submitUpdate">Save & Update</button>
 		      </div>
 		    </div>
 		  </div>
@@ -118,8 +120,95 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script>
-		callModalPopup("callModal","calledModal");//Calling pop up for editing
+	
+	window.onload = function() {
+		weighRateReport();
+	};
 		
+	
+	document.getElementById('submitButton').addEventListener('click',function(e){
+		submitDataNewEntry();
+	})
+	
+	document.getElementById('submitUpdate').addEventListener('click',function(e){
+		submitDataToUpdate();
+	})
+	
+	function submitDataNewEntry(){
+		var json={};
+		
+		json['vehicleName'] =  document.getElementById('vehicleName').value;
+		json['description'] = document.getElementById('description').value;
+		json['weighRate'] = document.getElementById('rate').value;
+		
+		document.getElementById('output').value = JSON.stringify(json);
+		
+		document.getElementsByTagName('form')[0].submit();
+	}
+
+	
+
+	function submitDataToUpdate(){
+		var json={};
+		
+		var element = document.getElementById('vehicleNameUpdate');
+		
+		json['vehicleTypeId'] = element.options[element.selectedIndex].getAttribute('value');
+		json['vehicleNameUpdate'] = element.options[element.selectedIndex].innerHTML;
+		json['description'] = document.getElementById('updateDescription').value;
+		json['rate'] = document.getElementById('updateRate').value;
+		
+		document.getElementById('outputUpdate').value = JSON.stringify(json);
+		
+		document.getElementsByTagName('form')[1].submit();
+	}
+	
+		
+		function weighRateReport(){
+			var url="../processing/weighRateReport.jsp";
+			
+			if(window.XMLHttpRequest){  
+				dataRequest=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				dataRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+		  
+			try{  
+				dataRequest.onreadystatechange=getWeighRateData;  
+				console.log("AJAX Req sent");
+				dataRequest.open("GET",url,true);  
+				dataRequest.send();  
+			}catch(e){alert("Unable to connect to server");}
+		}
+		
+		
+	function getWeighRateData(){
+		
+		if(dataRequest.readyState == 4){
+			var rateData = this.response.trim();
+			console.log(rateData);
+			setData(rateData);
+		}
+	}
+	
+	function setData(rateData){
+		var json = JSON.parse(rateData);
+		var element = document.getElementById('tableBody');
+		for(i=0; i< json.length; i++){
+			element.insertAdjacentHTML('beforeend','<tr>'+
+					'<td hidden>'+json[i].id+'</td>'+
+					'<td>'+json[i].vehicleName+'</td>'+
+					'<td>'+json[i].vehicleDesc+'</td>'+
+					'<td>'+json[i].weighrate+'</td>'+
+					'<td id="callModal" class="text-center"><img src="../property/img/edit.png" alt="edit"></td>'+
+					'<td class="text-center"><img src="../property/img/delete.png" alt="delete" id="deleteRow"></td>'+
+				'</tr>');
+		}
+		
+	}
+	
+	callModalPopup("callModal","calledModal");//Calling pop up for editing
 	</script>
 </body>
 </html>

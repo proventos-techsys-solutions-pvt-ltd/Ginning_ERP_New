@@ -11,7 +11,7 @@
 	
 	CheckRST cr = new CheckRST();
 	
-	flag = cr.checkRstExists(rst);
+	//flag = cr.checkRstExists(rst);
 	
 	out.print(flag);
 	

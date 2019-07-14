@@ -27,7 +27,11 @@ public int addStockDetails(StockDetails sd) {
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
-			cs.setInt(2, sd.getInvId());
+			if(sd.getInvId() == 0) {
+				cs.setNull(2, Types.NUMERIC);
+			}else if(sd.getInvId() > 0) {
+				cs.setInt(2, sd.getInvId());
+			}
 			cs.setDouble(3, sd.getTotalQuantity() );
 			cs.setDouble(4, sd.getAverageRate());
 			cs.setInt(5, sd.getStockMastId());

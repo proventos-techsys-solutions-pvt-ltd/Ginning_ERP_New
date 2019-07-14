@@ -20,11 +20,10 @@
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th>RST No</th>
+						<th>Sr. No.</th>
 						<th>Date</th>
-						<th>Record No</th>
 						<th>Vendor Name & Address</th>
-						<th>Material</th>
+						<th>Grade</th>
 						<th>Quantity</th>
 						<th>Contract Rate</th>
 						<th>Amount Due</th>
@@ -93,18 +92,16 @@
 				var element = document.getElementById("tableBody");
 				
 				for(i=0;i<data.length;i++){
-				
-				
 					
 					 element.insertAdjacentHTML('beforeend','<tr>'+
-							'<td>'+data[i].rst+'</td>'+
+							'<td>'+(i+1)+'</td>'+
 							'<td>'+data[i].amanatDate+'</td>'+
-							'<td>'+data[i].id+'</td>'+
-							'<td>'+data[i].customerName+', '+data[i].address+'</td>'+
-							'<td>'+data[i].material+'</td>'+
+							'<td hidden>'+data[i].amanatId+'</td>'+
+							'<td>'+data[i].customerName+', '+data[i].customerAddress+'</td>'+
+							'<td>'+data[i].grade+'</td>'+
 							'<td>'+data[i].quantity+'</td>'+
 							'<td>'+data[i].contractRate+'</td>'+
-							'<td>'+data[i].total+'</td>'+
+							'<td>'+(data[i].quantity * data[i].contractRate)+'</td>'+
 						'</tr>');
 				 
 				}

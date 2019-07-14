@@ -23,7 +23,8 @@
   	<div class="row tile-background-row">
   		<div class="col-md-2">
   			<label class="lbl-rm-l lbl-rm-t">Company</label>
-  			<select class="form-control form-control-sm" id="" name="">
+  			<select class="form-control form-control-sm" id="companyId" name="companyId">
+  				<option selected disabled>Select</option>
   				<c:Company/>
   			</select>
   		</div>
@@ -32,13 +33,14 @@
   	<div class="row mt-2 tile-background-row">
   		<div class="col-md-2">
   			<label class="lbl-rm-l lbl-rm-t">Vendor</label>
-  			<select class="form-control form-control-sm" id="" class="">
-  			
+  			<select class="form-control form-control-sm" id="customerId" name="customerId">
+  				<option selected disabled>Select</option>
+  				<c:Customer/>
   			</select>
   		</div>
   		<div class="col-md-2">
   			<label class="lbl-rm-l lbl-rm-t">Mobile No</label>
-  			<input type="text" class="form-control form-control-sm" id="" name="">
+  			<input type="text" class="form-control form-control-sm" id="mobile" name="mobile">
   		</div>
   		<div class="col-md-2 offset-md-4">
   			<div class="pending-invoices">
@@ -74,13 +76,13 @@
 	  				<tr>
 	  					<th width="10%">Date</th>
 	  					<th width="15%">Invoice No</th>
-	  					<th>Description</th>
+	  					<th>Vendor Name</th>
 	  					<th width="15%">Total Amount</th>
-	  					<th width="15%">Balance Payable</th>
+	  					<th width="15%">Amount Paid</th>
 	  					<th width="15%">Amount To Pay</th>
 	  				</tr>
 	  			</thead>
-	  			<tbody>
+	  			<tbody id=tableBody>
 	  			</tbody>
   			</table>
   		</div>
@@ -94,5 +96,79 @@
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/commonjs.js"></script>
+<script>
+document.getElementById("companyId").addEventListener("change",function(){
+	companyFilter(this.value);
+})
+
+
+window.onload = function() {
+	getInvoiceReport();
+	};
+
+function getInvoiceReport(){
+	
+	url = "../processing/purchaseInvoiceReport.jsp";
+	if(window.XMLHttpRequest){  
+		fetchRequest=new XMLHttpRequest();  
+	}  
+	else if(window.ActiveXObject){  
+		fetchRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+	}  
+	try{  
+		fetchRequest.onreadystatechange=getData;  
+		console.log("AJAX Req sent");
+		fetchRequest.open("GET",url,true);  
+		fetchRequest.send();  
+	}catch(e){alert("Unable to connect to server");}	
+}
+
+function getData(){
+	
+	if(fetchRequest.readyState == 4){
+		var response = this.response.trim();
+		
+		
+		var element = document.getElementById('tableBody');
+		
+		var jsonResponse = JSON.parse(response);
+		console.log(jsonResponse);
+		var status;
+		
+		
+		for(i=0;i<jsonResponse.length;i++){
+			
+			element.insertAdjacentHTML('beforeend','<tr>'+
+					'<td hidden>'+jsonResponse[i].companyId+'</td>'+
+					'<td hidden>'+jsonResponse[i].invoiceId+'</td>'+
+					'<td>'+jsonResponse[i].invoiceDate+'</td>'+
+					'<td>'+jsonResponse[i].invoiceNo+'</td>'+
+					'<td>'+jsonResponse[i].customerName+'</td>'+
+					'<td>'+jsonResponse[i].totalAmount+'</td>'+
+					'<td>'+jsonResponse[i].amountPaid+'</td>'+
+					'<td>'+jsonResponse[i].pendingAmount+'</td>'+
+				'</tr>');
+		}
+		console.log(element.rows.length);
+	}
+}
+
+function companyFilter(companyId)
+{
+	var tableBody = document.getElementById("tableBody");
+	for(i=0;i<tableBody.rows.length;i++){
+			tableBody.rows.item(i).removeAttribute('hidden');
+		}
+	
+	for(i=0;i<tableBody.rows.length;i++){
+		var id = tableBody.rows.item(i).cells[0].innerHTML;
+		if(companyId != id){
+			tableBody.rows.item(i).setAttribute('hidden','hidden');
+		}
+	}
+	
+} 
+</script>
+
 </body>
 </html>

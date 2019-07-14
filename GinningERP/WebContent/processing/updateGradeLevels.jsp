@@ -7,7 +7,7 @@
     pageEncoding="ISO-8859-1"%>
     
     <% 
-    	String output = request.getParameter("output");
+    	String output = request.getParameter("outputUpdate");
     	
     	JSONParser parser = new JSONParser();
     	
@@ -15,12 +15,13 @@
     	
      	GradeMaster gm = new GradeMaster();
      	
+     	gm.setId(Integer.parseInt((String)obj.get("gradeId")));
      	gm.setGrade(((String)obj.get("gradeName")).toUpperCase());
      	gm.setDesc(((String)obj.get("description")).toUpperCase());
      	
-     	AddGradeMaster agm = new AddGradeMaster();
+     	UpdateGradeMaster ugm = new UpdateGradeMaster();
      	
-     	agm.addGradeMaster(gm);
+     	ugm.updateGradeMaster(gm);
      	
         response.sendRedirect("../views/SetupGrade.jsp");
     

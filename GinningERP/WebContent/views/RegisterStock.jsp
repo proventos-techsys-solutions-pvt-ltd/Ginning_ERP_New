@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!doctype html>
+<%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <html lang="en">
     <head>
       <meta charset="utf-8">
@@ -24,6 +25,19 @@
 				</div>
 			</div>
 			</div>
+			</div>
+			<div class="row mt-2">
+			<div class="col-md-12">
+			<div class="d-flex justify-content-between align-content-center tile-background-row">
+				<div class="d-flex justify-content-start align-content-center tile-background-row">
+					<label>Company:</label>
+					<select class="form-control form-control-sm " id="companyId" name="companyId" onchange="">
+		        	    <option selected disabled>Select</option>
+		        	 	<c:Company />
+	        	    </select>
+				</div>
+			</div>
+			</div>
 		</div>
 		<div class="row mt-2">
 			<div class="col-md-3">
@@ -33,15 +47,15 @@
 				<div class="stock-block-content d-flex justify-content-center align-items-center">
 					<div class="stock-block-contents">
 						<label>Opening Balance</label>
-						<input type="text" class="form-control form-control-sm " id="" name="">
+						<input type="text" class="form-control form-control-sm " id="balesOpening" name="balesOpening">
 					</div>
 					<div class="stock-block-contents ml-1">
 						<label>Addition</label>
-						<input type="text" class="form-control form-control-sm " id="" name="">
+						<input type="text" class="form-control form-control-sm " id="balesAddition" name="balesAddition">
 					</div>
 					<div class="stock-block-contents ml-1">
 						<label>Closing Balance</label>
-						<input type="text" class="form-control form-control-sm" id="" name="">
+						<input type="text" class="form-control form-control-sm" id="balesClosing" name="balesClosing">
 					</div>
 				</div>
 			</div>
@@ -52,15 +66,15 @@
 				<div class="stock-block-content d-flex justify-content-center align-items-center">
 					<div class="stock-block-contents">
 						<label>Opening Balance</label>
-						<input type="text" class="form-control form-control-sm " id="" name="">
+						<input type="text" class="form-control form-control-sm " id="seedOpening" name="seedOpening">
 					</div>
 					<div class="stock-block-contents ml-1">
 						<label>Addition</label>
-						<input type="text" class="form-control form-control-sm " id="" name="">
+						<input type="text" class="form-control form-control-sm " id="seedAddition" name="seedAddition">
 					</div>
 					<div class="stock-block-contents ml-1">
 						<label>Closing Balance</label>
-						<input type="text" class="form-control form-control-sm" id="" name="">
+						<input type="text" class="form-control form-control-sm" id="seedClosing" name="seedClosing">
 					</div>
 				</div>
 			</div>
@@ -71,15 +85,15 @@
 				<div class="stock-block-content d-flex justify-content-center align-items-center">
 					<div class="stock-block-contents">
 						<label>Opening Balance</label>
-						<input type="text" class="form-control form-control-sm " id="" name="">
+						<input type="text" class="form-control form-control-sm " id="oilOpening" name="oilOpening">
 					</div>
 					<div class="stock-block-contents ml-1">
 						<label>Addition</label>
-						<input type="text" class="form-control form-control-sm " id="" name="">
+						<input type="text" class="form-control form-control-sm " id="oilAddition" name="oilAddition">
 					</div>
 					<div class="stock-block-contents ml-1">
 						<label>Closing Balance</label>
-						<input type="text" class="form-control form-control-sm" id="" name="">
+						<input type="text" class="form-control form-control-sm" id="oilClosing" name="oilClosing">
 					</div>
 				</div>
 			</div>
@@ -90,15 +104,15 @@
 				<div class="stock-block-content d-flex justify-content-center align-items-center">
 					<div class="stock-block-contents">
 						<label>Opening Balance</label>
-						<input type="text" class="form-control form-control-sm " id="" name="">
+						<input type="text" class="form-control form-control-sm " id="cakeOpening" name="cakeOpening">
 					</div>
 					<div class="stock-block-contents ml-1">
 						<label>Addition</label>
-						<input type="text" class="form-control form-control-sm " id="" name="">
+						<input type="text" class="form-control form-control-sm " id="cakeAddition" name="cakeAddition">
 					</div>
 					<div class="stock-block-contents ml-1">
 						<label>Closing Balance</label>
-						<input type="text" class="form-control form-control-sm" id="" name="">
+						<input type="text" class="form-control form-control-sm" id="cakeClosing" name="cakeClosing">
 					</div>
 				</div>
 			</div>
@@ -134,11 +148,45 @@
 			</div>
 		</div>
 	</div>
-
-
 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
+	<script>
+
+		document.addEventListener('change', function(e){
+			if(e.srcElement.id === 'companyId'){
+				getStockReport(e.srcElement.option[e.srcElement.selectedIndex].value);
+			}
+		})
+		
+		function getStockReport(companyId){
+			var url="../processing/getTodaysStockReport.jsp?companyId="+companyId;
+			if(window.XMLHttpRequest){  
+				fetchData=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				fetchData=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+		  
+			try{  
+				fetchData.onreadystatechange=fetchData;  
+				console.log("AJAX Req sent");
+				fetchData.open("GET",url,true);  
+				fetchData.send();  
+			}catch(e){alert("Unable to connect to server");}
+		}
+
+		 function fetchData(){
+			 if(fetchData.readyState == 4){
+				 console.log(this.response.trim());
+				
+				 
+			 }
+		 }
+
+
+	</script>
+	
 </body>
 </html>

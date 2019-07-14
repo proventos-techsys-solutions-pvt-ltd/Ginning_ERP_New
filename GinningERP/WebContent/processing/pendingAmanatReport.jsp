@@ -10,12 +10,10 @@
     	
     	AmanatReport ar = new AmanatReport();
     
-    	ArrayList<Amanat> list = new ArrayList<Amanat>();
     	
-    	list = ar.getAmanatData();
+    	JSONArray jsonArray = ar.getPendingAmanatData();
     	
-    	JSONArray jsonList = new JSONArray(list);
+    	out.print(jsonArray);
+    	out.flush();
     	
-    	out.print(jsonList);
-    
     %>

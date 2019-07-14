@@ -48,7 +48,7 @@
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Vehicle Type</label>
 	        	 <select class="form-control " id="vehicleType" name="vehicleType" onchange="setWeighRate(this)">
-	        	    <option>Select</option>
+	        	    <option disabled selected>Select</option>
 	        	 	<c:VehicleCategoryTag />
 	        	 </select>
 	        </div>

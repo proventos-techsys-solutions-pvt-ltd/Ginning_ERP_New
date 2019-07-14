@@ -1,3 +1,4 @@
+<%@page import="com.prov.dbupdation.UpdateWeighRateMast"%>
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="org.json.simple.parser.JSONParser"%>
 <%@page import="com.prov.dbinsertion.AddWeighRateMast"%>
@@ -6,7 +7,7 @@
     pageEncoding="ISO-8859-1"%>
     
     <% 
-    	String data = request.getParameter("output");
+    	String data = request.getParameter("outputUpdate");
      
     	JSONParser parser = new JSONParser();
     	
@@ -14,13 +15,14 @@
      	
      	WeighRateMast wrm = new WeighRateMast();
      	
-     	wrm.setVehicleName(((String)jsonObj.get("vehicleName")).toUpperCase());
+     	wrm.setId(Integer.parseInt((String)jsonObj.get("vehicleTypeId")));
+     	wrm.setVehicleName(((String)jsonObj.get("vehicleNameUpdate")).toUpperCase());
      	wrm.setVehicleDesc(((String)jsonObj.get("description")).toUpperCase());
-     	wrm.setWeighrate(Double.parseDouble((String)jsonObj.get("weighRate")));
+     	wrm.setWeighrate(Double.parseDouble((String)jsonObj.get("rate")));
      	
-     	AddWeighRateMast awrm = new AddWeighRateMast();
+     	UpdateWeighRateMast uwrm = new UpdateWeighRateMast();
      	
-     	awrm.addWeighRateMast(wrm);
+     	uwrm.updateWeighRateMast(wrm);
      	
         response.sendRedirect("../views/SetupVehicle.jsp");
     

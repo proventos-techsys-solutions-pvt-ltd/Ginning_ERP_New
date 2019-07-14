@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.prov.bean.StockMast;
 import com.prov.db.OracleConnection;
 
 public class StockMasterReport {
@@ -48,6 +49,100 @@ public class StockMasterReport {
 		}
 		
 		return stockMastId;
+	}
+	
+	public StockMast getTodaysStockReport(int companyId) {
+		ResultSet rs = null;
+		Connection con = null;
+		StockMast sm = new StockMast();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			
+			String sql = "SELECT * FROM STOCK_MAST WHERE STOCK_DATE=TRUNC(SYSDATE) AND COMPANY_ID=?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, companyId);
+			
+			rs = stmt.executeQuery();
+			
+			
+			while (rs.next()) {
+				
+				sm.setId(rs.getInt(1));
+				
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(2));
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+				String properDate = format2.format(date1);
+				
+				sm.setStockDate(properDate);
+				sm.setCompanyId(rs.getInt(3));
+				sm.setRawCotton(rs.getDouble(4));
+				sm.setCottonBales(rs.getDouble(5));
+				sm.setCottonSeed(rs.getDouble(6));
+				sm.setCottonSeedOil(rs.getDouble(7));
+				sm.setCottonCakes(rs.getDouble(8));
+				sm.setAvgRate(rs.getDouble(9));
+				
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return sm;
+	}
+	
+	public StockMast getTodaysOpeningStock(int companyId) {
+		ResultSet rs = null;
+		Connection con = null;
+		StockMast sm = new StockMast();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			
+			String sql = "SELECT * FROM STOCK_MAST WHERE STOCK_DATE=TRUNC(SYSDATE-1) AND COMPANY_ID=?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, companyId);
+			
+			rs = stmt.executeQuery();
+			
+			
+			while (rs.next()) {
+				
+				sm.setId(rs.getInt(1));
+				
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(2));
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+				String properDate = format2.format(date1);
+				
+				sm.setStockDate(properDate);
+				sm.setCompanyId(rs.getInt(3));
+				sm.setRawCotton(rs.getDouble(4));
+				sm.setCottonBales(rs.getDouble(5));
+				sm.setCottonSeed(rs.getDouble(6));
+				sm.setCottonSeedOil(rs.getDouble(7));
+				sm.setCottonCakes(rs.getDouble(8));
+				sm.setAvgRate(rs.getDouble(9));
+				
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return sm;
 	}
 
 }

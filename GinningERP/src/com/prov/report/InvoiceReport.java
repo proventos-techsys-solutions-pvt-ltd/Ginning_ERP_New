@@ -125,7 +125,7 @@ public ArrayList<Invoice> getReport() {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String invSql = "SELECT IM.ID, IM.INV_DATE, IM.INVOICE_NO, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.PENDING, CM.NAME, CM.ADDRESS, CM.MOBILE\r\n" + 
+			String invSql = "SELECT IM.ID, IM.INV_DATE, IM.INVOICE_NO, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.PENDING, IM.TOTAL, IM.AMOUNTPAID, CM.NAME, CM.ADDRESS, CM.MOBILE\r\n" + 
 					"FROM INVOICE_MAST IM, CUSTOMER_MAST CM\r\n" + 
 					"WHERE IM.CUSTOMER_ID = CM.ID";
 			
@@ -149,9 +149,11 @@ public ArrayList<Invoice> getReport() {
 				jsonObj.put("companyId", rs.getInt(4));
 				jsonObj.put("customerId", rs.getInt(5));
 				jsonObj.put("pendingAmount", rs.getDouble(6));
-				jsonObj.put("customerName", rs.getString(7));
-				jsonObj.put("customerAddress", rs.getString(8));
-				jsonObj.put("customerMobile", rs.getString(9));
+				jsonObj.put("totalAmount", rs.getDouble(7));
+				jsonObj.put("amountPaid", rs.getDouble(8));
+				jsonObj.put("customerName", rs.getString(9));
+				jsonObj.put("customerAddress", rs.getString(10));
+				jsonObj.put("customerMobile", rs.getString(11));
 				
 				report.put(jsonObj);
 				

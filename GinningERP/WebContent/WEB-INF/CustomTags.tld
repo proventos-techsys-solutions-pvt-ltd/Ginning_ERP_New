@@ -41,6 +41,12 @@
    </tag>
   
   <tag>
+    <name>Customer</name>
+	<tag-class>com.prov.tags.CustomerTag</tag-class>
+	<body-content>Empty</body-content>
+   </tag>
+   
+   <tag>
     <name>AccountCategory</name>
 	<tag-class>com.prov.tags.AccountCategoryTag</tag-class>
 	<body-content>Empty</body-content>
