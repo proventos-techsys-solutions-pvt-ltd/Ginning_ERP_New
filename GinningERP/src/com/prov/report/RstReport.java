@@ -23,7 +23,9 @@ public class RstReport {
 			String sql = "SELECT \r\n" + 
 					"					    CM.NAME, \r\n" + 
 					"					    CM.ADDRESS,\r\n" + 
-					"					   CM.MOBILE, \r\n" + 
+					"					    CM.MOBILE, \r\n" + 
+					"					    CM.BLACKLISTED, \r\n" + 
+					"					    CM.MEMBERSHIP, \r\n" + 
 					"					    WM.ID, \r\n" + 
 					"					    WM.MATERIAL, \r\n" + 
 					"					    WM.NET\r\n" + 
@@ -45,9 +47,11 @@ public class RstReport {
 				jsonObj.put("vendorName", rs.getString(1));
 				jsonObj.put("vendorAddress", rs.getString(2));
 				jsonObj.put("vendorMobile", rs.getString(3));
-				jsonObj.put("weighmentId", rs.getString(4));
-				jsonObj.put("material", rs.getString(5));
-				jsonObj.put("netWeight", rs.getString(6));
+				jsonObj.put("vendorBlacklisted", rs.getInt(4));
+				jsonObj.put("vendorMembership", rs.getInt(5));
+				jsonObj.put("weighmentId", rs.getString(6));
+				jsonObj.put("material", rs.getString(7));
+				jsonObj.put("netWeight", rs.getString(8));
 				
 			}
 			
@@ -73,7 +77,7 @@ public class RstReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT GD.ID, GD.WEIGHMENT_ID, GD.MATERIAL, GD.QUANTITY, GD.GRADE, GD.RATE, GD.AUTHORIZED_BY, GD.MOISTURE, WM.VID, WM.RST, WM.NET, CVM.CID, CM.NAME, CM.ADDRESS, CM.MOBILE\r\n" + 
+			String sql = "SELECT GD.ID, GD.WEIGHMENT_ID, GD.MATERIAL, GD.QUANTITY, GD.GRADE, GD.RATE, GD.AUTHORIZED_BY, GD.MOISTURE, WM.VID, WM.RST, WM.NET, CVM.CID, CM.NAME, CM.ADDRESS, CM.MOBILE, CM.BLACKLISTED, CM.MEMBERSHIP \r\n" + 
 					"FROM GRADE_DETAILS GD, WEIGH_MAST WM, CUSTOMER_VEHICLE_MAST CVM, CUSTOMER_MAST CM \r\n" + 
 					"WHERE\r\n" + 
 					"GD.WEIGHMENT_ID = WM.ID AND\r\n" + 
@@ -104,6 +108,8 @@ public class RstReport {
 				jsonObj.put("customerName", rs.getString(13));
 				jsonObj.put("customerAddress", rs.getString(14));
 				jsonObj.put("customerMobile", rs.getString(15));
+				jsonObj.put("customerBlacklisted", rs.getInt(16));
+				jsonObj.put("customerMembership", rs.getInt(17));
 				
 				jsonArray.put(jsonObj);
 			}

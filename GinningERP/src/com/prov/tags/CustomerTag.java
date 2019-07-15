@@ -27,7 +27,7 @@ public class CustomerTag extends SimpleTagSupport {
 			 Statement stmt = con.createStatement();
 			 customerResultSet = stmt.executeQuery(companyQuery);
 			 while(customerResultSet.next()) {
-				 customerName.put(customerResultSet.getInt("id"),customerResultSet.getString("name")+"-"+customerResultSet.getString("address")+"-"+customerResultSet.getString("mobile"));
+				 customerName.put(customerResultSet.getInt("id"),customerResultSet.getString("name")+"-"+customerResultSet.getString("address")+"-"+customerResultSet.getString("mobile")+"-"+customerResultSet.getString("blacklisted")+"-"+customerResultSet.getString("membership"));
 				}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -49,7 +49,9 @@ public class CustomerTag extends SimpleTagSupport {
 			String customerName = customer[0];
 			String customerAddress = customer[1];
 			String customerMobile = customer[2];
-			out.println("<option value='"+customerKey+"' data-mobile='"+customerMobile+"' data-address='"+customerAddress+"'>"+customerName+"</option>");
+			String blacklisted = customer[3];
+			String membership = customer[4];
+			out.println("<option value='"+customerKey+"' data-mobile='"+customerMobile+"' data-address='"+customerAddress+"' data-blacklisted='"+blacklisted+"' data-membership='"+membership+"'>"+customerName+"</option>");
 		}
 	}
 

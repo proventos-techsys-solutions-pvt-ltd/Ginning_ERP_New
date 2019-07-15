@@ -42,12 +42,16 @@
                         		</div>
                         	</div>
                             <div class="row tile-background-row">
-                                <div class="col-md-auto">
+                                <div class="col-md-2">
                                 	<label for="" class="lbl-rm-all">RST No </label>
                                 	<div class="d-flex justify-content-start align-items-center">
 	                                    <input id="rst" name="rst" type="text" class="form-control form-control-sm" placeholder="Search RST">
 					    				<button class="btn btn-success btn-sm btn-no-radius" type="button" onclick="fetchData(document.getElementById('rst').value)">Fetch</button>
                                 	</div>
+                                </div>
+                                <div class="col-md-3 offset-md-7">
+                                   <label class="lbl-rm-all">Customer Name & Address</label>
+                                   <textarea id="customerData" name="customerData" class="form-control form-control-sm" rows="3"></textarea>
                                 </div>
                                </div>
                             <div class="row tile-background-row">
@@ -55,16 +59,19 @@
                                     <label for="" class="lbl-rm-all">Invoice No </label>
                                     <input id="invoiceNo" name="invoiceNo" type="text" class="form-control form-control-sm" placeholder="Invoice No" >
                                 </div>
-                                
                                  <div class="col-md-2">
                                     <label for="" class="lbl-rm-all">Date </label>
                                     <input type="date" id="invoiceDate" name="invoiceDate" class="form-control form-control-sm" placeholder="Record No">
                                 </div>
+                                <div class="col-md-auto offset-md-5">
+                        			<label for="" class="lbl-rm-all">Membership</label>
+                                    <input id="customerBlacklisted" name="customerBlacklisted"  type="text" class="form-control form-control-sm" placeholder="">
+                        		</div>	
+                        		<div class="col-md-auto">
+                        			<label for="" class="lbl-rm-all">Blacklisted</label>
+                                    <input id="customerMembership" name="customerMembership"  type="text" class="form-control form-control-sm" placeholder="">
+                        		</div>
                                 
-                                <div class="col-md-3 offset-md-5">
-                                   <label class="lbl-rm-all">Customer Name & Address</label>
-                                   <textarea id="customerData" name="customerData" class="form-control form-control-sm" rows="3"></textarea>
-                                </div>
                              </div>
                               
                               <div class="row tile-background-row">
@@ -353,6 +360,22 @@
 			document.getElementById("customerData").value = data[i].customerName + "\n" + data[i].customerAddress + "\n" + data[i].customerMobile;
 			document.getElementById("customerId").value = data[i].customerId;
 			
+			var blacklisted;
+			var membership;
+			
+			if(data[i].customerBlacklisted === '1'){
+				blacklisted = 'YES';
+			}else{
+				blacklisted = 'NO'
+			}
+			if(data[i].customerMembership === '1'){
+				membership = 'YES';
+			}else{
+				membership = 'NO';
+			}
+			
+			document.getElementById("customerBlacklisted").value = blacklisted;
+			document.getElementById("customerMembership").value = membership;
 			
 			var rowNo = tableBody.children.length;
 			

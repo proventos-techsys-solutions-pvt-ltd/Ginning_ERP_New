@@ -22,6 +22,8 @@
 							<th>Name</th>
 							<th>Address</th>
 							<th width="15%">Mobile No</th>
+							<th width="10%">BlackListed</th>
+							<th width="10%">Membership</th>
 							<th width="5%" class="text-center">Edit</th>
 							<th width="5%" class="text-center">Delete</th>
 						</tr>
@@ -75,13 +77,31 @@
 					var jsonResponse = JSON.parse(response);
 					console.log(jsonResponse);
 					
+					var membership;
+					var blacklisted;
+					
 					for(i=0;i<jsonResponse.length;i++){
+						
+						if(jsonResponse[i].blacklist === 1){
+							blacklisted = 'YES';
+						}else{
+							blacklisted = 'NO'
+						}
+						if(jsonResponse[i].membership === 1){
+							membership = 'YES';
+						}else{
+							membership = 'NO';
+						}
 						
 						element.insertAdjacentHTML('beforeend','<tr>'+
 								'<td hidden>'+jsonResponse[i].id+'</td>'+
 								'<td>'+jsonResponse[i].name+'</td>'+
 								'<td>'+jsonResponse[i].address+'</td>'+
 								'<td>'+jsonResponse[i].mobile+'</td>'+
+								'<td>'+blacklisted+'</td>'+
+								'<td>'+membership+'</td>'+
+								'<td id="callModal" class="text-center"><img src="../property/img/edit.png" alt="edit"></td>'+
+								'<td class="text-center"><img src="../property/img/delete.png" alt="delete" id="deleteRow"></td>'+
 							'</tr>')
 					}
 				}

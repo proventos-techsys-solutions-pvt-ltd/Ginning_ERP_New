@@ -67,10 +67,21 @@
 	        	<input type="text" class="form-control " id="mobile" name="mobile" placeholder="" >
 	        </div>
 	        <div class="col-md-4">
+	        	<label class="lbl-rm-all">BlackListed</label>
+	        	<input type="text" class="form-control " id="blacklist" name="blacklist" placeholder="" >
+	        </div>
+	        <div class="col-md-4">
+	        	<label class="lbl-rm-all">Membership</label>
+	        	<input type="text" class="form-control " id="membership" name="membership" placeholder="" >
+	        </div>
+	     </div>
+	    <div class="form-row form-row-ctm">
+	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Material</label>
 	        	<input type="text" class="form-control " id="material" name="material" placeholder="">
 	        </div>
-        </div>
+	    </div>
+        
         <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Gross Weight : </label>
@@ -160,6 +171,12 @@
 			       		<label>Address</label>
 		       			<textarea class="form-control" name="address" id="newCustomerAddress"></textarea>
 			       	</div>	
+			       	<div class="col-md-6">
+		       			<input type="checkbox" class="" name="newMembership" id="newMembership" value="0" /><label class="lbl-rm-all">Membership</label>
+			       	</div>	
+			       	<div class="col-md-6">
+		       			<input type="checkbox" class="" name="newBlacklist" id="newBlacklist" value="0" /><label class="lbl-rm-all">Blacklist</label>
+			       	</div>	
 		       	</div>
 		       </form>
 		      </div>
@@ -202,6 +219,19 @@
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/commonjs.js"></script>
 <script>
+
+document.addEventListener('change', function(e){
+	if(e.srcElement.id === 'newMembership' || e.srcElement.id === 'newBlacklist' ){
+		if(e.srcElement.value === '0'){
+			e.srcElement.value = '1'
+			
+		}
+		else if(e.srcElement.value === '1'){
+			e.srcElement.value = '0'
+			
+		}
+	}
+})
 
 function decideWeighment(flag){
 
@@ -250,57 +280,9 @@ function submitRSTEntry(){
 }
 
 
-//Submit New Customer Form
-function submitNewCustomer(){
-	
-	var newCustomerName = document.getElementById("newCustomerName").value;
-	var newCustomerMobile = document.getElementById("newCustomerMobile").value;
-	var newCustomerAddress = document.getElementById("newCustomerAddress").value;
-	
-	//var newCustomerJson = {"name":newCustomerName,"moile":newCustomerMobile,"address":newCustomerAddress};
-	
-	saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress);
-}
-
-
-//Create AJAX Request for new customer form submission
-function saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress){
-	var url="../processing/addCustomer.jsp?name="+newCustomerName+"&mobile="+newCustomerMobile+"&address="+newCustomerAddress;
-	if(window.XMLHttpRequest){  
-		newCustomerRequest=new XMLHttpRequest();  
-	}  
-	else if(window.ActiveXObject){  
-		newCustomerRequest=new ActiveXObject("Microsoft.XMLHTTP");  
-	}  
-  
-	try{  
-		newCustomerRequest.onreadystatechange=setNewCustomerData;  
-		console.log("AJAX Req sent");
-		newCustomerRequest.open("GET",url,true);  
-		newCustomerRequest.send();  
-	}catch(e){alert("Unable to connect to server");}
-}
-
-
-//Set data in RST form fields of newly added customer
-function setNewCustomerData(){
-	
-	if(newCustomerRequest.readyState==4){
-		
-		console.log("New Customer Added");
-		
-		var customer = JSON.parse(this.response.trim());
-		
-		document.getElementById("id").value = customer.id;
-		document.getElementById("customer").value = customer.name;
-		document.getElementById("address").value = customer.address;
-		document.getElementById("mobile").value = customer.mobile;
-	}
-}
-
 
 //Check if the entered customer exists in DB
-document.getElementById("mobile").addEventListener('change',function(e){
+document.getElementById("mobile").addEventListener('input',function(e){
 	//if(e.keyCode === 13){
 		checkEnteredCustomer();
 	//}
@@ -350,10 +332,27 @@ function checkCustomer(){
 		else{
 			var customer = JSON.parse(res);
 			
+			var blacklisted;
+			var membership;
+			
 			document.getElementById("id").value = customer.id;
 			document.getElementById("customer").value = customer.name;
 			document.getElementById("address").value = customer.address;
 			document.getElementById("mobile").value = customer.mobile;
+			
+			if(customer.blacklist === '1'){
+				blacklisted = 'YES';
+			}else{
+				blacklisted = 'NO'
+			}
+			if(customer.membership === '1'){
+				membership = 'YES';
+			}else{
+				membership = 'NO';
+			}
+			
+			document.getElementById("blacklist").value = blacklisted;
+			document.getElementById("membership").value = membership;
 			
 			console.log("Customer found"+ customer);
 		}
@@ -370,12 +369,72 @@ function addNewCustomer(){
 	
 	$("#newCustomerModal").modal();
 	
-
-	
 	document.getElementById("newCustomerName").value = name;
 	document.getElementById("newCustomerMobile").value = mobile;
 	document.getElementById("newCustomerAddress").value = address;
 	
+}
+
+//Submit New Customer Form
+function submitNewCustomer(){
+	
+	var newCustomerName = document.getElementById("newCustomerName").value;
+	var newCustomerMobile = document.getElementById("newCustomerMobile").value;
+	var newCustomerAddress = document.getElementById("newCustomerAddress").value;
+	var newCustomerBlacklist = document.getElementById("newBlacklist").value;
+	var newCustomerMembership = document.getElementById("newMembership").value;
+	
+	saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress, newCustomerBlacklist, newCustomerMembership);
+}
+
+
+//Create AJAX Request for new customer form submission
+function saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress, newCustomerBlacklist, newCustomerMembership){
+	var url="../processing/addCustomer.jsp?name="+newCustomerName+"&mobile="+newCustomerMobile+"&address="+newCustomerAddress+"&membership="+newCustomerMembership+"&blacklist="+newCustomerBlacklist;
+	if(window.XMLHttpRequest){  
+		newCustomerRequest=new XMLHttpRequest();  
+	}  
+	else if(window.ActiveXObject){  
+		newCustomerRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+	}  
+  
+	try{  
+		newCustomerRequest.onreadystatechange=setNewCustomerData;  
+		console.log("AJAX Req sent");
+		newCustomerRequest.open("GET",url,true);  
+		newCustomerRequest.send();  
+	}catch(e){alert("Unable to connect to server");}
+}
+
+
+//Set data in RST form fields of newly added customer
+function setNewCustomerData(){
+	
+	if(newCustomerRequest.readyState==4){
+		
+		console.log("New Customer Added");
+		var blacklisted;
+		var membership;
+		var customer = JSON.parse(this.response.trim());
+		
+		if(customer.blacklist === '1'){
+			blacklisted = 'YES';
+		}else{
+			blacklisted = 'NO'
+		}
+		if(customer.membership === '1'){
+			membership = 'YES';
+		}else{
+			membership = 'NO';
+		}
+		
+		document.getElementById("id").value = customer.id;
+		document.getElementById("customer").value = customer.name;
+		document.getElementById("address").value = customer.address;
+		document.getElementById("mobile").value = customer.mobile;
+		document.getElementById("blacklist").value = blacklisted;
+		document.getElementById("membership").value = membership;
+	}
 }
 
 
@@ -398,6 +457,8 @@ var url="../processing/pendingTareReport.jsp";
 	}catch(e){alert("Unable to connect to server");}
 	
 }
+
+
 
 function getRstData(){
 	

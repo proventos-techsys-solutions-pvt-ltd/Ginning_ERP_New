@@ -70,6 +70,14 @@
 							<label class="lbl-rm-all">Mobile No</label>
 							<input type="text" class="form-control form-control-sm" id="vendorMobile" name="vendorMobile" readonly>
 						</div>
+						<div class="col-md-2">
+							<label class="lbl-rm-all">Membership</label>
+							<input type="text" class="form-control form-control-sm" id="vendorMembership" name="vendorMembership" readonly>
+						</div>
+						<div class="col-md-2">
+							<label class="lbl-rm-all">Blacklisted</label>
+							<input type="text" class="form-control form-control-sm" id="vendorBlacklisted" name="vendorBlacklisted" readonly>
+						</div>
 					</div>
 					<div class="form-row form-row-ctm">
 						<div class="col-md-12">
@@ -138,13 +146,28 @@
 	
 	function setDataForNewGrading(data){
 		
+		var blacklisted;
+		var membership;
+		
 		document.getElementById("vendorName").value = data[0].vendorName;
 		document.getElementById("vendorAddress").value = data[0].vendorAddress;
 		document.getElementById("vendorMobile").value = data[0].vendorMobile;
 		document.getElementById("material").value = data[0].material;
 		document.getElementById("quantity").value = data[0].netWeight;
 		document.getElementById("weighmentId").value = data[0].weighmentId;
+		if(data[0].vendorBlacklisted === '1'){
+			blacklisted = 'YES';
+		}else{
+			blacklisted = 'NO'
+		}
+		if(data[0].vendorMembership === '1'){
+			membership = 'YES';
+		}else{
+			membership = 'NO';
+		}
 		
+		document.getElementById("vendorBlacklisted").value = blacklisted;
+		document.getElementById("vendorMembership").value = membership;
 		
 		totalQuantity = document.getElementById("quantity").value;
 		
@@ -329,6 +352,8 @@
 	
 	function setGradeUpdationData(data)
 	{
+		var blacklisted;
+		var membership;
 		
 		document.getElementById("vendorName").value = data[0].customerName;
 		document.getElementById("vendorAddress").value = data[0].customerAddress;
@@ -337,6 +362,20 @@
 		document.getElementById("quantity").value = data[0].netWeight;
 		document.getElementById("weighmentId").value = data[0].weighmentId;
 		document.getElementById("authorizer").value = data[0].authorizer;
+		
+		if(data[0].vendorBlacklisted === '1'){
+			blacklisted = 'YES';
+		}else{
+			blacklisted = 'NO'
+		}
+		if(data[0].vendorMembership === '1'){
+			membership = 'YES';
+		}else{
+			membership = 'NO';
+		}
+		
+		document.getElementById("vendorBlacklisted").value = blacklisted;
+		document.getElementById("vendorMembership").value = membership;
 		
 		var noOfRows = data.length;
 		console.log(noOfRows);

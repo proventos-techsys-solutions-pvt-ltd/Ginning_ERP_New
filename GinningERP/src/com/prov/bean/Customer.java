@@ -2,7 +2,7 @@ package com.prov.bean;
 
 public class Customer {
 	
-	private int id;
+	private int id, membership, blacklist;
 	
 	private String name, address, mobile;
 
@@ -12,6 +12,22 @@ public class Customer {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getMembership() {
+		return membership;
+	}
+
+	public void setMembership(int membership) {
+		this.membership = membership;
+	}
+
+	public int getBlacklist() {
+		return blacklist;
+	}
+
+	public void setBlacklist(int blacklist) {
+		this.blacklist = blacklist;
 	}
 
 	public String getName() {
