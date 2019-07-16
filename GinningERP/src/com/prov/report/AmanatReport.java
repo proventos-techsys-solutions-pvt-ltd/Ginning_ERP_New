@@ -61,7 +61,7 @@ public JSONArray getPendingAmanatData() {
 	try {
 		con = OracleConnection.getConnection();
 		
-		String invSql = "SELECT AM.ID, AM.AMANAT_DATE, AM.FINAL_RATE, AM.CUSTOMER_ID, AM.GRADE_ID, GD.QUANTITY, GD.GRADE, GD.RATE, CM.NAME, CM.ADDRESS, CM.MOBILE \r\n" + 
+		String invSql = "SELECT AM.ID, AM.AMANAT_DATE, AM.FINAL_RATE, AM.CUSTOMER_ID, AM.GRADE_ID, GD.QUANTITY, GD.GRADE, GD.RATE, GD.RST, CM.NAME, CM.ADDRESS, CM.MOBILE \r\n" + 
 						"FROM AMANAT_MAST AM, GRADE_DETAILS GD, CUSTOMER_MAST CM\r\n" + 
 						"WHERE AM.CUSTOMER_ID = CM.ID\r\n" + 
 						"AND AM.GRADE_ID = GD.ID\r\n" + 
@@ -86,9 +86,10 @@ public JSONArray getPendingAmanatData() {
 			obj.put("quantity", rs.getDouble(6));
 			obj.put("grade", rs.getString(7));
 			obj.put("contractRate", rs.getDouble(8));
-			obj.put("customerName", rs.getString(9));
-			obj.put("customerAddress", rs.getString(10));
-			obj.put("customerMobile", rs.getString(11));
+			obj.put("rst", rs.getInt(9));
+			obj.put("customerName", rs.getString(10));
+			obj.put("customerAddress", rs.getString(11));
+			obj.put("customerMobile", rs.getString(12));
 			
 			jsonArray.put(obj);
 		}

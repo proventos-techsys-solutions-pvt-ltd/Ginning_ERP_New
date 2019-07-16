@@ -21,6 +21,7 @@
 				<thead>
 					<tr>
 						<th>Sr. No.</th>
+						<th>RST</th>
 						<th>Date</th>
 						<th>Vendor Name & Address</th>
 						<th>Grade</th>
@@ -95,6 +96,7 @@
 					
 					 element.insertAdjacentHTML('beforeend','<tr>'+
 							'<td>'+(i+1)+'</td>'+
+							'<td>'+data[i].rst+'</td>'+
 							'<td>'+data[i].amanatDate+'</td>'+
 							'<td hidden>'+data[i].amanatId+'</td>'+
 							'<td>'+data[i].customerName+', '+data[i].customerAddress+'</td>'+

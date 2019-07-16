@@ -9,12 +9,12 @@ public class OracleConnection {
 		{
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
-			String url = "jdbc:oracle:thin:@localhost:1521:orcl1";
+			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 			
 			Connection con = null;
 			
 			try {
-				con = DriverManager.getConnection(url, "Vipin", "V");
+				con = DriverManager.getConnection(url, "samir", "admin123");
 			}catch (Exception e) {
 				e.printStackTrace();
 			}

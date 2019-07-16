@@ -129,19 +129,29 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>05/01/2019</td>
+							<td class='date'></td>
 							<td>Cotton</td>
-							<td>1000 kg</td>
+							<td id="cottonStock"></td>
 						</tr>
 						<tr>
-							<td>05/01/2019</td>
-							<td>Cotton</td>
-							<td>1000 kg</td>
+							<td class='date'></td>
+							<td>Cotton Bales</td>
+							<td id="balesStock"></td>
 						</tr>
 						<tr>
-							<td>05/01/2019</td>
-							<td>Cotton</td>
-							<td>1000 kg</td>
+							<td class='date'></td>
+							<td>Cotton Seed</td>
+							<td id="seedStock"></td>
+						</tr>
+						<tr>
+							<td class='date'></td>
+							<td>Cotton Seed Oil</td>
+							<td id=oilStock></td>
+						</tr>
+						<tr>
+							<td class='date'></td>
+							<td>Cotton Cakes</td>
+							<td id="cakesStock"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -156,35 +166,66 @@
 
 		document.addEventListener('change', function(e){
 			if(e.srcElement.id === 'companyId'){
-				getStockReport(e.srcElement.option[e.srcElement.selectedIndex].value);
+				getStockReport(e.srcElement.options[e.srcElement.selectedIndex].value);
 			}
 		})
 		
 		function getStockReport(companyId){
 			var url="../processing/getTodaysStockReport.jsp?companyId="+companyId;
 			if(window.XMLHttpRequest){  
-				fetchData=new XMLHttpRequest();  
+				fetchStock=new XMLHttpRequest();  
 			}  
 			else if(window.ActiveXObject){  
-				fetchData=new ActiveXObject("Microsoft.XMLHTTP");  
+				fetchStock=new ActiveXObject("Microsoft.XMLHTTP");  
 			}  
 		  
 			try{  
-				fetchData.onreadystatechange=fetchData;  
+				fetchStock.onreadystatechange=fetchData;  
 				console.log("AJAX Req sent");
-				fetchData.open("GET",url,true);  
-				fetchData.send();  
+				fetchStock.open("GET",url,true);  
+				fetchStock.send();  
 			}catch(e){alert("Unable to connect to server");}
 		}
 
 		 function fetchData(){
-			 if(fetchData.readyState == 4){
-				 console.log(this.response.trim());
-				
-				 
+			 if(fetchStock.readyState == 4){
+				 setData(this.response.trim());
+				 //console.log(this.response.trim());
 			 }
 		 }
 
+		 
+		 function setData(data){
+			 
+			 var obj = JSON.parse(data);
+			 console.log(obj);
+			
+			 document.getElementById('balesOpening').value = obj.openingStock.cottonBales;
+			 document.getElementById('balesAddition').value = obj.stockAddition.cottonBales;
+			 document.getElementById('balesClosing').value = obj.closingStock.cottonBales;
+			 
+			 document.getElementById('seedOpening').value = obj.openingStock.cottonSeed;
+			 document.getElementById('seedAddition').value = obj.stockAddition.cottonSeed;
+			 document.getElementById('seedClosing').value = obj.closingStock.cottonSeed;
+			 
+			 document.getElementById('oilOpening').value = obj.openingStock.cottonSeedOil;
+			 document.getElementById('oilAddition').value = obj.stockAddition.cottonSeedOil;
+			 document.getElementById('oilClosing').value = obj.closingStock.cottonSeedOil;
+			 
+			 document.getElementById('cakeOpening').value = obj.openingStock.cottonCakes;
+			 document.getElementById('cakeAddition').value = obj.stockAddition.cottonCakes;
+			 document.getElementById('cakeClosing').value = obj.closingStock.cottonCakes;
+			 
+			 document.getElementById('cottonStock').innerHTML = obj.stockAddition.rawCotton;
+			 document.getElementById('balesStock').innerHTML = obj.stockAddition.cottonBales;
+			 document.getElementById('seedStock').innerHTML = obj.stockAddition.cottonSeed; 
+			 document.getElementById('oilStock').innerHTML = obj.stockAddition.cottonSeedOil;	
+			 document.getElementById('cakesStock').innerHTML = obj.stockAddition.cottonCakes;
+			 
+			 for(i=0;i<document.getElementsByClassName('date').length;i++){
+			 	document.getElementsByClassName('date')[i].innerHTML = obj.stockAddition.stockDate;
+			 }
+		 }
 
 	</script>
 	
