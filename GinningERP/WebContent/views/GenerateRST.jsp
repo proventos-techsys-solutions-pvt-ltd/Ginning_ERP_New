@@ -172,10 +172,16 @@
 		       			<textarea class="form-control" name="address" id="newCustomerAddress"></textarea>
 			       	</div>	
 			       	<div class="col-md-6">
-		       			<input type="checkbox" class="" name="newMembership" id="newMembership" value="0" /><label class="lbl-rm-all">Membership</label>
+			       	<div class="custom-control custom-checkbox">
+		       			 <input type="checkbox" class="custom-control-input" name="newMembership" id="newMembership" value="0">
+                         <label class="custom-control-label lbl-rm-t" for="newMembership">Membership</label>
+			       	</div>
 			       	</div>	
 			       	<div class="col-md-6">
-		       			<input type="checkbox" class="" name="newBlacklist" id="newBlacklist" value="0" /><label class="lbl-rm-all">Blacklist</label>
+			       		<div class="custom-control custom-checkbox">
+			       			<input type="checkbox" class="custom-control-input" name="newBlacklist" id="newBlacklist" value="0">
+                      	 	<label class="custom-control-label lbl-rm-t" for="newBlacklist">Blacklist</label>
+			       		</div>
 			       	</div>	
 		       	</div>
 		       </form>
