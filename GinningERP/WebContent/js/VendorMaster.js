@@ -3,7 +3,7 @@ class VendorMaster{
 		this.tableId = tableId;
 	}
 	
-	 editVendorMaster(){
+	editVendorMaster(){
 		var getTable = document.getElementById(this.tableId);//access table object
 		var getRows = getTable.rows; //access row object
 		var getRowsLength = getRows.length;//getting rows length

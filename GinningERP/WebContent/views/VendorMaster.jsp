@@ -55,8 +55,6 @@
 		</div>
 		
 		</div>
-		
-		
 		<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
@@ -66,9 +64,9 @@
 			setTitle("Vendor Master");//Setting Title of Page
 			setSearchPlaceholder("Search");//Setting Placeholder of Search Input
 			
-			 var loadfunction = function() {
+			window.onload = function() {
 				getCustomerData();
-				}(); 
+				};
 			
 			function getCustomerData(){
 				
@@ -95,6 +93,7 @@
 					
 					var element = document.getElementById('tableBody');
 					var tr = element.children;
+					console.log(element);
 					
 					var jsonResponse = JSON.parse(response);
 					console.log(jsonResponse);
@@ -115,29 +114,7 @@
 							membership = 'NO';
 						}
 						
-						var row = element.insertRow();
-						
-						var cell1 = row.insertCell(0);
-						var cell2 = row.insertCell(1);
-						var cell3 = row.insertCell(2);
-						var cell4 = row.insertCell(3);
-						var cell5 = row.insertCell(4);
-						var cell6 = row.insertCell(5);
-						var cell7 = row.insertCell(6);
-						var cell8 = row.insertCell(7);
-						
-						cell1.setAttribute('hidden','true');
-						
-						cell1.innerHTML = '<td hidden>'+jsonResponse[i].id+'</td>';
-						cell2.innerHTML = '<td>'+jsonResponse[i].name+'</td>';
-						cell3.innerHTML = '<td>'+jsonResponse[i].address+'</td>';
-						cell4.innerHTML = '<td>'+jsonResponse[i].mobile+'</td>';
-						cell5.innerHTML = '<td>'+blacklisted+'</td>';
-						cell6.innerHTML = '<td>'+membership+'</td>';
-						cell7.innerHTML = '<td id="callModal" class="text-center callModal"><img src="../property/img/edit.png" alt="edit"></td>';
-						cell8.innerHTML = '<td class="text-center"><img src="../property/img/delete.png" alt="delete" id="deleteRow"></td>';
-						
-						/* element.insertAdjacentHTML('beforeend','<tr>'+
+						element.insertAdjacentHTML('beforeend','<tr>'+
 								'<td hidden>'+jsonResponse[i].id+'</td>'+
 								'<td>'+jsonResponse[i].name+'</td>'+
 								'<td>'+jsonResponse[i].address+'</td>'+
@@ -146,13 +123,12 @@
 								'<td>'+membership+'</td>'+
 								'<td id="callModal" class="text-center callModal"><img src="../property/img/edit.png" alt="edit"></td>'+
 								'<td class="text-center"><img src="../property/img/delete.png" alt="delete" id="deleteRow"></td>'+
-							'</tr>') */
+							'</tr>')
 					}
 				}
 			}
 			
 		</script>
-		
 		<script src="../js/VendorMaster.js"></script>
 </body>
 </html>
