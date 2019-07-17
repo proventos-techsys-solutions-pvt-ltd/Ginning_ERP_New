@@ -33,12 +33,33 @@
 				</table>
 			</div>
 		</div>
+		<!-- Modal for editing -->
+		<div class="modal fade" id="editVendorMaster" tabindex="-1" role="dialog">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalCenterTitle">Edit Vendor Details</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        ...
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary">Save changes</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		
 		</div>
 		<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 		<script src="../js/commonjs.js"></script>
+		
 		<script>
 			setTitle("Vendor Master");//Setting Title of Page
 			setSearchPlaceholder("Search");//Setting Placeholder of Search Input
@@ -100,7 +121,7 @@
 								'<td>'+jsonResponse[i].mobile+'</td>'+
 								'<td>'+blacklisted+'</td>'+
 								'<td>'+membership+'</td>'+
-								'<td id="callModal" class="text-center"><img src="../property/img/edit.png" alt="edit"></td>'+
+								'<td id="callModal" class="text-center callModal"><img src="../property/img/edit.png" alt="edit"></td>'+
 								'<td class="text-center"><img src="../property/img/delete.png" alt="delete" id="deleteRow"></td>'+
 							'</tr>')
 					}
@@ -108,5 +129,6 @@
 			}
 			
 		</script>
+		<script src="../js/VendorMaster.js"></script>
 </body>
 </html>
