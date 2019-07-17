@@ -10,7 +10,7 @@
 <%@ page import="java.sql.SQLException"%>
 <%
 Connection con = null;
-String url = "jdbc:oracle:thin:@localhost:1521:orcl3";
+String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 
 try{
 //Connecting to Oracle Database

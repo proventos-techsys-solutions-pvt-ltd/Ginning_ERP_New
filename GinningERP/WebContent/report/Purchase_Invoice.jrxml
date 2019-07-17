@@ -10,7 +10,7 @@
 	<title>
 		<band height="79" splitType="Stretch">
 			<staticText>
-				<reportElement x="-20" y="10" width="595" height="56" uuid="36975298-0ec8-49dc-a0e8-fe8810be328e"/>
+				<reportElement x="10" y="20" width="510" height="56" uuid="36975298-0ec8-49dc-a0e8-fe8810be328e"/>
 				<textElement textAlignment="Center">
 					<font size="18" isBold="true"/>
 				</textElement>
