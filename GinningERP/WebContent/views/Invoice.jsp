@@ -49,7 +49,14 @@
 					    				<button class="btn btn-success btn-sm btn-no-radius" type="button" onclick="fetchData(document.getElementById('rst').value)">Fetch</button>
                                 	</div>
                                 </div>
-                                <div class="col-md-3 offset-md-7">
+                                <div class="col-md-2">
+                                	<label for="" class="lbl-rm-all">Amanat RST No </label>
+                                	<div class="d-flex justify-content-start align-items-center">
+	                                    <input id="amanatRst" name="amanatRst" type="text" class="form-control form-control-sm" placeholder="Search RST">
+					    				<button class="btn btn-success btn-sm btn-no-radius" type="button" onclick="fetchAmanatData(document.getElementById('amanatRst').value)">Fetch</button>
+                                	</div>
+                                </div>
+                                <div class="col-md-3 offset-md-5">
                                    <label class="lbl-rm-all">Customer Name & Address</label>
                                    <textarea id="customerData" name="customerData" class="form-control form-control-sm" rows="3"></textarea>
                                 </div>
@@ -338,6 +345,37 @@
 	function getData(){
 		
 		if(fetchRequest.readyState == 4){
+			var response = this.response.trim();
+			console.log(response);
+			var data = JSON.parse(response);
+			setData(data);
+		}
+	}
+	
+	
+	//Send the AJAX Request to fetch data
+	function fetchAmanatData(rst){
+		console.log(rst);
+		url = "../processing/amanatInvoice.jsp?rst="+rst;
+		if(window.XMLHttpRequest){  
+			fetchAmanatRequest=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchAmanatRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+		try{  
+			fetchAmanatRequest.onreadystatechange=getAmanatData;  
+			console.log("AJAX Req sent");
+			fetchAmanatRequest.open("GET",url,true);  
+			fetchAmanatRequest.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	
+	//Get data from AJAX request
+	function getAmanatData(){
+		
+		if(fetchAmanatRequest.readyState == 4){
 			var response = this.response.trim();
 			console.log(response);
 			var data = JSON.parse(response);

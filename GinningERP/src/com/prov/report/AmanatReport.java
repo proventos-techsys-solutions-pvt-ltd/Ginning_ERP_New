@@ -103,4 +103,63 @@ public JSONArray getPendingAmanatData() {
 	return jsonArray;
 	}
 
+
+public JSONArray getAmanatDataInvoicing(int rst) {
+	
+	ResultSet rs = null;
+	Connection con = null;
+	JSONArray jsonArray = new JSONArray();
+	try {
+		con = OracleConnection.getConnection();
+		
+		String invSql = "SELECT GD.WEIGHMENT_ID, GD.MATERIAL, GD.QUANTITY, GD.GRADE, GD.RATE CONTRACT_RATE, GD.AUTHORIZED_BY, GD.MOISTURE, AM.ID AMANAT_ID, AM.GRADE_ID, AM.AMANAT_DATE, AM.CUSTOMER_ID, AM.FINAL_RATE, CM.NAME, CM.ADDRESS, CM.MOBILE, CM.BLACKLISTED, CM.MEMBERSHIP\r\n" + 
+				"FROM GRADE_DETAILS GD, AMANAT_MAST AM, CUSTOMER_MAST CM\r\n" + 
+				"WHERE\r\n" + 
+				"GD.ID = AM.GRADE_ID AND\r\n" + 
+				"AM.CUSTOMER_ID = CM.ID AND\r\n" + 
+				"GD.RST="+rst;
+		
+		PreparedStatement stmt = con.prepareStatement(invSql);
+		
+		rs = stmt.executeQuery();
+		
+		while (rs.next()) {
+			JSONObject obj = new JSONObject();
+			
+			obj.put("weighmentId", rs.getInt(1));
+			obj.put("material", rs.getDouble(2));
+			obj.put("quantity", rs.getDouble(3));
+			obj.put("grade", rs.getString(4));
+			obj.put("rate", rs.getDouble(5));
+			obj.put("authorizer", rs.getString(6));
+			obj.put("moisture", rs.getFloat(7));
+			obj.put("amanatId", rs.getInt(8));
+			obj.put("gradeId", rs.getString(9));
+			
+			Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(10));
+			SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+			String properDate = format2.format(date1);
+			
+			obj.put("amanatDate", properDate);
+			obj.put("customerId", rs.getInt(11));
+			obj.put("finalRate", rs.getDouble(12));
+			obj.put("customerName", rs.getString(13));
+			obj.put("customerAddress", rs.getString(14));
+			obj.put("customerMobile", rs.getString(15));
+			obj.put("customerBlacklisted", rs.getInt(16));
+			obj.put("customerMembership", rs.getInt(17));
+			obj.put("rst", rst);
+			
+			jsonArray.put(obj);
+		}
+		
+		stmt.close();
+		con.close();
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	
+	return jsonArray;
+	}
+
 }

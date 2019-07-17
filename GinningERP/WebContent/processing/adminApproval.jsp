@@ -18,8 +18,6 @@
     	
     	String rstString = request.getParameter("rst");
     
-        System.out.print(rstString);
-        
         if(rstString.equals("0") || rstString == "")
         {
         	out.println("Please enter valid information.");	
