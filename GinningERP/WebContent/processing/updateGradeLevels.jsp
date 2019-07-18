@@ -7,17 +7,15 @@
     pageEncoding="ISO-8859-1"%>
     
     <% 
-    	String output = request.getParameter("outputUpdate");
-    	
-    	JSONParser parser = new JSONParser();
-    	
-    	JSONObject obj = (JSONObject)parser.parse(output);
+    	String gradeId = request.getParameter("gradeId");
+    	String gradeName = request.getParameter("gradeNameUpdate");
+    	String gradeDescription = request.getParameter("descriptionUpdate");
     	
      	GradeMaster gm = new GradeMaster();
      	
-     	gm.setId(Integer.parseInt((String)obj.get("gradeId")));
-     	gm.setGrade(((String)obj.get("gradeName")).toUpperCase());
-     	gm.setDesc(((String)obj.get("description")).toUpperCase());
+     	gm.setId(Integer.parseInt(gradeId));
+     	gm.setGrade(gradeName);
+     	gm.setDesc(gradeDescription);
      	
      	UpdateGradeMaster ugm = new UpdateGradeMaster();
      	

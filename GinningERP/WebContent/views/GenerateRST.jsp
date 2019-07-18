@@ -294,6 +294,8 @@ document.getElementById("mobile").addEventListener('input',function(e){
 	//}
 	
 });
+
+
 function checkEnteredCustomer(){
 	
 	var customerName = document.getElementById("customer").value;

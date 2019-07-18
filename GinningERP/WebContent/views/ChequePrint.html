@@ -1,0 +1,164 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+
+<!-- 
+	Need instructions or want more info? I live at https://github.com/hispanic/check-print 
+	Copyright © 2013 Michael Harry Scepaniak
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+
+<!-- Remove the protocol prefix (i.e., "http:") if hosting on a server instead of from localhost. -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script>
+	// Check #1.
+	var checkData1 = { 	
+		"date"          : "18/07/2019", // The date when the check is first eligible to be cashed/deposited. e.g. 05/01/2013
+		"payTo"         : "Ameya Pagore", // To whom the check should be made out. e.g. Michael Harry Scepaniak
+		"amountNbr"     : "10,000", // The amount of the check, as a number. e.g. 13,100.00
+		"amountTxt"     : "Ten Thousand", // The amount of the check, written out long-form. e.g. Thirteen thousand one hundred and 00/100
+		"payToAddress"  : [ // Lines 1 through 5 of the recipient's address.
+			],
+		"memo"          : ""// A short note to include on the check. e.g. Just a small thank you.
+		};
+	
+	/*
+	 * ============================================
+	 * NO NEED TO MODIFY ANYTHING BELOW THIS POINT.
+	 * ============================================
+	 */
+	jQuery(document).ready(function() {
+		populateCheck(1, checkData1);
+	})
+	
+	var populateCheck = function(checkNbr, checkData)
+	{
+		
+		function escapeRegExp(str) {
+			return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+		}
+		
+		function replaceAll(str, find, replace) {
+			return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+		}
+		
+		jQuery("div#check-" + checkNbr + "-date-box").html(replaceAll(checkData.date, '/', ''));
+		jQuery("div#check-" + checkNbr + "-pay-to-box").html(checkData.payTo);
+		jQuery("div#check-" + checkNbr + "-amount-nbr-box").html(checkData.amountNbr+" /-");
+		jQuery("div#check-" + checkNbr + "-amount-txt-box").html(checkData.amountTxt+" only");
+		jQuery("div#check-" + checkNbr + "-pay-to-address-box pre").html(buildAddressBlock(checkData.payToAddress));
+		jQuery("div#check-" + checkNbr + "-memo-box").html(checkData.memo);
+	}
+	
+	var buildAddressBlock = function(addressLines)
+	{
+		var addressBlock = "";
+		for (var i = 0; i < addressLines.length; i++)
+		{
+			var addressLine = addressLines[i];
+			if (addressLine !== undefined && addressLine !== null && addressLine.length > 0)
+			{
+				if (addressBlock.length > 0)
+				{
+					addressBlock += "<br />";
+				}
+				addressBlock += "         " + addressLine;
+			}
+		}
+		return addressBlock;
+	}
+</script>
+
+<style>
+
+
+	div
+	{
+		position: absolute;
+	}
+	
+	div#acPayee
+	{	
+		left: 300px;
+		top: 15px;
+		border-top: 1px solid;
+		border-bottom: 1px solid;
+		padding: 2px;
+	}
+	
+	div#check-1-date-box
+	{
+		letter-spacing: 5px;
+		left: 600px;
+		top: 30px;
+	}
+	
+	div#check-1-pay-to-box
+	{
+		left: 80px;
+		top: 75px;
+	}
+	
+	div#check-1-amount-nbr-box
+	{
+		left: 610px;
+		top: 115px;
+	}
+	
+	div#check-1-amount-txt-box
+	{
+		left: 100px;
+		top: 105px;
+	}
+	
+	div#check-1-pay-to-address-box
+	{
+		left: 30px;
+		top: 98px;
+	}
+	
+	div#check-1-memo-box
+	{
+		left: 20px;
+		top: 185px;
+	}
+	
+</style>
+</head>
+<body>
+
+	
+	<div id="acPayee">
+			A/C Payee only 
+	</div>
+	
+
+	<div id="check-1-date-box">
+	
+	</div>
+	<div id="check-1-pay-to-box">
+	
+	</div>
+	<div id="check-1-amount-nbr-box">
+	
+	</div>
+	<div id="check-1-amount-txt-box">
+	
+	</div>
+	<div id="check-1-pay-to-address-box">
+	<pre>
+
+	</pre>
+	</div>
+	<div id="check-1-memo-box">
+	
+	</div>
+</body>
+</html>

@@ -78,16 +78,14 @@
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		    	<form>
+		    	<form action="../processing/updateWeighRates.jsp">
 		    	<input type="hidden" id="outputUpdate" name="outputUpdate" />
 		    	</form>
+		    	<input type="hidden" id="weighRateId" name="weighRateId" />
 		    		<div class="form-row r-p-all">
 		    			<div class="col-md-6">
 		    				<label class="lbl-rm-l lbl-rm-t lbl-rm-b">Vehicle</label>
-		    				<select class="form-control form-control-sm" id="vehicleNameUpdate" name="vehicleNameUpdate">
-								<option disabled selected>Select</option>
-								<c:VehicleCategoryTag />
-							</select>
+		    				<input type="text" class="form-control form-control-sm" id="vehicleNameUpdate" name="vehicleNameUpdate">
 		    			</div>
 		    			<div class="col-md-6">
 		    				<label class="lbl-rm-l lbl-rm-t lbl-rm-b">Rate</label>
@@ -102,7 +100,6 @@
 		    				</textarea>
 		    			</div>
 		    		</div>
-		    	
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
@@ -145,16 +142,14 @@
 		
 		document.getElementsByTagName('form')[0].submit();
 	}
-
 	
-
 	function submitDataToUpdate(){
 		var json={};
 		
 		var element = document.getElementById('vehicleNameUpdate');
 		
-		json['vehicleTypeId'] = element.options[element.selectedIndex].getAttribute('value');
-		json['vehicleNameUpdate'] = element.options[element.selectedIndex].innerHTML;
+		json['vehicleTypeId'] = document.getElementById('weighRateId').value;
+		json['vehicleNameUpdate'] = document.getElementById('vehicleNameUpdate').value;
 		json['description'] = document.getElementById('updateDescription').value;
 		json['rate'] = document.getElementById('updateRate').value;
 		
@@ -201,14 +196,34 @@
 					'<td>'+json[i].vehicleName+'</td>'+
 					'<td>'+json[i].vehicleDesc+'</td>'+
 					'<td>'+json[i].weighrate+'</td>'+
-					'<td id="callModal" class="text-center"><img src="../property/img/edit.png" alt="edit"></td>'+
+					'<td id="edit" class="text-center"><img src="../property/img/edit.png" alt="edit"></td>'+
 					'<td class="text-center"><img src="../property/img/delete.png" alt="delete" id="deleteRow"></td>'+
 				'</tr>');
 		}
 		
 	}
 	
-	callModalPopup("callModal","calledModal");//Calling pop up for editing
+	document.addEventListener('click',function(e){
+		if(e.srcElement.id === 'edit' || e.srcElement.alt==='edit'){
+			var row;
+			if(e.srcElement.id === 'edit' ){
+				row = e.srcElement.parentNode;
+				console.log(row);
+			}else if(e.srcElement.alt==='edit'){
+				row = e.srcElement.parentNode.parentNode;
+				console.log(row);
+			}
+			
+			document.getElementById('weighRateId').value = row.cells[0].innerHTML;
+			document.getElementById('vehicleNameUpdate').value = row.cells[1].innerHTML;
+			document.getElementById('updateDescription').value = row.cells[2].innerHTML;
+			document.getElementById('updateRate').value = row.cells[3].innerHTML;
+			
+			
+			$("#calledModal").modal();
+		}
+	});
+	
 	</script>
 </body>
 </html>

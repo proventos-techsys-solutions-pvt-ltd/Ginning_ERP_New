@@ -117,11 +117,15 @@
 	                                     <textarea id="note" name="note" class="form-control form-control-sm"></textarea>
 									</div>
 									<div class="col-md-2 offset-md-6">
+										<label for="" class="lbl-rm-all">Unloading Charges</label> 
+	                                    <input type="text" id="unloadingCharges" name="unloadingCharges" class="form-control form-control-sm" value="20" readonly="readonly">
+	                                    <label for="" class="lbl-rm-all">Weighing Charges </label> 
+	                                    <input type="text" id="weighingCharges" name="weighingCharges" class="form-control form-control-sm" value="0" readonly="readonly">
 										<label for="" class="lbl-rm-all">Advance </label> 
 	                                    <input type="text" id="advance" name="advance" class="form-control form-control-sm" value="0">
 	                                    <label for="" class="lbl-rm-all">Net Payable </label> 
 	                                    <input type="text" id="net" name="net" class="form-control form-control-sm" value="0">
-									</div>
+ 									</div>
 								</div>
 									
                                
@@ -309,9 +313,6 @@
 				    </div>
 				  </div>
 				</div>
-				
-				
-				
 			<nav class="navbar navbar-default navbar-static-bottom footer border-top">
     
     		</nav>
@@ -321,6 +322,7 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/modal.js"></script>
 	<script>
+	
 	
 	//Send the AJAX Request to fetch data
 	function fetchData(rst){
@@ -398,6 +400,9 @@
 			document.getElementById("customerData").value = data[i].customerName + "\n" + data[i].customerAddress + "\n" + data[i].customerMobile;
 			document.getElementById("customerId").value = data[i].customerId;
 			
+			if(i===0){
+				document.getElementById('weighingCharges').value = Number(document.getElementById('weighingCharges').value) + Number(data[0].weighRate);
+			}
 			var blacklisted;
 			var membership;
 			
@@ -470,6 +475,7 @@
 		var total = 0;
 		for(i=0; i<rates.length; i++){
 			total = total + Number(rates[i].value);
+			total = total - (Number(document.getElementById('weighingCharges').value) + Number(document.getElementById('unloadingCharges').value));
 		}
 		
 		document.getElementById("net").value = total;

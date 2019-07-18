@@ -74,16 +74,12 @@
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		    	<form action="../processing/updateGradeLevels.jsp">
-		    		<input type="hidden" id="outputUpdate" name="outputUpdate" />
-		    	</form>
+		    	<form id='updateGradeForm' action="../processing/updateGradeLevels.jsp">
+		    		<input type="hidden" id="gradeId" name="gradeId" />
 		    		<div class="form-row r-p-all">
 		    			<div class="col-md-6">
 		    				<label class="lbl-rm-l lbl-rm-t">Grade</label>
-		    				<select class="form-control form-control-sm" id="gradeNameUpdate" name="gradeNameUpdate">
-								<option disabled selected>Select</option>
-								<c:Grade />
-							</select>
+		    				<input type="text" class="form-control form-control-sm" id="gradeNameUpdate" name="gradeNameUpdate">
 		    			</div>
 		    		</div>
 		    		<div class="form-row r-p-all">
@@ -94,6 +90,7 @@
 		    				</textarea>
 		    			</div>
 		    		</div>
+		    	</form>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
@@ -117,28 +114,9 @@
 		gradeReport();
 	};
 	
-	document.getElementById('submitUpdate').addEventListener('click',function(e){
-		submitDataToUpdate();
-	})
-	
 	document.getElementById('submitButton').addEventListener('click',function(e){
 		submitDataNewEntry();
 	})
-	
-	function submitDataToUpdate(){
-		var json={};
-		
-		var element = document.getElementById('gradeNameUpdate');
-		
-		json['gradeId'] = element.options[element.selectedIndex].getAttribute('data-gradeid');
-		json['gradeName'] = element.options[element.selectedIndex].value;
-		json['description'] = document.getElementById('descriptionUpdate').value;
-		
-		document.getElementById('outputUpdate').value = JSON.stringify(json);
-		
-		document.getElementsByTagName('form')[1].submit();
-	}
-	
 	
 	function submitDataNewEntry(){
 		var json={};
@@ -150,10 +128,6 @@
 		
 		document.getElementsByTagName('form')[0].submit();
 	}
-
-	
-	//Calling pop up for editing
-	callModalPopup("callModal","calledModal");
 		
 		function gradeReport(){
 			var url="../processing/gradeReport.jsp";
@@ -191,13 +165,35 @@
 					'<td hidden>'+json[i].id+'</td>'+
 					'<td>'+json[i].grade+'</td>'+
 					'<td>'+json[i].desc+'</td>'+
-					'<td id="callModal" class="text-center"><img src="../property/img/edit.png" alt="edit"></td>'+
+					'<td id="edit" class="text-center"><img src="../property/img/edit.png" alt="edit"></td>'+
 					'<td class="text-center"><img src="../property/img/delete.png" alt="delete"></td>'+
 					'<td class="text-center"><input type="radio" class="" id="" name=""  value=""></td>'+
 				'</tr>');
 		}
-		
 	}
+	
+	document.addEventListener('click',function(e){
+		if(e.srcElement.id === 'edit' || e.srcElement.alt==='edit'){
+			var row;
+			if(e.srcElement.id === 'edit' ){
+				row = e.srcElement.parentNode;
+				console.log(row);
+			}else if(e.srcElement.alt==='edit'){
+				row = e.srcElement.parentNode.parentNode;
+				console.log(row);
+			}
+			
+			document.getElementById('gradeId').value = row.cells[0].innerHTML;
+			document.getElementById('gradeNameUpdate').value = row.cells[1].innerHTML;
+			document.getElementById('descriptionUpdate').value = row.cells[2].innerHTML;
+			
+			$("#calledModal").modal();
+		}
+	});
+	
+	document.getElementById('submitUpdate').addEventListener('click',function(e){
+		document.getElementById('updateGradeForm').submit();
+	})
 			
 	
 	</script>
