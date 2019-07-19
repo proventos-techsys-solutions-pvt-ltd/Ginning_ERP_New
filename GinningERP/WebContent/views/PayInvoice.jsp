@@ -38,11 +38,7 @@
   				<c:Customer/>
   			</select>
   		</div>
-  		<div class="col-md-2">
-  			<label class="lbl-rm-l lbl-rm-t">Mobile No</label>
-  			<input type="text" class="form-control form-control-sm" id="mobile" name="mobile">
-  		</div>
-  		<div class="col-md-2 offset-md-4">
+  		<div class="col-md-2 offset-md-6">
   			<div class="pending-invoices">
   				<h6>Rs.10,000/-</h6>
   				<p class="lbl-rm-b">0 Days Overdue</p>
@@ -99,6 +95,10 @@
 <script>
 document.getElementById("companyId").addEventListener("change",function(){
 	companyFilter(this.value);
+})
+
+document.getElementById("customerId").addEventListener("change",function(){
+	vendorFilter(this.options[this.selectedIndex].text);
 })
 
 
@@ -166,8 +166,24 @@ function companyFilter(companyId)
 			tableBody.rows.item(i).setAttribute('hidden','hidden');
 		}
 	}
-	
 } 
+
+function vendorFilter(vendorName)
+{
+	console.log(vendorName);
+	var tableBody = document.getElementById("tableBody");
+	for(i=0;i<tableBody.rows.length;i++){
+			tableBody.rows.item(i).removeAttribute('hidden');
+		}
+	
+	for(i=0;i<tableBody.rows.length;i++){
+		var name = tableBody.rows.item(i).cells[4].innerHTML;
+		if(vendorName != name){
+			tableBody.rows.item(i).setAttribute('hidden','hidden');
+		}
+	}
+	
+}
 </script>
 
 </body>
