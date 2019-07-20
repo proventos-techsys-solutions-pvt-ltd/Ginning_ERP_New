@@ -27,7 +27,7 @@ public class GradeTag extends SimpleTagSupport {
 			 Statement stmt = con.createStatement();
 			 gradeResultSet = stmt.executeQuery(accountQuery);
 			 while(gradeResultSet.next()) {
-				 gradeName.put(gradeResultSet.getString("GRADE")+"-"+gradeResultSet.getInt("ID"),gradeResultSet.getString("DECRIPTION"));
+				 gradeName.put(gradeResultSet.getString("GRADE")+"-"+gradeResultSet.getInt("ID"),gradeResultSet.getString("DESCRIPTION"));
 				}
 		}catch(Exception e) {
 			e.printStackTrace();

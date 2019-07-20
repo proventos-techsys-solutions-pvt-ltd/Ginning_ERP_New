@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.Date"%>
+<%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <!doctype html>
 <html lang="en">
     <head>
@@ -34,37 +35,45 @@
 						<img src="../property/img/factory.png" alt="warehouse">&nbsp;
 						<label class="lbl-rm-l">Setup Company</label>
 					</div>
-					<select class="form-control form-control-sm">
-						<option value="">Company 1</option>
-						<option value="">Company 2</option>
-						<option value="">Company 3</option>
+					<select class="form-control form-control-sm" name="companyId" id="companyId">
+						<option disabled selected>Select</option>
+						<c:Company />
 					</select>
 				</div>
 				<div class="col-md-2">
 					<label class="lbl-rm-l">Today's Cotton Rate</label>
-					<input type="text" class="form-control form-control-sm" name="" id="">
+					<input type="text" class="form-control form-control-sm" name="todayCottonRate" id="todayCottonRate">
 				</div>
 				<div class="col-md-2">
 					<label class="lbl-rm-l">Heap</label>
-					<select class="form-control form-control-sm">
+					<select class="form-control form-control-sm" name="todayHeap" id="todayHeap">
 						<option value="">Heap A</option>
 						<option value="">Heap B</option>
 						<option value="">Heap C</option>
 					</select>
 				</div>
-				<div class="col-md-2">
-					<label class="lbl-rm-l">Grade</label>
-					<select class="form-control form-control-sm">
-						<option value="">Grade A</option>
-						<option value="">Grade B</option>
-						<option value="">Grade C</option>
-					</select>
 				</div>
-				<div class="col-md-2">
-					<label class="lbl-rm-l">Grade Rate</label>
-					<input type="text" class="form-control form-control-sm" name="" id="">
-				</div>
-			</div>
+				<div class="row tile-background-row">
+						<div class="col-md-4">
+							<table class="table table-bordered">
+								<thead>
+									<tr class="table-back">
+										<th width="5%" >Sr No</th>
+										<th width="20%">Grade</th>
+										<th width="20%">Rate</th>
+									</tr>
+								</thead>
+								<tbody id="tableBody">
+									<!-- <tr>
+										<td align="center">1</td>
+										<td>Grade A</td>
+										<td><input class="form-control form-control-sm lbl-rm-all" type="text" name="gradeARate" id="gradeARate" /></td>
+									</tr> -->
+								</tbody>
+							</table>
+						</div>
+					</div>
+				
 			
 			<div class="row mt-2 tile-background-row">
 					<div class="d-flex justify-content-between align-items-center">
@@ -74,21 +83,25 @@
 			</div>
 			
 			<div class="row tile-background-row">
-				<div class="col-md-3">
-					<label class="lbl-rm-l">Cotton Bells/Lint</label>
-					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
+				<div class="col-md-2">
+					<label class="lbl-rm-l">Raw Cotton</label>
+					<input type="text" class="form-control form-control-sm" name="rawCotton" id="rawCotton" readonly>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
+					<label class="lbl-rm-l">Cotton Bales/Lint</label>
+					<input type="text" class="form-control form-control-sm" name="cottonBales" id="cottonBales" readonly>
+				</div>
+				<div class="col-md-2">
 					<label class="lbl-rm-l">Cotton Seeds</label>
-					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
+					<input type="text" class="form-control form-control-sm" name="cottonSeed" id="cottonSeed" readonly>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<label class="lbl-rm-l">Cotton Oil</label>
-					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
+					<input type="text" class="form-control form-control-sm" name="cottonOil" id="cottonOil" readonly>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<label class="lbl-rm-l">Cotton Cake</label>
-					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
+					<input type="text" class="form-control form-control-sm" name="cottonCake" id="cottonCake" readonly>
 				</div>
 			</div>
 			
@@ -102,19 +115,19 @@
 			<div class="row tile-background-row">
 				<div class="col-md-3">
 					<label class="lbl-rm-l">Opening Balance</label>
-					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
+					<input type="text" class="form-control form-control-sm" name="cashOpening" id="cashOpening" readonly>
 				</div>
 				<div class="col-md-3">
 					<label class="lbl-rm-l">Addition Today &nbsp;<img src="../property/img/add.png" alt="add" class="ctm-hover" id="callCashModal"></label>
-					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
+					<input type="text" class="form-control form-control-sm" name="cashAddition" id="cashAddition" readonly>
 				</div>
 				<div class="col-md-3">
 					<label class="lbl-rm-l">Utilized Today</label>
-					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
+					<input type="text" class="form-control form-control-sm" name="cashUtilized" id="cashUtilized" readonly>
 				</div>
 				<div class="col-md-3">
 					<label class="lbl-rm-l">Closing Balance</label>
-					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
+					<input type="text" class="form-control form-control-sm" name="closingBalance" id="closingBalance" readonly>
 				</div>
 			</div>
 			
@@ -125,9 +138,8 @@
 				</div>
 			</div>
 			
-			<div class="row tile-background-row">
-			<% for(int i = 0; i<2 ; i++){ %>
-				<div class="col-md-12"><label>Bank Name</label></div>
+			<div class="row tile-background-row" id="bankDetails">
+				<!-- <div class="col-md-12"><label id="bankName">Bank Name</label></div>
 				<div class="col-md-3">
 					<label class="lbl-rm-l">Opening Balance</label>
 					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
@@ -143,8 +155,7 @@
 				<div class="col-md-3">
 					<label class="lbl-rm-l">Closing Balance</label>
 					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
-				</div>
-				<% } %>
+				</div> -->
 			</div>
 			
 			<!-- **********************CASH ADDITION POP-UP -->
@@ -173,27 +184,27 @@
 					      	<div class="form-row">
 					      		<div class="col-md-4">
 						      		<label class="lbl-rm-l">Date</label>
-						      		<input type="text" class="form-control form-control-sm" name="" id="" value="Today's Date">
+						      		<input type="date" class="form-control form-control-sm" name="addCashDate" id="addCashDate">
 					      		</div>
 					      		<div class="col-md-4">
 						      		<label class="lbl-rm-l">Voucher No</label>
-						      		<input type="text" class="form-control form-control-sm" name="" id="" value="Today's Date">
+						      		<input type="text" class="form-control form-control-sm" name="addCashVoucher" id="addCashVoucher" placeholder="Voucher No.">
 					      		</div>
 					      	</div> 
 				      		<div class="form-row">
 					      		<div class="col-md-12">
 						      		<label class="lbl-rm-l lbl-rm-t">Description</label>
-						      		<input type="text" class="form-control form-control-sm" name="" id="" value="">
+						      		<input type="text" class="form-control form-control-sm" name="addCashDesc" id="addCashDesc" value="">
 					      		</div>
 					      	</div> 
 					      	<div class="form-row">
 					      		<div class="col-md-4">
 						      		<label class="lbl-rm-l lbl-rm-t">Amount</label>
-						      		<input type="text" class="form-control form-control-sm" name="" id="" value="">
+						      		<input type="text" class="form-control form-control-sm" name="addCashAmount" id="addCashAmount" value="">
 					      		</div>
 					      		<div class="col-md-8">
 					      			<label class="lbl-rm-l lbl-rm-t">Reference</label>
-					      			<input type="text" class="form-control form-control-sm" name="" id="" value="">
+					      			<input type="text" class="form-control form-control-sm" name="addcashRef" id="addcashRef" value="">
 				      			</div>
 					      	</div> 
 					      </form>
@@ -266,15 +277,15 @@
 			      			<div class="form-row">
 			      				<div class="col-md-4">
 						      		<label class="lbl-rm-l">Date</label>
-						      		<input type="text" class="form-control form-control-sm" name="" id="" value="Today's Date">
+						      		<input type="text" class="form-control form-control-sm" name="addBankDate" id="addBankDate" value="Today's Date">
 					      		</div>
 					      		<div class="col-md-4">
 						      		<label class="lbl-rm-l">Voucher No</label>
-						      		<input type="text" class="form-control form-control-sm" name="" id="" value="Today's Date">
+						      		<input type="text" class="form-control form-control-sm" name="addBankVoucher" id="addBankVoucher" value="Today's Date">
 					      		</div>
 					      		<div class="col-md-4">
 						      		<label class="lbl-rm-l">Mode</label>
-						      		<select class="form-control form-control-sm" name="" id="">
+						      		<select class="form-control form-control-sm" name="addBankMode" id="addBankMode">
 						      			<option value="">Cheque</option>
 						      			<option value="">RTGS</option>
 						      			<option value="">Cash</option>
@@ -284,17 +295,17 @@
 			      			<div class="form-row">
 					      		<div class="col-md-12">
 						      		<label class="lbl-rm-l lbl-rm-t">Description</label>
-						      		<input type="text" class="form-control form-control-sm" name="" id="" value="">
+						      		<input type="text" class="form-control form-control-sm" name="addBankDesc" id="addBankDesc" value="">
 					      		</div>
 					      	</div> 
 					      	<div class="form-row">
 					      		<div class="col-md-4">
 					      			<label class="lbl-rm-l lbl-rm-t">Amount</label>
-					      			<input type="text" class="form-control form-control-sm" name="" id="" value="">
+					      			<input type="text" class="form-control form-control-sm" name="addBankAmount" id="addBankAmount" value="">
 				      			</div>
 				      			<div class="col-md-8">
 					      			<label class="lbl-rm-l lbl-rm-t">Reference</label>
-					      			<input type="text" class="form-control form-control-sm" name="" id="" value="">
+					      			<input type="text" class="form-control form-control-sm" name="addBankRef" id="addBankRef" value="">
 				      			</div>
 					      	</div>
 			      		</form>
@@ -306,8 +317,7 @@
 			    </div>
 			  </div>
 			</div>
-			
-		</div> 
+			</div>
 	
 	
 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
@@ -317,6 +327,128 @@
 	<script>
 	callModalPopup("callCashModal","cashAdditionModal"); // Calling Cash Addition Pop-up
 	callModalPopupWithIndex("callBankModal","bankAdditionModal"); // Calling Bank Addition Pop-up
+	
+	
+	document.addEventListener('change', function(e){
+		if(e.srcElement.id === 'companyId'){
+			getStockReport(e.srcElement.options[e.srcElement.selectedIndex].value);
+		}
+	})
+	
+	function getStockReport(companyId){
+		var url="../processing/getSetupCompanydata.jsp?companyId="+companyId;
+		if(window.XMLHttpRequest){  
+			fetchStock=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchStock=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+	  
+		try{  
+			fetchStock.onreadystatechange=fetchStockData;  
+			console.log("AJAX Req sent");
+			fetchStock.open("GET",url,true);  
+			fetchStock.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+
+	 function fetchStockData(){
+		 if(fetchStock.readyState == 4){
+			 var response = this.response.trim();
+			 console.log(JSON.parse(response));
+			 setStockData(response);
+			 setCashdata(response);
+			 setBankdata(response);
+		 }
+	 }
+
+	 
+	 function setStockData(data){
+		 
+		 var obj = JSON.parse(data);
+		
+		 document.getElementById('rawCotton').value = obj.stock.closingStock.rawCotton;
+		 document.getElementById('cottonBales').value = obj.stock.closingStock.cottonBales;
+		 document.getElementById('cottonSeed').value = obj.stock.closingStock.cottonSeed;
+		 document.getElementById('cottonOil').value = obj.stock.closingStock.cottonSeedOil;
+		 document.getElementById('cottonCake').value = obj.stock.closingStock.cottonCakes;
+		 
+	 }
+	 
+	 function setCashdata(data){
+		 var obj = JSON.parse(data);
+		 console.log(obj);
+	 }
+
+	 function setBankdata(data)
+	 {
+		 var obj = JSON.parse(data);
+		 var element = document.getElementById("bankDetails");
+		
+		 for(i=0; i< obj.banks.length; i++){
+		 element.insertAdjacentHTML('beforeEnd','<div class="col-md-12"><label id="bankName'+(i+1)+'">'+obj.banks[i].bankName+'</label></div>'+
+									'<div class="col-md-3">'+
+							'<label class="lbl-rm-l">Opening Balance</label>'+
+							'<input type="text" class="form-control form-control-sm" name="" id="" readonly>'+
+						'</div>'+
+						'<div class="col-md-3">'+
+							'<label class="lbl-rm-l">Addition Today <img src="../property/img/add.png" alt="add" class="ctm-hover" name="callBankModal" id="callBankModal"> </label>'+
+						'<input type="text" class="form-control form-control-sm" name="" id="" readonly>'+
+						'</div>'+
+						'<div class="col-md-3">'+
+							'<label class="lbl-rm-l">Utilized Today</label>'+
+							'<input type="text" class="form-control form-control-sm" name="" id="" readonly>'+
+						'</div>'+
+						'<div class="col-md-3">'+
+							'<label class="lbl-rm-l">Closing Balance</label>'+
+							'<input type="text" class="form-control form-control-sm" name="" id="" readonly>'+
+						'</div>');
+		 }
+	 }
+	 window.onload = function() {
+			gradeReport();
+		};
+	 
+	 function gradeReport(){
+			var url="../processing/gradeReport.jsp";
+			
+			if(window.XMLHttpRequest){  
+				dataRequest=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				dataRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+		  
+			try{  
+				dataRequest.onreadystatechange=getGradeData;  
+				console.log("AJAX Req sent");
+				dataRequest.open("GET",url,true);  
+				dataRequest.send();  
+			}catch(e){alert("Unable to connect to server");}
+		}
+		
+		
+	function getGradeData(){
+		
+		if(dataRequest.readyState == 4){
+			var gradeData = this.response.trim();
+			setGradeData(gradeData);
+		}
+	}
+	
+	function setGradeData(gradeData){
+		var json = JSON.parse(gradeData);
+		var element = document.getElementById('tableBody');
+		for(i=0; i< json.length; i++){
+			element.insertAdjacentHTML('beforeend','<tr>'+
+										'<td align="center">1</td>'+
+										'<td>'+json[i].grade+'</td>'+
+										'<td><input class="form-control form-control-sm lbl-rm-all" type="text" name="gradeARate" id="gradeARate" /></td>'+
+									'</tr>');
+		}
+	}
+	
+	
 	</script>
 </body>
 </html>
