@@ -21,14 +21,17 @@
 					<h4>Daily Transactions Setup </h4>
 				</div>
 				<div class="col-md-3">
-					<h4><%= new Date() %></h4>
+					<h4 id="todaysDate"><%= new Date() %></h4>
 				</div>
+				
 				<div class="col-md-3 offset-md-3 text-right">
-					<button type="button" class="btn btn-success">Set-up</button>
+					<button type="button" class="btn btn-success" onclick="submitDailySetup()">Set-up</button>
 					<button type="button" class="btn btn-success">Print Report</button>
 				</div>
 			</div>
-			
+			<form>
+					<input type="hidden" name="dailySetupOutput" id="dailySetupOutput" />
+			</form>
 			<div class="row tile-background-row">
 				<div class="col-md-3">
 					<div class="d-flex justify-content-start align-items-center">
@@ -47,9 +50,9 @@
 				<div class="col-md-2">
 					<label class="lbl-rm-l">Heap</label>
 					<select class="form-control form-control-sm" name="todayHeap" id="todayHeap">
-						<option value="">Heap A</option>
-						<option value="">Heap B</option>
-						<option value="">Heap C</option>
+						<option value="Heap A">Heap A</option>
+						<option value="Heap B">Heap B</option>
+						<option value="Heap C">Heap C</option>
 					</select>
 				</div>
 				</div>
@@ -325,9 +328,6 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script>
-	callModalPopup("callCashModal","cashAdditionModal"); // Calling Cash Addition Pop-up
-	callModalPopupWithIndex("callBankModal","bankAdditionModal"); // Calling Bank Addition Pop-up
-	
 	
 	document.addEventListener('change', function(e){
 		if(e.srcElement.id === 'companyId'){
@@ -377,32 +377,33 @@
 	 
 	 function setCashdata(data){
 		 var obj = JSON.parse(data);
-		 console.log(obj);
 	 }
 
 	 function setBankdata(data)
 	 {
 		 var obj = JSON.parse(data);
 		 var element = document.getElementById("bankDetails");
+		 
+		 element.innerHTML = '';
 		
 		 for(i=0; i< obj.banks.length; i++){
-		 element.insertAdjacentHTML('beforeEnd','<div class="col-md-12"><label id="bankName'+(i+1)+'">'+obj.banks[i].bankName+'</label></div>'+
+		 element.insertAdjacentHTML('beforeend','<div class="col-md-12"><label id="bankName'+(i+1)+'">'+obj.banks[i].bankName+'</label></div>'+
+										'<div class="col-md-3">'+
+										'<label class="lbl-rm-l">Opening Balance</label>'+
+										'<input type="text" class="form-control form-control-sm" name="bankOpening'+(i+1)+'" id="bankOpening'+(i+1)+'" readonly>'+
+									'</div>'+
 									'<div class="col-md-3">'+
-							'<label class="lbl-rm-l">Opening Balance</label>'+
-							'<input type="text" class="form-control form-control-sm" name="" id="" readonly>'+
-						'</div>'+
-						'<div class="col-md-3">'+
-							'<label class="lbl-rm-l">Addition Today <img src="../property/img/add.png" alt="add" class="ctm-hover" name="callBankModal" id="callBankModal"> </label>'+
-						'<input type="text" class="form-control form-control-sm" name="" id="" readonly>'+
-						'</div>'+
-						'<div class="col-md-3">'+
-							'<label class="lbl-rm-l">Utilized Today</label>'+
-							'<input type="text" class="form-control form-control-sm" name="" id="" readonly>'+
-						'</div>'+
-						'<div class="col-md-3">'+
-							'<label class="lbl-rm-l">Closing Balance</label>'+
-							'<input type="text" class="form-control form-control-sm" name="" id="" readonly>'+
-						'</div>');
+										'<label class="lbl-rm-l">Addition Today <img src="../property/img/add.png" alt="add" class="ctm-hover" name="callBankModal" id="callBankModal"> </label>'+
+									'<input type="text" class="form-control form-control-sm" name="bankAddition'+(i+1)+'" id="bankAddition'+(i+1)+'" readonly>'+
+									'</div>'+
+									'<div class="col-md-3">'+
+										'<label class="lbl-rm-l">Utilized Today</label>'+
+										'<input type="text" class="form-control form-control-sm" name="bankUtilized'+(i+1)+'" id="bankUtilized'+(i+1)+'" readonly>'+
+									'</div>'+
+									'<div class="col-md-3">'+
+										'<label class="lbl-rm-l">Closing Balance</label>'+
+										'<input type="text" class="form-control form-control-sm" name="bankClosing'+(i+1)+'" id="bankClosing'+(i+1)+'" readonly>'+
+									'</div>');
 		 }
 	 }
 	 window.onload = function() {
@@ -438,16 +439,57 @@
 	
 	function setGradeData(gradeData){
 		var json = JSON.parse(gradeData);
+		console.log(gradeData);
 		var element = document.getElementById('tableBody');
 		for(i=0; i< json.length; i++){
 			element.insertAdjacentHTML('beforeend','<tr>'+
 										'<td align="center">1</td>'+
+										'<td hidden id="gradeId'+(i+1)+'">'+json[i].id+'</td>'+
 										'<td>'+json[i].grade+'</td>'+
-										'<td><input class="form-control form-control-sm lbl-rm-all" type="text" name="gradeARate" id="gradeARate" /></td>'+
+										'<td><input class="form-control form-control-sm lbl-rm-all" type="text" name="gradeRate'+(i+1)+'" id="gradeRate'+(i+1)+'" /></td>'+
 									'</tr>');
 		}
 	}
 	
+	callModalPopup("callCashModal","cashAdditionModal"); // Calling Cash Addition Pop-up
+	//callModalPopupWithIndex("callBankModal","bankAdditionModal"); // Calling Bank Addition Pop-up
+	
+	document.addEventListener('click',function(e){
+		if(e.srcElement.id === 'callBankModal')
+			{
+				$('#bankAdditionModal').modal();
+			}
+	})
+	
+	function submitDailySetup(){
+		
+		jsonObj = {};
+		
+		jsonObj['companyId'] = document.getElementById('companyId').value;
+		jsonObj['date'] = document.getElementById('todaysDate').innerHTML;
+		jsonObj['heap'] = document.getElementById('todayHeap').value;
+		
+		jsonArray = [];
+		
+		var noOfRows = document.getElementById('tableBody').childElementCount;
+		for(i=0; i<noOfRows;i++){
+			gradeRate = {};
+			gradeRate['gradeId'] = document.getElementById('gradeId'+(i+1)).innerHTML;
+			gradeRate['gradeRate'] = document.getElementById('gradeRate'+(i+1)).value;
+			
+			jsonArray.push(gradeRate);
+		}
+		
+		jsonObj['gradeRates'] = jsonArray;
+		
+		var jsonStr = JSON.stringify(jsonObj);
+		console.log(jsonStr);
+		
+		document.getElementById('dailySetupOutput').value=jsonStr;
+		
+		document.getElementsByTagName('form')[0].submit();
+				
+	}
 	
 	</script>
 </body>
