@@ -111,10 +111,10 @@
                                     </table>
                                 </div>
                                 </div>
-                                <div class="row tile-background-row">
+                                <div class="row tile-background-row border-top">
 	                               	 <div class="col-md-4 ">
 	                                     <label class="lbl-rm-all">Note :</label>
-	                                     <textarea id="note" name="note" class="form-control form-control-sm"></textarea>
+	                                     <textarea id="note" name="note" class="form-control form-control-lg"></textarea>
 									</div>
 									<div class="col-md-2 offset-md-6">
 										<label for="" class="lbl-rm-all">Unloading Charges</label> 
@@ -128,191 +128,36 @@
  									</div>
 								</div>
 									
+                               <div class="row tile-background-row border-top">
+                               	<div class="col-md-4">
+                               		<label class="lbl-rm-all">Mode of Payment</label>
+                               		<select class="form-control form-control-sm" id="" name="">
+                               			<option>Cash</option>
+                               			<option>Cheque</option>
+                               			<option>RTGS/NEFT</option>
+                               		</select>
+                               	</div>
+                               		<div class="col-md-2">
+                               		<label class="lbl-rm-all">Amount</label>
+                               		<div class="d-flex justify-content-start align-items-center">
+                               			<input type="text" class="form-control form-control-sm" id="" name="">
+                               			&nbsp;&nbsp;
+                               			<img src="../property/img/add.png" alt="add" class="ctm-hover">
+                               		</div>
+                               		
+                               	</div>
+                               </div>
                                
-                                <div class="row tile-background-row">                
-                                <div class="col-md-12 border-top border-bottom">
-                                    <div class="d-flex justify-content-around custom-checkbox">
-                                        <div class="custom-control">
-                                            <input type="checkbox" class="custom-control-input" id="cashCheckbox">
-                                            <label class="custom-control-label" for="cashCheckbox">Cash</label>
-                                        </div>
-                                        <div class="custom-control">
-                                            <input type="checkbox" class="custom-control-input" id="chequeCheckbox">
-                                            <label class="custom-control-label" for="chequeCheckbox">Cheque</label>
-                                        </div>
-                                        <div class="custom-control">
-                                            <input type="checkbox" class="custom-control-input" id="rtgsCheckbox">
-                                            <label class="custom-control-label" for="rtgsCheckbox">RTGS/NEFT</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
-                                <!-- ********************HIDDEN TABLE FOR COLLECTING PAYMENT INFORMATION**************************** -->
-                                	<div class="row tile-background-row">
-                                	<div class="col-md-12 mt-2">
-                                		<table class="table table-bordered mt-2 " id="paymentTable">
-                                			<thead id="paymentDetailsTableHead"></thead>
-                                			<tbody id="paymentDetailsTableBody"></tbody>                     			
-                                		</table>
-                                	</div>
-                                	</div>
-                                <div class="row tile-background-row">
-                                <div class="col-md-12 ">
+                                
+                                <div class="row tile-background-row border-top">
+                                <div class="col-md-12">
                                     <div class="d-flex justify-content-end">
                                         <button style="margin-bottom:8px;" type="button" class="btn btn-success btn-sm btn-mr-rt btn-mr-tp" >Save</button>
                                         <button style="margin-bottom:8px;" type="button" class="btn btn-success btn-sm btn-mr-rt btn-mr-tp" onclick="submitForm()">Save & Print</button>
                                     </div>
                                 </div>
                                 </div>
-             	
-             	<!-- *********************************CASH PAYMENT MODAL******************************************** -->
-             	<div class="modal fade" id="cashPaymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				      	<h4 class="modal-title" id="myModalLabel">Cash Payment Details</h4>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				      </div>
-				      <div class="modal-body">
-				       	<form>
-				       		<div class="form-row">
-				       			<div class="col-md-6">
-				       			<label>Cash Receipt No</label>
-				       			<input type="text" class="form-control form-control-sm" name="cashReceiptNo" id="cashReceiptNo" placeholder="Auto" readonly>
-				       			</div>
-				       			<div class="col-md-6">
-				       			<label>Cash Balance</label>
-				       			<input type="text" class="form-control form-control-sm" name="cashBalance" id="cashBalance" readonly>
-				       			</div>
-				       		</div>
-				       		<div class="form-row">
-				       			<div class="col-md-6">
-				       			<label>Vendor Name</label>
-				       			<input type="text" class="form-control form-control-sm" name="vendorNameCash" id="vendorNameCash" placeholder="Auto" value="Vendor 1" readonly>
-				       			</div>
-				       		</div>
-				       		<div class="form-row">
-				       			<div class="col-md-6">
-				       			<label>Amount to Pay</label>
-				       			<input type="text" class="form-control form-control-sm" name="amountToPayCash" id="amountToPayCash">
-				       			</div>
-				       		</div>
-				       	</form>
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-default btn-sm" name="" id="cashPaymentClaseBtn" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary btn-sm" name="" id="cashPaymentSaveBtn" data-dismiss="modal">Save</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
-             	</div>
-             	
-             	<!-- *********************************CHEQUE PAYMENT MODAL******************************************** -->
-             	<div class="modal fade" id="chequePaymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				      	<h4 class="modal-title" id="myModalLabel">Cheque Payment Details</h4>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				      </div>
-				      <div class="modal-body">
-				       	<form>
-				       		<div class="form-row">
-				       			<div class="col-md-6">
-				       			<label>Select Bank</label>
-				       			<select name="chequeBank" id="chequeBank" class="form-control form-control-sm bank" >
-				       				<option selected disabled>Select</option>
-				       				<c:Bank/>
-				       			</select>
-				       			</div>
-				       			<div class="col-md-6">
-				       			<label>Balance</label>
-				       			<input name="balanceCheque" id="balanceCheque" type="text" class="form-control form-control-sm" readonly>
-				       			</div>
-				       		</div>
-				       		<div class="form-row">
-				       			<div class="col-md-6">
-				       			<label>Vendor Name</label>
-				       			<input type="text" class="form-control form-control-sm" name="vendorNameCheque" id="vendorNameCheque" placeholder="Auto">
-				       			</div>
-				       			<div class="col-md-6">
-				       			<label>Amount to Pay</label>
-				       			<input type="text" class="form-control form-control-sm" name="chequeAmount" id="chequeAmount">
-				       			</div>
-				       		</div>
-				       		<div class="form-row">
-				       			<div class="col-md-6">
-				       			<label>Date</label>
-				       			<input type="date" class="form-control form-control-sm" name="chequeDate" id="chequeDate" placeholder="Auto">
-				       			</div>
-				       			<div class="col-md-6">
-				       			<label>Cheque No</label>
-				       			<input type="text" class="form-control form-control-sm" name="chequeNo" id="chequeNo">
-				       			</div>
-				       		</div>
-				       	</form>
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-default btn-sm" id="chequePaymentCloseBtn" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary btn-sm" id="chequePaymentSaveBtn" data-dismiss="modal">Save</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
-             	
-             	<!-- *********************************RTSG/NEFT PAYMENT MODAL******************************************** -->
-             	<div class="modal fade" id="transferPaymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				      	<h4 class="modal-title" id="myModalLabel">RTGS/NEFT Payment Details</h4>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				      </div>
-				      <div class="modal-body">
-				       	<form>
-				       		<div class="form-row">
-				       			<div class="col-md-6">
-				       			<label>Select Bank</label>
-				       			<select name="rtgsBank" id="rtgsBank" class="form-control form-control-sm bank">
-				       				<option selected disabled>Select</option>
-				       				<c:Bank />
-				       			</select>
-				       			</div>
-				       			<div class="col-md-6">
-				       			<label>Balance</label>
-				       			<input name="balanceCheque" id="balanceCheque" type="text" class="form-control form-control-sm" readonly>
-				       			</div>
-				       		</div>
-				       		<div class="form-row">
-				       			<div class="col-md-6">
-				       			<label>Vendor Name</label>
-				       			<input type="text" class="form-control form-control-sm" name="vendorNameRN" id="vendorNameRN" placeholder="Auto">
-				       			</div>
-				       			<div class="col-md-6">
-				       			<label>Amount to Pay</label>
-				       			<input type="text" class="form-control form-control-sm" name="rnAmount" id="rnAmount">
-				       			</div>
-				       		</div>
-				       		<div class="form-row">
-				       			<div class="col-md-6">
-				       			<label>Date</label>
-				       			<input type="date" class="form-control form-control-sm" name="rnDate" id="rnDate" placeholder="Auto">
-				       			</div>
-				       			<div class="col-md-6">
-				       			<label>RTGS/NEFT No</label>
-				       			<input type="text" class="form-control form-control-sm" name="rnno" id="rnno">
-				       			</div>
-				       		</div>
-				       	</form>
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-default btn-sm" id="transferPaymentCloseBtn" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary btn-sm" id="transferPaymentSaveBtn" data-dismiss="modal">Save</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
+             				  </div>
 			<nav class="navbar navbar-default navbar-static-bottom footer border-top">
     
     		</nav>

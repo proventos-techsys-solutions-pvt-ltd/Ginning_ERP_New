@@ -21,9 +21,6 @@
 		        		<img src="../property/img/bill.png" alt="recipt">&nbsp;
 		        		<h4 class="lbl-rm-all">Goods Grading Note</h4>&nbsp;&nbsp;
 		        	</div>
-		        	<div class="d-flex justify-content-between align-items-center">	
-		        		<h4 class="lbl-rm-all border receipt-no">GGN No : 0001</h4>
-		        	</div>
 	        	</div>
 	        </div>
 	        <div class="col-md-1 offset-md-8">

@@ -52,9 +52,6 @@
              	<div class="col-md-6">
              		<canvas id="myChart"></canvas>
              	</div>
-             	<div class="col-md-6">
-             		<canvas id="myLineChart"></canvas>
-             	</div>
              </div>
                 
             </div>
@@ -100,10 +97,58 @@
 			 
 			 var obj = JSON.parse(data);
 			 console.log(obj);
-			
+			 
+			 var canvas = document.getElementById("myChart");
+			 var ctx = canvas.getContext('2d');
+
+			 // Global Options:
+			  Chart.defaults.global.defaultFontColor = 'black';
+			  Chart.defaults.global.defaultFontSize = 16;
+
+			 var data = {
+			     labels: ["She returns it ", "She keeps it"],
+			       datasets: [
+			         {
+			             fill: true,
+			             backgroundColor: [
+			                 'black',
+			                 'white'],
+			             data: [5, 95],
+			 // Notice the borderColor 
+			             borderColor:	['black', 'black'],
+			             borderWidth: [2,2]
+			         }
+			     ]
+			 };
+
+			 // Notice the rotation from the documentation.
+
+			 var options = {
+			         title: {
+			                   display: true,
+			                   text: 'What happens when you lend your favorite t-shirt to a girl ?',
+			                   position: 'top'
+			               },
+			         rotation: -0.7 * Math.PI
+			 };
+
+
+			 // Chart declaration:
+			 var myBarChart = new Chart(ctx, {
+			     type: 'pie',
+			     data: data,
+			     options: options
+			 });
+
+			 // Fun Fact: I've lost exactly 3 of my favorite T-shirts and 2 hoodies this way :|
+
+			 
+			 
+			 
+			/*
 			 var ctx = document.getElementById('myChart').getContext('2d');
 				var myChart = new Chart(ctx, {
-				    type: 'bar',
+				    type: 'pie',
 				    data: {
 				        labels: ['Cotton Bales', 'Cotton Seeds', 'Oil', 'Cotton Cake'],
 				        datasets: [{
@@ -134,41 +179,8 @@
 				        }
 				    }
 				});
+				*/
 				
-				/********LINE CHART*********/
-				var ctx = document.getElementById('myLineChart').getContext('2d');
-				var myLineChart = new Chart(ctx, {
-				    type: 'line',
-				    data: {
-				        labels: ['Cotton Bales', 'Cotton Seeds', 'Oil', 'Cotton Cake'],
-				        datasets: [{
-				            label: 'Rupees',
-				            data: [obj.closingStock.cottonBales, obj.closingStock.cottonSeed, obj.closingStock.cottonSeedOil, obj.closingStock.cottonCakes],
-				            backgroundColor: [
-				                'rgba(255, 99, 132, 0.2)',
-				                'rgba(54, 162, 235, 0.2)',
-				                'rgba(255, 206, 86, 0.2)',
-				                'rgba(75, 192, 192, 0.2)'
-				            ],
-				            borderColor: [
-				                'rgba(255, 99, 132, 1)',
-				                'rgba(54, 162, 235, 1)',
-				                'rgba(255, 206, 86, 1)',
-				                'rgba(75, 192, 192, 1)'
-				            ],
-				            borderWidth: 1
-				        }]
-				    },
-				    options:{
-				        scales: {
-				            yAxes: [{
-				                ticks: {
-				                    beginAtZero: true
-				                }
-				            }]
-				        }
-				    }
-				});
 				
 				document.getElementById('aRate').innerHTML = obj.closingStock.avgRate;
 				
