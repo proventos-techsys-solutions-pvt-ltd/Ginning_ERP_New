@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.Date"%>
@@ -21,7 +22,10 @@
 					<h4>Daily Transactions Setup </h4>
 				</div>
 				<div class="col-md-3">
-					<h4 id="todaysDate"><%= new Date() %></h4>
+				<% String pattern = "yyyy-MM-dd";
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+				String date = simpleDateFormat.format(new Date()); %>
+					<h4 id="todaysDate"><%= date %></h4>
 				</div>
 				
 				<div class="col-md-3 offset-md-3 text-right">
@@ -29,7 +33,7 @@
 					<button type="button" class="btn btn-success">Print Report</button>
 				</div>
 			</div>
-			<form>
+			<form action='../processing/addDailySetup.jsp'>
 					<input type="hidden" name="dailySetupOutput" id="dailySetupOutput" />
 			</form>
 			<div class="row tile-background-row">
@@ -44,16 +48,31 @@
 					</select>
 				</div>
 				<div class="col-md-2">
-					<label class="lbl-rm-l">Today's Cotton Rate</label>
-					<input type="text" class="form-control form-control-sm" name="todayCottonRate" id="todayCottonRate">
-				</div>
-				<div class="col-md-2">
 					<label class="lbl-rm-l">Heap</label>
 					<select class="form-control form-control-sm" name="todayHeap" id="todayHeap">
 						<option value="Heap A">Heap A</option>
 						<option value="Heap B">Heap B</option>
 						<option value="Heap C">Heap C</option>
 					</select>
+				</div>
+				<div class="col-md-3">
+		      		<label class="lbl-rm-l">Bank</label>
+		      		<select class="form-control form-control-sm" name="chequeBankId" id="chequeBankId">
+		      			<option selected disabled>Select</option>
+		      			<c:Bank />
+		      		</select>
+	      		</div>
+				<div class="col-md-1">
+					<label class="lbl-rm-l">Chqs Issued</label>
+					<input class="form-control form-control-sm" name="firstChequeNo" id="firstChequeNo" placeholder="First Cheque No" />
+				</div>
+				<div class="col-md-1">
+				<label>-</label>
+					<input class="form-control form-control-sm" name="lastChequeNo" id="lastChequeNo" placeholder="Last Cheque No" />
+				</div>
+				<div class="col-md-2">
+					<label class="lbl-rm-l">Total Cheques Issued</label>
+					<input class="form-control form-control-sm" name="totalCheques" id="totalCheques" placeholder="" readonly="readonly" />
 				</div>
 				</div>
 				<div class="row tile-background-row">
@@ -77,37 +96,6 @@
 						</div>
 					</div>
 				
-			
-			<div class="row mt-2 tile-background-row">
-					<div class="d-flex justify-content-between align-items-center">
-						<img src="../property/img/warehouse.png" alt="warehouse">&nbsp;
-						<h4  class="lbl-rm-b">Stock Details</h4>
-					</div>
-			</div>
-			
-			<div class="row tile-background-row">
-				<div class="col-md-2">
-					<label class="lbl-rm-l">Raw Cotton</label>
-					<input type="text" class="form-control form-control-sm" name="rawCotton" id="rawCotton" readonly>
-				</div>
-				<div class="col-md-2">
-					<label class="lbl-rm-l">Cotton Bales/Lint</label>
-					<input type="text" class="form-control form-control-sm" name="cottonBales" id="cottonBales" readonly>
-				</div>
-				<div class="col-md-2">
-					<label class="lbl-rm-l">Cotton Seeds</label>
-					<input type="text" class="form-control form-control-sm" name="cottonSeed" id="cottonSeed" readonly>
-				</div>
-				<div class="col-md-2">
-					<label class="lbl-rm-l">Cotton Oil</label>
-					<input type="text" class="form-control form-control-sm" name="cottonOil" id="cottonOil" readonly>
-				</div>
-				<div class="col-md-2">
-					<label class="lbl-rm-l">Cotton Cake</label>
-					<input type="text" class="form-control form-control-sm" name="cottonCake" id="cottonCake" readonly>
-				</div>
-			</div>
-			
 			<div class="row mt-2 tile-background-row">
 				<div class="d-flex justify-content-between align-items-center">
 					<img src="../property/img/purse.png" alt="warehouse">&nbsp;
@@ -220,35 +208,34 @@
 					      	<div class="form-row">
 					      		<div class="col-md-4">
 						      		<label class="lbl-rm-l">Date</label>
-						      		<input type="text" class="form-control form-control-sm" name="" id="" value="Today's Date">
+						      		<input type="text" class="form-control form-control-sm" name="contraBankDate" id="contraBankDate" value="Today's Date">
 					      		</div>
 					      		<div class="col-md-4">
 						      		<label class="lbl-rm-l">Voucher No</label>
-						      		<input type="text" class="form-control form-control-sm" name="" id="" value="Today's Date">
+						      		<input type="text" class="form-control form-control-sm" name="contraBankVoucher" id="contraBankVoucher" >
 					      		</div>
 					      		<div class="col-md-4">
 						      		<label class="lbl-rm-l">Bank</label>
-						      		<select class="form-control form-control-sm">
-						      			<option value="">Bank 1</option>
-						      			<option value="">Bank 2</option>
-						      			<option value="">Bank 3</option>
+						      		<select class="form-control form-control-sm" name="contraBankId" id="contraBankId">
+						      			<option selected disabled>Select</option>
+						      			<c:Bank />
 						      		</select>
 					      		</div>
 					      	</div> 
 				      		<div class="form-row">
 					      		<div class="col-md-12">
 						      		<label class="lbl-rm-l lbl-rm-t">Description</label>
-						      		<input type="text" class="form-control form-control-sm" name="" id="" value="">
+						      		<input type="text" class="form-control form-control-sm" name="contraBankDesc" id="contraBankDesc" value="">
 					      		</div>
 					      	</div> 
 					      	<div class="form-row">
 					      		<div class="col-md-4">
 						      		<label class="lbl-rm-l lbl-rm-t">Amount</label>
-						      		<input type="text" class="form-control form-control-sm" name="" id="" value="">
+						      		<input type="text" class="form-control form-control-sm" name="contraBankAmt" id="contraBankAmt" value="">
 					      		</div>
 					      		<div class="col-md-8">
 					      			<label class="lbl-rm-l lbl-rm-t">Reference</label>
-					      			<input type="text" class="form-control form-control-sm" name="" id="" value="">
+					      			<input type="text" class="form-control form-control-sm" name="contraBankRef" id="contraBankRef" value="">
 				      			</div>
 					      	</div> 
 					      </form>
@@ -335,6 +322,12 @@
 		}
 	})
 	
+	document.addEventListener('change', function(e){
+		if(e.srcElement.id === 'lastChequeNo'){
+			document.getElementById('totalCheques').value = e.srcElement.value - document.getElementById('firstChequeNo').value;
+		}
+	})
+	
 	function getStockReport(companyId){
 		var url="../processing/getSetupCompanydata.jsp?companyId="+companyId;
 		if(window.XMLHttpRequest){  
@@ -356,24 +349,11 @@
 		 if(fetchStock.readyState == 4){
 			 var response = this.response.trim();
 			 console.log(JSON.parse(response));
-			 setStockData(response);
 			 setCashdata(response);
 			 setBankdata(response);
 		 }
 	 }
 
-	 
-	 function setStockData(data){
-		 
-		 var obj = JSON.parse(data);
-		
-		 document.getElementById('rawCotton').value = obj.stock.closingStock.rawCotton;
-		 document.getElementById('cottonBales').value = obj.stock.closingStock.cottonBales;
-		 document.getElementById('cottonSeed').value = obj.stock.closingStock.cottonSeed;
-		 document.getElementById('cottonOil').value = obj.stock.closingStock.cottonSeedOil;
-		 document.getElementById('cottonCake').value = obj.stock.closingStock.cottonCakes;
-		 
-	 }
 	 
 	 function setCashdata(data){
 		 var obj = JSON.parse(data);
@@ -405,7 +385,28 @@
 										'<input type="text" class="form-control form-control-sm" name="bankClosing'+(i+1)+'" id="bankClosing'+(i+1)+'" readonly>'+
 									'</div>');
 		 }
+		 
+		 setBankTags('contraBankId', obj.banks[0].companyId);
+		 setBankTags('chequeBankId', obj.banks[0].companyId);
+		 
 	 }
+	
+	 function setBankTags(banktagId, companyId){
+		 
+		 var bankTag = document.getElementById(banktagId);
+			
+				for(i=0; i<bankTag.options.length; i++){
+					bankTag.options[i].hidden = false;
+				}
+				bankTag.options[0].selected = true;
+				
+				for(i=0; i<bankTag.options.length; i++){
+					if(companyId != Number(bankTag.options[i].getAttribute("data-company-id"))){
+						bankTag.options[i].hidden = true;
+					}	
+				}
+	 }
+	 
 	 window.onload = function() {
 			gradeReport();
 		};
@@ -443,7 +444,7 @@
 		var element = document.getElementById('tableBody');
 		for(i=0; i< json.length; i++){
 			element.insertAdjacentHTML('beforeend','<tr>'+
-										'<td align="center">1</td>'+
+										'<td align="center">'+(i+1)+'</td>'+
 										'<td hidden id="gradeId'+(i+1)+'">'+json[i].id+'</td>'+
 										'<td>'+json[i].grade+'</td>'+
 										'<td><input class="form-control form-control-sm lbl-rm-all" type="text" name="gradeRate'+(i+1)+'" id="gradeRate'+(i+1)+'" /></td>'+
@@ -468,7 +469,11 @@
 		jsonObj['companyId'] = document.getElementById('companyId').value;
 		jsonObj['date'] = document.getElementById('todaysDate').innerHTML;
 		jsonObj['heap'] = document.getElementById('todayHeap').value;
-		
+		jsonObj['todaysBankId'] = document.getElementById('chequeBankId').value;
+		jsonObj['firstChequeNo'] = document.getElementById('firstChequeNo').value;
+		jsonObj['lastChequeNo'] = document.getElementById('lastChequeNo').value;
+		jsonObj['totalCheques'] = document.getElementById('totalCheques').value;
+
 		jsonArray = [];
 		
 		var noOfRows = document.getElementById('tableBody').childElementCount;

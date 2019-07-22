@@ -142,7 +142,7 @@
 	})
 	
 	function setDataForNewGrading(data){
-		
+		document.getElementById('tableBody').innerHTML = '';
 		var blacklisted;
 		var membership;
 		
@@ -349,6 +349,8 @@
 	
 	function setGradeUpdationData(data)
 	{
+		document.getElementById('tableBody').innerHTML = '';
+		
 		var blacklisted;
 		var membership;
 		
@@ -424,6 +426,17 @@
 		}
 		
 		document.getElementById("quantity").value = totalQty;
+		
+		if(data[0].invoiceFlag === 1){
+			var inputElements = document.getElementsByTagName('input');
+			for(i=0;i<inputElements.length;i++){
+				inputElements[i].setAttribute('readonly', '')
+			}
+			var selectElements = document.getElementsByTagName('select');
+			for(i=0;i<selectElements.length;i++){
+				selectElements[i].setAttribute('disabled', '')
+			}
+		}
 	}
 	
 	

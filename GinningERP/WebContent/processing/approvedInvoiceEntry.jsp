@@ -56,6 +56,8 @@
 				item.setCustomerId(Integer.parseInt((String)json.get("customerId")));
 				item.setGradeId(Integer.parseInt((String)obj.get("gradeId")));
 				item.setAmanatDate((String)json.get("invoiceDate"));
+				item.setGradeId(Integer.parseInt((String)obj.get("gradeId")));
+				item.setRst(Integer.parseInt((String)obj.get("rst")));
 				amanatItemList.add(item);
 			}
 			

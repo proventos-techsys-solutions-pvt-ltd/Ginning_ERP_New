@@ -2,15 +2,42 @@ package com.prov.bean;
 
 public class DailySetup {
 	
-	private int id, companyId;
+	private int id, companyId, bankId, totalCheques;
+	public int getBankId() {
+		return bankId;
+	}
+	public void setBankId(int bankId) {
+		this.bankId = bankId;
+	}
+	public int getTotalCheques() {
+		return totalCheques;
+	}
+	public void setTotalCheques(int totalCheques) {
+		this.totalCheques = totalCheques;
+	}
+	public long getFirstChequeNo() {
+		return firstChequeNo;
+	}
+	public void setFirstChequeNo(long firstChequeNo) {
+		this.firstChequeNo = firstChequeNo;
+	}
+	public long getLastChequeNo() {
+		return lastChequeNo;
+	}
+	public void setLastChequeNo(long lastChequeNo) {
+		this.lastChequeNo = lastChequeNo;
+	}
+	private String setupDate, cottonHeap;
+	private long firstChequeNo, lastChequeNo;
+	
+	
 	public int getCompanyId() {
 		return companyId;
 	}
 	public void setCompanyId(int companyId) {
 		this.companyId = companyId;
 	}
-	private String setupDate, cottonHeap;
-	private float cottonRate;
+
 	public int getId() {
 		return id;
 	}
@@ -28,12 +55,6 @@ public class DailySetup {
 	}
 	public void setCottonHeap(String cottonHeap) {
 		this.cottonHeap = cottonHeap;
-	}
-	public float getCottonRate() {
-		return cottonRate;
-	}
-	public void setCottonRate(float cottonRate) {
-		this.cottonRate = cottonRate;
 	}
 	
 

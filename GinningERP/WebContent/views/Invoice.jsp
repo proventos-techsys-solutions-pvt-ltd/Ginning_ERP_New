@@ -168,23 +168,32 @@
 	<script src="../js/modal.js"></script>
 	<script>
 	
+	function checkRstInTable(rst){
+		var rstArray = $('#tableBody td:nth-child(1)>input').map(function(){
+		       return $(this).val();
+		   }).get();
+		var flag;
+		var n = rstArray.includes(rst);
+		return n;
+	}
 	
 	//Send the AJAX Request to fetch data
 	function fetchData(rst){
-		console.log(rst);
-		url = "../processing/adminApproval.jsp?rst="+rst;
-		if(window.XMLHttpRequest){  
-			fetchRequest=new XMLHttpRequest();  
-		}  
-		else if(window.ActiveXObject){  
-			fetchRequest=new ActiveXObject("Microsoft.XMLHTTP");  
-		}  
-		try{  
-			fetchRequest.onreadystatechange=getData;  
-			console.log("AJAX Req sent");
-			fetchRequest.open("GET",url,true);  
-			fetchRequest.send();  
-		}catch(e){alert("Unable to connect to server");}
+		if(!checkRstInTable(rst)){
+			url = "../processing/adminApproval.jsp?rst="+rst;
+			if(window.XMLHttpRequest){  
+				fetchRequest=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				fetchRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+			try{  
+				fetchRequest.onreadystatechange=getData;  
+				console.log("AJAX Req sent");
+				fetchRequest.open("GET",url,true);  
+				fetchRequest.send();  
+			}catch(e){alert("Unable to connect to server");}
+		}
 	}
 	
 	
@@ -291,11 +300,9 @@
 			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" >';
 			cell9.innerHTML = '<input type="hidden" id="gradeId'+(rowNo+1)+'" class="lbl-rm-all" name="gradeId" value="'+data[i].gradeId+'" >';
 			cell10.innerHTML = '<input type="hidden" id="weighmentId'+(rowNo+1)+'" class="lbl-rm-all" name="weighmentId" value="'+data[i].weighmentId+'" >';
-			
-			document.getElementById("vendorNameCash").value = data[i].customerName;
-			document.getElementById("vendorNameCheque").value = data[i].customerName;
  		}
 		calculateTotal();
+		
 	}
 	
 	//Set Amanat checkbox value

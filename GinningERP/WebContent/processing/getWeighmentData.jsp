@@ -1,3 +1,4 @@
+<%@page import="com.prov.dbops.CheckInvoiceExists"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="com.prov.dbops.CheckRST"%>
 <%@page import="org.json.JSONObject"%>
@@ -37,8 +38,18 @@
 		}
 		else if(gradeExistsFlag>0)
 		{
-			JSONArray jsonArray = report.getDataForInvoicing(rst);
-			jsonArray.getJSONObject(0).put("flag", gradeExistsFlag);
+			JSONArray jsonArray = null;
+			CheckInvoiceExists checkInv = new CheckInvoiceExists();
+			if(checkInv.invoiceExistsCheck(rst) > 0){
+				jsonArray = report.getDataForInvoicing(rst);
+				jsonArray.getJSONObject(0).put("flag", gradeExistsFlag);
+				jsonArray.getJSONObject(0).put("invoiceFlag", 1);
+			}
+			else if(checkInv.invoiceExistsCheck(rst) <= 0){
+				jsonArray = report.getDataForInvoicing(rst);
+				jsonArray.getJSONObject(0).put("flag", gradeExistsFlag);
+				jsonArray.getJSONObject(0).put("invoiceFlag", 0);
+			}
 			
 			out.print(jsonArray);
 			out.flush();

@@ -2,8 +2,16 @@ package com.prov.bean;
 
 public class Amanat {
 	
-	private int id, gradeId, customerId;
+	private int id, gradeId, customerId, rst;
 		
+	public int getRst() {
+		return rst;
+	}
+
+	public void setRst(int rst) {
+		this.rst = rst;
+	}
+
 	private String amanatDate;
 	
 	private double finalRate;

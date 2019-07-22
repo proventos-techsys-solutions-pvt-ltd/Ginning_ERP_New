@@ -18,7 +18,7 @@ public class SimpleRead implements Runnable, SerialPortEventListener {
         while (portList.hasMoreElements()) {
             portId = (CommPortIdentifier) portList.nextElement();
             if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
-                 if (portId.getName().equals("COM1")) {
+                 if (portId.getName().equals("COM3")) {
 			//                if (portId.getName().equals("/dev/term/a")) {
                     SimpleRead reader = new SimpleRead();
                 }
@@ -77,4 +77,8 @@ public class SimpleRead implements Runnable, SerialPortEventListener {
             break;
         }
     }
+    
+    public static void main(String[] args) {
+    	SimpleRead.getWeighBridgeData();
+	}
 }
