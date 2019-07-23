@@ -341,7 +341,16 @@ h6{
 .r-p-all{
 	padding:0;
 }
-
+/*******************************Log classes******************************/
+.log{
+	background:#7dcc01;
+	padding:.5rem;
+	margin-left:5px;
+}
+.heading{
+	font-size:1rem;
+	font-weight:bold;
+}
 
 /*******************RESPONSIVE CLASSESS*******************************/
 @media screen and (max-width: 768px){
@@ -350,4 +359,3 @@ h6{
 	margin-top:.5rem;
 	}
 }
-
