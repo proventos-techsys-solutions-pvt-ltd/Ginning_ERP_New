@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bd6d5571-f1ff-461c-86c6-cdf4ed142c72">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oracle DB Connection"/>
+	<queryString language="SQL">
+		<![CDATA[Select * from Invoice_MAST]]>
+	</queryString>
+	<field name="ID" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="ID"/>
+	</field>
+	<field name="INVOICE_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="INVOICE_NO"/>
+	</field>
+	<field name="TOTAL" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL"/>
+	</field>
+	<field name="AMOUNTPAID" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="AMOUNTPAID"/>
+	</field>
+	<field name="PENDING" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PENDING"/>
+	</field>
+	<field name="INV_DATE" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="INV_DATE"/>
+	</field>
+	<field name="COMPANY_ID" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="COMPANY_ID"/>
+	</field>
+	<field name="CUSTOMER_ID" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CUSTOMER_ID"/>
+	</field>
+	<field name="AUTHORIZER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="AUTHORIZER"/>
+	</field>
+	<field name="NOTE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOTE"/>
+	</field>
+	<field name="TOTAL_QUANTITY" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_QUANTITY"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="177" y="10" width="208" height="20" uuid="bb4f8d36-caf3-4146-9fe4-9edcd60d49fa"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[SAMIR COTTON INDUSTRIES PVT LTD]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="155" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="38" width="100" height="30" uuid="4b5056a6-02d2-469b-bd0b-ac0cd7357ff0"/>
+				<textFieldExpression><![CDATA[$F{CUSTOMER_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="113" width="100" height="30" uuid="69b9f72e-825c-48ec-acf7-76cc1e0d115b"/>
+				<textFieldExpression><![CDATA[$F{COMPANY_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="0" width="100" height="30" uuid="6699ef48-ed9d-497f-bba6-6cbbad509db6"/>
+				<textFieldExpression><![CDATA[$F{INVOICE_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="0" width="100" height="30" uuid="78e26a8c-18f1-46f3-aee3-051c3cf12183"/>
+				<textFieldExpression><![CDATA[$F{INV_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="191" y="0" width="63" height="30" uuid="85c41891-2561-417d-b984-427c7eccf3a8"/>
+				<textFieldExpression><![CDATA[INVOICE NO:]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="415" y="0" width="50" height="30" uuid="af60d858-ad15-405c-9b71-17f7174126a9"/>
+				<textFieldExpression><![CDATA[INVOICE DATE:]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="86" width="63" height="15" uuid="b8a7d738-d613-4ebe-ab8f-a05f86ccfbc4"/>
+				<textFieldExpression><![CDATA[Consignee:]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="5" width="100" height="30" uuid="1f1f0d4c-1105-49b0-b9e6-0051ca8160e7"/>
+				<text><![CDATA[Customer:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
