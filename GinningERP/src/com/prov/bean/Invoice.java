@@ -3,7 +3,26 @@ package com.prov.bean;
 public class Invoice {
 	
 	private int id, customerId, companyId ;
-	private double total, amountPaid, pending, totalQuanity;
+	private double total, amountPaid, pending, totalQuanity, cashAmount, chequeAmount, rtgsAmount ;
+	
+	public double getCashAmount() {
+		return cashAmount;
+	}
+	public void setCashAmount(double cashAmount) {
+		this.cashAmount = cashAmount;
+	}
+	public double getChequeAmount() {
+		return chequeAmount;
+	}
+	public void setChequeAmount(double chequeAmount) {
+		this.chequeAmount = chequeAmount;
+	}
+	public double getRtgsAmount() {
+		return rtgsAmount;
+	}
+	public void setRtgsAmount(double rtgsAmount) {
+		this.rtgsAmount = rtgsAmount;
+	}
 	public double getTotalQuanity() {
 		return totalQuanity;
 	}

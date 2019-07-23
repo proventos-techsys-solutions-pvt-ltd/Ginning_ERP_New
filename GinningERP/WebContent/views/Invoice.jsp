@@ -38,7 +38,7 @@
                         		</div>
                         		<div class="col-md-3 offset-md-6">
                         			<label class="lbl-rm-all">Authorized By</label>
-                                    <input id="authorizer" name="authorizer"  type="text" class="form-control form-control-sm" placeholder="">
+                                    <input id="authorizer" name="authorizer"  type="text" class="form-control form-control-sm" placeholder="" readonly>
                         		</div>
                         	</div>
                             <div class="row tile-background-row">
@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="col-md-3 offset-md-5">
                                    <label class="lbl-rm-all">Customer Name & Address</label>
-                                   <textarea id="customerData" name="customerData" class="form-control form-control-sm" rows="3"></textarea>
+                                   <textarea id="customerData" name="customerData" class="form-control form-control-sm" rows="3" readonly></textarea>
                                 </div>
                                </div>
                             <div class="row tile-background-row">
@@ -68,15 +68,15 @@
                                 </div>
                                  <div class="col-md-2">
                                     <label for="" class="lbl-rm-all">Date </label>
-                                    <input type="date" id="invoiceDate" name="invoiceDate" class="form-control form-control-sm" placeholder="Record No">
+                                    <input type="date" id="invoiceDate" name="invoiceDate" class="form-control form-control-sm" >
                                 </div>
                                 <div class="col-md-auto offset-md-5">
                         			<label for="" class="lbl-rm-all">Membership</label>
-                                    <input id="customerBlacklisted" name="customerBlacklisted"  type="text" class="form-control form-control-sm" placeholder="">
+                                    <input id="customerBlacklisted" name="customerBlacklisted"  type="text" class="form-control form-control-sm" placeholder="" readonly>
                         		</div>	
                         		<div class="col-md-auto">
                         			<label for="" class="lbl-rm-all">Blacklisted</label>
-                                    <input id="customerMembership" name="customerMembership"  type="text" class="form-control form-control-sm" placeholder="">
+                                    <input id="customerMembership" name="customerMembership"  type="text" class="form-control form-control-sm" placeholder="" readonly>
                         		</div>
                                 
                              </div>
@@ -127,28 +127,36 @@
 	                                    <input type="text" id="net" name="net" class="form-control form-control-sm" value="0">
  									</div>
 								</div>
-									
-                               <div class="row tile-background-row border-top">
-                               	<div class="col-md-4">
-                               		<label class="lbl-rm-all">Mode of Payment</label>
-                               		<select class="form-control form-control-sm" id="" name="">
-                               			<option>Cash</option>
-                               			<option>Cheque</option>
-                               			<option>RTGS/NEFT</option>
-                               		</select>
-                               	</div>
-                               		<div class="col-md-2">
-                               		<label class="lbl-rm-all">Amount</label>
-                               		<div class="d-flex justify-content-start align-items-center">
-                               			<input type="text" class="form-control form-control-sm" id="" name="">
-                               			&nbsp;&nbsp;
-                               			<img src="../property/img/add.png" alt="add" class="ctm-hover">
-                               		</div>
-                               		
-                               	</div>
-                               </div>
-                               
-                                
+								<div id="paymentSection">
+								</div>
+								<div class="row tile-background-row">
+										<div class="col-md-4">
+											<table class="table table-bordered">
+												<thead>
+													<tr class="table-back">
+														<th width="5%" >Sr No</th>
+														<th width="20%">Mode Of Payment</th>
+														<th width="20%">Amount</th>
+														<th width="5%" >Add</th>
+													</tr>
+												</thead>
+												<tbody id="paymentTableBody">
+													<tr>
+														<td align="center">1</td>
+														<td>
+															<select class="form-control form-control-sm" id="paymentMode1" name="paymentMode1">
+						                               			<option value="Cash">Cash</option>
+						                               			<option value="Cheque">Cheque</option>
+						                               			<option value="RTGS/NEFT">RTGS/NEFT</option>
+					                               			</select>
+					                               		</td>
+														<td><input type="text" class="form-control form-control-sm" id="payAmount1" name="payAmount1"></td>
+													<td><img src="../property/img/add.png" alt="add" class="ctm-hover" ></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+								</div>	
                                 <div class="row tile-background-row border-top">
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-end">
@@ -165,7 +173,6 @@
 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
-	<script src="../js/modal.js"></script>
 	<script>
 	
 	function checkRstInTable(rst){
@@ -290,13 +297,13 @@
 			cell9.setAttribute('hidden','hidden');
 			cell10.setAttribute('hidden','hidden');
 			
-			cell1.innerHTML = '<input type="text" id="tableRst'+(rowNo+1)+'" class="form-control form-control-sm" name="tableRst" value="'+data[i].rst+'" >';
-			cell2.innerHTML = '<input type="text" id="material'+(rowNo+1)+'" class="form-control form-control-sm" name="material" value="'+data[i].material+'" >';
-			cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+data[i].quantity+'" >';
-			cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+data[i].grade+'" >';
-			cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+data[i].moisture+'" >';
+			cell1.innerHTML = '<input type="text" id="tableRst'+(rowNo+1)+'" class="form-control form-control-sm" name="tableRst" value="'+data[i].rst+'" readonly>';
+			cell2.innerHTML = '<input type="text" id="material'+(rowNo+1)+'" class="form-control form-control-sm" name="material" value="'+data[i].material+'" readonly>';
+			cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+data[i].quantity+'" readonly>';
+			cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+data[i].grade+'" readonly>';
+			cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+data[i].moisture+'" readonly>';
 			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+data[i].rate+'" >';
-			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+(data[i].rate * data[i].quantity)+'" >';
+			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+(data[i].rate * data[i].quantity)+'" readonly>';
 			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" >';
 			cell9.innerHTML = '<input type="hidden" id="gradeId'+(rowNo+1)+'" class="lbl-rm-all" name="gradeId" value="'+data[i].gradeId+'" >';
 			cell10.innerHTML = '<input type="hidden" id="weighmentId'+(rowNo+1)+'" class="lbl-rm-all" name="weighmentId" value="'+data[i].weighmentId+'" >';
@@ -331,31 +338,10 @@
 		}
 		
 		document.getElementById("net").value = total;
+		document.getElementById("payAmount1").value = total;
 		
 	}
 	
-	//Set Bank options as per the company selected
-	document.getElementById("companyId").addEventListener("change", function(e){
-
-		var noOfOptions = document.getElementById("chequeBank").length;
-		var companyId = Number(e.srcElement.value);
-		var bankTags = document.getElementsByClassName("bank");
-		
-		for(j=0; j<bankTags.length; j++){
-			for(i=0; i<noOfOptions; i++){
-					bankTags[j].options[i].hidden = false;
-			}
-			bankTags[j].options[0].selected = true;
-		}
-		
-		for(j=0; j<bankTags.length; j++){
-			for(i=0; i<noOfOptions; i++){
-				if(companyId != Number(bankTags[j].options[i].getAttribute("data-company-id"))){
-					bankTags[j].options[i].hidden = true;
-				}
-			}
-		}
-	})
 	
 	//Submit invoice form
 	function submitForm(){
@@ -392,6 +378,14 @@
 		jsonObj['items'] = itemList;
 		jsonObj['totalQuantity'] = totalQuantity.toString();
 		
+		var paymentModesTable = document.getElementById('paymentTableBody');
+		console.log(paymentModesTable.rows.length);
+		
+		for(j=0;j<paymentModesTable.rows.length; j++){
+				jsonObj[document.getElementById('paymentMode'+(j+1)).value] = document.getElementById('payAmount'+(j+1)).value;
+			}
+		
+		
 		var jsonStr = JSON.stringify(jsonObj);
 		console.log(jsonStr);
 		
@@ -400,6 +394,51 @@
 		document.getElementsByTagName('form')[0].submit();
 		
 	}
+	
+	document.getElementById('net').addEventListener('change', function(e){
+		
+		document.getElementById('payAmount1').value = e.srcElement.value; 
+		
+	})
+	
+	document.addEventListener('click',function(e){
+		if(e.srcElement.alt === 'add'){
+			
+			var table = document.getElementById('paymentTableBody');
+			noOfRows = table.rows.length;
+			
+			var row = table.insertRow(noOfRows);
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			
+			cell1.setAttribute("align","center");
+			cell1.innerHTML = (noOfRows+1);
+			cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode'+(noOfRows+1)+'">'+
+					   			'<option>Cash</option>'+
+					   			'<option>Cheque</option>'+
+					   			'<option>RTGS/NEFT</option>'+
+							'</select>';
+			cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="payAmount'+(noOfRows+1)+'" name="payAmount'+(noOfRows+1)+'">';
+			cell4.innerHTML = '<img src="../property/img/add.png" alt="add" class="ctm-hover" >'
+			
+			var optionsAlreadySelected = [];
+			for(i=1;i<noOfRows+1;i++){
+				optionsAlreadySelected.push(document.getElementById('paymentMode'+(i)).value);
+			}
+
+			var selectElement = document.getElementById('paymentMode'+(noOfRows+1));
+			for(j=0;j<selectElement.options.length;j++){
+				if(optionsAlreadySelected.includes(selectElement.options[j].text)){
+					selectElement.options[j].hidden = true;
+				}else{
+					selectElement.options[j].selected = true;
+				}
+			}
+			
+		}
+	})
 	
 	</script>
 </body>

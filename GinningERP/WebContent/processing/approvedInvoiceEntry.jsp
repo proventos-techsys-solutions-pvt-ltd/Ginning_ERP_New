@@ -76,6 +76,30 @@
 			invoice.setAuthorizer((String)json.get("authorizer").toString().toUpperCase());
 			invoice.setNote((String)json.get("note").toString().toUpperCase());
 			invoice.setTotalQuanity(Double.parseDouble((String)json.get("totalQuantity")));
+			if((String)json.get("Cash") == null){
+				invoice.setCashAmount(0.0);
+			}else{
+				invoice.setCashAmount(Double.parseDouble((String)json.get("Cash")));
+			}
+			if((String)json.get("Cheque") == null){
+				invoice.setChequeAmount(0.0);
+			}else{
+				invoice.setChequeAmount(Double.parseDouble((String)json.get("Cheque")));
+			}
+			if((String)json.get("RTGS/NEFT") == null){
+				invoice.setRtgsAmount(0.0);
+			}else{
+				invoice.setRtgsAmount(Double.parseDouble((String)json.get("RTGS/NEFT")));
+			}
+			
+			
+			
+			
+			
+			System.out.println("CASH -------"+ invoice.getCashAmount());
+			System.out.println("ch -------"+ invoice.getChequeAmount());
+			System.out.println("rtgs -------"+ invoice.getRtgsAmount());
+			
 			
 			AddInvoice addinvoice = new AddInvoice();
 			

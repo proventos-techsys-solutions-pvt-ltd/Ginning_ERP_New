@@ -19,7 +19,7 @@ public int addInvoice(Invoice i) {
 			e.printStackTrace();
 		}
 
-		String addInvoice = "{ ? = call ADD_INVOICE(?,?,?,?,?,?,?,?,?,?) }";
+		String addInvoice = "{ ? = call ADD_INVOICE(?,?,?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -38,6 +38,9 @@ public int addInvoice(Invoice i) {
 			cs.setString(9, i.getAuthorizer());
 			cs.setString(10, i.getNote());
 			cs.setDouble(11, i.getTotalQuanity());
+			cs.setDouble(12, i.getCashAmount());
+			cs.setDouble(13, i.getChequeAmount());
+			cs.setDouble(14, i.getRtgsAmount());
 			
 			cs.executeUpdate();
 			
@@ -48,7 +51,7 @@ public int addInvoice(Invoice i) {
 			cs.close();
 			con.close();
 			
-			System.out.println("Insertion Succesful"+id);
+			System.out.println("Insertion Succesful - "+id);
 			} catch (Exception e) {
 			e.printStackTrace();
 		}

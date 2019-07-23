@@ -15,7 +15,10 @@
 		<div class="row mt-2 tile-background-row">
 				<div class="col-md-3">
 					<label class="lbl-rm-all">Search</label>
-					<input type="text" class="form-control form-control-sm" id="" name="" placeholder="RST">
+					<div class="d-flex justify-content-start align-items-center">
+						<input type="text" class="form-control form-control-sm" id="" name="" placeholder="Invoice No">
+						<button type="button" class="btn btn-success btn-sm btn-no-radius">Fetch</button>
+					</div>
 				</div>
 				<div class="col-md-4 offset-md-5">
 					<div class="d-flex justify-content-end align-items-center">
@@ -61,7 +64,7 @@
 							<label class="lbl-rm-all">Cash</label>
 							<div class="d-flex justify-content-start align-items-center">
 								<input type="text" class="form-control form-control-sm" id="" class="" readonly>
-								<button type="button" class="btn btn-success btn-sm btn-no-radius">Pay</button>
+								<button type="button" class="btn btn-success btn-sm btn-no-radius">Pay & Print Voucher</button>
 							</div>
 						</div>
 					</div>
