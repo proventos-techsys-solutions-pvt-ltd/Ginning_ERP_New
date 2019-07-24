@@ -64,7 +64,7 @@
 							<label class="lbl-rm-all">Cash</label>
 							<div class="d-flex justify-content-start align-items-center">
 								<input type="text" class="form-control form-control-sm" id="" class="" readonly>
-								<button type="button" class="btn btn-success btn-sm btn-no-radius">Pay & Print Voucher</button>
+								<button type="button" class="btn btn-success btn-sm btn-no-radius">Print</button>
 							</div>
 						</div>
 					</div>
@@ -85,7 +85,8 @@
 							<label class="lbl-rm-all">Name</label>
 							<div class="d-flex justify-content-start align-items-center">
 							<input type="text" class="form-control form-control-sm" id="" class="" placeholder="Mannual">
-							<button type="button" class="btn btn-success btn-sm btn-no-radius">Pay</button>
+							<button type="button" class="btn btn-success btn-sm btn-no-radius">Pay</button>&nbsp;
+							<button type="button" class="btn btn-success btn-sm btn-no-radius">Void</button>
 							</div>
 						</div>
 					</div>

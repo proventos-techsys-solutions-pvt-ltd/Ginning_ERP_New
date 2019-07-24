@@ -36,7 +36,7 @@
                                       <c:Company/>
                                   </select>
                         		</div>
-                        		<div class="col-md-3 offset-md-6">
+                        		<div class="col-md-4 offset-md-5">
                         			<label class="lbl-rm-all">Authorized By</label>
                                     <input id="authorizer" name="authorizer"  type="text" class="form-control form-control-sm" placeholder="" readonly>
                         		</div>
@@ -56,7 +56,7 @@
 					    				<button class="btn btn-success btn-sm btn-no-radius" type="button" onclick="fetchAmanatData(document.getElementById('amanatRst').value)">Fetch</button>
                                 	</div>
                                 </div>
-                                <div class="col-md-3 offset-md-5">
+                                <div class="col-md-4 offset-md-4">
                                    <label class="lbl-rm-all">Customer Name & Address</label>
                                    <textarea id="customerData" name="customerData" class="form-control form-control-sm" rows="3" readonly></textarea>
                                 </div>
@@ -70,11 +70,11 @@
                                     <label for="" class="lbl-rm-all">Date </label>
                                     <input type="date" id="invoiceDate" name="invoiceDate" class="form-control form-control-sm" >
                                 </div>
-                                <div class="col-md-auto offset-md-5">
+                                <div class="col-md-2 offset-md-4">
                         			<label for="" class="lbl-rm-all">Membership</label>
                                     <input id="customerBlacklisted" name="customerBlacklisted"  type="text" class="form-control form-control-sm" placeholder="" readonly>
                         		</div>	
-                        		<div class="col-md-auto">
+                        		<div class="col-md-2">
                         			<label for="" class="lbl-rm-all">Blacklisted</label>
                                     <input id="customerMembership" name="customerMembership"  type="text" class="form-control form-control-sm" placeholder="" readonly>
                         		</div>
@@ -112,11 +112,20 @@
                                 </div>
                                 </div>
                                 <div class="row tile-background-row border-top">
+                                	<div class="col-md-4">
+                                	<label class="lbl-rm-all">Grade Information</label>
+                                		<div class="border mt-2">
+                                			<div>Ameya load this grade info from Table in the div tab</div>
+                                			<div>Div 1 </div>
+                                			<div>Div 2 </div>
+                                			<div>Div 3 </div>
+                                		</div>
+                                	</div>
 	                               	 <div class="col-md-4 ">
 	                                     <label class="lbl-rm-all">Note :</label>
 	                                     <textarea id="note" name="note" class="form-control form-control-lg"></textarea>
 									</div>
-									<div class="col-md-2 offset-md-6">
+									<div class="col-md-2 offset-md-2">
 										<label for="" class="lbl-rm-all">Unloading Charges</label> 
 	                                    <input type="text" id="unloadingCharges" name="unloadingCharges" class="form-control form-control-sm" value="20" readonly="readonly">
 	                                    <label for="" class="lbl-rm-all">Weighing Charges </label> 
@@ -129,15 +138,16 @@
 								</div>
 								<div id="paymentSection">
 								</div>
-								<div class="row tile-background-row">
-										<div class="col-md-4">
+								<div class="row tile-background-row border-top">
+										<div class="col-md-6 offset-md-3" >
 											<table class="table table-bordered">
 												<thead>
 													<tr class="table-back">
 														<th width="5%" >Sr No</th>
 														<th width="20%">Mode Of Payment</th>
 														<th width="20%">Amount</th>
-														<th width="5%" >Add</th>
+														<th width="5%"></th>
+														<th width="5%"></th>
 													</tr>
 												</thead>
 												<tbody id="paymentTableBody">
@@ -151,7 +161,8 @@
 					                               			</select>
 					                               		</td>
 														<td><input type="text" class="form-control form-control-sm" id="payAmount1" name="payAmount1"></td>
-													<td><img src="../property/img/add.png" alt="add" class="ctm-hover" ></td>
+														<td class="text-center"><img src="../property/img/add.png" alt="add" class="ctm-hover" ></td>
+														<td class="text-center"></td>
 													</tr>
 												</tbody>
 											</table>
@@ -412,7 +423,11 @@
 			var cell2 = row.insertCell(1);
 			var cell3 = row.insertCell(2);
 			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
 			
+			cell4.className ="text-center";
+			cell5.className ="text-center";
+						
 			cell1.setAttribute("align","center");
 			cell1.innerHTML = (noOfRows+1);
 			cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode'+(noOfRows+1)+'">'+
@@ -422,6 +437,9 @@
 							'</select>';
 			cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="payAmount'+(noOfRows+1)+'" name="payAmount'+(noOfRows+1)+'">';
 			cell4.innerHTML = '<img src="../property/img/add.png" alt="add" class="ctm-hover" >'
+			cell5.innerHTML = '<img src="../property/img/delete.png" alt="delete" class="ctm-hover" >'
+			
+			
 			
 			var optionsAlreadySelected = [];
 			for(i=1;i<noOfRows+1;i++){
@@ -439,6 +457,11 @@
 			
 		}
 	})
+	function deleteRow(e){
+		var rowIndex = e.parentNode.parentNode.rowIndex;
+		var table = document.getElementById('paymentTableBody').deleteRow(rowIndex);
+	}
+	
 	
 	</script>
 </body>

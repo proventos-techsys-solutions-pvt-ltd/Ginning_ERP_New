@@ -99,6 +99,7 @@
 								'<td>'+jsonResponse[i].customerAddress+'</td>'+
 								'<td>'+jsonResponse[i].customerMobile+'</td>'+
 								'<td>'+status+'</td>'+
+								'<td class="text-center"><img src="../property/img/printer.png" alt="print" ></td>'+
 							'</tr>');
 					}
 					console.log(element.rows.length);

@@ -106,17 +106,19 @@
 			  Chart.defaults.global.defaultFontSize = 16;
 
 			 var data = {
-			     labels: ["She returns it ", "She keeps it"],
+			     labels: ["Cotton Bales", "Cotton Seeds", "Oil", "Cotton Cake"],
 			       datasets: [
 			         {
 			             fill: true,
 			             backgroundColor: [
 			                 'black',
-			                 'white'],
-			             data: [5, 95],
+			                 'white',
+			                 'green',
+			                 'orange'],
+			             data: [obj.closingStock.cottonBales,obj.closingStock.cottonSeed,obj.closingStock.cottonSeedOil,obj.closingStock.cottonCakes],
 			 // Notice the borderColor 
-			             borderColor:	['black', 'black'],
-			             borderWidth: [2,2]
+			             borderColor:	['black', 'black','black','black'],
+			             borderWidth: [2,2,2,2]
 			         }
 			     ]
 			 };
@@ -126,7 +128,7 @@
 			 var options = {
 			         title: {
 			                   display: true,
-			                   text: 'What happens when you lend your favorite t-shirt to a girl ?',
+			                   text: 'Stock Details',
 			                   position: 'top'
 			               },
 			         rotation: -0.7 * Math.PI
@@ -139,48 +141,6 @@
 			     data: data,
 			     options: options
 			 });
-
-			 // Fun Fact: I've lost exactly 3 of my favorite T-shirts and 2 hoodies this way :|
-
-			 
-			 
-			 
-			/*
-			 var ctx = document.getElementById('myChart').getContext('2d');
-				var myChart = new Chart(ctx, {
-				    type: 'pie',
-				    data: {
-				        labels: ['Cotton Bales', 'Cotton Seeds', 'Oil', 'Cotton Cake'],
-				        datasets: [{
-				            label: 'Quantity in Quintals',
-				            data: [obj.closingStock.cottonBales, obj.closingStock.cottonSeed, obj.closingStock.cottonSeedOil, obj.closingStock.cottonCakes],
-				            backgroundColor: [
-				                'rgba(255, 99, 132, 0.2)',
-				                'rgba(54, 162, 235, 0.2)',
-				                'rgba(255, 206, 86, 0.2)',
-				                'rgba(75, 192, 192, 0.2)'
-				            ],
-				            borderColor: [
-				                'rgba(255, 99, 132, 1)',
-				                'rgba(54, 162, 235, 1)',
-				                'rgba(255, 206, 86, 1)',
-				                'rgba(75, 192, 192, 1)'
-				            ],
-				            borderWidth: 1
-				        }]
-				    },
-				    options: {
-				        scales: {
-				            yAxes: [{
-				                ticks: {
-				                    beginAtZero: true
-				                }
-				            }]
-				        }
-				    }
-				});
-				*/
-				
 				
 				document.getElementById('aRate').innerHTML = obj.closingStock.avgRate;
 				

@@ -19,19 +19,25 @@
 			<table class="table table-bordered mt-2">
 				<thead>
 					<tr>
-						<th>Cheque No</th>
-						<th>Date</th>
-						<th>Vendor Name</th>
-						<th>Amount</th>
+						<th width="10%">Cheque No</th>
+						<th width="10%">Date</th>
+						<th width="30%">Vendor Name</th>
+						<th width="10%">Invoice No</th>
+						<th width="10%">Invoice Date</th>
+						<th width="10%">Amount</th>
+						<th width="10%">Status</th>
 					</tr>
 				</thead>
 				<tbody id="getChequeDetailsToPrint" data-toggle="modal" data-target="#chequePrintModal">
 				<%for(int i = 0 ; i<10 ; i++){ %>
-					<tr onclick="getTableDataOnRowClick('getChequeDetailsToPrint',this,'cheque')">
+					<tr>
 						<td>140<%= i %></td>
 						<td>21/05/2019</td>
 						<td>XYZ</td>
+						<td>INV 001</td>
+						<td>21/05/2019</td>
 						<td>10000</td>
+						<td>Printed/Void</td>
 					</tr>
 					<% } %>
 				</tbody>
@@ -52,34 +58,35 @@
 		      <div class="modal-body">
 		        <form>
 		        	<div class="form-row">
-		        		<div class="col-md-auto">
-		        			<label>Period</label>
+		        		<div class="col-md-12">
+		        			<h4>Period</h4>
 		        		</div>
-		        		<div class="col-md-auto">
+		        	</div>
+		        	
+		        	<div class="form-row">
+		        		<div class="col-md-6">
+		        			<label class="lbl-rm-all">From</label>
 		        			<input type="date" class="form-control form-control-sm " name="" id="">
 		        		</div>
-		        		<div class="col-md-auto">
-		        			<label>To</label>
-		        		</div>	
-		        		<div class="col-md-auto">
+		        		<div class="col-md-6">
+		        			<label class="lbl-rm-all">To</label>
 		        			<input type="date" class="form-control form-control-sm " name="" id="">
 		        		</div>
 		        	</div>
 		        	<div class="form-row">
-		        			<div class="col-md-auto">
-		        				<label>Cheque Range</label>
-		        			</div>
-		        			<div class="col-md-auto">
+		        		<div class="col-md-12">
+		        			<h4>Cheque Range</h4>
+		        		</div>
+		        	</div>
+		        	<div class="form-row">
+		        			<div class="col-md-6">
 		        				<select class="form-control form-control-sm">
 		        				<option value=""> ChequeNo</option>
 		        				<option value=""> ChequeNo</option>
 		        				<option value=""> ChequeNo</option>
 		        			</select>
 		        			</div>
-		        			<div class="col-md-auto">
-		        				<label>To</label>
-		        			</div>
-		        			<div class="col-md-auto">
+		        			<div class="col-md-6">
 		        				<select class="form-control form-control-sm">
 		        				<option value=""> ChequeNo</option>
 		        				<option value=""> ChequeNo</option>
@@ -88,10 +95,8 @@
 		        			</div>
 		        		</div>
 	        		<div class="form-row">
-	        			<div class="col-md-auto">
-	        				<label>Vendor</label>
-	        			</div>
-		        		<div class="col-md-auto">
+	        			<div class="col-md-12">
+	        				<h4>Vendor</h4>
 		        			<select class="form-control form-control-sm">
 		        				<option value=""> vendor name</option>
 		        				<option value=""> vendor name</option>
@@ -109,73 +114,6 @@
 		  </div>
 		</div>
 		<!-- OPTIONS MODAL POP-UP ENDS HERE  -->
-		
-		<!-- CHEQUE PRINT MODAL POP-UP STARTS HERE -->
-		<div class="modal fade" id="chequePrintModal" tabindex="-1" role="dialog">
-		  <div class="modal-dialog modal-lg" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title">Print Cheque</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <div class="modal-body">
-		      	<form>
-		      		<div class="cheque">
-		      		<div class="accP">Acc Payee</div>
-		      			<div class="form-row">
-									      			
-		      				<div class="col-md-1">
-		      					<label>Bank</label>
-		      				</div>
-		      				<div class="col-md-3 ">
-			      				<select class="form-control form-control-sm">
-			      					<option>Bank of India</option>
-			      					<option>HDFC Bank</option>
-			      				</select>
-			      			</div>
-			      			<div class="col-md-2">
-			      				<label>Cheque No</label>
-			      			</div>
-			      			<div class="col-md-3 ">
-			      				<input type="text" class="form-control-chq" name="cheque" id="chequeNo" >
-			      			</div>
-			      			<div class="col-md-3">
-			      				<input type="text" class="form-control-chq" name="cheque" id="chequeNo" >
-			      			</div>
-		      			</div>
-		      			<div class="form-row">
-			      			<div class="col-md-2">
-			      				<label>Pay</label>
-			      			</div>
-			      			<div class="col-md-10">
-		      					<input type="text" class="form-control-chq" name="cheque" id="chequeNo" >
-		      				</div>
-		      			</div>
-		      			<div class="form-row">
-			      			<div class="col-md-2">
-			      				<label>Rupay</label>
-			      			</div>
-			      			<div class="col-md-8">
-		      					<input type="text" class="form-control-chq" name="cheque" id="chequeNo" >
-		      					<input type="text" class="form-control-chq" name="cheque" id="chequeNo" >
-		      				</div>
-		      				<div class="col-md-2">
-		      					<input type="text" class="form-control" name="cheque" id="chequeNo" >
-		      				</div>
-		      			</div>
-		      			</div>
-		      		</form>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Void</button>
-		        <button type="button" class="btn btn-primary" data-dismiss="modal">Print</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-		<!-- CHEQUE PRINT MODAL POP-UP ENDS HERE  -->
 	</div>
 
 
