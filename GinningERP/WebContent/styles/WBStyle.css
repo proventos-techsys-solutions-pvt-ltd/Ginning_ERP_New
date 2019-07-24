@@ -359,3 +359,12 @@ h6{
 	margin-top:.5rem;
 	}
 }
+/*********************notification************************/
+.cir{
+	
+	background : red;
+	border-radius:40%;
+	color:white;
+	font-weigth:bolder;
+	padding:3px;
+}

@@ -77,13 +77,14 @@ public class RstReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT GD.ID, GD.WEIGHMENT_ID, GD.MATERIAL, GD.QUANTITY, GD.GRADE, GD.RATE, GD.AUTHORIZED_BY, GD.MOISTURE, WM.VID, WM.RST, WM.NET, CVM.CID, CVM.WEIGH_RATE, CM.NAME, CM.ADDRESS, CM.MOBILE, CM.BLACKLISTED, CM.MEMBERSHIP \r\n" + 
-					"FROM GRADE_DETAILS GD, WEIGH_MAST WM, CUSTOMER_VEHICLE_MAST CVM, CUSTOMER_MAST CM \r\n" + 
-					"WHERE\r\n" + 
-					"GD.WEIGHMENT_ID = WM.ID AND\r\n" + 
-					"WM.VID = CVM.ID AND\r\n" + 
-					"CVM.CID = CM.ID AND\r\n" + 
-					"GD.RST="+rst;
+			String sql = "SELECT GD.ID, GD.WEIGHMENT_ID, GD.MATERIAL, GD.QUANTITY, GD.GRADE, GD.RATE, GD.AUTHORIZED_BY, GD.MOISTURE, WM.VID, WM.RST, WM.NET, CVM.CID, CVM.WEIGH_RATE, CM.NAME, CM.ADDRESS, CM.MOBILE, CM.BLACKLISTED, CM.MEMBERSHIP, GM.DESCRIPTION GRADE_DESC\r\n" + 
+					"					FROM GRADE_DETAILS GD, WEIGH_MAST WM, CUSTOMER_VEHICLE_MAST CVM, CUSTOMER_MAST CM, GRADE_MASTER GM\r\n" + 
+					"					WHERE\r\n" + 
+					"                    GD.GRADE = GM.GRADE AND\r\n" + 
+					"					GD.WEIGHMENT_ID = WM.ID AND\r\n" + 
+					"					WM.VID = CVM.ID AND \r\n" + 
+					"					CVM.CID = CM.ID AND\r\n" + 
+					"					GD.RST="+rst;
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -111,6 +112,7 @@ public class RstReport {
 				jsonObj.put("customerMobile", rs.getString(16));
 				jsonObj.put("customerBlacklisted", rs.getInt(17));
 				jsonObj.put("customerMembership", rs.getInt(18));
+				jsonObj.put("gradeDesc", rs.getString(19));
 				
 				jsonArray.put(jsonObj);
 			}

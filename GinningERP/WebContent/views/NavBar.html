@@ -86,8 +86,32 @@
        	</li>
        
     </ul>
-    
+    <ul  class="navbar-nav mr-auto mt-2 mt-lg-0">
+     	<li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="../property/img/bell.png" alt="notification" id="notificationImg">
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="../views/Actions.jsp">
+			<div class="d-flex justify-content-between align-items-center">
+				<div>Action</div>
+				<div class="cir" id="notificationCount">0</div>
+			</div>          
+          </a>
+        </div>
+       	</li>
+       </ul>
+    	
+    	&nbsp;
       <label>Username</label> &nbsp; &nbsp; &nbsp;
       <label>Logout</label>
   </div>
 </nav>
+
+
+<script>
+	var totalNotifications = document.getElementById("notificationCount").innerHTML;
+	if(totalNotifications>0){
+		document.getElementById("notificationImg").src="../property/img/notification.png";
+	}
+</script>

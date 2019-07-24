@@ -329,12 +329,12 @@
 	}
 	
 	function deleteGradeEntry(index){
+		var element = document.getElementById('tableBody');
+		var qty1 = Number(element.rows[(index-2)].cells[1].children[0].value);
 		
-		var qty1 = Number(document.getElementById('tblQty'+(index-1)).value);
+		var qty2 = Number(element.rows[index-1].cells[1].children[0].value);
 		
-		var qty2 = Number(document.getElementById('tblQty'+(index)).value);
-		
-		document.getElementById('tblQty'+(index-1)).value = (qty1+qty2);
+		element.rows[(index-2)].cells[1].children[0].value = (qty1+qty2);
 		
 		document.getElementById('tableBody').deleteRow(index-1);
 		
@@ -419,7 +419,7 @@
 								+	"</select>";
 								
 			if(i>0){
-				cell7.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow'>";
+				cell7.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow"+(i+1)+"'>";
 			}
 			totalQty = totalQty + Number(data[i].quantity);
 			
@@ -436,20 +436,18 @@
 			for(i=0;i<selectElements.length;i++){
 				selectElements[i].setAttribute('disabled', '')
 			}
+			document.getElementById('rst').removeAttribute('readonly');
 		}
 	}
 	
-	
+	//Set Grade Description and rate on selecting grade
 	document.addEventListener("change",function(e){
-		
 		if(e.srcElement.id.includes("grade"))
 		{
 			
 			var selectedGrade = e.srcElement.options[e.srcElement.selectedIndex];
 			var gradeId = selectedGrade.getAttribute('data-gradeId');
-			//console.log("gradeId --- "+gradeId);
 			var rowNo = e.srcElement.parentElement.parentElement.rowIndex;
-			//console.log("rowNo -- "+rowNo);
 			
 			document.getElementById("description"+rowNo).value = selectedGrade.getAttribute('data-description');
 			

@@ -23,6 +23,10 @@
                			</div>
                		</div>
                 </div>
+            	  <%
+				    out.print(session.getAttribute("InvoiceNo"));
+				    session.removeAttribute("InvoiceNo");
+				%>
             
                         <form action="../processing/approvedInvoiceEntry.jsp" id="adminApprovalForm">
                         	<input type="hidden" name="output" id="output" value="" />
@@ -32,7 +36,7 @@
                         		<div class="col-md-3">
                        			  <label for="" class="lbl-rm-all">Company Name </label>
                                   <select name="companyId" id="companyId" class="form-control form-control-sm" >
-                                      <option selected="selected" disabled="disabled">Select</option>
+                                      <option value="0" selected="selected" disabled="disabled">Select</option>
                                       <c:Company/>
                                   </select>
                         		</div>
@@ -70,13 +74,17 @@
                                     <label for="" class="lbl-rm-all">Date </label>
                                     <input type="date" id="invoiceDate" name="invoiceDate" class="form-control form-control-sm" >
                                 </div>
-                                <div class="col-md-2 offset-md-4">
+                                <div class="col-md-2">
+                                    <label for="" class="lbl-rm-all">Total Quantity </label>
+                                    <input type="text" id="totalQty" name="totalQty" class="form-control form-control-sm" >
+                                </div>
+                                <div class="col-md-2 offset-md-2">
                         			<label for="" class="lbl-rm-all">Membership</label>
-                                    <input id="customerBlacklisted" name="customerBlacklisted"  type="text" class="form-control form-control-sm" placeholder="" readonly>
+                                    <input id="customerMembership" name="customerMembership"  type="text" class="form-control form-control-sm" placeholder="" readonly>
                         		</div>	
                         		<div class="col-md-2">
                         			<label for="" class="lbl-rm-all">Blacklisted</label>
-                                    <input id="customerMembership" name="customerMembership"  type="text" class="form-control form-control-sm" placeholder="" readonly>
+                                    <input id="customerBlacklisted" name="customerBlacklisted"  type="text" class="form-control form-control-sm" placeholder="" readonly>
                         		</div>
                                 
                              </div>
@@ -91,7 +99,7 @@
                                             <th width="10%">Quantity</th>
                                             <th width="20%">Grade</th>
                                             <th width="7%">Moisture</th>
-                                            <th width="7%">Rate</th>
+                                            <th width="7%">Rate per Quintal</th>
                                             <th width="10%">Amount</th>
                                             <th width="5%" class="text-center">Amanat</th>  
                                         </tr>
@@ -114,11 +122,8 @@
                                 <div class="row tile-background-row border-top">
                                 	<div class="col-md-4">
                                 	<label class="lbl-rm-all">Grade Information</label>
-                                		<div class="border mt-2">
-                                			<div>Ameya load this grade info from Table in the div tab</div>
-                                			<div>Div 1 </div>
-                                			<div>Div 2 </div>
-                                			<div>Div 3 </div>
+                                		<div class="border mt-2" id="gradeInfo">
+                                			
                                 		</div>
                                 	</div>
 	                               	 <div class="col-md-4 ">
@@ -127,7 +132,7 @@
 									</div>
 									<div class="col-md-2 offset-md-2">
 										<label for="" class="lbl-rm-all">Unloading Charges</label> 
-	                                    <input type="text" id="unloadingCharges" name="unloadingCharges" class="form-control form-control-sm" value="20" readonly="readonly">
+	                                    <input type="text" id="unloadingCharges" name="unloadingCharges" class="form-control form-control-sm" value="0" readonly="readonly">
 	                                    <label for="" class="lbl-rm-all">Weighing Charges </label> 
 	                                    <input type="text" id="weighingCharges" name="weighingCharges" class="form-control form-control-sm" value="0" readonly="readonly">
 										<label for="" class="lbl-rm-all">Advance </label> 
@@ -185,6 +190,51 @@
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script>
+	
+	
+	window.onload = function(){
+		getDailySetupData();
+	}
+	
+	function getDailySetupData(){
+		
+		url = "../processing/setDailyInvSetup.jsp";
+		if(window.XMLHttpRequest){  
+			fetchDailySetupRequest=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchDailySetupRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+		try{  
+			fetchDailySetupRequest.onreadystatechange=fetchDailySetupData;  
+			console.log("AJAX Req sent");
+			fetchDailySetupRequest.open("GET",url,true);  
+			fetchDailySetupRequest.send();  
+		}catch(e){alert("Unable to connect to server");}
+		
+	}
+	
+	function  fetchDailySetupData(){
+		if(fetchDailySetupRequest.readyState == 4){
+			var response = this.response.trim();
+			var data = JSON.parse(response);
+			setDailySetupData(data);
+		}
+	}
+	
+	function setDailySetupData(data){
+		
+		var companySelect = document.getElementById('companyId');
+		
+		for(i=0;i<companySelect.options.length;i++){
+			if(data.companyId != Number(companySelect.options[i].value)){
+				companySelect.options[i].disabled = true;
+			}
+			else if(data.companyId === Number(companySelect.options[i].value)){
+				companySelect.options[i].selected = true;
+			}
+		}
+	}
 	
 	function checkRstInTable(rst){
 		var rstArray = $('#tableBody td:nth-child(1)>input').map(function(){
@@ -265,33 +315,35 @@
 		var noOfRows = data.length;
 		
 		var table = document.getElementById("tableBody");
+		document.getElementById("rst").value = data[0].rst;
+		document.getElementById("customerData").value = data[0].customerName + "\n" + data[0].customerAddress + "\n" + data[0].customerMobile;
+		document.getElementById("customerId").value = data[0].customerId;
+		document.getElementById("totalQty").value = Number(document.getElementById("totalQty").value) + Number(data[0].netQuantity);
+		
+		document.getElementById('unloadingCharges').value = Number(document.getElementById('unloadingCharges').value) + ((Number(document.getElementById("totalQty").value)/100) * 20);
+		
+		if(i===0){
+			document.getElementById('weighingCharges').value = Number(document.getElementById('weighingCharges').value) + Number(data[0].weighRate);
+		}
+		var blacklisted;
+		var membership;
+		
+		if(Number(data[0].customerBlacklisted) === 1){
+			blacklisted = 'YES';
+		}else if(Number(data[0].customerBlacklisted) === 0){
+			blacklisted = 'NO'
+		}
+		if(Number(data[0].customerMembership) === 1){
+			membership = 'YES';
+		}else if(Number(data[0].customerMembership) === 0){
+			membership = 'NO';
+		}
+		
+		document.getElementById("customerBlacklisted").value = blacklisted;
+		document.getElementById("customerMembership").value = membership;
 		
 		for(i=0; i<noOfRows; i++ ){
 		
-			document.getElementById("rst").value = data[i].rst;
-			document.getElementById("customerData").value = data[i].customerName + "\n" + data[i].customerAddress + "\n" + data[i].customerMobile;
-			document.getElementById("customerId").value = data[i].customerId;
-			
-			if(i===0){
-				document.getElementById('weighingCharges').value = Number(document.getElementById('weighingCharges').value) + Number(data[0].weighRate);
-			}
-			var blacklisted;
-			var membership;
-			
-			if(data[i].customerBlacklisted === '1'){
-				blacklisted = 'YES';
-			}else{
-				blacklisted = 'NO'
-			}
-			if(data[i].customerMembership === '1'){
-				membership = 'YES';
-			}else{
-				membership = 'NO';
-			}
-			
-			document.getElementById("customerBlacklisted").value = blacklisted;
-			document.getElementById("customerMembership").value = membership;
-			
 			var rowNo = tableBody.children.length;
 			
 			var row = table.insertRow(rowNo);
@@ -305,8 +357,10 @@
 			var cell8 = row.insertCell(7);
 			var cell9 = row.insertCell(8);
 			var cell10 = row.insertCell(9);
+			var cell11 = row.insertCell(10);
 			cell9.setAttribute('hidden','hidden');
 			cell10.setAttribute('hidden','hidden');
+			cell11.setAttribute('hidden','hidden');
 			
 			cell1.innerHTML = '<input type="text" id="tableRst'+(rowNo+1)+'" class="form-control form-control-sm" name="tableRst" value="'+data[i].rst+'" readonly>';
 			cell2.innerHTML = '<input type="text" id="material'+(rowNo+1)+'" class="form-control form-control-sm" name="material" value="'+data[i].material+'" readonly>';
@@ -314,13 +368,29 @@
 			cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+data[i].grade+'" readonly>';
 			cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+data[i].moisture+'" readonly>';
 			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+data[i].rate+'" >';
-			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+(data[i].rate * data[i].quantity)+'" readonly>';
+			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+(data[i].rate * (data[i].quantity/100))+'" readonly>';
 			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" >';
 			cell9.innerHTML = '<input type="hidden" id="gradeId'+(rowNo+1)+'" class="lbl-rm-all" name="gradeId" value="'+data[i].gradeId+'" >';
 			cell10.innerHTML = '<input type="hidden" id="weighmentId'+(rowNo+1)+'" class="lbl-rm-all" name="weighmentId" value="'+data[i].weighmentId+'" >';
- 		}
+			cell11.innerHTML = '<input type="hidden" id="gradeDesc'+(rowNo+1)+'" class="lbl-rm-all" name="gradeDesc" value="'+data[i].gradeDesc+'" >';
+
+		}
 		calculateTotal();
-		
+		setGradeNote();
+	}
+	
+	//Set Grade Description in Grading Note
+	function setGradeNote(){
+		var noOfGrades = document.getElementsByName('grade').length;
+		for(i=0;i<noOfGrades; i++){
+			var grade = document.getElementsByName('grade')[i].value;
+			var gradeDesc = document.getElementsByName('gradeDesc')[i].value;
+			var gradeData = grade + " : " + gradeDesc;
+			
+			if(! document.getElementById('gradeInfo').innerHTML.includes(gradeData)){
+				document.getElementById('gradeInfo').innerHTML = document.getElementById('gradeInfo').innerHTML + '<br>' + gradeData;
+			}
+		}
 	}
 	
 	//Set Amanat checkbox value
@@ -338,8 +408,7 @@
 	})
 		
 	
-	
-	//calculate total amount to be paid
+	//Calculate total amount to be paid
 	function calculateTotal(){
 		var rates = document.getElementsByName("amount");
 		var total = 0;
@@ -395,73 +464,93 @@
 		for(j=0;j<paymentModesTable.rows.length; j++){
 				jsonObj[document.getElementById('paymentMode'+(j+1)).value] = document.getElementById('payAmount'+(j+1)).value;
 			}
-		
-		
 		var jsonStr = JSON.stringify(jsonObj);
 		console.log(jsonStr);
 		
 		document.getElementById('output').value=jsonStr;
 		
 		document.getElementsByTagName('form')[0].submit();
-		
 	}
 	
+	//Change Total Amount in Payment Mode  amount Table
 	document.getElementById('net').addEventListener('change', function(e){
-		
 		document.getElementById('payAmount1').value = e.srcElement.value; 
-		
 	})
 	
+	
+	//Add new rows to Payment Mode table
 	document.addEventListener('click',function(e){
 		if(e.srcElement.alt === 'add'){
 			
 			var table = document.getElementById('paymentTableBody');
 			noOfRows = table.rows.length;
 			
-			var row = table.insertRow(noOfRows);
-			var cell1 = row.insertCell(0);
-			var cell2 = row.insertCell(1);
-			var cell3 = row.insertCell(2);
-			var cell4 = row.insertCell(3);
-			var cell5 = row.insertCell(4);
+			if(noOfRows<3){
+				var amount = 0;
+				for(k=0;k<paymentTableBody.rows.length;k++){
+					amount = Number(amount) + Number(paymentTableBody.rows[k].cells[2].children[0].value);			
+					console.log(Number(paymentTableBody.rows[k].cells[2].children[0].value));
+				}
+				var pendingAmount = Number(document.getElementById('net').value) - amount;
 			
-			cell4.className ="text-center";
-			cell5.className ="text-center";
-						
-			cell1.setAttribute("align","center");
-			cell1.innerHTML = (noOfRows+1);
-			cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode'+(noOfRows+1)+'">'+
-					   			'<option>Cash</option>'+
-					   			'<option>Cheque</option>'+
-					   			'<option>RTGS/NEFT</option>'+
-							'</select>';
-			cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="payAmount'+(noOfRows+1)+'" name="payAmount'+(noOfRows+1)+'">';
-			cell4.innerHTML = '<img src="../property/img/add.png" alt="add" class="ctm-hover" >'
-			cell5.innerHTML = '<img src="../property/img/delete.png" alt="delete" class="ctm-hover" >'
-			
-			
-			
-			var optionsAlreadySelected = [];
-			for(i=1;i<noOfRows+1;i++){
-				optionsAlreadySelected.push(document.getElementById('paymentMode'+(i)).value);
-			}
-
-			var selectElement = document.getElementById('paymentMode'+(noOfRows+1));
-			for(j=0;j<selectElement.options.length;j++){
-				if(optionsAlreadySelected.includes(selectElement.options[j].text)){
-					selectElement.options[j].hidden = true;
-				}else{
-					selectElement.options[j].selected = true;
+				var row = table.insertRow(noOfRows);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+				var cell3 = row.insertCell(2);
+				var cell4 = row.insertCell(3);
+				var cell5 = row.insertCell(4);
+				
+				cell4.className ="text-center";
+				cell5.className ="text-center";
+							
+				cell1.setAttribute("align","center");
+				cell1.innerHTML = (noOfRows+1);
+				cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode'+(noOfRows+1)+'">'+
+						   			'<option>Cash</option>'+
+						   			'<option>Cheque</option>'+
+						   			'<option>RTGS/NEFT</option>'+
+								'</select>';
+				cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="payAmount'+(noOfRows+1)+'" name="payAmount'+(noOfRows+1)+'" value='+pendingAmount+'>';
+				cell4.innerHTML = '<img src="../property/img/add.png" alt="add" class="ctm-hover" >'
+				cell5.innerHTML = '<img src="../property/img/delete.png" alt="delete" class="ctm-hover" id="deleteRow'+(noOfRows+1)+'" >'
+				
+				var optionsAlreadySelected = [];
+				for(i=0;i<noOfRows;i++){
+					optionsAlreadySelected.push(table.rows[i].cells[1].children[0].value);
+				}
+				console.log(optionsAlreadySelected);
+	
+				var selectElement = document.getElementById('paymentMode'+(noOfRows+1));
+				for(j=0;j<selectElement.options.length;j++){
+					if(optionsAlreadySelected.includes(selectElement.options[j].text)){
+						selectElement.options[j].hidden = true;
+					}else{
+						selectElement.options[j].selected = true;
+					}
 				}
 			}
-			
 		}
 	})
-	function deleteRow(e){
-		var rowIndex = e.parentNode.parentNode.rowIndex;
-		var table = document.getElementById('paymentTableBody').deleteRow(rowIndex);
+	
+	//Delete row in Payment Mode table
+	function deletePaymentMode(index){
+		var element = document.getElementById('paymentTableBody');
+		
+		var qty1 = Number(element.rows[(index-2)].cells[2].children[0].value);
+	
+		var qty2 = Number(element.rows[index-1].cells[2].children[0].value);
+		
+		element.rows[(index-2)].cells[2].children[0].value = (qty1+qty2);
+		
+		document.getElementById('paymentTableBody').deleteRow(index-1);
 	}
 	
+	//Call delete row from payment mode function
+	document.addEventListener('click',function(e){
+		if(e.srcElement.tagName.toString().includes("img") || e.srcElement.id.toString().includes("deleteRow")){
+			deletePaymentMode(e.srcElement.parentNode.parentNode.rowIndex);
+		}
+	});
 	
 	</script>
 </body>

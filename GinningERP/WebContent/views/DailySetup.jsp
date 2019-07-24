@@ -324,7 +324,7 @@
 	
 	document.addEventListener('change', function(e){
 		if(e.srcElement.id === 'lastChequeNo'){
-			document.getElementById('totalCheques').value = e.srcElement.value - document.getElementById('firstChequeNo').value;
+			document.getElementById('totalCheques').value = (e.srcElement.value - document.getElementById('firstChequeNo').value)+1;
 		}
 	})
 	

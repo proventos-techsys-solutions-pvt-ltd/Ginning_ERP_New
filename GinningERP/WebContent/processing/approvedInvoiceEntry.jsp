@@ -153,7 +153,7 @@
 		UpdateStockMast us = new UpdateStockMast();
 		
 		us.updateStockOnEntry(sm);
-		
+		System.out.println("InvoiceNo -- " + invoice.getInvoiceNo());
+		session.setAttribute("InvoiceNo", invoice.getInvoiceNo());
 		response.sendRedirect("../views/Invoice.jsp");
-
 %>
