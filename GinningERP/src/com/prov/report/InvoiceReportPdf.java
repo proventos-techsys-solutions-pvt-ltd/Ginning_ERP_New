@@ -16,7 +16,16 @@ public class InvoiceReportPdf {
 	public ArrayList getInvoiceData() {
 		Connection con= null;
 		
-		String command = "SELECT * FROM INVOICE_MAST WHERE id=?"
+		String command = "SELECT GD.ID, GD.WEIGHMENT_ID, GD.MATERIAL, GD.QUANTITY, GD.GRADE, GD.RATE, GD.AUTHORIZED_BY, GD.MOISTURE, WM.VID, WM.RST, WM.NET, CVM.CID, CVM.WEIGH_RATE, CM.NAME, CM.ADDRESS, CM.MOBILE, CM.BLACKLISTED, CM.MEMBERSHIP, IM.Company_ID, COMPM.NAME \r\n" + 
+				"					FROM GRADE_DETAILS GD, WEIGH_MAST WM, CUSTOMER_VEHICLE_MAST CVM, CUSTOMER_MAST CM, invoice_mast im, invoice_items II, company_master COMPM\r\n" + 
+				"					WHERE\r\n" + 
+				"					GD.WEIGHMENT_ID = WM.ID AND\r\n" + 
+				"					WM.VID = CVM.ID AND \r\n" + 
+				"					CVM.CID = CM.ID AND \r\n" + 
+				"					GD.RST=II.rst and\r\n" + 
+				"                    im.company_id = COMPM.ID AND\r\n" + 
+				"                    ii.invoice_id = IM.ID AND\r\n" + 
+				"                    im.invoice_no = "+invoiceNo;
 		Statement stmt = con.prepareStatement(command);
 		ResultSet rs = stmt.executeQuery(command);
 		
