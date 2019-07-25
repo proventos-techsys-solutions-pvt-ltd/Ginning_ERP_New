@@ -51,7 +51,7 @@
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Authorizer</label>
-							<input type="text" class="form-control form-control-sm" id="authorizer" name="authorizer" >
+							<input type="text" class="form-control form-control-sm" id="authorizer" name="authorizer" value="NA" >
 						</div>
 					</div>
 					<div class="form-row form-row-ctm">
@@ -82,11 +82,11 @@
 								<thead>
 									<tr class="table-back">
 										<th width="5%" >Sr No</th>
-										<th width="10%">Quantity</th>
+										<th width="10%">Quantity in Kg</th>
 										<th width="20%">Grade</th>
 										<th>Grade Description</th>
 										<th width="7%">Moisture</th>
-										<th width="7%">Rate</th>
+										<th width="7%">Rate per Quintal</th>
 										<th width="5%"></th>
 									</tr>
 								</thead>
@@ -131,6 +131,7 @@
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script>
+	
 	//Global variables
 	var totalQuantity = 0;
 	var tableQuantityGlobal = 0;
@@ -141,6 +142,8 @@
 		setFirstRowData()
 	})
 	
+	
+	//Set data for Grading
 	function setDataForNewGrading(data){
 		document.getElementById('tableBody').innerHTML = '';
 		var blacklisted;
@@ -192,7 +195,6 @@
 							+	"<option>Select</option>"
 							+	"<c:GradeRate />"
 							+	"</select>";
-		cell7.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow'>";
 		
 		document.getElementById("tblQty1").value = totalQuantity;
 		
@@ -266,24 +268,31 @@
 		}catch(e){alert("Unable to connect to server");}
 	}
 	
+	
 	//Set data in form fields of the page
 	function getData(){
 		
 		if(fetchRequest.readyState == 4){
 			var response = this.response.trim();
 			console.log(response);
-			
-			var data = JSON.parse(response);
-			
-			if(Number(data[0].flag) === 0){
-				setDataForNewGrading(data);
+			if(Number(response) === 0 ){
+				window.alert("RST entered is either blank or 0.")
 			}
-			else if(Number(data[0].flag) > 0){
-				setGradeUpdationData(data);
+			else if(Number(response) === 1){
+				window.alert("Invalid RST.")
+			}else{
+				var data = JSON.parse(response);
+				if(Number(data[0].flag) === 0){
+					setDataForNewGrading(data);
+				}
+				else if(Number(data[0].flag) > 0){
+					setGradeUpdationData(data);
+				}
 			}
 		}
 	}
 	
+	//Submit Grdaing data
 	function submitGradingData(){
 		
 		var jsonObj = {};
@@ -296,7 +305,6 @@
 		jsonObj['vendorMobile'] = document.getElementById("vendorMobile").value;
 		jsonObj['weighmentId'] = document.getElementById("weighmentId").value;
 		jsonObj['authorizer'] = document.getElementById("authorizer").value;
-		
 		
 		var noOfRows = document.getElementById('tableBody').childElementCount;
 		console.log('no of Rows --- '+noOfRows);
@@ -312,6 +320,9 @@
 			 grade['description'] = document.getElementById('description'+(i+1)).value;
 			 grade['moisture'] = document.getElementById('moisture'+(i+1)).value;
 			 grade['rate'] = document.getElementById('rate'+(i+1)).value;
+			 if(document.getElementById('gradeId'+(i+1)) != null){
+				 grade['gradeId'] = document.getElementById('gradeId'+(i+1)).value;
+				}
 		    
 			 gradeList.push(grade);
 			 
@@ -325,9 +336,10 @@
 		document.getElementById('output').value=jsonStr;
 		
 		document.getElementsByTagName('form')[0].submit();
-		
 	}
 	
+	
+	//Function to delete rows in grade table
 	function deleteGradeEntry(index){
 		var element = document.getElementById('tableBody');
 		var qty1 = Number(element.rows[(index-2)].cells[1].children[0].value);
@@ -340,6 +352,7 @@
 		
 	}
 	
+	//Event for deleting rows in Grade Table
 	document.addEventListener('click',function(e){
 		if(e.srcElement.tagName.toString().includes("img") || e.srcElement.id.toString().includes("deleteRow")){
 			deleteGradeEntry(e.srcElement.parentNode.parentNode.rowIndex);
@@ -347,6 +360,7 @@
 	});
 	
 	
+	//Set data for which rates has already been submitted
 	function setGradeUpdationData(data)
 	{
 		document.getElementById('tableBody').innerHTML = '';
@@ -393,6 +407,8 @@
 			var cell5 = row.insertCell(4);
 			var cell6 = row.insertCell(5);
 			var cell7 = row.insertCell(6);
+			var cell8 = row.insertCell(7);
+			cell8.setAttribute('hidden',true);
 		
 			cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(i+1)+"' name='srNo"+(i+1)+"' value="+(i+1)+">";
 			cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty"+(i+1)+"' name='dividedQuantity' value="+data[i].quantity+">";
@@ -403,26 +419,36 @@
 			var textToFind = data[i].grade;	
 			var dd = document.getElementById("grade"+(i+1)+"");
 			loop1:
-			for ( j = 0; i < dd.options.length; j++) {
+			for ( j = 0; j < dd.options.length; j++) {
 			    if (dd.options[j].text === textToFind) {
 			        dd.selectedIndex = j;
 			        var description = dd.options[j].getAttribute('data-description');
-			        break loop1;
+			    }else{
+			    	dd.options[j].disabled = true;
 			    }
 			}
 			
 			cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(i+1)+"' name='description"+(i+1)+"' value='"+description+"'>";
 			cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(i+1)+"' name='moisture"+(i+1)+"' value="+data[i].moisture+">";
 			cell6.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='rate"+(i+1)+"' name='rate"+(i+1)+"' >"
-								+	"<option>"+data[i].rate+"</option>"
+								+	"<option selected>"+data[i].rate+"</option>"
 								+	"<c:GradeRate />"
 								+	"</select>";
 								
 			if(i>0){
-				cell7.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow"+(i+1)+"'>";
+				cell7.innerHTML = "<img src='../property/img/delete.png' class='delete-row' alt='delete' id='deleteRow"+(i+1)+"'>";
 			}
+			
+			cell8.innerHTML = "<input type='hidden' id='gradeId"+(i+1)+"' name='gradeId"+(i+1)+"' value='"+data[i].gradeId+"'>";
+			
 			totalQty = totalQty + Number(data[i].quantity);
 			
+			var inputElements = document.getElementsByClassName('form-control');
+			for(k=0;k<inputElements.length;k++){
+				if((inputElements[k].id).includes('srNo') || (inputElements[k].id).includes('tblQty') || (inputElements[k].id).includes('description') || (inputElements[k].id).includes('moisture') || (inputElements[k].id).includes('quantity')){
+					inputElements[k].setAttribute('readonly',true);
+				}
+			}
 		}
 		
 		document.getElementById("quantity").value = totalQty;
@@ -436,9 +462,19 @@
 			for(i=0;i<selectElements.length;i++){
 				selectElements[i].setAttribute('disabled', '')
 			}
+			var deleteIcons = document.getElementsByClassName('delete-row');
+			for(i=0;i<deleteIcons.length;i++){
+				removeElement(deleteIcons[i]);
+			}
 			document.getElementById('rst').removeAttribute('readonly');
 		}
 	}
+	
+	 // Removes an element from the document
+	function removeElement(element) {
+	    element.parentNode.removeChild(element);
+	}
+	
 	
 	//Set Grade Description and rate on selecting grade
 	document.addEventListener("change",function(e){

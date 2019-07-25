@@ -6,8 +6,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%
-	
-	int rst = Integer.parseInt(request.getParameter("rst"));
+
+	int rst = 0;
+	try{
+		 rst = Integer.parseInt(request.getParameter("rst"));
+	}catch(Exception e){
+		out.println(0);
+	}
 
 	CheckRST cr = new CheckRST();
 	
@@ -15,7 +20,10 @@
 	
 	if(rst == 0 )
 	{
-		out.println("Please enter valid information.");
+		out.println(0);
+	}
+	else if(rstExistFlag <= 0){
+		out.println(1);
 	}
 	else if(rstExistFlag > 0){
 		

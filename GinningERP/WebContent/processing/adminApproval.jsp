@@ -1,3 +1,4 @@
+<%@page import="com.prov.dbops.CheckRST"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="com.prov.report.RstReport"%>
 <%@page import="com.prov.bean.Amanat"%>
@@ -22,18 +23,24 @@
         
         if(rstString.equals("0") || rstString == "")
         {
-        	out.println("Please enter valid information.");	
-        }
-        
-        else{
-        	
+        	out.println(0);	
+        }else{
         	int rst = Integer.parseInt(rstString);
-        	
-	    	RstReport report = new RstReport();
-        	
-        	JSONArray jsonArray =  report.getDataForInvoicing(rst);
-        	
-	    	out.print(jsonArray);
-	    	out.flush();
+	        CheckRST cr = new CheckRST();
+	    	
+	    	int rstExistFlag = cr.checkRstExistsInWeighMast(rst);
+	    	
+	    	if(rstExistFlag <= 0){
+	    		out.println(1);
+	    	}
+	    	else if(rstExistFlag > 0){
+	        	
+		    	RstReport report = new RstReport();
+	        	
+	        	JSONArray jsonArray =  report.getDataForInvoicing(rst);
+	        	
+		    	out.print(jsonArray);
+		    	out.flush();
+	    	}
         }
     %>

@@ -271,8 +271,15 @@
 		if(fetchRequest.readyState == 4){
 			var response = this.response.trim();
 			console.log(response);
-			var data = JSON.parse(response);
-			setData(data);
+			if(Number(response) === 0 ){
+				window.alert("RST entered is either blank or 0.")
+			}
+			else if(Number(response) === 1){
+				window.alert("Invalid RST.")
+			}else{
+				var data = JSON.parse(response);
+				setData(data);
+			}
 		}
 	}
 	

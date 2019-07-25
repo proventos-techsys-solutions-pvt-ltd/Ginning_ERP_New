@@ -348,14 +348,15 @@ function checkCustomer(){
 			document.getElementById("address").value = customer.address;
 			document.getElementById("mobile").value = customer.mobile;
 			
-			if(customer.blacklist === '1'){
+			if(Number(customer.blacklist) === 1){
 				blacklisted = 'YES';
-			}else{
+			}else if(Number(customer.blacklist) === 0){
 				blacklisted = 'NO'
 			}
-			if(customer.membership === '1'){
+			if(Number(customer.membership) === 1){
 				membership = 'YES';
-			}else{
+			}else if(Number(customer.membership) === 0)
+			{
 				membership = 'NO';
 			}
 			

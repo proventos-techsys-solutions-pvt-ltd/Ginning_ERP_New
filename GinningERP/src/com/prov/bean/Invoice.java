@@ -2,7 +2,13 @@ package com.prov.bean;
 
 public class Invoice {
 	
-	private int id, customerId, companyId ;
+	private int id, customerId, companyId, paidByoperator ;
+	public int getPaidByoperator() {
+		return paidByoperator;
+	}
+	public void setPaidByoperator(int paidByoperator) {
+		this.paidByoperator = paidByoperator;
+	}
 	private double total, amountPaid, pending, totalQuanity, cashAmount, chequeAmount, rtgsAmount ;
 	
 	public double getCashAmount() {

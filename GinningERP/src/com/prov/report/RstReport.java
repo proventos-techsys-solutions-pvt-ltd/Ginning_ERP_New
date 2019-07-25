@@ -99,7 +99,7 @@ public class RstReport {
 				jsonObj.put("material", rs.getString(3));
 				jsonObj.put("quantity", rs.getString(4));
 				jsonObj.put("grade", rs.getString(5));
-				jsonObj.put("rate", rs.getString(6));
+				jsonObj.put("rate", rs.getFloat(6));
 				jsonObj.put("authorizer", rs.getString(7));
 				jsonObj.put("moisture", rs.getString(8));
 				jsonObj.put("vehicleId", rs.getString(9));
@@ -115,6 +115,7 @@ public class RstReport {
 				jsonObj.put("gradeDesc", rs.getString(19));
 				
 				jsonArray.put(jsonObj);
+				
 			}
 			
 			rs.close();

@@ -1,3 +1,5 @@
+<%@page import="com.prov.dbupdation.UpdateGradeDetails"%>
+<%@page import="com.prov.dbops.CheckAlreadyGraded"%>
 <%@page import="java.util.stream.IntStream"%>
 <%@page import="com.prov.dbinsertion.AddGradeDetails"%>
 <%@page import="java.util.ArrayList"%>
@@ -22,50 +24,96 @@
     	
     	ArrayList<GradeDetails> gradeList = new ArrayList<GradeDetails>();
     	
-    	for(int i=0; i<jsonArray.size(); i++ )
-    	{
-    		GradeDetails grade = new GradeDetails();
-        	
-        	grade.setWeighmentId(Integer.parseInt((String)json.get("weighmentId")));
-        	grade.setMaterial(((String)json.get("material")).toUpperCase());
-        	grade.setRst(Integer.parseInt((String)json.get("rst")));
-        	grade.setAuthorizedBy(((String)json.get("authorizer")).toUpperCase());
-        	
-        	JSONObject gradeJson = (JSONObject)jsonArray.get(i);
-        	
-        	grade.setQuantity(Float.parseFloat((String)gradeJson.get("quantity")));
-        	grade.setGrade(((String)gradeJson.get("grade")).toUpperCase());
-        	grade.setMoisture(Float.parseFloat((String)gradeJson.get("moisture")));
-        	grade.setRate(Float.parseFloat((String)gradeJson.get("rate")));
-        	
-        	gradeList.add(grade);
-        	
-    	}
+    	CheckAlreadyGraded checkGradeExists = new CheckAlreadyGraded();
     	
-    	AddGradeDetails addGrades = new AddGradeDetails();
-    	int i=0;
-    	ArrayList<Integer> ids = new ArrayList<Integer>();
+    	int rowCount = checkGradeExists.alreadyGraded(Integer.parseInt((String)json.get("rst")));
     	
-    	for(GradeDetails grade: gradeList){
-    		
-    		ids.add(i, addGrades.addGradeDetails(grade));
-    		i++;
-    		
+    	if(rowCount == 0){
+		   	for(int i=0; i<jsonArray.size(); i++ )
+		   	{
+		   		GradeDetails grade = new GradeDetails();
+		       	
+		       	grade.setWeighmentId(Integer.parseInt((String)json.get("weighmentId")));
+		       	grade.setMaterial(((String)json.get("material")).toUpperCase());
+		       	grade.setRst(Integer.parseInt((String)json.get("rst")));
+		       	grade.setAuthorizedBy(((String)json.get("authorizer")).toUpperCase());
+		       	
+		       	JSONObject gradeJson = (JSONObject)jsonArray.get(i);
+		       	
+		       	grade.setQuantity(Float.parseFloat((String)gradeJson.get("quantity")));
+		       	grade.setGrade(((String)gradeJson.get("grade")).toUpperCase());
+		       	grade.setMoisture(Float.parseFloat((String)gradeJson.get("moisture")));
+		       	grade.setRate(Float.parseFloat((String)gradeJson.get("rate")));
+		       	
+		       	gradeList.add(grade);
+		   	}
+		   	
+		   	AddGradeDetails addGrades = new AddGradeDetails();
+		   	int i=0;
+		   	ArrayList<Integer> ids = new ArrayList<Integer>();
+		   	
+		   	for(GradeDetails grade: gradeList){
+		   		ids.add(i, addGrades.addGradeDetails(grade));
+		   		i++;
+		   	}
+		
+		   	boolean contains = false;
+		   	for(int j=0;j<ids.size();j++)
+		   	{
+		   		if(ids.get(j)!=0){
+		   			contains=true;
+		   		}
+		   	}	
+		   	
+		   	if(!contains){
+		   		response.sendRedirect("errorPage.html");
+		   	}
+		   	else{
+		   		response.sendRedirect("../views/GoodsReceiptNote.jsp");
+		   	}
     	}
-
-    	boolean contains = false;
-    	for(int j=0;j<ids.size();j++)
-    	{
-    		if(ids.get(j)!=0){
-    			contains=true;
-    		}
-    	}	
-    	
-    	if(!contains){
-    		response.sendRedirect("errorPage.html");
-    	}
-    	else{
-    		response.sendRedirect("../views/GoodsReceiptNote.jsp");
+    	else if(rowCount>0){
+    		for(int i=0; i<jsonArray.size(); i++ )
+		   	{
+		   		GradeDetails grade = new GradeDetails();
+		       	
+		       	grade.setWeighmentId(Integer.parseInt((String)json.get("weighmentId")));
+		       	grade.setMaterial(((String)json.get("material")).toUpperCase());
+		       	grade.setRst(Integer.parseInt((String)json.get("rst")));
+		       	grade.setAuthorizedBy(((String)json.get("authorizer")).toUpperCase());
+		       	
+		       	JSONObject gradeJson = (JSONObject)jsonArray.get(i);
+		       	grade.setId(Integer.parseInt((String)gradeJson.get("gradeId")));
+		       	grade.setQuantity(Float.parseFloat((String)gradeJson.get("quantity")));
+		       	grade.setGrade(((String)gradeJson.get("grade")).toUpperCase());
+		       	grade.setMoisture(Float.parseFloat((String)gradeJson.get("moisture")));
+		       	grade.setRate(Float.parseFloat((String)gradeJson.get("rate")));
+		       	
+		       	gradeList.add(grade);
+		   	}
+		   	
+		   	UpdateGradeDetails updateRates = new UpdateGradeDetails();
+		   	int i=0;
+		   	ArrayList<Integer> rowsUpdated = new ArrayList<Integer>();
+		   	
+		   	for(GradeDetails grade: gradeList){
+		   		rowsUpdated.add(i, updateRates.updateRatesInGradeDetails(grade));
+		   		i++;
+		   	}
+		   	boolean contains = false;
+		   	for(int j=0;j<rowsUpdated.size();j++)
+		   	{
+		   		if(rowsUpdated.get(j)!=0){
+		   			contains=true;
+		   		}
+		   	}	
+		   	
+		   	if(!contains){
+		   		response.sendRedirect("errorPage.html");
+		   	}
+		   	else{
+		   		response.sendRedirect("../views/GoodsReceiptNote.jsp");
+		   	}
     	}
     	
     %>

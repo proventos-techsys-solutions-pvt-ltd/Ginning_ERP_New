@@ -2,6 +2,7 @@ package com.prov.dbupdation;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
 
@@ -56,4 +57,36 @@ public class UpdateGradeDetails {
 		
 	}
 	
+	public int updateRatesInGradeDetails(GradeDetails gd)
+	{
+		Connection con = null;
+		int rowCount = 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		String updateGradeDetails = "UPDATE GRADE_DETAILS SET\r\n" + 
+				"RATE = ?\r\n" + 
+				"WHERE RST=?\r\n" + 
+				"AND ID=?";
+		PreparedStatement stmt;
+		try {
+			stmt = con.prepareStatement(updateGradeDetails);
+			
+			stmt.setDouble(1, gd.getRate());
+			stmt.setInt(2, gd.getRst());
+			stmt.setInt(3, gd.getId());
+			
+			rowCount = stmt.executeUpdate();
+			
+			stmt.close();
+			con.close();
+			System.out.println("Updation Succesful-"+rowCount);
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rowCount;
+	}
 }
