@@ -9,7 +9,7 @@ public class OracleConnection {
 		{
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
-			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+			String url = "jdbc:oracle:thin:@localhost:1521:orcl3";
 			
 			Connection con = null;
 			

@@ -5,6 +5,7 @@ html{
 	height:100%;
 }
 /**************************************NAV BAR EDIT*************************/
+
 .custom-navbar{
     background: #393a3d;
     color: white;
@@ -20,6 +21,7 @@ html{
     font-size: 1.1rem;
     color: white;
 }
+
 /***********************************************LABEL CLASSES****************************************/
 label{
     vertical-align: middle;

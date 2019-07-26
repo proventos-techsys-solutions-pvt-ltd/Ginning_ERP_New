@@ -1,7 +1,44 @@
-<nav class="navbar navbar-expand-lg custom-navbar">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<style>
+	.nav-class{
+		display:none;
+	}
+	@media screen and (max-width: 768px){
+	.hide-this-class{
+		display:none;
+	}
+	.nav-class{
+		display:flex;
+	}
+}
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	  
+	  
+	  <ul class="nav justify-content-end align-items-center img-set nav-class">
+		  	<li class="nav-item dropdown">
+        	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          	<img src="../property/img/bell.png" alt="notification" id="class">
+        	</a>
+        	<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          	<a class="dropdown-item" href="../views/Actions.jsp">
+			<div class="d-flex justify-content-between align-items-center">
+			<div>Action</div>
+			<div class="cir" id="notificationCount">1</div>
+			</div>          
+         	</a>
+        	</div>
+       		</li>
+	       	<li class="nav-item">
+			  	<img src="../property/img/user.png" alt="user">
+			  	&nbsp;&nbsp;&nbsp;
+			    <img src="../property/img/exit.png" alt="user">
+		  	</li>
+		</ul> 
+		
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
     <a class="navbar-brand" href="./home.jsp">Cotton Ginning</a>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -86,32 +123,65 @@
        	</li>
        
     </ul>
-    <ul  class="navbar-nav mr-auto mt-2 mt-lg-0">
+   
+	
+	<ul  class="nav justify-content-end hide-this-class" >
      	<li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img src="../property/img/bell.png" alt="notification" id="notificationImg">
+          <img src="../property/img/settings.png" alt="setting" class="setting">
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="../views/Actions.jsp">
+				<h4>Payment Operator</h4>
+          </a>
+        </div>
+       	</li>
+       </ul>
+	
+    
+    <ul  class="nav justify-content-end hide-this-class" >
+     	<li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="../property/img/bell.png" alt="notification" class="notificationImg">
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="../views/Actions.jsp">
 			<div class="d-flex justify-content-between align-items-center">
 				<div>Action</div>
-				<div class="cir" id="notificationCount">0</div>
+				<div class="cir" id="notificationCount">1</div>
 			</div>          
           </a>
         </div>
        	</li>
        </ul>
     	
-    	&nbsp;
-      <label>Username</label> &nbsp; &nbsp; &nbsp;
-      <label>Logout</label>
+    	<ul class="nav justify-content-end hide-this-class img-set">
+		  <li class="nav-item">
+		    <img src="../property/img/user.png" alt="user">
+		  </li>
+		</ul>
+		   
+		<ul class="nav justify-content-end hide-this-class img-set">
+		  <li class="nav-item">
+		    <img src="../property/img/exit.png" alt="user">
+		  </li>
+		</ul>    	
+    
   </div>
 </nav>
 
 
 <script>
 	var totalNotifications = document.getElementById("notificationCount").innerHTML;
+	console.log(totalNotifications);
 	if(totalNotifications>0){
-		document.getElementById("notificationImg").src="../property/img/notification.png";
+		document.getElementsByClassName("notificationImg")[0].src="../property/img/notification.png";
 	}
+	
+	function playSound(filename){
+        var mp3Source = '<source src="' + filename + '.mp3" type="audio/mpeg">';
+        var oggSource = '<source src="' + filename + '.ogg" type="audio/ogg">';
+        var embedSource = '<embed hidden="true" autostart="true" loop="false" src="' + filename +'.mp3">';
+        document.getElementById("sound").innerHTML='<audio autoplay="autoplay">' + mp3Source + oggSource + embedSource + '</audio>';
+      }
 </script>
