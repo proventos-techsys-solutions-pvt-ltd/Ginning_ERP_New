@@ -2,103 +2,42 @@
 <!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Test" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9555b268-7608-465b-b308-b4cfc3df3859">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oracle DB Connection"/>
-	<queryString language="SQL">
-		<![CDATA[SELECT GD."ID",
-	GD."WEIGHMENT_ID",
-	GD."MATERIAL",
-	GD."QUANTITY",
-	GD."GRADE",
-	GD."RATE",
-	GD."AUTHORIZED_BY",
-	GD."MOISTURE",
-	WM."VID",
-	WM."RST",
-	WM."NET",
-	CVM."CID",
-	CVM."WEIGH_RATE",
-	CM."NAME",
-	CM."ADDRESS",
-	CM."MOBILE",
-	CM."BLACKLISTED",
-	CM."MEMBERSHIP",
-	im."COMPANY_ID",
-	COMPM."NAME"
-FROM "GRADE_DETAILS" GD,
-	"WEIGH_MAST" WM,
-	"CUSTOMER_VEHICLE_MAST" CVM,
-	"CUSTOMER_MAST" CM,
-	"INVOICE_MAST" im,
-	"INVOICE_ITEMS" II,
-	"COMPANY_MASTER" COMPM
-WHERE 
-	 GD."WEIGHMENT_ID" = WM."ID" 
-	 AND WM."VID" = CVM."ID" 
-	 AND CVM."CID" = CM."ID" 
-	 AND GD."RST" = II."RST" 
-	 AND im."COMPANY_ID" = COMPM."ID" 
-	 AND II."INVOICE_ID" = im."ID" 
-	 AND im."INVOICE_NO" = 'INV 2325']]>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
 	</queryString>
 	<field name="ID" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.label" value="ID"/>
-	</field>
-	<field name="WEIGHMENT_ID" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.label" value="WEIGHMENT_ID"/>
+		<fieldDescription><![CDATA[ID]]></fieldDescription>
 	</field>
 	<field name="MATERIAL" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="MATERIAL"/>
+		<fieldDescription><![CDATA[MATERIAL]]></fieldDescription>
 	</field>
 	<field name="QUANTITY" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.label" value="QUANTITY"/>
+		<fieldDescription><![CDATA[QUANTITY]]></fieldDescription>
 	</field>
 	<field name="GRADE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="GRADE"/>
+		<fieldDescription><![CDATA[GRADE]]></fieldDescription>
 	</field>
 	<field name="RATE" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.label" value="RATE"/>
+		<fieldDescription><![CDATA[RATE]]></fieldDescription>
 	</field>
 	<field name="AUTHORIZED_BY" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="AUTHORIZED_BY"/>
-	</field>
-	<field name="MOISTURE" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.label" value="MOISTURE"/>
-	</field>
-	<field name="VID" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.label" value="VID"/>
-	</field>
-	<field name="RST" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.label" value="RST"/>
-	</field>
-	<field name="NET" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.label" value="NET"/>
-	</field>
-	<field name="CID" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.label" value="CID"/>
-	</field>
-	<field name="WEIGH_RATE" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.label" value="WEIGH_RATE"/>
+		<fieldDescription><![CDATA[AUTHORIZED_BY]]></fieldDescription>
 	</field>
 	<field name="NAME" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="NAME"/>
+		<fieldDescription><![CDATA[NAME]]></fieldDescription>
 	</field>
 	<field name="ADDRESS" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="ADDRESS"/>
+		<fieldDescription><![CDATA[ADDRESS]]></fieldDescription>
 	</field>
 	<field name="MOBILE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="MOBILE"/>
-	</field>
-	<field name="BLACKLISTED" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.label" value="BLACKLISTED"/>
-	</field>
-	<field name="MEMBERSHIP" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.label" value="MEMBERSHIP"/>
+		<fieldDescription><![CDATA[MOBILE]]></fieldDescription>
 	</field>
 	<field name="COMPANY_ID" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.label" value="COMPANY_ID"/>
+		<fieldDescription><![CDATA[COMPANY_ID]]></fieldDescription>
 	</field>
 	<field name="COLUMN_20" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="NAME"/>
+		<fieldDescription><![CDATA[COLUMN_20]]></fieldDescription>
 	</field>
 	<variable name="RATE1" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{RATE}]]></variableExpression>

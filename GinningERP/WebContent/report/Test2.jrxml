@@ -461,18 +461,18 @@ WHERE
 				<reportElement x="417" y="4" width="387" height="31" uuid="aab2cffa-fcb6-43ba-8240-7136a250595f"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="466" y="7" width="100" height="30" uuid="c5dc178a-8d73-43b5-b5b4-ff3c22a2c99b"/>
+				<reportElement x="490" y="5" width="100" height="30" uuid="c5dc178a-8d73-43b5-b5b4-ff3c22a2c99b"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="570" y="7" width="100" height="30" uuid="d22c2594-7faf-4eb9-90ba-6ec6c7551f9e"/>
+				<reportElement x="599" y="5" width="100" height="30" uuid="d22c2594-7faf-4eb9-90ba-6ec6c7551f9e"/>
 				<textFieldExpression><![CDATA[$V{QUANTITY1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="674" y="7" width="100" height="30" uuid="ffc6ff6c-6a03-446c-80cf-d7949478f5d0"/>
+				<reportElement x="703" y="5" width="100" height="30" uuid="ffc6ff6c-6a03-446c-80cf-d7949478f5d0"/>
 				<textFieldExpression><![CDATA[$V{RATE1}]]></textFieldExpression>
 			</textField>
 		</band>
