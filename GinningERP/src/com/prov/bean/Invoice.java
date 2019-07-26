@@ -11,6 +11,14 @@ public class Invoice {
 	}
 	private double total, amountPaid, pending, totalQuanity, cashAmount, chequeAmount, rtgsAmount ;
 	
+	private float unloadingCharges;
+	
+	public float getUnloadingCharges() {
+		return unloadingCharges;
+	}
+	public void setUnloadingCharges(float unloadingCharges) {
+		this.unloadingCharges = unloadingCharges;
+	}
 	public double getCashAmount() {
 		return cashAmount;
 	}

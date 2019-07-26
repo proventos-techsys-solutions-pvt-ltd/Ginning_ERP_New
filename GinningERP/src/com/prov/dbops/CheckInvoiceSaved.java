@@ -40,5 +40,38 @@ public class CheckInvoiceSaved {
 		
 		return rowCount;
 	}
+	
+	
+	public int invoiceExistsCheckByNo(String invoiceNo) {
+		Connection con = null;
+		ResultSet rs = null;
+		int rowCount = 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		String invoiceCheck = "SELECT COUNT(*) FROM INVOICE_MAST WHERE INVOICE_NO =?";
+		
+		PreparedStatement stmt;
+		try {
+			stmt = con.prepareCall(invoiceCheck);
+			stmt.setString(1, invoiceNo);
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				rowCount = rs.getInt(1);
+			}
+			
+			stmt.close();
+			con.close();	
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return rowCount;
+	}
 
 }

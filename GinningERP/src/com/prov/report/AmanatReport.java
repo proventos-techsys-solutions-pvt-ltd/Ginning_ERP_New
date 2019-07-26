@@ -111,9 +111,10 @@ public JSONArray getAmanatDataInvoicing(int rst) {
 	try {
 		con = OracleConnection.getConnection();
 		
-		String invSql = "SELECT GD.WEIGHMENT_ID, GD.MATERIAL, GD.QUANTITY, GD.GRADE, GD.RATE CONTRACT_RATE, GD.AUTHORIZED_BY, GD.MOISTURE, AM.ID AMANAT_ID, AM.GRADE_ID, AM.AMANAT_DATE, AM.CUSTOMER_ID, AM.FINAL_RATE, CM.NAME, CM.ADDRESS, CM.MOBILE, CM.BLACKLISTED, CM.MEMBERSHIP\r\n" + 
-				"FROM GRADE_DETAILS GD, AMANAT_MAST AM, CUSTOMER_MAST CM\r\n" + 
+		String invSql = "SELECT GD.WEIGHMENT_ID, GD.MATERIAL, GD.QUANTITY, GD.GRADE, GD.RATE CONTRACT_RATE, GD.AUTHORIZED_BY, GD.MOISTURE, AM.ID AMANAT_ID, AM.GRADE_ID, AM.AMANAT_DATE, AM.CUSTOMER_ID, AM.FINAL_RATE, CM.NAME, CM.ADDRESS, CM.MOBILE, CM.BLACKLISTED, CM.MEMBERSHIP, GM.DESCRIPTION GRADE_DESC\r\n" + 
+				"FROM GRADE_DETAILS GD, AMANAT_MAST AM, CUSTOMER_MAST CM, GRADE_MASTER GM\r\n" + 
 				"WHERE\r\n" + 
+				"GD.GRADE = GM.GRADE AND\r\n" + 
 				"GD.ID = AM.GRADE_ID AND\r\n" + 
 				"AM.CUSTOMER_ID = CM.ID AND\r\n" + 
 				"GD.RST="+rst;
@@ -148,6 +149,7 @@ public JSONArray getAmanatDataInvoicing(int rst) {
 			obj.put("customerBlacklisted", rs.getInt(16));
 			obj.put("customerMembership", rs.getInt(17));
 			obj.put("rst", rst);
+			obj.put("gradeDesc", rs.getString(18));
 			
 			jsonArray.put(obj);
 		}

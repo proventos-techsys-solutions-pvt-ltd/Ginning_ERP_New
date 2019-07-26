@@ -1,3 +1,6 @@
+<%@page import="org.json.JSONObject"%>
+<%@page import="com.prov.report.InvoiceReport"%>
+<%@page import="com.prov.jasper.JasperReports"%>
 <%@page import="com.prov.dbupdation.UpdateStockMast"%>
 <%@page import="com.prov.report.StockMasterReport"%>
 <%@page import="com.prov.dbinsertion.AddStockDetails"%>
@@ -9,7 +12,6 @@
 <%@page import="com.prov.bean.InvoiceItems"%>
 <%@page import="com.prov.dbinsertion.AddInvoice"%>
 <%@page import="org.json.simple.JSONArray"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="org.json.simple.parser.JSONParser"%>
 <%@page import="com.prov.dbinsertion.AddStockMast"%>
 <%@page import="com.prov.bean.StockMast"%>
@@ -76,6 +78,7 @@
 			invoice.setAuthorizer((String)json.get("authorizer").toString().toUpperCase());
 			invoice.setNote((String)json.get("note").toString().toUpperCase());
 			invoice.setTotalQuanity(Double.parseDouble((String)json.get("totalQuantity")));
+			invoice.setPaidByoperator(0);
 			if((String)json.get("Cash") == null){
 				invoice.setCashAmount(0.0);
 			}else{
@@ -92,15 +95,6 @@
 				invoice.setRtgsAmount(Double.parseDouble((String)json.get("RTGS/NEFT")));
 			}
 			
-			
-			
-			
-			
-			System.out.println("CASH -------"+ invoice.getCashAmount());
-			System.out.println("ch -------"+ invoice.getChequeAmount());
-			System.out.println("rtgs -------"+ invoice.getRtgsAmount());
-			
-			
 			AddInvoice addinvoice = new AddInvoice();
 			
 			invoiceId = addinvoice.addInvoice(invoice); 
@@ -112,7 +106,6 @@
 				invoiceItemList.get(i).setInvoiceId(invoiceId);
 				addItems.addInvoiceItems(invoiceItemList.get(i));
 			}
-		
 		}
 		
 		if(amanatItemList.size()>0){
@@ -153,7 +146,15 @@
 		UpdateStockMast us = new UpdateStockMast();
 		
 		us.updateStockOnEntry(sm);
-		System.out.println("InvoiceNo -- " + invoice.getInvoiceNo());
+		
+		InvoiceReport invReport = new InvoiceReport();
+		
+		JSONObject printObj = invReport.getInvoiceForPrinting(invoiceId);
+
+		JasperReports printReport = new JasperReports();
+		
+		printReport.compileAndPrint("", printObj, "");
+		
 		session.setAttribute("InvoiceNo", invoice.getInvoiceNo());
 		response.sendRedirect("../views/Invoice.jsp");
 %>

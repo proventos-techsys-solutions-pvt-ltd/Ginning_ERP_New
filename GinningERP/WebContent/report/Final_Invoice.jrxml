@@ -6,44 +6,47 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="ID" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[ID]]></fieldDescription>
+	<field name="invoiceId" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[invoiceId]]></fieldDescription>
 	</field>
-	<field name="MATERIAL" class="java.lang.String">
-		<fieldDescription><![CDATA[MATERIAL]]></fieldDescription>
+	<field name="material" class="java.lang.String">
+		<fieldDescription><![CDATA[material]]></fieldDescription>
 	</field>
-	<field name="QUANTITY" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[QUANTITY]]></fieldDescription>
+	<field name="totalQuantity" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[totalQuantity]]></fieldDescription>
 	</field>
-	<field name="GRADE" class="java.lang.String">
-		<fieldDescription><![CDATA[GRADE]]></fieldDescription>
+	<field name="grade" class="java.lang.String">
+		<fieldDescription><![CDATA[grade]]></fieldDescription>
 	</field>
-	<field name="RATE" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[RATE]]></fieldDescription>
+	<field name="rate" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[rate]]></fieldDescription>
 	</field>
-	<field name="AUTHORIZED_BY" class="java.lang.String">
-		<fieldDescription><![CDATA[AUTHORIZED_BY]]></fieldDescription>
+	<field name="authorizer" class="java.lang.String">
+		<fieldDescription><![CDATA[authorizer]]></fieldDescription>
 	</field>
-	<field name="NAME" class="java.lang.String">
-		<fieldDescription><![CDATA[NAME]]></fieldDescription>
+	<field name="quantity" class="java.lang.String">
+		<fieldDescription><![CDATA[quantity]]></fieldDescription>
 	</field>
-	<field name="ADDRESS" class="java.lang.String">
-		<fieldDescription><![CDATA[ADDRESS]]></fieldDescription>
+	<field name="vendorName" class="java.lang.String">
+		<fieldDescription><![CDATA[vendorName]]></fieldDescription>
 	</field>
-	<field name="MOBILE" class="java.lang.String">
-		<fieldDescription><![CDATA[MOBILE]]></fieldDescription>
+	<field name="vendorAddress" class="java.lang.String">
+		<fieldDescription><![CDATA[vendorAddress]]></fieldDescription>
 	</field>
-	<field name="COMPANY_ID" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[COMPANY_ID]]></fieldDescription>
+	<field name="vendorMobile" class="java.lang.String">
+		<fieldDescription><![CDATA[vendorMobile]]></fieldDescription>
 	</field>
-	<field name="COLUMN_20" class="java.lang.String">
-		<fieldDescription><![CDATA[COLUMN_20]]></fieldDescription>
+	<field name="companyId" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[companyId]]></fieldDescription>
+	</field>
+	<field name="companyName" class="java.lang.String">
+		<fieldDescription><![CDATA[companyName]]></fieldDescription>
 	</field>
 	<variable name="RATE1" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{RATE}]]></variableExpression>
+		<variableExpression><![CDATA[$F{rate}]]></variableExpression>
 	</variable>
 	<variable name="QUANTITY1" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{QUANTITY}]]></variableExpression>
+		<variableExpression><![CDATA[$F{quantity}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -77,7 +80,7 @@
 			</rectangle>
 			<textField>
 				<reportElement x="92" y="10" width="100" height="30" uuid="732d4cf4-a20e-40f1-986b-0d34888149da"/>
-				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vendorName}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="7" y="10" width="70" height="30" uuid="5a7e27dd-c2b3-4f0e-bfac-0eb7478be295"/>
@@ -85,7 +88,7 @@
 			</staticText>
 			<textField>
 				<reportElement x="304" y="10" width="81" height="30" uuid="09b44e71-6bfa-4e3a-b6c3-6a402b430455"/>
-				<textFieldExpression><![CDATA[$F{ID}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{invoiceId}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="238" y="10" width="100" height="30" uuid="096781b6-2d8c-4ac7-8105-f4b53b2fbeb2"/>
@@ -93,7 +96,7 @@
 			</staticText>
 			<textField>
 				<reportElement x="91" y="46" width="102" height="30" uuid="580b2171-e1e2-4d6f-9b0d-42b9ff917ccc"/>
-				<textFieldExpression><![CDATA[$F{COLUMN_20}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{companyName}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="7" y="60" width="70" height="30" uuid="05ad1835-2399-4370-8dc1-d439f8886ca1"/>
@@ -101,7 +104,7 @@
 			</staticText>
 			<textField>
 				<reportElement x="92" y="67" width="100" height="30" uuid="e7b826ed-8afa-40d6-921d-b54efb7ead0c"/>
-				<textFieldExpression><![CDATA[$F{ADDRESS}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vendorAddress}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement x="412" y="0" width="393" height="101" uuid="c2f4ffcd-b9b7-4047-bc8f-becef76a4be8"/>
@@ -112,7 +115,7 @@
 			</staticText>
 			<textField>
 				<reportElement x="505" y="10" width="100" height="30" uuid="21beb5e6-239d-4396-bc43-d5fe043acc7f"/>
-				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vendorName}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="640" y="10" width="100" height="30" uuid="25d6ca27-f18f-4500-b894-5ef0c8dd208d"/>
@@ -120,7 +123,7 @@
 			</staticText>
 			<textField>
 				<reportElement x="706" y="10" width="81" height="30" uuid="fd5fb12f-68a0-4065-9871-39ae14d13265"/>
-				<textFieldExpression><![CDATA[$F{ID}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{invoiceId}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="421" y="55" width="70" height="30" uuid="22201f8d-9658-4e8f-8283-21fb16c556a0"/>
@@ -128,11 +131,11 @@
 			</staticText>
 			<textField>
 				<reportElement x="504" y="45" width="101" height="30" uuid="4361c271-d6cc-4765-91c4-bb702a988fec"/>
-				<textFieldExpression><![CDATA[$F{COLUMN_20}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{companyName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="505" y="66" width="100" height="30" uuid="5205695d-7ea0-4083-9715-5af6a4c38fac"/>
-				<textFieldExpression><![CDATA[$F{ADDRESS}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vendorAddress}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="238" y="46" width="100" height="30" uuid="43928cbb-076e-4701-8d8d-f99010bc5845"/>
@@ -232,25 +235,25 @@
 				<reportElement x="35" y="9" width="66" height="30" uuid="cd3579d7-034a-4720-ab9a-7112aa138a4f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e52f4797-0cc9-48bf-9899-67e23de9b9ed"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{MATERIAL}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{material}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="193" y="8" width="66" height="30" uuid="d5c72379-a652-4a34-9305-ca3c2afd09ab">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="91a9fde8-1e87-49ef-a203-b53fd51057bf"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{QUANTITY}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="277" y="7" width="69" height="30" uuid="d95ee39e-f828-426e-9524-14ac00e642d8">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="34e6a64c-f408-40e4-a52b-0aa818c29120"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{RATE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{rate}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="111" y="8" width="63" height="30" uuid="1619fc8b-96e3-4c68-92bb-901a39db7922">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f783feaf-18d0-4ee9-8e97-63d7d752cee7"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{GRADE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{grade}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="-6" y="42" width="396" height="3" uuid="b36ab29b-217a-430b-a978-c20a984a3bd9"/>
@@ -259,25 +262,25 @@
 				<reportElement x="452" y="5" width="66" height="30" uuid="ea49f43f-bf89-4533-8285-25633e31e29c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e52f4797-0cc9-48bf-9899-67e23de9b9ed"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{MATERIAL}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{material}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="535" y="6" width="63" height="30" uuid="21262c80-ce9a-4ef5-a8ba-c61d3391e455">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f783feaf-18d0-4ee9-8e97-63d7d752cee7"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{GRADE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{grade}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="620" y="6" width="66" height="30" uuid="f4e03ebe-d685-4dd2-952f-b54a8c9d76a6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="91a9fde8-1e87-49ef-a203-b53fd51057bf"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{QUANTITY}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="710" y="6" width="69" height="30" uuid="4d31becc-70a1-4886-a94f-74a7ae8b8ab2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="34e6a64c-f408-40e4-a52b-0aa818c29120"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{RATE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{rate}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="414" y="42" width="393" height="4" uuid="6e176e56-17cd-43c3-bc06-e0c64f9038b8"/>
@@ -328,7 +331,7 @@
 		<band height="54" splitType="Stretch">
 			<textField>
 				<reportElement x="288" y="9" width="100" height="30" uuid="d8770a78-48ce-45e6-8ace-059fed2e66c5"/>
-				<textFieldExpression><![CDATA[$F{AUTHORIZED_BY}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{authorizer}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="167" y="10" width="100" height="30" uuid="faf353f8-577d-48e0-8cdb-cfc93732c2b5"/>
@@ -346,7 +349,7 @@
 			</staticText>
 			<textField>
 				<reportElement x="711" y="10" width="100" height="30" uuid="74513235-ff73-45e7-ae35-375f7b8356a2"/>
-				<textFieldExpression><![CDATA[$F{AUTHORIZED_BY}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{authorizer}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

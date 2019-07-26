@@ -168,5 +168,190 @@ public ArrayList<Invoice> getReport() {
 		return report;
 	}
 	
-
+	public JSONObject getInvoiceForOperator(String invoiceNo) {
+		ResultSet rs = null;
+		Connection con = null;
+		
+		JSONObject jsonObj = new JSONObject();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String invSql = "SELECT IM.ID, IM.INVOICE_NO, IM.TOTAL, IM.AMOUNTPAID, IM.PENDING, IM.INV_DATE, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.AUTHORIZER, \r\n" + 
+					"        IM.NOTE, IM.TOTAL_QUANTITY, IM.CASH_AMOUNT, IM.CHEQUE_AMOUNT, IM.RTGS_AMOUNT, IM.PAID_BY_OP, CM.NAME, CM.ADDRESS, CM.MOBILE\r\n" + 
+					"FROM INVOICE_MAST IM, CUSTOMER_MAST CM\r\n" + 
+					"WHERE IM.CUSTOMER_ID = CM.ID AND\r\n" + 
+					"      IM.INVOICE_NO = ?"; 
+				
+			PreparedStatement stmt = con.prepareStatement(invSql);
+			
+			stmt.setString(1, invoiceNo);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				jsonObj.put("invoiceId", rs.getString(1));
+				jsonObj.put("invoiceNo", rs.getString(2));
+				jsonObj.put("totalAmount", rs.getDouble(3));
+				jsonObj.put("amountPaid", rs.getDouble(4));
+				jsonObj.put("pendingAmount", rs.getDouble(5));
+				
+				String date = rs.getString(6);
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+				String properDate = format2.format(date1);
+				jsonObj.put("invoiceDate", properDate);
+				
+				jsonObj.put("companyId", rs.getInt(7));
+				jsonObj.put("customerId", rs.getInt(8));
+				jsonObj.put("authorizer", rs.getString(9));
+				jsonObj.put("invoiceNote", rs.getString(10));
+				jsonObj.put("totalQuantity", rs.getDouble(11));
+				jsonObj.put("cashAmount", rs.getDouble(12));
+				jsonObj.put("chequeAmount", rs.getDouble(13));
+				jsonObj.put("rtgsAmount", rs.getDouble(14));
+				jsonObj.put("paidByOperator", rs.getDouble(15));
+				jsonObj.put("customerName", rs.getString(16));
+				jsonObj.put("customerAddress", rs.getString(17));
+				jsonObj.put("customerMobile", rs.getString(18));
+			}
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jsonObj;
+	}
+	
+	public JSONObject getInvoiceForPrinting(int invoiceId) {
+		
+		ResultSet rs = null;
+		Connection con = null;
+		
+		JSONObject jsonObj = new JSONObject();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String invSql = "SELECT \r\n" + 
+					"		IM.ID INV_ID, \r\n" + 
+					"		IM.INVOICE_NO,\r\n" + 
+					"		IM.AMOUNTPAID,\r\n" + 
+					"		IM.PENDING,\r\n" + 
+					"		IM.INV_DATE,\r\n" + 
+					"		IM.COMPANY_ID,\r\n" + 
+					"		IM.CUSTOMER_ID,\r\n" + 
+					"		IM.AUTHORIZER,\r\n" + 
+					"		IM.NOTE,\r\n" + 
+					"		IM.TOTAL_QUANTITY,\r\n" + 
+					"		IM.CASH_AMOUNT,\r\n" + 
+					"		IM.CHEQUE_AMOUNT,\r\n" + 
+					"		IM.RTGS_AMOUNT,\r\n" + 
+					"		IM.PAID_BY_OP,\r\n" + 
+					"       IM.UNLOADING_CHARGES,\r\n"+	
+					"		COMP.NAME COMP_NAME,\r\n" + 
+					"		COMP.ADDRESS COMP_ADDR,\r\n" + 
+					"		COMP.TELEPHONE COMP_TEL,\r\n" + 
+					"		CUST.NAME CUST_NAME,\r\n" + 
+					"		CUST.ADDRESS CUST_ADDR,\r\n" + 
+					"		CUST.MOBILE CUST_MOB,\r\n" + 
+					"		II.ID INV_ITEM_ID,\r\n" + 
+					"		II.WEIGHMENT_ID,\r\n" + 
+					"		II.GRADE_ID,\r\n" + 
+					"		II.RST,\r\n" + 
+					"		WM.VID VEH_ID,\r\n" + 
+					"		GD.MATERIAL,\r\n" + 
+					"		GD.QUANTITY,\r\n" + 
+					"		GD.GRADE,\r\n" + 
+					"		GD.RATE,\r\n" + 
+					"		GD.MOISTURE,\r\n" + 
+					"		GD.AUTHORIZED_BY,\r\n" + 
+					"		GM.DESCRIPTION,\r\n" + 
+					"		CV.WEIGH_RATE\r\n" + 
+					"FROM\r\n" + 
+					"		INVOICE_MAST IM,\r\n" + 
+					"		COMPANY_MASTER COMP,\r\n" + 
+					"		CUSTOMER_MAST CUST,\r\n" + 
+					"		invoice_items II,\r\n" + 
+					"		weigh_mast WM,\r\n" + 
+					"		grade_details GD,\r\n" + 
+					"		customer_vehicle_mast CV,\r\n" + 
+					"		grade_master GM\r\n" + 
+					"WHERE \r\n" + 
+					"		im.id = ii.invoice_id AND\r\n" + 
+					"		im.company_id = comp.id AND\r\n" + 
+					"		im.customer_id = cust.id AND\r\n" + 
+					"		ii.grade_id = gd.id AND\r\n" + 
+					"		gd.weighment_id = wm.id AND\r\n" + 
+					"		GM.GRADE = gd.grade AND\r\n" + 
+					"		wm.vid = cv.id AND\r\n" + 
+					"		IM.ID=?"; 
+				
+			PreparedStatement stmt = con.prepareStatement(invSql);
+			
+			stmt.setInt(1, invoiceId);
+			
+			rs = stmt.executeQuery();
+			
+			rs.first();
+			
+			jsonObj.put("invoiceId", rs.getInt(1));
+			jsonObj.put("invoiceNo", rs.getString(2));
+			jsonObj.put("amountPaid", rs.getDouble(3));
+			jsonObj.put("amountPending", rs.getDouble(4));
+			jsonObj.put("invoiceDate", rs.getString(5));
+			jsonObj.put("companyId", rs.getInt(6));
+			jsonObj.put("customerId", rs.getInt(7));
+			jsonObj.put("authorizer", rs.getString(8));
+			jsonObj.put("note", rs.getString(9));
+			jsonObj.put("totalQuantity", rs.getDouble(10));
+			jsonObj.put("cashAmount", rs.getDouble(11));
+			jsonObj.put("chequeAmount", rs.getDouble(12));
+			jsonObj.put("rtgsAmount", rs.getDouble(13));
+			jsonObj.put("paidByOperator", rs.getInt(14));
+			jsonObj.put("unloadingCharges", rs.getFloat(15));
+			jsonObj.put("companyname", rs.getString(16));
+			jsonObj.put("companyAddress", rs.getString(17));
+			jsonObj.put("companyTelephone", rs.getString(18));
+			jsonObj.put("vendorName", rs.getString(19));
+			jsonObj.put("vendorAddress", rs.getString(20));
+			jsonObj.put("vendorMobile", rs.getString(21));
+			
+			jsonObj.put("weighRate", rs.getDouble(34));
+			
+			JSONArray jsonArr = new JSONArray();
+			
+			rs.previous();
+			while (rs.next()) {
+				
+				
+				JSONObject invoiceItems = new JSONObject();
+				
+				invoiceItems.put("invoiceItemId", rs.getInt(22));
+				invoiceItems.put("weighmentId", rs.getInt(23));
+				invoiceItems.put("GradeId", rs.getInt(24));
+				invoiceItems.put("rst", rs.getInt(25));
+				invoiceItems.put("vehicleId", rs.getInt(26));
+				invoiceItems.put("material", rs.getString(27));
+				invoiceItems.put("quantity", rs.getDouble(28));
+				invoiceItems.put("grade", rs.getString(29));
+				invoiceItems.put("rate", rs.getDouble(30));
+				invoiceItems.put("moisture", rs.getFloat(31));
+				invoiceItems.put("authorizer", rs.getString(32));
+				invoiceItems.put("gradeDescription", rs.getString(33));
+				
+				jsonArr.put(invoiceItems);
+				
+			}
+			
+			jsonObj.put("invoiceItems", jsonArr);
+			
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jsonObj;
+		
+	}
 }
