@@ -33,14 +33,14 @@
         	</div>
        		</li>
 	       	<li class="nav-item">
-			  	<img src="../property/img/user.png" alt="user">
+			  	<img data-toggle="userName" title="Logout"  src="../property/img/user.png" alt="user">
 			  	&nbsp;&nbsp;&nbsp;
-			    <img src="../property/img/exit.png" alt="user">
+			    <img data-toggle="logOut" title="Logout"  src="../property/img/exit.png" alt="user">
 		  	</li>
 		</ul> 
 		
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a class="navbar-brand" href="./home.jsp">Cotton Ginning</a>
+    <a class="navbar-brand" href="./Dashboard.jsp">Cotton Ginning</a>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
         <a class="nav-link" href="./Dashboard.jsp">Dashboard <span class="sr-only">(current)</span></a>
@@ -112,15 +112,6 @@
         </div>
        	</li>
        	
-       	<li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Payment Operator
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="../accounts_operation_view/Payment.jsp">Vendor Payment</a>
-          <a class="dropdown-item" href="../accounts_operation_view/rtgs-neft.jsp">RTGS/NEFT Report</a>
-        </div>
-       	</li>
        
     </ul>
    
@@ -131,8 +122,11 @@
           <img src="../property/img/settings.png" alt="setting" class="setting">
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="../views/Actions.jsp">
-				<h4>Payment Operator</h4>
+          <a class="dropdown-item" href="../accounts_operation_view/Payment.jsp">
+				Cashier Module
+          </a>
+           <a class="dropdown-item" href="../views/GenerateRST.jsp">
+				WB Operator Module
           </a>
         </div>
        	</li>
@@ -157,13 +151,13 @@
     	
     	<ul class="nav justify-content-end hide-this-class img-set">
 		  <li class="nav-item">
-		    <img src="../property/img/user.png" alt="user">
+		    <img data-toggle="userName" title="Username" src="../property/img/user.png" alt="user">
 		  </li>
 		</ul>
 		   
 		<ul class="nav justify-content-end hide-this-class img-set">
 		  <li class="nav-item">
-		    <img src="../property/img/exit.png" alt="user">
+		    <img data-toggle="logOut" title="Logout" src="../property/img/exit.png" alt="user">
 		  </li>
 		</ul>    	
     
@@ -184,4 +178,14 @@
         var embedSource = '<embed hidden="true" autostart="true" loop="false" src="' + filename +'.mp3">';
         document.getElementById("sound").innerHTML='<audio autoplay="autoplay">' + mp3Source + oggSource + embedSource + '</audio>';
       }
+</script>
+
+<script>
+$(document).ready(function(){
+  $('[data-toggle="logOut"]').tooltip();   
+});
+
+$(document).ready(function(){
+	  $('[data-toggle="userName"]').tooltip();   
+	});
 </script>
