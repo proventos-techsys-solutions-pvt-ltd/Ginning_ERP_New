@@ -22,7 +22,7 @@ try{
 	con = DriverManager.getConnection(url, "samir", "admin123");
 	
 	//Loading Jasper file report from local file system.
-	String jrxmlFile = session.getServletContext().getRealPath("/report/Test.jrxml");
+	String jrxmlFile = session.getServletContext().getRealPath("/report/FinalInvoicePDF.jrxml");
 	
 	InputStream input = new FileInputStream(new File(jrxmlFile));
 
