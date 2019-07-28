@@ -4,21 +4,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>RST Form</title>
+  <title>WB Operation For Generating RST</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="../styles/bootstrap.min.css">	
   <link rel="stylesheet" href="../styles/WBStyle.css">
+  <!-- Bootstrap JS -->
+  	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
+	<script src="../js/popper.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
-  
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<div style="width:100%;" class="d-flex justify-content-between align-items-center">
+		<div>
+			<a class="navbar-brand" href="./Dashboard.jsp">Sameer Cotton Industries</a>
+		</div>
+		<div>
+			<img data-toggle="userName" title="Username" src="../property/img/user.png" alt="user">
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<img data-toggle="logOut" title="Logout" src="../property/img/exit.png" alt="user">
+		</div>
+	</div>
+  </nav>
   <div class="container-fluid">
+ 
+  
   	<div class="row mt-2 ">
   		<div class="col-md-12">
   			<div class="d-flex justify-content-start align-items-center tile-background-row">
   				<img src="../property/img/weight.png" alt="weight" >&nbsp;
-  				<h4 class="lbl-rm-all">Weighment</h4>
+  				<h4 class="lbl-rm-all" id="title">Weighment</h4>
   			</div>
   		</div>
   	</div>
@@ -30,97 +47,112 @@
 	      	<input type="hidden" id="id" name="id" value="0" />
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">RST No</label>
-	        	<input type="text" class="form-control " id="rst" name="rst" placeholder="Auto" required>
+	        	<div class="d-flex justify-content-start align-items-center">
+	        		<input type="text" class="form-control " id="rst" name="rst" placeholder="Auto" required>
+	        		<button type="button" class="btn btn-success" onclick="fetchDataForSecondWeighment(document.getElementById('rst').value)">Fetch</button>
+	        	</div>
+	        	
 	        </div>
-
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Date</label>
-	        	<input type="date" class="form-control " id="date" name="date" placeholder="" required>
+	        	<input type="date" class="form-control " id="date" name="date" placeholder="">
 	        </div>
 	
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Vehicle No</label>
-	        	<input type="email" class="form-control " id="vehicleNo" name="vehicleNo" placeholder="AA 31 DA 0000" required>
+	        	<input type="text" class="form-control " id="vehicleNo" name="vehicleNo" placeholder="Vh No">
 	        </div>
         </div>
         <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Vehicle Type</label>
-	        	 <select class="form-control " id="vehicleType" name="vehicleType" onchange="setWeighRate(this)" required>
+	        	 <select class="form-control " id="vehicleType" name="vehicleType" onchange="setWeighRate(this)">
 	        	    <option disabled selected>Select</option>
 	        	 	<c:VehicleCategoryTag />
 	        	 </select>
 	        </div>
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Customer</label>
-	        	<input type="text" class="form-control " name="customer" id="customer" placeholder="" required>
+	        	<input type="text" class="form-control " name="customer" id="customer" placeholder="">
 	        </div>
 	        <div class="col-md-4">
-	        	<label class="lbl-rm-all">Address</label>
-	        	<textarea class="form-control " id="address" name="address" required></textarea>
+	        	<label class="lbl-rm-all">Mobile No</label>
+	        	<input type="text" class="form-control " id="mobile" name="mobile" placeholder="" >
 	        </div>
+	        
 	    </div>
 	    <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
-	        	<label class="lbl-rm-all">Mobile No</label>
-	        	<input type="text" class="form-control " id="mobile" name="mobile" placeholder="" required>
+	        	<label class="lbl-rm-all">Address</label>
+	        	<textarea class="form-control " id="address" name="address"></textarea>
 	        </div>
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">BlackListed</label>
-	        	<input type="text" class="form-control " id="blacklist" name="blacklist" placeholder="" required>
+	        	<input type="text" class="form-control " id="blacklist" name="blacklist" placeholder="" >
 	        </div>
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Membership</label>
-	        	<input type="text" class="form-control " id="membership" name="membership" placeholder="" required>
+	        	<input type="text" class="form-control " id="membership" name="membership" placeholder="" >
 	        </div>
 	     </div>
 	    <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Material</label>
-	        	<input type="text" class="form-control " id="material" name="material" placeholder="" required>
+	        	<input type="text" class="form-control " id="material" name="material" placeholder="">
 	        </div>
 	    </div>
         
         <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Gross Weight : </label>
-	        	<input type="text" class="form-control  " id="gross" name="gross" placeholder="" value="0.0" required>
-	        	<input type="text" class="form-control  " id="tare" name="grossWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly" >
+	        	<div class="d-flex justify-content-start align-items-center">
+	        		<input type="text" class="form-control  " id="gross" name="gross" placeholder="" value="0.0" readonly="readonly">
+	        		<button type="button" class="btn btn-success" onclick="fetchGrossWeight()">Fetch</button>
+	        	</div>
+	        	
+	        	<input type="text" class="form-control  " id="grossWtTime" name="grossWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
-	        
 	         <div class="col-md-4">
 	        	<label class="lbl-rm-all">Tare Weight : </label>
-	            <input type="text" class="form-control  " id="tare" name="tare" placeholder="" value="0.0" >
-	            <input type="text" class="form-control  " id="tare" name="tareWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
+	        	<div class="d-flex justify-content-start align-items-center">
+	            	<input type="text" class="form-control" id="tare" name="tare" placeholder="" value="0.0" readonly="readonly">
+	           	 	<button type="button" class="btn btn-success" onclick="fetchTareWeight()">Fetch</button>
+	           	</div>
+	            <input type="text" class="form-control  " id="tareWtTime" name="tareWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
-	        
 	        <div class="col-md-4">
 	            <label class="lbl-rm-all">Net Weight : </label>
-	            <input type="text" class="form-control  " id="net" name="net" placeholder="" value="0.0">
-	            <input type="text" class="form-control  " id="tare" name="netWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
+	            <div class="d-flex justify-content-start align-items-center">
+	            <input type="text" class="form-control  " id="net" name="net" placeholder="" value="0.0" readonly="readonly">
+	            </div>
+	            <input type="text" class="form-control  " id="netWtTime" name="netWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
         </div>
         <div class="form-row form-row-ctm">
+        	<div class="col-md-4">
+        		
+	  		</div>
+	  		<div class="col-md-4">
+        		
+	  		</div>
+	  	</div>
+        <div class="form-row form-row-ctm">
         <div class="col-md-4">
         	<label class="lbl-rm-all">Weigh Rate :</label>
-        	<input type="text" class="form-control " name="weighRate" value='0'>
+        	<input type="text" class="form-control " id="weighRate" name="weighRate" value='0'>
         </div>
         </div>
-        <div class="form-row justify-content-end border-top">
-	        <div class="col-md-auto">
-        		<button type="button" class="btn btn-success change-button" onclick="fetchRst()">Fetch RST</button>
-	  		</div>
-  			<div class="col-md-auto ">
+        <div class="form-row border-top">
+	        <div class="col-md-12">
+  			<div class="d-flex justify-content-end align-items-center ">
   				<button type="button" class="btn btn-success change-button" onclick="submitRSTEntry()">Submit</button>
-  			</div>
-  			<div class="col-md-auto ">
-  				<button type="button" class="btn btn-success change-button" data-toggle="modal" data-target="#modalLoginForm">Reset</button>
-  			</div>
-  			<div class="col-md-auto ">
+  				&nbsp;
+  				<button type="button" class="btn btn-success change-button" onclick="resetFormData()">Reset</button>
+  				&nbsp;
   				<button type="button" class="btn btn-success change-button">Print</button>
-  			</div>
-  			<div class="col-md-auto ">
+  				&nbsp;
   				<button type="button" class="btn btn-success change-button">PDF</button>
+  			</div>
   			</div>
         </div>
         </form>
@@ -159,35 +191,23 @@
 		       <form id="newCustomer" action="../processing/addCustomer.jsp">
 		       	<div class="form-row">
 			       	<div class="col-md-6">
-			       		<label>Name</label>
+			       		<label class="lbl-rm-all">Name</label>
 			       		<input type="text" id="newCustomerName" class="form-control" name="name">
 			       	</div>	
 			       	<div class="col-md-6">
-			       		<label>Mobile</label>
+			       		<label class="lbl-rm-all">Mobile</label>
 			       		<input type="tel" class="form-control" name="mobile" id="newCustomerMobile">
 			       	</div>
 			       	<div class="col-md-12">
-			       		<label>Address</label>
+			       		<label class="lbl-rm-all">Address</label>
 		       			<textarea class="form-control" name="address" id="newCustomerAddress"></textarea>
-			       	</div>	
-			       	<div class="col-md-6">
-			       	<div class="custom-control custom-checkbox">
-		       			 <input type="checkbox" class="custom-control-input" name="newMembership" id="newMembership" value="0">
-                         <label class="custom-control-label lbl-rm-t" for="newMembership">Membership</label>
-			       	</div>
-			       	</div>	
-			       	<div class="col-md-6">
-			       		<div class="custom-control custom-checkbox">
-			       			<input type="checkbox" class="custom-control-input" name="newBlacklist" id="newBlacklist" value="0">
-                      	 	<label class="custom-control-label lbl-rm-t" for="newBlacklist">Blacklist</label>
-			       		</div>
 			       	</div>	
 		       	</div>
 		       </form>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary" onclick="submitNewCustomer()" data-dismiss="modal">Add Customer</button>
+		        <button type="button" class="btn btn-success" onclick="submitNewCustomer()" data-dismiss="modal">Add Customer</button>
 		      </div>
 		    </div>
 		  </div>
@@ -199,18 +219,14 @@
 <nav class="navbar navbar-default navbar-static-bottom footer ">
  
 </nav>
-<script src="../js/jquery-3.3.1.slim.min.js" ></script>
-<script src="../js/popper.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
 <script src="../js/commonjs.js"></script>
-
 <script>
+
 
 document.addEventListener('change', function(e){
 	if(e.srcElement.id === 'newMembership' || e.srcElement.id === 'newBlacklist' ){
 		if(e.srcElement.value === '0'){
 			e.srcElement.value = '1'
-			
 		}
 		else if(e.srcElement.value === '1'){
 			e.srcElement.value = '0'
@@ -220,59 +236,154 @@ document.addEventListener('change', function(e){
 })
 
 function decideWeighment(flag){
-
-	if(flag === 0){
-		document.getElementById("newRST").action = "../processing/addInvoiceEntry.jsp";
-	}else if(flag === 1){
+	if(flag === 1){
 		document.getElementById("title").innerHTML = "Second Weighment";
-		document.getElementById("newRST").action = "../processing/secondWeighment.jsp";
 	}
-	
 }
 
-function fetchRst(){
+function fetchDataForSecondWeighment(rst){
+	var url="../processing/fetchSecondWeighment.jsp?rst="+rst;
+	if(window.XMLHttpRequest){  
+		fetchWeighData=new XMLHttpRequest();  
+	}  
+	else if(window.ActiveXObject){  
+		fetchWeighData=new ActiveXObject("Microsoft.XMLHTTP");  
+	}  
+	try{  
+		fetchWeighData.onreadystatechange=fetchFirstWeighment;  
+		console.log("AJAX Req sent");
+		fetchWeighData.open("GET",url,true);  
+		fetchWeighData.send();  
+	}catch(e){alert("Unable to connect to server");}
+}
+function fetchFirstWeighment(){
+	if(fetchWeighData.readyState == 4){
+		var response = this.response.trim();
+		console.log(response)
+		if(Number(response) === 0){
+			window.alert("Please enter a valid RST number.")
+		}else{
+			setFirstWeighmentData(response);
+		}
+	}
+}
+
+function setFirstWeighmentData(response){
 	
-	var url="../processing/readWeighBridgeData.jsp";
+	var blacklisted;
+	var membership;
+	var data = JSON.parse(response);
+	if(Number(data.vendorBlacklisted) === 1){
+		blacklisted = 'YES';
+	}else if(Number(data.vendorBlacklisted) === 0){
+		blacklisted = 'NO'
+	}
+	if(Number(data.vendorMembership) === 1){
+		membership = 'YES';
+	}else if(Number(data.vendorMembership) === 0){
+		membership = 'NO';
+	}
+	document.getElementById('date').value = data.weighmentDate ;
+	document.getElementById('vehicleNo').value = data.vehicleNo ;
+	document.getElementById('customer').value = data.vendorName ;
+	document.getElementById('address').value = data.vendorAddress ;
+	document.getElementById('mobile').value = data.vendorMobile ;
+	document.getElementById('blacklist').value = blacklisted ;
+	document.getElementById('membership').value = membership ;
+	document.getElementById('material').value = data.material ;
+	document.getElementById('gross').value = data.grossWt ;
+	document.getElementById('grossWtTime').value = data.grossWtTime ;
+	document.getElementById('tare').value = data.tareWt ;
+	document.getElementById('net').value = data.netWt ;
+	document.getElementById('weighRate').value = data.weighRate ;
+	document.getElementById('date').setAttribute('readonly','');
+	document.getElementById('vehicleNo').setAttribute('readonly','');
+	document.getElementById('vehicleType').setAttribute('readonly','');
+	document.getElementById('customer').setAttribute('readonly','');
+	document.getElementById('address').setAttribute('readonly','');
+	document.getElementById('mobile').setAttribute('readonly','');
+	document.getElementById('blacklist').setAttribute('readonly','');
+	document.getElementById('membership').setAttribute('readonly','');
+	document.getElementById('material').setAttribute('readonly','');
+	document.getElementById('weighRate').setAttribute('readonly','');
+
+	var element = document.getElementById('vehicleType');
+	
+	for(i=0;i<element.options.length;i++){
+		if(element.options[i].innerHTML === data.vehicleName){
+			element.options[i].selected=true;
+		}else{
+			element.options[i].disabled=true;
+		}
+	}
+	decideWeighment(1);
+}
+
+function fetchGrossWeight(){
+	var url="../processing/fetchWeight.jsp";
 	if(window.XMLHttpRequest){  
 		fetchData=new XMLHttpRequest();  
 	}  
 	else if(window.ActiveXObject){  
 		fetchData=new ActiveXObject("Microsoft.XMLHTTP");  
 	}  
-  
 	try{  
-		fetchData.onreadystatechange=fetchWeighData;  
+		fetchData.onreadystatechange=fetchGrossWeighData;  
 		console.log("AJAX Req sent");
 		fetchData.open("GET",url,true);  
 		fetchData.send();  
 	}catch(e){alert("Unable to connect to server");}
 }
 
- function fetchWeighData(){
+ function fetchGrossWeighData(){
 	 if(fetchData.readyState == 4){
-		 console.log(this.response.trim());
-		 console.log("Data Found!!!!!!!");
+		 var response = this.response.trim();
+		 console.log('Weight --- '+response);
+		 var grossWtInput = document.getElementById('gross');
+		 grossWtInput.value = response;
 	 }
  }
+ 
+ 
+ function fetchTareWeight(){
+		var url="../processing/fetchWeight.jsp";
+		if(window.XMLHttpRequest){  
+			fetchData=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchData=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+		try{  
+			fetchData.onreadystatechange=fetchTareWeighData;  
+			console.log("AJAX Req sent");
+			fetchData.open("GET",url,true);  
+			fetchData.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
 
-
-
+	 function fetchTareWeighData(){
+		 if(fetchData.readyState == 4){
+			 var response = this.response.trim();
+			 console.log('Weight --- '+response);
+			 var tareWtInput = document.getElementById('tare');
+			tareWtInput.value = response;
+			document.getElementById('net').value = Number(document.getElementById('gross').value) - Number(document.getElementById('tare').value);
+		 }
+	 }
 	var height = new SettingHeightofAdjacentPanels("getHeight","scroll",0);//getting & setting height of panels
 	height.calcHeight();
 
 //Submit RST Weigh Bridge Form
 function submitRSTEntry(){
 	document.getElementById("newRST").submit();	
+	resetFormData();
 }
-
-
-
+function resetFormData(){
+	document.getElementById("newRST").reset();
+}
 //Check if the entered customer exists in DB
-document.getElementById("mobile").addEventListener('input',function(e){
-	//if(e.keyCode === 13){
+document.getElementById("mobile").addEventListener('change',function(e){
 		checkEnteredCustomer();
-	//}
-	
 });
 
 
@@ -284,7 +395,6 @@ function checkEnteredCustomer(){
 	getCustomerData(customerName, mobile);
 	
 }
-
 
 //Create AJAX Req to get the customer data from DB if the customer exists in it
 function getCustomerData(customerName,mobile){
@@ -304,8 +414,6 @@ function getCustomerData(customerName,mobile){
 		checkRequest.send();  
 	}catch(e){alert("Unable to connect to server");}
 }
-
-
 
 //Set data in RST form if the customer exists in the DB
 function checkCustomer(){
@@ -348,7 +456,6 @@ function checkCustomer(){
 	}
 }
 
-
 //Open Add new customer form popup
 function addNewCustomer(){
 	
@@ -376,7 +483,6 @@ function submitNewCustomer(){
 	saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress, newCustomerBlacklist, newCustomerMembership);
 }
 
-
 //Create AJAX Request for new customer form submission
 function saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress, newCustomerBlacklist, newCustomerMembership){
 	var url="../processing/addCustomer.jsp?name="+newCustomerName+"&mobile="+newCustomerMobile+"&address="+newCustomerAddress+"&membership="+newCustomerMembership+"&blacklist="+newCustomerBlacklist;
@@ -394,7 +500,6 @@ function saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddres
 		newCustomerRequest.send();  
 	}catch(e){alert("Unable to connect to server");}
 }
-
 
 //Set data in RST form fields of newly added customer
 function setNewCustomerData(){
@@ -416,7 +521,6 @@ function setNewCustomerData(){
 		}else{
 			membership = 'NO';
 		}
-		
 		document.getElementById("id").value = customer.id;
 		document.getElementById("customer").value = customer.name;
 		document.getElementById("address").value = customer.address;
@@ -426,28 +530,21 @@ function setNewCustomerData(){
 	}
 }
 
-
 function pendingTareWt(){
-	
 var url="../processing/pendingTareReport.jsp";
-	
 	if(window.XMLHttpRequest){  
 		dataRequest=new XMLHttpRequest();  
 	}  
 	else if(window.ActiveXObject){  
 		dataRequest=new ActiveXObject("Microsoft.XMLHTTP");  
 	}  
-  
 	try{  
 		dataRequest.onreadystatechange=getRstData;  
 		console.log("AJAX Req sent");
 		dataRequest.open("GET",url,true);  
 		dataRequest.send();  
 	}catch(e){alert("Unable to connect to server");}
-	
 }
-
-
 
 function getRstData(){
 	
@@ -473,18 +570,24 @@ function setPendingData(pendingRst){
 			    '<td>'+jsonData[i].grossWt+'</td>'+     
 			   '</tr>');
 	 }
-	
 }
 
 window.onload = function() {
 	pendingTareWt();
+	var today = new Date();
+	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+	var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+	var dateTime = date+' '+time;
+	document.getElementById('grossWtTime').value = dateTime;
+	document.getElementById('tareWtTime').value = dateTime;
+	document.getElementById('netWtTime').value = dateTime;
 	};
-	
-	
 
 function setWeighRate(event) {
 	document.getElementsByName("weighRate")[0].value = event.selectedOptions[0].getAttribute('data-weighRate'); 
 }
+
+
 
 </script>
 </body>

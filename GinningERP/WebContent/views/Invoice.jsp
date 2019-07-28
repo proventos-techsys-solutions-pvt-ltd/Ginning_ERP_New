@@ -176,8 +176,9 @@
                                 <div class="row tile-background-row border-top">
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-end">
-                                        <button style="margin-bottom:8px;" type="button" class="btn btn-success btn-sm btn-mr-rt btn-mr-tp" >Save</button>
-                                        <button style="margin-bottom:8px;" type="button" class="btn btn-success btn-sm btn-mr-rt btn-mr-tp" onclick="submitForm()">Save & Print</button>
+                                        <button type="button" class="btn btn-success btn-sm" >Save</button>
+                                        &nbsp;
+                                        <button type="button" class="btn btn-success btn-sm" onclick="submitForm()">Save & Print</button>
                                     </div>
                                 </div>
                                 </div>

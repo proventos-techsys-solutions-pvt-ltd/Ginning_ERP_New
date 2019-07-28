@@ -10,6 +10,11 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="../styles/bootstrap.min.css">	
   <link rel="stylesheet" href="../styles/WBStyle.css">
+  <link href="https://fonts.googleapis.com/css?family=Vollkorn&display=swap" rel="stylesheet"> 
+  <!-- Bootstrap JS -->
+  	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
+	<script src="../js/popper.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
   <%@include file="../views/NavBar.html" %>
@@ -31,12 +36,12 @@
 	      	<input type="hidden" id="id" name="id" value="0" />
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">RST No</label>
-	        	<input type="text" class="form-control " id="rst" name="rst" placeholder="Auto">
+	        	<div class="d-flex justify-content-start align-items-center">
+	        		<input type="text" class="form-control " id="rst" name="rst" placeholder="Auto" required>
+	        		<button type="button" class="btn btn-success" onclick="fetchDataForSecondWeighment(document.getElementById('rst').value)">Fetch</button>
+	        	</div>
+	        	
 	        </div>
-			<div class="col-md-auto">
-				<label class="lbl-rm-all"></label>
-        		<button type="button" class="btn btn-success change-button" onclick="fetchDataForSecondWeighment(document.getElementById('rst').value)">Fetch RST</button>
-	  		</div>
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Date</label>
 	        	<input type="date" class="form-control " id="date" name="date" placeholder="">
@@ -44,7 +49,7 @@
 	
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Vehicle No</label>
-	        	<input type="email" class="form-control " id="vehicleNo" name="vehicleNo" placeholder="Vh No">
+	        	<input type="text" class="form-control " id="vehicleNo" name="vehicleNo" placeholder="Vh No">
 	        </div>
         </div>
         <div class="form-row form-row-ctm">
@@ -60,14 +65,15 @@
 	        	<input type="text" class="form-control " name="customer" id="customer" placeholder="">
 	        </div>
 	        <div class="col-md-4">
-	        	<label class="lbl-rm-all">Address</label>
-	        	<textarea class="form-control " id="address" name="address"></textarea>
+	        	<label class="lbl-rm-all">Mobile No</label>
+	        	<input type="text" class="form-control " id="mobile" name="mobile" placeholder="" >
 	        </div>
+	        
 	    </div>
 	    <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
-	        	<label class="lbl-rm-all">Mobile No</label>
-	        	<input type="text" class="form-control " id="mobile" name="mobile" placeholder="" >
+	        	<label class="lbl-rm-all">Address</label>
+	        	<textarea class="form-control " id="address" name="address"></textarea>
 	        </div>
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">BlackListed</label>
@@ -88,26 +94,35 @@
         <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Gross Weight : </label>
-	        	<input type="text" class="form-control  " id="gross" name="gross" placeholder="" value="0.0" readonly="readonly">
+	        	<div class="d-flex justify-content-start align-items-center">
+	        		<input type="text" class="form-control  " id="gross" name="gross" placeholder="" value="0.0" readonly="readonly">
+	        		<button type="button" class="btn btn-success" onclick="fetchGrossWeight()">Fetch</button>
+	        	</div>
+	        	
 	        	<input type="text" class="form-control  " id="grossWtTime" name="grossWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
 	         <div class="col-md-4">
 	        	<label class="lbl-rm-all">Tare Weight : </label>
-	            <input type="text" class="form-control  " id="tare" name="tare" placeholder="" value="0.0" readonly="readonly">
+	        	<div class="d-flex justify-content-start align-items-center">
+	            	<input type="text" class="form-control" id="tare" name="tare" placeholder="" value="0.0" readonly="readonly">
+	           	 	<button type="button" class="btn btn-success" onclick="fetchTareWeight()">Fetch</button>
+	           	</div>
 	            <input type="text" class="form-control  " id="tareWtTime" name="tareWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
 	        <div class="col-md-4">
 	            <label class="lbl-rm-all">Net Weight : </label>
+	            <div class="d-flex justify-content-start align-items-center">
 	            <input type="text" class="form-control  " id="net" name="net" placeholder="" value="0.0" readonly="readonly">
+	            </div>
 	            <input type="text" class="form-control  " id="netWtTime" name="netWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
         </div>
         <div class="form-row form-row-ctm">
         	<div class="col-md-4">
-        		<button type="button" class="btn btn-success change-button" onclick="fetchGrossWeight()">Fetch Gross Weight</button>
+        		
 	  		</div>
 	  		<div class="col-md-4">
-        		<button type="button" class="btn btn-success change-button" onclick="fetchTareWeight()">Fetch Tare Weight</button>
+        		
 	  		</div>
 	  	</div>
         <div class="form-row form-row-ctm">
@@ -116,19 +131,17 @@
         	<input type="text" class="form-control " id="weighRate" name="weighRate" value='0'>
         </div>
         </div>
-        <div class="form-row justify-content-end border-top">
-	        
-  			<div class="col-md-auto ">
+        <div class="form-row border-top">
+	        <div class="col-md-12">
+  			<div class="d-flex justify-content-end align-items-center ">
   				<button type="button" class="btn btn-success change-button" onclick="submitRSTEntry()">Submit</button>
-  			</div>
-  			<div class="col-md-auto ">
-  				<button type="button" class="btn btn-success change-button" data-toggle="modal" data-target="#modalLoginForm">Reset</button>
-  			</div>
-  			<div class="col-md-auto ">
+  				&nbsp;
+  				<button type="button" class="btn btn-success change-button" onclick="resetFormData()">Reset</button>
+  				&nbsp;
   				<button type="button" class="btn btn-success change-button">Print</button>
-  			</div>
-  			<div class="col-md-auto ">
+  				&nbsp;
   				<button type="button" class="btn btn-success change-button">PDF</button>
+  			</div>
   			</div>
         </div>
         </form>
@@ -167,35 +180,23 @@
 		       <form id="newCustomer" action="../processing/addCustomer.jsp">
 		       	<div class="form-row">
 			       	<div class="col-md-6">
-			       		<label>Name</label>
+			       		<label class="lbl-rm-all">Name</label>
 			       		<input type="text" id="newCustomerName" class="form-control" name="name">
 			       	</div>	
 			       	<div class="col-md-6">
-			       		<label>Mobile</label>
+			       		<label class="lbl-rm-all">Mobile</label>
 			       		<input type="tel" class="form-control" name="mobile" id="newCustomerMobile">
 			       	</div>
 			       	<div class="col-md-12">
-			       		<label>Address</label>
+			       		<label class="lbl-rm-all">Address</label>
 		       			<textarea class="form-control" name="address" id="newCustomerAddress"></textarea>
-			       	</div>	
-			       	<div class="col-md-6">
-			       	<div class="custom-control custom-checkbox">
-		       			 <input type="checkbox" class="custom-control-input" name="newMembership" id="newMembership" value="0">
-                         <label class="custom-control-label lbl-rm-t" for="newMembership">Membership</label>
-			       	</div>
-			       	</div>	
-			       	<div class="col-md-6">
-			       		<div class="custom-control custom-checkbox">
-			       			<input type="checkbox" class="custom-control-input" name="newBlacklist" id="newBlacklist" value="0">
-                      	 	<label class="custom-control-label lbl-rm-t" for="newBlacklist">Blacklist</label>
-			       		</div>
 			       	</div>	
 		       	</div>
 		       </form>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary" onclick="submitNewCustomer()" data-dismiss="modal">Add Customer</button>
+		        <button type="button" class="btn btn-success" onclick="submitNewCustomer()" data-dismiss="modal">Add Customer</button>
 		      </div>
 		    </div>
 		  </div>
@@ -205,31 +206,8 @@
 
 <!--Footer code starts here-->
 <nav class="navbar navbar-default navbar-static-bottom footer ">
- <div class="container">	
-  <div class="row">
-	  	<div class="col-md-auto">
-	       <label> No of Vehicles Inside Premises :</label>
-	       <input type="text" class="form-control" name="notgiven" value="" readonly>
-	    </div>
-	    <div class="col-md-auto">
-	    	<label> No of RST Pending for Tare Weight :</label>
-	        <input type="text" class="form-control" name="notgiven" value="" readonly>
-	    </div>
-	    <div class="col-md-auto">
-	     	 <label> No of RST Cleared for Tare Weight :</label>
-	         <input type="text" class="form-control" name="notgiven" value="" readonly>
-	    </div>          
-   </div>
-  <div class="row">
-  	<div class="col-md-12">
-  		<p class="text-right">Designed & Developed by Proventos</p>
-  	</div>
-  </div>
-  </div>
+ 
 </nav>
-<script src="../js/jquery-3.3.1.slim.min.js" ></script>
-<script src="../js/popper.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
 <script src="../js/commonjs.js"></script>
 <script>
 
@@ -387,8 +365,11 @@ function fetchGrossWeight(){
 //Submit RST Weigh Bridge Form
 function submitRSTEntry(){
 	document.getElementById("newRST").submit();	
+	resetFormData();
 }
-
+function resetFormData(){
+	document.getElementById("newRST").reset();
+}
 //Check if the entered customer exists in DB
 document.getElementById("mobile").addEventListener('change',function(e){
 		checkEnteredCustomer();
@@ -594,6 +575,8 @@ window.onload = function() {
 function setWeighRate(event) {
 	document.getElementsByName("weighRate")[0].value = event.selectedOptions[0].getAttribute('data-weighRate'); 
 }
+
+
 
 </script>
 </body>
