@@ -19,7 +19,7 @@
   		<div class="col-md-12">
   			<div class="d-flex justify-content-start align-items-center tile-background-row">
   				<img src="../property/img/weight.png" alt="weight" >&nbsp;
-  				<h4 class="lbl-rm-all">Weighment</h4>
+  				<h4 class="lbl-rm-all" id="title">Weighment</h4>
   			</div>
   		</div>
   	</div>
@@ -33,7 +33,10 @@
 	        	<label class="lbl-rm-all">RST No</label>
 	        	<input type="text" class="form-control " id="rst" name="rst" placeholder="Auto">
 	        </div>
-
+			<div class="col-md-auto">
+				<label class="lbl-rm-all"></label>
+        		<button type="button" class="btn btn-success change-button" onclick="fetchDataForSecondWeighment(document.getElementById('rst').value)">Fetch RST</button>
+	  		</div>
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Date</label>
 	        	<input type="date" class="form-control " id="date" name="date" placeholder="">
@@ -86,31 +89,38 @@
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Gross Weight : </label>
 	        	<input type="text" class="form-control  " id="gross" name="gross" placeholder="" value="0.0">
-	        	<input type="text" class="form-control  " id="tare" name="grossWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
+	        	<input type="text" class="form-control  " id="grossWtTime" name="grossWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
+	        
 	        
 	         <div class="col-md-4">
 	        	<label class="lbl-rm-all">Tare Weight : </label>
 	            <input type="text" class="form-control  " id="tare" name="tare" placeholder="" value="0.0">
-	            <input type="text" class="form-control  " id="tare" name="tareWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
+	            <input type="text" class="form-control  " id="tareWtTime" name="tareWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
 	        
 	        <div class="col-md-4">
 	            <label class="lbl-rm-all">Net Weight : </label>
 	            <input type="text" class="form-control  " id="net" name="net" placeholder="" value="0.0">
-	            <input type="text" class="form-control  " id="tare" name="netWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
+	            <input type="text" class="form-control  " id="netWtTime" name="netWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
         </div>
         <div class="form-row form-row-ctm">
+        	<div class="col-md-4">
+        		<button type="button" class="btn btn-success change-button" onclick="fetchGrossWeight()">Fetch Gross Weight</button>
+	  		</div>
+	  		<div class="col-md-4">
+        		<button type="button" class="btn btn-success change-button" onclick="fetchTareWeight()">Fetch Tare Weight</button>
+	  		</div>
+	  	</div>
+        <div class="form-row form-row-ctm">
         <div class="col-md-4">
         	<label class="lbl-rm-all">Weigh Rate :</label>
-        	<input type="text" class="form-control " name="weighRate" value='0'>
+        	<input type="text" class="form-control " id="weighRate" name="weighRate" value='0'>
         </div>
         </div>
         <div class="form-row justify-content-end border-top">
-	        <div class="col-md-auto">
-        		<button type="button" class="btn btn-success change-button" onclick="fetchRst()">Fetch RST</button>
-	  		</div>
+	        
   			<div class="col-md-auto ">
   				<button type="button" class="btn btn-success change-button" onclick="submitRSTEntry()">Submit</button>
   			</div>
@@ -226,11 +236,11 @@
 <script src="../js/commonjs.js"></script>
 <script>
 
+
 document.addEventListener('change', function(e){
 	if(e.srcElement.id === 'newMembership' || e.srcElement.id === 'newBlacklist' ){
 		if(e.srcElement.value === '0'){
 			e.srcElement.value = '1'
-			
 		}
 		else if(e.srcElement.value === '1'){
 			e.srcElement.value = '0'
@@ -240,42 +250,146 @@ document.addEventListener('change', function(e){
 })
 
 function decideWeighment(flag){
-
-	if(flag === 0){
-		document.getElementById("newRST").action = "../processing/addInvoiceEntry.jsp";
-	}else if(flag === 1){
+	if(flag === 1){
 		document.getElementById("title").innerHTML = "Second Weighment";
-		document.getElementById("newRST").action = "../processing/secondWeighment.jsp";
 	}
-	
 }
 
-function fetchRst(){
+function fetchDataForSecondWeighment(rst){
+	var url="../processing/fetchSecondWeighment.jsp?rst="+rst;
+	if(window.XMLHttpRequest){  
+		fetchWeighData=new XMLHttpRequest();  
+	}  
+	else if(window.ActiveXObject){  
+		fetchWeighData=new ActiveXObject("Microsoft.XMLHTTP");  
+	}  
+	try{  
+		fetchWeighData.onreadystatechange=fetchFirstWeighment;  
+		console.log("AJAX Req sent");
+		fetchWeighData.open("GET",url,true);  
+		fetchWeighData.send();  
+	}catch(e){alert("Unable to connect to server");}
+}
+function fetchFirstWeighment(){
+	if(fetchWeighData.readyState == 4){
+		var response = this.response.trim();
+		console.log(response)
+		if(Number(response) === 0){
+			window.alert("Please enter a valid RST number.")
+		}else{
+			setFirstWeighmentData(response);
+		}
+	}
+}
+
+function setFirstWeighmentData(response){
 	
-	var url="../processing/readWeighBridgeData.jsp";
+	var blacklisted;
+	var membership;
+	var data = JSON.parse(response);
+	
+	if(customer.blacklist === '1'){
+		blacklisted = 'YES';
+	}else{
+		blacklisted = 'NO'
+	}
+	if(customer.membership === '1'){
+		membership = 'YES';
+	}else{
+		membership = 'NO';
+	}
+	
+	document.getElementById('date').value = data.weighmentDate ;
+	document.getElementById('vehicleNo').value = data.vehicleNo ;
+	document.getElementById('customer').value = data.vendorName ;
+	document.getElementById('address').value = data.vendorAddress ;
+	document.getElementById('mobile').value = data.vendorMobile ;
+	document.getElementById('blacklist').value = blacklisted ;
+	document.getElementById('membership').value = membership ;
+	document.getElementById('material').value = data.material ;
+	document.getElementById('gross').value = data.grossWt ;
+	document.getElementById('grossWtTime').value = data.grossWtTime ;
+	document.getElementById('tare').value = data.tareWt ;
+	document.getElementById('net').value = data.netWt ;
+	document.getElementById('weighRate').value = data.weighRate ;
+	document.getElementById('date').setAttribute('readonly','');
+	document.getElementById('vehicleNo').setAttribute('readonly','');
+	document.getElementById('vehicleType').setAttribute('readonly','');
+	document.getElementById('customer').setAttribute('readonly','');
+	document.getElementById('address').setAttribute('readonly','');
+	document.getElementById('mobile').setAttribute('readonly','');
+	document.getElementById('blacklist').setAttribute('readonly','');
+	document.getElementById('membership').setAttribute('readonly','');
+	document.getElementById('material').setAttribute('readonly','');
+	document.getElementById('gross').setAttribute('readonly','');
+	document.getElementById('weighRate').setAttribute('readonly','');
+	if(Number(data.netWt) != 0.0){
+		document.getElementById('net').setAttribute('readonly','');
+		document.getElementById('tare').setAttribute('readonly','');
+	}
+	
+	var element = document.getElementById('vehicleType');
+	
+	for(i=0;i<element.options.length;i++){
+		if(element.options[i].innerHTML === data.vehicleName){
+			element.options[i].selected=true;
+		}else{
+			element.options[i].disabled=true;
+		}
+	}
+	decideWeighment(1);
+}
+
+function fetchGrossWeight(){
+	var url="../processing/fetchWeight.jsp";
 	if(window.XMLHttpRequest){  
 		fetchData=new XMLHttpRequest();  
 	}  
 	else if(window.ActiveXObject){  
 		fetchData=new ActiveXObject("Microsoft.XMLHTTP");  
 	}  
-  
 	try{  
-		fetchData.onreadystatechange=fetchWeighData;  
+		fetchData.onreadystatechange=fetchGrossWeighData;  
 		console.log("AJAX Req sent");
 		fetchData.open("GET",url,true);  
 		fetchData.send();  
 	}catch(e){alert("Unable to connect to server");}
 }
 
- function fetchWeighData(){
+ function fetchGrossWeighData(){
 	 if(fetchData.readyState == 4){
-		 console.log(this.response.trim());
-		 console.log("Data Found!!!!!!!");
+		 var response = this.response.trim();
+		 console.log('Weight --- '+response);
+		 var grossWtInput = document.getElementById('gross');
+		 grossWtInput.value = response;
 	 }
  }
+ 
+ 
+ function fetchTareWeight(){
+		var url="../processing/fetchWeight.jsp";
+		if(window.XMLHttpRequest){  
+			fetchData=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchData=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+		try{  
+			fetchData.onreadystatechange=fetchTareWeighData;  
+			console.log("AJAX Req sent");
+			fetchData.open("GET",url,true);  
+			fetchData.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
 
-
+	 function fetchTareWeighData(){
+		 if(fetchData.readyState == 4){
+			 var response = this.response.trim();
+			 console.log('Weight --- '+response);
+			 var tareWtInput = document.getElementById('tare');
+			tareWtInput.value = response;
+		 }
+	 }
 
 	var height = new SettingHeightofAdjacentPanels("getHeight","scroll",0);//getting & setting height of panels
 	height.calcHeight();
@@ -288,11 +402,8 @@ function submitRSTEntry(){
 
 
 //Check if the entered customer exists in DB
-document.getElementById("mobile").addEventListener('input',function(e){
-	//if(e.keyCode === 13){
+document.getElementById("mobile").addEventListener('change',function(e){
 		checkEnteredCustomer();
-	//}
-	
 });
 
 
@@ -436,7 +547,6 @@ function setNewCustomerData(){
 		}else{
 			membership = 'NO';
 		}
-		
 		document.getElementById("id").value = customer.id;
 		document.getElementById("customer").value = customer.name;
 		document.getElementById("address").value = customer.address;
@@ -498,6 +608,13 @@ function setPendingData(pendingRst){
 
 window.onload = function() {
 	pendingTareWt();
+	var today = new Date();
+	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+	var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+	var dateTime = date+' '+time;
+	document.getElementById('grossWtTime').value = dateTime;
+	document.getElementById('tareWtTime').value = dateTime;
+	document.getElementById('netWtTime').value = dateTime;
 	};
 	
 	

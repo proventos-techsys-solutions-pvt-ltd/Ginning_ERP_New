@@ -18,6 +18,9 @@ public class JasperReports {
 	
 	public void compileAndPrint(String sourceFile, JSONObject obj, String outputFile) {
 		try {
+			
+			System.out.println("PrintObject ---- "+obj);
+			
 			JasperReport report = JasperCompileManager.compileReport(sourceFile);
 	        
 	        ByteArrayInputStream jsonDataStream = new ByteArrayInputStream(obj.toString().getBytes());
@@ -32,9 +35,7 @@ public class JasperReports {
 	        //Create Jasper Print object passing report, parameter json data source.
 	        JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, ds);
 	        
-	        
-				JasperExportManager.exportReportToPdfFile(jasperPrint,
-				        "outputFile");
+			JasperExportManager.exportReportToPdfFile(jasperPrint,outputFile);
 		} catch (JRException e) {
 			e.printStackTrace();
 		}

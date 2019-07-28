@@ -1,3 +1,4 @@
+<%@page import="com.prov.dbops.CheckAlreadyGraded"%>
 <%@page import="com.prov.dbops.CheckRST"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="com.prov.report.RstReport"%>
@@ -24,23 +25,42 @@
         if(rstString.equals("0") || rstString == "")
         {
         	out.println(0);	
+    		out.flush();
+
         }else{
-        	int rst = Integer.parseInt(rstString);
+        	int rst=0;
+        	try{
+        		rst = Integer.parseInt(rstString);
+        	}catch(Exception e){
+        		out.println(0);	
+        		out.flush();
+        	}
 	        CheckRST cr = new CheckRST();
 	    	
 	    	int rstExistFlag = cr.checkRstExistsInWeighMast(rst);
 	    	
 	    	if(rstExistFlag <= 0){
 	    		out.println(1);
+	    		out.flush();
 	    	}
 	    	else if(rstExistFlag > 0){
+	    		CheckAlreadyGraded checkGrade = new CheckAlreadyGraded();
+	    		int gradeRows = checkGrade.alreadyGraded(rst);
+	    		if(gradeRows <= 0){
+	    			
+	    			out.println(2);
+		    		out.flush();
+
+	    		}
+	    		else if(gradeRows>0){
 	        	
-		    	RstReport report = new RstReport();
-	        	
-	        	JSONArray jsonArray =  report.getDataForInvoicing(rst);
-	        	
-		    	out.print(jsonArray);
-		    	out.flush();
+			    	RstReport report = new RstReport();
+		        	
+		        	JSONArray jsonArray =  report.getDataForInvoicing(rst);
+		        	
+			    	out.print(jsonArray);
+			    	out.flush();
+	    		}
 	    	}
         }
     %>

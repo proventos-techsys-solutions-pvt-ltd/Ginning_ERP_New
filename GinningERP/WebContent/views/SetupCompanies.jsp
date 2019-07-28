@@ -147,7 +147,7 @@
 					
 						element.insertAdjacentHTML('beforeend','<ul class="list-unstyled companyList">'+
 						  '<li class="media">'+
-						  '<img class="mr-3" src="'+dataList[i].logoPath+'" alt="Company 1 Logo" width="100px" height="100px">'+
+						  '<img class="mr-3" src="../images/'+dataList[i].logoPath+'" alt="Company 1 Logo" width="100px" height="100px">'+
 						  '<div class="media-body">'+
 						  '  <h5 class="mt-0 mb-1 displayCompanyName">'+dataList[i].name+'</h5>'+
 						  '  		<p>Address : '+dataList[i].address+'</p>'+

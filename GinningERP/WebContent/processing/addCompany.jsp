@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="com.prov.bean.Company"%>
 <%@page import="com.prov.dbinsertion.AddCompany"%>
 <%@ page import = "java.io.*,java.util.*, javax.servlet.*" %>
@@ -9,13 +10,14 @@
 
 <%
    File file ;
-	String location = null;
+   String location = null;
    int maxFileSize = 5000 * 1024;
    int maxMemSize = 5000 * 1024;
-   ServletContext context = pageContext.getServletContext();
-   String filePath = context.getInitParameter("file-upload");
-   Map<String, String> data = new TreeMap<String, String>();
+   String relativeWebPath = "/images/";
+   String filePath = getServletContext().getRealPath(relativeWebPath);
 
+   HashMap<String, String> data = new HashMap<String, String>();
+   
    // Verify the content type
    String contentType = request.getContentType();
    
@@ -25,7 +27,7 @@
       factory.setSizeThreshold(maxMemSize);
       
       // Location to save data that is larger than maxMemSize.
-      factory.setRepository(new File(context.getInitParameter("file-upload")));
+      factory.setRepository(new File(filePath));
 
       // Create a new file upload handler
       ServletFileUpload upload = new ServletFileUpload(factory);
@@ -54,11 +56,11 @@
                   file = new File( filePath + 
                   fileName.substring( fileName.lastIndexOf("\\"))) ;
                } else {
-                  file = new File( filePath + 
+                  file = new File( filePath +
                   fileName.substring(fileName.lastIndexOf("\\")+1)) ;
                }
                fi.write( file ) ;
-               location = filePath+fileName;
+               location = fileName;
             }
             else{
             	

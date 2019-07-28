@@ -1,4 +1,4 @@
-<%@page import="org.json.JSONObject"%>
+<%@page import="org.json.simple.JSONObject"%>
 <%@page import="com.prov.report.InvoiceReport"%>
 <%@page import="com.prov.jasper.JasperReports"%>
 <%@page import="com.prov.dbupdation.UpdateStockMast"%>
@@ -79,6 +79,7 @@
 			invoice.setNote((String)json.get("note").toString().toUpperCase());
 			invoice.setTotalQuanity(Double.parseDouble((String)json.get("totalQuantity")));
 			invoice.setPaidByoperator(0);
+			invoice.setUnloadingCharges(Float.parseFloat((String)json.get("unloadingCharges")));
 			if((String)json.get("Cash") == null){
 				invoice.setCashAmount(0.0);
 			}else{
@@ -149,11 +150,14 @@
 		
 		InvoiceReport invReport = new InvoiceReport();
 		
-		JSONObject printObj = invReport.getInvoiceForPrinting(invoiceId);
+		org.json.JSONObject printObj = invReport.getInvoiceForPrinting(invoiceId);
 
 		JasperReports printReport = new JasperReports();
+
+		String filePath = getServletContext().getRealPath("\\WebContent\\report\\FinalInvoicePDF.jrxml");
+		System.out.println("ReportJson ----------- "+ printObj);
 		
-		printReport.compileAndPrint("", printObj, "");
+		printReport.compileAndPrint("E:\\FinalInvoicePDF.jrxml", printObj, "E:\\sample.pdf");
 		
 		session.setAttribute("InvoiceNo", invoice.getInvoiceNo());
 		response.sendRedirect("../views/Invoice.jsp");

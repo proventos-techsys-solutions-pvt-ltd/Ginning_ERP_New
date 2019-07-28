@@ -42,7 +42,7 @@
                         		</div>
                         		<div class="col-md-4 offset-md-5">
                         			<label class="lbl-rm-all">Authorized By</label>
-                                    <input id="authorizer" name="authorizer"  type="text" class="form-control form-control-sm" placeholder="" readonly>
+                                    <input id="authorizer" name="authorizer"  type="text" class="form-control form-control-sm" placeholder="" value="Authorizer" readonly>
                         		</div>
                         	</div>
                             <div class="row tile-background-row">
@@ -128,7 +128,7 @@
                                 	</div>
 	                               	 <div class="col-md-4 ">
 	                                     <label class="lbl-rm-all">Note :</label>
-	                                     <textarea id="note" name="note" class="form-control form-control-lg"></textarea>
+	                                     <textarea id="note" name="note" class="form-control form-control-lg">Note</textarea>
 									</div>
 									<div class="col-md-2 offset-md-2">
 										<label for="" class="lbl-rm-all">Unloading Charges</label> 
@@ -276,6 +276,8 @@
 			}
 			else if(Number(response) === 1){
 				window.alert("Invalid RST.")
+			}else if(Number(response) === 2){
+				window.alert("Grading fo this RST is not yet done.")
 			}else{
 				var data = JSON.parse(response);
 				setData(data);
@@ -464,6 +466,7 @@
 		
 		jsonObj['items'] = itemList;
 		jsonObj['totalQuantity'] = totalQuantity.toString();
+		jsonObj['unloadingCharges'] = document.getElementById('unloadingCharges').value;
 		
 		var paymentModesTable = document.getElementById('paymentTableBody');
 		console.log(paymentModesTable.rows.length);
