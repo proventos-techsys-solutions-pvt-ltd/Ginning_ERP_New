@@ -100,26 +100,13 @@ public class WeighReport {
 				wm.setGross(rs.getFloat(5));
 				wm.setTare(rs.getFloat(6));
 				wm.setNet(rs.getFloat(7));
-				String grossTime = rs.getString(8);
-				
-				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(grossTime);
-				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-				String properDate = format2.format(date1);
-				wm.setGrossWtTime(properDate);
-				
-				String tareTime = rs.getString(9);
-				
-				date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(tareTime); 
-				properDate = format2.format(date1);
-				wm.setTareWtTime(properDate);
-				
+				wm.setGrossWtTime(rs.getString(8));
+				wm.setTareWtTime(rs.getString(9));
 				String weighmentDate = rs.getString(10);
-				
-				date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(weighmentDate); 
-				properDate = format2.format(date1);
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(weighmentDate); 
+				SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+				String properDate = format2.format(date1);
 				wm.setWeighmentDate(properDate);
-
-
 				list.add(wm);				
 				}
 			

@@ -155,14 +155,15 @@
 		document.getElementById("material").value = data[0].material;
 		document.getElementById("quantity").value = data[0].netWeight;
 		document.getElementById("weighmentId").value = data[0].weighmentId;
-		if(data[0].vendorBlacklisted === '1'){
+
+		if(Number(data[0].vendorBlacklisted) === 1){
 			blacklisted = 'YES';
-		}else{
+		}else if(Number(data[0].vendorBlacklisted) === 0){
 			blacklisted = 'NO'
 		}
-		if(data[0].vendorMembership === '1'){
+		if(Number(data[0].vendorMembership) === 1){
 			membership = 'YES';
-		}else{
+		}else if(Number(data[0].vendorBlacklisted) === 0){
 			membership = 'NO';
 		}
 		
@@ -376,14 +377,14 @@
 		document.getElementById("weighmentId").value = data[0].weighmentId;
 		document.getElementById("authorizer").value = data[0].authorizer;
 		
-		if(data[0].vendorBlacklisted === '1'){
+		if(Number(data[0].vendorBlacklisted) === 1){
 			blacklisted = 'YES';
-		}else{
+		}else if(Number(data[0].vendorBlacklisted) === 0){
 			blacklisted = 'NO'
 		}
-		if(data[0].vendorMembership === '1'){
+		if(Number(data[0].vendorMembership) === 1){
 			membership = 'YES';
-		}else{
+		}else if(Number(data[0].vendorBlacklisted) === 0){
 			membership = 'NO';
 		}
 		

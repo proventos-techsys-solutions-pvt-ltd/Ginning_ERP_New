@@ -88,20 +88,17 @@
         <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Gross Weight : </label>
-	        	<input type="text" class="form-control  " id="gross" name="gross" placeholder="" value="0.0">
+	        	<input type="text" class="form-control  " id="gross" name="gross" placeholder="" value="0.0" readonly="readonly">
 	        	<input type="text" class="form-control  " id="grossWtTime" name="grossWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
-	        
-	        
 	         <div class="col-md-4">
 	        	<label class="lbl-rm-all">Tare Weight : </label>
-	            <input type="text" class="form-control  " id="tare" name="tare" placeholder="" value="0.0">
+	            <input type="text" class="form-control  " id="tare" name="tare" placeholder="" value="0.0" readonly="readonly">
 	            <input type="text" class="form-control  " id="tareWtTime" name="tareWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
-	        
 	        <div class="col-md-4">
 	            <label class="lbl-rm-all">Net Weight : </label>
-	            <input type="text" class="form-control  " id="net" name="net" placeholder="" value="0.0">
+	            <input type="text" class="form-control  " id="net" name="net" placeholder="" value="0.0" readonly="readonly">
 	            <input type="text" class="form-control  " id="netWtTime" name="netWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
         </div>
@@ -287,18 +284,16 @@ function setFirstWeighmentData(response){
 	var blacklisted;
 	var membership;
 	var data = JSON.parse(response);
-	
-	if(customer.blacklist === '1'){
+	if(Number(data.vendorBlacklisted) === 1){
 		blacklisted = 'YES';
-	}else{
+	}else if(Number(data.vendorBlacklisted) === 0){
 		blacklisted = 'NO'
 	}
-	if(customer.membership === '1'){
+	if(Number(data.vendorMembership) === 1){
 		membership = 'YES';
-	}else{
+	}else if(Number(data.vendorMembership) === 0){
 		membership = 'NO';
 	}
-	
 	document.getElementById('date').value = data.weighmentDate ;
 	document.getElementById('vehicleNo').value = data.vehicleNo ;
 	document.getElementById('customer').value = data.vendorName ;
@@ -321,13 +316,8 @@ function setFirstWeighmentData(response){
 	document.getElementById('blacklist').setAttribute('readonly','');
 	document.getElementById('membership').setAttribute('readonly','');
 	document.getElementById('material').setAttribute('readonly','');
-	document.getElementById('gross').setAttribute('readonly','');
 	document.getElementById('weighRate').setAttribute('readonly','');
-	if(Number(data.netWt) != 0.0){
-		document.getElementById('net').setAttribute('readonly','');
-		document.getElementById('tare').setAttribute('readonly','');
-	}
-	
+
 	var element = document.getElementById('vehicleType');
 	
 	for(i=0;i<element.options.length;i++){
@@ -388,9 +378,9 @@ function fetchGrossWeight(){
 			 console.log('Weight --- '+response);
 			 var tareWtInput = document.getElementById('tare');
 			tareWtInput.value = response;
+			document.getElementById('net').value = Number(document.getElementById('gross').value) - Number(document.getElementById('tare').value);
 		 }
 	 }
-
 	var height = new SettingHeightofAdjacentPanels("getHeight","scroll",0);//getting & setting height of panels
 	height.calcHeight();
 
@@ -398,8 +388,6 @@ function fetchGrossWeight(){
 function submitRSTEntry(){
 	document.getElementById("newRST").submit();	
 }
-
-
 
 //Check if the entered customer exists in DB
 document.getElementById("mobile").addEventListener('change',function(e){
@@ -415,7 +403,6 @@ function checkEnteredCustomer(){
 	getCustomerData(customerName, mobile);
 	
 }
-
 
 //Create AJAX Req to get the customer data from DB if the customer exists in it
 function getCustomerData(customerName,mobile){
@@ -435,8 +422,6 @@ function getCustomerData(customerName,mobile){
 		checkRequest.send();  
 	}catch(e){alert("Unable to connect to server");}
 }
-
-
 
 //Set data in RST form if the customer exists in the DB
 function checkCustomer(){
@@ -479,7 +464,6 @@ function checkCustomer(){
 	}
 }
 
-
 //Open Add new customer form popup
 function addNewCustomer(){
 	
@@ -507,7 +491,6 @@ function submitNewCustomer(){
 	saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress, newCustomerBlacklist, newCustomerMembership);
 }
 
-
 //Create AJAX Request for new customer form submission
 function saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress, newCustomerBlacklist, newCustomerMembership){
 	var url="../processing/addCustomer.jsp?name="+newCustomerName+"&mobile="+newCustomerMobile+"&address="+newCustomerAddress+"&membership="+newCustomerMembership+"&blacklist="+newCustomerBlacklist;
@@ -525,7 +508,6 @@ function saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddres
 		newCustomerRequest.send();  
 	}catch(e){alert("Unable to connect to server");}
 }
-
 
 //Set data in RST form fields of newly added customer
 function setNewCustomerData(){
@@ -556,28 +538,21 @@ function setNewCustomerData(){
 	}
 }
 
-
 function pendingTareWt(){
-	
 var url="../processing/pendingTareReport.jsp";
-	
 	if(window.XMLHttpRequest){  
 		dataRequest=new XMLHttpRequest();  
 	}  
 	else if(window.ActiveXObject){  
 		dataRequest=new ActiveXObject("Microsoft.XMLHTTP");  
 	}  
-  
 	try{  
 		dataRequest.onreadystatechange=getRstData;  
 		console.log("AJAX Req sent");
 		dataRequest.open("GET",url,true);  
 		dataRequest.send();  
 	}catch(e){alert("Unable to connect to server");}
-	
 }
-
-
 
 function getRstData(){
 	
@@ -603,7 +578,6 @@ function setPendingData(pendingRst){
 			    '<td>'+jsonData[i].grossWt+'</td>'+     
 			   '</tr>');
 	 }
-	
 }
 
 window.onload = function() {
@@ -616,8 +590,6 @@ window.onload = function() {
 	document.getElementById('tareWtTime').value = dateTime;
 	document.getElementById('netWtTime').value = dateTime;
 	};
-	
-	
 
 function setWeighRate(event) {
 	document.getElementsByName("weighRate")[0].value = event.selectedOptions[0].getAttribute('data-weighRate'); 

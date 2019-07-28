@@ -3,11 +3,10 @@
     pageEncoding="ISO-8859-1"%>	
     
     <% 
-    	
     	FetchWeight fetch = new FetchWeight();
-    	double weight = fetch.fetch();
+    	String weightStr = fetch.fetch();
+    	double weight = fetch.parseWeight(weightStr);
     
     	out.println(weight);
     	out.flush();
-    
     %>

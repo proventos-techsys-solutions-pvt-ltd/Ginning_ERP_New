@@ -2,9 +2,7 @@ package com.prov.weighing;
 
 public class FetchWeight {
 	
-	public double fetch() {
-	
-		double weight = 0 ;
+	public String fetch() {
 		String weightStr ="";
 		try
 	    {
@@ -12,22 +10,27 @@ public class FetchWeight {
 	    }
 	    catch ( Exception e )
 	    {
-	        // TODO Auto-generated catch block
 	        e.printStackTrace();
 	    }
-		
+		return weightStr;
+	}
+	
+	public double parseWeight(String weightStr) {
+		double weight = 0 ;
 		String[] strArr = weightStr.split("");
 		String string = "";
 		for (int i = 0; i < strArr.length; i++) {
-			if(strArr[i].matches("\\d"))
+			if(strArr[i].matches("\\d") || strArr[i].equals("."))
 			{
 				 string = string + strArr[i];
 			}
 		}
 		try {
 			weight = Double.parseDouble(string);
-		}catch (Exception e) {
-			weight = fetch();
+		}catch (NumberFormatException e1) {
+			weightStr = fetch();
+		}catch (NullPointerException e2) {
+			weightStr = fetch();
 		}
 		return weight;
 	}

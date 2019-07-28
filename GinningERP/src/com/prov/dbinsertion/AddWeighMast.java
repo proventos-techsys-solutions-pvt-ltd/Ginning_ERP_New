@@ -25,15 +25,8 @@ public int addWeighMast(WeighMast wm) {
 		CallableStatement cs;
 		try {
 			
-			Date grossSqlDate=Date.valueOf(wm.getGrossWtTime());
-
-			
-			Date tareSqlDate=Date.valueOf(wm.getTareWtTime());
-
-			
 			Date sqlWeighmentDate=Date.valueOf(wm.getWeighmentDate());
 
-			
 			cs = con.prepareCall(addWeighMast);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
@@ -44,8 +37,8 @@ public int addWeighMast(WeighMast wm) {
 			cs.setFloat(5, wm.getGross());
 			cs.setFloat(6, wm.getTare());
 			cs.setFloat(7, wm.getNet());
-			cs.setDate(8, grossSqlDate);
-			cs.setDate(9, tareSqlDate);
+			cs.setString(8, wm.getGrossWtTime());
+			cs.setString(9, wm.getTareWtTime());
 			cs.setDate(10, sqlWeighmentDate);
 			
 			cs.executeUpdate();
@@ -82,14 +75,12 @@ public int addWeighMast(WeighMast wm) {
 		PreparedStatement stmt;
 		try {
 			
-			Date tareSqlDate=Date.valueOf(wm.getTareWtTime());
-			
 			stmt = con.prepareStatement(updateWeighMast);
 			
 			
 			stmt.setFloat(2, wm.getTare());
 			stmt.setFloat(3, wm.getNet());
-			stmt.setDate(4, tareSqlDate);
+			stmt.setString(4, wm.getTareWtTime());
 			stmt.setInt(5, wm.getRst());
 
 			

@@ -1,3 +1,9 @@
+<%@page import="java.io.PrintWriter"%>
+<%@page import="java.io.FileOutputStream"%>
+<%@page import="net.sf.jasperreports.engine.JasperPrintManager"%>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@page import="net.sf.jasperreports.engine.JasperExportManager"%>
+<%@page import="net.sf.jasperreports.engine.JasperPrint"%>
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="com.prov.report.InvoiceReport"%>
 <%@page import="com.prov.jasper.JasperReports"%>
@@ -157,8 +163,15 @@
 		String filePath = getServletContext().getRealPath("\\WebContent\\report\\FinalInvoicePDF.jrxml");
 		System.out.println("ReportJson ----------- "+ printObj);
 		
-		printReport.compileAndPrint("E:\\FinalInvoicePDF.jrxml", printObj, "E:\\sample.pdf");
+		JasperPrint print = printReport.compileAndPrint("E:\\FinalInvoicePDF.jrxml", printObj, "E:\\sample.pdf");
+		//JasperExportManager.exportReportToPdfStream(print, response.getOutputStream());
+		JasperPrintManager.printReport(print, true);
 		
+		response.getOutputStream().flush();
+		response.getOutputStream().close(); 
 		session.setAttribute("InvoiceNo", invoice.getInvoiceNo());
-		response.sendRedirect("../views/Invoice.jsp");
+		
+		//response.sendRedirect("../views/Invoice.jsp");
+		//RequestDispatcher dd=request.getRequestDispatcher("../views/Invoice.jsp");
+		//dd.forward(request, response);
 %>

@@ -331,9 +331,7 @@
 		
 		document.getElementById('unloadingCharges').value = Number(document.getElementById('unloadingCharges').value) + ((Number(document.getElementById("totalQty").value)/100) * 20);
 		
-		if(i===0){
 			document.getElementById('weighingCharges').value = Number(document.getElementById('weighingCharges').value) + Number(data[0].weighRate);
-		}
 		var blacklisted;
 		var membership;
 		
@@ -423,12 +421,10 @@
 		var total = 0;
 		for(i=0; i<rates.length; i++){
 			total = total + Number(rates[i].value);
-			total = total - (Number(document.getElementById('weighingCharges').value) + Number(document.getElementById('unloadingCharges').value));
 		}
-		
+		total = total - (Number(document.getElementById('weighingCharges').value) + Number(document.getElementById('unloadingCharges').value));
 		document.getElementById("net").value = total;
 		document.getElementById("payAmount1").value = total;
-		
 	}
 	
 	
