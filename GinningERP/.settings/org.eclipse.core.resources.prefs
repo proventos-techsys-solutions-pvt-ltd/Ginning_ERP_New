@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//WebContent/report/Cheque.jrxml=UTF-8
 encoding//WebContent/report/FinalInvoicePDF.jrxml=UTF-8
+encoding//WebContent/report/FinalInvoicePDF2.jrxml=UTF-8
 encoding//WebContent/report/RST.jrxml=UTF-8
 encoding//WebContent/report/Test.jrxml=UTF-8
 encoding//WebContent/views/Invoice.jsp=UTF-8
