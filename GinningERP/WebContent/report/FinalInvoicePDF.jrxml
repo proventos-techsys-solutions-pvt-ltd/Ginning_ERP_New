@@ -510,7 +510,7 @@
 	<columnFooter>
 		<band height="41" splitType="Stretch">
 			<rectangle>
-				<reportElement x="412" y="4" width="393" height="31" uuid="063e55e3-bcea-412a-b8fc-c13599484a17"/>
+				<reportElement x="412" y="3" width="393" height="31" uuid="063e55e3-bcea-412a-b8fc-c13599484a17"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="-4" y="3" width="393" height="31" uuid="fa85cc4f-ca1f-4d4d-8b48-4a16ff0c7244"/>

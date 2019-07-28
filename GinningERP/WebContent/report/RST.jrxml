@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RST" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1f40c7f7-6260-4085-a6ef-bbe945e0c222">
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="64" splitType="Stretch">
+			<textField>
+				<reportElement x="40" y="3" width="460" height="30" uuid="cefc5a11-1123-4eec-b3fb-59bbddb47f2d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[Company Name]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="201" y="35" width="161" height="13" uuid="e2a2db2b-bc52-4798-b7d1-0cf4c2faf429"/>
+				<textFieldExpression><![CDATA[Comapny Address]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="202" y="51" width="161" height="13" uuid="ed29bce4-2f31-4199-81b3-034b5a15787d"/>
+				<textFieldExpression><![CDATA[Mobile No]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="170" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="18" width="100" height="19" uuid="0c2e582d-d2f3-4af1-b012-2b2db6bd6b19">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[RST NO:]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="37" width="100" height="19" uuid="efbb19c6-27d6-4c31-a1f1-374ec42c2ab3">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[Customer:]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="56" width="100" height="19" uuid="a8407338-b324-4151-af58-64f631b965ff">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[Address:]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="75" width="100" height="19" uuid="6c555936-631b-4999-a35b-b8e11c0741d9">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[MobileNo:]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="18" width="100" height="19" uuid="37d9d037-acab-4a1d-82fa-f4ba519b067e">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[Vehicle No:]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="281" y="37" width="100" height="19" uuid="4d2dfc4c-b1e6-4a9d-a284-31104ecddae8">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[Vehicle Type:]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="56" width="100" height="19" uuid="eb543b06-fad2-404c-a1da-7f826b72263f">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[Material:]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="97" width="100" height="19" uuid="fa3c8f7e-e9d1-4ea8-b9f0-328d681b188e">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[Gross Wt:]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="97" width="100" height="19" uuid="7cea45c8-439b-4d11-bae7-0655ee849595">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[Date and Time:]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="122" width="100" height="19" uuid="a426ce14-465b-44e1-86a8-f5666f615bf5">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[Charges(1): Rs.]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="147" width="137" height="19" uuid="c4654d1c-e5c3-46c2-b547-e080b14ec336">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[OPERATOR'S SIGNATURE:]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="147" width="137" height="19" uuid="9e7ea714-2bc1-483a-862a-de0f535a4787">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[GREADER'S SIGNATURE:]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement x="0" y="94" width="561" height="1" uuid="30e9c2f9-a23a-438a-abf9-be6a01021750"/>
+			</break>
+			<break>
+				<reportElement x="0" y="119" width="561" height="1" uuid="b93aba76-1849-467d-9058-02d2461eea3a"/>
+			</break>
+			<break>
+				<reportElement x="0" y="144" width="561" height="1" uuid="fd072900-c0a1-4dd4-b13e-a1837947ba03"/>
+			</break>
+			<break>
+				<reportElement x="0" y="169" width="561" height="1" uuid="3d1e0096-8881-4347-baf0-262eeccf7b06"/>
+			</break>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="130" y="2" width="280" height="32" uuid="2a2b3771-db2b-4690-816e-684cad253c2c">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[Contact for Repairs at Telephone No.
+Welcome!]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
