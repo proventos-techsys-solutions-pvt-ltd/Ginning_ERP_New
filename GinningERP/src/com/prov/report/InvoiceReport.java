@@ -306,7 +306,7 @@ public ArrayList<Invoice> getReport() {
 			
 			jsonObj.put("invoiceId", rs.getInt(1));
 			jsonObj.put("invoiceNo", rs.getString(2));
-			jsonObj.put("totalAmount", rs.getDouble(3));
+			jsonObj.put("totalAmount","Rs. "+ rs.getString(3)+" /-");
 			
 			String amountInWords = numToWords.convertToIndianCurrency(rs.getString(3));
 			
@@ -318,7 +318,7 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("customerId", rs.getInt(8));
 			jsonObj.put("authorizer", rs.getString(9));
 			jsonObj.put("note", rs.getString(10));
-			jsonObj.put("totalQuantity", rs.getDouble(11));
+			jsonObj.put("totalQuantity", rs.getString(11)+" Kgs");
 			jsonObj.put("cashAmount", rs.getDouble(12));
 			jsonObj.put("chequeAmount", rs.getDouble(13));
 			jsonObj.put("rtgsAmount", rs.getDouble(14));

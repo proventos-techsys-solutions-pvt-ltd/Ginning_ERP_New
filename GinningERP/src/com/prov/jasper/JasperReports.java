@@ -1,6 +1,7 @@
 package com.prov.jasper;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ import net.sf.jasperreports.engine.data.JsonDataSource;
 
 public class JasperReports {
 	
-	public JasperPrint compileAndPrint(String sourceFile, JSONObject obj, String dest) {
+	public JasperPrint compileAndPrint(InputStream sourceFile, JSONObject obj) {
 		 JasperPrint jasperPrint =null;
 		try {
 			
@@ -37,7 +38,7 @@ public class JasperReports {
 	        //Create Jasper Print object passing report, parameter json data source.
 	        jasperPrint = JasperFillManager.fillReport(report, parameters, ds);
 	        
-			JasperExportManager.exportReportToPdfFile(jasperPrint,dest);
+			//JasperExportManager.exportReportToPdfFile(jasperPrint,dest);
 			
 			 //JasperPrintManager.printReport( jasperPrint, true);
 	       
