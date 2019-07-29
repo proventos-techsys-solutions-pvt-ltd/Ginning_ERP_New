@@ -37,7 +37,7 @@
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">RST No</label>
 	        	<div class="d-flex justify-content-start align-items-center">
-	        		<input type="text" class="form-control " id="rst" name="rst" placeholder="Auto" required>
+	        		<input type="text" class="form-control" id="rst" name="rst" placeholder="Auto" required>
 	        		<button type="button" class="btn btn-success" onclick="fetchDataForSecondWeighment(document.getElementById('rst').value)">Fetch</button>
 	        	</div>
 	        	
@@ -209,6 +209,7 @@
  
 </nav>
 <script src="../js/commonjs.js"></script>
+<script src="../js/validations/GenerateRST.js"></script>
 <script>
 
 
@@ -364,6 +365,7 @@ function fetchGrossWeight(){
 
 //Submit RST Weigh Bridge Form
 function submitRSTEntry(){
+	uiController.validate();
 	document.getElementById("newRST").submit();	
 	resetFormData();
 }
