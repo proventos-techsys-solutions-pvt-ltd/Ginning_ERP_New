@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import com.prov.bean.Invoice;
 import com.prov.db.OracleConnection;
+import com.prov.misc.NumberToWords;
 
 public class InvoiceReport {
 	
@@ -174,6 +175,7 @@ public ArrayList<Invoice> getReport() {
 		
 		JSONObject jsonObj = new JSONObject();
 		
+		
 		try {
 			con = OracleConnection.getConnection();
 			
@@ -229,7 +231,7 @@ public ArrayList<Invoice> getReport() {
 		
 		ResultSet rs = null;
 		Connection con = null;
-		
+		NumberToWords numToWords = new NumberToWords();
 		JSONObject jsonObj = new JSONObject();
 		
 		try {
@@ -305,6 +307,10 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("invoiceId", rs.getInt(1));
 			jsonObj.put("invoiceNo", rs.getString(2));
 			jsonObj.put("totalAmount", rs.getDouble(3));
+			
+			String amountInWords = numToWords.convertToIndianCurrency(rs.getString(3));
+			
+			jsonObj.put("totalInWords", amountInWords);
 			jsonObj.put("amountPaid", rs.getDouble(4));
 			jsonObj.put("amountPending", rs.getDouble(5));
 			jsonObj.put("invoiceDate", rs.getString(6));
@@ -326,7 +332,6 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("vendorName", rs.getString(22));
 			jsonObj.put("vendorAddress", rs.getString(23));
 			jsonObj.put("vendorMobile", rs.getString(24));
-			
 			jsonObj.put("weighRate", rs.getDouble(37));
 			jsonObj.put("companyEmail", rs.getString(38));
 			
@@ -350,6 +355,10 @@ public ArrayList<Invoice> getReport() {
 				invoiceItems.put("moisture", rs.getFloat(34));
 				invoiceItems.put("gradeAuthorizer", rs.getString(35));
 				invoiceItems.put("gradeDescription", rs.getString(36));
+				
+				double amount =  (rs.getDouble(31)/100) * rs.getDouble(33);
+						
+				invoiceItems.put("amount", amount);
 				
 				jsonArr.put(invoiceItems);
 				

@@ -17,7 +17,7 @@ import net.sf.jasperreports.engine.data.JsonDataSource;
 
 public class JasperReports {
 	
-	public JasperPrint compileAndPrint(String sourceFile, JSONObject obj, String outputFile) {
+	public JasperPrint compileAndPrint(String sourceFile, JSONObject obj, String dest) {
 		 JasperPrint jasperPrint =null;
 		try {
 			
@@ -37,7 +37,7 @@ public class JasperReports {
 	        //Create Jasper Print object passing report, parameter json data source.
 	        jasperPrint = JasperFillManager.fillReport(report, parameters, ds);
 	        
-			//JasperExportManager.exportReportToPdfFile(jasperPrint,outputFile);
+			JasperExportManager.exportReportToPdfFile(jasperPrint,dest);
 			
 			 //JasperPrintManager.printReport( jasperPrint, true);
 	       

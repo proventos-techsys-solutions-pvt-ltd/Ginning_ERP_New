@@ -28,7 +28,7 @@
 				    session.removeAttribute("InvoiceNo");
 				%>
             
-                        <form action="../processing/approvedInvoiceEntry.jsp" id="adminApprovalForm">
+                        <form action="../processing/approvedInvoiceEntry.jsp" id="adminApprovalForm" target="_blank">
                         	<input type="hidden" name="output" id="output" value="" />
                         </form>
                         	<input type="hidden" name="customerId" value="" id="customerId" />
@@ -443,7 +443,7 @@
 		jsonObj['pending'] = document.getElementById('net').value;
 		jsonObj['invoiceDate'] = document.getElementById('invoiceDate').value;
 		jsonObj['companyId'] = document.getElementById('companyId').value;
-		jsonObj['note'] = document.getElementById('note').value
+		jsonObj['note'] = document.getElementById('note').value;
 		
 		var noOfRows = document.getElementById('tableBody').childElementCount;
 		console.log('no of Rows --- '+noOfRows);

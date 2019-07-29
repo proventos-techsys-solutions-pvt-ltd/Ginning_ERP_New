@@ -154,24 +154,7 @@
 		
 		us.updateStockOnEntry(sm);
 		
-		InvoiceReport invReport = new InvoiceReport();
-		
-		org.json.JSONObject printObj = invReport.getInvoiceForPrinting(invoiceId);
-
-		JasperReports printReport = new JasperReports();
-
-		String filePath = getServletContext().getRealPath("\\WebContent\\report\\FinalInvoicePDF.jrxml");
-		System.out.println("ReportJson ----------- "+ printObj);
-		
-		JasperPrint print = printReport.compileAndPrint("E:\\FinalInvoicePDF.jrxml", printObj, "E:\\sample.pdf");
-		//JasperExportManager.exportReportToPdfStream(print, response.getOutputStream());
-		JasperPrintManager.printReport(print, true);
-		
-		response.getOutputStream().flush();
-		response.getOutputStream().close(); 
-		session.setAttribute("InvoiceNo", invoice.getInvoiceNo());
-		
-		//response.sendRedirect("../views/Invoice.jsp");
-		//RequestDispatcher dd=request.getRequestDispatcher("../views/Invoice.jsp");
-		//dd.forward(request, response);
+		request.setAttribute("invoiceId", Integer.toString(invoiceId));
+	        
+	    request.getRequestDispatcher("../report/FinalInvoicePDF.jsp").forward(request, response);
 %>
