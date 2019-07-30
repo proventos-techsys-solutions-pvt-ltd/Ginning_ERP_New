@@ -5,20 +5,24 @@ import java.sql.DriverManager;
 
 public class OracleConnection {
 	
+	private static Connection connection = null;
+	
 		public static Connection getConnection() throws ClassNotFoundException
 		{
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			
-			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
-			
-			Connection con = null;
-			
-			try {
-				con = DriverManager.getConnection(url, "samir", "admin123");
-			}catch (Exception e) {
-				e.printStackTrace();
+			if(connection == null) {
+				Class.forName("oracle.jdbc.driver.OracleDriver");
+				
+				String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+				
+				connection = null;
+				
+				try {
+					connection = DriverManager.getConnection(url, "samir", "admin123");
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
-			return con;
+			return connection;
 		}
 
 	}

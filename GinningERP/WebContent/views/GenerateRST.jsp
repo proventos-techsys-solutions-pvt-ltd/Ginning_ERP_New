@@ -40,7 +40,6 @@
 	        		<input type="text" class="form-control" id="rst" name="rst" placeholder="Auto">
 	        		<button type="button" class="btn btn-success" onclick="fetchDataForSecondWeighment(document.getElementById('rst').value)">Fetch</button>
 	        	</div>
-	        	
 	        </div>
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Date</label>
@@ -68,7 +67,6 @@
 	        	<label class="lbl-rm-all">Mobile No</label>
 	        	<input type="text" class="form-control " id="mobile" name="mobile" placeholder="" >
 	        </div>
-	        
 	    </div>
 	    <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
@@ -90,13 +88,12 @@
 	        	<input type="text" class="form-control " id="material" name="material" placeholder="">
 	        </div>
 	    </div>
-        
         <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Gross Weight : </label>
 	        	<div class="d-flex justify-content-start align-items-center">
 	        		<input type="text" class="form-control  " id="gross" name="gross" placeholder="" value="0.0" readonly="readonly">
-	        		<button type="button" class="btn btn-success" onclick="fetchGrossWeight()">Fetch</button>
+	        		<button type="button" class="btn btn-success" onclick="fetchGrossWeight()" id="fetchGrossWeight">Fetch</button>
 	        	</div>
 	        	
 	        	<input type="text" class="form-control  " id="grossWtTime" name="grossWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
@@ -105,7 +102,7 @@
 	        	<label class="lbl-rm-all">Tare Weight : </label>
 	        	<div class="d-flex justify-content-start align-items-center">
 	            	<input type="text" class="form-control" id="tare" name="tare" placeholder="" value="0.0" readonly="readonly">
-	           	 	<button type="button" class="btn btn-success" onclick="fetchTareWeight()">Fetch</button>
+	           	 	<button type="button" class="btn btn-success" id="fetchTareWeight" onclick="fetchTareWeight()">Fetch</button>
 	           	</div>
 	            <input type="text" class="form-control  " id="tareWtTime" name="tareWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
@@ -134,7 +131,7 @@
         <div class="form-row border-top">
 	        <div class="col-md-12">
   			<div class="d-flex justify-content-end align-items-center ">
-  				<button type="button" class="btn btn-success change-button" onclick="submitRSTEntry()">Submit</button>
+  				<button type="button" class="btn btn-success change-button" id="submitRstEntry" onclick="submitRSTEntry()">Submit</button>
   				&nbsp;
   				<button type="button" class="btn btn-success change-button" onclick="resetFormData()">Reset</button>
   				&nbsp;
@@ -161,7 +158,7 @@
               </tr>
           </thead>
           <tbody id="tableBody">
-           </tbody>
+          </tbody>
       </table>
       </div>
     </div>
@@ -201,7 +198,6 @@
 		    </div>
 		  </div>
 		</div>
-  
   </div>
 
 <!--Footer code starts here-->
@@ -213,23 +209,45 @@
 <script>
 
 
-document.addEventListener('change', function(e){
-	if(e.srcElement.id === 'newMembership' || e.srcElement.id === 'newBlacklist' ){
-		if(e.srcElement.value === '0'){
-			e.srcElement.value = '1'
-		}
-		else if(e.srcElement.value === '1'){
-			e.srcElement.value = '0'
-			
-		}
-	}
-})
-
 function decideWeighment(flag){
 	if(flag === 1){
 		document.getElementById("title").innerHTML = "Second Weighment";
 	}
 }
+
+document.addEventListener('change',function(e){
+	if(e.srcElement.id === "rst"){
+		checkRSTAlreadyExists(e.srcElement.value);
+	}
+})
+
+function checkRSTAlreadyExists(rst){
+	var url="../processing/fetchSecondWeighment.jsp?rst="+rst;
+	if(window.XMLHttpRequest){  
+		fetchRstStatus=new XMLHttpRequest();  
+	}  
+	else if(window.ActiveXObject){  
+		fetchRstStatus=new ActiveXObject("Microsoft.XMLHTTP");  
+	}  
+	try{  
+		fetchRstStatus.onreadystatechange=checkRstExists;  
+		console.log("AJAX Req sent");
+		fetchRstStatus.open("GET",url,true);  
+		fetchRstStatus.send();  
+	}catch(e){alert("Unable to connect to server");}
+}
+
+function checkRstExists(){
+	if(fetchRstStatus.readyState == 4){
+		var response = this.response.trim();
+		setFirstWeighmentData(response);
+		if(Number(document.getElementById('tare').value) != 0){
+			document.getElementById("submitRstEntry").disabled=true;
+			document.getElementById("fetchTareWeight").disabled=true;
+		}
+	}
+}
+
 
 function fetchDataForSecondWeighment(rst){
 	var url="../processing/fetchSecondWeighment.jsp?rst="+rst;
@@ -306,6 +324,9 @@ function setFirstWeighmentData(response){
 			element.options[i].disabled=true;
 		}
 	}
+	
+	document.getElementById("fetchGrossWeight").disabled = "true";
+	
 	decideWeighment(1);
 }
 
@@ -367,6 +388,7 @@ function submitRSTEntry(){
 	if(uiController.validate()===true){
 		document.getElementById("newRST").submit();	
 		resetFormData();
+		
 	}else{
 		alert("Please check if data has been properly entered!!!");
 	}
@@ -374,9 +396,28 @@ function submitRSTEntry(){
 }
 function resetFormData(){
 	document.getElementById("newRST").reset();
+	//RESET ALL FIELDS
+	document.getElementById('date').removeAttribute('readonly');
+	document.getElementById('vehicleNo').removeAttribute('readonly');
+	document.getElementById('vehicleType').removeAttribute('readonly');
+	document.getElementById('customer').removeAttribute('readonly');
+	document.getElementById('address').removeAttribute('readonly');
+	document.getElementById('mobile').removeAttribute('readonly');
+	document.getElementById('material').removeAttribute('readonly');
+	document.getElementById('weighRate').removeAttribute('readonly');
+	
+	var element = document.getElementById('vehicleType');
+	element.options[0].selected=true;
+	for(i=0;i<element.options.length;i++){
+			element.options[i].disabled=false;
+	}
+	document.getElementById("fetchGrossWeight").disabled = false;
+	document.getElementById("submitRstEntry").disabled=false;
+	document.getElementById("fetchTareWeight").disabled=false;
 }
 //Check if the entered customer exists in DB
-document.getElementById("mobile").addEventListener('change',function(e){
+document.addEventListener('change',function(e){
+	if(e.srcElement.id === "mobile")
 		checkEnteredCustomer();
 });
 
@@ -471,15 +512,13 @@ function submitNewCustomer(){
 	var newCustomerName = document.getElementById("newCustomerName").value;
 	var newCustomerMobile = document.getElementById("newCustomerMobile").value;
 	var newCustomerAddress = document.getElementById("newCustomerAddress").value;
-	var newCustomerBlacklist = document.getElementById("newBlacklist").value;
-	var newCustomerMembership = document.getElementById("newMembership").value;
 	
-	saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress, newCustomerBlacklist, newCustomerMembership);
+	saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress);
 }
 
 //Create AJAX Request for new customer form submission
-function saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress, newCustomerBlacklist, newCustomerMembership){
-	var url="../processing/addCustomer.jsp?name="+newCustomerName+"&mobile="+newCustomerMobile+"&address="+newCustomerAddress+"&membership="+newCustomerMembership+"&blacklist="+newCustomerBlacklist;
+function saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress){
+	var url="../processing/addCustomer.jsp?name="+newCustomerName+"&mobile="+newCustomerMobile+"&address="+newCustomerAddress;
 	if(window.XMLHttpRequest){  
 		newCustomerRequest=new XMLHttpRequest();  
 	}  
@@ -541,17 +580,13 @@ var url="../processing/pendingTareReport.jsp";
 }
 
 function getRstData(){
-	
 	if(dataRequest.readyState == 4){
 		var pendingRst = this.response.trim();
-		console.log(pendingRst);
 		setPendingData(pendingRst);
 	}
-	
 }
 
 function setPendingData(pendingRst){
-	
 	 var element = document.getElementById("tableBody");
    
 	 var jsonData = JSON.parse(pendingRst);

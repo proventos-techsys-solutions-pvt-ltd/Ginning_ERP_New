@@ -8,7 +8,8 @@ var uiController = (function(){
 				customerName : document.getElementById("customer"),
 				mobileNo : document.getElementById("mobile"),
 				address : document.getElementById("address"),
-				material : document.getElementById("material")
+				material : document.getElementById("material"),
+				grossWeight : document.getElementById("gross")
 		}
 		
 		var expressions={
@@ -53,7 +54,12 @@ var uiController = (function(){
 											if(elementIds.material.value.trim()!==""){
 												elementIds.material.style.borderColor ="#ced4da";
 												elementIds.material.title ="";
-												return true;
+												//validate gross weight
+												if(Number(elementIds.grossWeight.value.trim())>0){
+													return true
+												}else{
+													alert("Gross weight should be more than Zero");
+												}
 											}else{
 												elementIds.material.style.border ="1px red solid";
 												elementIds.material.title ="Should not be blank";

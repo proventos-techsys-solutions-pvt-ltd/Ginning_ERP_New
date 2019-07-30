@@ -2,13 +2,15 @@ package com.prov.dbinsertion;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.Types;
-import com.prov.bean.AccountName;
+
+import com.prov.bean.Rtgs;
 import com.prov.db.OracleConnection;
 
-public class AddAccountName {
-	
-	public int addAccountName(AccountName a)
+public class AddRtgs {
+
+	public int addCheque(Rtgs r)
 	{
 		Connection con = null;
 		int id = 0;
@@ -18,7 +20,7 @@ public class AddAccountName {
 			e.printStackTrace();
 		}
 		
-		String addAccountName = "{ ? = call ADD_ACCOUNT_NAME(?,?,?) }";
+		String addAccountName = "{ ? = call ADD_CHEQUE(?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -26,15 +28,22 @@ public class AddAccountName {
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
-			cs.setInt(2, a.getCompanyId());
-			cs.setInt(3, a.getAccountCategoryId());
-			cs.setString(4,a.getAccountName());
+			Date date = Date.valueOf(r.getRtgsDate());
+			
+			cs.setInt(2, r.getCustomerId());
+			cs.setInt(3, r.getInvoiceId());
+			cs.setString(4, r.getAccountNo());
+			cs.setString(5, r.getBankName());
+			cs.setString(6, r.getIfsc());
+			cs.setDouble(7, r.getRtgsAmount());
+			cs.setDate(8, date);
+			cs.setString(8, r.getCustomerName());
 			
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);
 			
-			a.setId(id);
+			r.setId(id);
 			
 			cs.close();
 			con.close();
@@ -47,4 +56,5 @@ public class AddAccountName {
 		return id;
 	}
 
+	
 }

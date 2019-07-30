@@ -12,7 +12,6 @@
 	int rst = Integer.parseInt(request.getParameter("rst"));
 
 	CheckRST cr = new CheckRST();
-	
 	if(cr.checkRstExistsInWeighMast(rst)==0){
 	
 		int cid = Integer.parseInt(request.getParameter("id"));
@@ -30,15 +29,6 @@
 	 	String tareWtTime = request.getParameter("tareWtTime");
 	 	String netWtTime = request.getParameter("netWtTime");
 	 	double weighRate = Double.parseDouble(request.getParameter("weighRate"));
-	 	
-	 	if(cid == 0 || rst == 0 || date == null || vehicleNo == "" || vehicleNo == null || 
-	 	   vehicleTypeId == 0 || customer == "" || customer == null || address == "" || address == null || 
-	 	   material == null || material == "" || mobile == null || mobile == "" || gross == 0 ||
-	 	   grossWtTime == "" || grossWtTime == null || weighRate == 0)
-	 	{
-	 		out.println("Please enter valid information.");
-	 	}
-	 	else{
 	 		
 			CustomerVehicle cv = new CustomerVehicle();
 			Invoice inv = new Invoice();
@@ -71,7 +61,6 @@
 			response .sendRedirect("../views/GenerateRST.jsp");
 		
 			}
-	}
 	else{
 		
 		float tare = Float.parseFloat(request.getParameter("tare"));

@@ -6,8 +6,8 @@
     String CustomerName = request.getParameter("name").toUpperCase();
     String CustomerAddress = request.getParameter("address").toUpperCase();
     String CustomerCity = request.getParameter("mobile").toUpperCase();
-    int CustomerMembership = Integer.parseInt(request.getParameter("membership"));
-    int CustomerBlacklisted = Integer.parseInt(request.getParameter("blacklist"));
+    int CustomerMembership = 0;
+    int CustomerBlacklisted = 0;
    
     if(CustomerName == null || CustomerName == "" || CustomerAddress == null || CustomerAddress == "" || CustomerCity == null || CustomerCity == "")
     {
