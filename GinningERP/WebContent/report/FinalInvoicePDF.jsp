@@ -12,55 +12,35 @@
 <%@page import="com.prov.jasper.JasperReports"%>
 <%@page import="com.prov.report.InvoiceReport"%>
 
-    <% 
-    
-  	int invoiceId = Integer.parseInt((String)request.getAttribute("invoiceId"));
-    
-    InvoiceReport invReport = new InvoiceReport();
-	
-	org.json.JSONObject printObj = invReport.getInvoiceForPrinting(invoiceId);
+    <%
+    	int invoiceId = Integer.parseInt((String) request.getAttribute("invoiceId"));
 
-	JasperReports printReport = new JasperReports();
+    	InvoiceReport invReport = new InvoiceReport();
 
-/*	String filePath = getServletContext().getRealPath("/report/FinalInvoicePDF2.jrxml");
-	InputStream input = new FileInputStream(new File(filePath));
-	System.out.println("ReportJson ----------- "+ filePath);
-	
-	JasperPrint print =  printReport.compileAndPrint(input, printObj);
-	
-	
-	//Exporting Report as PDF
-	//JasperExportManager.exportReportToPdfStream(print, response.getOutputStream());
-	
-	//Exporting Report as PDF
-	JasperExportManager.exportReportToPdfStream(print, response.getOutputStream());
-	
-	response.getOutputStream().flush();
-	response.getOutputStream().close();
-	
-	return;*/
-	//Loading Jasper file report from local file system.
-		String jrxmlFile = session.getServletContext().getRealPath("/report/FinalInvoicePDF2.jrxml");
-		
-		InputStream input = new FileInputStream(new File(jrxmlFile));
+    	org.json.JSONObject printObj = invReport.getInvoiceForPrinting(invoiceId);
 
-		//Generating the report.
-		JasperReport jasperReport = JasperCompileManager.compileReport(input);
-		
-		 ByteArrayInputStream jsonDataStream = new ByteArrayInputStream(printObj.toString().getBytes());
-	       
-	        //Create json datasource from json stream
-	        JsonDataSource ds = new JsonDataSource(jsonDataStream);
-	        
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, ds);
-		
-		//Exporting Report as PDF
-		JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
-		
-		response.getOutputStream().flush();
-		response.getOutputStream().close();
-		
-    	
+    	JasperReports printReport = new JasperReports();
+
+    	//Loading Jasper file report from local file system.
+    	String jrxmlFile = session.getServletContext().getRealPath("/report/FinalInvoicePDF.jrxml");
+
+    	InputStream input = new FileInputStream(new File(jrxmlFile));
+
+    	//Generating the report.
+    	JasperReport jasperReport = JasperCompileManager.compileReport(input);
+
+    	ByteArrayInputStream jsonDataStream = new ByteArrayInputStream(printObj.toString().getBytes());
+
+    	//Create json datasource from json stream
+    	JsonDataSource ds = new JsonDataSource(jsonDataStream);
+
+    	JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, ds);
+
+    	//Exporting Report as PDF
+    	JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
+
+    	response.getOutputStream().flush();
+    	response.getOutputStream().close();
     %>
     
     

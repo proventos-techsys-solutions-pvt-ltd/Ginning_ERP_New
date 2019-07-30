@@ -4,6 +4,45 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
+	<field name="RSTNO" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[RSTNO]]></fieldDescription>
+	</field>
+	<field name="companyName" class="java.lang.String">
+		<fieldDescription><![CDATA[companyName]]></fieldDescription>
+	</field>
+	<field name="companyAddress" class="java.lang.String">
+		<fieldDescription><![CDATA[companyAddress]]></fieldDescription>
+	</field>
+	<field name="companyMobileNo" class="java.lang.String">
+		<fieldDescription><![CDATA[companyMobileNo]]></fieldDescription>
+	</field>
+	<field name="customerName" class="java.lang.String">
+		<fieldDescription><![CDATA[customerName]]></fieldDescription>
+	</field>
+	<field name="customerAddress" class="java.lang.String">
+		<fieldDescription><![CDATA[customerAddress]]></fieldDescription>
+	</field>
+	<field name="customerMobileNo" class="java.lang.String">
+		<fieldDescription><![CDATA[customerMobileNo]]></fieldDescription>
+	</field>
+	<field name="vehicleNo" class="java.lang.String">
+		<fieldDescription><![CDATA[vehicleNo]]></fieldDescription>
+	</field>
+	<field name="vehicleType" class="java.lang.String">
+		<fieldDescription><![CDATA[vehicleType]]></fieldDescription>
+	</field>
+	<field name="material" class="java.lang.String">
+		<fieldDescription><![CDATA[material]]></fieldDescription>
+	</field>
+	<field name="grossWt" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[grossWt]]></fieldDescription>
+	</field>
+	<field name="dateAndTime" class="java.lang.String">
+		<fieldDescription><![CDATA[dateAndTime]]></fieldDescription>
+	</field>
+	<field name="charges" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[charges]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -14,15 +53,15 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18"/>
 				</textElement>
-				<textFieldExpression><![CDATA[Company Name]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{companyName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="201" y="35" width="161" height="13" uuid="e2a2db2b-bc52-4798-b7d1-0cf4c2faf429"/>
-				<textFieldExpression><![CDATA[Comapny Address]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{companyAddress}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="202" y="51" width="161" height="13" uuid="ed29bce4-2f31-4199-81b3-034b5a15787d"/>
-				<textFieldExpression><![CDATA[Mobile No]]></textFieldExpression>
+				<reportElement x="201" y="51" width="161" height="13" uuid="ed29bce4-2f31-4199-81b3-034b5a15787d"/>
+				<textFieldExpression><![CDATA[$F{companyMobileNo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -59,7 +98,7 @@
 				<textFieldExpression><![CDATA[Vehicle No:]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="281" y="37" width="100" height="19" uuid="4d2dfc4c-b1e6-4a9d-a284-31104ecddae8">
+				<reportElement x="280" y="37" width="100" height="19" uuid="4d2dfc4c-b1e6-4a9d-a284-31104ecddae8">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[Vehicle Type:]]></textFieldExpression>
@@ -71,7 +110,7 @@
 				<textFieldExpression><![CDATA[Material:]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="3" y="97" width="100" height="19" uuid="fa3c8f7e-e9d1-4ea8-b9f0-328d681b188e">
+				<reportElement x="2" y="97" width="100" height="19" uuid="fa3c8f7e-e9d1-4ea8-b9f0-328d681b188e">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[Gross Wt:]]></textFieldExpression>
@@ -83,13 +122,13 @@
 				<textFieldExpression><![CDATA[Date and Time:]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="4" y="122" width="100" height="19" uuid="a426ce14-465b-44e1-86a8-f5666f615bf5">
+				<reportElement x="2" y="122" width="100" height="19" uuid="a426ce14-465b-44e1-86a8-f5666f615bf5">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[Charges(1): Rs.]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="3" y="147" width="137" height="19" uuid="c4654d1c-e5c3-46c2-b547-e080b14ec336">
+				<reportElement x="2" y="147" width="137" height="19" uuid="c4654d1c-e5c3-46c2-b547-e080b14ec336">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[OPERATOR'S SIGNATURE:]]></textFieldExpression>
@@ -100,29 +139,88 @@
 				</reportElement>
 				<textFieldExpression><![CDATA[GREADER'S SIGNATURE:]]></textFieldExpression>
 			</textField>
-			<break>
-				<reportElement x="0" y="94" width="561" height="1" uuid="30e9c2f9-a23a-438a-abf9-be6a01021750"/>
-			</break>
-			<break>
-				<reportElement x="0" y="119" width="561" height="1" uuid="b93aba76-1849-467d-9058-02d2461eea3a"/>
-			</break>
-			<break>
-				<reportElement x="0" y="144" width="561" height="1" uuid="fd072900-c0a1-4dd4-b13e-a1837947ba03"/>
-			</break>
-			<break>
-				<reportElement x="0" y="169" width="561" height="1" uuid="3d1e0096-8881-4347-baf0-262eeccf7b06"/>
-			</break>
+			<line>
+				<reportElement x="0" y="95" width="557" height="1" uuid="1a141292-92ff-4c16-a3dd-e5fe776a0d99"/>
+			</line>
+			<line>
+				<reportElement x="0" y="118" width="557" height="1" uuid="19fcfa13-a6c3-4ddb-b8e2-0b1157c0d5b3"/>
+			</line>
+			<line>
+				<reportElement x="0" y="144" width="557" height="1" uuid="da0c9547-4acf-4f13-bc80-6ab50143ecef"/>
+			</line>
+			<line>
+				<reportElement x="0" y="168" width="557" height="1" uuid="5fc90068-37a0-4a02-a9ee-4f420cb918ff"/>
+			</line>
+			<textField>
+				<reportElement x="102" y="18" width="100" height="19" uuid="b09951fa-f377-458d-a8e7-98e28d528631">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{RSTNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="37" width="100" height="19" uuid="2296e8c1-fb88-4864-a0ec-9462ed7e5d32">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{customerName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="56" width="100" height="19" uuid="6622b99e-23a6-4fce-b001-2e62ccfb9857">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{customerAddress}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="75" width="100" height="19" uuid="4e81409b-1f80-4acc-9d84-13299c12f240">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{customerMobileNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="18" width="100" height="19" uuid="947d00a9-0316-4b98-9ff5-381b50429f08">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{vehicleNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="37" width="100" height="19" uuid="cf4d1710-66c3-4b65-8744-c7ac9b23122e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{vehicleType}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="56" width="100" height="19" uuid="6739bd40-e6f6-4941-b4d8-8e54c2cafb8c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{material}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="97" width="100" height="19" uuid="227e996d-a2f0-452a-89ce-d074ab5e8f1f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{grossWt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="97" width="100" height="19" uuid="e24136a8-595e-42a2-b720-97b04f110a17">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{dateAndTime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="122" width="100" height="19" uuid="5232d805-12e8-473b-900f-04469f782a10">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{charges}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<pageFooter>
-		<band height="34" splitType="Stretch">
+		<band height="29" splitType="Stretch">
 			<textField>
-				<reportElement x="130" y="2" width="280" height="32" uuid="2a2b3771-db2b-4690-816e-684cad253c2c">
+				<reportElement x="130" y="1" width="319" height="27" uuid="2a2b3771-db2b-4690-816e-684cad253c2c">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[Contact for Repairs at Telephone No.
-Welcome!]]></textFieldExpression>
+				<textFieldExpression><![CDATA[Designed and Developed by Proventos Techsys Solutions Pvt. Ltd.]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
