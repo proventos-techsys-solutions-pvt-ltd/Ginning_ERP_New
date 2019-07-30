@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!doctype html>
+<%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <html lang="en">
    <head>
      	<meta charset="utf-8">
@@ -40,7 +41,6 @@
 		<div class="row mt-2">
 			<div class="col-md-8">
 				<div class="tile-background-row">
-				<form>
 					<input type="hidden" id="invoiceId" name="invoiceId">
 					<div class="form-row">
 						<div class="col-md-3">
@@ -76,16 +76,22 @@
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Bank</label>
-							<input type="text" class="form-control form-control-sm" id="chequeBank" name="chequeBank" placeholder="auto">
+							<select type="text" class="form-control form-control-sm" id="chequeBank" name="chequeBank">
+								<c:Bank />
+							</select>
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Cheque No</label>
-							<input type="text" class="form-control form-control-sm" id="chequeNo" name="chequeNo" placeholder="Mannual">
+							<input type="text" class="form-control form-control-sm" id="chequeNo" name="chequeNo" placeholder="Cheque No.">
+						</div>
+						<div class="col-md-auto">
+							<label class="lbl-rm-all">Date</label>
+							<input type="date" class="form-control form-control-sm" id="chequeDate" name="chequeDate">
 						</div>
 						<div class="col-md-3">
 							<label class="lbl-rm-all">Name</label>
 							<div class="d-flex justify-content-start align-items-center">
-							<input type="text" class="form-control form-control-sm" id="nameOnCheque" name="nameOnCheque" placeholder="Mannual">
+							<input type="text" class="form-control form-control-sm" id="nameOnCheque" name="nameOnCheque" placeholder="Name on Cheque">
 							<button type="button" class="btn btn-success btn-sm btn-no-radius">Pay</button>&nbsp;
 							<button type="button" class="btn btn-success btn-sm btn-no-radius">Void</button>
 							</div>
@@ -98,20 +104,22 @@
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Bank Name</label>
-							<input type="text" class="form-control form-control-sm" id="rtgsBank" name="rtgsBank" placeholder="Mannual">
+							<input type="text" class="form-control form-control-sm" id="rtgsBank" name="rtgsBank" placeholder="RTGS Bank Name">
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Account No</label>
-							<input type="text" class="form-control form-control-sm" id="rtgsAccountNo" name="rtgsAccountNo" placeholder="Mannual">
+							<input type="text" class="form-control form-control-sm" id="rtgsAccountNo" name="rtgsAccountNo" placeholder="Account No.">
 						</div>
 						<div class="col-md-3">
 							<label class="lbl-rm-all">IFSC Code</label>
 							<div class="d-flex justify-content-start align-items-center">
-							<input type="text" class="form-control form-control-sm" id="rtgsIfsc" name="rtgsIfsc" placeholder="Mannual">
+							<input type="text" class="form-control form-control-sm" id="rtgsIfsc" name="rtgsIfsc" placeholder="IFSC Code">
 							<button type="button" class="btn btn-success btn-sm btn-no-radius">Pay</button>
 							</div>
 						</div>
 					</div>
+				<form>
+				<input type="hidden" id="form"  />	
 				</form>
 				</div>
 			</div>
@@ -143,6 +151,51 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script>
+	
+	window.onload = function(){
+		getDailySetupData();
+	}
+	
+	function getDailySetupData(){
+		
+		url = "../processing/setDailyInvSetup.jsp";
+		if(window.XMLHttpRequest){  
+			fetchDailySetupRequest=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchDailySetupRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+		try{  
+			fetchDailySetupRequest.onreadystatechange=fetchDailySetupData;  
+			console.log("AJAX Req sent");
+			fetchDailySetupRequest.open("GET",url,true);  
+			fetchDailySetupRequest.send();  
+		}catch(e){alert("Unable to connect to server");}
+		
+	}
+	
+	function  fetchDailySetupData(){
+		if(fetchDailySetupRequest.readyState == 4){
+			var response = this.response.trim();
+			var data = JSON.parse(response);
+			setDailySetupData(data);
+		}
+	}
+	
+	function setDailySetupData(data){
+			
+			var bank=  document.getElementById('chequeBank');
+			
+			for(i=0;i<bank.options.length;i++){
+				if(data.bankId != Number(bank.options[i].value)){
+					bank.options[i].disabled = true;
+				}
+				else if(data.bankId === Number(bank.options[i].value)){
+					bank.options[i].selected = true;
+				}
+			}
+		}
+	
 	
 	function fetchInvoiceData(invoiceNo){
 			url = "../processing/getDataForOperator.jsp?invoiceNo="+invoiceNo;
@@ -193,6 +246,15 @@
 			document.getElementById('rtgsBank').value = "" ;
 			document.getElementById('rtgsAccountNo').value = "" ;
 			document.getElementById('rtgsIfsc').value = "" ;
+		}
+		
+		
+		function getChequeData(){
+			var chequeAmount = document.getElementById('chequeAmount').value;
+			var chequeBank = document.getElementById('chequeBank').value;
+			var chequeNo = document.getElementById('chequeNo').value;
+			var chequeDate = document.getElementById('chequeDate').value;
+			var chequeName = document.getElementById('nameOnCheque').value;
 			
 		}
 		

@@ -58,10 +58,6 @@
 	</columnHeader>
 	<detail>
 		<band height="230" splitType="Stretch">
-			<image>
-				<reportElement x="-10" y="0" width="590" height="230" uuid="2fa50ea6-087f-42f4-bd00-cd8df94d630c"/>
-				<imageExpression><![CDATA["C:/Users/Akshay/Desktop/cheque_validation.jpg"]]></imageExpression>
-			</image>
 			<textField>
 				<reportElement x="76" y="63" width="248" height="18" uuid="d323e1aa-7df5-441b-b0ca-b13c51ed5e90"/>
 				<textElement verticalAlignment="Middle"/>

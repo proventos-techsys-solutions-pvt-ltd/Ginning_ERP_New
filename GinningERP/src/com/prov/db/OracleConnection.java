@@ -9,7 +9,7 @@ public class OracleConnection {
 	
 		public static Connection getConnection() throws ClassNotFoundException
 		{
-			if(connection == null) {
+			//if(connection == null) {
 				Class.forName("oracle.jdbc.driver.OracleDriver");
 				
 				String url = "jdbc:oracle:thin:@localhost:1521:orcl";
@@ -21,7 +21,7 @@ public class OracleConnection {
 				}catch (Exception e) {
 					e.printStackTrace();
 				}
-			}
+			//}
 			return connection;
 		}
 
