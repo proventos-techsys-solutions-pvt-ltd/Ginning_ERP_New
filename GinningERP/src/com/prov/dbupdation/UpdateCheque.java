@@ -6,12 +6,11 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import com.prov.bean.Rtgs;
+import com.prov.bean.Cheque;
 import com.prov.db.OracleConnection;
 
-public class UpdateRtgs {
-	
-	public int updateRtgs(Rtgs r)
+public class UpdateCheque {
+	public int updateCheque(Cheque c)
 	{
 		
 		Connection con = null;
@@ -22,30 +21,30 @@ public class UpdateRtgs {
 			e.printStackTrace();
 		}
 
-		String updateRtgs = "{ ? = call UPDATE_RTGS(?,?,?,?,?,?,?,?,?,?) }";
+		String updateCheque = "{ ? = call UPDATE_RTGS(?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
-			cs = con.prepareCall(updateRtgs);
+			cs = con.prepareCall(updateCheque);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
-			Date date = Date.valueOf(r.getRtgsDate());
+			Date date = Date.valueOf(c.getChequeDate());
 			
-			cs.setInt(2, r.getId());
-			cs.setInt(3, r.getCustomerId());
-			cs.setInt(4, r.getInvoiceId());
-			cs.setString(5, r.getAccountNo());
-			cs.setString(6, r.getBankName());
-			cs.setString(7, r.getIfsc());
-			cs.setDouble(8, r.getRtgsAmount());
-			cs.setDate(9, date);
-			cs.setString(10, r.getCustomerName());
-			
+			cs.setInt(2, c.getId());
+			cs.setInt(3, c.getCustomerId());
+			cs.setInt(4, c.getInvoiceId());
+			cs.setInt(5,c.getBankId());
+			cs.setString(6, c.getCustomerName());
+			cs.setString(7, c.getInvoiceNo());
+			cs.setString(8, c.getBankName());
+			cs.setLong(9, c.getChequeNo());
+			cs.setDouble(10, c.getChequeAmount());
+			cs.setDate(11, date);
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);
 			
-			r.setId(id);
+			c.setId(id);
 			
 			cs.close();
 			con.close();

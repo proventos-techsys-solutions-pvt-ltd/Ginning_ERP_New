@@ -20,11 +20,11 @@ public class AddRtgs {
 			e.printStackTrace();
 		}
 		
-		String addAccountName = "{ ? = call ADD_CHEQUE(?,?,?,?,?,?,?,?) }";
+		String addRtgs = "{ ? = call ADD_RTGS(?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
-			cs = con.prepareCall(addAccountName);
+			cs = con.prepareCall(addRtgs);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
@@ -37,7 +37,7 @@ public class AddRtgs {
 			cs.setString(6, r.getIfsc());
 			cs.setDouble(7, r.getRtgsAmount());
 			cs.setDate(8, date);
-			cs.setString(8, r.getCustomerName());
+			cs.setString(9, r.getCustomerName());
 			
 			cs.executeUpdate();
 			
