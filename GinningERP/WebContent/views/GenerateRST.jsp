@@ -37,7 +37,7 @@
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">RST No</label>
 	        	<div class="d-flex justify-content-start align-items-center">
-	        		<input type="text" class="form-control" id="rst" name="rst" placeholder="Auto" required>
+	        		<input type="text" class="form-control" id="rst" name="rst" placeholder="Auto">
 	        		<button type="button" class="btn btn-success" onclick="fetchDataForSecondWeighment(document.getElementById('rst').value)">Fetch</button>
 	        	</div>
 	        	
@@ -77,11 +77,11 @@
 	        </div>
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">BlackListed</label>
-	        	<input type="text" class="form-control " id="blacklist" name="blacklist" placeholder="" >
+	        	<input type="text" class="form-control " id="blacklist" name="blacklist" placeholder="" readonly>
 	        </div>
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Membership</label>
-	        	<input type="text" class="form-control " id="membership" name="membership" placeholder="" >
+	        	<input type="text" class="form-control " id="membership" name="membership" placeholder="" readonly>
 	        </div>
 	     </div>
 	    <div class="form-row form-row-ctm">
@@ -128,7 +128,7 @@
         <div class="form-row form-row-ctm">
         <div class="col-md-4">
         	<label class="lbl-rm-all">Weigh Rate :</label>
-        	<input type="text" class="form-control " id="weighRate" name="weighRate" value='0'>
+        	<input type="text" class="form-control " id="weighRate" name="weighRate" value='0' readonly>
         </div>
         </div>
         <div class="form-row border-top">
@@ -355,7 +355,6 @@ function fetchGrossWeight(){
 		 if(fetchData.readyState == 4){
 			 var response = this.response.trim();
 			 console.log('Weight --- '+response);
-			 var tareWtInput = document.getElementById('tare');
 			tareWtInput.value = response;
 			document.getElementById('net').value = Number(document.getElementById('gross').value) - Number(document.getElementById('tare').value);
 		 }
@@ -365,9 +364,13 @@ function fetchGrossWeight(){
 
 //Submit RST Weigh Bridge Form
 function submitRSTEntry(){
-	uiController.validate();
-	document.getElementById("newRST").submit();	
-	resetFormData();
+	if(uiController.validate()===true){
+		document.getElementById("newRST").submit();	
+		resetFormData();
+	}else{
+		alert("Please check if data has been properly entered!!!");
+	}
+	
 }
 function resetFormData(){
 	document.getElementById("newRST").reset();
