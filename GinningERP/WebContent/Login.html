@@ -20,7 +20,7 @@
 	<div class="container-fluid" style="background:none;">
 		<div class="row mt-2">
 			<div class="col-md-4 offset-md-4 login border">
-				<form>
+				<form method="post" action="./processing/checkLogin.jsp" id="loginForm">
 						<div class="form-row">
 							<div class="col-md-12">
 								<div class="d-flex justify-content-center">
@@ -32,10 +32,10 @@
 						<div class="form-row">
 							<div class="col-md-12">
 								<label class="lbl-rm-all">Role</label>
-								<select class="form-control form-control-lg">
-									<option>Administrator</option>
-									<option>WB Operator</option>
-									<option>Cashier</option>
+								<select class="form-control form-control-lg" name="role" id="role">
+									<option value= "Administrator">Administrator</option>
+									<option value= "operator">WB Operator</option>
+									<option value="cashier">Cashier</option>
 								</select>
 							</div>
 						</div>
@@ -43,20 +43,20 @@
 						<div class="form-row">
 							<div class="col-md-12">
 								<label class="lbl-rm-all">Username</label>
-								<input type="text" class="form-control form-control-lg" id="" name="">
+								<input type="text" class="form-control form-control-lg" id="username" name="username">
 							</div>
 						</div>
 						
 						<div class="form-row">
 							<div class="col-md-12">
 								<label class="lbl-rm-all">Password</label>
-								<input type="password" class="form-control form-control-lg" id="" name="">
+								<input type="password" class="form-control form-control-lg" id="password" name="password">
 							</div>
 						</div>
 						
 						<div class="form-row">
 							<div class="col-md-12">
-								<button type="button" class="btn btn-success btn-lg">Log-In</button>
+								<button type="button" class="btn btn-success btn-lg" id="submitForm">Log-In</button>
 							</div>
 						</div>
 					
@@ -71,6 +71,12 @@
 <script src="./js/jquery-3.3.1.slim.min.js" ></script>
 <script src="./js/popper.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
-
+<script>
+	var form = document.getElementById("loginForm");
+	console.log(form);
+	document.getElementById("submitForm").addEventListener("click",function(){
+		document.getElementById("loginForm").submit();
+	})
+</script>
 </body>
 </html>

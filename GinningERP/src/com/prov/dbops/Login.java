@@ -27,8 +27,8 @@ public class Login {
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);
-			cs.close();
-			con.close();	
+//			cs.close();
+//			con.close();	
 			} catch (SQLException e) {
 			e.printStackTrace();
 		}
