@@ -41,7 +41,9 @@
 		<div class="row mt-2">
 			<div class="col-md-8">
 				<div class="tile-background-row">
-					<input type="hidden" id="invoiceId" name="invoiceId">
+					<input type="hidden" id="invoiceId" name="invoiceId" />
+					<input type="hidden" id="customerId" name="customerId" />
+					<input type="hidden" id="customerName" name="customerName" />
 					<div class="form-row">
 						<div class="col-md-3">
 							<label class="lbl-rm-all">Customer Information</label>
@@ -92,7 +94,7 @@
 							<label class="lbl-rm-all">Name</label>
 							<div class="d-flex justify-content-start align-items-center">
 							<input type="text" class="form-control form-control-sm" id="nameOnCheque" name="nameOnCheque" placeholder="Name on Cheque">
-							<button type="button" class="btn btn-success btn-sm btn-no-radius">Pay</button>&nbsp;
+							<button type="button" class="btn btn-success btn-sm btn-no-radius" onclick="submitChequeData()">Pay</button>&nbsp;
 							<button type="button" class="btn btn-success btn-sm btn-no-radius">Void</button>
 							</div>
 						</div>
@@ -114,12 +116,12 @@
 							<label class="lbl-rm-all">IFSC Code</label>
 							<div class="d-flex justify-content-start align-items-center">
 							<input type="text" class="form-control form-control-sm" id="rtgsIfsc" name="rtgsIfsc" placeholder="IFSC Code">
-							<button type="button" class="btn btn-success btn-sm btn-no-radius">Pay</button>
+							<button type="button" class="btn btn-success btn-sm btn-no-radius" onclick="submitRtgsData()">Pay</button>
 							</div>
 						</div>
 					</div>
-				<form>
-				<input type="hidden" id="form"  />	
+				<form id='paymentForm' action="../processing/submitPayment.jsp" target="_blank">
+				<input type="hidden" id="output" name="output" />	
 				</form>
 				</div>
 			</div>
@@ -157,7 +159,6 @@
 	}
 	
 	function getDailySetupData(){
-		
 		url = "../processing/setDailyInvSetup.jsp";
 		if(window.XMLHttpRequest){  
 			fetchDailySetupRequest=new XMLHttpRequest();  
@@ -171,7 +172,6 @@
 			fetchDailySetupRequest.open("GET",url,true);  
 			fetchDailySetupRequest.send();  
 		}catch(e){alert("Unable to connect to server");}
-		
 	}
 	
 	function  fetchDailySetupData(){
@@ -183,9 +183,7 @@
 	}
 	
 	function setDailySetupData(data){
-			
 			var bank=  document.getElementById('chequeBank');
-			
 			for(i=0;i<bank.options.length;i++){
 				if(data.bankId != Number(bank.options[i].value)){
 					bank.options[i].disabled = true;
@@ -195,7 +193,6 @@
 				}
 			}
 		}
-	
 	
 	function fetchInvoiceData(invoiceNo){
 			url = "../processing/getDataForOperator.jsp?invoiceNo="+invoiceNo;
@@ -216,7 +213,6 @@
 		
 		//Get data from AJAX request
 		function getInvoiceData(){
-			
 			if(fetchInvoiceReq.readyState == 4){
 				var response = this.response.trim();
 				console.log(response);
@@ -232,8 +228,10 @@
 		function setData(data){
 			
 			document.getElementById('invoiceNo').value = data.invoiceNo ;
-			document.getElementById('invoiceId').value = data.invoiceId
+			document.getElementById('invoiceId').value = data.invoiceId;
+			document.getElementById('customerId').value = data.customerId;
 			document.getElementById('customerInfo').value = data.customerName +'\n' + data.customerAddress + '\n' + data.customerMobile  ;
+			document.getElementById('customerName').value = data.customerName;
 			document.getElementById('invoiceDate').value = data.invoiceDate ;
 			document.getElementById('totalAmount').value = data.totalAmount ;
 			document.getElementById('invoiceStatus').value = data.paidByOperator ;
@@ -249,17 +247,66 @@
 		}
 		
 		
-		function getChequeData(){
-			var chequeAmount = document.getElementById('chequeAmount').value;
-			var chequeBank = document.getElementById('chequeBank').value;
-			var chequeNo = document.getElementById('chequeNo').value;
-			var chequeDate = document.getElementById('chequeDate').value;
-			var chequeName = document.getElementById('nameOnCheque').value;
+		function submitChequeData(){
 			
+			var chequeJson = {};
+			chequeJson['dataType'] = 'cheque';
+			chequeJson['chequeAmount']= document.getElementById('chequeAmount').value;
+			var bank = document.getElementById('chequeBank');
+			chequeJson['chequeBankId'] = bank.value;
+			chequeJson['chequeBankName'] = bank.options[bank.selectedIndex].text.split('-')[0].trim();
+			chequeJson['chequeNo'] = document.getElementById('chequeNo').value;
+			chequeJson['chequeDate'] = document.getElementById('chequeDate').value;
+			chequeJson['chequeName'] = document.getElementById('nameOnCheque').value;
+			chequeJson['invoiceId'] = document.getElementById('invoiceId').value;
+			chequeJson['invoiceNo'] = document.getElementById('searchInvoiceNo').value;
+			chequeJson['customerId'] = document.getElementById('customerId').value;
+			chequeJson['customerName'] = document.getElementById('customerName').value;
+			
+			var chequeInfo = JSON.stringify(chequeJson);
+			document.getElementById('output').value = chequeInfo;
+			console.log(chequeInfo);
+			document.getElementById('paymentForm').submit();
 		}
 		
+	function submitRtgsData(){
+			
+			var rtgsJson = {};
+			rtgsJson['dataType'] = 'rtgs';
+			rtgsJson['rtgsAmount']= document.getElementById('rtgsAmount').value;
+			rtgsJson['rtgsBank'] = document.getElementById('rtgsBank').value;
+			rtgsJson['rtgsAccountNo'] = document.getElementById('rtgsAccountNo').value;
+			rtgsJson['rtgsIfsc'] = document.getElementById('rtgsIfsc').value;
+			rtgsJson['rtgsDate'] = document.getElementById('invoiceDate').value;
+			rtgsJson['invoiceId'] = document.getElementById('invoiceId').value;
+			rtgsJson['invoiceNo'] = document.getElementById('searchInvoiceNo').value;
+			rtgsJson['customerId'] = document.getElementById('customerId').value;
+			rtgsJson['customerName'] = document.getElementById('customerName').value;
+			
+			var rtgsInfo = JSON.stringify(rtgsJson);
+			console.log(rtgsInfo);
+			document.getElementById('output').value = rtgsInfo;
+			
+			document.getElementById('paymentForm').submit();
+		}
+	
+	function submitCash(){
+		var cashJson = {};
+		
+		cashJson['dataType'] = 'cash';	
+		cashJson['cashAmount'] = document.getElementById('cashAmount').value;
+		cashJson['invoiceId'] = document.getElementById('invoiceId').value;
+		cashJson['customerName'] = document.getElementById('customerName').value;
+		cashJson['customerId'] = document.getElementById('customerId').value;
+		cashJson['invoiceNo'] = document.getElementById('invoiceNo').value;
+		
+		var cashInfo = JSON.stringify(cashJson);
+		document.getElementById('output').value = cashJson;
+		
+		document.getElementById('paymentForm').submit();
+		
+	}
 		
 	</script>
-	
 </body>
 </html>	

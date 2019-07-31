@@ -135,8 +135,8 @@
 	                                    <input type="text" id="unloadingCharges" name="unloadingCharges" class="form-control form-control-sm" value="0" readonly="readonly">
 	                                    <label for="" class="lbl-rm-all">Weighing Charges </label> 
 	                                    <input type="text" id="weighingCharges" name="weighingCharges" class="form-control form-control-sm" value="0" readonly="readonly">
-										<label for="" class="lbl-rm-all">Advance </label> 
-	                                    <input type="text" id="advance" name="advance" class="form-control form-control-sm" value="0">
+										<label for="" class="lbl-rm-all" hidden>Advance </label> 
+	                                    <input type="hidden" id="advance" name="advance" class="form-control form-control-sm" value="0">
 	                                    <label for="" class="lbl-rm-all">Net Payable </label> 
 	                                    <input type="text" id="net" name="net" class="form-control form-control-sm" value="0">
  									</div>
@@ -479,7 +479,7 @@
 		document.getElementsByTagName('form')[0].submit();
 	}
 	
-	//Change Total Amount in Payment Mode  amount Table
+	//Change Total Amount in Payment Mode amount Table
 	document.getElementById('net').addEventListener('change', function(e){
 		document.getElementById('payAmount1').value = e.srcElement.value; 
 	})

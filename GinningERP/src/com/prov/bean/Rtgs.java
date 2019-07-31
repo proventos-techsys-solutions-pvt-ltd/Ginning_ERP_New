@@ -3,7 +3,13 @@ package com.prov.bean;
 public class Rtgs {
 	
 	private int id, invoiceId, customerId;
-	private String accountNo, bankName, ifsc, rtgsDate, customerName;
+	private String accountNo, bankName, ifsc, rtgsDate, customerName, invoiceNo;
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
+	}
 	private double rtgsAmount;
 
 	public int getId() {

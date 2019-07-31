@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Types;
+import java.text.SimpleDateFormat;
 
 import com.prov.bean.Rtgs;
 import com.prov.db.OracleConnection;
@@ -20,7 +21,7 @@ public class AddRtgs {
 			e.printStackTrace();
 		}
 		
-		String addRtgs = "{ ? = call ADD_RTGS(?,?,?,?,?,?,?,?) }";
+		String addRtgs = "{ ? = call ADD_RTGS(?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -28,16 +29,24 @@ public class AddRtgs {
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
-			Date date = Date.valueOf(r.getRtgsDate());
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+			java.util.Date date = sdf.parse(r.getRtgsDate());
 			
-			cs.setInt(2, r.getCustomerId());
-			cs.setInt(3, r.getInvoiceId());
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+			String dateFormatted = sdf2.format(date);
+			System.out.println("Date --- "+dateFormatted);
+			
+			Date sqlDate = Date.valueOf(dateFormatted);
+			
+			cs.setInt(2, r.getInvoiceId());
+			cs.setInt(3, r.getCustomerId());
 			cs.setString(4, r.getAccountNo());
 			cs.setString(5, r.getBankName());
 			cs.setString(6, r.getIfsc());
 			cs.setDouble(7, r.getRtgsAmount());
-			cs.setDate(8, date);
+			cs.setDate(8, sqlDate);
 			cs.setString(9, r.getCustomerName());
+			cs.setString(10, r.getInvoiceNo());
 			
 			cs.executeUpdate();
 			

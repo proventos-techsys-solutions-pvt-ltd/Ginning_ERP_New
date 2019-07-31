@@ -3,8 +3,7 @@ package com.prov.bean;
 public class Cheque {
 	
 	private int id, customerId, bankId, invoiceId;
-	private String customerName, invoiceNo, bankName, chequeDate;
-	private long chequeNo;
+	private String customerName, invoiceNo, bankName, chequeDate, chequeNo;
 	private double chequeAmount;
 	public int getId() {
 		return id;
@@ -48,10 +47,10 @@ public class Cheque {
 	public void setBankName(String bankName) {
 		this.bankName = bankName;
 	}
-	public long getChequeNo() {
+	public String getChequeNo() {
 		return chequeNo;
 	}
-	public void setChequeNo(long chequeNo) {
+	public void setChequeNo(String chequeNo) {
 		this.chequeNo = chequeNo;
 	}
 	public String getChequeDate() {

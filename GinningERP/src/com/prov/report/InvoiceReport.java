@@ -52,6 +52,11 @@ public Invoice getInvoiceData(int id) {
 				inv.setAuthorizer(rs.getString(9));
 				inv.setNote(rs.getString(10));
 				inv.setTotalQuanity(rs.getDouble(11));
+				inv.setCashAmount(rs.getDouble(12));
+				inv.setChequeAmount(rs.getDouble(13));
+				inv.setRtgsAmount(rs.getDouble(14));
+				inv.setPaidByoperator(rs.getInt(15));
+				inv.setUnloadingCharges(rs.getFloat(16));
 			}
 			
 			stmt.close();
@@ -103,6 +108,11 @@ public ArrayList<Invoice> getReport() {
 			inv.setAuthorizer(rs.getString(9));
 			inv.setNote(rs.getString(10));
 			inv.setTotalQuanity(rs.getDouble(11));
+			inv.setCashAmount(rs.getDouble(12));
+			inv.setChequeAmount(rs.getDouble(13));
+			inv.setRtgsAmount(rs.getDouble(14));
+			inv.setPaidByoperator(rs.getInt(15));
+			inv.setUnloadingCharges(rs.getFloat(16));
 			
 			reportList.add(inv);
 			

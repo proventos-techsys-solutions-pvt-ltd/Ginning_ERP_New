@@ -22,7 +22,7 @@ public class UpdateRtgs {
 			e.printStackTrace();
 		}
 
-		String updateRtgs = "{ ? = call UPDATE_RTGS(?,?,?,?,?,?,?,?,?,?) }";
+		String updateRtgs = "{ ? = call UPDATE_RTGS(?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(updateRtgs);
@@ -40,6 +40,7 @@ public class UpdateRtgs {
 			cs.setDouble(8, r.getRtgsAmount());
 			cs.setDate(9, date);
 			cs.setString(10, r.getCustomerName());
+			cs.setString(11, r.getInvoiceNo());
 			
 			cs.executeUpdate();
 			

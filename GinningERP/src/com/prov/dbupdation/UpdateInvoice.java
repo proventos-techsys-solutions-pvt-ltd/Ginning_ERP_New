@@ -2,6 +2,7 @@ package com.prov.dbupdation;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -65,7 +66,42 @@ public int updateInvoice(Invoice i) {
 		}
 		
 		return id;
+	}
+
+	public int updatePendingAmount(double amountPaid, int invoiceId) {
 		
+		Connection con = null;
+		int rowCount = 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		String updateInvoice = "UPDATE INVOICE_MAST SET PENDING=(SELECT ((PENDING)-?) FROM INVOICE_MAST WHERE ID=?),"
+													       + "AMOUNTPAID=(SELECT ((AMOUNTPAID)+?) FROM INVOICE_MAST WHERE ID=?)"
+													       + "WHERE ID=?";
+		PreparedStatement stmt;
+		try {
+			
+			stmt = con.prepareStatement(updateInvoice);
+
+			stmt.setDouble(1, amountPaid);
+			stmt.setInt(2, invoiceId);
+			stmt.setDouble(3, amountPaid);
+			stmt.setInt(4, invoiceId);
+			stmt.setInt(5, invoiceId);
+			
+			rowCount = stmt.executeUpdate();
+			
+			stmt.close();
+			con.close();
+			
+			System.out.println("Updation Succesful - "+rowCount);
+			} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rowCount;
 	}
 }
 
