@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="com.prov.jasper.JasperReports"%>
 <%@ page contentType="application/pdf"%>
 <%@ page trimDirectiveWhitespaces="true"%>
@@ -12,9 +13,8 @@
 <%
 	int invoiceId = Integer.parseInt((String)request.getAttribute("invoiceId"));
 	
-	InvoiceReport invReport = new InvoiceReport();
 	
-	org.json.JSONObject printObj = invReport.getInvoiceForPrinting(invoiceId);
+	JSONObject printObj = invReport.getInvoiceForPrinting(invoiceId);
 	
 	JasperReports printReport = new JasperReports();
 	

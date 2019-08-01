@@ -1,27 +1,28 @@
-<%@ page contentType="application/pdf"%>
+<%@page import="com.prov.report.RstReport"%>
+<%@page import="org.json.JSONObject"%>
 <%@page import="net.sf.jasperreports.engine.JasperExportManager"%>
 <%@page import="net.sf.jasperreports.engine.JasperPrint"%>
 <%@page import="com.prov.jasper.JasperReports"%>
 <%@page import="com.prov.report.InvoiceReport"%>
+<%@ page contentType="application/pdf"%>
 <%@ page trimDirectiveWhitespaces="true" %>
-
-
-    <% 
+ <% 
     
-  	int invoiceId = Integer.parseInt((String)request.getAttribute("invoiceId"));
+  	int weighmentId = Integer.parseInt(request.getParameter("weighmentId"));
+	 System.out.println(weighmentId);
     
-    request.removeAttribute("invoiceId");
-
-    InvoiceReport invReport = new InvoiceReport();
-	
-	org.json.JSONObject printObj = invReport.getInvoiceForPrinting(invoiceId);
-
+    RstReport report = new RstReport();
+    
+    JSONObject jsonObj = report.getRSTForPrint(weighmentId);
+    
 	JasperReports printReport = new JasperReports();
+	
+	System.out.println(jsonObj);
 
 	//Loading Jasper file report from local file system.
-	String jrxmlFile = session.getServletContext().getRealPath("/report/FinalInvoicePDF.jrxml");
+	String jrxmlFile = session.getServletContext().getRealPath("/report/RST.jrxml");
 		
-	JasperPrint jasperPrint = printReport.compileAndPrint(jrxmlFile, printObj);
+	JasperPrint jasperPrint = printReport.compileAndPrint(jrxmlFile, jsonObj);
 	
 	//Exporting Report as PDF
 	JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
@@ -32,6 +33,3 @@
 	return;
 		
     %>
-    
-    
-    

@@ -31,7 +31,7 @@
    	<div class="row mt-2 ">
     <div class="col-md-8">
     <div class="tile-background-row" id="getHeight">
-      	<form id="newRST" action="../processing/addWeighmentEntry.jsp">
+      	<form id="newRST" action="../processing/addWeighmentEntry.jsp" target="_blank">
       	<div class="form-row form-row-ctm">
 	      	<input type="hidden" id="id" name="id" value="0" />
 	        <div class="col-md-4">
@@ -93,7 +93,7 @@
 	        	<label class="lbl-rm-all">Gross Weight : </label>
 	        	<div class="d-flex justify-content-start align-items-center">
 	        		<input type="text" class="form-control  " id="gross" name="gross" placeholder="" value="0.0" readonly="readonly">
-	        		<button type="button" class="btn btn-success" onclick="fetchGrossWeight()" id="fetchGrossWeight">Fetch</button>
+	        		<button type="button" class="btn btn-success" onclick="fetchGrossWt()" id="fetchGrossWeight">Fetch</button>
 	        	</div>
 	        	
 	        	<input type="text" class="form-control  " id="grossWtTime" name="grossWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
@@ -102,7 +102,7 @@
 	        	<label class="lbl-rm-all">Tare Weight : </label>
 	        	<div class="d-flex justify-content-start align-items-center">
 	            	<input type="text" class="form-control" id="tare" name="tare" placeholder="" value="0.0" readonly="readonly">
-	           	 	<button type="button" class="btn btn-success" id="fetchTareWeight" onclick="fetchTareWeight()">Fetch</button>
+	           	 	<button type="button" class="btn btn-success" id="fetchTareWeight" onclick="fetchTareWt()" disabled>Fetch</button>
 	           	</div>
 	            <input type="text" class="form-control  " id="tareWtTime" name="tareWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
@@ -135,7 +135,7 @@
   				&nbsp;
   				<button type="button" class="btn btn-success change-button" onclick="resetFormData()">Reset</button>
   				&nbsp;
-  				<button type="button" class="btn btn-success change-button">Print</button>
+  				<button type="button" class="btn btn-success change-button" onclick="printReceipt()">Print</button>
   				&nbsp;
   				<button type="button" class="btn btn-success change-button">PDF</button>
   			</div>
@@ -240,14 +240,15 @@ function checkRSTAlreadyExists(rst){
 function checkRstExists(){
 	if(fetchRstStatus.readyState == 4){
 		var response = this.response.trim();
-		setFirstWeighmentData(response);
-		if(Number(document.getElementById('tare').value) != 0){
-			document.getElementById("submitRstEntry").disabled=true;
-			document.getElementById("fetchTareWeight").disabled=true;
+		if(Number(response) != 0){
+			setFirstWeighmentData(response);
+			if(Number(document.getElementById('tare').value) != 0){
+				document.getElementById("submitRstEntry").disabled=true;
+				document.getElementById("fetchTareWeight").disabled=true;
+			}
 		}
 	}
 }
-
 
 function fetchDataForSecondWeighment(rst){
 	var url="../processing/fetchSecondWeighment.jsp?rst="+rst;
@@ -264,6 +265,7 @@ function fetchDataForSecondWeighment(rst){
 		fetchWeighData.send();  
 	}catch(e){alert("Unable to connect to server");}
 }
+
 function fetchFirstWeighment(){
 	if(fetchWeighData.readyState == 4){
 		var response = this.response.trim();
@@ -291,6 +293,7 @@ function setFirstWeighmentData(response){
 	}else if(Number(data.vendorMembership) === 0){
 		membership = 'NO';
 	}
+	document.getElementById('id').value = data.weighmentId;
 	document.getElementById('date').value = data.weighmentDate ;
 	document.getElementById('vehicleNo').value = data.vehicleNo ;
 	document.getElementById('customer').value = data.vendorName ;
@@ -326,11 +329,14 @@ function setFirstWeighmentData(response){
 	}
 	
 	document.getElementById("fetchGrossWeight").disabled = "true";
+	if(Number(document.getElementById('tare').value) === 0.0){
+		document.getElementById("fetchTareWeight").disabled = false;
+	}
 	
 	decideWeighment(1);
 }
 
-function fetchGrossWeight(){
+function fetchGrossWt(){
 	var url="../processing/fetchWeight.jsp";
 	if(window.XMLHttpRequest){  
 		fetchData=new XMLHttpRequest();  
@@ -356,7 +362,7 @@ function fetchGrossWeight(){
  }
  
  
- function fetchTareWeight(){
+ function fetchTareWt(){
 		var url="../processing/fetchWeight.jsp";
 		if(window.XMLHttpRequest){  
 			fetchData=new XMLHttpRequest();  
@@ -376,6 +382,7 @@ function fetchGrossWeight(){
 		 if(fetchData.readyState == 4){
 			 var response = this.response.trim();
 			 console.log('Weight --- '+response);
+			 var tareWtInput = document.getElementById('tare');
 			tareWtInput.value = response;
 			document.getElementById('net').value = Number(document.getElementById('gross').value) - Number(document.getElementById('tare').value);
 		 }
@@ -413,22 +420,21 @@ function resetFormData(){
 	}
 	document.getElementById("fetchGrossWeight").disabled = false;
 	document.getElementById("submitRstEntry").disabled=false;
-	document.getElementById("fetchTareWeight").disabled=false;
+	document.getElementById("fetchTareWeight").disabled=true;
+	setCurrentDate();
 }
 //Check if the entered customer exists in DB
 document.addEventListener('change',function(e){
 	if(e.srcElement.id === "mobile")
 		checkEnteredCustomer();
+	
 });
 
 
 function checkEnteredCustomer(){
-	
 	var customerName = document.getElementById("customer").value;
 	var mobile = document.getElementById("mobile").value;
-	
 	getCustomerData(customerName, mobile);
-	
 }
 
 //Create AJAX Req to get the customer data from DB if the customer exists in it
@@ -508,7 +514,6 @@ function addNewCustomer(){
 
 //Submit New Customer Form
 function submitNewCustomer(){
-	
 	var newCustomerName = document.getElementById("newCustomerName").value;
 	var newCustomerMobile = document.getElementById("newCustomerMobile").value;
 	var newCustomerAddress = document.getElementById("newCustomerAddress").value;
@@ -603,6 +608,10 @@ function setPendingData(pendingRst){
 
 window.onload = function() {
 	pendingTareWt();
+	setCurrentDate();
+	};
+
+function setCurrentDate(){
 	var today = new Date();
 	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 	var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -610,13 +619,16 @@ window.onload = function() {
 	document.getElementById('grossWtTime').value = dateTime;
 	document.getElementById('tareWtTime').value = dateTime;
 	document.getElementById('netWtTime').value = dateTime;
-	};
-
+}	
+	
 function setWeighRate(event) {
 	document.getElementsByName("weighRate")[0].value = event.selectedOptions[0].getAttribute('data-weighRate'); 
 }
 
-
+function printReceipt(){
+	var weighmentId = document.getElementById('id').value;
+	window.open('../report/RSTPrintOnly.jsp?weighmentId='+weighmentId);
+}
 
 </script>
 </body>

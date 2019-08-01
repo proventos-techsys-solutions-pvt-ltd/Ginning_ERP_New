@@ -163,7 +163,7 @@
 		}
 		if(Number(data[0].vendorMembership) === 1){
 			membership = 'YES';
-		}else if(Number(data[0].vendorBlacklisted) === 0){
+		}else if(Number(data[0].vendorMembership) === 0){
 			membership = 'NO';
 		}
 		

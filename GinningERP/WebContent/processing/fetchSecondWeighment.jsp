@@ -8,7 +8,6 @@
 
     <%
     	String rstStr = request.getParameter("rst");
-    System.out.println(rstStr);
 	    if(rstStr.equals("0") || rstStr == "")
 	    {
 	    	out.println(0);	

@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="com.prov.dbops.CheckRST"%>
 <%@page import="com.prov.dbupdation.UpdateWeighMast"%>
 <%@page import="com.prov.dbinsertion.AddWeighMast"%>
@@ -55,14 +56,17 @@
 			w.setWeighmentDate(date);
 			
 			AddWeighMast addWeigh = new AddWeighMast();
+			int weighMastId=0;
+			weighMastId = addWeigh.addWeighMast(w);
 			
-			int rstWeighMast = addWeigh.addWeighMast(w);
+			request.setAttribute("weighmentId", Integer.toString(weighMastId));
 			
-			response .sendRedirect("../views/GenerateRST.jsp");
-		
-			}
+			request.getRequestDispatcher("../report/RST.jsp").forward(request,response);
+
+		}
 	else{
 		
+		int weighmentId = Integer.parseInt(request.getParameter("id"));
 		float tare = Float.parseFloat(request.getParameter("tare"));
 	 	float net = Float.parseFloat(request.getParameter("net"));
 	 	String tareWtTime = request.getParameter("tareWtTime");
@@ -79,10 +83,10 @@
 		
 		int rstWeighMast = uw.secondWeighment(w);
 		
-		response.sendRedirect("../views/GenerateRST.jsp");
+		request.setAttribute("weighmentId", Integer.toString(weighmentId));
+		
+		request.getRequestDispatcher("../report/RST.jsp").forward(request,response);
 		
 		}
-
-
 %>
 

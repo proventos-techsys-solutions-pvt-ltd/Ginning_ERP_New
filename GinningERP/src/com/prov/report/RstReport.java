@@ -165,7 +165,7 @@ public class RstReport {
 					"										    WEIGH_RATE_MAST WRM\r\n" + 
 					"										WHERE \r\n" + 
 					"										WM.VID = CVM.ID AND\r\n" + 
-					"										CM.ID = CVM.ID AND\r\n" + 
+					"										CM.ID = CVM.CID AND\r\n" + 
 					"										CVM.V_TYPE_ID = WRM.ID AND \r\n" + 
 					"										WM.RST="+rst;
 			
@@ -209,7 +209,78 @@ public class RstReport {
 		}
 		
 		return jsonObj;
+	}
+	
+	public JSONObject getRSTForPrint(int weighmentId) {
+		
+		ResultSet rs = null;
+		Connection con = null;
+		JSONObject jsonObj = new JSONObject();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT\r\n" + 
+					"    WM.RST,\r\n" + 
+					"    WM.MATERIAL,\r\n" + 
+					"    WM.GROSS,\r\n" + 
+					"    WM.GROSSWT_TIME,\r\n" + 
+					"    WM.TARE,\r\n" + 
+					"    WM.NET,\r\n" + 
+					"    WM.TAREWT_TIME,\r\n" + 
+					"    WM.WEIGHMENT_DATE,\r\n" + 
+					"    CVM.VEHICLE_NO,\r\n" + 
+					"    CVM.WEIGH_RATE,\r\n" + 
+					"    WRM.VEHICLE_NAME,\r\n" + 
+					"    CUST.NAME,\r\n" + 
+					"    CUST.ADDRESS,\r\n" + 
+					"    CUST.MOBILE,\r\n" + 
+					"    COMP.NAME COMP_NAME,\r\n" + 
+					"    COMP.ADDRESS COMP_NAME,\r\n" + 
+					"    COMP.MOBILE COMP_MOBILE\r\n" + 
+					"    FROM WEIGH_MAST WM, CUSTOMER_VEHICLE_MAST CVM, WEIGH_RATE_MAST WRM, CUSTOMER_MAST CUST, COMPANY_MASTER COMP\r\n" + 
+					"    WHERE \r\n" + 
+					"    WM.VID = CVM.ID AND\r\n" + 
+					"    CVM.CID = CUST.ID AND\r\n" + 
+					"    CVM.V_TYPE_ID = WRM.ID AND\r\n" + 
+					"    COMP.ID = (SELECT COMPANY_ID FROM DAILY_SETUP WHERE SETUP_DATE = WEIGHMENT_DATE) AND\r\n" + 
+					"    WM.ID="+weighmentId;
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				jsonObj.put("RSTNO", rs.getInt(1));
+				jsonObj.put("material", rs.getString(2));
+				jsonObj.put("grossWt", rs.getDouble(3));
+				jsonObj.put("grossTime", rs.getString(4));
+				jsonObj.put("tare", rs.getDouble(5));
+				jsonObj.put("net", rs.getDouble(6));
+				jsonObj.put("tareTime", rs.getString(7));
+				jsonObj.put("dateAndTime", rs.getString(8));
+				jsonObj.put("vehicleNo", rs.getString(9));
+				jsonObj.put("charges", rs.getFloat(10));
+				jsonObj.put("vehicleType", rs.getString(11));
+				jsonObj.put("customerName", rs.getString(12));
+				jsonObj.put("customerAddress", rs.getString(13));
+				jsonObj.put("customerMobileNo", rs.getString(14));
+				jsonObj.put("companyName", rs.getString(15));
+				jsonObj.put("companyAddress", rs.getString(16));
+				jsonObj.put("companyMobileNo", rs.getString(17));
+				
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return jsonObj;
 		
 	}
-
 }
