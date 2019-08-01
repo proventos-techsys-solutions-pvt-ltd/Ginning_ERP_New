@@ -5,12 +5,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import com.prov.bean.Customer;
+import com.prov.bean.AccountGroup;
 import com.prov.db.OracleConnection;
 
-public class UpdateCustomer {
-
-	public int updateCustomer(Customer c)
+public class UpdateAccountGroup {
+	
+	public int updateAccountGroup(AccountGroup ag)
 	{
 		
 		Connection con = null;
@@ -21,25 +21,21 @@ public class UpdateCustomer {
 			e.printStackTrace();
 		}
 
-		String updateCustomer = "{ ? = call UPDATE_CUSTOMER(?,?,?,?,?,?) }";
+		String updateAccountGroup = "{ ? = call UPDATE_ACCOUNTGROUP(?,?) }";
 		CallableStatement cs;
 		try {
-			cs = con.prepareCall(updateCustomer);
+			cs = con.prepareCall(updateAccountGroup);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 		
-			cs.setInt(2, c.getId() );
-			cs.setString(3, c.getName());
-			cs.setString(4, c.getAddress());
-			cs.setString(5, c.getMobile());
-			cs.setInt(6, c.getBlacklist());
-			cs.setInt(7, c.getMembership());
+			cs.setInt(2, ag.getId());
+			cs.setString(3, ag.getGroupName());
 			
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);
 			
-			c.setId(id);
+			ag.setId(id);
 			
 			cs.close();
 			con.close();
@@ -52,5 +48,5 @@ public class UpdateCustomer {
 		return id;
 		
 	}
-	
+
 }

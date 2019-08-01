@@ -1,17 +1,16 @@
-package com.prov.dbupdation;
+package com.prov.dbinsertion;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import com.prov.bean.Customer;
+import com.prov.bean.AccountGroup;
 import com.prov.db.OracleConnection;
 
-public class UpdateCustomer {
-
-	public int updateCustomer(Customer c)
-	{
+public class AddAccountGroup {
+	
+public int addAccountGroup(AccountGroup ag) {
 		
 		Connection con = null;
 		int id = 0;
@@ -21,36 +20,31 @@ public class UpdateCustomer {
 			e.printStackTrace();
 		}
 
-		String updateCustomer = "{ ? = call UPDATE_CUSTOMER(?,?,?,?,?,?) }";
+		String addAccountGroup = "{ ? = call ADD_ACCOUNTGROUP(?) }";
 		CallableStatement cs;
 		try {
-			cs = con.prepareCall(updateCustomer);
+			cs = con.prepareCall(addAccountGroup);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
-		
-			cs.setInt(2, c.getId() );
-			cs.setString(3, c.getName());
-			cs.setString(4, c.getAddress());
-			cs.setString(5, c.getMobile());
-			cs.setInt(6, c.getBlacklist());
-			cs.setInt(7, c.getMembership());
+			
+			cs.setString(2, ag.getGroupName());
 			
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);
 			
-			c.setId(id);
+			ag.setId(id);
 			
 			cs.close();
 			con.close();
 			
-			System.out.println("Updation Succesful-"+id);
+			System.out.println("Insertion Succesful"+id);
 			} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 		return id;
-		
 	}
-	
+
+
 }

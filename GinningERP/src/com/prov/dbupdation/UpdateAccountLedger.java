@@ -2,15 +2,16 @@ package com.prov.dbupdation;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import com.prov.bean.Customer;
+import com.prov.bean.AccountLedger;
 import com.prov.db.OracleConnection;
 
-public class UpdateCustomer {
-
-	public int updateCustomer(Customer c)
+public class UpdateAccountLedger {
+	
+	public int updateAccountLedger(AccountLedger al)
 	{
 		
 		Connection con = null;
@@ -21,25 +22,26 @@ public class UpdateCustomer {
 			e.printStackTrace();
 		}
 
-		String updateCustomer = "{ ? = call UPDATE_CUSTOMER(?,?,?,?,?,?) }";
+		String updateAccountLedger = "{ ? = call UPDATE_ACCOUNTLEDGER(?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
-			cs = con.prepareCall(updateCustomer);
+			cs = con.prepareCall(updateAccountLedger);
+			
+			Date date=Date.valueOf(al.getLedgerDate());			
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 		
-			cs.setInt(2, c.getId() );
-			cs.setString(3, c.getName());
-			cs.setString(4, c.getAddress());
-			cs.setString(5, c.getMobile());
-			cs.setInt(6, c.getBlacklist());
-			cs.setInt(7, c.getMembership());
+			cs.setDate(2, date);
+			cs.setInt(3, al.getMonthId());
+			cs.setInt(4, al.getAccountId());
+			cs.setString(5, al.getAccountLedger());
+			cs.setString(6, al.getLedgerDesc());
+			cs.setInt(7, al.getGroupId());
+			cs.setDouble(8, al.getOpeningBal());
 			
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);
-			
-			c.setId(id);
 			
 			cs.close();
 			con.close();
@@ -52,5 +54,5 @@ public class UpdateCustomer {
 		return id;
 		
 	}
-	
+
 }

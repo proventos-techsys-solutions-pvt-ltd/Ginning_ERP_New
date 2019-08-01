@@ -1,17 +1,16 @@
-package com.prov.dbupdation;
+package com.prov.dbinsertion;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import com.prov.bean.Customer;
+import com.prov.bean.Month;
 import com.prov.db.OracleConnection;
 
-public class UpdateCustomer {
+public class AddMonth {
 
-	public int updateCustomer(Customer c)
-	{
+public int addMonth(Month m) {
 		
 		Connection con = null;
 		int id = 0;
@@ -21,36 +20,31 @@ public class UpdateCustomer {
 			e.printStackTrace();
 		}
 
-		String updateCustomer = "{ ? = call UPDATE_CUSTOMER(?,?,?,?,?,?) }";
+		String addMonth = "{ ? = call ADD_MONTH(?,?) }";
 		CallableStatement cs;
 		try {
-			cs = con.prepareCall(updateCustomer);
+			cs = con.prepareCall(addMonth);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
-		
-			cs.setInt(2, c.getId() );
-			cs.setString(3, c.getName());
-			cs.setString(4, c.getAddress());
-			cs.setString(5, c.getMobile());
-			cs.setInt(6, c.getBlacklist());
-			cs.setInt(7, c.getMembership());
+			
+			cs.setInt(2, m.getYearId());
+			cs.setString(3, m.getMonth());
 			
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);
 			
-			c.setId(id);
+			m.setId(id);
 			
 			cs.close();
 			con.close();
 			
-			System.out.println("Updation Succesful-"+id);
+			System.out.println("Insertion Succesful"+id);
 			} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 		return id;
-		
 	}
-	
+
 }
