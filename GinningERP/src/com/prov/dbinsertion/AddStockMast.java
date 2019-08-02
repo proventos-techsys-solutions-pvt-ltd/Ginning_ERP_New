@@ -75,11 +75,13 @@ public class AddStockMast {
 			e.printStackTrace();
 		}
 	
-		String addStock = "{ ? = call ADD_OPENING_STOCK}";
+		String addStock = "{ ? = call ADD_OPENING_STOCK()}";
 		CallableStatement cs;
 		try {
 			
 			cs = con.prepareCall(addStock);
+			
+			cs.registerOutParameter(1, Types.NUMERIC);
 			
 			cs.executeUpdate();
 			

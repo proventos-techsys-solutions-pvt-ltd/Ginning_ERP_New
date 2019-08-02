@@ -53,5 +53,43 @@ public class GradeRateReport {
 		
 		return gradeRateList;
 	}
+	
+	public GradeRateMaster getTodaysSuperRate() {
+		ResultSet rs = null;
+		Connection con = null;
+		GradeRateMaster grm = new GradeRateMaster();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT * FROM GRADE_RATE_MASTER WHERE TRUNC(RATE_DATE) = trunc(SYSDATE) and grade_id=1";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				grm.setId(rs.getInt(1));
+				
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(2));
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+				String properDate = format2.format(date1);
+				
+				grm.setRateDate(properDate);
+				grm.setGradeId(rs.getInt(3));
+				grm.setRate(rs.getDouble(4));
+				
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return grm;
+	}
 
 }

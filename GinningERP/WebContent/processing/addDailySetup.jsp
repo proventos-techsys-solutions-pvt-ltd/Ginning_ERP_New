@@ -1,3 +1,4 @@
+<%@page import="com.prov.dbinsertion.AddStockMast"%>
 <%@page import="com.prov.dbinsertion.AddGradeRateMaster"%>
 <%@page import="com.prov.bean.GradeRateMaster"%>
 <%@page import="org.json.simple.JSONArray"%>
@@ -44,6 +45,10 @@
     	
     	agr.addGradeRateMaster(gr);
     }
+    
+    AddStockMast addStock = new AddStockMast();
+    
+    addStock.addOpeningStock();
 
     response.sendRedirect("../views/DailySetup.jsp");
     

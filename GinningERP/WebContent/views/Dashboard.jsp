@@ -20,7 +20,7 @@
                 	<div class="col-md-6">
                 		<div class="d-flex justify-content-center ">
                         	<h4 class="lbl-rm-all">Today's Purchase Rate</h4>&nbsp;
-                        	<h4 id="tRate">330</h4>
+                        	<h4 id="tRate"></h4>
                         </div>
                     </div>
                 	<div class="col-md-6">
@@ -88,7 +88,6 @@
 		 function fetchData(){
 			 if(fetchStock.readyState == 4){
 				 setData(this.response.trim());
-				 //console.log(this.response.trim());
 			 }
 		 }
 
@@ -124,7 +123,6 @@
 			 };
 
 			 // Notice the rotation from the documentation.
-
 			 var options = {
 			         title: {
 			                   display: true,
@@ -155,10 +153,33 @@
 				}
 		 }
 		
+		getTodayCottonRate();
 		
+		function getTodayCottonRate(){
+			var url="../processing/getTodaysSuperRate.jsp";
+			if(window.XMLHttpRequest){  
+				fetchCottonRate=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				fetchCottonRate=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+		  
+			try{  
+				fetchCottonRate.onreadystatechange=fetchRate;  
+				console.log("AJAX Req sent");
+				fetchCottonRate.open("GET",url,true);  
+				fetchCottonRate.send();  
+			}catch(e){alert("Unable to connect to server");}
+		}
 		
-		
-		
+		function fetchRate(){
+			 if(fetchCottonRate.readyState == 4){
+				var response = this.response.trim();
+				console.log(response);
+				var data = JSON.parse(response);
+				document.getElementById('tRate').innerHTML = data['rate'];
+			 }
+		 }
 		
 		</script>
 		

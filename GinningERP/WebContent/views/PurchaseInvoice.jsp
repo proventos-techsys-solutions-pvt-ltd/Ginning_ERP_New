@@ -99,7 +99,7 @@
 								'<td>'+jsonResponse[i].customerAddress+'</td>'+
 								'<td>'+jsonResponse[i].customerMobile+'</td>'+
 								'<td>'+status+'</td>'+
-								'<td class="text-center"><img src="../property/img/printer.png" alt="print" ></td>'+
+								'<td id="print" class="text-center"><img src="../property/img/printer.png" alt="print" ></td>'+
 							'</tr>');
 					}
 					console.log(element.rows.length);
@@ -115,12 +115,23 @@
 				
 				for(i=0;i<tableBody.rows.length;i++){
 					var id = tableBody.rows.item(i).cells[0].innerHTML;
-					if(companyId != id){
+					if(compa nyId != id){
 						tableBody.rows.item(i).setAttribute('hidden','hidden');
 					}
 				}
 				
 			} 
+			
+		document.addEventListener('click',function(e){
+			if(e.srcElement.alt==='print'){
+				var rowNo = e.srcElement.parentElement.parentElement.rowIndex;
+				var invoiceId = document.getElementById('tableBody').rows[rowNo].cells[1].innerHTML;
+				
+				window.open('../report/InvoicePDFPrintOnly.jsp?invoiceId='+invoiceId);
+			}
+		})
+		
+			
 		</script>
 
 </body>
