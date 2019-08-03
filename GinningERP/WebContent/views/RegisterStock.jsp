@@ -33,6 +33,7 @@
 					<label>Company:</label>
 					<select class="form-control form-control-sm " id="companyId" name="companyId" onchange="">
 		        	    <option selected disabled>Select</option>
+		        	    <option value="0">All</option>
 		        	 	<c:Company />
 	        	    </select>
 				</div>

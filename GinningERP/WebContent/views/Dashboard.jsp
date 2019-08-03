@@ -36,6 +36,7 @@
              		<label class="lbl-rm-l">Company</label>
              		<select class="form-control form-control-sm" id="companyId">
              			<option disabled selected>Selected</option>
+             			<option value="0">All</option>
              			<c:Company />
              		</select>
              	</div>
@@ -116,7 +117,7 @@
 			                 'orange'],
 			             data: [obj.closingStock.cottonBales,obj.closingStock.cottonSeed,obj.closingStock.cottonSeedOil,obj.closingStock.cottonCakes],
 			 // Notice the borderColor 
-			             borderColor:	['black', 'black','black','black'],
+			             borderColor: ['black', 'black','black','black'],
 			             borderWidth: [2,2,2,2]
 			         }
 			     ]
@@ -139,21 +140,20 @@
 			     data: data,
 			     options: options
 			 });
-				
-				document.getElementById('aRate').innerHTML = obj.closingStock.avgRate;
-				
-				var tRate = document.getElementById("tRate").innerHTML;
-				var aRate = document.getElementById("aRate").innerHTML;
-				if(tRate > aRate){
-					document.getElementById("aRate").style.background = "green";
-					document.getElementById("aRate").style.color = "#fff";
-				}else{
-					document.getElementById("aRate").style.background = "red";	
-					document.getElementById("aRate").style.color = "#fff";
-				}
 		 }
 		
-		getTodayCottonRate();
+		
+		function getAverageRate(){
+			var tRate = document.getElementById("tRate").innerHTML;
+			var aRate = document.getElementById("aRate").innerHTML;
+			if(tRate > aRate){
+				document.getElementById("aRate").style.background = "green";
+				document.getElementById("aRate").style.color = "#fff";
+			}else{
+				document.getElementById("aRate").style.background = "red";	
+				document.getElementById("aRate").style.color = "#fff";
+			}
+		}
 		
 		function getTodayCottonRate(){
 			var url="../processing/getTodaysSuperRate.jsp";
@@ -177,12 +177,14 @@
 				var response = this.response.trim();
 				console.log(response);
 				var data = JSON.parse(response);
-				document.getElementById('tRate').innerHTML = data['rate'];
+				document.getElementById('tRate').innerHTML = data['superRate'];
+				document.getElementById('aRate').innerHTML = data['averageRate'];
 			 }
 		 }
 		
+		getTodayCottonRate();
+		getAverageRate();
+		
 		</script>
-		
-		
       </body>
 </html>
