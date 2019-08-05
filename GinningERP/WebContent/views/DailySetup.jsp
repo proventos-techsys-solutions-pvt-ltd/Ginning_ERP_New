@@ -17,20 +17,23 @@
 <body>
 	<%@include file="../views/NavBar.html" %>
 		<div class="container-fluid">
-			<div class="row mt-2 tile-background-row">
+			<div class="row mt-2 tile-background-row border-bottom">
 				<div class="col-md-3">
-					<h4>Daily Transactions Setup </h4>
+					<div class="d-flex justify-content-start align-items-center">
+						<img src="../property/img/factory.png" alt="warehouse">&nbsp;
+						<h4 class="lbl-rm-all">Daily Setup</h4>
+					</div>
 				</div>
 				<div class="col-md-3">
 				<% String pattern = "yyyy-MM-dd";
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 				String date = simpleDateFormat.format(new Date()); %>
-					<h4 id="todaysDate"><%= date %></h4>
+					<h4 class="lbl-rm-all" id="todaysDate"><%= date %></h4>
 				</div>
 				
 				<div class="col-md-3 offset-md-3 text-right">
-					<button type="button" class="btn btn-success" onclick="submitDailySetup()">Set-up</button>
-					<button type="button" class="btn btn-success">Print Report</button>
+					<button type="button" class="btn btn-success" onclick="submitDailySetup()">Add Company</button>
+					<button type="button" class="btn btn-success">Lock Users</button>
 				</div>
 			</div>
 			<form action='../processing/addDailySetup.jsp'>
@@ -57,24 +60,79 @@
 				</div>
 				<div class="col-md-3">
 		      		<label class="lbl-rm-l">Bank</label>
+		      		<div class="">
 		      		<select class="form-control form-control-sm" name="chequeBankId" id="chequeBankId">
 		      			<option selected disabled>Select</option>
 		      			<c:Bank />
 		      		</select>
+		      		</div>
 	      		</div>
-				<div class="col-md-1">
-					<label class="lbl-rm-l">Chqs Issued</label>
-					<input class="form-control form-control-sm" name="firstChequeNo" id="firstChequeNo" placeholder="First Cheque No" />
 				</div>
-				<div class="col-md-1">
-				<label>-</label>
-					<input class="form-control form-control-sm" name="lastChequeNo" id="lastChequeNo" placeholder="Last Cheque No" />
+				
+				<div class="row tile-background-row">
+					<div class="col-md-12">
+						<table class="table table-bordered">
+							<thead>
+								<tr class="table-back">
+									<th rowspan="2" width="5%" style="vertical-align:middle;">Sr No</th>
+									<th rowspan="2" width="8%" style="vertical-align:middle;">Date</th>
+									<th rowspan="2" width="8%" style="vertical-align:middle;">Setup Time</th>
+									<th rowspan="2" width="8%" style="vertical-align:middle;">Discard Time</th>
+									<th rowspan="2" width="25%" style="vertical-align:middle;">Company Name</th>
+									<th rowspan="2" width="10%" style="vertical-align:middle;">Heap</th>
+									<th rowspan="2" width="15%" style="vertical-align:middle;">Bank</th>
+									<th colspan="2" style="vertical-align:middle;text-align:center;">Cheque Series</th>
+									<th rowspan="2" width="5%" style="vertical-align:middle;">Setup</th>
+									<th rowspan="2" width="5%" style="vertical-align:middle;">Update</th>
+								</tr>
+								<tr class="table-back">
+									<th width="7%" style="vertical-align:middle;text-align:center;">From</th>
+									<th width="7%" style="vertical-align:middle;text-align:center;">To</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<input type="text" class="form-control form-control-sm" id="" name="">
+									</td>
+									<td>
+										<input type="text" class="form-control form-control-sm" id="" name="">
+									</td>
+									<td>
+										<input type="text" class="form-control form-control-sm" id="" name="">
+									</td>
+									<td>
+										<input type="text" class="form-control form-control-sm" id="" name="">
+									</td>
+									<td>
+										<input type="text" class="form-control form-control-sm" id="" name="">
+									</td>
+									<td>
+										<input type="text" class="form-control form-control-sm" id="" name="">
+									</td>
+									<td>
+										<input type="text" class="form-control form-control-sm" id="" name="">
+									</td>
+									<td>
+										<input class="form-control form-control-sm" name="firstChequeNo" id="firstChequeNo"/>
+									</td>
+									<td>
+										<input class="form-control form-control-sm" name="lastChequeNo" id="lastChequeNo"/>
+									</td>
+									<td>
+										<button type="button" class="btn btn-success btn-sm" id="" name="">Setup</button>
+									</td>
+									<td>
+										<button type="button" class="btn btn-success btn-sm" id="" name="">Update</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
-				<div class="col-md-2">
-					<label class="lbl-rm-l">Total Cheques Issued</label>
-					<input class="form-control form-control-sm" name="totalCheques" id="totalCheques" placeholder="" readonly="readonly" />
-				</div>
-				</div>
+				
+				
+				
 				<div class="row tile-background-row">
 						<div class="col-md-4">
 							<table class="table table-bordered">
