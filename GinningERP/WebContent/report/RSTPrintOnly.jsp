@@ -9,7 +9,7 @@
  <% 
     
   	int weighmentId = Integer.parseInt(request.getParameter("weighmentId"));
-	 System.out.println(weighmentId);
+	System.out.println(weighmentId);
     
     RstReport report = new RstReport();
     

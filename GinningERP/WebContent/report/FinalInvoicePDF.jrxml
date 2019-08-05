@@ -513,7 +513,7 @@
 			</componentElement>
 			<staticText>
 				<reportElement x="196" y="173" width="130" height="23" uuid="639ebf0b-0ed0-4faf-a9c7-09522061566e"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Less:Weighing Charges:(-)]]></text>
 			</staticText>
 			<textField>
@@ -523,7 +523,7 @@
 			</textField>
 			<staticText>
 				<reportElement x="196" y="196" width="130" height="23" uuid="9ba58ddd-488c-4a73-90fa-d2366e5c6f62"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Less: Unloading Charges:(-)]]></text>
 			</staticText>
 			<textField>
@@ -533,7 +533,7 @@
 			</textField>
 			<staticText>
 				<reportElement x="612" y="173" width="130" height="23" uuid="52779fd5-abf2-44c2-8c6a-1359e2ed178f"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Less:Weighing Charges:(-)]]></text>
 			</staticText>
 			<textField>
@@ -543,7 +543,7 @@
 			</textField>
 			<staticText>
 				<reportElement x="612" y="196" width="130" height="23" uuid="40812afa-264d-423b-a526-7523d1cdee58"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Less: Unloading Charges:(-)]]></text>
 			</staticText>
 			<textField>
@@ -703,19 +703,19 @@
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="66" y="22" width="80" height="18" uuid="bbc8d6b4-52b0-406d-a348-36ca86b43680"/>
+				<reportElement x="66" y="21" width="80" height="18" uuid="bbc8d6b4-52b0-406d-a348-36ca86b43680"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="194" y="21" width="111" height="20" uuid="b537c0f0-6127-4a65-9750-ec066bc36383"/>
+				<reportElement x="194" y="19" width="111" height="20" uuid="b537c0f0-6127-4a65-9750-ec066bc36383"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{totalQuantity}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="314" y="21" width="82" height="20" uuid="9383c4fa-4db9-4e25-8cec-5d000b73ea5e"/>
+				<reportElement x="314" y="19" width="82" height="20" uuid="9383c4fa-4db9-4e25-8cec-5d000b73ea5e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{totalAmount}]]></textFieldExpression>
 			</textField>
@@ -726,19 +726,21 @@
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="482" y="22" width="80" height="18" uuid="5b5ef1c3-2c11-4c12-8a2b-972dedf8022f"/>
+				<reportElement x="505" y="21" width="80" height="18" uuid="5b5ef1c3-2c11-4c12-8a2b-972dedf8022f"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="632" y="21" width="90" height="20" uuid="7530a1f5-bf26-45eb-b49a-f6de46aa7616"/>
+				<reportElement x="613" y="19" width="111" height="20" uuid="7530a1f5-bf26-45eb-b49a-f6de46aa7616">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{totalQuantity}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="732" y="21" width="82" height="20" uuid="ccce7f30-e8bd-4fbd-843b-7c0428a7bf8f"/>
+				<reportElement x="732" y="19" width="82" height="20" uuid="ccce7f30-e8bd-4fbd-843b-7c0428a7bf8f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{totalAmount}]]></textFieldExpression>
 			</textField>
@@ -753,7 +755,7 @@
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="271" y="85" width="125" height="21" uuid="2d97c624-5561-45fe-9d77-3221ccf8afcb"/>
+				<reportElement x="271" y="84" width="125" height="21" uuid="2d97c624-5561-45fe-9d77-3221ccf8afcb"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<text><![CDATA[Authorized Signatory]]></text>
 			</staticText>
@@ -782,7 +784,7 @@
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="687" y="85" width="125" height="21" uuid="7c5e3cc7-3819-4561-8a49-fdde376179c6"/>
+				<reportElement x="687" y="84" width="125" height="21" uuid="7c5e3cc7-3819-4561-8a49-fdde376179c6"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<text><![CDATA[Authorized Signatory]]></text>
 			</staticText>
@@ -810,13 +812,13 @@
 				<textFieldExpression><![CDATA[$F{cashAmount}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="242" y="0" width="66" height="23" uuid="0233f4c5-60d0-45cb-a2af-ca87fe2fa363"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="242" y="0" width="78" height="23" uuid="0233f4c5-60d0-45cb-a2af-ca87fe2fa363"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Cash Amount:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="242" y="23" width="66" height="23" uuid="221000c3-55ea-4df2-aef2-7a2d63bf310b"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="242" y="23" width="78" height="23" uuid="221000c3-55ea-4df2-aef2-7a2d63bf310b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Cheque Amount:]]></text>
 			</staticText>
 			<textField>
@@ -831,12 +833,12 @@
 			</textField>
 			<staticText>
 				<reportElement x="645" y="0" width="78" height="23" uuid="5b97a51e-fed9-44aa-b84a-f1d2b9512fd5"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Cash Amount:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="645" y="23" width="78" height="23" uuid="56ddd7a3-4682-41d9-a760-bc3d3101cc96"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Cheque Amount:]]></text>
 			</staticText>
 			<textField>
