@@ -50,7 +50,7 @@
 	        </div>
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Date</label>
-	        	<input type="date" class="form-control " id="date" name="date" placeholder="">
+	        	<input type="date" class="form-control " id="date" name="date" placeholder="" readonly>
 	        </div>
 	
 	        <div class="col-md-4">
@@ -477,7 +477,6 @@ function submitRSTEntry(){
 //RESET ALL input FIELDS
 function resetFormData(){
 	document.getElementById("newRST").reset();
-	document.getElementById('date').removeAttribute('readonly');
 	document.getElementById('vehicleNo').removeAttribute('readonly');
 	document.getElementById('vehicleType').removeAttribute('readonly');
 	document.getElementById('customer').removeAttribute('readonly');
@@ -686,12 +685,25 @@ function setPendingData(pendingRst){
 //Get current date and time
 function setCurrentDate(){
 	var today = new Date();
-	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+	 var dd = today.getDate();
+	    var mm = today.getMonth()+1; //January is 0!
+	    var yyyy = today.getFullYear();
+
+	    if(dd<10){
+	        dd='0'+dd;
+	    } 
+	    if(mm<10){
+	        mm='0'+mm;
+	    } 
+
+	    todayDate = yyyy+'-'+mm+'-'+dd; 
+	    formattedDate = dd+'-'+mm+'-'+yyyy;
 	var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-	var dateTime = date+' '+time;
+	var dateTime = formattedDate+' '+time;
 	document.getElementById('grossWtTime').value = dateTime;
 	document.getElementById('tareWtTime').value = dateTime;
 	document.getElementById('netWtTime').value = dateTime;
+	document.getElementById("date").value = todayDate;
 }	
 	
 //Set weight rate according to the vehicle type selected
@@ -704,7 +716,6 @@ function printReceipt(){
 	var weighmentId = document.getElementById('id').value;
 	window.open('${pageContext.request.contextPath}/report/RSTPrintOnly.jsp?weighmentId='+weighmentId);
 }
-
 
 //Function calls on page load
 pendingTareWt();
