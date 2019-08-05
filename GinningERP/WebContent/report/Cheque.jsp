@@ -14,7 +14,7 @@
 	int invoiceId = Integer.parseInt((String)request.getAttribute("invoiceId"));
 	
 	
-	JSONObject printObj = invReport.getInvoiceForPrinting(invoiceId);
+	/* JSONObject printObj = invReport.getInvoiceForPrinting(invoiceId);
 	
 	JasperReports printReport = new JasperReports();
 	
@@ -29,5 +29,5 @@
 	response.getOutputStream().flush();
 	response.getOutputStream().close();
 	
-	return;
+	return; */
 %>

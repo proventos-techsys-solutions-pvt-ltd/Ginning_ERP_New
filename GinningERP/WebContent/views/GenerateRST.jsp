@@ -8,22 +8,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="../styles/bootstrap.min.css">	
-  <link rel="stylesheet" href="../styles/WBStyle.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/bootstrap.min.css">	
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/WBStyle.css">
   <link href="https://fonts.googleapis.com/css?family=Vollkorn&display=swap" rel="stylesheet"> 
   <!-- Bootstrap JS -->
-  	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
-	<script src="../js/popper.min.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
+  	<script src="${pageContext.request.contextPath}/js/jquery-3.3.1.slim.min.js" ></script>
+	<script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </head>
 <body>
   <%@include file="../views/NavBar.html" %>
-  
   <div class="container-fluid">
   	<div class="row mt-2 ">
   		<div class="col-md-12">
   			<div class="d-flex justify-content-start align-items-center tile-background-row">
-  				<img src="../property/img/weight.png" alt="weight" >&nbsp;
+  				<img src="${pageContext.request.contextPath}/property/img/weight.png" alt="weight" >&nbsp;
   				<h4 class="lbl-rm-all" id="title">Weighment</h4>
   			</div>
   		</div>
@@ -31,7 +30,7 @@
    	<div class="row mt-2 ">
     <div class="col-md-8">
     <div class="tile-background-row" id="getHeight">
-      	<form id="newRST" action="../processing/addWeighmentEntry.jsp" target="_blank">
+      	<form id="newRST" action="${pageContext.request.contextPath}/processing/addWeighmentEntry.jsp" target="_blank">
       	<div class="form-row form-row-ctm">
 	      	<input type="hidden" id="id" name="id" value="0" />
 	        <div class="col-md-4">
@@ -174,7 +173,7 @@
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		       <form id="newCustomer" action="../processing/addCustomer.jsp">
+		       <form id="newCustomer" action="${pageContext.request.contextPath}/processing/addCustomer.jsp">
 		       	<div class="form-row">
 			       	<div class="col-md-6">
 			       		<label class="lbl-rm-all">Name</label>
@@ -204,10 +203,35 @@
 <nav class="navbar navbar-default navbar-static-bottom footer ">
  
 </nav>
-<script src="../js/commonjs.js"></script>
-<script src="../js/validations/GenerateRST.js"></script>
+<script src="${pageContext.request.contextPath}/js/commonjs.js"></script>
+<script src="${pageContext.request.contextPath}/js/validations/GenerateRST.js"></script>
 <script>
 
+
+function fetchRSTSeries(){
+	var url="${pageContext.request.contextPath}/processing/getRstSeries.jsp";
+	if(window.XMLHttpRequest){  
+		fetchRSTSeries=new XMLHttpRequest();  
+	}  
+	else if(window.ActiveXObject){  
+		fetchRSTSeries=new ActiveXObject("Microsoft.XMLHTTP");  
+	}  
+	try{  
+		fetchRSTSeries.onreadystatechange=fetchRST;  
+		console.log("AJAX Req sent");
+		fetchRSTSeries.open("GET",url,true);  
+		fetchRSTSeries.send();  
+	}catch(e){alert("Unable to connect to server");}
+}
+
+function fetchRST(){
+	if(fetchRSTSeries.readyState == 4){
+		var response = this.response.trim();
+		document.getElementById('rst').value = response;
+	}
+}
+
+fetchRSTSeries();
 
 function decideWeighment(flag){
 	if(flag === 1){
@@ -222,7 +246,7 @@ document.addEventListener('change',function(e){
 })
 
 function checkRSTAlreadyExists(rst){
-	var url="../processing/fetchSecondWeighment.jsp?rst="+rst;
+	var url="${pageContext.request.contextPath}/processing/fetchSecondWeighment.jsp?rst="+rst;
 	if(window.XMLHttpRequest){  
 		fetchRstStatus=new XMLHttpRequest();  
 	}  
@@ -251,7 +275,7 @@ function checkRstExists(){
 }
 
 function fetchDataForSecondWeighment(rst){
-	var url="../processing/fetchSecondWeighment.jsp?rst="+rst;
+	var url="${pageContext.request.contextPath}/processing/fetchSecondWeighment.jsp?rst="+rst;
 	if(window.XMLHttpRequest){  
 		fetchWeighData=new XMLHttpRequest();  
 	}  
@@ -337,7 +361,7 @@ function setFirstWeighmentData(response){
 }
 
 function fetchGrossWt(){
-	var url="../processing/fetchWeight.jsp";
+	var url="${pageContext.request.contextPath}/processing/fetchWeight.jsp";
 	if(window.XMLHttpRequest){  
 		fetchData=new XMLHttpRequest();  
 	}  
@@ -363,7 +387,7 @@ function fetchGrossWt(){
  
  
  function fetchTareWt(){
-		var url="../processing/fetchWeight.jsp";
+		var url="${pageContext.request.contextPath}/processing/fetchWeight.jsp";
 		if(window.XMLHttpRequest){  
 			fetchData=new XMLHttpRequest();  
 		}  
@@ -439,7 +463,7 @@ function checkEnteredCustomer(){
 
 //Create AJAX Req to get the customer data from DB if the customer exists in it
 function getCustomerData(customerName,mobile){
-	var url="../processing/getCustomer.jsp?customerName="+customerName+"&mobileNo="+mobile;
+	var url="${pageContext.request.contextPath}/processing/getCustomer.jsp?customerName="+customerName+"&mobileNo="+mobile;
 	
 	if(window.XMLHttpRequest){  
 		checkRequest=new XMLHttpRequest();  
@@ -523,7 +547,7 @@ function submitNewCustomer(){
 
 //Create AJAX Request for new customer form submission
 function saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress){
-	var url="../processing/addCustomer.jsp?name="+newCustomerName+"&mobile="+newCustomerMobile+"&address="+newCustomerAddress;
+	var url="${pageContext.request.contextPath}/processing/addCustomer.jsp?name="+newCustomerName+"&mobile="+newCustomerMobile+"&address="+newCustomerAddress;
 	if(window.XMLHttpRequest){  
 		newCustomerRequest=new XMLHttpRequest();  
 	}  
@@ -569,7 +593,7 @@ function setNewCustomerData(){
 }
 
 function pendingTareWt(){
-var url="../processing/pendingTareReport.jsp";
+var url="${pageContext.request.contextPath}/processing/pendingTareReport.jsp";
 	if(window.XMLHttpRequest){  
 		dataRequest=new XMLHttpRequest();  
 	}  
@@ -627,7 +651,7 @@ function setWeighRate(event) {
 
 function printReceipt(){
 	var weighmentId = document.getElementById('id').value;
-	window.open('../report/RSTPrintOnly.jsp?weighmentId='+weighmentId);
+	window.open('${pageContext.request.contextPath}/report/RSTPrintOnly.jsp?weighmentId='+weighmentId);
 }
 
 </script>

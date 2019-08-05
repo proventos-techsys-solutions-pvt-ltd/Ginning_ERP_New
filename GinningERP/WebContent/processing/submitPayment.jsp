@@ -26,7 +26,7 @@
 		cheque.setBankName(((String)obj.get("chequeBankName")).toUpperCase());
 		cheque.setChequeAmount(Double.parseDouble((String)obj.get("chequeAmount")));
 		cheque.setChequeDate((String)obj.get("chequeDate"));
-		cheque.setChequeNo(Long.parseLong((String)obj.get("chequeNo")));
+		cheque.setChequeNo((String)obj.get("chequeNo"));
 		cheque.setCustomerId(Integer.parseInt((String)obj.get("customerId")));
 		cheque.setCustomerName(((String)obj.get("chequeName")).toUpperCase());
 		cheque.setInvoiceNo(((String)obj.get("invoiceNo")).toUpperCase());

@@ -17,9 +17,9 @@
     loginCheck = cl.checkLogin(username, password);
     System.out.println(loginCheck);
     if(loginCheck>0){
-        response.sendRedirect("../views/Dashboard.jsp");
+        response.sendRedirect("../views/GenerateRST.jsp");
     }else{
-        response.sendRedirect("login.html");
+        response.sendRedirect("../Login.html");
     }
     }
     

@@ -55,7 +55,7 @@ public class DailySetupReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT * FROM DAILY_SETUP WHERE TRUNC(SETUP_DATE) = SYSDATE;";
+			String sql = "SELECT * FROM DAILY_SETUP WHERE TRUNC(SETUP_DATE) = TRUNC(SYSDATE)";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			rs = stmt.executeQuery();

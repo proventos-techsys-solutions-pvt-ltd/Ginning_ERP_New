@@ -148,7 +148,7 @@
 		document.getElementById('tableBody').innerHTML = '';
 		var blacklisted;
 		var membership;
-		
+		console.log(data);
 		document.getElementById("vendorName").value = data[0].vendorName;
 		document.getElementById("vendorAddress").value = data[0].vendorAddress;
 		document.getElementById("vendorMobile").value = data[0].vendorMobile;
@@ -159,7 +159,7 @@
 		if(Number(data[0].vendorBlacklisted) === 1){
 			blacklisted = 'YES';
 		}else if(Number(data[0].vendorBlacklisted) === 0){
-			blacklisted = 'NO'
+			blacklisted = 'NO';
 		}
 		if(Number(data[0].vendorMembership) === 1){
 			membership = 'YES';
@@ -377,14 +377,14 @@
 		document.getElementById("weighmentId").value = data[0].weighmentId;
 		document.getElementById("authorizer").value = data[0].authorizer;
 		
-		if(Number(data[0].vendorBlacklisted) === 1){
+		if(Number(data[0].customerBlacklisted) === 1){
 			blacklisted = 'YES';
-		}else if(Number(data[0].vendorBlacklisted) === 0){
-			blacklisted = 'NO'
+		}else if(Number(data[0].customerBlacklisted) === 0){
+			blacklisted = 'NO';
 		}
-		if(Number(data[0].vendorMembership) === 1){
+		if(Number(data[0].customerMembership) === 1){
 			membership = 'YES';
-		}else if(Number(data[0].vendorBlacklisted) === 0){
+		}else if(Number(data[0].customerMembership) === 0){
 			membership = 'NO';
 		}
 		

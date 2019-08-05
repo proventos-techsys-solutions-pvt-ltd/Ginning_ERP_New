@@ -85,7 +85,9 @@
 		
 		request.setAttribute("weighmentId", Integer.toString(weighmentId));
 		
-		request.getRequestDispatcher("../report/RST.jsp").forward(request,response);
+		//request.getRequestDispatcher("../report/RST.jsp").forward(request,response);
+		
+		response.sendRedirect("../report/RST.jsp");
 		
 		}
 %>
