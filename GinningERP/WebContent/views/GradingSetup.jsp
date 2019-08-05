@@ -15,6 +15,12 @@
 <body>
 	<%@include file="../views/NavBar.html" %>
 	<div class="container-fluid">
+	<div hidden>
+		   <%
+		    out.print(session.getAttribute("gradeId"));
+		    session.removeAttribute("gradeId");
+			%>
+		</div> 
 		<div class="row mt-2 tile-background-row">
 			<div class="d-flex justify-content-between align-items-center">
 				<img src="../property/img/grade.png" alt="Grade"/>&nbsp;

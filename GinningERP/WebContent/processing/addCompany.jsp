@@ -88,16 +88,15 @@
     	c.setLogoPath(location); 
     	
     	AddCompany ac = new AddCompany();
+    	int companyId = 0;
     	
-    	ac.addCompany(c);
+    	companyId = ac.addCompany(c);
     	
-    	response.sendRedirect("../views/SetupCompanies.jsp");
-    	
+    	request.setAttribute("companyId", Integer.toString(companyId));
+	    request.getRequestDispatcher("../views/SetupCompanies.jsp").forward(request, response);
       } catch(Exception ex) {
          System.out.println(ex);
-         
       }
-      
    }
    
 %>

@@ -29,8 +29,10 @@
     ds.setTotalCheques(Integer.parseInt((String)obj.get("totalCheques")));
    		
     AddDailySetup ads = new AddDailySetup();
+   
+    int setupId = 0;
     
-    ads.addDailySetup(ds);
+    setupId = ads.addDailySetup(ds);
     
     JSONArray gradeArray = (JSONArray)obj.get("gradeRates");
     
@@ -50,6 +52,7 @@
     
     addStock.addOpeningStock();
 
-    response.sendRedirect("../views/DailySetup.jsp");
+    request.setAttribute("setupId", Integer.toString(setupId));
+    request.getRequestDispatcher("../views/DailySetup.jsp").forward(request, response);
     
     %>

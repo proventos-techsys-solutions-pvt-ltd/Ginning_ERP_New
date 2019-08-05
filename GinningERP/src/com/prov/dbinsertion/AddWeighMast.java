@@ -88,20 +88,16 @@ public int addWeighMast(WeighMast wm) {
 			
 			stmt.close();
 			con.close();
-			
-			if(flag == 1) {
-				System.out.println("Updation Succesful"+flag);
-			}
-			else {
-				System.out.println("Updation Failed"+flag);
-			}
-			} catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return flag;
-		
+		if(flag == 1) {
+			System.out.println("Updation Succesful -- "+flag);
+			return wm.getRst();
+		}
+		else {
+			System.out.println("Updation Failed -- "+flag);
+			return 0;
+		}
 	}
-
-
 }

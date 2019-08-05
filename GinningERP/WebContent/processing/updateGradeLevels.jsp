@@ -19,9 +19,11 @@
      	
      	UpdateGradeMaster ugm = new UpdateGradeMaster();
      	
-     	ugm.updateGradeMaster(gm);
+     	int updatedGradeId = ugm.updateGradeMaster(gm);
      	
-        response.sendRedirect("../views/SetupGrade.jsp");
+     	request.setAttribute("gradeId", Integer.toString(updatedGradeId));
+		request.getRequestDispatcher("../views/SetupGrade.jsp").forward(request,response);
+     	
     
     %>
     

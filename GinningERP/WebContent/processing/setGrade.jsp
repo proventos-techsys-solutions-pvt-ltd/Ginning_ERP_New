@@ -65,12 +65,8 @@
 		   		}
 		   	}	
 		   	
-		   	if(!contains){
-		   		response.sendRedirect("errorPage.html");
-		   	}
-		   	else{
-		   		response.sendRedirect("../views/GoodsReceiptNote.jsp");
-		   	}
+		   	request.setAttribute("gradeSubmitFlag", contains);
+			request.getRequestDispatcher("../views/GoodsReceiptNote.jsp").forward(request,response);
     	}
     	else if(rowCount>0){
     		for(int i=0; i<jsonArray.size(); i++ )
@@ -108,12 +104,8 @@
 		   		}
 		   	}	
 		   	
-		   	if(!contains){
-		   		response.sendRedirect("errorPage.html");
-		   	}
-		   	else{
-		   		response.sendRedirect("../views/GoodsReceiptNote.jsp");
-		   	}
+			request.setAttribute("gradeSubmitFlag", contains);
+			request.getRequestDispatcher("../views/GoodsReceiptNote.jsp").forward(request,response);
     	}
     	
     %>

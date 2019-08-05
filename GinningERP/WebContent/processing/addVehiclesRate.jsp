@@ -20,9 +20,12 @@
      	
      	AddWeighRateMast awrm = new AddWeighRateMast();
      	
-     	awrm.addWeighRateMast(wrm);
+     	int weighRateId = 0;
      	
-        response.sendRedirect("../views/SetupVehicle.jsp");
-    
+     	weighRateId = awrm.addWeighRateMast(wrm);
+     	
+     	request.setAttribute("weighRateId", Integer.toString(weighRateId));
+        request.getRequestDispatcher("../views/SetupVehicle.jsp").forward(request, response);
+     	
     %>
     

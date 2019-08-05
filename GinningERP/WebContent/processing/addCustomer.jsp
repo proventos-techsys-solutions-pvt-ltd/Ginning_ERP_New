@@ -31,7 +31,6 @@
     	   	
     	 out.print(newCustomerJson);
     	 out.flush();
-    	
     }
     	
    

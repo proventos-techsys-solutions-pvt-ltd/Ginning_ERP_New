@@ -42,7 +42,8 @@
     	   	
     	 c.setId(id);
     	 
-    	 response.sendRedirect("../views/VendorMaster.jsp");
+    	request.setAttribute("customerId", Integer.toString(id));
+		request.getRequestDispatcher("../views/VendorMaster.jsp").forward(request,response);
     	
     }
     	

@@ -12,18 +12,26 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/WBStyle.css">
   <link href="https://fonts.googleapis.com/css?family=Vollkorn&display=swap" rel="stylesheet"> 
   <!-- Bootstrap JS -->
-  	<script src="${pageContext.request.contextPath}/js/jquery-3.3.1.slim.min.js" ></script>
+   	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  	<!-- script src="${pageContext.request.contextPath}/js/jquery-3.3.1.slim.min.js" ></script> -->
+  	<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
 	<script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </head>
 <body>
   <%@include file="../views/NavBar.html" %>
+   <div hidden>
+   <%
+    out.print(session.getAttribute("weighmentId"));
+    session.removeAttribute("weighmentId");
+	%>
+	</div>
   <div class="container-fluid">
   	<div class="row mt-2 ">
   		<div class="col-md-12">
   			<div class="d-flex justify-content-start align-items-center tile-background-row">
   				<img src="${pageContext.request.contextPath}/property/img/weight.png" alt="weight" >&nbsp;
-  				<h4 class="lbl-rm-all" id="title">Weighment</h4>
+  				<h4 class="lbl-rm-all" id="title">First Weighment</h4>
   			</div>
   		</div>
   	</div>
@@ -95,7 +103,7 @@
 	        		<button type="button" class="btn btn-success" onclick="fetchGrossWt()" id="fetchGrossWeight">Fetch</button>
 	        	</div>
 	        	
-	        	<input type="text" class="form-control  " id="grossWtTime" name="grossWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
+	        	<input type="text" class="form-control  " id="grossWtTime" name="grossWtTime" placeholder="Date & Time" readonly="readonly">
 	        </div>
 	         <div class="col-md-4">
 	        	<label class="lbl-rm-all">Tare Weight : </label>
@@ -103,12 +111,12 @@
 	            	<input type="text" class="form-control" id="tare" name="tare" placeholder="" value="0.0" readonly="readonly">
 	           	 	<button type="button" class="btn btn-success" id="fetchTareWeight" onclick="fetchTareWt()" disabled>Fetch</button>
 	           	</div>
-	            <input type="text" class="form-control  " id="tareWtTime" name="tareWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
+	            <input type="text" class="form-control  " id="tareWtTime" name="tareWtTime" placeholder="Date & Time" readonly="readonly">
 	        </div>
 	        <div class="col-md-4">
 	            <label class="lbl-rm-all">Net Weight : </label>
 	            <div class="d-flex justify-content-start align-items-center">
-	            <input type="text" class="form-control  " id="net" name="net" placeholder="" value="0.0" readonly="readonly">
+	            <input type="text" class="form-control  " id="net" name="net" placeholder="" readonly="readonly">
 	            </div>
 	            <input type="text" class="form-control  " id="netWtTime" name="netWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>
@@ -207,8 +215,39 @@
 <script src="${pageContext.request.contextPath}/js/validations/GenerateRST.js"></script>
 <script>
 
+//Send AJAX req to chech Daily setup
+function checkDailySetup(){
+	var url="${pageContext.request.contextPath}/processing/checkDailySetup.jsp";
+	if(window.XMLHttpRequest){  
+		dailySetup=new XMLHttpRequest();  
+	}  
+	else if(window.ActiveXObject){  
+		dailySetup=new ActiveXObject("Microsoft.XMLHTTP");  
+	}  
+	try{  
+		dailySetup.onreadystatechange=getDailySetupRecords;  
+		console.log("AJAX Req sent");
+		dailySetup.open("GET",url,true);  
+		dailySetup.send();  
+	}catch(e){alert("Unable to connect to server");}
+}
 
-function fetchRSTSeries(){
+//Get response of Daily Setup Check performed by AJAX
+function getDailySetupRecords(){
+	if(dailySetup.readyState == 4){
+		var response = this.response.trim();
+		console.log("daily Setup---"+response);
+		if(Number(response) > 0){
+			//$.unblockUI
+		}
+		else if(Number(response) <= 0){
+			//$.blockUI();
+		}
+	} 
+}
+
+//Send AJAX request to get RST series
+function fetchRSTSeriesFunc(){
 	var url="${pageContext.request.contextPath}/processing/getRstSeries.jsp";
 	if(window.XMLHttpRequest){  
 		fetchRSTSeries=new XMLHttpRequest();  
@@ -224,6 +263,7 @@ function fetchRSTSeries(){
 	}catch(e){alert("Unable to connect to server");}
 }
 
+//Set RST series in input field
 function fetchRST(){
 	if(fetchRSTSeries.readyState == 4){
 		var response = this.response.trim();
@@ -231,20 +271,23 @@ function fetchRST(){
 	}
 }
 
-fetchRSTSeries();
-
+//Change tile of the weighment page 
 function decideWeighment(flag){
 	if(flag === 1){
 		document.getElementById("title").innerHTML = "Second Weighment";
+	}else{
+		document.getElementById("title").innerHTML = "First Weighment";
 	}
 }
 
+//call RST Check AJAX method on chage of the RST search box
 document.addEventListener('change',function(e){
 	if(e.srcElement.id === "rst"){
 		checkRSTAlreadyExists(e.srcElement.value);
 	}
 })
 
+//Send AJAX request to check RST already Exists
 function checkRSTAlreadyExists(rst){
 	var url="${pageContext.request.contextPath}/processing/fetchSecondWeighment.jsp?rst="+rst;
 	if(window.XMLHttpRequest){  
@@ -261,6 +304,7 @@ function checkRSTAlreadyExists(rst){
 	}catch(e){alert("Unable to connect to server");}
 }
 
+//check if RST already exists
 function checkRstExists(){
 	if(fetchRstStatus.readyState == 4){
 		var response = this.response.trim();
@@ -274,6 +318,7 @@ function checkRstExists(){
 	}
 }
 
+//Send AJAX request to get data of first weighment
 function fetchDataForSecondWeighment(rst){
 	var url="${pageContext.request.contextPath}/processing/fetchSecondWeighment.jsp?rst="+rst;
 	if(window.XMLHttpRequest){  
@@ -290,10 +335,10 @@ function fetchDataForSecondWeighment(rst){
 	}catch(e){alert("Unable to connect to server");}
 }
 
+//Get response from AJAX of first weighment. 
 function fetchFirstWeighment(){
 	if(fetchWeighData.readyState == 4){
 		var response = this.response.trim();
-		console.log(response)
 		if(Number(response) === 0){
 			window.alert("Please enter a valid RST number.")
 		}else{
@@ -302,6 +347,7 @@ function fetchFirstWeighment(){
 	}
 }
 
+//Set the data of the first weighment automatically
 function setFirstWeighmentData(response){
 	
 	var blacklisted;
@@ -356,10 +402,10 @@ function setFirstWeighmentData(response){
 	if(Number(document.getElementById('tare').value) === 0.0){
 		document.getElementById("fetchTareWeight").disabled = false;
 	}
-	
 	decideWeighment(1);
 }
 
+//fetch Gross weight from weigh machine
 function fetchGrossWt(){
 	var url="${pageContext.request.contextPath}/processing/fetchWeight.jsp";
 	if(window.XMLHttpRequest){  
@@ -376,6 +422,7 @@ function fetchGrossWt(){
 	}catch(e){alert("Unable to connect to server");}
 }
 
+//Set gross weight obtained by AJAX in input field
  function fetchGrossWeighData(){
 	 if(fetchData.readyState == 4){
 		 var response = this.response.trim();
@@ -385,7 +432,7 @@ function fetchGrossWt(){
 	 }
  }
  
- 
+ //fetch Tare weight from weigh machine
  function fetchTareWt(){
 		var url="${pageContext.request.contextPath}/processing/fetchWeight.jsp";
 		if(window.XMLHttpRequest){  
@@ -401,7 +448,8 @@ function fetchGrossWt(){
 			fetchData.send();  
 		}catch(e){alert("Unable to connect to server");}
 	}
-
+	
+ //Set tare weight obtained by AJAX in input field
 	 function fetchTareWeighData(){
 		 if(fetchData.readyState == 4){
 			 var response = this.response.trim();
@@ -425,9 +473,10 @@ function submitRSTEntry(){
 	}
 	
 }
+
+//RESET ALL input FIELDS
 function resetFormData(){
 	document.getElementById("newRST").reset();
-	//RESET ALL FIELDS
 	document.getElementById('date').removeAttribute('readonly');
 	document.getElementById('vehicleNo').removeAttribute('readonly');
 	document.getElementById('vehicleType').removeAttribute('readonly');
@@ -446,15 +495,17 @@ function resetFormData(){
 	document.getElementById("submitRstEntry").disabled=false;
 	document.getElementById("fetchTareWeight").disabled=true;
 	setCurrentDate();
+	fetchRSTSeriesFunc();
+	decideWeighment(0);
 }
+
 //Check if the entered customer exists in DB
 document.addEventListener('change',function(e){
 	if(e.srcElement.id === "mobile")
 		checkEnteredCustomer();
-	
 });
 
-
+//Get customer data from input fields and call getCustomerData function.
 function checkEnteredCustomer(){
 	var customerName = document.getElementById("customer").value;
 	var mobile = document.getElementById("mobile").value;
@@ -484,7 +535,6 @@ function getCustomerData(customerName,mobile){
 function checkCustomer(){
 	if(checkRequest.readyState==4){
 		var res = this.response.trim();
-		console.log(res);
 		if(res.toString() === 'false')
 		{
 			console.log("Customer not found, please add new customer!");
@@ -516,7 +566,7 @@ function checkCustomer(){
 			document.getElementById("blacklist").value = blacklisted;
 			document.getElementById("membership").value = membership;
 			
-			console.log("Customer found"+ customer);
+			console.log("Customer found -- "+ customer);
 		}
 	}
 }
@@ -568,7 +618,7 @@ function setNewCustomerData(){
 	
 	if(newCustomerRequest.readyState==4){
 		
-		console.log("New Customer Added");
+		console.log("New Customer Added!!!");
 		var blacklisted;
 		var membership;
 		var customer = JSON.parse(this.response.trim());
@@ -592,6 +642,7 @@ function setNewCustomerData(){
 	}
 }
 
+//Sen AJAX request to get the tare weight pending RSTs
 function pendingTareWt(){
 var url="${pageContext.request.contextPath}/processing/pendingTareReport.jsp";
 	if(window.XMLHttpRequest){  
@@ -608,6 +659,7 @@ var url="${pageContext.request.contextPath}/processing/pendingTareReport.jsp";
 	}catch(e){alert("Unable to connect to server");}
 }
 
+//Get tare weight pending RSTs from AJAX response
 function getRstData(){
 	if(dataRequest.readyState == 4){
 		var pendingRst = this.response.trim();
@@ -615,6 +667,7 @@ function getRstData(){
 	}
 }
 
+//Set tare weight pending RSTs in status table
 function setPendingData(pendingRst){
 	 var element = document.getElementById("tableBody");
    
@@ -630,11 +683,7 @@ function setPendingData(pendingRst){
 	 }
 }
 
-window.onload = function() {
-	pendingTareWt();
-	setCurrentDate();
-	};
-
+//Get current date and time
 function setCurrentDate(){
 	var today = new Date();
 	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -645,14 +694,24 @@ function setCurrentDate(){
 	document.getElementById('netWtTime').value = dateTime;
 }	
 	
+//Set weight rate according to the vehicle type selected
 function setWeighRate(event) {
 	document.getElementsByName("weighRate")[0].value = event.selectedOptions[0].getAttribute('data-weighRate'); 
 }
 
+//Print RST Receipt
 function printReceipt(){
 	var weighmentId = document.getElementById('id').value;
 	window.open('${pageContext.request.contextPath}/report/RSTPrintOnly.jsp?weighmentId='+weighmentId);
 }
+
+
+//Function calls on page load
+pendingTareWt();
+setCurrentDate();
+fetchRSTSeriesFunc();
+decideWeighment(0);
+checkDailySetup();
 
 </script>
 </body>

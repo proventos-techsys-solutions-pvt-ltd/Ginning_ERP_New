@@ -13,17 +13,18 @@
     }
     else{
     	
-    AddUser au = new AddUser();
-    User u = new User();
-    u.setName(Username);
-    u.setUsername(UserName);
-    u.setPassword(UserPassword);
-    u.setRole(UserRole);
-    
-   	au.addUser(u);
-   	
-   	response.sendRedirect("masters/PartyMaster.jsp");
-   	
+	    AddUser au = new AddUser();
+	    User u = new User();
+	    u.setName(Username);
+	    u.setUsername(UserName);
+	    u.setPassword(UserPassword);
+	    u.setRole(UserRole);
+	    
+	   int userId = au.addUser(u);
+	   	
+	   	request.setAttribute("stockId", Integer.toString(userId));
+        request.getRequestDispatcher("../views/.jsp").forward(request, response);
+	   	
     }
 %>
 

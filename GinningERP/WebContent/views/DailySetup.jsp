@@ -30,7 +30,12 @@
 				String date = simpleDateFormat.format(new Date()); %>
 					<h4 class="lbl-rm-all" id="todaysDate"><%= date %></h4>
 				</div>
-				
+				<div hidden>
+            	  <%
+				    out.print(session.getAttribute("setupId"));
+				    session.removeAttribute("setupId");
+				%>
+            	</div>
 				<div class="col-md-3 offset-md-3 text-right">
 					<button type="button" class="btn btn-success" onclick="submitDailySetup()">Add Company</button>
 					<button type="button" class="btn btn-success">Lock Users</button>

@@ -13,6 +13,12 @@
 <body>
 	<%@include file="../views/NavBar.html" %>
 	<div class="container-fluid">
+	<div hidden>
+		   <%
+		    out.print(session.getAttribute("companyId"));
+		    session.removeAttribute("companyId");
+			%>
+		</div> 
 		<div class="row mt-2">
 		<div class="col-md-7">
 		<div class="tile-background-g">

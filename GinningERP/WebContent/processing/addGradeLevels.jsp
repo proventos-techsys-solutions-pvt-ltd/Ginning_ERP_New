@@ -20,9 +20,12 @@
      	
      	AddGradeMaster agm = new AddGradeMaster();
      	
-     	agm.addGradeMaster(gm);
+     	int gradeId = 0;
      	
-        response.sendRedirect("../views/SetupGrade.jsp");
+     	gradeId = agm.addGradeMaster(gm);
+     	
+        request.setAttribute("gradeId", Integer.toString(gradeId));
+        request.getRequestDispatcher("../views/SetupGrade.jsp").forward(request, response);
     
     %>
     

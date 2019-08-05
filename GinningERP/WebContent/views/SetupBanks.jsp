@@ -14,6 +14,12 @@
 <body>
    <%@include file="../views/NavBar.html" %>
        	<div class="container-fluid">
+       	<div hidden>
+		   <%
+		    out.print(session.getAttribute("bankId"));
+		    session.removeAttribute("bankId");
+			%>
+		</div> 
        		<div class="row mt-2">
        			<div class="col-md-12">
        				<div class="d-flex justify-content-start align-items-center tile-background-row">

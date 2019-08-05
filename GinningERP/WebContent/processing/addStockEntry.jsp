@@ -24,14 +24,9 @@
     	
     	AddStockMast stockEntry = new AddStockMast();
     	
-    	int id = stockEntry.addStockMast(stock);
+    	int stockId = stockEntry.addStockMast(stock);
     	
-    	if(id>0){
-    		response.sendRedirect("../views/SetupStock.jsp");
-    	}
-    	else{
-    		response.sendRedirect("../views/ErrorPage.jsp");
-    	}
-    	
+   		request.setAttribute("stockId", Integer.toString(stockId));
+        request.getRequestDispatcher("../views/SetupStock.jsp").forward(request, response);
     	
     %>

@@ -7,9 +7,9 @@ import java.sql.SQLException;
 
 import com.prov.db.OracleConnection;
 
-public class CheckAlreadyGraded {
-
-	public int alreadyGraded(int rst) {
+public class CheckDailySetup {
+	
+	public int checkDailySetupCompleted() {
 		Connection con = null;
 		ResultSet rs = null;
 		int rowCount = 0;
@@ -19,12 +19,11 @@ public class CheckAlreadyGraded {
 			e.printStackTrace();
 		}
 	
-		String rstCheck = "SELECT COUNT(*) FROM GRADE_DETAILS WHERE RST = ?";
+		String rstCheck = "SELECT COUNT(*) RECORDS FROM DAILY_SETUP WHERE TRUNC(SETUP_DATE) = TRUNC(SYSDATE)";
 		
 		PreparedStatement stmt;
 		try {
 			stmt = con.prepareCall(rstCheck);
-			stmt.setInt(1, rst);
 			
 			rs = stmt.executeQuery();
 			
@@ -38,4 +37,5 @@ public class CheckAlreadyGraded {
 		}
 		return rowCount;
 	}
+
 }

@@ -23,11 +23,12 @@
                			</div>
                		</div>
                 </div>
+                <div hidden>
             	  <%
 				    out.print(session.getAttribute("InvoiceNo"));
 				    session.removeAttribute("InvoiceNo");
 				%>
-            
+            	</div>
                         <form action="../processing/approvedInvoiceEntry.jsp" id="adminApprovalForm" target="_blank">
                         	<input type="hidden" name="output" id="output" value="" />
                         </form>

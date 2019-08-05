@@ -63,7 +63,7 @@
 			
 			request.getRequestDispatcher("../report/RST.jsp").forward(request,response);
 
-		}
+	}
 	else{
 		
 		int weighmentId = Integer.parseInt(request.getParameter("id"));
@@ -83,12 +83,9 @@
 		
 		int rstWeighMast = uw.secondWeighment(w);
 		
-		request.setAttribute("weighmentId", Integer.toString(weighmentId));
+		request.setAttribute("weighmentId", Integer.toString(rstWeighMast));
 		
-		//request.getRequestDispatcher("../report/RST.jsp").forward(request,response);
-		
-		response.sendRedirect("../report/RST.jsp");
-		
-		}
+		request.getRequestDispatcher("../report/RST.jsp").forward(request,response);
+	}
 %>
 

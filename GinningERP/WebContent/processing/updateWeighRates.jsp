@@ -22,9 +22,10 @@
      	
      	UpdateWeighRateMast uwrm = new UpdateWeighRateMast();
      	
-     	uwrm.updateWeighRateMast(wrm);
+     	int updatedWeighRate = uwrm.updateWeighRateMast(wrm);
      	
-        response.sendRedirect("../views/SetupVehicle.jsp");
+        request.setAttribute("weighRateId", Integer.toString(updatedWeighRate));
+		request.getRequestDispatcher("../views/SetupVehicle.jsp").forward(request,response);
     
     %>
     

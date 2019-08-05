@@ -24,8 +24,13 @@
 	        	</div>
 	        </div>
 	        <div class="col-md-1 offset-md-8">
-	        	
-	        </div>
+	      </div>
+	     <div hidden>
+		   <%
+		    out.print(session.getAttribute("gradeSubmitFlag"));
+		    session.removeAttribute("gradeSubmitFlag");
+			%>
+		</div>  
         </div>
         <div class="row mt-2 tile-background-row">
 			<div class="col-md-12">
