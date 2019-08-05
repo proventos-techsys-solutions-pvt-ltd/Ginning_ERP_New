@@ -30,14 +30,9 @@
 				String date = simpleDateFormat.format(new Date()); %>
 					<h4 class="lbl-rm-all" id="todaysDate"><%= date %></h4>
 				</div>
-				<div hidden>
-            	  <%
-				    out.print(session.getAttribute("setupId"));
-				    session.removeAttribute("setupId");
-				%>
-            	</div>
+				
 				<div class="col-md-3 offset-md-3 text-right">
-					<button type="button" class="btn btn-success" onclick="submitDailySetup()">Add Company</button>
+					<button type="button" class="btn btn-success" id="addCompany">Add Company</button>
 					<button type="button" class="btn btn-success">Lock Users</button>
 				</div>
 			</div>
@@ -76,7 +71,7 @@
 				
 				<div class="row tile-background-row">
 					<div class="col-md-12">
-						<table class="table table-bordered">
+						<table class="table table-bordered" id="companySetupTable">
 							<thead>
 								<tr class="table-back">
 									<th rowspan="2" width="5%" style="vertical-align:middle;">Sr No</th>
@@ -98,25 +93,25 @@
 							<tbody>
 								<tr>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="" name="">
+										<input type="text" class="form-control form-control-sm" id="" name="" value="1" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="" name="">
+										<input type="text" class="form-control form-control-sm" id="" name="" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="" name="">
+										<input type="text" class="form-control form-control-sm" id="" name="" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="" name="">
+										<input type="text" class="form-control form-control-sm" id="" name="" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="" name="">
+										<input type="text" class="form-control form-control-sm" id="" name="" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="" name="">
+										<input type="text" class="form-control form-control-sm" id="" name="" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="" name="">
+										<input type="text" class="form-control form-control-sm" id="" name="" readonly>
 									</td>
 									<td>
 										<input class="form-control form-control-sm" name="firstChequeNo" id="firstChequeNo"/>
@@ -139,9 +134,12 @@
 				
 				
 				<div class="row tile-background-row">
-						<div class="col-md-4">
+						<div class="col-md-6">
 							<table class="table table-bordered">
 								<thead>
+									<tr class="table-back">
+										<th colspan="3" style="vertical-align:middle;text-align:center;">General Rates</th>
+									</tr>
 									<tr class="table-back">
 										<th width="5%" >Sr No</th>
 										<th width="20%">Grade</th>
@@ -157,6 +155,29 @@
 								</tbody>
 							</table>
 						</div>
+						
+							<div class="col-md-6">
+							<table class="table table-bordered">
+								<thead>
+									<tr class="table-back">
+										<th colspan="3" style="vertical-align:middle;text-align:center;">Bonus Card Rates</th>
+									</tr>
+									<tr class="table-back">
+										<th width="5%" >Sr No</th>
+										<th width="20%">Grade</th>
+										<th width="20%">Rate</th>
+									</tr>
+								</thead>
+								<tbody id="tableBody">
+									<!-- <tr>
+										<td align="center">1</td>
+										<td>Grade A</td>
+										<td><input class="form-control form-control-sm lbl-rm-all" type="text" name="gradeARate" id="gradeARate" /></td>
+									</tr> -->
+								</tbody>
+							</table>
+						</div>
+						
 					</div>
 				
 			<div class="row mt-2 tile-background-row">
@@ -376,6 +397,7 @@
 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/dailysetup.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script>
 	
