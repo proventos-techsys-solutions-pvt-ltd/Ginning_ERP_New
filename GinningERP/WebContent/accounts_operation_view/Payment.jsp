@@ -154,6 +154,37 @@
 	<script src="../js/commonjs.js"></script>
 	<script>
 	
+	//Send AJAX req to chech Daily setup
+	function checkDailySetup(){
+		var url="${pageContext.request.contextPath}/processing/checkDailySetup.jsp";
+		if(window.XMLHttpRequest){  
+			dailySetup=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			dailySetup=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+		try{  
+			dailySetup.onreadystatechange=getDailySetupRecords;  
+			console.log("AJAX Req sent");
+			dailySetup.open("GET",url,true);  
+			dailySetup.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+
+	//Get response of Daily Setup Check performed by AJAX
+	function getDailySetupRecords(){
+		if(dailySetup.readyState == 4){
+			var response = this.response.trim();
+			console.log("daily Setup---"+response);
+			if(Number(response) > 0){
+				//$.unblockUI
+			}
+			else if(Number(response) <= 0){
+				//$.blockUI();
+			}
+		} 
+	}
+	
 	window.onload = function(){
 		getDailySetupData();
 	}
@@ -304,9 +335,10 @@
 		document.getElementById('output').value = cashJson;
 		
 		document.getElementById('paymentForm').submit();
-		
 	}
 		
+	checkDailySetup();
+	
 	</script>
 </body>
 </html>	
