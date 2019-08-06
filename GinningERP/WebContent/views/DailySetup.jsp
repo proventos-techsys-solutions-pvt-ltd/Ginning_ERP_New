@@ -33,7 +33,7 @@
 				
 				<div class="col-md-3 offset-md-3 text-right">
 					<button type="button" class="btn btn-success" id="addCompany">Add Company</button>
-					<button type="button" class="btn btn-success">Lock Users</button>
+					<button type="button" class="btn btn-success" id="lockUsers">Lock Users</button>
 				</div>
 			</div>
 			<form action='../processing/addDailySetup.jsp'>
@@ -46,7 +46,7 @@
 						<label class="lbl-rm-l">Setup Company</label>
 					</div>
 					<select class="form-control form-control-sm" name="companyId" id="companyId">
-						<option disabled selected>Select</option>
+						<option selected>sAMEER</option>
 						<c:Company />
 					</select>
 				</div>
@@ -62,7 +62,7 @@
 		      		<label class="lbl-rm-l">Bank</label>
 		      		<div class="">
 		      		<select class="form-control form-control-sm" name="chequeBankId" id="chequeBankId">
-		      			<option selected disabled>Select</option>
+		      			<option selected>boi</option>
 		      			<c:Bank />
 		      		</select>
 		      		</div>
@@ -93,25 +93,25 @@
 							<tbody>
 								<tr>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="" name="" value="1" readonly>
+										<input type="text" class="form-control form-control-sm" id="srNoTable" name="" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="" name="" readonly>
+										<input type="text" class="form-control form-control-sm" id="dateTable" name="" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="" name="" readonly>
+										<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="" name="" readonly>
+										<input type="text" class="form-control form-control-sm" id="discardTimeTable" name="" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="" name="" readonly>
+										<input type="text" class="form-control form-control-sm" id="companyNameTable" name="" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="" name="" readonly>
+										<input type="text" class="form-control form-control-sm" id="heapTable" name="" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="" name="" readonly>
+										<input type="text" class="form-control form-control-sm" id="bankTable" name="" readonly>
 									</td>
 									<td>
 										<input class="form-control form-control-sm" name="firstChequeNo" id="firstChequeNo"/>
@@ -120,10 +120,10 @@
 										<input class="form-control form-control-sm" name="lastChequeNo" id="lastChequeNo"/>
 									</td>
 									<td>
-										<button type="button" class="btn btn-success btn-sm" id="" name="">Setup</button>
+										<button type="button" class="btn btn-success btn-sm" id="setup" name="setup">Setup</button>
 									</td>
 									<td>
-										<button type="button" class="btn btn-success btn-sm" id="" name="">Update</button>
+										<button type="button" class="btn btn-success btn-sm" id="update" name="update">Update</button>
 									</td>
 								</tr>
 							</tbody>
