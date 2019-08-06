@@ -20,88 +20,97 @@
 			%>
 		</div> 
 		<div class="row mt-2">
-		<div class="col-md-7">
-		<div class="tile-background-g">
-				<h3>Setup Companies</h3>
-			</div>
-		<div class="tile-background border mt-2">
-		<form name="companyForm" enctype="multipart/form-data" action="../processing/addCompany.jsp" method="post">
-			<div class="form-row">
-				<div class="col-md-10">
-					<label>Company Name</label>
-					<input type="text" class="form-control  " name="name" id="name">
-					<label>Company Address</label>
-					<textarea class="form-control form-control-lg " name="address" id="address">
-					</textarea>
-				</div>
-				<div class="col-md-2">
-					<img src="../property/img/logo.jpg" alt="Logo" class="img-thumbnail">
+			<div class="col-md-12">
+				<div class="tile-background-row">
+					<h4>Setup Companies</h4>
 				</div>
 			</div>
-			<div class="form-row">
-				<div class="col-md-4">
-					<label>City</label>
-					<input type="text" class="form-control  " name="city" id="city">
-				</div>
-				<div class="col-md-4">
-					<label>State</label>
-					<input type="text" class="form-control  " name="state" id="state">
-				</div>
-				<div class="col-md-4">
-					<label>PAN</label>
-					<input type="text" class="form-control  " name="pan" id="pan">
+		</div>
+		<div class=" row mt-2">
+			<div class="col-md-7">
+				<div class="tile-background-row">
+					<form name="companyForm" enctype="multipart/form-data" action="../processing/addCompany.jsp" method="post">
+						<div class="form-row">
+							<div class="col-md-10">
+								<label class="lbl-rm-all">Company Name</label>
+								<input type="text" class="form-control  " name="name" id="name">
+								<label class="lbl-rm-all">Company Address</label>
+								<textarea class="form-control form-control-lg " name="address" id="address">
+								</textarea>
+							</div>
+							<div class="col-md-2">
+								<img src="../property/img/logo.jpg" alt="Logo" class="img-thumbnail">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col-md-4">
+								<label class="lbl-rm-all">City</label>
+								<input type="text" class="form-control  " name="city" id="city">
+							</div>
+							<div class="col-md-4">
+								<label class="lbl-rm-all">State</label>
+								<input type="text" class="form-control  " name="state" id="state">
+							</div>
+							<div class="col-md-4">
+								<label class="lbl-rm-all">PAN</label>
+								<input type="text" class="form-control  " name="pan" id="pan">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col-md-4">
+								<label class="lbl-rm-all">TAN</label>
+								<input type="text" class="form-control  " name="tan" id="tan">
+							</div>
+							<div class="col-md-4">
+								<label class="lbl-rm-all">CIN</label>
+								<input type="text" class="form-control  " name="cin" id="cin">
+							</div>
+							<div class="col-md-4">
+								<label class="lbl-rm-all">GST No</label>
+								<input type="text" class="form-control  " name="gst" id="gst">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col-md-3">
+								<label class="lbl-rm-all">Telephone</label>
+								<input type="text" class="form-control  " name="telephone" id="telephone">
+							</div>
+							<div class="col-md-3">
+								<label class="lbl-rm-all">Mobile</label>
+								<input type="text" class="form-control  " name="mobile" id="mobile">
+							</div>
+							<div class="col-md-3">
+								<label class="lbl-rm-all">Email</label>
+								<input type="email" class="form-control  " name="email" id="email">
+							</div>
+							<div class="col-md-3">
+								<label class="lbl-rm-all">Logo</label>
+								<input type="file" class="form-control  " name="file" id="logo">
+							</div>
+						</div>
+						<div class="form-row border-top">
+							<div class="col-md-12">
+								<div class="d-flex justify-content-end align-items-center">
+									<button type="button" class="btn btn-success btn-sm" onclick="submitForm()">Add</button>
+									&nbsp;&nbsp;
+									<button type="button" class="btn btn-success btn-sm">Reset</button>
+								</div>
+							</div>
+						</div>
+					</form>
+					
 				</div>
 			</div>
-			<div class="form-row">
-				<div class="col-md-4">
-					<label>TAN</label>
-					<input type="text" class="form-control  " name="tan" id="tan">
+			<div class="col-md-5">
+				<div class="tile-background-row">
+					<h4>Company Details</h4>
+					<div class="tile-background border mt-2" id="companyDataDisplay">
+					</div>
 				</div>
-				<div class="col-md-4">
-					<label>CIN</label>
-					<input type="text" class="form-control  " name="cin" id="cin">
-				</div>
-				<div class="col-md-4">
-					<label>GST No</label>
-					<input type="text" class="form-control  " name="gst" id="gst">
-				</div>
-			</div>
-			<div class="form-row">
-				<div class="col-md-3">
-					<label>Telephone</label>
-					<input type="text" class="form-control  " name="telephone" id="telephone">
-				</div>
-				<div class="col-md-3">
-					<label>Mobile</label>
-					<input type="text" class="form-control  " name="mobile" id="mobile">
-				</div>
-				<div class="col-md-3">
-					<label>Email</label>
-					<input type="text" class="form-control  " name="email" id="email">
-				</div>
-				<div class="col-md-3">
-					<label>Logo</label>
-					<input type="file" class="form-control  " name="file" id="logo">
-				</div>
-			</div>
-		</form>
-		<div class="row">
-			<div class="col-md-auto">
-				<button type="button" class="btn btn-primary btn-sm btn-mr-tp" onclick="submitForm()">Add</button>
-				<button type="button" class="btn btn-primary btn-sm btn-mr-tp">Reset</button>
 			</div>
 		</div>
 		</div>
-		</div>
-		<div class="col-md-5" >
-			<div class="tile-background-g">
-				<h3>Company Details</h3>
-			</div>
-			<div class="tile-background border mt-2" id="companyDataDisplay">
-			</div>
-		</div>
-		</div>
-		</div>
+		
    		<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
