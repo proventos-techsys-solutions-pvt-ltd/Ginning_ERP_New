@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.prov.dbinsertion.AddStockMast"%>
 <%@page import="com.prov.dbinsertion.AddGradeRateMaster"%>
 <%@page import="com.prov.bean.GradeRateMaster"%>
@@ -19,8 +21,17 @@
     
     DailySetup ds = new DailySetup();
     
-    ds.setSetupDate((String)obj.get("date"));
-    System.out.println(ds.getSetupDate());
+    
+    String date = (String)obj.get("date") + (String)obj.get("setupTime");
+    
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    Date formattedDate =  sdf.parse(date);
+    
+    SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+    String formattedDateStr = sdf2.format(formattedDate);
+
+    ds.setSetupDate(formattedDateStr);
+    ds.setBonusAmount(Float.parseFloat((String)obj.get("bonusAmount")));
     ds.setCompanyId(Integer.parseInt((String)obj.get("companyId")));
     ds.setBankId(Integer.parseInt((String)obj.get("todaysBankId")));
     ds.setCottonHeap((String)obj.get("heap"));

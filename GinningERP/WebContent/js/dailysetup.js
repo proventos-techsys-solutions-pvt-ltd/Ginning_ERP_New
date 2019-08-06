@@ -48,7 +48,6 @@ var uiController = (function(){
 		
 		if(table.rows[Number(rowNumber-1)].cells[0].children[0].value!==""){
 			
-			
 			var row = table.insertRow(rowNumber); // 
 			
 			var cell1 = row.insertCell(0);
@@ -63,17 +62,17 @@ var uiController = (function(){
 			var cell10 = row.insertCell(9);
 			var cell11 = row.insertCell(10);
 			
-			cell1.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="" readonly></td>';
-			cell2.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="" readonly></td>';
-			cell3.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="" readonly></td>';
-			cell4.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="" readonly></td>';
-			cell5.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="" readonly></td>';
-			cell6.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="" readonly></td>';
-			cell7.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="" readonly></td>';
+			cell1.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="srNoTable" readonly></td>';
+			cell2.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="dateTable" readonly></td>';
+			cell3.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="setupTimeTable" readonly></td>';
+			cell4.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="discardTimeTable" readonly></td>';
+			cell5.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="companyNameTable" readonly></td>';
+			cell6.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="heapTable" readonly></td>';
+			cell7.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="bankTable" readonly></td>';
 			cell8.innerHTML = '<td><input class="form-control form-control-sm" name="firstChequeNo" id="firstChequeNo"></td>';
 			cell9.innerHTML = '<td><input class="form-control form-control-sm" name="lastChequeNo" id="lastChequeNo"></td>';
-			cell10.innerHTML = '<td><button type="button" class="btn btn-success btn-sm" id="" name="" disabled>Setup</button></td>';
-			cell11.innerHTML = '<td><button type="button" class="btn btn-success btn-sm" id="" name="" disabled>Update</button></td>'
+			cell10.innerHTML = '<td><button type="button" class="btn btn-success btn-sm" id="" name="setup" disabled>Setup</button></td>';
+			cell11.innerHTML = '<td><button type="button" class="btn btn-success btn-sm" id="" name="update" disabled>Update</button></td>'
 				
 			}
 		}else{

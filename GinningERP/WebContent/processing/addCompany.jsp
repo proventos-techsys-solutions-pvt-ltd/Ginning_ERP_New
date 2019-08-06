@@ -13,11 +13,10 @@
    String location = null;
    int maxFileSize = 5000 * 1024;
    int maxMemSize = 5000 * 1024;
-   String relativeWebPath = "/images/";
-   String filePath = getServletContext().getRealPath(relativeWebPath);
+   String filePath = session.getServletContext().getRealPath("/images/");
 
    HashMap<String, String> data = new HashMap<String, String>();
-   
+  
    // Verify the content type
    String contentType = request.getContentType();
    

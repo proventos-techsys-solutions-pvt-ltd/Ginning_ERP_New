@@ -3,6 +3,13 @@ package com.prov.bean;
 public class DailySetup {
 	
 	private int id, companyId, bankId, totalCheques;
+	public float bonusAmount;
+	public float getBonusAmount() {
+		return bonusAmount;
+	}
+	public void setBonusAmount(float bonusAmount) {
+		this.bonusAmount = bonusAmount;
+	}
 	public int getBankId() {
 		return bankId;
 	}
@@ -27,7 +34,13 @@ public class DailySetup {
 	public void setLastChequeNo(long lastChequeNo) {
 		this.lastChequeNo = lastChequeNo;
 	}
-	private String setupDate, cottonHeap;
+	private String setupDate, cottonHeap, discardDate;
+	public String getDiscardDate() {
+		return discardDate;
+	}
+	public void setDiscardDate(String discardDate) {
+		this.discardDate = discardDate;
+	}
 	private long firstChequeNo, lastChequeNo;
 	
 	

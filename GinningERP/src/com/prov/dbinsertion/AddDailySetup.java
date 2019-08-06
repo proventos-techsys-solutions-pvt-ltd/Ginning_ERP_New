@@ -3,6 +3,7 @@ package com.prov.dbinsertion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLType;
 import java.sql.Types;
 
 import com.prov.bean.DailySetup;
@@ -20,7 +21,7 @@ public class AddDailySetup {
 			e.printStackTrace();
 		}
 	
-		String addCustomerVehicle = "{ ? = call DAILY_SETUP_ENTRY(?,?,?,?,?,?,?) }";
+		String addCustomerVehicle = "{ ? = call DAILY_SETUP_ENTRY(?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 	
@@ -37,6 +38,8 @@ public class AddDailySetup {
 			cs.setLong(6, ds.getFirstChequeNo());
 			cs.setLong(7, ds.getLastChequeNo());
 			cs.setInt(8, ds.getTotalCheques());
+			cs.setFloat(9, ds.getBonusAmount());
+			cs.setNull(10, java.sql.Types.DATE);
 			
 			cs.executeUpdate();
 			

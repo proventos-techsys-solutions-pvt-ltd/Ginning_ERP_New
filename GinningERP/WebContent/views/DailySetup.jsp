@@ -25,10 +25,7 @@
 					</div>
 				</div>
 				<div class="col-md-3">
-				<% String pattern = "yyyy-MM-dd";
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-				String date = simpleDateFormat.format(new Date()); %>
-					<h4 class="lbl-rm-all" id="todaysDate"><%= date %></h4>
+					<h4 class="lbl-rm-all" id="todaysDate"></h4>
 				</div>
 				
 				<div class="col-md-3 offset-md-3 text-right">
@@ -46,13 +43,14 @@
 						<label class="lbl-rm-l">Setup Company</label>
 					</div>
 					<select class="form-control form-control-sm" name="companyId" id="companyId">
-						<option selected>sAMEER</option>
+						<option selected disabled>Select</option>
 						<c:Company />
 					</select>
 				</div>
 				<div class="col-md-2">
 					<label class="lbl-rm-l">Heap</label>
 					<select class="form-control form-control-sm" name="todayHeap" id="todayHeap">
+						<option selected disabled>Select</option>
 						<option value="Heap A">Heap A</option>
 						<option value="Heap B">Heap B</option>
 						<option value="Heap C">Heap C</option>
@@ -62,12 +60,16 @@
 		      		<label class="lbl-rm-l">Bank</label>
 		      		<div class="">
 		      		<select class="form-control form-control-sm" name="chequeBankId" id="chequeBankId">
-		      			<option selected>boi</option>
+		      			<option selected disabled>Select</option>
 		      			<c:Bank />
 		      		</select>
 		      		</div>
 	      		</div>
+	      		<div class="col-md-auto">
+					<label class="lbl-rm-l">Bonus Addition</label>
+					<input class="form-control form-control-sm" name="bonusAmount" id="bonusAmount">
 				</div>
+			</div>
 				
 				<div class="row tile-background-row">
 					<div class="col-md-12">
@@ -93,25 +95,25 @@
 							<tbody>
 								<tr>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="srNoTable" name="" readonly>
+										<input type="text" class="form-control form-control-sm" id="srNoTable" name="srNoTable" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="dateTable" name="" readonly>
+										<input type="text" class="form-control form-control-sm" id="dateTable" name="dateTable" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="" readonly>
+										<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="setupTimeTable" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="discardTimeTable" name="" readonly>
+										<input type="text" class="form-control form-control-sm" id="discardTimeTable" name="discardTimeTable" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="companyNameTable" name="" readonly>
+										<input type="text" class="form-control form-control-sm" id="companyNameTable" name="companyNameTable" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="heapTable" name="" readonly>
+										<input type="text" class="form-control form-control-sm" id="heapTable" name="heapTable" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="bankTable" name="" readonly>
+										<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" readonly>
 									</td>
 									<td>
 										<input class="form-control form-control-sm" name="firstChequeNo" id="firstChequeNo"/>
@@ -146,12 +148,7 @@
 										<th width="20%">Rate</th>
 									</tr>
 								</thead>
-								<tbody id="tableBody">
-									<!-- <tr>
-										<td align="center">1</td>
-										<td>Grade A</td>
-										<td><input class="form-control form-control-sm lbl-rm-all" type="text" name="gradeARate" id="gradeARate" /></td>
-									</tr> -->
+								<tbody id="gradeTableBody">
 								</tbody>
 							</table>
 						</div>
@@ -168,12 +165,7 @@
 										<th width="20%">Rate</th>
 									</tr>
 								</thead>
-								<tbody id="tableBody">
-									<!-- <tr>
-										<td align="center">1</td>
-										<td>Grade A</td>
-										<td><input class="form-control form-control-sm lbl-rm-all" type="text" name="gradeARate" id="gradeARate" /></td>
-									</tr> -->
+								<tbody id="bonusTableBody">
 								</tbody>
 							</table>
 						</div>
@@ -214,23 +206,7 @@
 			</div>
 			
 			<div class="row tile-background-row" id="bankDetails">
-				<!-- <div class="col-md-12"><label id="bankName">Bank Name</label></div>
-				<div class="col-md-3">
-					<label class="lbl-rm-l">Opening Balance</label>
-					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
-				</div>
-				<div class="col-md-3">
-					<label class="lbl-rm-l">Addition Today <img src="../property/img/add.png" alt="add" class="ctm-hover" name="callBankModal" id="callBankModal"> </label>
-					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
-				</div>
-				<div class="col-md-3">
-					<label class="lbl-rm-l">Utilized Today</label>
-					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
-				</div>
-				<div class="col-md-3">
-					<label class="lbl-rm-l">Closing Balance</label>
-					<input type="text" class="form-control form-control-sm" name="" id="" readonly>
-				</div> -->
+				
 			</div>
 			
 			<!-- **********************CASH ADDITION POP-UP -->
@@ -403,35 +379,29 @@
 	
 	document.addEventListener('change', function(e){
 		if(e.srcElement.id === 'companyId'){
-			getStockReport(e.srcElement.options[e.srcElement.selectedIndex].value);
+			getCompanyReport(e.srcElement.options[e.srcElement.selectedIndex].value);
 		}
 	})
 	
-	document.addEventListener('change', function(e){
-		if(e.srcElement.id === 'lastChequeNo'){
-			document.getElementById('totalCheques').value = (e.srcElement.value - document.getElementById('firstChequeNo').value)+1;
-		}
-	})
-	
-	function getStockReport(companyId){
+	function getCompanyReport(companyId){
 		var url="../processing/getSetupCompanydata.jsp?companyId="+companyId;
 		if(window.XMLHttpRequest){  
-			fetchStock=new XMLHttpRequest();  
+			fetchCompReport=new XMLHttpRequest();  
 		}  
 		else if(window.ActiveXObject){  
-			fetchStock=new ActiveXObject("Microsoft.XMLHTTP");  
+			fetchCompReport=new ActiveXObject("Microsoft.XMLHTTP");  
 		}  
 	  
 		try{  
-			fetchStock.onreadystatechange=fetchStockData;  
+			fetchCompReport.onreadystatechange=fetchCompanyData;  
 			console.log("AJAX Req sent");
-			fetchStock.open("GET",url,true);  
-			fetchStock.send();  
+			fetchCompReport.open("GET",url,true);  
+			fetchCompReport.send();  
 		}catch(e){alert("Unable to connect to server");}
 	}
 
-	 function fetchStockData(){
-		 if(fetchStock.readyState == 4){
+	 function fetchCompanyData(){
+		 if(fetchCompReport.readyState == 4){
 			 var response = this.response.trim();
 			 console.log(JSON.parse(response));
 			 setCashdata(response);
@@ -492,10 +462,6 @@
 				}
 	 }
 	 
-	 window.onload = function() {
-			gradeReport();
-		};
-	 
 	 function gradeReport(){
 			var url="../processing/gradeReport.jsp";
 			
@@ -526,16 +492,48 @@
 	function setGradeData(gradeData){
 		var json = JSON.parse(gradeData);
 		console.log(gradeData);
-		var element = document.getElementById('tableBody');
+		var table = document.getElementById('gradeTableBody');
 		for(i=0; i< json.length; i++){
-			element.insertAdjacentHTML('beforeend','<tr>'+
-										'<td align="center">'+(i+1)+'</td>'+
-										'<td hidden id="gradeId'+(i+1)+'">'+json[i].id+'</td>'+
-										'<td>'+json[i].grade+'</td>'+
-										'<td><input class="form-control form-control-sm lbl-rm-all" type="text" name="gradeRate'+(i+1)+'" id="gradeRate'+(i+1)+'" /></td>'+
-									'</tr>');
+			var rowNumber = table.rows.length;
+			var row = table.insertRow(rowNumber);
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			
+			cell2.hidden=true;
+			cell2.id= "gradeId"+(i+1);
+			
+			cell1.innerHTML = (i+1);
+			cell2.innerHTML = json[i].id;
+			cell3.innerHTML = json[i].grade;
+			cell4.innerHTML = '<input class="form-control form-control-sm lbl-rm-all" type="text" name="gradeRate'+(i+1)+'" id="gradeRate'+(i+1)+'" />';
+		}
+		setBonusData(gradeData);
+	}
+	
+
+	function setBonusData(gradeData){
+		var json = JSON.parse(gradeData);
+		var table = document.getElementById('bonusTableBody');
+		for(i=0; i< json.length; i++){
+			var rowNumber = table.rows.length;
+			var row = table.insertRow(rowNumber);
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			
+			cell2.hidden=true;
+			cell2.id= "gradeId"+(i+1);
+			
+			cell1.innerHTML = (i+1);
+			cell2.innerHTML = json[i].id;
+			cell3.innerHTML = json[i].grade;
+			cell4.innerHTML = '<input class="form-control form-control-sm lbl-rm-all" type="text" name="bonusgradeRate'+(i+1)+'" id="bonusgradeRate'+(i+1)+'" />';
 		}
 	}
+	
 	
 	callModalPopup("callCashModal","cashAdditionModal"); // Calling Cash Addition Pop-up
 	//callModalPopupWithIndex("callBankModal","bankAdditionModal"); // Calling Bank Addition Pop-up
@@ -547,21 +545,32 @@
 			}
 	})
 	
-	function submitDailySetup(){
+	document.addEventListener('click',function(e){
+		if(e.srcElement.id === "setup"){
+			var rowIndex = e.srcElement.parentElement.parentElement.rowIndex-2;
+			console.log("rowIndex---"+rowIndex);
+			submitDailySetup(rowIndex);
+		}
+	})
+	
+	function submitDailySetup(rowIndex){
 		
 		jsonObj = {};
 		
-		jsonObj['companyId'] = document.getElementById('companyId').value;
-		jsonObj['date'] = document.getElementById('todaysDate').innerHTML;
-		jsonObj['heap'] = document.getElementById('todayHeap').value;
-		jsonObj['todaysBankId'] = document.getElementById('chequeBankId').value;
-		jsonObj['firstChequeNo'] = document.getElementById('firstChequeNo').value;
-		jsonObj['lastChequeNo'] = document.getElementById('lastChequeNo').value;
-		jsonObj['totalCheques'] = document.getElementById('totalCheques').value;
+		jsonObj['bonusAmount'] = document.getElementById('bonusAmount').value
+		jsonObj['companyId'] = document.getElementsByName('companyNameTable')[rowIndex].value;
+		jsonObj['date'] = document.getElementsByName('dateTable')[rowIndex].value;
+		jsonObj['setupTime'] = document.getElementsByName('setupTimeTable')[rowIndex].value;
+		jsonObj['discardTime'] = document.getElementsByName('discardTimeTable')[rowIndex].value;
+		jsonObj['heap'] = document.getElementsByName('heapTable')[rowIndex].value;
+		jsonObj['todaysBankId'] = document.getElementsByName('bankTable')[rowIndex].value;
+		jsonObj['firstChequeNo'] = document.getElementsByName('firstChequeNo')[rowIndex].value;
+		jsonObj['lastChequeNo'] = document.getElementsByName('lastChequeNo')[rowIndex].value;
+		jsonObj['totalCheques'] = Number(document.getElementsByName('lastChequeNo')[rowIndex].value)-Number(document.getElementsByName('firstChequeNo')[rowIndex].value)+1;
 
 		jsonArray = [];
 		
-		var noOfRows = document.getElementById('tableBody').childElementCount;
+		var noOfRows = document.getElementById('gradeTableBody').childElementCount;
 		for(i=0; i<noOfRows;i++){
 			gradeRate = {};
 			gradeRate['gradeId'] = document.getElementById('gradeId'+(i+1)).innerHTML;
@@ -580,6 +589,23 @@
 		document.getElementsByTagName('form')[0].submit();
 				
 	}
+
+	document.addEventListener('keyup', function(e){
+		if(e.srcElement.id.includes('gradeRate')){
+			var bonusAmt = Number(document.getElementById('bonusAmount').value);
+			var element = document.getElementById('bonus'+e.srcElement.id);
+			element.value = Number(e.srcElement.value)+Number(bonusAmt);
+		}
+	})
+	
+	function setDisplayDate(){
+		var today = new Date();
+		var date1 = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+		document.getElementById('todaysDate').innerHTML = date1;
+	}
+	
+	setDisplayDate();
+	gradeReport();
 	
 	</script>
 </body>
