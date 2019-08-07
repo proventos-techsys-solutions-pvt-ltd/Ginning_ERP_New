@@ -59,9 +59,8 @@
 			int weighMastId=0;
 			weighMastId = addWeigh.addWeighMast(w);
 			
-			request.setAttribute("weighmentId", Integer.toString(weighMastId));
-			
-			request.getRequestDispatcher("../report/RST.jsp").forward(request,response);
+			session.setAttribute("weighmentId", Integer.toString(weighMastId));
+			response.sendRedirect("../report/RST.jsp");
 
 	}
 	else{
@@ -83,9 +82,8 @@
 		
 		int rstWeighMast = uw.secondWeighment(w);
 		
-		request.setAttribute("weighmentId", Integer.toString(rstWeighMast));
-		
-		request.getRequestDispatcher("../report/RST.jsp").forward(request,response);
+		session.setAttribute("weighmentId", Integer.toString(rstWeighMast));
+		response.sendRedirect("../report/RST.jsp");
 	}
 %>
 

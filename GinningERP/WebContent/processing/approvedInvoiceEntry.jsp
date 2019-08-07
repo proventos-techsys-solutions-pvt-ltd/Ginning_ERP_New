@@ -154,7 +154,6 @@
 		
 		us.updateStockOnEntry(sm);
 		
-		request.setAttribute("invoiceId", Integer.toString(invoiceId));
-	        
-	    request.getRequestDispatcher("../report/FinalInvoicePDF.jsp").forward(request, response);
+		session.setAttribute("invoiceId", Integer.toString(invoiceId));
+	    response.sendRedirect("../views/Invoice.jsp");
 %>

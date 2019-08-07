@@ -22,18 +22,20 @@ public class DailySetup {
 	public void setTotalCheques(int totalCheques) {
 		this.totalCheques = totalCheques;
 	}
-	public long getFirstChequeNo() {
+	
+	public String getFirstChequeNo() {
 		return firstChequeNo;
 	}
-	public void setFirstChequeNo(long firstChequeNo) {
+	public void setFirstChequeNo(String firstChequeNo) {
 		this.firstChequeNo = firstChequeNo;
 	}
-	public long getLastChequeNo() {
+	public String getLastChequeNo() {
 		return lastChequeNo;
 	}
-	public void setLastChequeNo(long lastChequeNo) {
+	public void setLastChequeNo(String lastChequeNo) {
 		this.lastChequeNo = lastChequeNo;
 	}
+
 	private String setupDate, cottonHeap, discardDate;
 	public String getDiscardDate() {
 		return discardDate;
@@ -41,7 +43,7 @@ public class DailySetup {
 	public void setDiscardDate(String discardDate) {
 		this.discardDate = discardDate;
 	}
-	private long firstChequeNo, lastChequeNo;
+	private String firstChequeNo, lastChequeNo;
 	
 	
 	public int getCompanyId() {

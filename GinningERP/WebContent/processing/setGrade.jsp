@@ -104,8 +104,8 @@
 		   		}
 		   	}	
 		   	
-			request.setAttribute("gradeSubmitFlag", contains);
-			request.getRequestDispatcher("../views/GoodsReceiptNote.jsp").forward(request,response);
+			session.setAttribute("gradeSubmitFlag", contains);
+    		response.sendRedirect("../views/GoodsReceiptNote.jsp");
     	}
     	
     %>

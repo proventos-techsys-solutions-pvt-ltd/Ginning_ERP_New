@@ -24,8 +24,7 @@
      	
      	gradeId = agm.addGradeMaster(gm);
      	
-        request.setAttribute("gradeId", Integer.toString(gradeId));
-        request.getRequestDispatcher("../views/SetupGrade.jsp").forward(request, response);
-    
+        session.setAttribute("gradeId", Integer.toString(gradeId));
+    	response.sendRedirect("../views/SetupGrade.jsp");
     %>
     

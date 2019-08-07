@@ -22,9 +22,8 @@
 	    
 	   int userId = au.addUser(u);
 	   	
-	   	request.setAttribute("stockId", Integer.toString(userId));
-        request.getRequestDispatcher("../views/.jsp").forward(request, response);
-	   	
+	   	session.setAttribute("userId", Integer.toString(userId));
+	   	response.sendRedirect("../views/.jsp");
     }
 %>
 

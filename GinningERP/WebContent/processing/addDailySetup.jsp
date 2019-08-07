@@ -1,3 +1,4 @@
+<%@page import="com.prov.dbops.CheckOpeningStockExists"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.prov.dbinsertion.AddStockMast"%>
@@ -22,12 +23,13 @@
     DailySetup ds = new DailySetup();
     
     
-    String date = (String)obj.get("date") + (String)obj.get("setupTime");
+    String date = (String)obj.get("date") +" "+ (String)obj.get("setupTime")+":00";
     
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     Date formattedDate =  sdf.parse(date);
     
-    SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+    SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
     String formattedDateStr = sdf2.format(formattedDate);
 
     ds.setSetupDate(formattedDateStr);
@@ -35,13 +37,21 @@
     ds.setCompanyId(Integer.parseInt((String)obj.get("companyId")));
     ds.setBankId(Integer.parseInt((String)obj.get("todaysBankId")));
     ds.setCottonHeap((String)obj.get("heap"));
-    ds.setFirstChequeNo(Long.parseLong((String)obj.get("firstChequeNo")));
-    ds.setLastChequeNo(Long.parseLong((String)obj.get("lastChequeNo")));
+    ds.setFirstChequeNo((String)obj.get("firstChequeNo"));
+    ds.setLastChequeNo((String)obj.get("lastChequeNo"));
     ds.setTotalCheques(Integer.parseInt((String)obj.get("totalCheques")));
-   		
+    
     AddDailySetup ads = new AddDailySetup();
    
     int setupId = 0;
+    
+    String gradeDate = (String)obj.get("date");
+    
+    SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+    Date formattedGradeDate =  sdf1.parse(date);
+    
+    SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
+    String formattedGradeDateStr = sdf3.format(formattedDate);
     
     setupId = ads.addDailySetup(ds);
     
@@ -51,19 +61,24 @@
     	GradeRateMaster gr = new GradeRateMaster();
     	
     	gr.setGradeId(Integer.parseInt((String)((JSONObject)gradeArray.get(i)).get("gradeId")));
-    	gr.setRateDate((String)obj.get("date"));
+    	gr.setRateDate(formattedGradeDateStr);
     	gr.setRate(Double.parseDouble((String)((JSONObject)gradeArray.get(i)).get("gradeRate")));
     	
     	AddGradeRateMaster agr = new AddGradeRateMaster();
     	
     	agr.addGradeRateMaster(gr);
     }
-    
-    AddStockMast addStock = new AddStockMast();
-    
-    addStock.addOpeningStock();
 
-    request.setAttribute("setupId", Integer.toString(setupId));
-    request.getRequestDispatcher("../views/DailySetup.jsp").forward(request, response);
+    CheckOpeningStockExists checkOpeningStock = new CheckOpeningStockExists();
+    
+    int stockMastCount = checkOpeningStock.checkOpeningStockInDb();
+    
+    if(stockMastCount == 0){
+	    AddStockMast addStock = new AddStockMast();
+	    addStock.addOpeningStock();
+    }
+	    
+    session.setAttribute("setupId", Integer.toString(setupId));
+    response.sendRedirect("../views/DailySetup.jsp");
     
     %>

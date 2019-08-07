@@ -23,8 +23,9 @@
     
     AddBank ab = new AddBank();
     
-    ab.addBank(b);
+    int bankId = ab.addBank(b);
     
+    session.setAttribute("bankId", Integer.toString(bankId));
     response.sendRedirect("../views/SetupBanks.jsp");
     
     %>

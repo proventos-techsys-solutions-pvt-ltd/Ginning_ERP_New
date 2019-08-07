@@ -9,9 +9,8 @@
     <% 
     
   	int invoiceId = Integer.parseInt((String)request.getAttribute("invoiceId"));
-    
     request.removeAttribute("invoiceId");
-
+    
     InvoiceReport invReport = new InvoiceReport();
 	
 	org.json.JSONObject printObj = invReport.getInvoiceForPrinting(invoiceId);

@@ -8,9 +8,9 @@
 <%@ page trimDirectiveWhitespaces="true" %>
  <% 
     
-  	int weighmentId = Integer.parseInt((String)request.getAttribute("weighmentId"));
+  	int weighmentId = Integer.parseInt((String)session.getAttribute("weighmentId"));
     
-    request.removeAttribute("weighmentId");
+ 	session.removeAttribute("weighmentId");
     
     RstReport report = new RstReport();
     

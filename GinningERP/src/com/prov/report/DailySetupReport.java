@@ -3,6 +3,7 @@ package com.prov.report;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import com.prov.bean.DailySetup;
 import com.prov.db.OracleConnection;
@@ -30,9 +31,11 @@ public class DailySetupReport {
 				ds.setCottonHeap(rs.getString(3));
 				ds.setCompanyId(rs.getInt(4));
 				ds.setBankId(rs.getInt(5));
-				ds.setFirstChequeNo(rs.getInt(6));
-				ds.setLastChequeNo(rs.getInt(7));
+				ds.setFirstChequeNo(rs.getString(6));
+				ds.setLastChequeNo(rs.getString(7));
 				ds.setTotalCheques(rs.getInt(8));
+				ds.setBonusAmount(rs.getFloat(9));
+				ds.setDiscardDate(rs.getString(10));
 			}
 			
 			rs.close();
@@ -45,13 +48,11 @@ public class DailySetupReport {
 		return ds;
 	}
 	
-	public DailySetup getTodaysDailySetup() {
+	public ArrayList<DailySetup> getTodaysDailySetups() {
 
 		ResultSet rs = null;
 		Connection con = null;
-		
-		DailySetup ds = new DailySetup();
-		
+		ArrayList<DailySetup> todaysSetups = new ArrayList<DailySetup>();
 		try {
 			con = OracleConnection.getConnection();
 			
@@ -61,14 +62,19 @@ public class DailySetupReport {
 			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
+				DailySetup ds = new DailySetup();
+
 				ds.setId(rs.getInt(1));
 				ds.setSetupDate(rs.getString(2));
 				ds.setCottonHeap(rs.getString(3));
 				ds.setCompanyId(rs.getInt(4));
 				ds.setBankId(rs.getInt(5));
-				ds.setFirstChequeNo(rs.getInt(6));
-				ds.setLastChequeNo(rs.getInt(7));
+				ds.setFirstChequeNo(rs.getString(6));
+				ds.setLastChequeNo(rs.getString(7));
 				ds.setTotalCheques(rs.getInt(8));
+				ds.setBonusAmount(rs.getFloat(9));
+				ds.setDiscardDate(rs.getString(10));
+				todaysSetups.add(ds);
 			}
 			
 			rs.close();
@@ -78,7 +84,8 @@ public class DailySetupReport {
 			e.printStackTrace();
 		}
 		
-		return ds;
+		return todaysSetups;
 	}
+	
 
 }

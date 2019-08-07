@@ -30,10 +30,8 @@ public class BankTag extends SimpleTagSupport {
 					  obj.put("bankId",bankResultSet.getString("id"));
 					  obj.put("companyId", bankResultSet.getString("company_id"));
 					  obj.put("accountNo", bankResultSet.getString("account_no"));
-					  
 					  jsonArray.put(obj);
 					}
-				 System.out.println(jsonArray);
 			}catch(Exception e) {
 				e.printStackTrace();
 			}

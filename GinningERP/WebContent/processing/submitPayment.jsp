@@ -78,8 +78,8 @@
 		
 		updateInvoice.updatePendingAmount(Double.parseDouble((String)obj.get("cashAmount")),invoiceId);
 		
-		request.setAttribute("id", Integer.toString(invoiceId));
-		request.getRequestDispatcher("../report/CashVoucher.jsp").forward(request, response);
+		session.setAttribute("id", Integer.toString(invoiceId));
+		response.sendRedirect("../report/CashVoucher.jsp");
 	}
 	
 %>

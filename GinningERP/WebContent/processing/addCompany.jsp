@@ -91,8 +91,8 @@
     	
     	companyId = ac.addCompany(c);
     	
-    	request.setAttribute("companyId", Integer.toString(companyId));
-	    request.getRequestDispatcher("../views/SetupCompanies.jsp").forward(request, response);
+    	session.setAttribute("companyId", Integer.toString(companyId));
+	    response.sendRedirect("../views/SetupCompanies.jsp");
       } catch(Exception ex) {
          System.out.println(ex);
       }

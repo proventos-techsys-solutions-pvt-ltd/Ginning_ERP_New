@@ -17,6 +17,12 @@
 <body>
 	<%@include file="../views/NavBar.html" %>
 		<div class="container-fluid">
+		<div hidden>
+        	<%
+			    out.print(session.getAttribute("setupId"));
+			    session.removeAttribute("setupId");
+			%>
+         </div>
 			<div class="row mt-2 tile-background-row border-bottom">
 				<div class="col-md-3">
 					<div class="d-flex justify-content-start align-items-center">
@@ -33,8 +39,11 @@
 					<button type="button" class="btn btn-success" id="lockUsers">Lock Users</button>
 				</div>
 			</div>
-			<form action='../processing/addDailySetup.jsp'>
+			<form id="dailySetupForm" action='../processing/addDailySetup.jsp'>
 					<input type="hidden" name="dailySetupOutput" id="dailySetupOutput" />
+			</form>
+			<form id="addChequeForm" action='../processing/addCheques.jsp'>
+					<input type="hidden" name="addCheques" id="addCheques" />
 			</form>
 			<div class="row tile-background-row">
 				<div class="col-md-3">
@@ -70,7 +79,6 @@
 					<input class="form-control form-control-sm" name="bonusAmount" id="bonusAmount">
 				</div>
 			</div>
-				
 				<div class="row tile-background-row">
 					<div class="col-md-12">
 						<table class="table table-bordered" id="companySetupTable">
@@ -132,9 +140,6 @@
 						</table>
 					</div>
 				</div>
-				
-				
-				
 				<div class="row tile-background-row">
 						<div class="col-md-6">
 							<table class="table table-bordered">
@@ -403,7 +408,6 @@
 	 function fetchCompanyData(){
 		 if(fetchCompReport.readyState == 4){
 			 var response = this.response.trim();
-			 console.log(JSON.parse(response));
 			 setCashdata(response);
 			 setBankdata(response);
 		 }
@@ -491,7 +495,6 @@
 	
 	function setGradeData(gradeData){
 		var json = JSON.parse(gradeData);
-		console.log(gradeData);
 		var table = document.getElementById('gradeTableBody');
 		for(i=0; i< json.length; i++){
 			var rowNumber = table.rows.length;
@@ -546,9 +549,8 @@
 	})
 	
 	document.addEventListener('click',function(e){
-		if(e.srcElement.id === "setup"){
+		if(e.srcElement.name === "setup"){
 			var rowIndex = e.srcElement.parentElement.parentElement.rowIndex-2;
-			console.log("rowIndex---"+rowIndex);
 			submitDailySetup(rowIndex);
 		}
 	})
@@ -566,7 +568,7 @@
 		jsonObj['todaysBankId'] = document.getElementsByName('bankTable')[rowIndex].value;
 		jsonObj['firstChequeNo'] = document.getElementsByName('firstChequeNo')[rowIndex].value;
 		jsonObj['lastChequeNo'] = document.getElementsByName('lastChequeNo')[rowIndex].value;
-		jsonObj['totalCheques'] = Number(document.getElementsByName('lastChequeNo')[rowIndex].value)-Number(document.getElementsByName('firstChequeNo')[rowIndex].value)+1;
+		jsonObj['totalCheques'] = (Number(document.getElementsByName('lastChequeNo')[rowIndex].value)-Number(document.getElementsByName('firstChequeNo')[rowIndex].value)+1).toString();
 
 		jsonArray = [];
 		
@@ -580,14 +582,10 @@
 		}
 		
 		jsonObj['gradeRates'] = jsonArray;
-		
 		var jsonStr = JSON.stringify(jsonObj);
 		console.log(jsonStr);
-		
 		document.getElementById('dailySetupOutput').value=jsonStr;
-		
-		document.getElementsByTagName('form')[0].submit();
-				
+		document.getElementsById('dailySetupForm').submit();
 	}
 
 	document.addEventListener('keyup', function(e){
@@ -597,6 +595,27 @@
 			element.value = Number(e.srcElement.value)+Number(bonusAmt);
 		}
 	})
+	
+	document.addEventListener('click',function(e){
+		if(e.srcElement.name === "update"){
+			var rowIndex = e.srcElement.parentElement.parentElement.rowIndex-2;
+			submitDailySetup(rowIndex);
+		}
+	})
+	
+	function addCheques(rowIndex){
+		
+		jsonObj={};
+		
+		jsonObj['firstChequeNo'] = document.getElementsByName('firstChequeNo')[rowIndex].value;
+		jsonObj['lastChequeNo'] = document.getElementsByName('lastChequeNo')[rowIndex].value;
+		jsonObj['totalCheques'] = (Number(document.getElementsByName('lastChequeNo')[rowIndex].value)-Number(document.getElementsByName('firstChequeNo')[rowIndex].value)+1).toString();
+		jsonObj['setupId'] = document.getElementsByName('setupId')[rowIndex].value;
+		var jsonStr = JSON.stringify(jsonObj);
+		document.getElementById('addCheques').value=jsonStr;
+		document.getElementsById('addChequeForm').submit();
+		addCheques
+	}
 	
 	function setDisplayDate(){
 		var today = new Date();

@@ -26,7 +26,6 @@
     	
     	int stockId = stockEntry.addStockMast(stock);
     	
-   		request.setAttribute("stockId", Integer.toString(stockId));
-        request.getRequestDispatcher("../views/SetupStock.jsp").forward(request, response);
-    	
+   		session.setAttribute("stockId", Integer.toString(stockId));
+    	response.sendRedirect("../views/SetupStock.jsp");
     %>

@@ -29,8 +29,6 @@ var uiController = (function(){
 		
 		var table = appController.hmtlPageObjectsMethod().companySetupTable; // fetch table object
 		var rowNumber = table.rows.length;
-		console.log("row number " +rowNumber);
-		console.log(appController.getDateAndTime().date);
 		
 		
 		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[0].querySelector('input').value = "1";
@@ -84,7 +82,6 @@ var uiController = (function(){
 	var setupCompany = function(){
 		var table = appController.hmtlPageObjectsMethod().companySetupTable; // fetch table object
 		var rowNumber = table.rows.length;
-		console.log(rowNumber);
 		
 		var srNo = document.getElementById(ids.companyTable).rows[(rowNumber-2)].cells[0].querySelector('input').value;
 		var date = document.getElementById(ids.companyTable).rows[(rowNumber-2)].cells[1].querySelector('input').value;
@@ -146,7 +143,7 @@ var appController = (function(){
 	var getDateAndTime = function(){ // get date and time 
 		var todayDateAndTime = new Date();
 		return 	dateAndTime={
-					date :todayDateAndTime.getDate()+"/"+todayDateAndTime.getMonth()+"/"+todayDateAndTime.getFullYear() ,
+					date :todayDateAndTime.getDate()+"/"+(todayDateAndTime.getMonth()+1)+"/"+todayDateAndTime.getFullYear() ,
 					time :todayDateAndTime.getHours()+":"+todayDateAndTime.getMinutes()
 		}
 	} 
