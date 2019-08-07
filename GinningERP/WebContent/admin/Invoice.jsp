@@ -12,7 +12,7 @@
 <body>
 
 <%@include file="../admin/Top_Nav.html" %>
-<div class="container-fluid">
+<div class="container-fluid container-mr-t">
 	 <%@include file="../admin/Side_bar.html" %>
 	 <div class="row row-background border-bottom">
                 	<div class="col-md-auto">
@@ -181,8 +181,7 @@
                                 </div>
                                 </div>
 </div>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-</nav>
+
 
 <script src="../js/jquery-3.3.1.slim.min.js" ></script>
 <script src="../js/popper.min.js"></script>

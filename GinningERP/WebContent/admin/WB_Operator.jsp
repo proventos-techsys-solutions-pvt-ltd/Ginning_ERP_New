@@ -12,7 +12,7 @@
 <body>
 
 <%@include file="../admin/Top_Nav.html" %>
-<div class="container-fluid">
+<div class="container-fluid container-mr-t">
 	 <%@include file="../admin/Side_bar.html" %>
 	<div class="row row-background border-bottom">
 		<div class="col-md-12">

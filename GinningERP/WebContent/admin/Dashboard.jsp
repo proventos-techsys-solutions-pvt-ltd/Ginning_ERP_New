@@ -17,7 +17,7 @@
 	    <span class="navbar-toggler-icon"></span>
 	 </button>
 </nav>
-<div class="container-fluid">
+<div class="container-fluid container-mr-t">
 	  <%@include file="../admin/Side_bar.html" %>
  	<div class="row row-background border-bottom">
        	<div class="col-md-6">
