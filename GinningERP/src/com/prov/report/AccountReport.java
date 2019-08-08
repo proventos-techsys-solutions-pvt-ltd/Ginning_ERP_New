@@ -21,8 +21,6 @@ public class AccountReport {
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
 			rs = stmt.executeQuery();
-
-			
 			
 			while (rs.next()) {
 				

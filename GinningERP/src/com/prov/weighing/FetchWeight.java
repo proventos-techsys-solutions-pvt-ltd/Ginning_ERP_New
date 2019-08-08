@@ -6,7 +6,7 @@ public class FetchWeight {
 		String weightStr ="";
 		try
 	    {
-			weightStr = (new TwoWaySerialComm()).connect("COM4");
+			weightStr = (new TwoWaySerialComm()).connect("COM1");
 	    }
 	    catch ( Exception e )
 	    {

@@ -36,13 +36,20 @@ public class DailySetup {
 		this.lastChequeNo = lastChequeNo;
 	}
 
-	private String setupDate, cottonHeap, discardDate;
-	public String getDiscardDate() {
-		return discardDate;
+	private String setupDate, cottonHeap, discardTime, setupTime;
+	public String getDiscardTime() {
+		return discardTime;
 	}
-	public void setDiscardDate(String discardDate) {
-		this.discardDate = discardDate;
+	public void setDiscardTime(String discardTime) {
+		this.discardTime = discardTime;
 	}
+	public String getSetupTime() {
+		return setupTime;
+	}
+	public void setSetupTime(String setupTime) {
+		this.setupTime = setupTime;
+	}
+
 	private String firstChequeNo, lastChequeNo;
 	
 	

@@ -30,16 +30,16 @@ var uiController = (function(){
 		var table = appController.hmtlPageObjectsMethod().companySetupTable; // fetch table object
 		var rowNumber = table.rows.length;
 		
-		
-		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[0].querySelector('input').value = "1";
-		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[1].querySelector('input').value = appController.getDateAndTime().date;
-		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[2].querySelector('input').value = "00:00";
+		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[0].querySelector('input').value = "";
+		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[1].querySelector('input').value = "1";
+		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[2].querySelector('input').value = appController.getDateAndTime().date;
 		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[3].querySelector('input').value = "00:00";
-		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[4].querySelector('input').value = appController.getDataForSetup().getCompanyName;
-		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[5].querySelector('input').value = appController.getDataForSetup().getTodayHeap;
-		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[6].querySelector('input').value = appController.getDataForSetup().getBankName;
-		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[9].querySelector('button').disabled = false;
+		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[4].querySelector('input').value = "00:00";
+		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[5].querySelector('input').value = appController.getDataForSetup().getCompanyName;
+		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[6].querySelector('input').value = appController.getDataForSetup().getTodayHeap;
+		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[7].querySelector('input').value = appController.getDataForSetup().getBankName;
 		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[10].querySelector('button').disabled = false;
+		document.getElementById(ids.companyTable).rows[(rowNumber-1)].cells[11].querySelector('button').disabled = false;
 		
 		document.getElementById(ids.addCompanyId).disabled = true; // Add company button has disabled
 		document.getElementById(ids.lockUsersButton).disabled = false; // Lock user button enabled
@@ -59,18 +59,21 @@ var uiController = (function(){
 			var cell9 = row.insertCell(8);
 			var cell10 = row.insertCell(9);
 			var cell11 = row.insertCell(10);
+			var cell12 = row.insertCell(11);
 			
-			cell1.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="srNoTable" readonly></td>';
-			cell2.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="dateTable" readonly></td>';
-			cell3.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="setupTimeTable" readonly></td>';
-			cell4.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="discardTimeTable" readonly></td>';
-			cell5.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="companyNameTable" readonly></td>';
-			cell6.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="heapTable" readonly></td>';
-			cell7.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="bankTable" readonly></td>';
-			cell8.innerHTML = '<td><input class="form-control form-control-sm" name="firstChequeNo" id="firstChequeNo"></td>';
-			cell9.innerHTML = '<td><input class="form-control form-control-sm" name="lastChequeNo" id="lastChequeNo"></td>';
-			cell10.innerHTML = '<td><button type="button" class="btn btn-success btn-sm" id="" name="setup" disabled>Setup</button></td>';
-			cell11.innerHTML = '<td><button type="button" class="btn btn-success btn-sm" id="" name="update" disabled>Update</button></td>'
+			cell1.hidden =true;
+			cell1.innerHTML = '<td><input type="hidden" class="form-control form-control-sm" id="" name="setupId" readonly></td>';
+			cell2.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="srNoTable" readonly></td>';
+			cell3.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="dateTable" readonly></td>';
+			cell4.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="setupTimeTable" readonly></td>';
+			cell5.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="discardTimeTable" readonly></td>';
+			cell6.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="companyNameTable" readonly></td>';
+			cell7.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="heapTable" readonly></td>';
+			cell8.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="bankTable" readonly></td>';
+			cell9.innerHTML = '<td><input class="form-control form-control-sm" name="firstChequeNo" id="firstChequeNo"></td>';
+			cell10.innerHTML = '<td><input class="form-control form-control-sm" name="lastChequeNo" id="lastChequeNo"></td>';
+			cell11.innerHTML = '<td><button type="button" class="btn btn-success btn-sm" id="" name="setup" disabled>Setup</button></td>';
+			cell12.innerHTML = '<td><button type="button" class="btn btn-success btn-sm" id="" name="update" disabled>Update</button></td>'
 				
 			}
 		}else{

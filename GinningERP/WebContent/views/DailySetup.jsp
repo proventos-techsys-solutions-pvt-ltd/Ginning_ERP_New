@@ -100,8 +100,11 @@
 									<th width="7%" style="vertical-align:middle;text-align:center;">To</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="tableBody">
 								<tr>
+									<td hidden>
+										<input type="hidden" class="form-control form-control-sm" id="setupId" name="setupId" readonly>
+									</td>
 									<td>
 										<input type="text" class="form-control form-control-sm" id="srNoTable" name="srNoTable" readonly>
 									</td>
@@ -382,6 +385,86 @@
 	<script src="../js/commonjs.js"></script>
 	<script>
 	
+	
+	function getSetupReport(companyId){
+		var url="../processing/fetchDailySetup.jsp";
+		if(window.XMLHttpRequest){  
+			fetchSetupReport=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchSetupReport=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+	  
+		try{  
+			fetchSetupReport.onreadystatechange=fetchSetupData;  
+			console.log("AJAX Req sent");
+			fetchSetupReport.open("GET",url,true);  
+			fetchSetupReport.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	function fetchSetupData()
+	{
+		if(fetchSetupReport.readyState == 4){
+			var response = this.response.trim();
+			setSetupDataInTable(response)
+		}
+	}
+	
+	function setSetupDataInTable(response){
+		var data = JSON.parse(response);
+		var setupArrLength = data.length;
+		
+		var tableBody = document.getElementById("tableBody");
+		if(setupArrLength != 0){
+			for(i=0; i<setupArrLength; i++){
+				if(i===0){
+					
+					tableBody.rows[0].cells[0].children[0].value = 1;
+					tableBody.rows[0].cells[1].children[0].value = data[i].id;
+					tableBody.rows[0].cells[2].children[0].value = data[i].setupDate;
+					tableBody.rows[0].cells[3].children[0].value = data[i].setupTime;
+					tableBody.rows[0].cells[4].children[0].value = data[i].discardTime;
+					tableBody.rows[0].cells[5].children[0].value = data[i].companyId;
+					tableBody.rows[0].cells[6].children[0].value = data[i].cottonHeap;
+					tableBody.rows[0].cells[7].children[0].value = data[i].bankId;
+					tableBody.rows[0].cells[8].children[0].value = data[i].firstChequeNo;
+					tableBody.rows[0].cells[8].children[0].readOnly = true;
+					tableBody.rows[0].cells[9].children[0].value = data[i].lastChequeNo;
+				}else{
+					var rowNumber = tableBody.rows.length;
+					var row = table.insertRow(rowNumber);
+					var cell1 = row.insertCell(0);
+					var cell2 = row.insertCell(1);
+					var cell3 = row.insertCell(2);
+					var cell4 = row.insertCell(3);
+					var cell5 = row.insertCell(4);
+					var cell6 = row.insertCell(5);
+					var cell7 = row.insertCell(6);
+					var cell8 = row.insertCell(7);
+					var cell9 = row.insertCell(8);
+					var cell10 = row.insertCell(9);
+					var cell11 = row.insertCell(10);
+					
+					cell1.innerHTML = '<input type="hidden" class="form-control form-control-sm" id="setupId" name="setupId" value="'+data[i].id+'" readonly>';
+					cell2.innerHTML = '<input type="text" class="form-control form-control-sm" id="dateTable" name="dateTable" value="'+data[i].setupDate+'" readonly>';
+					cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="setupTimeTable" value="'+data[i].setupTime+'" readonly>';
+					cell4.innerHTML = '<input type="text" class="form-control form-control-sm" id="discardTimeTable" name="discardTimeTable" value="'+data[i].discardTime+'" readonly>';
+					cell5.innerHTML = '<input type="text" class="form-control form-control-sm" id="companyNameTable" name="companyNameTable" value="'+data[i].companyId+'" readonly>';
+					cell6.innerHTML = '<input type="text" class="form-control form-control-sm" id="heapTable" name="heapTable" value="'+data[i].cottonHeap+'" readonly>';
+					cell7.innerHTML = '<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" value="'+data[i].bankId+'" readonly>';
+					cell8.innerHTML = '<input type="text" class="form-control form-control-sm" id="firstChequeNo" name="firstChequeNo" value="'+data[i].firstChequeNo+'" readonly>';
+					cell9.innerHTML = '<input type="text" class="form-control form-control-sm" id="lastChequeNo" name="lastChequeNo" value="'+data[i].lastChequeNo+'" readonly>';
+					cell10.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="setup" name="setup" disabled="">Setup</button>';
+					cell11.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="update" name="update" disabled="">Update</button>';
+				}
+			}
+		}
+	}
+	
+	getSetupReport();
+	
+	
 	document.addEventListener('change', function(e){
 		if(e.srcElement.id === 'companyId'){
 			getCompanyReport(e.srcElement.options[e.srcElement.selectedIndex].value);
@@ -585,7 +668,7 @@
 		var jsonStr = JSON.stringify(jsonObj);
 		console.log(jsonStr);
 		document.getElementById('dailySetupOutput').value=jsonStr;
-		document.getElementsById('dailySetupForm').submit();
+		document.getElementById('dailySetupForm').submit();
 	}
 
 	document.addEventListener('keyup', function(e){
@@ -613,7 +696,7 @@
 		jsonObj['setupId'] = document.getElementsByName('setupId')[rowIndex].value;
 		var jsonStr = JSON.stringify(jsonObj);
 		document.getElementById('addCheques').value=jsonStr;
-		document.getElementsById('addChequeForm').submit();
+		document.getElementById('addChequeForm').submit();
 		addCheques
 	}
 	

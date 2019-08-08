@@ -210,7 +210,6 @@
 		
 		var table = document.getElementById("tableBody");
 		
-		
 		var row = table.insertRow(tableBody.children.length);
 		var cell1 = row.insertCell(0);
 		var cell2 = row.insertCell(1);
@@ -360,18 +359,12 @@
 			 if(document.getElementById('gradeId'+(i+1)) != null){
 				 grade['gradeId'] = document.getElementById('gradeId'+(i+1)).value;
 				}
-		    
 			 gradeList.push(grade);
-			 
 		}
 		jsonObj['gradeList']=gradeList;
-		
 		console.log(jsonObj);
-		
 		var jsonStr = JSON.stringify(jsonObj);
-		
 		document.getElementById('output').value=jsonStr;
-		
 		document.getElementsByTagName('form')[0].submit();
 	}
 	
@@ -517,7 +510,6 @@
 	document.addEventListener("change",function(e){
 		if(e.srcElement.id.includes("grade"))
 		{
-			
 			var selectedGrade = e.srcElement.options[e.srcElement.selectedIndex];
 			var gradeId = selectedGrade.getAttribute('data-gradeId');
 			var rowNo = e.srcElement.parentElement.parentElement.rowIndex;
@@ -533,9 +525,7 @@
 					break;
 				}
 			}
-			
 		}
-		
 	});
 	
 	checkDailySetup();

@@ -40,11 +40,7 @@
 							<th>IFSC Code</th>
 						<tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>
-							</td>
-						</tr>
+					<tbody id="tableBody">
 					</tbody>
 				</table>
 			</div>
@@ -54,5 +50,52 @@
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
+	<script>
+	function getReport(){
+		var url="../processing/getRtgsReport.jsp";
+		if(window.XMLHttpRequest){  
+			fetchReport=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchReport=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+	  
+		try{  
+			fetchReport.onreadystatechange=fetchReportData;  
+			console.log("AJAX Req sent");
+			fetchReport.open("GET",url,true);  
+			fetchReport.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	function fetchReportData()
+	{
+		if(fetchReport.readyState == 4){
+			var response = this.response.trim();
+			setDataInTable(response)
+		}
+	}
+	
+	function setDataInTable(response){
+		var data = JSON.parse(response);
+		var table = document.getElementById("tableBody");
+		for(i=0; i<data.length; i++){
+			var noOfRows = table.rows.length;
+			var row = table.insertRow(noOfRows);
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
+			
+			cell1.innerHTML = data[i].customerName;
+			cell2.innerHTML = data[i].rtgsAmount;
+			cell3.innerHTML = data[i].bankName;
+			cell4.innerHTML = data[i].accountNo;
+			cell5.innerHTML = data[i].ifsc;
+		}
+	}
+	getReport();
+	</script>
 </body>
 </html>

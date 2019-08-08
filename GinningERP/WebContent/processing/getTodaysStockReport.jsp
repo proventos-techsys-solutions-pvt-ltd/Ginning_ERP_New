@@ -11,7 +11,6 @@
 
 	if(companyId >0){
 		
-		
 		StockMast todayOpeningStock = report.getTodaysOpeningStock(companyId);
 		
 		StockMast todayClosingStock = report.getTodaysStockReport(companyId);
@@ -45,6 +44,9 @@
 
 		JSONObject stockOpening = report.getTodaysOpeningStockForAll();
 		JSONObject stockCurrent = report.getTodaysStockForAll();
+		
+		System.out.println(stockOpening.toString());
+		System.out.println(stockCurrent.toString());
 		
 		double rawCotton = stockCurrent.getDouble("rawCotton") - stockOpening.getDouble("rawCotton");
 		double cottonBales = stockCurrent.getDouble("cottonBales") - stockOpening.getDouble("cottonBales");

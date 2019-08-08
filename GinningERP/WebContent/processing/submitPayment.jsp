@@ -56,7 +56,7 @@
 		rtgs.setIfsc(((String)obj.get("rtgsIfsc")).toUpperCase());
 		rtgs.setCustomerId(Integer.parseInt((String)obj.get("customerId")));
 		rtgs.setCustomerName(((String)obj.get("customerName")).toUpperCase());
-		rtgs.setInvoiceNo((String)obj.get("invoiceNo"));
+		rtgs.setInvoiceNo(((String)obj.get("invoiceNo")).toUpperCase());
 		rtgs.setInvoiceId(Integer.parseInt((String)obj.get("invoiceId")));
 		
 		AddRtgs addRtgs = new AddRtgs();

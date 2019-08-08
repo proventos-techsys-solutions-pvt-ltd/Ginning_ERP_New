@@ -164,18 +164,16 @@ public class StockMasterReport {
 					"    SUM(cotton_cakes) cotton_cakes,\r\n" + 
 					"    STOCK_DATE\r\n" + 
 					"    FROM STOCK_MAST\r\n" + 
-					"    WHERE tRUNC(STOCK_DATE) = TRUNC(SYSDATE)\r\n" + 
+					"    WHERE tRUNC(STOCK_DATE) = (select max(STOCK_DATE) from STOCK_MAST)\r\n" + 
 					"    GROUP BY STOCK_DATE";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
-			
 			
 			rs = stmt.executeQuery();
 			
 			obj = new JSONObject();
 			
 			while (rs.next()) {
-				
 				
 				obj.put("rawCotton", rs.getDouble(1));
 				obj.put("cottonBales", rs.getDouble(2));
@@ -188,7 +186,6 @@ public class StockMasterReport {
 				String properDate = format2.format(date1);
 				obj.put("stockDate",properDate);
 			}
-			
 			rs.close();
 			stmt.close();
 			con.close();
@@ -227,8 +224,7 @@ public class StockMasterReport {
 			obj = new JSONObject();
 			
 			while (rs.next()) {
-				
-				
+ 				
 				obj.put("rawCotton", rs.getDouble(1));
 				obj.put("cottonBales", rs.getDouble(2));
 				obj.put("cottonSeed", rs.getDouble(3));
@@ -240,7 +236,6 @@ public class StockMasterReport {
 				String properDate = format2.format(date1);
 				obj.put("stockDate",properDate);
 			}
-			
 			rs.close();
 			stmt.close();
 			con.close();
@@ -273,7 +268,6 @@ public class StockMasterReport {
 			while (rs.next()) {
 				avgRate = rs.getDouble(1);
 			}
-			
 			rs.close();
 			stmt.close();
 			con.close();

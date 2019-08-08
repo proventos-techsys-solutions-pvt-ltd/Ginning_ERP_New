@@ -1,19 +1,17 @@
-<%@page import="org.json.JSONObject"%>
+<%@page import="org.json.JSONArray"%>
 <%@page import="com.prov.bean.DailySetup"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.prov.report.DailySetupReport"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
     <% 
-    
     	DailySetupReport dsr = new DailySetupReport();
     
-    	DailySetup ds = dsr.LatestDailySetup();
+    	ArrayList<DailySetup> todaysSetups = dsr.getTodaysDailySetups();
     	
-    	JSONObject jsonObj = new JSONObject(ds);
+    	JSONArray setupJson = new JSONArray(todaysSetups);
     	
-    	out.print(jsonObj);
-    	out.flush();
-    
-    
+    	out.print(setupJson);
+    	out.flush(); 
     %>
