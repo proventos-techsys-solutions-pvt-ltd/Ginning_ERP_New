@@ -3,6 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -60,13 +61,9 @@
 <script src="../js/jquery-3.3.1.slim.min.js" ></script>
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
+
 <script>
-	document.getElementById("toggleBar").addEventListener("click",function(){
-		 document.getElementsByClassName("sidebar")[0].style.display = "block";
-		 document.getElementsByClassName("sidebar")[0].style.zIndex = "1";
-		 document.getElementsByClassName("sidebar")[0].style.transition="all 2s";
-		
-	})
+
 </script>
 </body>
 </html>

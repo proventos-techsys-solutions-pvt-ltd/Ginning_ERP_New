@@ -3,6 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -11,12 +12,7 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-<a class="navbar-brand" href="./Dashboard.jsp">Samir Cotton Industries</a>
- 	<button class="navbar-toggler" type="button" id="toggleBar">
-	    <span class="navbar-toggler-icon"></span>
-	 </button>
-</nav>
+<%@include file="../admin/Top_Nav.html" %>
 <div class="container-fluid container-mr-t">
 	<%@include file="../admin/Side_bar.html" %>
  	<div class="row row-background border-bottom">
@@ -605,6 +601,8 @@
 	setDisplayDate();
 	gradeReport();
 	
+	
+
 	</script>
 
 </body>

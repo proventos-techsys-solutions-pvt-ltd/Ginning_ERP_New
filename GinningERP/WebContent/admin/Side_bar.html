@@ -7,7 +7,9 @@
 			<li><i class="fa fa-tachometer" aria-hidden="true">&nbsp;</i><a href="Dashboard.jsp">Dashboard</a></li>
 			<li><i class="fa fa-hand-o-right" aria-hidden="true">&nbsp;</i><a href="Daily_Setup.jsp">Daily Setup</a></li>	
 			<li><i class="fa fa-check" aria-hidden="true">&nbsp;</i><a href="Grading.jsp">Grading</a></li>	
-			<li><i class="fa fa-tasks" aria-hidden="true">&nbsp;</i><a href="Invoice.jsp">Invoicing</a></li>	
+			<li><i class="fa fa-tasks" aria-hidden="true">&nbsp;</i><a href="Invoice.jsp">Invoicing</a></li>
+			<li><i class="fa fa-balance-scale" aria-hidden="true">&nbsp;</i><a href="WB_Operator.jsp">WB-Operator Status</a></li>
+			<li><i class="fa fa-money" aria-hidden="true">&nbsp;</i><a href="Cashier.jsp">Cashier Status</a></li>	
 			<li><i class="fa fa-balance-scale " aria-hidden="true">&nbsp;</i><a class="sub drp-down">Reports&nbsp;&nbsp;</a>
 				<ul class="submenu">
 					<li>Cash Register</li>
@@ -15,13 +17,19 @@
 					<li>PDC Register</li>				
 				</ul>
 			</li>	
-			<li><i class="fa fa-balance-scale" aria-hidden="true">&nbsp;</i><a href="WB_Operator.jsp">WB-Operator</a></li>	
+			<li><i class="fa fa-cog " aria-hidden="true">&nbsp;</i><a class="sub drp-down">Setup&nbsp;&nbsp;</a>
+				<ul class="submenu">
+					<li><a href="Setup_Companies.jsp">Setup Companies</a></li>
+					<li><a href="Setup_Bank.jsp">Setup Bank</a></li>
+					<li>Setup Grade Levels</li>
+					<li>Setup Vehicle Rates</li>				
+				</ul>
+			</li>		
 			
 			<li><i class="fa fa-cogs" aria-hidden="true">&nbsp;</i><a class="sub drp-down">Settings&nbsp;&nbsp;</a>
 				<ul class="submenu">
-					<li><i class="fa fa-users" aria-hidden="true">&nbsp;</i><a href="">Manage Users</a></li>
-					<li><a>Cheque Register</a></li>
-					<li><a>PDC Register</a></li>				
+					<li><a href="">Manage Users</a></li>
+									
 				</ul>
 			</li>		
 			<li><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i><a href="WB_Operator.jsp">Sign-Out</a></li>
@@ -43,6 +51,14 @@
 			  }
 		})
 	}
+	
+	document.getElementById("toggleBar").addEventListener("click",function(){
+		  if (document.getElementsByClassName("sidebar")[0].style.display === "none") {
+			  document.getElementsByClassName("sidebar")[0].style.display = "block";
+		  } else {
+			  document.getElementsByClassName("sidebar")[0].style.display = "none";
+		  }
+	})
 	
 </script>
 	

@@ -1,7 +1,7 @@
 
 .sidebar{
 	heigth:100%;
-	width:200px;
+	width:250px;
 	position:fixed;
 	top:56px;
 	left:0;
@@ -60,7 +60,7 @@ body{
 	font-family:"Times New Roman", Times, serif;
 }
 .row{
-	margin-left:195px;
+	margin-left:245px;
 	margin-right:10px;
 }
 .section{
@@ -105,6 +105,9 @@ input,button{
 @media screen and (max-width: 768px){
 	.sidebar{
 		display:none;
+		z-index:1;
+		 -webkit-transition: width 2s; /* Safari prior 6.1 */
+  		transition: width 2s;
 	}
 	.container-fluid{
 		padding-left:0px;
