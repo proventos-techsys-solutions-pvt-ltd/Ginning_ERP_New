@@ -35,8 +35,7 @@
              	<div class="col-md-2">
              		<label class="lbl-rm-l">Company</label>
              		<select class="form-control form-control-sm" id="companyId">
-             			<option disabled selected>Selected</option>
-             			<option value="0">All</option>
+             			<option value="0" selected>All</option>
              			<c:Company />
              		</select>
              	</div>
@@ -63,6 +62,8 @@
 		<script src="../chart/package/dist/Chart.bundle.js" ></script>
 		<script>
 
+		getStockReport(0);
+		
 		document.addEventListener('change', function(e){
 			if(e.srcElement.id === 'companyId'){
 				getStockReport(e.srcElement.options[e.srcElement.selectedIndex].value);

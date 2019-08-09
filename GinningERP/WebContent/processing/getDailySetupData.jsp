@@ -8,7 +8,7 @@
     
     	DailySetupReport dsr = new DailySetupReport();
     
-    	DailySetup ds = dsr.getTodaysDailySetup();
+    	DailySetup ds = dsr.LatestDailySetup();
     	
     	JSONObject obj = new JSONObject(ds);
     	

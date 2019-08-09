@@ -115,7 +115,7 @@
 										<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="setupTimeTable" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="discardTimeTable" name="discardTimeTable" readonly>
+										<input type="text" class="form-control form-control-sm" id="discardTimeTable" name="discardTimeTable" value="NA" readonly>
 									</td>
 									<td>
 										<input type="text" class="form-control form-control-sm" id="companyNameTable" name="companyNameTable" readonly>
@@ -417,14 +417,18 @@
 		
 		var tableBody = document.getElementById("tableBody");
 		if(setupArrLength != 0){
+			console.log(data);
 			for(i=0; i<setupArrLength; i++){
 				if(i===0){
-					
-					tableBody.rows[0].cells[0].children[0].value = 1;
-					tableBody.rows[0].cells[1].children[0].value = data[i].id;
+					tableBody.rows[0].cells[0].children[0].value = data[i].id;
+					tableBody.rows[0].cells[1].children[0].value = 1;
 					tableBody.rows[0].cells[2].children[0].value = data[i].setupDate;
 					tableBody.rows[0].cells[3].children[0].value = data[i].setupTime;
-					tableBody.rows[0].cells[4].children[0].value = data[i].discardTime;
+					if(data[i].hasOwnProperty('discardTime')){
+						tableBody.rows[0].cells[4].children[0].value = data[i].discardTime;
+					}else{
+						tableBody.rows[0].cells[4].children[0].value = 'NA';
+					}
 					tableBody.rows[0].cells[5].children[0].value = data[i].companyId;
 					tableBody.rows[0].cells[6].children[0].value = data[i].cottonHeap;
 					tableBody.rows[0].cells[7].children[0].value = data[i].bankId;
@@ -433,7 +437,7 @@
 					tableBody.rows[0].cells[9].children[0].value = data[i].lastChequeNo;
 				}else{
 					var rowNumber = tableBody.rows.length;
-					var row = table.insertRow(rowNumber);
+					var row = tableBody.insertRow(rowNumber);
 					var cell1 = row.insertCell(0);
 					var cell2 = row.insertCell(1);
 					var cell3 = row.insertCell(2);
@@ -445,18 +449,26 @@
 					var cell9 = row.insertCell(8);
 					var cell10 = row.insertCell(9);
 					var cell11 = row.insertCell(10);
+					var cell12 = row.insertCell(11);
+					cell1.hidden=true;
 					
 					cell1.innerHTML = '<input type="hidden" class="form-control form-control-sm" id="setupId" name="setupId" value="'+data[i].id+'" readonly>';
-					cell2.innerHTML = '<input type="text" class="form-control form-control-sm" id="dateTable" name="dateTable" value="'+data[i].setupDate+'" readonly>';
-					cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="setupTimeTable" value="'+data[i].setupTime+'" readonly>';
-					cell4.innerHTML = '<input type="text" class="form-control form-control-sm" id="discardTimeTable" name="discardTimeTable" value="'+data[i].discardTime+'" readonly>';
-					cell5.innerHTML = '<input type="text" class="form-control form-control-sm" id="companyNameTable" name="companyNameTable" value="'+data[i].companyId+'" readonly>';
-					cell6.innerHTML = '<input type="text" class="form-control form-control-sm" id="heapTable" name="heapTable" value="'+data[i].cottonHeap+'" readonly>';
-					cell7.innerHTML = '<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" value="'+data[i].bankId+'" readonly>';
-					cell8.innerHTML = '<input type="text" class="form-control form-control-sm" id="firstChequeNo" name="firstChequeNo" value="'+data[i].firstChequeNo+'" readonly>';
-					cell9.innerHTML = '<input type="text" class="form-control form-control-sm" id="lastChequeNo" name="lastChequeNo" value="'+data[i].lastChequeNo+'" readonly>';
-					cell10.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="setup" name="setup" disabled="">Setup</button>';
-					cell11.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="update" name="update" disabled="">Update</button>';
+					cell2.innerHTML = '<input type="text" class="form-control form-control-sm" id="srNoTable" name="srNoTable" value="'+(i+2)+'" readonly>';
+					cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="dateTable" name="dateTable" value="'+data[i].setupDate+'" readonly>';
+					cell4.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="setupTimeTable" value="'+data[i].setupTime+'" readonly>';
+					if(data[i].hasOwnProperty('discardTime')){
+						cell5.innerHTML = '<input type="text" class="form-control form-control-sm" id="discardTimeTable" name="discardTimeTable" value="'+data[i].discardTime+'" readonly>';
+					}
+					else{
+						cell5.innerHTML = '<input type="text" class="form-control form-control-sm" id="discardTimeTable" name="discardTimeTable" value="NA" readonly>';
+					}
+					cell6.innerHTML = '<input type="text" class="form-control form-control-sm" id="companyNameTable" name="companyNameTable" value="'+data[i].companyId+'" readonly>';
+					cell7.innerHTML = '<input type="text" class="form-control form-control-sm" id="heapTable" name="heapTable" value="'+data[i].cottonHeap+'" readonly>';
+					cell8.innerHTML = '<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" value="'+data[i].bankId+'" readonly>';
+					cell9.innerHTML = '<input type="text" class="form-control form-control-sm" id="firstChequeNo" name="firstChequeNo" value="'+data[i].firstChequeNo+'" readonly>';
+					cell10.innerHTML = '<input type="text" class="form-control form-control-sm" id="lastChequeNo" name="lastChequeNo" value="'+data[i].lastChequeNo+'">';
+					cell11.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="setup" name="setup" disabled="">Setup</button>';
+					cell12.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="update" name="update" disabled="">Update</button>';
 				}
 			}
 		}

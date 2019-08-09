@@ -132,6 +132,8 @@
 	                                     <textarea id="note" name="note" class="form-control form-control-lg">Note</textarea>
 									</div>
 									<div class="col-md-2 offset-md-2">
+										<label for="" class="lbl-rm-all">Bonus</label> 
+	                                    <input type="text" id="bonus" name="bonus" class="form-control form-control-sm" value="0" readonly="readonly">
 										<label for="" class="lbl-rm-all">Unloading Charges</label> 
 	                                    <input type="text" id="unloadingCharges" name="unloadingCharges" class="form-control form-control-sm" value="0" readonly="readonly">
 	                                    <label for="" class="lbl-rm-all">Weighing Charges </label> 
