@@ -84,6 +84,7 @@
 						<table class="table table-bordered" id="companySetupTable">
 							<thead>
 								<tr class="table-back">
+									<th rowspan="2" >Hid Fld</th>
 									<th rowspan="2" width="5%" style="vertical-align:middle;">Sr No</th>
 									<th rowspan="2" width="8%" style="vertical-align:middle;">Date</th>
 									<th rowspan="2" width="8%" style="vertical-align:middle;">Setup Time</th>
@@ -102,8 +103,8 @@
 							</thead>
 							<tbody id="tableBody">
 								<tr>
-									<td hidden>
-										<input type="hidden" class="form-control form-control-sm" id="setupId" name="setupId" readonly>
+									<td>
+										<input type="text" class="form-control form-control-sm" id="setupId" name="setupId" readonly>
 									</td>
 									<td>
 										<input type="text" class="form-control form-control-sm" id="srNoTable" name="srNoTable" readonly>
@@ -127,10 +128,10 @@
 										<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" readonly>
 									</td>
 									<td>
-										<input class="form-control form-control-sm" name="firstChequeNo" id="firstChequeNo"/>
+										<input type="text" class="form-control form-control-sm" name="firstChequeNo" id="firstChequeNo"/>
 									</td>
 									<td>
-										<input class="form-control form-control-sm" name="lastChequeNo" id="lastChequeNo"/>
+										<input type="text" class="form-control form-control-sm" name="lastChequeNo" id="lastChequeNo"/>
 									</td>
 									<td>
 										<button type="button" class="btn btn-success btn-sm" id="setup" name="setup">Setup</button>
@@ -450,9 +451,9 @@
 					var cell10 = row.insertCell(9);
 					var cell11 = row.insertCell(10);
 					var cell12 = row.insertCell(11);
-					cell1.hidden=true;
+					//cell1.hidden=true;
 					
-					cell1.innerHTML = '<input type="hidden" class="form-control form-control-sm" id="setupId" name="setupId" value="'+data[i].id+'" readonly>';
+					cell1.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupId" name="setupId" value="'+data[i].id+'" readonly>';
 					cell2.innerHTML = '<input type="text" class="form-control form-control-sm" id="srNoTable" name="srNoTable" value="'+(i+2)+'" readonly>';
 					cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="dateTable" name="dateTable" value="'+data[i].setupDate+'" readonly>';
 					cell4.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="setupTimeTable" value="'+data[i].setupTime+'" readonly>';

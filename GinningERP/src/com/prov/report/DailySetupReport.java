@@ -59,7 +59,7 @@ public class DailySetupReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT * FROM DAILY_SETUP WHERE TRUNC(SETUP_DATE) = trunc(current_timestamp)";
+			String sql = "SELECT * FROM DAILY_SETUP WHERE TRUNC(SETUP_DATE) = trunc(current_timestamp) order by setup_date";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			rs = stmt.executeQuery();
