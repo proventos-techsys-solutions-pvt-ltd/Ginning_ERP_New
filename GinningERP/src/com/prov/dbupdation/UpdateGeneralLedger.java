@@ -3,6 +3,7 @@ package com.prov.dbupdation;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
 
@@ -11,7 +12,7 @@ import com.prov.db.OracleConnection;
 
 public class UpdateGeneralLedger {
 	
-	public int updateCustomer(GeneralLedger gl)
+	public int updateGeneralLedger(GeneralLedger gl)
 	{
 		
 		Connection con = null;
@@ -22,7 +23,7 @@ public class UpdateGeneralLedger {
 			e.printStackTrace();
 		}
 
-		String updateCustomer = "{ ? = call UPDATE_GENERALLEDGER(?,?,?,?,?,?,?,?) }";
+		String updateCustomer = "{ ? = call UPDATE_GENERALLEDGER(?,?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(updateCustomer);
@@ -34,11 +35,15 @@ public class UpdateGeneralLedger {
 			cs.setInt(2, gl.getId());
 			cs.setInt(3, gl.getVoucherNo());
 			cs.setInt(4,  gl.getAccountId());
-			cs.setDate(5, date);
-			cs.setInt(6,  gl.getMonthId());
-			cs.setDouble(7, gl.getOpeningBal());
-			cs.setDouble(8, gl.getDebit());
-			cs.setDouble(9, gl.getCredit());
+			cs.setInt(5, gl.getGroupId());
+			cs.setString(6, gl.getAccountLedger());
+			cs.setString(7, gl.getLedgerDesc());
+			cs.setDate(8, date);
+			cs.setInt(9,  gl.getMonthId());
+			cs.setDouble(10, gl.getOpeningBal());
+			cs.setDouble(11, gl.getDebit());
+			cs.setDouble(12, gl.getCredit());
+			cs.setDouble(13, gl.getClosingBal());
 			
 			cs.executeUpdate();
 			
@@ -58,5 +63,36 @@ public class UpdateGeneralLedger {
 		
 	}
 	
+	
+	public int updateOpeningBal(double openingBal, int id)
+	{
+		Connection con = null;
+		int rowsUpdated = 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 
+		String updateOpeningBal = "UPDATE GENERAL_LEDGER SET OPENING_BAL = ? WHERE account_id=?";
+		PreparedStatement stmt;
+		try {
+
+			stmt = con.prepareStatement(updateOpeningBal);
+			
+			stmt.setDouble(1, openingBal);
+			stmt.setInt(2, id);
+			
+			rowsUpdated = stmt.executeUpdate();
+			
+			stmt.close();
+			con.close();
+			
+			System.out.println("Updation Succesful-"+rowsUpdated);
+			
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rowsUpdated;
+	}
 }

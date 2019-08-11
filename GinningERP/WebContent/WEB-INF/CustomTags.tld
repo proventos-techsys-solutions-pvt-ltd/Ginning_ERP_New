@@ -33,13 +33,6 @@
 	<tag-class>com.prov.tags.GradeTag</tag-class>
 	<body-content>Empty</body-content>
    </tag>
-     
-   <tag>
-    <name>Account</name>
-	<tag-class>com.prov.tags.AccountTag</tag-class>
-	<body-content>Empty</body-content>
-   </tag>
-  
   <tag>
     <name>Customer</name>
 	<tag-class>com.prov.tags.CustomerTag</tag-class>

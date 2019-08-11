@@ -21,7 +21,7 @@ public int addGeneralLedger(GeneralLedger gl) {
 			e.printStackTrace();
 		}
 
-		String addGeneralLedger = "{ ? = call ADD_GENERALLEDGER(?,?,?,?,?,?,?) }";
+		String addGeneralLedger = "{ ? = call ADD_GENERALLEDGER(?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(addGeneralLedger);
@@ -31,12 +31,14 @@ public int addGeneralLedger(GeneralLedger gl) {
 			Date date=Date.valueOf(gl.getGlDate());	
 			
 			cs.setInt(2, gl.getVoucherNo());
-			cs.setInt(3,  gl.getAccountId());
-			cs.setDate(4, date);
-			cs.setInt(5,  gl.getMonthId());
-			cs.setDouble(6, gl.getOpeningBal());
-			cs.setDouble(7, gl.getDebit());
-			cs.setDouble(8, gl.getCredit());
+			cs.setInt(3, gl.getGroupId());
+			cs.setString(4, gl.getAccountLedger());
+			cs.setString(5, gl.getLedgerDesc());
+			cs.setDate(6, date);
+			cs.setDouble(7, gl.getOpeningBal());
+			cs.setDouble(8, gl.getDebit());
+			cs.setDouble(9, gl.getCredit());
+			cs.setDouble(10, gl.getClosingBal());
 			
 			cs.executeUpdate();
 			
@@ -47,7 +49,7 @@ public int addGeneralLedger(GeneralLedger gl) {
 			cs.close();
 			con.close();
 			
-			System.out.println("Insertion Succesful"+id);
+			System.out.println("Insertion Succesful--"+id);
 			} catch (SQLException e) {
 			e.printStackTrace();
 		}

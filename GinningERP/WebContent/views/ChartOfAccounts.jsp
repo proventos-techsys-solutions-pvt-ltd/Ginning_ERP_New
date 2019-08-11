@@ -51,15 +51,14 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr>
+							<th>Account ID</th>
 							<th>Account Name</th>
 							<th>Account Category</th>
 							<th>Description</th>
+							<th>Opening Balance</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-						
-						</tr>
+					<tbody id="tableBody">
 					</tbody>
 				</table>
 			</div>
@@ -76,27 +75,39 @@
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		        <form id="charOfAccounts">
+		        <form id="charOfAccounts" action="../processing/addAccountToGL.jsp">
+		        <input type="hidden" id="accountId" name="accountId" value="0"/>
 		        	<div class="form-row">
 		        		<div class="col-md-6">
 		        			<label>Account Category</label> <!-- take value from table accounttype -->
-		        			<select class="form-control form-control-sm" name="accountType" id="accountType">
+		        			<select class="form-control form-control-sm" name="accGroupId" id="accGroupId">
 		        				<c:AccountCategory/>
 		        			</select>
 		        		</div>
 		        		<div class="col-md-6">
 		        			<label>Account Name</label>
-							<input class="form-control form-control-sm" type="text" id="accountName" name="accountName">
+							<input class="form-control form-control-sm" type="text" id="accountLedgerName" name="accountLedgerName">
 		        		</div>
 		        		<div class="col-md-12">
 		        			<label>Description</label>
-		        			<textarea class="form-control form-control-sm" name="accountDescription" id="accountDescription"></textarea>
+		        			<textarea class="form-control form-control-sm" name="ledgerDesc" id="ledgerDesc"></textarea>
 		        		</div>
 		        	</div>
 		        	<div class="form-row">
-		        		<div class="col-md-6">
+		        		<div class="col-md-4">
 		        			<label>Opening Balance</label>
 		        			<input class="form-control form-control-sm" type="text" id="openingBal" name="openingBal">
+		        		</div>
+		        		<div class="col-md-2">
+		        			<label>Balance</label>
+		        			<select class="form-control form-control-sm" name="openingBalType" id="openingBalType">
+		        				<option value="1">Dr</option>
+		        				<option value="2">Cr</option>
+		        			</select>
+		        		</div>
+		        		<div class="col-md-6">
+		        			<label>Date</label>
+		        			<input class="form-control form-control-sm" type="date" id="openingBalDate" name="openingBalDate">
 		        		</div>
 		        	</div>
 		        	
@@ -105,12 +116,11 @@
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 		        <button type="button" class="btn btn-primary" id="saveButton" onclick="submitAccount()">Save and Close</button>
-		        <button type="button" class="btn btn-primary" id="updateButton" onclick="updateChartOfAccounts()">Update</button>
+		        <button type="button" class="btn btn-primary" id="updateButton" >Update</button>
 		      </div>
 		    </div>
 		  </div>
 		</div>
-		
 	</div>
 
 
@@ -122,29 +132,128 @@
 	callModalPopup("callAddAccount","addAccount");//Calling account add popup
 	
 	function submitAccount(){
-		
-		var companyId = document.getElementById('company').value;
-		var accountType = document.getElementById('accountType').value;
-		var accountName = document.getElementById('accountName').value;
-		var description = document.getElementById('accountDescription').value;
-		var openingBalance = document.getElementById('openingBal').value;
-		
-		url = "../processing/addAccount.jsp?company="+companyId+"&accountType="+accountType+"&accountName="+accountName+"&description="+description+"&openingBalance="+openingBalance;
-		
+		document.getElementById("charOfAccounts").submit();
+	}
+	
+	function fetchReport(){
+		url = "../processing/generalLedgerReport.jsp";
 		if(window.XMLHttpRequest){  
-			submitReq=new XMLHttpRequest();  
+			fetchRequest=new XMLHttpRequest();  
 		}  
 		else if(window.ActiveXObject){  
-			submitReq=new ActiveXObject("Microsoft.XMLHTTP");  
+			fetchRequest=new ActiveXObject("Microsoft.XMLHTTP");  
 		}  
 	  
 		try{  
+			fetchRequest.onreadystatechange=getLedgerData;  
 			console.log("AJAX Req sent");
-			submitReq.open("GET",url,true);  
-			submitReq.send();  
+			fetchRequest.open("GET",url,true);  
+			fetchRequest.send();  
 		}catch(e){alert("Unable to connect to server");}
-		
 	}
+	
+	function getLedgerData(){
+		if(fetchRequest.readyState == 4){
+			var response = this.response.trim();
+			console.log(response);
+			var data  = JSON.parse(response);
+			console.log(data);
+			setDataInTable(data);
+		}
+
+		function setDataInTable(data){
+			
+			var table = document.getElementById("tableBody");
+			
+			var dataLength = data.length;
+			
+			for(i=0; i<dataLength; i++)
+			{
+				var noOfRows = table.rows.length;
+				
+				var row = table.insertRow(noOfRows);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+				var cell3 = row.insertCell(2);
+				var cell4 = row.insertCell(3);
+				var cell5 = row.insertCell(4);
+				var cell6 = row.insertCell(5);
+				var cell7 = row.insertCell(6);
+				cell1.hidden=true;
+				cell7.hidden=true;
+				
+				cell1.innerHTML = data[i].id;
+				cell2.innerHTML = data[i].accountId;
+				cell3.innerHTML = data[i].accountLedger;
+				cell4.innerHTML = data[i].groupName;
+				cell5.innerHTML = data[i].ledgerDesc;
+				cell6.innerHTML = data[i].openingBal;
+				cell7.innerHTML = data[i].glDate;
+			}
+		}
+	}
+	fetchReport();
+	
+	
+	document.addEventListener('click',function(e){
+		if(e.srcElement.tagName === "TR"){
+			var rowIndex = e.srcElement.rowIndex;
+			var table = document.getElementById("tableBody");
+			
+			var selectGroup = document.getElementById("accGroupId");
+			for(i=0; i<selectGroup.options.length; i++){
+				if(table.rows[rowIndex].cell[3].innerHTML === selectGroup.options[i].innerHTML){
+					selectGroup.options[i].selected=true;
+					break;
+				}
+			}
+			var selectTrans = document.getElementById("openingBalType");
+				if(table.rows[rowIndex].cells[5].innerHTML > 0 ){
+					selectTrans.options[0].selected=true;
+				}
+				else if(table.rows[rowIndex].cells[5].innerHTML < 0 ){
+					selectTrans.options[1].selected=true;
+				}
+			document.getElementById("accountId").value = table.rows[rowIndex].cells[1].innerHTML;
+			document.getElementById("openingBal").value = table.rows[rowIndex].cells[5].innerHTML;
+			document.getElementById("accountLedgerName").value = table.rows[rowIndex].cells[2].innerHTML;
+			document.getElementById("ledgerDesc").value = table.rows[rowIndex].cells[4].innerHTML;
+			document.getElementById("openingBalDate").value = table.rows[rowIndex].cells[6].innerHTML;
+			
+			$("#addAccount").modal();
+		}
+		else if(e.srcElement.tagName === "TD"){
+			var rowIndex = Number(e.srcElement.parentNode.rowIndex) - 1;
+			var table = document.getElementById("tableBody");
+			
+			var selectGroup = document.getElementById("accGroupId");
+			for(i=0; i<selectGroup.options.length; i++){
+				if(table.rows[rowIndex].cells[3].innerHTML === selectGroup.options[i].innerHTML){
+					selectGroup.options[i].selected=true;
+					break;
+				}
+			}
+			var selectTrans = document.getElementById("openingBalType");
+				if(Number(table.rows[rowIndex].cells[5].innerHTML) > 0 ){
+					selectTrans.options[0].selected=true;
+				}
+				else if(Number(table.rows[rowIndex].cells[5].innerHTML) < 0 ){
+					selectTrans.options[1].selected=true;
+				}
+			document.getElementById("accountId").value = table.rows[rowIndex].cells[1].innerHTML;
+			document.getElementById("openingBal").value = table.rows[rowIndex].cells[5].innerHTML;
+			document.getElementById("accountLedgerName").value = table.rows[rowIndex].cells[2].innerHTML;
+			document.getElementById("ledgerDesc").value = table.rows[rowIndex].cells[4].innerHTML;
+			document.getElementById("openingBalDate").value = table.rows[rowIndex].cells[6].innerHTML;
+			
+			$("#addAccount").modal();
+		}
+	})
+	
+	document.getElementById("updateButton").addEventListener('click',function(e){
+		document.getElementById("charOfAccounts").action = "../processing/updateOpeningBalance.jsp";
+		document.getElementById("charOfAccounts").submit();	
+	})
 	
 	</script>	
 </body>

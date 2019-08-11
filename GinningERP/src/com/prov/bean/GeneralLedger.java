@@ -2,11 +2,43 @@ package com.prov.bean;
 
 public class GeneralLedger {
 	
-	private int id, voucherNo, accountId, monthId;
+	private int id, voucherNo, accountId, monthId, groupId;
 	
-	private String glDate;
+	private String glDate, accountLedger, ledgerDesc;
 
-	private double openingBal, debit, credit;
+	public int getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
+	}
+
+	public String getAccountLedger() {
+		return accountLedger;
+	}
+
+	public void setAccountLedger(String accountLedger) {
+		this.accountLedger = accountLedger;
+	}
+
+	public String getLedgerDesc() {
+		return ledgerDesc;
+	}
+
+	public void setLedgerDesc(String ledgerDesc) {
+		this.ledgerDesc = ledgerDesc;
+	}
+
+	public double getClosingBal() {
+		return closingBal;
+	}
+
+	public void setClosingBal(double closingBal) {
+		this.closingBal = closingBal;
+	}
+
+	private double openingBal, debit, credit, closingBal;
 
 	public int getId() {
 		return id;

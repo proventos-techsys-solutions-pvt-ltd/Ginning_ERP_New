@@ -23,16 +23,15 @@ public class AccountCategoryTag extends SimpleTagSupport {
 		TreeMap<Integer,String> accountCategory = new TreeMap<Integer,String>();
 		try {
 			 con = OracleConnection.getConnection();
-			 String accountQuery = "Select * from account_category_master order by account_category";
+			 String accountQuery = "Select * from account_group order by group_name";
 			 Statement stmt = con.createStatement();
 			 accountCatResultSet = stmt.executeQuery(accountQuery);
 			 while(accountCatResultSet.next()) {
-				 accountCategory.put(accountCatResultSet.getInt("id"),accountCatResultSet.getString("account_category"));
+				 accountCategory.put(accountCatResultSet.getInt("id"),accountCatResultSet.getString("group_name"));
 				}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		return accountCategory;
 	}
 	
