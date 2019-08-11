@@ -16,7 +16,7 @@
 		<%@include file="../views/CommonSearchHeaderForReports.jsp" %>
 		<div class="row mt-2 tile-background-row">
 		<div class="col-md-12">
-			<table class="table table-bordered mt-2">
+			<table id="tblCheck" class="table table-bordered mt-2">
 				<thead>
 					<tr>
 						<th width="10%">Cheque No</th>
@@ -116,19 +116,31 @@
 		<!-- OPTIONS MODAL POP-UP ENDS HERE  -->
 	</div>
 
-
 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="../excelExport/table2excel.js"></script>
+    <script type="text/javascript">
+        function Export() {
+            $("#tblCheck").table2excel({
+            	filename: "CheckRegister.xls"
+            });
+        }
+	</script>
 	<script>
 	setTitle("Check Register");//Setting Title of Page
 	setSearchPlaceholder("Cheque");//Setting Placeholder of Search Input
 	callModalPopup("options","optionsModal");//calling option pop-up
 	document.getElementById("clearFilterBtn").disabled = true;//disable clear filter button
 	document.getElementById("filterBtn").addEventListener("click",function(){
-		document.getElementById("clearFilterBtn").disabled = false;
+	document.getElementById("clearFilterBtn").disabled = false;	
+	})
+	document.getElementById("exportToExcel").addEventListener("click",function(){
+	Export();
 	})
 	</script>
+  
 </body>
 </html>
