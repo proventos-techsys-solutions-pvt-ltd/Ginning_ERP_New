@@ -1,3 +1,5 @@
+<%@page import="com.prov.bean.StockMast"%>
+<%@page import="com.prov.dbinsertion.AddStockMast"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="com.prov.bean.Company"%>
 <%@page import="com.prov.dbinsertion.AddCompany"%>

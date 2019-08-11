@@ -31,6 +31,16 @@
                     </div>   
                 </div>
                 
+                <div class="row tile-background-row">
+                	<div class="col-md-auto">
+                		<label>Beginning year</label>
+                		 <input type="date" class="form-control form-control-sm" id="" name="">
+                		 <label>Beginning year</label>
+                		 <input type="date" class="form-control form-control-sm" id="" name="">
+                		 <button type="button" class="btn btn-success btn-sm">Setup</button>
+                	</div>
+                </div>
+                
              <div class="row mt-2 tile-background-row">
              	<div class="col-md-2">
              		<label class="lbl-rm-l">Company</label>

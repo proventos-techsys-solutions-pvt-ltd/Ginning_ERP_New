@@ -32,7 +32,6 @@ public class AddStockMast {
 				
 				Date stockSqlDate=Date.valueOf(sm.getStockDate());
 	
-				
 				cs = con.prepareCall(addStock);
 				
 				cs.registerOutParameter(1, Types.NUMERIC);
@@ -98,5 +97,59 @@ public class AddStockMast {
 		
 		return rowCount;
 	}
+	
+	public int addFirstStockMast(StockMast sm) {
+		
+		sm.setCottonBales(sm.getRawCotton()*0.35);
+		sm.setCottonSeed(sm.getRawCotton()*0.64);
+		sm.setCottonSeedOil(sm.getCottonSeed()*0.10);
+		sm.setCottonCakes(sm.getCottonSeed()-(sm.getCottonSeed()*0.12));
+		
+		Connection con = null;
+		int id = 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		java.util.Date utilDate = new java.util.Date();
+		
+		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+		String addStock = "{ ? = call ADD_STOCK(?,?,?,?,?,?,?,?) }";
+		CallableStatement cs;
+		try {
+			
+			cs = con.prepareCall(addStock);
+			
+			cs.registerOutParameter(1, Types.NUMERIC);
+			
+			cs.setDate(2, sqlDate);
+			cs.setInt(3, sm.getCompanyId());
+			cs.setDouble(4, sm.getRawCotton());
+			cs.setDouble(5, sm.getCottonBales());
+			cs.setDouble(6, sm.getCottonSeed());
+			cs.setDouble(7, sm.getCottonSeedOil());
+			cs.setDouble(8, sm.getCottonCakes());
+			cs.setDouble(9, sm.getAvgRate());
+			
+			cs.executeUpdate();
+			
+			id = cs.getInt(1);
+			
+			sm.setId(id);
+			
+			cs.close();
+			con.close();
+			
+			System.out.println("Insertion Succesful"+id);
+			} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return id;
+	}	
+
 }
 
