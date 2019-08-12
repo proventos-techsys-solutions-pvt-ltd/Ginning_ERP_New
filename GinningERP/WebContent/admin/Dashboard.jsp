@@ -57,10 +57,10 @@
 	  	<div class="col-md-3">
 	  			<div class="d-flex justify-content-between align-items-center inner3 border">
 	  				<div>
-	  					callout
+	  					Financial Year	
 	  				</div>
 	  				<div>
-	  					Avrage Rate
+	  					2019-20
 	  				</div>
 	  			</div>
 	  	</div>
@@ -71,8 +71,7 @@
              	<div class="col-md-2">
              		<label class="lbl-rm-l">Company</label>
              		<select class="form-control form-control-sm" id="companyId">
-             			<option disabled selected>Selected</option>
-             			<option value="0">All</option>
+             			<option value="0" selected>All</option>
              			<c:Company />
              		</select>
              	</div>
@@ -135,6 +134,8 @@
 <script src="../chart/package/dist/Chart.bundle.js" ></script>
 	<script>
 
+		getStockReport(0);
+		
 		document.addEventListener('change', function(e){
 			if(e.srcElement.id === 'companyId'){
 				getStockReport(e.srcElement.options[e.srcElement.selectedIndex].value);
@@ -183,14 +184,14 @@
 			         {
 			             fill: true,
 			             backgroundColor: [
-			                 '#296b7b',
-			                 '#834a50',
-			                 '#fed201',
-			                 '#cc3733'],
+			                 'black',
+			                 'white',
+			                 'green',
+			                 'orange'],
 			             data: [obj.closingStock.cottonBales,obj.closingStock.cottonSeed,obj.closingStock.cottonSeedOil,obj.closingStock.cottonCakes],
 			 // Notice the borderColor 
-			             borderColor: ['#fff', '#fff','#fff','#fff'],
-			             borderWidth: [1,1,1,1]
+			             borderColor: ['black', 'black','black','black'],
+			             borderWidth: [2,2,2,2]
 			         }
 			     ]
 			 };
@@ -208,7 +209,7 @@
 
 			 // Chart declaration:
 			 var myBarChart = new Chart(ctx, {
-			     type: 'doughnut',
+			     type: 'pie',
 			     data: data,
 			     options: options
 			 });

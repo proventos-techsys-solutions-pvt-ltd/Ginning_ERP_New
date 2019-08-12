@@ -24,27 +24,11 @@ var uiController = (function(){
 			updateButton : "update"
 	}
 	
-	var addSetupCompanyRow = function(){//Table row add function
-		if(appController.getDataForSetup().getCompanyName !== null && appController.getDataForSetup().getTodayHeap !== null && appController.getDataForSetup().getBankName !==null ){
+	var insertTableRow = function(){//insert table row
 		
+		if(table.rows[Number(rowNumber-1)].cells[1].children[0].value!==""){
 		var table = appController.hmtlPageObjectsMethod().companySetupTableBody; // fetch table object
 		var rowNumber = table.rows.length; // gives the row count
-		
-		document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[0].querySelector('input').value = "1";
-		document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[1].querySelector('input').value = "1";
-		document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[2].querySelector('input').value = appController.getDateAndTime().date;
-		document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[3].querySelector('input').value = appController.getDateAndTime().time;
-		document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[4].querySelector('input').value = "00:00";
-		document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[5].querySelector('input').value = appController.getDataForSetup().getCompanyName;
-		document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[6].querySelector('input').value = appController.getDataForSetup().getTodayHeap;
-		document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[7].querySelector('input').value = appController.getDataForSetup().getBankName;
-		document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[10].querySelector('button').disabled = false;
-		document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[11].querySelector('button').disabled = true;
-		
-		document.getElementById(ids.addCompanyId).disabled = true; // Add company button has disabled
-		document.getElementById(ids.lockUsersButton).disabled = false; // Lock user button enabled	
-		
-			if(table.rows[Number(rowNumber-1)].cells[1].children[0].value!==""){
 			
 			var row = table.insertRow(rowNumber); // 
 			
@@ -74,9 +58,32 @@ var uiController = (function(){
 			cell11.innerHTML = '<td><button type="button" class="btn btn-success btn-sm" id="" name="setup" disabled>Setup</button></td>';
 			cell12.innerHTML = '<td><button type="button" class="btn btn-success btn-sm" id="" name="update" disabled>Update</button></td>'
 				
-				var rowNumber = table.rows.length; //updating the row count
 				
 			}
+	}
+	
+	var addSetupCompanyRow = function(){//Table row add function
+		if(appController.getDataForSetup().getCompanyName !== null && appController.getDataForSetup().getTodayHeap !== null && appController.getDataForSetup().getBankName !==null ){
+		
+		var table = appController.hmtlPageObjectsMethod().companySetupTableBody; // fetch table object
+		var rowNumber = table.rows.length; // gives the row count
+		console.log("new row number"+rowNumber);
+				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[0].querySelector('input').value = "1";
+				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[1].querySelector('input').value = "1";
+				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[2].querySelector('input').value = appController.getDateAndTime().date;
+				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[3].querySelector('input').value = appController.getDateAndTime().time;
+				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[4].querySelector('input').value = "00:00";
+				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[5].querySelector('input').value = appController.getDataForSetup().getCompanyName;
+				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[6].querySelector('input').value = appController.getDataForSetup().getTodayHeap;
+				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[7].querySelector('input').value = appController.getDataForSetup().getBankName;
+				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[10].querySelector('button').disabled = false;
+				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[11].querySelector('button').disabled = true;
+				
+				document.getElementById(ids.addCompanyId).disabled = true; // Add company button has disabled
+				document.getElementById(ids.lockUsersButton).disabled = false; // Lock user button enabled	
+				
+				insertTableRow();
+		
 		}else{
 			alert("PLEASE SELECT COMPANY NAME, HEAP AND BANK");
 		}

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+  <%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <!doctype html>
 <html>
 <head>
@@ -102,7 +103,8 @@
                                             <th width="7%">Moisture</th>
                                             <th width="7%">Rate / Qntl</th>
                                             <th width="7%">Amount</th>
-                                            <th width="3%" class="text-center">Amanat</th>  
+                                            <th width="2%" class="text-center">Amanat</th>
+                                            <th width="2%" class="text-center">PDC</th>   
                                         </tr>
                                         </thead>
                                         <tbody id='tableBody'>
@@ -393,9 +395,12 @@
 			var cell9 = row.insertCell(8);
 			var cell10 = row.insertCell(9);
 			var cell11 = row.insertCell(10);
-			cell9.setAttribute('hidden','hidden');
+			var cell12 = row.insertCell(11);
+			cell8.className ="text-center";
+			cell9.className = "text-center";
 			cell10.setAttribute('hidden','hidden');
 			cell11.setAttribute('hidden','hidden');
+			cell12.setAttribute('hidden','hidden');
 			
 			cell1.innerHTML = '<input type="text" id="tableRst'+(rowNo+1)+'" class="form-control form-control-sm" name="tableRst" value="'+data[i].rst+'" readonly>';
 			cell2.innerHTML = '<input type="text" id="material'+(rowNo+1)+'" class="form-control form-control-sm" name="material" value="'+data[i].material+'" readonly>';
@@ -405,9 +410,10 @@
 			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+data[i].rate+'" >';
 			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+(data[i].rate * (data[i].quantity/100))+'" readonly>';
 			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" >';
-			cell9.innerHTML = '<input type="hidden" id="gradeId'+(rowNo+1)+'" class="lbl-rm-all" name="gradeId" value="'+data[i].gradeId+'" >';
-			cell10.innerHTML = '<input type="hidden" id="weighmentId'+(rowNo+1)+'" class="lbl-rm-all" name="weighmentId" value="'+data[i].weighmentId+'" >';
-			cell11.innerHTML = '<input type="hidden" id="gradeDesc'+(rowNo+1)+'" class="lbl-rm-all" name="gradeDesc" value="'+data[i].gradeDesc+'" >';
+			cell9.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="pdcCheck" value="false" >';
+			cell10.innerHTML = '<input type="hidden" id="gradeId'+(rowNo+1)+'" class="lbl-rm-all" name="gradeId" value="'+data[i].gradeId+'" >';
+			cell11.innerHTML = '<input type="hidden" id="weighmentId'+(rowNo+1)+'" class="lbl-rm-all" name="weighmentId" value="'+data[i].weighmentId+'" >';
+			cell12.innerHTML = '<input type="hidden" id="gradeDesc'+(rowNo+1)+'" class="lbl-rm-all" name="gradeDesc" value="'+data[i].gradeDesc+'" >';
 
 		}
 		calculateTotal();
