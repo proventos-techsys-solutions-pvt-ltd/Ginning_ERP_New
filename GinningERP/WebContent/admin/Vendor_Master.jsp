@@ -18,7 +18,7 @@
 	 <%@include file="../admin/CommonSearchHeaderForReports.jsp" %>
 		<div class="row mt-2 row-background">
 			<div class="col-md-12">
-				<table class="table table-bordered">
+				<table id="tblCustomer" class="table table-bordered">
 					<thead>
 						<tr>
 							<th>Name</th>
@@ -90,6 +90,16 @@
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 		<script src="../js/commonjs.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script src="../js/export/export2excel.js"></script>
+    	<script type="text/javascript">
+        function Export() {
+            $("#tblCustomer").export2excel({
+            	filename: "Customers.xls"
+            });
+        }
+		</script>
+		
 		<script>
 			setTitle("Vendor Master");//Setting Title of Page
 			setSearchPlaceholder("Search");//Setting Placeholder of Search Input
@@ -215,6 +225,10 @@
 		document.getElementById('updateCustomerForm').submit();
 		
 	});
+	
+	document.getElementById("exportToExcel").addEventListener("click",function(){
+		Export();
+		})
 	
 		</script>
 </body>

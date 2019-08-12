@@ -1,19 +1,19 @@
 /*
-*  jQuery table2excel - v1.1.1
+*  jQuery export2excel - v1.1.1
 *  jQuery plugin to export an .xls file in browser from an HTML table
-*  https://github.com/rainabba/jquery-table2excel
+*  https://github.com/rainabba/jquery-export2excel
 *
 *  Made by Akshay Patole
 *  Under MIT License
 */
-//table2excel.js
+//export2excel.js
 ; (function ($, window, document, undefined) {
-    var pluginName = "table2excel",
+    var pluginName = "export2excel",
 
     defaults = {
         exclude: ".noExl",
-        name: "Table2Excel",
-        filename: "table2excel",
+        name: "Export2Excel",
+        filename: "export2excel",
         fileext: ".xls",
         exclude_img: true,
         exclude_links: true,
@@ -192,7 +192,7 @@
     };
 
     function getFileName(settings) {
-        return (settings.filename ? settings.filename : "table2excel");
+        return (settings.filename ? settings.filename : "export2excel");
     }
 
     // Removes all img tags
