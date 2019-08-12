@@ -16,26 +16,35 @@
 <%@include file="../admin/Top_Nav.html" %>
 <div class="container-fluid container-mr-t">
 	<%@include file="../admin/Side_bar.html" %>
- 	<div class="row row-background border-bottom">
-		<div class="col-md-3">
-			<div class="d-flex justify-content-start align-items-center">
-				<img src="../property/img/factory.png" alt="warehouse">&nbsp;
-				<h4 class="lbl-rm-all">Daily Setup</h4>
+ <div hidden>
+        	<%
+			    out.print(session.getAttribute("setupId"));
+			    session.removeAttribute("setupId");
+			%>
+         </div>
+			<div class="row mt-2 row-background border-bottom">
+				<div class="col-md-3">
+					<div class="d-flex justify-content-start align-items-center">
+						<img src="../property/img/factory.png" alt="warehouse">&nbsp;
+						<h4 class="lbl-rm-all">Daily Setup</h4>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<h4 class="lbl-rm-all" id="todaysDate"></h4>
+				</div>
+				
+				<div class="col-md-3 offset-md-3 text-right">
+					<button type="button" class="btn btn-success" id="addCompany">Add Company</button>
+					<button type="button" class="btn btn-success" id="lockUsers">Lock Users</button>
+				</div>
 			</div>
-		</div>
-		<div class="col-md-3">
-			<h4 class="lbl-rm-all" id="todaysDate"></h4>
-		</div>
-		
-		<div class="col-md-3 offset-md-3 text-right">
-			<button type="button" class="btn btn-success" id="addCompany">Add Company</button>
-			<button type="button" class="btn btn-success" id="lockUsers">Lock Users</button>
-		</div>
-	</div>
-	<form action='../processing/addDailySetup.jsp'>
-			<input type="hidden" name="dailySetupOutput" id="dailySetupOutput" />
-	</form>
-    <div class="row row-background">
+			<form id="dailySetupForm" action='../processing/addDailySetup.jsp'>
+					<input type="hidden" name="dailySetupOutput" id="dailySetupOutput" />
+			</form>
+			<form id="addChequeForm" action='../processing/addCheques.jsp'>
+					<input type="hidden" name="addCheques" id="addCheques" />
+			</form>
+			<div class="row row-background">
 				<div class="col-md-3">
 					<div class="d-flex justify-content-start align-items-center">
 						<img src="../property/img/factory.png" alt="warehouse">&nbsp;
@@ -64,16 +73,17 @@
 		      		</select>
 		      		</div>
 	      		</div>
-	      		<div class="col-md-2">
+	      		<div class="col-md-auto">
 					<label class="lbl-rm-l">Bonus Addition</label>
 					<input class="form-control form-control-sm" name="bonusAmount" id="bonusAmount">
 				</div>
 			</div>
-			<div class="row row-background">
+				<div class="row row-background">
 					<div class="col-md-12">
 						<table class="table table-bordered" id="companySetupTable">
 							<thead>
 								<tr class="table-back">
+									<th rowspan="2" >Hid Fld</th>
 									<th rowspan="2" width="5%" style="vertical-align:middle;">Sr No</th>
 									<th rowspan="2" width="8%" style="vertical-align:middle;">Date</th>
 									<th rowspan="2" width="8%" style="vertical-align:middle;">Setup Time</th>
@@ -90,8 +100,11 @@
 									<th width="7%" style="vertical-align:middle;text-align:center;">To</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="tableBody">
 								<tr>
+									<td>
+										<input type="text" class="form-control form-control-sm" id="setupId" name="setupId" readonly>
+									</td>
 									<td>
 										<input type="text" class="form-control form-control-sm" id="srNoTable" name="srNoTable" readonly>
 									</td>
@@ -102,7 +115,7 @@
 										<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="setupTimeTable" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="discardTimeTable" name="discardTimeTable" readonly>
+										<input type="text" class="form-control form-control-sm" id="discardTimeTable" name="discardTimeTable" value="NA" readonly>
 									</td>
 									<td>
 										<input type="text" class="form-control form-control-sm" id="companyNameTable" name="companyNameTable" readonly>
@@ -114,10 +127,10 @@
 										<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" readonly>
 									</td>
 									<td>
-										<input class="form-control form-control-sm" name="firstChequeNo" id="firstChequeNo"/>
+										<input type="text" class="form-control form-control-sm" name="firstChequeNo" id="firstChequeNo"/>
 									</td>
 									<td>
-										<input class="form-control form-control-sm" name="lastChequeNo" id="lastChequeNo"/>
+										<input type="text" class="form-control form-control-sm" name="lastChequeNo" id="lastChequeNo"/>
 									</td>
 									<td>
 										<button type="button" class="btn btn-success btn-sm" id="setup" name="setup">Setup</button>
@@ -200,7 +213,7 @@
 				</div>
 			</div>
 			
-			<div class="row row-background" id="bankDetails">
+			<div class="row tile-background-row" id="bankDetails">
 				
 			</div>
 			
@@ -361,16 +374,108 @@
 			      </div>
 			    </div>
 			  </div>
-			</div>     
-         
-</div>
-
-<script src="../js/jquery-3.3.1.slim.min.js" ></script>
-<script src="../js/popper.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/commonjs.js"></script>
-<script src="../js/dailysetup.js"></script>
-<script>
+			</div>
+			</div>
+	
+	
+	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
+	<script src="../js/popper.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/dailysetup.js"></script>
+	<script src="../js/commonjs.js"></script>
+	<script>
+	
+	
+	function getSetupReport(companyId){
+		var url="../processing/fetchDailySetup.jsp";
+		if(window.XMLHttpRequest){  
+			fetchSetupReport=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchSetupReport=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+	  
+		try{  
+			fetchSetupReport.onreadystatechange=fetchSetupData;  
+			console.log("AJAX Req sent");
+			fetchSetupReport.open("GET",url,true);  
+			fetchSetupReport.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	function fetchSetupData()
+	{
+		if(fetchSetupReport.readyState == 4){
+			var response = this.response.trim();
+			setSetupDataInTable(response)
+		}
+	}
+	
+	function setSetupDataInTable(response){
+		var data = JSON.parse(response);
+		var setupArrLength = data.length;
+		
+		var tableBody = document.getElementById("tableBody");
+		if(setupArrLength != 0){
+			console.log(data);
+			for(i=0; i<setupArrLength; i++){
+				if(i===0){
+					tableBody.rows[0].cells[0].children[0].value = data[i].id;
+					tableBody.rows[0].cells[1].children[0].value = 1;
+					tableBody.rows[0].cells[2].children[0].value = data[i].setupDate;
+					tableBody.rows[0].cells[3].children[0].value = data[i].setupTime;
+					if(data[i].hasOwnProperty('discardTime')){
+						tableBody.rows[0].cells[4].children[0].value = data[i].discardTime;
+					}else{
+						tableBody.rows[0].cells[4].children[0].value = 'NA';
+					}
+					tableBody.rows[0].cells[5].children[0].value = data[i].companyId;
+					tableBody.rows[0].cells[6].children[0].value = data[i].cottonHeap;
+					tableBody.rows[0].cells[7].children[0].value = data[i].bankId;
+					tableBody.rows[0].cells[8].children[0].value = data[i].firstChequeNo;
+					tableBody.rows[0].cells[8].children[0].readOnly = true;
+					tableBody.rows[0].cells[9].children[0].value = data[i].lastChequeNo;
+				}else{
+					var rowNumber = tableBody.rows.length;
+					var row = tableBody.insertRow(rowNumber);
+					var cell1 = row.insertCell(0);
+					var cell2 = row.insertCell(1);
+					var cell3 = row.insertCell(2);
+					var cell4 = row.insertCell(3);
+					var cell5 = row.insertCell(4);
+					var cell6 = row.insertCell(5);
+					var cell7 = row.insertCell(6);
+					var cell8 = row.insertCell(7);
+					var cell9 = row.insertCell(8);
+					var cell10 = row.insertCell(9);
+					var cell11 = row.insertCell(10);
+					var cell12 = row.insertCell(11);
+					//cell1.hidden=true;
+					
+					cell1.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupId" name="setupId" value="'+data[i].id+'" readonly>';
+					cell2.innerHTML = '<input type="text" class="form-control form-control-sm" id="srNoTable" name="srNoTable" value="'+(i+2)+'" readonly>';
+					cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="dateTable" name="dateTable" value="'+data[i].setupDate+'" readonly>';
+					cell4.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="setupTimeTable" value="'+data[i].setupTime+'" readonly>';
+					if(data[i].hasOwnProperty('discardTime')){
+						cell5.innerHTML = '<input type="text" class="form-control form-control-sm" id="discardTimeTable" name="discardTimeTable" value="'+data[i].discardTime+'" readonly>';
+					}
+					else{
+						cell5.innerHTML = '<input type="text" class="form-control form-control-sm" id="discardTimeTable" name="discardTimeTable" value="NA" readonly>';
+					}
+					cell6.innerHTML = '<input type="text" class="form-control form-control-sm" id="companyNameTable" name="companyNameTable" value="'+data[i].companyId+'" readonly>';
+					cell7.innerHTML = '<input type="text" class="form-control form-control-sm" id="heapTable" name="heapTable" value="'+data[i].cottonHeap+'" readonly>';
+					cell8.innerHTML = '<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" value="'+data[i].bankId+'" readonly>';
+					cell9.innerHTML = '<input type="text" class="form-control form-control-sm" id="firstChequeNo" name="firstChequeNo" value="'+data[i].firstChequeNo+'" readonly>';
+					cell10.innerHTML = '<input type="text" class="form-control form-control-sm" id="lastChequeNo" name="lastChequeNo" value="'+data[i].lastChequeNo+'">';
+					cell11.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="setup" name="setup" disabled="">Setup</button>';
+					cell12.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="update" name="update" disabled="">Update</button>';
+				}
+			}
+		}
+	}
+	
+	getSetupReport();
+	
 	
 	document.addEventListener('change', function(e){
 		if(e.srcElement.id === 'companyId'){
@@ -398,7 +503,6 @@
 	 function fetchCompanyData(){
 		 if(fetchCompReport.readyState == 4){
 			 var response = this.response.trim();
-			 console.log(JSON.parse(response));
 			 setCashdata(response);
 			 setBankdata(response);
 		 }
@@ -486,7 +590,6 @@
 	
 	function setGradeData(gradeData){
 		var json = JSON.parse(gradeData);
-		console.log(gradeData);
 		var table = document.getElementById('gradeTableBody');
 		for(i=0; i< json.length; i++){
 			var rowNumber = table.rows.length;
@@ -541,9 +644,8 @@
 	})
 	
 	document.addEventListener('click',function(e){
-		if(e.srcElement.id === "setup"){
+		if(e.srcElement.name === "setup"){
 			var rowIndex = e.srcElement.parentElement.parentElement.rowIndex-2;
-			console.log("rowIndex---"+rowIndex);
 			submitDailySetup(rowIndex);
 		}
 	})
@@ -561,7 +663,7 @@
 		jsonObj['todaysBankId'] = document.getElementsByName('bankTable')[rowIndex].value;
 		jsonObj['firstChequeNo'] = document.getElementsByName('firstChequeNo')[rowIndex].value;
 		jsonObj['lastChequeNo'] = document.getElementsByName('lastChequeNo')[rowIndex].value;
-		jsonObj['totalCheques'] = Number(document.getElementsByName('lastChequeNo')[rowIndex].value)-Number(document.getElementsByName('firstChequeNo')[rowIndex].value)+1;
+		jsonObj['totalCheques'] = (Number(document.getElementsByName('lastChequeNo')[rowIndex].value)-Number(document.getElementsByName('firstChequeNo')[rowIndex].value)+1).toString();
 
 		jsonArray = [];
 		
@@ -575,14 +677,10 @@
 		}
 		
 		jsonObj['gradeRates'] = jsonArray;
-		
 		var jsonStr = JSON.stringify(jsonObj);
 		console.log(jsonStr);
-		
 		document.getElementById('dailySetupOutput').value=jsonStr;
-		
-		document.getElementsByTagName('form')[0].submit();
-				
+		document.getElementById('dailySetupForm').submit();
 	}
 
 	document.addEventListener('keyup', function(e){
@@ -593,6 +691,27 @@
 		}
 	})
 	
+	document.addEventListener('click',function(e){
+		if(e.srcElement.name === "update"){
+			var rowIndex = e.srcElement.parentElement.parentElement.rowIndex-2;
+			submitDailySetup(rowIndex);
+		}
+	})
+	
+	function addCheques(rowIndex){
+		
+		jsonObj={};
+		
+		jsonObj['firstChequeNo'] = document.getElementsByName('firstChequeNo')[rowIndex].value;
+		jsonObj['lastChequeNo'] = document.getElementsByName('lastChequeNo')[rowIndex].value;
+		jsonObj['totalCheques'] = (Number(document.getElementsByName('lastChequeNo')[rowIndex].value)-Number(document.getElementsByName('firstChequeNo')[rowIndex].value)+1).toString();
+		jsonObj['setupId'] = document.getElementsByName('setupId')[rowIndex].value;
+		var jsonStr = JSON.stringify(jsonObj);
+		document.getElementById('addCheques').value=jsonStr;
+		document.getElementById('addChequeForm').submit();
+		addCheques
+	}
+	
 	function setDisplayDate(){
 		var today = new Date();
 		var date1 = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
@@ -602,9 +721,6 @@
 	setDisplayDate();
 	gradeReport();
 	
-	
-
 	</script>
-
 </body>
 </html>

@@ -1,6 +1,6 @@
 
 .sidebar{
-	heigth:100%;
+	display:block ;
 	width:200px;
 	position:fixed;
 	top:56px;
@@ -9,15 +9,17 @@
 	background-color:#343a40;
 	color:#fff;
 	overflow-x: hidden;
-	
 }
+
 .sidebar-menu-panel{
 	padding-left:10px;
 }
+
 .menu-item{
 	border-top:1px solid #fff;
 	padding:5px 0px 5px 0px;
 }
+
 .menu-item:hover{
 	background-color:#5eb75b;
 }
@@ -107,6 +109,10 @@ h4,h5{
 }
 input,button{
 	margin-bottom:.5rem;
+	
+}
+checkbox{
+	margin-bottom:0rem;
 }
 .form-control-sm{
 	border-radius:0px;
@@ -177,7 +183,7 @@ input,button{
 	padding:5px;
 }
 /*******************************MEDIA ************************/
-@media screen and (max-width: 768px){
+@media only screen and (max-width: 768px){
 	.sidebar{
 		display:none;
 		z-index:1;
@@ -191,4 +197,9 @@ input,button{
 	.row{
 		margin-left:5px;
 	}
+}
+@media only screen and (min-width: 769px){
+	.sidebar{
+		display:block !important;
+	}	
 }
