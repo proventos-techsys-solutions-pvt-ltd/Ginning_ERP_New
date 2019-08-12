@@ -2,8 +2,16 @@ package com.prov.bean;
 
 public class GeneralLedger {
 	
-	private int id, voucherNo, accountId, monthId, groupId;
+	private int id, voucherNo, accountId, monthId, groupId, companyId;
 	
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
+	}
+
 	private String glDate, accountLedger, ledgerDesc;
 
 	public int getGroupId() {

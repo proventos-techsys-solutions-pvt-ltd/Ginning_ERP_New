@@ -23,7 +23,7 @@ public class UpdateGeneralLedger {
 			e.printStackTrace();
 		}
 
-		String updateCustomer = "{ ? = call UPDATE_GENERALLEDGER(?,?,?,?,?,?,?,?,?,?,?,?) }";
+		String updateCustomer = "{ ? = call UPDATE_GENERALLEDGER(?,?,?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(updateCustomer);
@@ -44,6 +44,7 @@ public class UpdateGeneralLedger {
 			cs.setDouble(11, gl.getDebit());
 			cs.setDouble(12, gl.getCredit());
 			cs.setDouble(13, gl.getClosingBal());
+			cs.setInt(14, gl.getCompanyId());
 			
 			cs.executeUpdate();
 			

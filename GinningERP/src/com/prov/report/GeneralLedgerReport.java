@@ -37,7 +37,8 @@ public class GeneralLedgerReport {
 					"gl.OPENING_BAL,\r\n" + 
 					"gl.DEBIT,\r\n" + 
 					"gl.CREDIT,\r\n" + 
-					"gl.CLOSING_BAL,\r\n" + 
+					"gl.CLOSING_BAL,\r\n" +
+					"gl.COMPANY_ID,\r\n" +
 					"ag.group_name\r\n" + 
 					"FROM GENERAL_LEDGER gl, account_group ag \r\n" + 
 					"where gl.group_id = ag.id";
@@ -63,8 +64,9 @@ public class GeneralLedgerReport {
 				gl.setDebit(rs.getDouble(10));
 				gl.setCredit(rs.getDouble(11));
 				gl.setClosingBal(rs.getDouble(12));
+				gl.setCompanyId(rs.getInt(13));
 				JSONObject obj = new JSONObject(gl);
-				obj.put("groupName", rs.getString(13));
+				obj.put("groupName", rs.getString(14));
 				
 				jsonArr.put(obj);
 			}

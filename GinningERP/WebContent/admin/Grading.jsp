@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<title>Dashboard</title>
+<title>Goods Grading Note</title>
 </head>
 
 <body>
@@ -80,6 +80,10 @@
 						<div class="col-md-2">
 							<label class="lbl-rm-all">Blacklisted</label>
 							<input type="text" class="form-control form-control-sm" id="vendorBlacklisted" name="vendorBlacklisted" readonly>
+						</div>
+						<div class="col-md-2">
+							<label class="lbl-rm-all">Bonus Amount per Quintal</label>
+							<input type="text" class="form-control form-control-sm" id="bonusAmount" name="bonusAmount" value="0" readonly>
 						</div>
 					</div>
 					<div class="form-row form-row-ctm">
@@ -157,7 +161,6 @@ function checkDailySetup(){
 function getDailySetupRecords(){
 	if(dailySetup.readyState == 4){
 		var response = this.response.trim();
-		console.log("daily Setup---"+response);
 		if(Number(response) > 0){
 			//$.unblockUI
 		}
@@ -165,6 +168,29 @@ function getDailySetupRecords(){
 			//$.blockUI();
 		}
 	} 
+}
+
+function fetchBonusRate(){
+	var url="${pageContext.request.contextPath}/processing/getLatestBonusRate.jsp";
+	if(window.XMLHttpRequest){  
+		fetchBonus=new XMLHttpRequest();  
+	}  
+	else if(window.ActiveXObject){  
+		fetchBonus=new ActiveXObject("Microsoft.XMLHTTP");  
+	}  
+	try{  
+		fetchBonus.onreadystatechange=getBonusAmount;  
+		console.log("AJAX Req sent");
+		fetchBonus.open("GET",url,true);  
+		fetchBonus.send();  
+	}catch(e){alert("Unable to connect to server");}
+}
+
+function getBonusAmount(){
+	if(fetchBonus.readyState == 4){
+		console.log("bonus ---" +this.response.trim());
+		document.getElementById("bonusAmount").value = this.response.trim();
+	}
 }
 
 //Global variables
@@ -538,6 +564,7 @@ document.addEventListener("change",function(e){
 });
 
 checkDailySetup();
+fetchBonusRate();
 </script>
 
 </body>

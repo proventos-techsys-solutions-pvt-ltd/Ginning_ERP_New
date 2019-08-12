@@ -67,6 +67,10 @@
 						<label>Date</label>
 						<input type="date" class="form-control form-control-sm" name="date" id="date">
 						</div>
+						<div class="form-group col-md-6">
+						<label>Opening Balance</label>
+						<input type="text" class="form-control form-control-sm" name="openingBal" id="openingBal">
+						</div>
 					</div>
 				</form>
 					<div class="d-flex justify-content-end align-items-center">

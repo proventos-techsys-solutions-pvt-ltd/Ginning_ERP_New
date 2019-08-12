@@ -1,3 +1,5 @@
+<%@page import="com.prov.dbinsertion.AddGeneralLedger"%>
+<%@page import="com.prov.bean.GeneralLedger"%>
 <%@page import="com.prov.dbinsertion.AddBank"%>
 <%@page import="com.prov.bean.Bank"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -11,6 +13,7 @@
     String ifsc = request.getParameter("ifsc").toUpperCase();
     String micr = request.getParameter("micr").toUpperCase();
     String date = request.getParameter("date");
+    double openingBalance = Double.parseDouble(request.getParameter("openingBal"));
     
     Bank b = new Bank();
     
@@ -25,7 +28,25 @@
     
     int bankId = ab.addBank(b);
     
+    String bankAccountName = b.getBankName()+" - "+(b.getAccountNo().substring(b.getAccountNo().length() - 4));
+    
+    GeneralLedger gl = new GeneralLedger();
+    
+    gl.setAccountLedger(bankAccountName);
+    gl.setCompanyId(b.getCompanyId());
+    gl.setGlDate(date);
+    gl.setGroupId(1);
+    gl.setLedgerDesc(b.getBankName());
+    gl.setOpeningBal(openingBalance);
+    gl.setCredit(0);
+    gl.setDebit(0);
+	gl.setClosingBal(0);
+    
+    AddGeneralLedger addGl = new AddGeneralLedger();
+    
+    addGl.addGeneralLedger(gl);
+	
     session.setAttribute("bankId", Integer.toString(bankId));
-    response.sendRedirect("../views/SetupBanks.jsp");
+    response.sendRedirect("../admin/Setup_Bank.jsp");
     
     %>

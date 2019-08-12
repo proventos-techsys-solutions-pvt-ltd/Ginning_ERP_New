@@ -6,6 +6,7 @@
     <%
     
     	int groupId = Integer.parseInt(request.getParameter("accGroupId"));
+    	int companyId = Integer.parseInt(request.getParameter("companyId"));
     	String accountName = request.getParameter("accountLedgerName").toUpperCase();
     	String accountDesc = request.getParameter("ledgerDesc").toUpperCase();
     	double openingBal = Double.parseDouble(request.getParameter("openingBal")); 
@@ -13,7 +14,7 @@
     	String ledgerDate = request.getParameter("openingBalDate");
     	
     	GeneralLedger gl = new GeneralLedger();
-    	
+    	gl.setCompanyId(companyId);
     	gl.setGroupId(groupId);
     	gl.setAccountLedger(accountName);
     	gl.setLedgerDesc(accountDesc);
@@ -32,7 +33,7 @@
 	    int ledgerId = addGl.addGeneralLedger(gl);
 	    
 	    session.setAttribute("accountLedgerId",ledgerId);
-   		response.sendRedirect("../views/ChartOfAccounts.jsp");
+   		response.sendRedirect("../admin/Chart_Of_Accounts.jsp");
    		
 	    
     %>
