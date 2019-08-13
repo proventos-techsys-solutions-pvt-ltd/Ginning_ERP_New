@@ -23,7 +23,7 @@ public class UpdateGeneralLedger {
 			e.printStackTrace();
 		}
 
-		String updateCustomer = "{ ? = call UPDATE_GENERALLEDGER(?,?,?,?,?,?,?,?,?,?,?,?) }";
+		String updateCustomer = "{ ? = call UPDATE_GENERALLEDGER(?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(updateCustomer);
@@ -34,16 +34,15 @@ public class UpdateGeneralLedger {
 		
 			cs.setInt(2, gl.getVoucherNo());
 			cs.setInt(3,  gl.getAccountId());
-			cs.setInt(4, gl.getGroupId());
+			cs.setInt(4, gl.getAccountCatId());
 			cs.setString(5, gl.getAccountLedger());
 			cs.setString(6, gl.getLedgerDesc());
 			cs.setDate(7, date);
-			cs.setInt(8,  gl.getMonthId());
-			cs.setDouble(9, gl.getOpeningBal());
-			cs.setDouble(10, gl.getDebit());
-			cs.setDouble(11, gl.getCredit());
-			cs.setDouble(12, gl.getClosingBal());
-			cs.setInt(13, gl.getCompanyId());
+			cs.setDouble(8, gl.getOpeningBal());
+			cs.setDouble(9, gl.getDebit());
+			cs.setDouble(10, gl.getCredit());
+			cs.setDouble(11, gl.getClosingBal());
+			cs.setInt(12, gl.getCompanyId());
 			
 			cs.executeUpdate();
 			

@@ -46,6 +46,18 @@
    </tag>
    
    <tag>
+    <name>AccountGroup</name>
+	<tag-class>com.prov.tags.AccountGroupTag</tag-class>
+	<body-content>Empty</body-content>
+   </tag>
+   
+   <tag>
+    <name>AccountLedger</name>
+	<tag-class>com.prov.tags.AccountLedgerTag</tag-class>
+	<body-content>Empty</body-content>
+   </tag>
+   
+   <tag>
     <name>VehicleCategoryTag</name>
 	<tag-class>com.prov.tags.VehicleCategoryTag</tag-class>
 	<body-content>Empty</body-content>

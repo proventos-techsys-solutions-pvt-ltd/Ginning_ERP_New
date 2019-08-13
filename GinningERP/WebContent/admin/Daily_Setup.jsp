@@ -219,101 +219,58 @@
 			
 			<!-- **********************CASH ADDITION POP-UP -->
 			<div class="modal fade" id="cashAdditionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-			  <div class="modal-dialog" role="document">
+			  <div class="modal-dialog modal-xl" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalCenterTitle">Cash Addition Details</h5>
+			        <h5 class="modal-title" id="exampleModalCenterTitle">Journal Entry</h5>
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
 			      </div>
 			      <div class="modal-body">
-			      	<ul class="nav nav-tabs" id="myTab" role="tablist">
-					  <li class="nav-item">
-					    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Cash</a>
-					  </li>
-					  <li class="nav-item">
-					    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Bank</a>
-					  </li>
-					</ul>
-					<div class="tab-content" id="myTabContent">
-					<!-- ********************* CASH ADDITION************************ -->
-					  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-					  	 <form>
-					      	<div class="form-row">
-					      		<div class="col-md-4">
-						      		<label class="lbl-rm-l">Date</label>
-						      		<input type="date" class="form-control form-control-sm" name="addCashDate" id="addCashDate">
-					      		</div>
-					      		<div class="col-md-4">
-						      		<label class="lbl-rm-l">Voucher No</label>
-						      		<input type="text" class="form-control form-control-sm" name="addCashVoucher" id="addCashVoucher" placeholder="Voucher No.">
-					      		</div>
-					      	</div> 
-				      		<div class="form-row">
-					      		<div class="col-md-12">
-						      		<label class="lbl-rm-l lbl-rm-t">Description</label>
-						      		<input type="text" class="form-control form-control-sm" name="addCashDesc" id="addCashDesc" value="">
-					      		</div>
-					      	</div> 
-					      	<div class="form-row">
-					      		<div class="col-md-4">
-						      		<label class="lbl-rm-l lbl-rm-t">Amount</label>
-						      		<input type="text" class="form-control form-control-sm" name="addCashAmount" id="addCashAmount" value="">
-					      		</div>
-					      		<div class="col-md-8">
-					      			<label class="lbl-rm-l lbl-rm-t">Reference</label>
-					      			<input type="text" class="form-control form-control-sm" name="addcashRef" id="addcashRef" value="">
-				      			</div>
-					      	</div> 
-					      </form>
-					  </div>
-					  
-					  
-					  <!-- *********************BANK CASH CONTRA ADDITION************************ -->
-					  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-					  	 <form>
-					      	<div class="form-row">
-					      		<div class="col-md-4">
-						      		<label class="lbl-rm-l">Date</label>
-						      		<input type="text" class="form-control form-control-sm" name="contraBankDate" id="contraBankDate" value="Today's Date">
-					      		</div>
-					      		<div class="col-md-4">
-						      		<label class="lbl-rm-l">Voucher No</label>
-						      		<input type="text" class="form-control form-control-sm" name="contraBankVoucher" id="contraBankVoucher" >
-					      		</div>
-					      		<div class="col-md-4">
-						      		<label class="lbl-rm-l">Bank</label>
-						      		<select class="form-control form-control-sm" name="contraBankId" id="contraBankId">
-						      			<option selected disabled>Select</option>
-						      			<c:Bank />
-						      		</select>
-					      		</div>
-					      	</div> 
-				      		<div class="form-row">
-					      		<div class="col-md-12">
-						      		<label class="lbl-rm-l lbl-rm-t">Description</label>
-						      		<input type="text" class="form-control form-control-sm" name="contraBankDesc" id="contraBankDesc" value="">
-					      		</div>
-					      	</div> 
-					      	<div class="form-row">
-					      		<div class="col-md-4">
-						      		<label class="lbl-rm-l lbl-rm-t">Amount</label>
-						      		<input type="text" class="form-control form-control-sm" name="contraBankAmt" id="contraBankAmt" value="">
-					      		</div>
-					      		<div class="col-md-8">
-					      			<label class="lbl-rm-l lbl-rm-t">Reference</label>
-					      			<input type="text" class="form-control form-control-sm" name="contraBankRef" id="contraBankRef" value="">
-				      			</div>
-					      	</div> 
-					      </form>
-					  </div>
-					  
-					</div>
+			      	<form action="../processing/addCashDailySetup.jsp" id="addCashForm">
+			      		<div class="form-row">
+			      			<div class="col-md-auto">
+			      				<label>Date</label>
+			      				<input type="date" class="form-control form-control-sm" id="addCashDate" name="addCashDate">
+			      			</div>
+			      			<div class="col-md-auto">
+			      				<label>Reference</label>
+			      				<input type="text" class="form-control form-control-sm" id="addCashReference" name="addCashReference">
+			      			</div>
+			      			<div class="col-md-auto">
+			      				<label>Voucher No</label>
+			      				<input type="text" class="form-control form-control-sm" id="addCashVoucher" name="addCashVoucher">
+			      			</div>
+			      		</div>
+			      		<div class="form-row">
+			      			<div class="col-md-2">
+			      				<label>Account</label>
+			      				<select class="form-control form-control-sm" id="addCashAccount" name="addCashAccount">
+			      					<c:AccountLedger/>
+			      				</select>
+			      			</div>
+			      			<div class="col-md-6">
+			      				<label>Description</label>
+			      				<input type="text" class="form-control form-control-sm" id="addCashDescription" name="addCashDescription">
+			      			</div>
+			      			<div class="col-md-2">
+			      				<label>Amount</label>
+			      				<input type="text" class="form-control form-control-sm" id="addCashAmount" name="addCashAmount">
+			      			</div>
+			      			<div class="col-md-2">
+			      				<label>Mode</label>
+			      				<select class="form-control form-control-sm" id="addCashMode" name="addCashMode">
+			      					<c:AccountLedger/>
+			      				</select>
+			      			</div>
+			      		</div>
+			      		
+			      	</form>
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-primary btn-sm">Save</button>
+			        <button type="button" class="btn btn-primary btn-sm" id="addCashButton">Save</button>
 			      </div>
 			    </div>
 			  </div>
@@ -339,7 +296,7 @@
 					      		</div>
 					      		<div class="col-md-4">
 						      		<label class="lbl-rm-l">Voucher No</label>
-						      		<input type="text" class="form-control form-control-sm" name="addBankVoucher" id="addBankVoucher" value="Today's Date">
+						      		<input type="text" class="form-control form-control-sm" name="addBankVoucher" id="addBankVoucher" value="">
 					      		</div>
 					      		<div class="col-md-4">
 						      		<label class="lbl-rm-l">Mode</label>
@@ -385,6 +342,31 @@
 	<script src="../js/commonjs.js"></script>
 	<script>
 	
+	function fetchVoucherNoSeries(){
+		var url="../processing/getVoucherNoSeries.jsp";
+		if(window.XMLHttpRequest){  
+			fetchVoucherNo=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchVoucherNo=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+	  
+		try{  
+			fetchVoucherNo.onreadystatechange=getVoucherNo;  
+			console.log("AJAX Req sent");
+			fetchVoucherNo.open("GET",url,true);  
+			fetchVoucherNo.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	function getVoucherNo(){
+		if(fetchVoucherNo.readyState == 4){
+			var voucherNo = this.response.trim();
+			console.log("voucher---"+voucherNo);
+			document.getElementById("addBankVoucher").value = voucherNo;
+			document.getElementById("addCashVoucher").value = voucherNo;
+		}
+	}
 	
 	function getSetupReport(companyId){
 		var url="../processing/fetchDailySetup.jsp";
@@ -718,8 +700,13 @@
 		document.getElementById('todaysDate').innerHTML = date1;
 	}
 	
+	document.getElementById("addCashButton").addEventListener("click",function(e){
+		document.getElementById("addCashForm").submit();
+	})
+	
 	setDisplayDate();
 	gradeReport();
+	fetchVoucherNoSeries();
 	
 	</script>
 </body>

@@ -238,10 +238,10 @@ function getDailySetupRecords(){
 		var response = this.response.trim();
 		console.log("daily Setup---"+response);
 		if(Number(response) > 0){
-			//$.unblockUI
+			$.unblockUI
 		}
 		else if(Number(response) <= 0){
-			//$.blockUI();
+			$.blockUI();
 		}
 	} 
 }

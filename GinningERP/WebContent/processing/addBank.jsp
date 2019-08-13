@@ -35,7 +35,7 @@
     gl.setAccountLedger(bankAccountName);
     gl.setCompanyId(b.getCompanyId());
     gl.setGlDate(date);
-    gl.setGroupId(1);
+    gl.setAccountCatId(1);
     gl.setLedgerDesc(b.getBankName());
     gl.setOpeningBal(openingBalance);
     gl.setCredit(0);

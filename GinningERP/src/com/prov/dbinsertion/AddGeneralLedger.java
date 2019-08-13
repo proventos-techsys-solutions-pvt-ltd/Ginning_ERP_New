@@ -31,7 +31,7 @@ public int addGeneralLedger(GeneralLedger gl) {
 			Date date=Date.valueOf(gl.getGlDate());	
 			
 			cs.setInt(2, gl.getVoucherNo());
-			cs.setInt(3, gl.getGroupId());
+			cs.setInt(3, gl.getAccountCatId());
 			cs.setString(4, gl.getAccountLedger());
 			cs.setString(5, gl.getLedgerDesc());
 			cs.setDate(6, date);

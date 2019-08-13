@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Goods Grading Note</title>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
 </head>
 
 <body>
@@ -136,13 +138,13 @@
         </div>
 </div>
 
-<script src="../js/jquery-3.3.1.slim.min.js" ></script>
+<!-- <script src="../js/jquery-3.3.1.slim.min.js" ></script> -->
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script>
 //Send AJAX req to chech Daily setup
 function checkDailySetup(){
-	var url="${pageContext.request.contextPath}/processing/checkDailySetup.jsp";
+	var url="../processing/checkDailySetup.jsp";
 	if(window.XMLHttpRequest){  
 		dailySetup=new XMLHttpRequest();  
 	}  

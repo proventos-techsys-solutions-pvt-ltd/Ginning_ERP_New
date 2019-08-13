@@ -5,7 +5,7 @@
     
     <%
     
-    	int groupId = Integer.parseInt(request.getParameter("accGroupId"));
+    	int accountCatId = Integer.parseInt(request.getParameter("accGroupId"));
     	int companyId = Integer.parseInt(request.getParameter("companyId"));
     	String accountName = request.getParameter("accountLedgerName").toUpperCase();
     	String accountDesc = request.getParameter("ledgerDesc").toUpperCase();
@@ -15,7 +15,7 @@
     	
     	GeneralLedger gl = new GeneralLedger();
     	gl.setCompanyId(companyId);
-    	gl.setGroupId(groupId);
+    	gl.setAccountCatId(accountCatId);
     	gl.setAccountLedger(accountName);
     	gl.setLedgerDesc(accountDesc);
     	if(balanceType == 1){

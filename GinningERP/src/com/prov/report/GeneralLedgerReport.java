@@ -26,22 +26,23 @@ public class GeneralLedgerReport {
 			con = OracleConnection.getConnection();
 			
 			String sql = "SELECT \r\n" + 
-					"gl.ID,\r\n" + 
-					"gl.VOUCHER_NO,\r\n" + 
-					"gl.ACCOUNT_ID,\r\n" + 
-					"gl.GROUP_ID,\r\n" + 
-					"gl.ACC_LEDGER,\r\n" + 
-					"gl.LEDGER_DESC,\r\n" + 
-					"gl.LEDGER_DATE,\r\n" + 
-					"gl.MONTH_ID,\r\n" + 
-					"gl.OPENING_BAL,\r\n" + 
-					"gl.DEBIT,\r\n" + 
-					"gl.CREDIT,\r\n" + 
-					"gl.CLOSING_BAL,\r\n" +
-					"gl.COMPANY_ID,\r\n" +
-					"ag.group_name\r\n" + 
-					"FROM GENERAL_LEDGER gl, account_group ag \r\n" + 
-					"where gl.group_id = ag.id";
+					"					gl.ID,\r\n" + 
+					"					gl.VOUCHER_NO,\r\n" + 
+					"					gl.ACCOUNT_ID,\r\n" + 
+					"					gl.ACC_CATEGORY_ID,\r\n" + 
+					"					gl.ACC_LEDGER,\r\n" + 
+					"					gl.LEDGER_DESC,\r\n" + 
+					"					gl.LEDGER_DATE,\r\n" + 
+					"					gl.MONTH_ID,\r\n" + 
+					"					gl.OPENING_BAL,\r\n" + 
+					"					gl.DEBIT,\r\n" + 
+					"					gl.CREDIT,\r\n" + 
+					"					gl.CLOSING_BAL,\r\n" + 
+					"					gl.COMPANY_ID,\r\n" + 
+					"					ac.category_name\r\n" + 
+					"					FROM GENERAL_LEDGER gl, account_category ac \r\n" + 
+					"					where gl.ACC_CATEGORY_ID = ac.id\r\n" + 
+					"					 ORDER BY GL.ACCOUNT_ID";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			rs = stmt.executeQuery();
@@ -50,7 +51,7 @@ public class GeneralLedgerReport {
 				gl.setId(rs.getInt(1));
 				gl.setVoucherNo(rs.getInt(2));
 				gl.setAccountId(rs.getInt(3));
-				gl.setGroupId(rs.getInt(4));
+				gl.setAccountCatId(rs.getInt(4));
 				gl.setAccountLedger(rs.getString(5));
 				gl.setLedgerDesc(rs.getString(6));
 				String date = rs.getString(7);

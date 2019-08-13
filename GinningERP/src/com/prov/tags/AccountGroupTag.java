@@ -15,7 +15,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 import com.prov.db.OracleConnection;
 
-public class AccountCategoryTag extends SimpleTagSupport {
+public class AccountGroupTag extends SimpleTagSupport {
 
 	public static TreeMap<Integer,String> getAccountCats() {			
 		Connection con=null;
@@ -23,11 +23,11 @@ public class AccountCategoryTag extends SimpleTagSupport {
 		TreeMap<Integer,String> accountCategory = new TreeMap<Integer,String>();
 		try {
 			 con = OracleConnection.getConnection();
-			 String accountQuery = "Select * from account_category order by category_name";
+			 String accountQuery = "Select * from account_group order by group_name";
 			 Statement stmt = con.createStatement();
 			 accountCatResultSet = stmt.executeQuery(accountQuery);
 			 while(accountCatResultSet.next()) {
-				 accountCategory.put(accountCatResultSet.getInt("id"),accountCatResultSet.getString("category_name"));
+				 accountCategory.put(accountCatResultSet.getInt("id"),accountCatResultSet.getString("group_name"));
 				}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -47,6 +47,5 @@ public class AccountCategoryTag extends SimpleTagSupport {
 			out.println("<option value='"+accountValue+"'>"+accountKey+"</option>");
 		}
 	}
-
 
 }

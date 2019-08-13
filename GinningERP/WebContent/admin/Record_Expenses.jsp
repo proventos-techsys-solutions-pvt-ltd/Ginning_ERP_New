@@ -53,7 +53,6 @@
 						<label class="lbl-rm-l">Expense Account</label>
 						<select class="form-control form-control-sm" name="accountId" id="accountId">
 							<option selected="selected" disabled>Select</option>
-							<c:Account/>
 						</select>
 				</div>
 				<div class="col-md-5">
