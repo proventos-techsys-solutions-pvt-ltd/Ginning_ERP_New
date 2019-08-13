@@ -29,6 +29,7 @@
 	    gl.setDebit(0);
    		gl.setClosingBal(0);
    		gl.setAccountId(accountId);
+   		gl.setVoucherNo(0);
     	
     	UpdateGeneralLedger update = new UpdateGeneralLedger();
     	

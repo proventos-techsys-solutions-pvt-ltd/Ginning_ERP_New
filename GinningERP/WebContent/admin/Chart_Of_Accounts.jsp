@@ -26,7 +26,7 @@
 			<div class="col-md-3">
 				<label class="lbl-rm-l lbl-rm-t">Company</label>
 				<select class="form-control form-control-sm" name="company" id="company">
-					<option selected disabled>Select</option>
+					<option value="0">All</option>
 					<c:Company/>					
 				</select>
 			</div>
@@ -129,7 +129,21 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script>
-	callModalPopup("callAddAccount","addAccount");//Calling account add popup
+	
+	document.getElementById("callAddAccount").addEventListener("click",function(e){
+		var companyId = document.getElementById("company").value;
+		if(companyId>0){
+			document.getElementById("companyId").value = companyId;
+			document.getElementById("accountId").value = "";
+			document.getElementById("openingBal").value = "";
+			document.getElementById("accountLedgerName").value = "";
+			document.getElementById("ledgerDesc").value = "";
+			document.getElementById("openingBalDate").value = "";
+			$("#addAccount").modal();
+		}else{
+			alert("Please Select a company from dropdown.")
+		}
+	})
 	
 	function submitAccount(){
 		document.getElementById("charOfAccounts").submit();
@@ -161,8 +175,7 @@
 			setDataInTable(data);
 		}
 
-		function setDataInTable(data){
-			
+	function setDataInTable(data){
 			var table = document.getElementById("tableBody");
 			
 			var dataLength = data.length;
@@ -262,18 +275,21 @@
 	
 	document.getElementById("company").addEventListener('change',function(e){
 		var companyId = e.srcElement.value;
-		
-		document.getElementById("companyId").value = e.srcElement.value;
-		
 		var tableBody = document.getElementById("tableBody");
-		for(i=0;i<tableBody.rows.length;i++){
-				tableBody.rows.item(i).removeAttribute('hidden');
+		if(Number(companyId)>0){
+			document.getElementById("companyId").value = e.srcElement.value;
+			for(i=0;i<tableBody.rows.length;i++){
+					tableBody.rows.item(i).removeAttribute('hidden');
+				}
+			for(i=0;i<tableBody.rows.length;i++){
+				var id = tableBody.rows.item(i).cells[7].innerHTML;
+				if(companyId != id){
+					tableBody.rows.item(i).setAttribute('hidden','hidden');
+				}
 			}
-		
-		for(i=0;i<tableBody.rows.length;i++){
-			var id = tableBody.rows.item(i).cells[7].innerHTML;
-			if(companyId != id){
-				tableBody.rows.item(i).setAttribute('hidden','hidden');
+		}else{
+			for(i=0;i<tableBody.rows.length;i++){
+				tableBody.rows.item(i).removeAttribute('hidden');
 			}
 		}
 	})
