@@ -9,7 +9,8 @@ var uiController = (function(){
 			updateButton:"update",
 			companyId : "companyId",
 			heapId : "todayHeap",
-			chequeBankId : "chequeBankId"
+			chequeBankId : "chequeBankId",
+			bonusAmountId: "bonusAmount"
 	}
 	
 	var tableIds = {
@@ -27,6 +28,7 @@ var uiController = (function(){
 	var insertTableRow = function(){//insert table row
 		
 		if(table.rows[Number(rowNumber-1)].cells[1].children[0].value!==""){
+			
 		var table = appController.hmtlPageObjectsMethod().companySetupTableBody; // fetch table object
 		var rowNumber = table.rows.length; // gives the row count
 			
@@ -55,7 +57,7 @@ var uiController = (function(){
 			cell8.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="bankTable" readonly></td>';
 			cell9.innerHTML = '<td><input class="form-control form-control-sm" name="firstChequeNo" id="firstChequeNo"></td>';
 			cell10.innerHTML = '<td><input class="form-control form-control-sm" name="lastChequeNo" id="lastChequeNo"></td>';
-			cell11.innerHTML = '<td><button type="button" class="btn btn-success btn-sm" id="" name="setup" disabled>Setup</button></td>';
+			cell11.innerHTML = '<td><button type="button" class="btn btn-success btn-sm" id="" name="setup">Setup</button></td>';
 			cell12.innerHTML = '<td><button type="button" class="btn btn-success btn-sm" id="" name="update" disabled>Update</button></td>'
 				
 				
@@ -63,11 +65,18 @@ var uiController = (function(){
 	}
 	
 	var addSetupCompanyRow = function(){//Table row add function
-		if(appController.getDataForSetup().getCompanyName !== null && appController.getDataForSetup().getTodayHeap !== null && appController.getDataForSetup().getBankName !==null ){
 		
+		if(appController.getDataForSetup().getCompanyName !== null && 
+				appController.getDataForSetup().getTodayHeap !== null && 
+				appController.getDataForSetup().getBankName !== null &&
+				appController.getDataForSetup().getBonusAmount !== null	
+		){
+			
+			
 		var table = appController.hmtlPageObjectsMethod().companySetupTableBody; // fetch table object
 		var rowNumber = table.rows.length; // gives the row count
 		console.log("new row number"+rowNumber);
+
 				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[0].querySelector('input').value = "1";
 				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[1].querySelector('input').value = "1";
 				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[2].querySelector('input').value = appController.getDateAndTime().date;
@@ -82,7 +91,7 @@ var uiController = (function(){
 				document.getElementById(ids.addCompanyId).disabled = true; // Add company button has disabled
 				document.getElementById(ids.lockUsersButton).disabled = false; // Lock user button enabled	
 				
-				insertTableRow();
+				insertTableRow();//calling insert row function
 		
 		}else{
 			alert("PLEASE SELECT COMPANY NAME, HEAP AND BANK");
@@ -175,18 +184,21 @@ var appController = (function(){
 		var companyName = document.getElementById(uiController.htmlElementIds().companyId).value.trim();
 		var todayHeap =  document.getElementById(uiController.htmlElementIds().heapId).value.trim();
 		var bankName = document.getElementById(uiController.htmlElementIds().chequeBankId).value.trim();
+		var bonusAmount = document.getElementById(uiController.htmlElementIds().bonusAmountId).value.trim();
 				
-		if(companyName ==="" || companyName ==="Select" && todayHeap ==="" || todayHeap ==="Select" && bankName ==="" || bankName ==="Select" ){
+		if(companyName ==="" || companyName ==="Select" && todayHeap ==="" || todayHeap ==="Select" && bankName ==="" || bankName ==="Select" && bonusAmount ==="" ){
 			validData = {
 					getCompanyName : null,
 					getTodayHeap : null,
-					getBankName : null
+					getBankName : null,
+					getBonusAmount: null
 			};
 		}else{
 			validData = {
 					getCompanyName : companyName,
 					getTodayHeap : todayHeap,
-					getBankName : bankName
+					getBankName : bankName,
+					getBonusAmount :bonusAmount
 			};
 		}
 		return validData;

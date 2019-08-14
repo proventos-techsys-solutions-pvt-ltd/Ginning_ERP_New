@@ -101,7 +101,7 @@
 								</tr>
 							</thead>
 							<tbody id="tableBody">
-								<tr>
+							 	<tr>
 									<td>
 										<input type="text" class="form-control form-control-sm" id="setupId" name="setupId" readonly>
 									</td>
@@ -213,9 +213,10 @@
 				</div>
 			</div>
 			
-			<div class="row tile-background-row" id="bankDetails">
+			<div class="row row-background" id="bankDetails">
 				
 			</div>
+			
 			
 			<!-- **********************CASH ADDITION POP-UP -->
 			<div class="modal fade" id="cashAdditionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -279,51 +280,53 @@
 			 <!-- *********************BANK ADDITION************************ -->
 			
 			<div class="modal fade" id="bankAdditionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-			  <div class="modal-dialog " role="document">
+			  <div class="modal-dialog modal-xl" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalCenterTitle">Bank Addition Details</h5>
+			        <h5 class="modal-title" id="exampleModalCenterTitle">Journal Entry</h5>
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
 			      </div>
 			      <div class="modal-body">
-			      		<form>
-			      			<div class="form-row">
-			      				<div class="col-md-4">
-						      		<label class="lbl-rm-l">Date</label>
-						      		<input type="text" class="form-control form-control-sm" name="addBankDate" id="addBankDate" value="Today's Date">
-					      		</div>
-					      		<div class="col-md-4">
-						      		<label class="lbl-rm-l">Voucher No</label>
-						      		<input type="text" class="form-control form-control-sm" name="addBankVoucher" id="addBankVoucher" value="">
-					      		</div>
-					      		<div class="col-md-4">
-						      		<label class="lbl-rm-l">Mode</label>
-						      		<select class="form-control form-control-sm" name="addBankMode" id="addBankMode">
-						      			<option value="">Cheque</option>
-						      			<option value="">RTGS</option>
-						      			<option value="">Cash</option>
-						      		</select>
-					      		</div>
+			      		<form action="../processing/addCashDailySetup.jsp" id="">
+			      		<div class="form-row">
+			      			<div class="col-md-auto">
+			      				<label>Date</label>
+			      				<input type="date" class="form-control form-control-sm" id="" name="">
 			      			</div>
-			      			<div class="form-row">
-					      		<div class="col-md-12">
-						      		<label class="lbl-rm-l lbl-rm-t">Description</label>
-						      		<input type="text" class="form-control form-control-sm" name="addBankDesc" id="addBankDesc" value="">
-					      		</div>
-					      	</div> 
-					      	<div class="form-row">
-					      		<div class="col-md-4">
-					      			<label class="lbl-rm-l lbl-rm-t">Amount</label>
-					      			<input type="text" class="form-control form-control-sm" name="addBankAmount" id="addBankAmount" value="">
-				      			</div>
-				      			<div class="col-md-8">
-					      			<label class="lbl-rm-l lbl-rm-t">Reference</label>
-					      			<input type="text" class="form-control form-control-sm" name="addBankRef" id="addBankRef" value="">
-				      			</div>
-					      	</div>
-			      		</form>
+			      			<div class="col-md-auto">
+			      				<label>Reference</label>
+			      				<input type="text" class="form-control form-control-sm" id="" name="">
+			      			</div>
+			      			<div class="col-md-auto">
+			      				<label>Voucher No</label>
+			      				<input type="text" class="form-control form-control-sm" id="" name="">
+			      			</div>
+			      		</div>
+			      		<div class="form-row">
+			      			<div class="col-md-2">
+			      				<label>Account</label>
+			      				<select class="form-control form-control-sm" id="" name="">
+			      					<c:AccountLedger/>
+			      				</select>
+			      			</div>
+			      			<div class="col-md-6">
+			      				<label>Description</label>
+			      				<input type="text" class="form-control form-control-sm" id="" name="">
+			      			</div>
+			      			<div class="col-md-2">
+			      				<label>Amount</label>
+			      				<input type="text" class="form-control form-control-sm" id="" name="">
+			      			</div>
+			      			<div class="col-md-2">
+			      				<label>Mode</label>
+			      				<select class="form-control form-control-sm" id="" name="">
+			      					<c:AccountLedger/>
+			      				</select>
+			      			</div>
+			      		</div>
+			      	</form>
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>

@@ -16,13 +16,13 @@
 <%@include file="../admin/Top_Nav.html" %>
 	<div class="container-fluid container-mr-t">
 	 <%@include file="../admin/Side_bar.html" %>
-	<div class="row mt-2 tile-background-row">
+	<div class="row mt-2 row-background border-bottom">
 		<div class="col-md-12">
 			<h4>Chart of Accounts</h4>
 		</div>
 		</div>
 		
-		<div class="row tile-background-row">
+		<div class="row row-background">
 			<div class="col-md-3">
 				<label class="lbl-rm-l lbl-rm-t">Company</label>
 				<select class="form-control form-control-sm" name="company" id="company">
@@ -32,7 +32,7 @@
 			</div>
 		</div>
 		
-		<div class="row tile-background-row">
+		<div class="row row-background">
 			<div class="col-md-3 ">
 				<div class="d-flex flex-row flex-wrap align-items-center">
 					<div class="p-2">
@@ -45,7 +45,7 @@
 			</div>
 		</div>
 		
-		<div class="row mt-2 tile-background-row">
+		<div class="row mt-2 row-background">
 			<div class="col-md-12">
 				<table class="table table-bordered">
 					<thead>
