@@ -180,38 +180,38 @@
 						
 					</div>
 				
-			<div class="row mt-2 row-background">
-				<div class="d-flex justify-content-between align-items-center">
-					<img src="../property/img/purse.png" alt="warehouse">&nbsp;
-					<h4  class="lbl-rm-b">Cash Details</h4>
-				</div>
+			<div class="row  row-background border-top">
+					<div class="col-md-3">
+						<div class="d-flex justify-content-start align-items-center">
+						<img src="../property/img/purse.png" alt="warehouse">&nbsp;
+						<h4 class="lbl-rm-b">Cash Balance</h4>
+						</div>
+					</div>
+					
+					<div class="col-md-3">
+						<div class="d-flex justify-content-start align-items-center">
+						<input type="text" class="form-control form-control-sm" name="cashAddition" id="cashAddition" readonly>
+						&nbsp;&nbsp;
+						<img src="../property/img/add.png" alt="add" class="ctm-hover" id="callCashModal">
+						</div>
+					</div>
+					
+					<div class="col-md-3">
+						<div class="d-flex justify-content-start align-items-center">
+						<img src="../property/img/purse.png" alt="warehouse">&nbsp;
+						<h4 class="lbl-rm-b">Bank Balance</h4>
+						</div>
+					</div>
+					
+					<div class="col-md-3">
+						<div class="d-flex justify-content-start align-items-center">
+						<input type="text" class="form-control form-control-sm" name="bankAddition" id="bankAddition" readonly>
+						&nbsp;&nbsp;
+						<img src="../property/img/add.png" alt="add" class="ctm-hover" id="callBankModal">
+						</div>
+					</div>
 			</div>
 			
-			<div class="row row-background">
-				<div class="col-md-3">
-					<label class="lbl-rm-l">Opening Balance</label>
-					<input type="text" class="form-control form-control-sm" name="cashOpening" id="cashOpening" readonly>
-				</div>
-				<div class="col-md-3">
-					<label class="lbl-rm-l">Addition Today &nbsp;<img src="../property/img/add.png" alt="add" class="ctm-hover" id="callCashModal"></label>
-					<input type="text" class="form-control form-control-sm" name="cashAddition" id="cashAddition" readonly>
-				</div>
-				<div class="col-md-3">
-					<label class="lbl-rm-l">Utilized Today</label>
-					<input type="text" class="form-control form-control-sm" name="cashUtilized" id="cashUtilized" readonly>
-				</div>
-				<div class="col-md-3">
-					<label class="lbl-rm-l">Closing Balance</label>
-					<input type="text" class="form-control form-control-sm" name="closingBalance" id="closingBalance" readonly>
-				</div>
-			</div>
-			
-			<div class="row mt-2 row-background">
-				<div class="d-flex justify-content-between align-items-center">
-					<img src="../property/img/account.png" alt="warehouse">&nbsp;
-					<h4  class="lbl-rm-b">Bank Details</h4>
-				</div>
-			</div>
 			
 			<div class="row row-background" id="bankDetails">
 				
@@ -223,7 +223,7 @@
 			  <div class="modal-dialog modal-xl" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalCenterTitle">Journal Entry</h5>
+			        <h5 class="modal-title" id="exampleModalCenterTitle">Cash Journal Entry</h5>
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
@@ -283,45 +283,45 @@
 			  <div class="modal-dialog modal-xl" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalCenterTitle">Journal Entry</h5>
+			        <h5 class="modal-title" id="exampleModalCenterTitle">Bank Journal Entry</h5>
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
 			      </div>
 			      <div class="modal-body">
-			      		<form action="../processing/addCashDailySetup.jsp" id="">
+			      		<form action="../processing/addBankDailySetup.jsp" id="addBankForm">
 			      		<div class="form-row">
 			      			<div class="col-md-auto">
 			      				<label>Date</label>
-			      				<input type="date" class="form-control form-control-sm" id="" name="">
+			      				<input type="date" class="form-control form-control-sm" id="addBankDate" name="addBankDate">
 			      			</div>
 			      			<div class="col-md-auto">
 			      				<label>Reference</label>
-			      				<input type="text" class="form-control form-control-sm" id="" name="">
+			      				<input type="text" class="form-control form-control-sm" id="addBankReference" name="addBankReference">
 			      			</div>
 			      			<div class="col-md-auto">
 			      				<label>Voucher No</label>
-			      				<input type="text" class="form-control form-control-sm" id="" name="">
+			      				<input type="text" class="form-control form-control-sm" id="addBankVoucher" name="addBankVoucher">
 			      			</div>
 			      		</div>
 			      		<div class="form-row">
 			      			<div class="col-md-2">
 			      				<label>Account</label>
-			      				<select class="form-control form-control-sm" id="" name="">
+			      				<select class="form-control form-control-sm" id="addBankAccountId" name="addBankAccountId">
 			      					<c:AccountLedger/>
 			      				</select>
 			      			</div>
 			      			<div class="col-md-6">
 			      				<label>Description</label>
-			      				<input type="text" class="form-control form-control-sm" id="" name="">
+			      				<input type="text" class="form-control form-control-sm" id="addBankDesc" name="addBankDesc">
 			      			</div>
 			      			<div class="col-md-2">
 			      				<label>Amount</label>
-			      				<input type="text" class="form-control form-control-sm" id="" name="">
+			      				<input type="text" class="form-control form-control-sm" id="addBankAmount" name="addBankAmount">
 			      			</div>
 			      			<div class="col-md-2">
 			      				<label>Mode</label>
-			      				<select class="form-control form-control-sm" id="" name="">
+			      				<select class="form-control form-control-sm" id="addBankMode" name="addBankMode">
 			      					<c:AccountLedger/>
 			      				</select>
 			      			</div>
@@ -330,7 +330,7 @@
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-primary btn-sm">Save</button>
+			        <button type="button" class="btn btn-primary btn-sm" id="submitBankAddition">Save</button>
 			      </div>
 			    </div>
 			  </div>
@@ -619,14 +619,9 @@
 	
 	
 	callModalPopup("callCashModal","cashAdditionModal"); // Calling Cash Addition Pop-up
-	//callModalPopupWithIndex("callBankModal","bankAdditionModal"); // Calling Bank Addition Pop-up
+	callModalPopup("callBankModal","bankAdditionModal"); // Calling Bank Addition Pop-up
 	
-	document.addEventListener('click',function(e){
-		if(e.srcElement.id === 'callBankModal')
-			{
-				$('#bankAdditionModal').modal();
-			}
-	})
+	
 	
 	document.addEventListener('click',function(e){
 		if(e.srcElement.name === "setup"){
@@ -705,6 +700,10 @@
 	
 	document.getElementById("addCashButton").addEventListener("click",function(e){
 		document.getElementById("addCashForm").submit();
+	})
+	
+	document.getElementById("submitBankAddition").addEventListener('click',function(e){
+		document.getElementById("addBankForm").submit();
 	})
 	
 	setDisplayDate();

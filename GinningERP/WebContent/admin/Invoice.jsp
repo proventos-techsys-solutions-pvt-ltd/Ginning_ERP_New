@@ -134,6 +134,8 @@
 	                                     <textarea id="note" name="note" class="form-control form-control-lg">Note</textarea>
 									</div>
 									<div class="col-md-2 offset-md-2">
+										<label for="" class="lbl-rm-all">Total</label> 
+	                                    <input type="text" id="" name="" class="form-control form-control-sm" value="0" readonly="readonly">
 										<label for="" class="lbl-rm-all">Unloading Charges</label> 
 	                                    <input type="text" id="unloadingCharges" name="unloadingCharges" class="form-control form-control-sm" value="0" readonly="readonly">
 	                                    <label for="" class="lbl-rm-all">Weighing Charges </label> 
@@ -147,7 +149,7 @@
 								<div id="paymentSection">
 								</div>
 								<div class="row row-background border-top">
-										<div class="col-md-6 offset-md-3" >
+										<div class="col-md-6" >
 											<table class="table table-bordered">
 												<thead>
 													<tr class="table-back">
@@ -175,7 +177,28 @@
 												</tbody>
 											</table>
 										</div>
-								</div>	
+										<div class="col-md-6" >
+											<table class="table table-bordered">
+												<thead>
+													<tr>
+														<th width="5%" >Type</th>
+														<th width="20%">Date</th>
+														<th width="20%">Amount</th>
+														<th width="5%"></th>
+													</tr>
+												</thead>
+												<tbody id="pdcTableBody">
+													<tr>
+														<td align="center">PDC</td>
+														<td><input type="date" class="form-control form-control-sm" id="" name=""></td>
+														<td><input type="text" class="form-control form-control-sm" id="" name=""></td>
+														<td class="text-center"></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+								</div>
+								
                                 <div class="row row-background border-top">
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-end">
@@ -410,7 +433,7 @@
 			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+data[i].rate+'" >';
 			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+(data[i].rate * (data[i].quantity/100))+'" readonly>';
 			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" >';
-			cell9.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="pdcCheck" value="false" >';
+			cell9.innerHTML = '<input type="checkbox" id="pdcCheck'+(rowNo+1)+'" class="lbl-rm-all" name="pdcCheck" value="false" >';
 			cell10.innerHTML = '<input type="hidden" id="gradeId'+(rowNo+1)+'" class="lbl-rm-all" name="gradeId" value="'+data[i].gradeId+'" >';
 			cell11.innerHTML = '<input type="hidden" id="weighmentId'+(rowNo+1)+'" class="lbl-rm-all" name="weighmentId" value="'+data[i].weighmentId+'" >';
 			cell12.innerHTML = '<input type="hidden" id="gradeDesc'+(rowNo+1)+'" class="lbl-rm-all" name="gradeDesc" value="'+data[i].gradeDesc+'" >';
@@ -591,6 +614,14 @@
 			deletePaymentMode(e.srcElement.parentNode.parentNode.rowIndex);
 		}
 	});
+	
+	//Adding PDC check details
+	var totalNoOfPdc = document.getElementsByName("pdcCheck").length;
+	for(i=0;i<totalNoOfPdc;i++){
+		document.getElementsByName("pdcCheck")[i].onclick = function(){
+			alert("working");
+		}
+	}
 	
 	checkDailySetup();
 	</script>
