@@ -69,12 +69,16 @@
 			</textField>
 			<textField>
 				<reportElement x="50" y="29" width="460" height="21" uuid="e2a2db2b-bc52-4798-b7d1-0cf4c2faf429"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{companyAddress}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="200" y="50" width="161" height="13" uuid="ed29bce4-2f31-4199-81b3-034b5a15787d"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{companyMobileNo}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -97,77 +101,99 @@
 				<reportElement x="102" y="18" width="100" height="19" uuid="b09951fa-f377-458d-a8e7-98e28d528631">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{RSTNO}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="102" y="37" width="100" height="19" uuid="2296e8c1-fb88-4864-a0ec-9462ed7e5d32">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{customerName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="102" y="56" width="100" height="19" uuid="6622b99e-23a6-4fce-b001-2e62ccfb9857">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{customerAddress}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="102" y="75" width="100" height="19" uuid="4e81409b-1f80-4acc-9d84-13299c12f240">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{customerMobileNo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="380" y="18" width="100" height="19" uuid="947d00a9-0316-4b98-9ff5-381b50429f08">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{vehicleNo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="380" y="37" width="100" height="19" uuid="cf4d1710-66c3-4b65-8744-c7ac9b23122e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{vehicleType}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="380" y="56" width="100" height="19" uuid="6739bd40-e6f6-4941-b4d8-8e54c2cafb8c">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{material}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="60" y="97" width="100" height="19" uuid="227e996d-a2f0-452a-89ce-d074ab5e8f1f">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{grossWt}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="380" y="75" width="140" height="19" uuid="e24136a8-595e-42a2-b720-97b04f110a17">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{dateAndTime}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="69" y="122" width="100" height="19" uuid="5232d805-12e8-473b-900f-04469f782a10">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{grossTime}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="233" y="97" width="104" height="19" uuid="178e25fa-d0ad-4b98-8109-a4621ab13f50">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{tare}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -175,117 +201,159 @@
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{tareTime}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="413" y="97" width="100" height="19" uuid="0a7a2c45-86dd-40a3-a076-90011f0a5621">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{net}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="429" y="122" width="100" height="19" uuid="216c4e90-5cd5-4868-a513-8a873d90e6fa">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{tareTime}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="460" y="146" width="88" height="20" uuid="8a02969f-ebac-43bd-a1ed-05d91c77934a"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{charges}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="18" width="92" height="19" uuid="27fddc4c-79a5-411e-9009-d139bf9146b9"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[RST No.:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="37" width="92" height="19" uuid="1e20487c-7af8-43cd-8e47-d21eb240cc17"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Vendor Name:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="56" width="92" height="19" uuid="58ec6f1f-05e6-42e2-b020-492423d6a585"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Vendor Addr.:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="75" width="92" height="19" uuid="b5fb96ae-61f4-4689-a55f-312b1e63da4c"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Vendor Mob.:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="288" y="18" width="92" height="19" uuid="0d867a1c-4e9d-438e-8f25-5448a7777ce2"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Vehicle No.:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="288" y="37" width="92" height="19" uuid="6abe95f4-9b48-4905-b8e7-fbdbf84a2170"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Vehicle Type:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="288" y="56" width="92" height="19" uuid="01e51f66-4e6f-48b7-b6b5-fef94f7e32d1"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Material:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="288" y="75" width="92" height="19" uuid="cee7c557-446a-4bbc-bfae-9ad5a89bfde2"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Date:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="97" width="78" height="19" uuid="5118e7b1-6a10-43d8-b267-39f5d0862533">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Gross Weight:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="122" width="70" height="19" uuid="ec8dcdc1-a5be-477a-a747-1d623056d9fa"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Date & Time:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="191" y="97" width="78" height="19" uuid="78436707-28c9-423c-907a-9c5e3027d9bb">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Tare Weight:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="191" y="122" width="69" height="19" uuid="77322591-094c-45eb-9b56-3ffa3ffce7c7"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Date & Time:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="372" y="97" width="78" height="19" uuid="5269909c-cbb0-425d-986d-533b254dfdc8">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Net Weight:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="372" y="122" width="68" height="19" uuid="6e889075-b0a8-4b4f-90c8-33b8093c2125"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Date & Time:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="369" y="146" width="91" height="20" uuid="bc9880a1-e586-40f2-abe5-37fc7fdb1d80"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Weighing Charges:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="288" y="170" width="110" height="20" uuid="c3416770-b350-43ea-a74e-7646c9255c76"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Grader's Signature:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="170" width="120" height="20" uuid="592d32b9-a00b-497e-82b5-463ecfd032ae"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Opearator's Signature]]></text>
 			</staticText>
 			<staticText>
