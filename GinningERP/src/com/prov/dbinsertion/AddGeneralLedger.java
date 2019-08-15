@@ -21,7 +21,7 @@ public int addGeneralLedger(GeneralLedger gl) {
 			e.printStackTrace();
 		}
 
-		String addGeneralLedger = "{ ? = call ADD_GENERALLEDGER(?,?,?,?,?,?,?,?,?,?) }";
+		String addGeneralLedger = "{ ? = call ADD_GENERALLEDGER(?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(addGeneralLedger);
@@ -40,6 +40,7 @@ public int addGeneralLedger(GeneralLedger gl) {
 			cs.setDouble(9, gl.getCredit());
 			cs.setDouble(10, gl.getClosingBal());
 			cs.setInt(11, gl.getCompanyId());
+			cs.setInt(12, gl.getBankId());
 			
 			cs.executeUpdate();
 			

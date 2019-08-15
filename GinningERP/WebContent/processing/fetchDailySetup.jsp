@@ -8,9 +8,7 @@
     <% 
     	DailySetupReport dsr = new DailySetupReport();
     
-    	ArrayList<DailySetup> todaysSetups = dsr.getTodaysDailySetups();
-    	
-    	JSONArray setupJson = new JSONArray(todaysSetups);
+   		JSONArray setupJson = dsr.getTodaysDailySetups();
     	
     	out.print(setupJson);
     	out.flush(); 

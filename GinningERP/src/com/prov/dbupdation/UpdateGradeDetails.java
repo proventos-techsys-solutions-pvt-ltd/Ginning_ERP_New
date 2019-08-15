@@ -22,7 +22,7 @@ public class UpdateGradeDetails {
 			e.printStackTrace();
 		}
 
-		String updateGradeDetails = "{ ? = call UPDATE_GRADEDETAILS(?,?,?,?,?,?,?,?,?) }";
+		String updateGradeDetails = "{ ? = call UPDATE_GRADEDETAILS(?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(updateGradeDetails);
@@ -38,6 +38,7 @@ public class UpdateGradeDetails {
 			cs.setDouble(8, gd.getRate());
 			cs.setString(9, gd.getAuthorizedBy());
 			cs.setDouble(10, gd.getMoisture());
+			cs.setFloat(11, gd.getBonusPerQtl());
 			
 			cs.executeUpdate();
 			

@@ -80,7 +80,11 @@
                                     <label for="" class="lbl-rm-all">Total Quantity </label>
                                     <input type="text" id="totalQty" name="totalQty" class="form-control form-control-sm" >
                                 </div>
-                                <div class="col-md-2 offset-md-2">
+                                <div class="col-md-2">
+                                    <label for="" class="lbl-rm-all">Bonus Per Qtl </label>
+                                    <input type="text" id="bonusPerQtl" name="bonusPerQtl" class="form-control form-control-sm" >
+                                </div>
+                                <div class="col-md-2">
                         			<label for="" class="lbl-rm-all">Membership</label>
                                     <input id="customerMembership" name="customerMembership"  type="text" class="form-control form-control-sm" placeholder="" readonly>
                         		</div>	
@@ -135,7 +139,9 @@
 									</div>
 									<div class="col-md-2 offset-md-2">
 										<label for="" class="lbl-rm-all">Total</label> 
-	                                    <input type="text" id="" name="" class="form-control form-control-sm" value="0" readonly="readonly">
+	                                    <input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm" value="0" readonly="readonly">
+										<label for="" class="lbl-rm-all">Total Bonus</label> 
+	                                    <input type="text" id="totalBonus" name="totalBonus" class="form-control form-control-sm" value="0" readonly="readonly">
 										<label for="" class="lbl-rm-all">Unloading Charges</label> 
 	                                    <input type="text" id="unloadingCharges" name="unloadingCharges" class="form-control form-control-sm" value="0" readonly="readonly">
 	                                    <label for="" class="lbl-rm-all">Weighing Charges </label> 
@@ -382,9 +388,10 @@
 		document.getElementById("customerId").value = data[0].customerId;
 		document.getElementById("totalQty").value = Number(document.getElementById("totalQty").value) + Number(data[0].netQuantity);
 		
-		document.getElementById('unloadingCharges').value = Number(document.getElementById('unloadingCharges').value) + ((Number(document.getElementById("totalQty").value)/100) * 20);
+		document.getElementById('unloadingCharges').value = ((Number(document.getElementById("totalQty").value)/100) * 20);
 		
-			document.getElementById('weighingCharges').value = Number(document.getElementById('weighingCharges').value) + Number(data[0].weighRate);
+		document.getElementById('weighingCharges').value = Number(document.getElementById('weighingCharges').value) + Number(data[0].weighRate);
+		
 		var blacklisted;
 		var membership;
 		
@@ -395,12 +402,15 @@
 		}
 		if(Number(data[0].customerMembership) === 1){
 			membership = 'YES';
+			document.getElementById("totalBonus").value = ((Number(document.getElementById("totalQty").value)/100) * data[0].bonusPerQtl);
 		}else if(Number(data[0].customerMembership) === 0){
 			membership = 'NO';
 		}
 		
 		document.getElementById("customerBlacklisted").value = blacklisted;
 		document.getElementById("customerMembership").value = membership;
+		document.getElementById("bonusPerQtl").value = data[0].bonusPerQtl;
+
 		
 		for(i=0; i<noOfRows; i++ ){
 		
@@ -430,7 +440,7 @@
 			cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+data[i].quantity+'" readonly>';
 			cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+data[i].grade+'" readonly>';
 			cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+data[i].moisture+'" readonly>';
-			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+data[i].rate+'" >';
+			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+data[i].rate+'" readonly>';
 			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+(data[i].rate * (data[i].quantity/100))+'" readonly>';
 			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" >';
 			cell9.innerHTML = '<input type="checkbox" id="pdcCheck'+(rowNo+1)+'" class="lbl-rm-all" name="pdcCheck" value="false" >';
@@ -479,9 +489,18 @@
 		for(i=0; i<rates.length; i++){
 			total = total + Number(rates[i].value);
 		}
-		total = total - (Number(document.getElementById('weighingCharges').value) + Number(document.getElementById('unloadingCharges').value));
-		document.getElementById("net").value = total;
-		document.getElementById("payAmount1").value = total;
+		document.getElementById("totalAmount").value = total;
+		var membershipStatus = document.getElementById("customerMembership");
+		if(membershipStatus.value === "YES"){
+			total = total + Number(document.getElementById("totalBonus").value) - (Number(document.getElementById('weighingCharges').value) + Number(document.getElementById('unloadingCharges').value));
+			document.getElementById("net").value = total;
+			document.getElementById("payAmount1").value = total;
+		}
+		if(membershipStatus.value === "NO"){
+			total = total - (Number(document.getElementById('weighingCharges').value) + Number(document.getElementById('unloadingCharges').value));
+			document.getElementById("net").value = total;
+			document.getElementById("payAmount1").value = total;
+		}
 	}
 	
 	

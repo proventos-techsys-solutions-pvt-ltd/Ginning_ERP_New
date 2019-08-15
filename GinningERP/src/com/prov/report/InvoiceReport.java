@@ -57,6 +57,7 @@ public Invoice getInvoiceData(int id) {
 				inv.setRtgsAmount(rs.getDouble(14));
 				inv.setPaidByoperator(rs.getInt(15));
 				inv.setUnloadingCharges(rs.getFloat(16));
+				inv.setBonusAmount(rs.getFloat(17));
 			}
 			
 			stmt.close();
@@ -113,7 +114,7 @@ public ArrayList<Invoice> getReport() {
 			inv.setRtgsAmount(rs.getDouble(14));
 			inv.setPaidByoperator(rs.getInt(15));
 			inv.setUnloadingCharges(rs.getFloat(16));
-			
+			inv.setBonusAmount(rs.getFloat(17));
 			reportList.add(inv);
 			
 		}
@@ -264,6 +265,7 @@ public ArrayList<Invoice> getReport() {
 					"		IM.RTGS_AMOUNT,\r\n" + 
 					"		IM.PAID_BY_OP,\r\n" + 
 					"       IM.UNLOADING_CHARGES,\r\n"+	
+					"       IM.BONUS_AMOUNT,\r\n"+
 					"		COMP.NAME COMP_NAME,\r\n" + 
 					"		COMP.ADDRESS COMP_ADDR,\r\n" + 
 					"		COMP.TELEPHONE COMP_TEL,\r\n" + 
@@ -334,16 +336,17 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("rtgsAmount", rs.getDouble(14));
 			jsonObj.put("paidByOperator", rs.getInt(15));
 			jsonObj.put("unloadingCharges", rs.getFloat(16));
-			jsonObj.put("companyName", rs.getString(17));
-			jsonObj.put("companyAddress", rs.getString(18));
-			jsonObj.put("companyTelephone", rs.getString(19));
-			jsonObj.put("companyGst", rs.getString(20));
-			jsonObj.put("companyState", rs.getString(21));
-			jsonObj.put("vendorName", rs.getString(22));
-			jsonObj.put("vendorAddress", rs.getString(23));
-			jsonObj.put("vendorMobile", rs.getString(24));
-			jsonObj.put("weighRate", rs.getDouble(37));
-			jsonObj.put("companyEmail", rs.getString(38));
+			jsonObj.put("bonusAmount", rs.getFloat(17));
+			jsonObj.put("companyName", rs.getString(18));
+			jsonObj.put("companyAddress", rs.getString(19));
+			jsonObj.put("companyTelephone", rs.getString(20));
+			jsonObj.put("companyGst", rs.getString(21));
+			jsonObj.put("companyState", rs.getString(22));
+			jsonObj.put("vendorName", rs.getString(23));
+			jsonObj.put("vendorAddress", rs.getString(24));
+			jsonObj.put("vendorMobile", rs.getString(25));
+			jsonObj.put("weighRate", rs.getDouble(38));
+			jsonObj.put("companyEmail", rs.getString(39));
 			
 			JSONArray jsonArr = new JSONArray();
 			
@@ -353,20 +356,20 @@ public ArrayList<Invoice> getReport() {
 				
 				JSONObject invoiceItems = new JSONObject();
 				
-				invoiceItems.put("invoiceItemId", rs.getInt(25));
-				invoiceItems.put("weighmentId", rs.getInt(26));
-				invoiceItems.put("gradeId", rs.getInt(27));
-				invoiceItems.put("rst", rs.getInt(28));
-				invoiceItems.put("vehicleId", rs.getInt(29));
-				invoiceItems.put("material", rs.getString(30));
-				invoiceItems.put("quantity", rs.getDouble(31));
-				invoiceItems.put("grade", rs.getString(32));
-				invoiceItems.put("rate", rs.getDouble(33));
-				invoiceItems.put("moisture", rs.getFloat(34));
-				invoiceItems.put("gradeAuthorizer", rs.getString(35));
-				invoiceItems.put("gradeDescription", rs.getString(36));
+				invoiceItems.put("invoiceItemId", rs.getInt(26));
+				invoiceItems.put("weighmentId", rs.getInt(27));
+				invoiceItems.put("gradeId", rs.getInt(28));
+				invoiceItems.put("rst", rs.getInt(29));
+				invoiceItems.put("vehicleId", rs.getInt(30));
+				invoiceItems.put("material", rs.getString(31));
+				invoiceItems.put("quantity", rs.getDouble(32));
+				invoiceItems.put("grade", rs.getString(33));
+				invoiceItems.put("rate", rs.getDouble(34));
+				invoiceItems.put("moisture", rs.getFloat(35));
+				invoiceItems.put("gradeAuthorizer", rs.getString(36));
+				invoiceItems.put("gradeDescription", rs.getString(37));
 				
-				double amount =  (rs.getDouble(31)/100) * rs.getDouble(33);
+				double amount =  (rs.getDouble(32)/100) * rs.getDouble(34);
 						
 				invoiceItems.put("amount", amount);
 				

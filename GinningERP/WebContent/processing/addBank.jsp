@@ -41,6 +41,7 @@
     gl.setCredit(0);
     gl.setDebit(0);
 	gl.setClosingBal(0);
+	gl.setBankId(bankId);
     
     AddGeneralLedger addGl = new AddGeneralLedger();
     

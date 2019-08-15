@@ -22,7 +22,7 @@ public int updateInvoice(Invoice i) {
 			e.printStackTrace();
 		}
 
-		String updateInvoice = "{ ? = call UPDATE_INVOICE(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
+		String updateInvoice = "{ ? = call UPDATE_INVOICE(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -50,6 +50,7 @@ public int updateInvoice(Invoice i) {
 			cs.setDouble(15, i.getRtgsAmount() );
 			cs.setInt(16, i.getPaidByoperator() );
 			cs.setFloat(17, i.getUnloadingCharges() );
+			cs.setFloat(18, i.getBonusAmount());
 			
 			cs.executeUpdate();
 			

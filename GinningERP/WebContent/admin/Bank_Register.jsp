@@ -21,31 +21,45 @@
 					<h4 id="report-title" class="lbl-rm-l"></h4>
 			</div>
 			</div>
+			<form action="../processing/getBankTrReport.jsp" id="dateFilterForm">
 			<div class="row row-background">
 			<div class="col-md-3">
 					<label class="lbl-rm-l">Company</label>
-					<select class="form-control form-control-sm" name="" id="companyId">
+					<select class="form-control form-control-sm" name="companyId" id="companyId">
 						<option selected>Select</option>
 						<c:Company />
 					</select>
 			</div>
 			<div class="col-md-3">
 					<label class="lbl-rm-l">Bank</label>
-					<select class="form-control form-control-sm" name="" id="">
+					<select class="form-control form-control-sm" name="bankId" id="bankId">
 						<option selected>Select</option>
+						<c:Bank />
 					</select>
 			</div>
 		</div>
-		<div class="row row-background ">
-			
+		<div class="row row-background">
+			<div class="col-md-auto">
+				<div class="d-flex justify-content-start align-items-center">
+					<label>From</label>
+					&nbsp;&nbsp;
+						<input type="date" class="form-control form-control-sm" id="startDate" name="startDate">
+					&nbsp;&nbsp; 
+					<label>To</label>
+					&nbsp;&nbsp;
+						<input type="date" class="form-control form-control-sm" id="endDate" name="endDate">
+					&nbsp;&nbsp;
+					<button type="button" class="btn btn-success btn-sm" id="dateFilterButton">Filter</button>
+				</div>
+			</div>
+			</div>
+			</form> 
+			<div class="row row-background">
 			<div class="col-md-auto">
 				<div class="d-flex justify-content-start align-items-center">
 				<input type="text" class="form-control form-control-sm inpt-rm-t" name="" id="searchInput" placeholder="">
 				<button type="button" class="btn btn-success btn-sm lbl-rm-l">Search</button>
 				</div>
-			</div>
-			<div class="col-md-auto text-left">
-				<button type="button" class="btn btn-danger btn-sm" id="clearFilterBtn">Clear Filter</button>
 			</div>
 			<div class="col-md-auto">
 				<img src="../property/img/setting.png" alt="option" class="img-set" id="options">
@@ -55,18 +69,30 @@
 			</div>
 	 	<div class="row row-background">
 	 		<div class="col-md-12">
+	 		<input type="hidden" name="jsonOutput" id="jsonOutput" value='<%= session.getAttribute("jsonArray") %>' />
+	 		<% session.removeAttribute("jsonArray"); %>
 	 			<table class="table table-bordered">
 	 				<thead>
 	 					<tr>
 	 					<th>Date</th>
 	 					<th>Voucher No</th>
+	 					<th>Voucher Ref</th>
 	 					<th>Description</th>
 	 					<th>Debit</th>
 	 					<th>Credit</th>
 	 					<th>Balance</th>
 	 					</tr>
 	 				</thead>
-	 				<tbody>
+	 				<tbody id="tableBody">
+	 				<tr>
+	 						<td></td>
+	 						<td></td>
+	 						<td></td>
+	 						<td>Opening Balance</td>
+	 						<td></td>
+	 						<td></td>
+	 						<th>0</th>
+	 					</tr>
 	 				</tbody>
 	 			</table>
 	 		</div>
@@ -80,6 +106,55 @@
 		<script>
 		setTitle("Bank Register");//Setting Title of Page
 		setSearchPlaceholder("Search");//Setting Placeholder of Search Input
+		
+		document.getElementById("dateFilterButton").addEventListener('click',function(e){
+			document.getElementById('dateFilterForm').submit();
+		})
+		
+		document.getElementById("companyId").addEventListener("change",function(e){
+			var bankOptions = document.getElementById("bankId").options;
+			for(i=0; i<bankOptions.length; i++){
+					bankOptions[i].disabled = false;
+				}
+			for(i=0; i<bankOptions.length; i++){
+				if(e.srcElement.value != bankOptions[i].getAttribute("data-company-id")){
+					bankOptions[i].disabled = true;
+				}
+			}
+		})
+		
+		function setReportInTable(){
+			var data = document.getElementById("jsonOutput").value;
+			var table = document.getElementById("tableBody");
+			if(data != "null"){
+				json = JSON.parse(data);
+				console.log(json);
+				for(i=0;i<json.length;i++){
+					var noOfRows = table.rows.length;
+					
+					var rows = table.insertRow(noOfRows);
+					var cell1 = rows.insertCell(0);
+					var cell2 = rows.insertCell(1);
+					var cell3 = rows.insertCell(2);
+					var cell4 = rows.insertCell(3);
+					var cell5 = rows.insertCell(4);
+					var cell6 = rows.insertCell(5);
+					var cell7 = rows.insertCell(6);
+					
+					cell1.innerHTML = json[i].transactionDate;
+					cell2.innerHTML = json[i].voucherNo;
+					cell3.innerHTML = json[i].voucherReference;
+					cell4.innerHTML = json[i].narration;
+					cell5.innerHTML = json[i].debit;
+					cell6.innerHTML = json[i].credit;
+					cell7.innerHTML = Number(table.rows[noOfRows-1].cells[6].innerHTML) + Number(json[i].debit) - Number(json[i].credit);
+					
+				}
+			}
+		}	
+		
+		setReportInTable();
+		
 		</script>
 </body>
 </html>

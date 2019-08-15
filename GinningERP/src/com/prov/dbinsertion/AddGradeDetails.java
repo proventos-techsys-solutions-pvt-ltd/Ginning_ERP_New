@@ -20,7 +20,7 @@ public int addGradeDetails(GradeDetails gd) {
 			e.printStackTrace();
 		}
 
-		String addGradeDetails = "{ ? = call ADD_GRADEDETAILS(?,?,?,?,?,?,?,?) }";
+		String addGradeDetails = "{ ? = call ADD_GRADEDETAILS(?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(addGradeDetails);
@@ -35,6 +35,7 @@ public int addGradeDetails(GradeDetails gd) {
 			cs.setDouble(7, gd.getRate());
 			cs.setString(8, gd.getAuthorizedBy());
 			cs.setDouble(9, gd.getMoisture());
+			cs.setFloat(10, gd.getBonusPerQtl());
 
 			cs.executeUpdate();
 			

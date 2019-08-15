@@ -35,7 +35,6 @@
 				
 				<div class="col-md-3 offset-md-3 text-right">
 					<button type="button" class="btn btn-success" id="addCompany">Add Company</button>
-					<button type="button" class="btn btn-success" id="lockUsers">Lock Users</button>
 				</div>
 			</div>
 			<form id="dailySetupForm" action='../processing/addDailySetup.jsp'>
@@ -87,7 +86,6 @@
 									<th rowspan="2" width="5%" style="vertical-align:middle;">Sr No</th>
 									<th rowspan="2" width="8%" style="vertical-align:middle;">Date</th>
 									<th rowspan="2" width="8%" style="vertical-align:middle;">Setup Time</th>
-									<th rowspan="2" width="8%" style="vertical-align:middle;">Discard Time</th>
 									<th rowspan="2" width="25%" style="vertical-align:middle;">Company Name</th>
 									<th rowspan="2" width="10%" style="vertical-align:middle;">Heap</th>
 									<th rowspan="2" width="15%" style="vertical-align:middle;">Bank</th>
@@ -115,16 +113,13 @@
 										<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="setupTimeTable" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="discardTimeTable" name="discardTimeTable" value="NA" readonly>
-									</td>
-									<td>
-										<input type="text" class="form-control form-control-sm" id="companyNameTable" name="companyNameTable" readonly>
+										<input type="text" class="form-control form-control-sm" id="companyNameTable" name="companyNameTable" data-company-id="" value="" readonly>
 									</td>
 									<td>
 										<input type="text" class="form-control form-control-sm" id="heapTable" name="heapTable" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" readonly>
+										<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" data-bank-id="" readonly>
 									</td>
 									<td>
 										<input type="text" class="form-control form-control-sm" name="firstChequeNo" id="firstChequeNo"/>
@@ -403,24 +398,24 @@
 		var tableBody = document.getElementById("tableBody");
 		if(setupArrLength != 0){
 			console.log(data);
-			for(i=0; i<setupArrLength; i++){
+			for(i=0; i<=setupArrLength; i++){
 				if(i===0){
 					tableBody.rows[0].cells[0].children[0].value = data[i].id;
 					tableBody.rows[0].cells[1].children[0].value = 1;
 					tableBody.rows[0].cells[2].children[0].value = data[i].setupDate;
 					tableBody.rows[0].cells[3].children[0].value = data[i].setupTime;
-					if(data[i].hasOwnProperty('discardTime')){
-						tableBody.rows[0].cells[4].children[0].value = data[i].discardTime;
-					}else{
-						tableBody.rows[0].cells[4].children[0].value = 'NA';
-					}
-					tableBody.rows[0].cells[5].children[0].value = data[i].companyId;
-					tableBody.rows[0].cells[6].children[0].value = data[i].cottonHeap;
-					tableBody.rows[0].cells[7].children[0].value = data[i].bankId;
-					tableBody.rows[0].cells[8].children[0].value = data[i].firstChequeNo;
-					tableBody.rows[0].cells[8].children[0].readOnly = true;
-					tableBody.rows[0].cells[9].children[0].value = data[i].lastChequeNo;
-				}else{
+					tableBody.rows[0].cells[4].children[0].setAttribute("data-company-id",data[i].companyId);
+					tableBody.rows[0].cells[4].children[0].value = data[i].companyName;
+					tableBody.rows[0].cells[5].children[0].value = data[i].cottonHeap;
+					tableBody.rows[0].cells[6].children[0].setAttribute("data-bank-id", data[i].bankId);
+					tableBody.rows[0].cells[6].children[0].value = data[i].bankName;
+					tableBody.rows[0].cells[7].children[0].value = data[i].firstChequeNo;
+					tableBody.rows[0].cells[7].children[0].readOnly = true;
+					tableBody.rows[0].cells[8].children[0].value = data[i].lastChequeNo;
+					tableBody.rows[0].cells[9].children[0].disabled=true;
+					tableBody.rows[0].cells[10].children[0].disabled=false;
+				
+				}else if(i === setupArrLength){
 					var rowNumber = tableBody.rows.length;
 					var row = tableBody.insertRow(rowNumber);
 					var cell1 = row.insertCell(0);
@@ -434,118 +429,53 @@
 					var cell9 = row.insertCell(8);
 					var cell10 = row.insertCell(9);
 					var cell11 = row.insertCell(10);
-					var cell12 = row.insertCell(11);
+					//cell1.hidden=true;
+					
+					cell1.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupId" name="setupId" value="" readonly>';
+					cell2.innerHTML = '<input type="text" class="form-control form-control-sm" id="srNoTable" name="srNoTable" value="'+(i+1)+'" readonly>';
+					cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="dateTable" name="dateTable" value="" readonly>';
+					cell4.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="setupTimeTable" value="" readonly>';
+					cell5.innerHTML = '<input type="text" class="form-control form-control-sm" id="companyNameTable" name="companyNameTable" data-company-id="" value="" readonly>';
+					cell6.innerHTML = '<input type="text" class="form-control form-control-sm" id="heapTable" name="heapTable" value="" readonly>';
+					cell7.innerHTML = '<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" data-bank-id="" value="" readonly>';
+					cell8.innerHTML = '<input type="text" class="form-control form-control-sm" id="firstChequeNo" name="firstChequeNo" value="">';
+					cell9.innerHTML = '<input type="text" class="form-control form-control-sm" id="lastChequeNo" name="lastChequeNo" value="">';
+					cell10.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="setup" name="setup" disabled="false">Setup</button>';
+					cell11.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="update" name="update" disabled="false">Update</button>';
+				
+				}
+				else{
+					var rowNumber = tableBody.rows.length;
+					var row = tableBody.insertRow(rowNumber);
+					var cell1 = row.insertCell(0);
+					var cell2 = row.insertCell(1);
+					var cell3 = row.insertCell(2);
+					var cell4 = row.insertCell(3);
+					var cell5 = row.insertCell(4);
+					var cell6 = row.insertCell(5);
+					var cell7 = row.insertCell(6);
+					var cell8 = row.insertCell(7);
+					var cell9 = row.insertCell(8);
+					var cell10 = row.insertCell(9);
+					var cell11 = row.insertCell(10);
 					//cell1.hidden=true;
 					
 					cell1.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupId" name="setupId" value="'+data[i].id+'" readonly>';
-					cell2.innerHTML = '<input type="text" class="form-control form-control-sm" id="srNoTable" name="srNoTable" value="'+(i+2)+'" readonly>';
+					cell2.innerHTML = '<input type="text" class="form-control form-control-sm" id="srNoTable" name="srNoTable" value="'+(i+1)+'" readonly>';
 					cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="dateTable" name="dateTable" value="'+data[i].setupDate+'" readonly>';
 					cell4.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="setupTimeTable" value="'+data[i].setupTime+'" readonly>';
-					if(data[i].hasOwnProperty('discardTime')){
-						cell5.innerHTML = '<input type="text" class="form-control form-control-sm" id="discardTimeTable" name="discardTimeTable" value="'+data[i].discardTime+'" readonly>';
-					}
-					else{
-						cell5.innerHTML = '<input type="text" class="form-control form-control-sm" id="discardTimeTable" name="discardTimeTable" value="NA" readonly>';
-					}
-					cell6.innerHTML = '<input type="text" class="form-control form-control-sm" id="companyNameTable" name="companyNameTable" value="'+data[i].companyId+'" readonly>';
-					cell7.innerHTML = '<input type="text" class="form-control form-control-sm" id="heapTable" name="heapTable" value="'+data[i].cottonHeap+'" readonly>';
-					cell8.innerHTML = '<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" value="'+data[i].bankId+'" readonly>';
-					cell9.innerHTML = '<input type="text" class="form-control form-control-sm" id="firstChequeNo" name="firstChequeNo" value="'+data[i].firstChequeNo+'" readonly>';
-					cell10.innerHTML = '<input type="text" class="form-control form-control-sm" id="lastChequeNo" name="lastChequeNo" value="'+data[i].lastChequeNo+'">';
-					cell11.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="setup" name="setup" disabled="">Setup</button>';
-					cell12.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="update" name="update" disabled="">Update</button>';
+					cell5.innerHTML = '<input type="text" class="form-control form-control-sm" id="companyNameTable" name="companyNameTable" data-company-id="'+data[i].companyId+'" value="'+data[i].companyName+'" readonly>';
+					cell6.innerHTML = '<input type="text" class="form-control form-control-sm" id="heapTable" name="heapTable" value="'+data[i].cottonHeap+'" readonly>';
+					cell7.innerHTML = '<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" data-company-id="'+data[i].bankId+'" value="'+data[i].bankName+'" readonly>';
+					cell8.innerHTML = '<input type="text" class="form-control form-control-sm" id="firstChequeNo" name="firstChequeNo" value="'+data[i].firstChequeNo+'" readonly>';
+					cell9.innerHTML = '<input type="text" class="form-control form-control-sm" id="lastChequeNo" name="lastChequeNo" value="'+data[i].lastChequeNo+'">';
+					cell10.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="setup" name="setup" disabled="false">Setup</button>';
+					cell11.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="update" name="update" >Update</button>';
 				}
 			}
 		}
 	}
 	
-	getSetupReport();
-	
-	
-	document.addEventListener('change', function(e){
-		if(e.srcElement.id === 'companyId'){
-			getCompanyReport(e.srcElement.options[e.srcElement.selectedIndex].value);
-		}
-	})
-	
-	function getCompanyReport(companyId){
-		var url="../processing/getSetupCompanydata.jsp?companyId="+companyId;
-		if(window.XMLHttpRequest){  
-			fetchCompReport=new XMLHttpRequest();  
-		}  
-		else if(window.ActiveXObject){  
-			fetchCompReport=new ActiveXObject("Microsoft.XMLHTTP");  
-		}  
-	  
-		try{  
-			fetchCompReport.onreadystatechange=fetchCompanyData;  
-			console.log("AJAX Req sent");
-			fetchCompReport.open("GET",url,true);  
-			fetchCompReport.send();  
-		}catch(e){alert("Unable to connect to server");}
-	}
-
-	 function fetchCompanyData(){
-		 if(fetchCompReport.readyState == 4){
-			 var response = this.response.trim();
-			 setCashdata(response);
-			 setBankdata(response);
-		 }
-	 }
-
-	 
-	 function setCashdata(data){
-		 var obj = JSON.parse(data);
-	 }
-
-	 function setBankdata(data)
-	 {
-		 var obj = JSON.parse(data);
-		 var element = document.getElementById("bankDetails");
-		 
-		 element.innerHTML = '';
-		
-		 for(i=0; i< obj.banks.length; i++){
-		 element.insertAdjacentHTML('beforeend','<div class="col-md-12"><label id="bankName'+(i+1)+'">'+obj.banks[i].bankName+'</label></div>'+
-										'<div class="col-md-3">'+
-										'<label class="lbl-rm-l">Opening Balance</label>'+
-										'<input type="text" class="form-control form-control-sm" name="bankOpening'+(i+1)+'" id="bankOpening'+(i+1)+'" readonly>'+
-									'</div>'+
-									'<div class="col-md-3">'+
-										'<label class="lbl-rm-l">Addition Today <img src="../property/img/add.png" alt="add" class="ctm-hover" name="callBankModal" id="callBankModal"> </label>'+
-									'<input type="text" class="form-control form-control-sm" name="bankAddition'+(i+1)+'" id="bankAddition'+(i+1)+'" readonly>'+
-									'</div>'+
-									'<div class="col-md-3">'+
-										'<label class="lbl-rm-l">Utilized Today</label>'+
-										'<input type="text" class="form-control form-control-sm" name="bankUtilized'+(i+1)+'" id="bankUtilized'+(i+1)+'" readonly>'+
-									'</div>'+
-									'<div class="col-md-3">'+
-										'<label class="lbl-rm-l">Closing Balance</label>'+
-										'<input type="text" class="form-control form-control-sm" name="bankClosing'+(i+1)+'" id="bankClosing'+(i+1)+'" readonly>'+
-									'</div>');
-		 }
-		 
-		 setBankTags('contraBankId', obj.banks[0].companyId);
-		 setBankTags('chequeBankId', obj.banks[0].companyId);
-		 
-	 }
-	
-	 function setBankTags(banktagId, companyId){
-		 
-		 var bankTag = document.getElementById(banktagId);
-			
-				for(i=0; i<bankTag.options.length; i++){
-					bankTag.options[i].hidden = false;
-				}
-				bankTag.options[0].selected = true;
-				
-				for(i=0; i<bankTag.options.length; i++){
-					if(companyId != Number(bankTag.options[i].getAttribute("data-company-id"))){
-						bankTag.options[i].hidden = true;
-					}	
-				}
-	 }
-	 
 	 function gradeReport(){
 			var url="../processing/gradeReport.jsp";
 			
@@ -635,12 +565,11 @@
 		jsonObj = {};
 		
 		jsonObj['bonusAmount'] = document.getElementById('bonusAmount').value
-		jsonObj['companyId'] = document.getElementsByName('companyNameTable')[rowIndex].value;
+		jsonObj['companyId'] = document.getElementsByName('companyNameTable')[rowIndex].getAttribute("data-company-id");
 		jsonObj['date'] = document.getElementsByName('dateTable')[rowIndex].value;
 		jsonObj['setupTime'] = document.getElementsByName('setupTimeTable')[rowIndex].value;
-		jsonObj['discardTime'] = document.getElementsByName('discardTimeTable')[rowIndex].value;
 		jsonObj['heap'] = document.getElementsByName('heapTable')[rowIndex].value;
-		jsonObj['todaysBankId'] = document.getElementsByName('bankTable')[rowIndex].value;
+		jsonObj['todaysBankId'] = document.getElementsByName('bankTable')[rowIndex].getAttribute("data-bank-id");
 		jsonObj['firstChequeNo'] = document.getElementsByName('firstChequeNo')[rowIndex].value;
 		jsonObj['lastChequeNo'] = document.getElementsByName('lastChequeNo')[rowIndex].value;
 		jsonObj['totalCheques'] = (Number(document.getElementsByName('lastChequeNo')[rowIndex].value)-Number(document.getElementsByName('firstChequeNo')[rowIndex].value)+1).toString();
@@ -706,10 +635,22 @@
 		document.getElementById("addBankForm").submit();
 	})
 	
+	document.getElementById("companyId").addEventListener("change",function(e){
+			var bankOptions = document.getElementById("chequeBankId").options;
+			for(i=0; i<bankOptions.length; i++){
+					bankOptions[i].disabled = false;
+				}
+			for(i=0; i<bankOptions.length; i++){
+				if(e.srcElement.value != bankOptions[i].getAttribute("data-company-id")){
+					bankOptions[i].disabled = true;
+				}
+			}
+		})
+	
+	getSetupReport();
 	setDisplayDate();
 	gradeReport();
 	fetchVoucherNoSeries();
-	
 	</script>
 </body>
 </html>

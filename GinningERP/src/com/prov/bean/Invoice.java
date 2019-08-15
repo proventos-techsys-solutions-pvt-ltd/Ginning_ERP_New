@@ -2,6 +2,8 @@ package com.prov.bean;
 
 public class Invoice {
 	
+	private float bonusAmount;
+	
 	private int id, customerId, companyId, paidByoperator ;
 	public int getPaidByoperator() {
 		return paidByoperator;
@@ -11,6 +13,12 @@ public class Invoice {
 	}
 	private double total, amountPaid, pending, totalQuanity, cashAmount, chequeAmount, rtgsAmount ;
 	
+	public float getBonusAmount() {
+		return bonusAmount;
+	}
+	public void setBonusAmount(float bonusAmount) {
+		this.bonusAmount = bonusAmount;
+	}
 	private float unloadingCharges;
 	
 	public float getUnloadingCharges() {

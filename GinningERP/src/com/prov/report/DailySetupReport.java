@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.prov.bean.DailySetup;
 import com.prov.db.OracleConnection;
@@ -51,15 +53,35 @@ public class DailySetupReport {
 		return ds;
 	}
 	
-	public ArrayList<DailySetup> getTodaysDailySetups() {
+	public JSONArray getTodaysDailySetups() {
 
 		ResultSet rs = null;
 		Connection con = null;
-		ArrayList<DailySetup> todaysSetups = new ArrayList<DailySetup>();
+		JSONArray jsonArray = new JSONArray();
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT * FROM DAILY_SETUP WHERE TRUNC(SETUP_DATE) = trunc(current_timestamp) order by setup_date";
+			String sql = "SELECT \r\n" + 
+					"DS.ID,\r\n" + 
+					"DS.SETUP_DATE,\r\n" + 
+					"DS.COTTON_HEAP,\r\n" + 
+					"DS.COMPANY_ID,\r\n" + 
+					"DS.BANK_ID,\r\n" + 
+					"DS.FIRST_CHEQUE_NO,\r\n" + 
+					"DS.LAST_CHEQUE_NO,\r\n" + 
+					"DS.TOTAL_CHEQUES,\r\n" + 
+					"DS.BONUS_AMOUNT,\r\n" + 
+					"DS.DISCARD_DATE,\r\n" + 
+					"COMP.NAME,\r\n" + 
+					"BM.BANK_NAME\r\n" + 
+					"FROM \r\n" + 
+					"DAILY_SETUP DS,\r\n" + 
+					"COMPANY_MASTER COMP,\r\n" + 
+					"BANK_MAST BM\r\n" + 
+					"WHERE \r\n" + 
+					"ds.company_id = comp.id AND\r\n" + 
+					"bm.id = ds.bank_id AND\r\n" + 
+					"TRUNC(SETUP_DATE) = trunc(current_timestamp) order by setup_date";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			rs = stmt.executeQuery();
@@ -67,6 +89,8 @@ public class DailySetupReport {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 			
 			while (rs.next()) {
+				
+				
 				DailySetup ds = new DailySetup();
 
 				ds.setId(rs.getInt(1));
@@ -98,7 +122,11 @@ public class DailySetupReport {
 					ds.setDiscardTime(null);
 				}
 				
-				todaysSetups.add(ds);
+				JSONObject obj = new JSONObject(ds);
+				obj.put("companyName", rs.getString(11));
+				obj.put("bankName", rs.getString(12));
+				
+				jsonArray.put(obj);
 			}
 			
 			rs.close();
@@ -108,7 +136,7 @@ public class DailySetupReport {
 			e.printStackTrace();
 		}
 		
-		return todaysSetups;
+		return jsonArray;
 	}
 	
 

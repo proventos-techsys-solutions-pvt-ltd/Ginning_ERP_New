@@ -2,8 +2,16 @@ package com.prov.bean;
 
 public class GeneralLedger {
 	
-	private int id, voucherNo, accountId, monthId, accountCatId, companyId;
+	private int id, voucherNo, accountId, monthId, accountCatId, companyId, bankId;
 	
+	public int getBankId() {
+		return bankId;
+	}
+
+	public void setBankId(int bankId) {
+		this.bankId = bankId;
+	}
+
 	public int getCompanyId() {
 		return companyId;
 	}

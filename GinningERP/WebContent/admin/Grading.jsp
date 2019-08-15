@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+  <%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
+
 <!doctype html>
 <html>
 <head>
@@ -35,6 +37,10 @@
 			%>
 		</div>  
         </div>
+        <select id="gradeRate" hidden>
+        	<c:GradeRate/>
+        </select>
+        
         <div class="row row-background">
 			<div class="col-md-12">
 				<form action='../processing/setGrade.jsp'>
@@ -120,6 +126,12 @@
 								</tbody>
 							</table>
 						</div>
+					</div>
+					<div class="col-md-2 offset-md-10">
+						<label for="" class="lbl-rm-all">Total Bonus</label> 
+                        <input type="text" id="totalBonus" name="totalBonus" class="form-control form-control-sm" value="0" readonly="readonly">
+						<label for="" class="lbl-rm-all">Total Amount</label> 
+                        <input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm" value="0" readonly="readonly">
 					</div>
 					<div class="form-row border-top">
 						<div class="col-md-1 offset-md-10 r-p-all">
@@ -247,21 +259,19 @@ function setDataForNewGrading(data){
 	var cell6 = row.insertCell(5);
 	var cell7 = row.insertCell(6);
 
-	cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo1' name='srNo1' value='1'>";
+	cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo1' name='srNo' value='1'>";
 	cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty1' name='dividedQuantity' value=''>";
-	cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='grade1' name='grade1'>"
+	cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='grade1' name='grade'>"
 						+	"<option>Select</option>"
 						+	"<c:Grade />"
 						+	"</select>";
-	cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description1' name='description1'>";
-	cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture1' name='moisture1' value=''>";
-	cell6.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='rate1' name='rate1'>"
-						+	"<option>Select</option>"
-						+	"<c:GradeRate />"
-						+	"</select>";
+	cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description1' name='description'>";
+	cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture1' name='moisture' value=''>";
+	cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate1' name='rate'>"
+						
 	
 	document.getElementById("tblQty1").value = totalQuantity;
-	
+	calculateTotal();
 	}	
 
 
@@ -292,24 +302,21 @@ document.addEventListener("change",function(e){
 				var cell6 = row.insertCell(5);
 				var cell7 = row.insertCell(6);
 			
-				cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(noOfRows+1)+"' name='srNo"+(noOfRows+1)+"' value="+(noOfRows+1)+">";
+				cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(noOfRows+1)+"' name='srNo' value="+(noOfRows+1)+">";
 				cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty"+(noOfRows+1)+"' name='dividedQuantity' value="+remainingQuantity+">";
-				cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='grade"+(noOfRows+1)+"' name='grade"+(noOfRows+1)+"'>"
+				cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='grade"+(noOfRows+1)+"' name='grade'>"
 									+	"<option>Select</option>"
 									+	"<c:Grade />"
 									+	"</select>";
-				cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(noOfRows+1)+"' name='description"+(noOfRows+1)+"'>";
-				cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(noOfRows+1)+"' name='moisture"+(noOfRows+1)+"'>";
-				cell6.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='rate"+(noOfRows+1)+"' name='rate"+(noOfRows+1)+"' >"
-									+	"<option>Select</option>"
-									+	"<c:GradeRate />"
-									+	"</select>";
+				cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(noOfRows+1)+"' name='description'>";
+				cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(noOfRows+1)+"' name='moisture'>";
+				cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate"+(noOfRows+1)+"' name='rate' >"
 				cell7.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow'>";
 			
 			}
 			noOfRows = document.getElementsByName("dividedQuantity").length;
 	}	
-
+	calculateTotal();
 })
 
 //Fetch data for grading using RST
@@ -369,6 +376,7 @@ function submitGradingData(){
 	jsonObj['vendorMobile'] = document.getElementById("vendorMobile").value;
 	jsonObj['weighmentId'] = document.getElementById("weighmentId").value;
 	jsonObj['authorizer'] = document.getElementById("authorizer").value;
+	jsonObj['bonusPerQtl'] = document.getElementById("bonusAmount").value;
 	
 	var noOfRows = document.getElementById('tableBody').childElementCount;
 	console.log('no of Rows --- '+noOfRows);
@@ -474,9 +482,9 @@ function setGradeUpdationData(data)
 		var cell8 = row.insertCell(7);
 		cell8.setAttribute('hidden',true);
 	
-		cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(i+1)+"' name='srNo"+(i+1)+"' value="+(i+1)+">";
+		cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(i+1)+"' name='srNo' value="+(i+1)+">";
 		cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty"+(i+1)+"' name='dividedQuantity' value="+data[i].quantity+">";
-		cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='grade"+(i+1)+"' name='grade"+(i+1)+"'>"
+		cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='grade"+(i+1)+"' name='grade'>"
 							+	"<option>Select</option>"
 							+	"<c:Grade />"
 							+	"</select>";
@@ -492,18 +500,15 @@ function setGradeUpdationData(data)
 		    }
 		}
 		
-		cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(i+1)+"' name='description"+(i+1)+"' value='"+description+"'>";
-		cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(i+1)+"' name='moisture"+(i+1)+"' value="+data[i].moisture+">";
-		cell6.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='rate"+(i+1)+"' name='rate"+(i+1)+"' >"
-							+	"<option selected>"+data[i].rate+"</option>"
-							+	"<c:GradeRate />"
-							+	"</select>";
+		cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(i+1)+"' name='description' value='"+description+"'>";
+		cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(i+1)+"' name='moisture' value="+data[i].moisture+">";
+		cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate"+(i+1)+"' name='rate' value="+data[i].rate+" >";
 							
 		if(i>0){
 			cell7.innerHTML = "<img src='../property/img/delete.png' class='delete-row' alt='delete' id='deleteRow"+(i+1)+"'>";
 		}
 		
-		cell8.innerHTML = "<input type='hidden' id='gradeId"+(i+1)+"' name='gradeId"+(i+1)+"' value='"+data[i].gradeId+"'>";
+		cell8.innerHTML = "<input type='hidden' id='gradeId"+(i+1)+"' name='gradeId' value='"+data[i].gradeId+"'>";
 		
 		totalQty = totalQty + Number(data[i].quantity);
 		
@@ -513,6 +518,7 @@ function setGradeUpdationData(data)
 				inputElements[k].setAttribute('readonly',true);
 			}
 		}
+		
 	}
 	
 	document.getElementById("quantity").value = totalQty;
@@ -551,12 +557,12 @@ document.addEventListener("change",function(e){
 		
 		document.getElementById("description"+rowNo).value = selectedGrade.getAttribute('data-description');
 		
-		var options = document.getElementById("rate"+rowNo).options;
+		var options = document.getElementById("gradeRate").options;
 		var noOfOptions = options.length;
 		
 		for(i=0; i< noOfOptions; i++){
 			if(options[i].getAttribute('data-gradeid') === gradeId){
-				options[i].selected = 'selected';
+				document.getElementById("rate"+(rowNo)).value = options[i].value;
 				break;
 			}
 		}
@@ -564,6 +570,26 @@ document.addEventListener("change",function(e){
 	}
 	
 });
+
+function calculateTotal(){
+	var totalBonus = Number(document.getElementById("bonusAmount").value) * Number(document.getElementById("quantity").value /100) ;
+	var rates = document.getElementsByName("rate");
+	var total = 0;
+	var qty = document.getElementsByName("dividedQuantity");
+	for(i=0; i<rates.length; i++){
+		total = total + (Number(rates[i].value) * (Number(qty[i].value)/100));
+	}
+	var membershipStatus = document.getElementById("vendorMembership");
+	if(membershipStatus.value === "YES"){
+		document.getElementById("totalBonus").value = totalBonus;
+		document.getElementById("totalAmount").value = total+totalBonus;
+	}else if(membershipStatus.value === "NO"){
+		document.getElementById("totalBonus").value = 0;
+		document.getElementById("totalAmount").value = total;
+	}
+		
+	
+}
 
 checkDailySetup();
 fetchBonusRate();

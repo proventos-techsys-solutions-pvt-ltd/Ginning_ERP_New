@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Dashboard</title>
+<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 </head>
 
 <body>
@@ -86,7 +87,7 @@
 		</div>
 		
 		</div>
-		<script src="../js/jquery-3.3.1.slim.min.js" ></script>
+		
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 		<script src="../js/commonjs.js"></script>

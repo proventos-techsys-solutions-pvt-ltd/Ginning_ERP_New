@@ -36,9 +36,6 @@ public class CashReport {
 		java.sql.Date sqlStartDate = java.sql.Date.valueOf(properStartDate);
 		java.sql.Date sqlEndDate = java.sql.Date.valueOf(properEndDate);
 		
-		System.out.println("startDate---" + sqlStartDate);
-		System.out.println("endDate---" + sqlEndDate);
-		
 		try {
 			con = OracleConnection.getConnection();
 			

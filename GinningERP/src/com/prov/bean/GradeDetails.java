@@ -5,7 +5,17 @@ public class GradeDetails {
 	private int id, weighmentId, rst;
 	
 	private String material, grade, authorizedBy;
+
+	private float bonusPerQtl;
 	
+	public float getBonusPerQtl() {
+		return bonusPerQtl;
+	}
+
+	public void setBonusPerQtl(float bonusPerQtl) {
+		this.bonusPerQtl = bonusPerQtl;
+	}
+
 	private double quantity, rate, moisture;
 
 	public double getMoisture() {
