@@ -447,6 +447,7 @@ function setGradeUpdationData(data)
 	document.getElementById("quantity").value = data[0].netWeight;
 	document.getElementById("weighmentId").value = data[0].weighmentId;
 	document.getElementById("authorizer").value = data[0].authorizer;
+	document.getElementById("bonusAmount").value = data[0].bonusPerQtl;
 	
 	if(Number(data[0].customerBlacklisted) === 1){
 		blacklisted = 'YES';
@@ -538,6 +539,7 @@ function setGradeUpdationData(data)
 		}
 		document.getElementById('rst').removeAttribute('readonly');
 	}
+	calculateTotal();
 }
 
  // Removes an element from the document
@@ -587,8 +589,6 @@ function calculateTotal(){
 		document.getElementById("totalBonus").value = 0;
 		document.getElementById("totalAmount").value = total;
 	}
-		
-	
 }
 
 checkDailySetup();
