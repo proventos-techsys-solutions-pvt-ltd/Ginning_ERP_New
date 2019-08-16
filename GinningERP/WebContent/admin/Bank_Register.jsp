@@ -71,7 +71,7 @@
 	 		<div class="col-md-12">
 	 		<input type="hidden" name="jsonOutput" id="jsonOutput" value='<%= session.getAttribute("jsonArray") %>' />
 	 		<% session.removeAttribute("jsonArray"); %>
-	 			<table class="table table-bordered">
+	 			<table id="tblBankRegister" class="table table-bordered">
 	 				<thead>
 	 					<tr>
 	 					<th>Date</th>
@@ -103,6 +103,15 @@
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 		<script src="../js/commonjs.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script src="../js/export/export2excel.js"></script>
+    	<script type="text/javascript">
+        function Export() {
+            $("#tblBankRegister").export2excel({
+            	filename: "Bank_Register.xls"
+            });
+        }
+		</script>
 		<script>
 		setTitle("Bank Register");//Setting Title of Page
 		setSearchPlaceholder("Search");//Setting Placeholder of Search Input
@@ -154,6 +163,11 @@
 		}	
 		
 		setReportInTable();
+		
+		document.getElementById("exportToExcel").addEventListener("click",function(){
+			Export();
+			})
+		
 		
 		</script>
 </body>

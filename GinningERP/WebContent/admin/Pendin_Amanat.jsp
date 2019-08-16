@@ -19,7 +19,7 @@
 		<div class="row row-background">
 			<div class="col-md-12">
 			<div class="setHeight">
-			<table class="table table-bordered">
+			<table id="tblPendingAmanat" class="table table-bordered">
 				<thead>
 					<tr>
 						<th>Sr. No.</th>
@@ -44,6 +44,15 @@
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 		<script src="../js/commonjs.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script src="../js/export/export2excel.js"></script>
+    	<script type="text/javascript">
+        function Export() {
+            $("#tblPendingAmanat").export2excel({
+            	filename: "Pending_Amanat.xls"
+            });
+        }
+		</script>
 		<script>
 		setTitle("Pending Amanat");//Setting Title of Page
 		setSearchPlaceholder("Search");//Setting Placeholder of Search Input
@@ -110,6 +119,11 @@
 				 
 				}
 			}
+			
+			document.getElementById("exportToExcel").addEventListener("click",function(){
+				Export();
+				})
+			
 		</script>
 </body>
 </html>
