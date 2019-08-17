@@ -11,8 +11,14 @@ public class Invoice {
 	public void setPaidByoperator(int paidByoperator) {
 		this.paidByoperator = paidByoperator;
 	}
-	private double total, amountPaid, pending, totalQuanity, cashAmount, chequeAmount, rtgsAmount ;
+	private double total, amountPaid, pending, totalQuanity, cashAmount, chequeAmount, rtgsAmount, netPayable ;
 	
+	public double getNetPayable() {
+		return netPayable;
+	}
+	public void setNetPayable(double netPayable) {
+		this.netPayable = netPayable;
+	}
 	public float getBonusAmount() {
 		return bonusAmount;
 	}

@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
 <title>Dashboard</title>
 </head>
 
@@ -30,7 +32,7 @@
 				    session.removeAttribute("InvoiceNo");
 				%>
             	</div>
-                        <form action="../processing/approvedInvoiceEntry.jsp" id="adminApprovalForm" target="_blank">
+                        <form action="../processing/approvedInvoiceEntry.jsp" id="adminApprovalForm">
                         	<input type="hidden" name="output" id="output" value="" />
                         </form>
                         	<input type="hidden" name="customerId" value="" id="customerId" />
@@ -215,7 +217,7 @@
 </div>
 
 
-<script src="../js/jquery-3.3.1.slim.min.js" ></script>
+<!-- <script src="../js/jquery-3.3.1.slim.min.js" ></script> -->
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script>
@@ -242,10 +244,10 @@
 			var response = this.response.trim();
 			console.log("daily Setup---"+response);
 			if(Number(response) > 0){
-				//$.unblockUI
+				$.unblockUI
 			}
 			else if(Number(response) <= 0){
-				//$.blockUI();
+				$.blockUI();
 			}
 		} 
 	}
@@ -512,7 +514,7 @@
 		jsonObj['authorizer'] = document.getElementById('authorizer').value;
 		jsonObj['invoiceNo'] = document.getElementById('invoiceNo').value;
 		jsonObj['customerId'] = document.getElementById('customerId').value;
-		var total = (Number(document.getElementById('advance').value) + Number(document.getElementById('net').value));
+		var total = Number(document.getElementById('totalAmount').value);
 		jsonObj['total'] = total.toString();
 		jsonObj['amountPaid'] = document.getElementById('advance').value;
 		jsonObj['pending'] = document.getElementById('net').value;
@@ -539,6 +541,8 @@
 		jsonObj['items'] = itemList;
 		jsonObj['totalQuantity'] = totalQuantity.toString();
 		jsonObj['unloadingCharges'] = document.getElementById('unloadingCharges').value;
+		jsonObj['totalBonus'] = document.getElementById('totalBonus').value;
+		jsonObj['netPayable'] = document.getElementById('net').value;
 		
 		var paymentModesTable = document.getElementById('paymentTableBody');
 		console.log(paymentModesTable.rows.length);

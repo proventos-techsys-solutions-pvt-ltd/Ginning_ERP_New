@@ -77,6 +77,7 @@
 			invoice.setCompanyId(companyId);
 			invoice.setInvoiceNo((String)json.get("invoiceNo").toString().toUpperCase());
 			invoice.setTotal(Double.parseDouble((String)json.get("total")));
+			invoice.setNetPayable(Double.parseDouble((String)json.get("netPayable")));
 			invoice.setAmountPaid(Double.parseDouble((String)json.get("amountPaid")));
 			invoice.setPending(Double.parseDouble((String)json.get("pending")));
 			invoice.setInvDate((String)json.get("invoiceDate"));
@@ -86,6 +87,7 @@
 			invoice.setTotalQuanity(Double.parseDouble((String)json.get("totalQuantity")));
 			invoice.setPaidByoperator(0);
 			invoice.setUnloadingCharges(Float.parseFloat((String)json.get("unloadingCharges")));
+			invoice.setBonusAmount(Float.parseFloat((String)json.get("totalBonus")));
 			if((String)json.get("Cash") == null){
 				invoice.setCashAmount(0.0);
 			}else{
@@ -128,32 +130,34 @@
 		
 		System.out.println("Stock ID ---- "+stockMastId);
 		
-		StockDetails stock = new StockDetails();
-		double totalQuantity = Double.parseDouble((String)json.get("totalQuantity"));
-		double totalAmount = Double.parseDouble((String)json.get("total"));
-		double averageRate = totalAmount/totalQuantity;
-		stock.setInvId(invoiceId);
-		stock.setTotalQuantity(totalQuantity);
-		stock.setAverageRate(averageRate);
-		stock.setStockMastId(stockMastId);
-		stock.setCompanyId(Integer.parseInt((String)json.get("companyId")));
-		
-		AddStockDetails addStock = new AddStockDetails();
-		
-		addStock.addStockDetails(stock);
-		
-		StockMast sm = new StockMast();
-		
-		sm.setId(stockMastId);
-		sm.setRawCotton(totalQuantity);
-		sm.setCompanyId(companyId);
-		sm.setStockDate((String)json.get("invoiceDate"));
-		sm.setAvgRate(averageRate);
-		
-		UpdateStockMast us = new UpdateStockMast();
-		
-		us.updateStockOnEntry(sm);
+		if(invoiceId>0){
+			StockDetails stock = new StockDetails();
+			double totalQuantity = Double.parseDouble((String)json.get("totalQuantity"));
+			double totalAmount = Double.parseDouble((String)json.get("total"));
+			double averageRate = totalAmount/(totalQuantity/100);
+			stock.setInvId(invoiceId);
+			stock.setTotalQuantity(totalQuantity);
+			stock.setAverageRate(averageRate);
+			stock.setStockMastId(stockMastId);
+			stock.setCompanyId(Integer.parseInt((String)json.get("companyId")));
+			
+			AddStockDetails addStock = new AddStockDetails();
+			
+			addStock.addStockDetails(stock);
+			
+			StockMast sm = new StockMast();
+			
+			sm.setId(stockMastId);
+			sm.setRawCotton(totalQuantity);
+			sm.setCompanyId(companyId);
+			sm.setStockDate((String)json.get("invoiceDate"));
+			sm.setAvgRate(averageRate);
+			
+			UpdateStockMast us = new UpdateStockMast();
+			
+			us.updateStockOnEntry(sm);
+		}
 		
 		session.setAttribute("invoiceId", Integer.toString(invoiceId));
-	    response.sendRedirect("../views/Invoice.jsp");
+	    response.sendRedirect("../admin/Invoice.jsp");
 %>

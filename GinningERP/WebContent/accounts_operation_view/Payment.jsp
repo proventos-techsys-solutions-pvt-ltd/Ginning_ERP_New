@@ -8,6 +8,7 @@
 		<!-- Bootstrap CSS -->
 	  	<link rel="stylesheet" href="../styles/bootstrap.min.css">	
 	  	<link rel="stylesheet" href="../styles/WBStyle.css">
+	  	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
      <title>Vendor Payment</title>
    </head>
 <body>
@@ -19,6 +20,9 @@
 					<div class="d-flex justify-content-start align-items-center">
 						<input type="text" class="form-control form-control-sm" id="searchInvoiceNo" name="searchInvoiceNo" placeholder="Invoice No">
 						<button type="button" class="btn btn-success btn-sm btn-no-radius" onclick="fetchInvoiceData(document.getElementById('searchInvoiceNo').value)">Fetch</button>
+					</div>
+					<div class="col-md-4">
+						<button type="button" class="btn btn-success btn-sm btn-no-radius" onclick="openInNewTab(document.getElementById('invoiceId').value)">Print Invoice</button>
 					</div>
 				</div>
 				<div class="col-md-4 offset-md-5">
@@ -148,7 +152,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
@@ -177,10 +180,10 @@
 			var response = this.response.trim();
 			console.log("daily Setup---"+response);
 			if(Number(response) > 0){
-				//$.unblockUI
+				$.unblockUI
 			}
 			else if(Number(response) <= 0){
-				//$.blockUI();
+				$.blockUI();
 			}
 		} 
 	}
@@ -338,6 +341,11 @@
 	}
 		
 	checkDailySetup();
+	
+	function openInNewTab(invoiceId) {
+		  var win = window.open("../report/InvoicePDFPrintOnly.jsp?invoiceId="+invoiceId, '_blank');
+		  win.focus();
+		}
 	
 	</script>
 </body>

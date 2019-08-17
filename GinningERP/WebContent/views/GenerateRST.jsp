@@ -116,7 +116,7 @@
 	        <div class="col-md-4">
 	            <label class="lbl-rm-all">Net Weight : </label>
 	            <div class="d-flex justify-content-start align-items-center">
-	            <input type="text" class="form-control  " id="net" name="net" placeholder="" readonly="readonly">
+	            <input type="text" class="form-control  " id="net" name="net" placeholder="" value="0.0" readonly="readonly">
 	            </div>
 	            <input type="text" class="form-control  " id="netWtTime" name="netWtTime" placeholder="Date & Time" value="0001-01-01" readonly="readonly">
 	        </div>

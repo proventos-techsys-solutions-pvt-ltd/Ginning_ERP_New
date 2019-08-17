@@ -58,6 +58,7 @@ public Invoice getInvoiceData(int id) {
 				inv.setPaidByoperator(rs.getInt(15));
 				inv.setUnloadingCharges(rs.getFloat(16));
 				inv.setBonusAmount(rs.getFloat(17));
+				inv.setNetPayable(rs.getDouble(18));
 			}
 			
 			stmt.close();
@@ -115,6 +116,7 @@ public ArrayList<Invoice> getReport() {
 			inv.setPaidByoperator(rs.getInt(15));
 			inv.setUnloadingCharges(rs.getFloat(16));
 			inv.setBonusAmount(rs.getFloat(17));
+			inv.setNetPayable(rs.getDouble(18));
 			reportList.add(inv);
 			
 		}
@@ -137,7 +139,7 @@ public ArrayList<Invoice> getReport() {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String invSql = "SELECT IM.ID, IM.INV_DATE, IM.INVOICE_NO, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.PENDING, IM.TOTAL, IM.AMOUNTPAID, CM.NAME, CM.ADDRESS, CM.MOBILE\r\n" + 
+			String invSql = "SELECT IM.ID, IM.INV_DATE, IM.INVOICE_NO, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.PENDING, IM.TOTAL, IM.NET_AMOUNT IM.AMOUNTPAID, CM.NAME, CM.ADDRESS, CM.MOBILE\r\n" + 
 					"FROM INVOICE_MAST IM, CUSTOMER_MAST CM\r\n" + 
 					"WHERE IM.CUSTOMER_ID = CM.ID";
 			
@@ -162,10 +164,11 @@ public ArrayList<Invoice> getReport() {
 				jsonObj.put("customerId", rs.getInt(5));
 				jsonObj.put("pendingAmount", rs.getDouble(6));
 				jsonObj.put("totalAmount", rs.getDouble(7));
-				jsonObj.put("amountPaid", rs.getDouble(8));
-				jsonObj.put("customerName", rs.getString(9));
-				jsonObj.put("customerAddress", rs.getString(10));
-				jsonObj.put("customerMobile", rs.getString(11));
+				jsonObj.put("netPayable", rs.getDouble(8));
+				jsonObj.put("amountPaid", rs.getDouble(9));
+				jsonObj.put("customerName", rs.getString(10));
+				jsonObj.put("customerAddress", rs.getString(11));
+				jsonObj.put("customerMobile", rs.getString(12));
 				
 				report.put(jsonObj);
 				
@@ -190,7 +193,7 @@ public ArrayList<Invoice> getReport() {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String invSql = "SELECT IM.ID, IM.INVOICE_NO, IM.TOTAL, IM.AMOUNTPAID, IM.PENDING, IM.INV_DATE, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.AUTHORIZER, \r\n" + 
+			String invSql = "SELECT IM.ID, IM.INVOICE_NO, IM.NET_AMOUNT, IM.AMOUNTPAID, IM.PENDING, IM.INV_DATE, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.AUTHORIZER, \r\n" + 
 					"        IM.NOTE, IM.TOTAL_QUANTITY, IM.CASH_AMOUNT, IM.CHEQUE_AMOUNT, IM.RTGS_AMOUNT, IM.PAID_BY_OP, CM.NAME, CM.ADDRESS, CM.MOBILE\r\n" + 
 					"FROM INVOICE_MAST IM, CUSTOMER_MAST CM\r\n" + 
 					"WHERE IM.CUSTOMER_ID = CM.ID AND\r\n" + 
@@ -265,7 +268,8 @@ public ArrayList<Invoice> getReport() {
 					"		IM.RTGS_AMOUNT,\r\n" + 
 					"		IM.PAID_BY_OP,\r\n" + 
 					"       IM.UNLOADING_CHARGES,\r\n"+	
-					"       IM.BONUS_AMOUNT,\r\n"+
+					"       IM.BONUS,\r\n"+
+					"       IM.NET_AMOUNT,\r\n"+
 					"		COMP.NAME COMP_NAME,\r\n" + 
 					"		COMP.ADDRESS COMP_ADDR,\r\n" + 
 					"		COMP.TELEPHONE COMP_TEL,\r\n" + 
@@ -286,7 +290,7 @@ public ArrayList<Invoice> getReport() {
 					"		GD.MOISTURE,\r\n" + 
 					"		GD.AUTHORIZED_BY,\r\n" + 
 					"		GM.DESCRIPTION,\r\n" + 
-					"		CV.WEIGH_RATE\r\n," + 
+					"		CV.WEIGH_RATE, \r\n" + 
 					"		COMP.EMAIL COMP_EMAIL\r\n" + 
 					"FROM\r\n" + 
 					"		INVOICE_MAST IM,\r\n" + 
@@ -337,16 +341,19 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("paidByOperator", rs.getInt(15));
 			jsonObj.put("unloadingCharges", rs.getFloat(16));
 			jsonObj.put("bonusAmount", rs.getFloat(17));
-			jsonObj.put("companyName", rs.getString(18));
-			jsonObj.put("companyAddress", rs.getString(19));
-			jsonObj.put("companyTelephone", rs.getString(20));
-			jsonObj.put("companyGst", rs.getString(21));
-			jsonObj.put("companyState", rs.getString(22));
-			jsonObj.put("vendorName", rs.getString(23));
-			jsonObj.put("vendorAddress", rs.getString(24));
-			jsonObj.put("vendorMobile", rs.getString(25));
-			jsonObj.put("weighRate", rs.getDouble(38));
-			jsonObj.put("companyEmail", rs.getString(39));
+			
+			jsonObj.put("netAmount","Rs. "+ rs.getString(18)+" /-");
+			
+			jsonObj.put("companyName", rs.getString(19));
+			jsonObj.put("companyAddress", rs.getString(20));
+			jsonObj.put("companyTelephone", rs.getString(21));
+			jsonObj.put("companyGst", rs.getString(22));
+			jsonObj.put("companyState", rs.getString(23));
+			jsonObj.put("vendorName", rs.getString(24));
+			jsonObj.put("vendorAddress", rs.getString(25));
+			jsonObj.put("vendorMobile", rs.getString(26));
+			jsonObj.put("weighRate", rs.getDouble(39));
+			jsonObj.put("companyEmail", rs.getString(40));
 			
 			JSONArray jsonArr = new JSONArray();
 			
@@ -356,20 +363,20 @@ public ArrayList<Invoice> getReport() {
 				
 				JSONObject invoiceItems = new JSONObject();
 				
-				invoiceItems.put("invoiceItemId", rs.getInt(26));
-				invoiceItems.put("weighmentId", rs.getInt(27));
-				invoiceItems.put("gradeId", rs.getInt(28));
-				invoiceItems.put("rst", rs.getInt(29));
-				invoiceItems.put("vehicleId", rs.getInt(30));
-				invoiceItems.put("material", rs.getString(31));
-				invoiceItems.put("quantity", rs.getDouble(32));
-				invoiceItems.put("grade", rs.getString(33));
-				invoiceItems.put("rate", rs.getDouble(34));
-				invoiceItems.put("moisture", rs.getFloat(35));
-				invoiceItems.put("gradeAuthorizer", rs.getString(36));
-				invoiceItems.put("gradeDescription", rs.getString(37));
+				invoiceItems.put("invoiceItemId", rs.getInt(27));
+				invoiceItems.put("weighmentId", rs.getInt(28));
+				invoiceItems.put("gradeId", rs.getInt(29));
+				invoiceItems.put("rst", rs.getInt(30));
+				invoiceItems.put("vehicleId", rs.getInt(31));
+				invoiceItems.put("material", rs.getString(32));
+				invoiceItems.put("quantity", rs.getDouble(33));
+				invoiceItems.put("grade", rs.getString(34));
+				invoiceItems.put("rate", rs.getDouble(35));
+				invoiceItems.put("moisture", rs.getFloat(36));
+				invoiceItems.put("gradeAuthorizer", rs.getString(37));
+				invoiceItems.put("gradeDescription", rs.getString(38));
 				
-				double amount =  (rs.getDouble(32)/100) * rs.getDouble(34);
+				double amount =  (rs.getDouble(33)/100) * rs.getDouble(33);
 						
 				invoiceItems.put("amount", amount);
 				

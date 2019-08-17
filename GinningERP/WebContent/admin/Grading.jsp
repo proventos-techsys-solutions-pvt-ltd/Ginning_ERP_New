@@ -176,10 +176,10 @@ function getDailySetupRecords(){
 	if(dailySetup.readyState == 4){
 		var response = this.response.trim();
 		if(Number(response) > 0){
-			//$.unblockUI
+			$.unblockUI
 		}
 		else if(Number(response) <= 0){
-			//$.blockUI();
+			$.blockUI();
 		}
 	} 
 }

@@ -216,17 +216,18 @@
 		 }
 		
 		
-		function getAverageRate(){
-			var tRate = document.getElementById("tRate").innerHTML;
-			var aRate = document.getElementById("aRate").innerHTML;
-			if(tRate > aRate){
+		/* function getAverageRate(){
+			var tRate = document.getElementById("tRate").innerHTML.trim();
+			var aRate = document.getElementById("aRate").innerHTML.trim();
+			console.log(tRate+"----------"+aRate);
+			if(Number(tRate) > Number(aRate)){
 				document.getElementById("aRate").style.background = "green";
 				document.getElementById("aRate").style.color = "#fff";
 			}else{
 				document.getElementById("aRate").style.background = "red";	
 				document.getElementById("aRate").style.color = "#fff";
 			}
-		}
+		} */
 		
 		function getTodayCottonRate(){
 			var url="../processing/getTodaysSuperRate.jsp";
@@ -252,11 +253,12 @@
 				var data = JSON.parse(response);
 				document.getElementById('tRate').innerHTML = data['superRate'];
 				document.getElementById('aRate').innerHTML = data['averageRate'];
+				//getAverageRate();
 			 }
 		 }
 		
 		getTodayCottonRate();
-		getAverageRate();
+		
 		
 		</script>
 </body>
