@@ -591,6 +591,10 @@ function calculateTotal(){
 	}
 }
 
+document.addEventListener('change', function(e){
+	calculateTotal();
+})
+
 checkDailySetup();
 fetchBonusRate();
 </script>

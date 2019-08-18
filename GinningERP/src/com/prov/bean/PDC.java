@@ -3,7 +3,13 @@ package com.prov.bean;
 public class PDC {
 	
 	private int id, customerId, bankId, invoiceId;
-	private String payeeName, chequeDate;
+	private String payeeName, chequeDate, chequeNo;
+	public String getChequeNo() {
+		return chequeNo;
+	}
+	public void setChequeNo(String chequeNo) {
+		this.chequeNo = chequeNo;
+	}
 	private double chequeAmount;
 	
 	public int getId() {

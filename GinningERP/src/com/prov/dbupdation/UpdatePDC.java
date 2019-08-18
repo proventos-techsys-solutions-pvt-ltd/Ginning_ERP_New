@@ -22,7 +22,7 @@ public class UpdatePDC {
 			e.printStackTrace();
 		}
 
-		String updateCheque = "{ ? = call UPDATE_PDC(?,?,?,?,?,?,?,?) }";
+		String updateCheque = "{ ? = call UPDATE_PDC(?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(updateCheque);
@@ -38,6 +38,7 @@ public class UpdatePDC {
 			cs.setString(6, p.getPayeeName());
 			cs.setDate(7, date);
 			cs.setDouble(8, p.getChequeAmount());
+			cs.setString(9, p.getChequeNo());
 			
 			cs.executeUpdate();
 			
