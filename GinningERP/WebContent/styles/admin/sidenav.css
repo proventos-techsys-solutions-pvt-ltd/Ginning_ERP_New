@@ -38,7 +38,7 @@
   	padding-left: 20px;
 }
 .submenu a:hover{
-	background-color:red;
+	background-color:#279636;
 }
 ul{
 	backgroun:yellow;
@@ -50,7 +50,7 @@ ul li{
 	padding-bottom:5px;
 }
 li:hover{
-	background-color:red;
+	background-color:#279636;
 	
 }
 a{
