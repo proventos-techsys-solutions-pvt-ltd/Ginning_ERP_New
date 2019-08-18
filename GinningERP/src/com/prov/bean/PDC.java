@@ -1,9 +1,9 @@
 package com.prov.bean;
 
-public class Cheque {
+public class PDC {
 	
 	private int id, customerId, bankId, invoiceId;
-	private String customerName, invoiceNo, bankName, chequeDate, chequeNo;
+	private String payeeName, chequeDate;
 	private double chequeAmount;
 	
 	public int getId() {
@@ -30,29 +30,11 @@ public class Cheque {
 	public void setInvoiceId(int invoiceId) {
 		this.invoiceId = invoiceId;
 	}
-	public String getCustomerName() {
-		return customerName;
+	public String getPayeeName() {
+		return payeeName;
 	}
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
-	}
-	public String getInvoiceNo() {
-		return invoiceNo;
-	}
-	public void setInvoiceNo(String invoiceNo) {
-		this.invoiceNo = invoiceNo;
-	}
-	public String getBankName() {
-		return bankName;
-	}
-	public void setBankName(String bankName) {
-		this.bankName = bankName;
-	}
-	public String getChequeNo() {
-		return chequeNo;
-	}
-	public void setChequeNo(String chequeNo) {
-		this.chequeNo = chequeNo;
+	public void setPayeeName(String payeeName) {
+		this.payeeName = payeeName;
 	}
 	public String getChequeDate() {
 		return chequeDate;
@@ -66,5 +48,7 @@ public class Cheque {
 	public void setChequeAmount(double chequeAmount) {
 		this.chequeAmount = chequeAmount;
 	}
+	
+	
 
 }

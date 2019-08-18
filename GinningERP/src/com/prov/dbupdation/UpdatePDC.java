@@ -6,11 +6,12 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import com.prov.bean.Cheque;
+import com.prov.bean.PDC;
 import com.prov.db.OracleConnection;
 
-public class UpdateCheque {
-	public int updateCheque(Cheque c)
+public class UpdatePDC {
+	
+	public int updatePDC(PDC p)
 	{
 		
 		Connection con = null;
@@ -21,30 +22,28 @@ public class UpdateCheque {
 			e.printStackTrace();
 		}
 
-		String updateCheque = "{ ? = call UPDATE_CHEQUE(?,?,?,?,?,?,?,?,?,?,?) }";
+		String updateCheque = "{ ? = call UPDATE_PDC(?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(updateCheque);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
-			Date date = Date.valueOf(c.getChequeDate());
+			Date date = Date.valueOf(p.getChequeDate());
 			
-			cs.setInt(2, c.getId());
-			cs.setInt(3, c.getCustomerId());
-			cs.setInt(4, c.getInvoiceId());
-			cs.setInt(5,c.getBankId());
-			cs.setString(6, c.getCustomerName());
-			cs.setString(7, c.getInvoiceNo());
-			cs.setString(8, c.getBankName());
-			cs.setString(9, c.getChequeNo());
-			cs.setDouble(10, c.getChequeAmount());
-			cs.setDate(11, date);
+			cs.setInt(2, p.getId());
+			cs.setInt(3, p.getCustomerId());
+			cs.setInt(4, p.getInvoiceId());
+			cs.setInt(5, p.getBankId());
+			cs.setString(6, p.getPayeeName());
+			cs.setDate(7, date);
+			cs.setDouble(8, p.getChequeAmount());
+			
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);
 			
-			c.setId(id);
+			p.setId(id);
 			
 			cs.close();
 			con.close();
