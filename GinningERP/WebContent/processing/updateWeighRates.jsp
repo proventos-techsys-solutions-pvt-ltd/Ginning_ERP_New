@@ -25,7 +25,7 @@
      	int updatedWeighRate = uwrm.updateWeighRateMast(wrm);
      	
         request.setAttribute("weighRateId", Integer.toString(updatedWeighRate));
-		request.getRequestDispatcher("../views/SetupVehicle.jsp").forward(request,response);
+		request.getRequestDispatcher("../admin/Setup_Vehicle_Rates.jsp").forward(request,response);
     
     %>
     

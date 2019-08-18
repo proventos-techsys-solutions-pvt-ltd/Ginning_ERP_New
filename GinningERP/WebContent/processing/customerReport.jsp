@@ -11,5 +11,5 @@
     	JSONArray jsonArray = new JSONArray(cr.getReport());
     	
     	out.println(jsonArray);
-    
+    	out.flush();
     %>

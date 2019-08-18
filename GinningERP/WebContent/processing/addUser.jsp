@@ -23,7 +23,7 @@
 	   int userId = au.addUser(u);
 	   	
 	   	session.setAttribute("userId", Integer.toString(userId));
-	   	response.sendRedirect("../views/.jsp");
+	   	response.sendRedirect("../admin/Dashboard.jsp");
     }
 %>
 

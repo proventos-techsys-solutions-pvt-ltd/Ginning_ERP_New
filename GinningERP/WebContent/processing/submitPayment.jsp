@@ -40,8 +40,9 @@
 		
 		updateInvoice.updatePendingAmount(cheque.getChequeAmount(), cheque.getInvoiceId());
 		
-		request.setAttribute("id", Integer.toString(id));
-		request.getRequestDispatcher("../report/Cheque.jsp").forward(request, response);
+		session.setAttribute("chequeId", Integer.toString(id));
+		response.sendRedirect("../report/Cheque.jsp");
+		
 		
 		
 		
@@ -67,8 +68,8 @@
 		
 		updateInvoice.updatePendingAmount(rtgs.getRtgsAmount(), rtgs.getInvoiceId());
 		
-		request.setAttribute("id", Integer.toString(id));
-		request.getRequestDispatcher("../report/RTGSVoucher.jsp").forward(request, response);
+		session.setAttribute("id", Integer.toString(id));
+		response.sendRedirect("../report/RTGSVoucher.jsp");
 			
 	}else if(((String)obj.get("dataType")).equals("cash")){
 

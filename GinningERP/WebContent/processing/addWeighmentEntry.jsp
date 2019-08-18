@@ -78,11 +78,13 @@
 		w.setNet(net);
 		w.setTareWtTime(tareWtTime);
 		
+		System.out.println(w.getTareWtTime());
+		
 		UpdateWeighMast uw = new UpdateWeighMast();
 		
 		int rstWeighMast = uw.secondWeighment(w);
 		
-		session.setAttribute("weighmentId", Integer.toString(rstWeighMast));
+		session.setAttribute("weighmentId", Integer.toString(weighmentId));
 		response.sendRedirect("../report/RST.jsp");
 	}
 %>

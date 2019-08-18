@@ -22,7 +22,7 @@
      	int updatedGradeId = ugm.updateGradeMaster(gm);
      	
      	request.setAttribute("gradeId", Integer.toString(updatedGradeId));
-		request.getRequestDispatcher("../views/SetupGrade.jsp").forward(request,response);
+		request.getRequestDispatcher("../admin/Setup_Grade_Levels.jsp").forward(request,response);
      	
     
     %>

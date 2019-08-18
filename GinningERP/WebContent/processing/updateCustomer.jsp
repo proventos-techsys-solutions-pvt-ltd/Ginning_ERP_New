@@ -42,8 +42,8 @@
     	   	
     	 c.setId(id);
     	 
-    	request.setAttribute("customerId", Integer.toString(id));
-		request.getRequestDispatcher("../views/VendorMaster.jsp").forward(request,response);
+    	session.setAttribute("customerId", Integer.toString(id));
+		response.sendRedirect("../admin/Vendor_Master.jsp");
     	
     }
     	

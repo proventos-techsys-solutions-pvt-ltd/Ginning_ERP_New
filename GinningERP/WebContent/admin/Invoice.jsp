@@ -35,6 +35,7 @@
                         <form action="../processing/approvedInvoiceEntry.jsp" id="adminApprovalForm">
                         	<input type="hidden" name="output" id="output" value="" />
                         </form>
+                        	<input type="hidden" name="bankId" value="" id="bankId" />
                         	<input type="hidden" name="customerId" value="" id="customerId" />
                         	<div class="row row-background">
                         		<div class="col-md-3">
@@ -198,8 +199,8 @@
 												<tbody id="pdcTableBody">
 													<tr>
 														<td align="center">PDC</td>
-														<td><input type="date" class="form-control form-control-sm" id="" name=""></td>
-														<td><input type="text" class="form-control form-control-sm" id="" name=""></td>
+														<td><input type="date" class="form-control form-control-sm" id="pdcDate" name="pdcDate"></td>
+														<td><input type="text" class="form-control form-control-sm" id="pdcAmount" name="pdcAmount" value="0"></td>
 														<td class="text-center"></td>
 													</tr>
 												</tbody>
@@ -287,6 +288,7 @@
 		
 		var companySelect = document.getElementById('companyId');
 		
+		document.getElementById("bankId").value = data.bankId;
 		for(i=0;i<companySelect.options.length;i++){
 			if(data.companyId != Number(companySelect.options[i].value)){
 				companySelect.options[i].disabled = true;
@@ -521,6 +523,7 @@
 		jsonObj['invoiceDate'] = document.getElementById('invoiceDate').value;
 		jsonObj['companyId'] = document.getElementById('companyId').value;
 		jsonObj['note'] = document.getElementById('note').value;
+		jsonObj['bankId'] = document.getElementById('bankId').value;
 		
 		var noOfRows = document.getElementById('tableBody').childElementCount;
 		console.log('no of Rows --- '+noOfRows);
@@ -550,6 +553,16 @@
 		for(j=0;j<paymentModesTable.rows.length; j++){
 				jsonObj[document.getElementById('paymentMode'+(j+1)).value] = document.getElementById('payAmount'+(j+1)).value;
 			}
+		
+		var pdcJson = {};
+
+		if(document.getElementById("pdcAmount")!=0){
+			pdcJson['pdcDate'] = document.getElementById("pdcDate").value;
+			pdcJson['pdcAmount'] = document.getElementById("pdcAmount").value;
+		}
+		
+		jsonObj['pdcJson'] = pdcJson;
+		
 		var jsonStr = JSON.stringify(jsonObj);
 		console.log(jsonStr);
 		
@@ -639,12 +652,29 @@
 	});
 	
 	//Adding PDC check details
-	var totalNoOfPdc = document.getElementsByName("pdcCheck").length;
-	for(i=0;i<totalNoOfPdc;i++){
-		document.getElementsByName("pdcCheck")[i].onclick = function(){
-			alert("working");
+	document.addEventListener("change",function(e){
+		if(e.srcElement.name === "pdcCheck" ){
+			if(e.srcElement.checked){
+				var table = document.getElementById("tableBody");
+				var rowIndex = e.srcElement.parentNode.parentNode.rowIndex;
+				var pdcAmount = table.rows[rowIndex-1].cells[6].children[0].value;
+				var amount = document.getElementById("pdcAmount").value;
+				document.getElementById("pdcAmount").value = Number(amount) + Number(pdcAmount);
+				var payAmountValue = document.getElementById("payAmount1").value;
+				document.getElementById("payAmount1").value = Number(payAmountValue) - Number(pdcAmount);
+				
+			}
+			if(!e.srcElement.checked){
+				var table = document.getElementById("tableBody");
+				var rowIndex = e.srcElement.parentNode.parentNode.rowIndex;
+				var pdcAmount = table.rows[rowIndex-1].cells[6].children[0].value;
+				var amount = document.getElementById("pdcAmount").value;
+				document.getElementById("pdcAmount").value = Number(amount) - Number(pdcAmount);
+				var cashAmount = Number(document.getElementById("payAmount1").value) + Number(pdcAmount);
+				document.getElementById("payAmount1").value = cashAmount;
+			}
 		}
-	}
+	})
 	
 	checkDailySetup();
 	</script>

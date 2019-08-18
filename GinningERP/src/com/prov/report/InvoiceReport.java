@@ -139,7 +139,7 @@ public ArrayList<Invoice> getReport() {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String invSql = "SELECT IM.ID, IM.INV_DATE, IM.INVOICE_NO, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.PENDING, IM.TOTAL, IM.NET_AMOUNT IM.AMOUNTPAID, CM.NAME, CM.ADDRESS, CM.MOBILE\r\n" + 
+			String invSql = "SELECT IM.ID, IM.INV_DATE, IM.INVOICE_NO, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.PENDING, IM.TOTAL, IM.NET_AMOUNT, IM.AMOUNTPAID, CM.NAME, CM.ADDRESS, CM.MOBILE\r\n" + 
 					"FROM INVOICE_MAST IM, CUSTOMER_MAST CM\r\n" + 
 					"WHERE IM.CUSTOMER_ID = CM.ID";
 			
@@ -324,9 +324,7 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("invoiceNo", rs.getString(2));
 			jsonObj.put("totalAmount","Rs. "+ rs.getString(3)+" /-");
 			
-			String amountInWords = numToWords.convertToIndianCurrency(rs.getString(3));
 			
-			jsonObj.put("totalInWords", amountInWords);
 			jsonObj.put("amountPaid", rs.getDouble(4));
 			jsonObj.put("amountPending", rs.getDouble(5));
 			jsonObj.put("invoiceDate", rs.getString(6));
@@ -341,6 +339,10 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("paidByOperator", rs.getInt(15));
 			jsonObj.put("unloadingCharges", rs.getFloat(16));
 			jsonObj.put("bonusAmount", rs.getFloat(17));
+			
+			String amountInWords = numToWords.convertToIndianCurrency(rs.getString(18));
+			
+			jsonObj.put("totalInWords", amountInWords);
 			
 			jsonObj.put("netAmount","Rs. "+ rs.getString(18)+" /-");
 			
@@ -395,5 +397,61 @@ public ArrayList<Invoice> getReport() {
 		}
 		return jsonObj;
 		
+	}
+	
+	public JSONArray getTodaysPendingInvoiceReport() {
+		ResultSet rs = null;
+		Connection con = null;
+		
+		JSONArray report = new JSONArray();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String invSql = "SELECT IM.ID, IM.INV_DATE, IM.INVOICE_NO, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.PENDING, IM.TOTAL, IM.NET_AMOUNT, IM.AMOUNTPAID, CM.NAME, CM.ADDRESS, CM.MOBILE\r\n" + 
+							"FROM INVOICE_MAST IM, CUSTOMER_MAST CM\r\n" + 
+							"WHERE \r\n" + 
+							"im.customer_id = cm.id and\r\n" + 
+							"im.inv_date = trunc(sysdate) and \r\n" + 
+							"im.pending >0";
+			
+			PreparedStatement stmt = con.prepareStatement(invSql);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				JSONObject jsonObj = new JSONObject();
+				
+				jsonObj.put("invoiceId", rs.getString(1));
+				
+				String date = rs.getString(2);
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+				String properDate = format2.format(date1);
+				
+				jsonObj.put("invoiceDate", properDate);
+				jsonObj.put("invoiceNo", rs.getString(3));
+				jsonObj.put("companyId", rs.getInt(4));
+				jsonObj.put("customerId", rs.getInt(5));
+				jsonObj.put("pendingAmount", rs.getDouble(6));
+				jsonObj.put("totalAmount", rs.getDouble(7));
+				jsonObj.put("netPayable", rs.getDouble(8));
+				jsonObj.put("amountPaid", rs.getDouble(9));
+				jsonObj.put("customerName", rs.getString(10));
+				jsonObj.put("customerAddress", rs.getString(11));
+				jsonObj.put("customerMobile", rs.getString(12));
+				
+				report.put(jsonObj);
+				
+			}
+			
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return report;
 	}
 }

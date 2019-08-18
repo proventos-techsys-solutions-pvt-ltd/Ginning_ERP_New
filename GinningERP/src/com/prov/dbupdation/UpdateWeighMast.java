@@ -85,17 +85,11 @@ public int secondWeighment(WeighMast wm) {
 	PreparedStatement stmt;
 	try {
 		
-		
-		Date sqlTareWtTime = new SimpleDateFormat("yyyy-MM-dd").parse(wm.getTareWtTime());
-		@SuppressWarnings({ "deprecation" })
-		java.sql.Date tareSqlDate = new java.sql.Date(sqlTareWtTime.getDate());
-		
-		
-		stmt = con.prepareCall(updateWeighMast);
+		stmt = con.prepareStatement(updateWeighMast);
 		
 		stmt.setFloat(1, wm.getTare());
 		stmt.setFloat(2, wm.getNet());
-		stmt.setDate(3, tareSqlDate);
+		stmt.setString(3, wm.getTareWtTime());
 		stmt.setInt(4, wm.getRst());
 		
 		row = stmt.executeUpdate();

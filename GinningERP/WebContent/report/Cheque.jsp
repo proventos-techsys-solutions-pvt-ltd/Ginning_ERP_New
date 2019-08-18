@@ -1,3 +1,5 @@
+<%@page import="com.prov.bean.Cheque"%>
+<%@page import="com.prov.report.ChequeReport"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="com.prov.jasper.JasperReports"%>
 <%@ page contentType="application/pdf"%>
@@ -11,10 +13,12 @@
 <%@ page import="java.sql.DriverManager"%>
 <%@ page import="java.sql.SQLException"%>
 <%
-	int invoiceId = Integer.parseInt((String)request.getAttribute("invoiceId"));
+	int chequeId = Integer.parseInt((String)session.getAttribute("chequeId"));
+ 	session.removeAttribute("chequeId");
 	
+	ChequeReport cr = new ChequeReport();
 	
-	/* JSONObject printObj = invReport.getInvoiceForPrinting(invoiceId);
+	JSONObject printObj = cr.getChequeForPrinting(chequeId);
 	
 	JasperReports printReport = new JasperReports();
 	
@@ -29,5 +33,5 @@
 	response.getOutputStream().flush();
 	response.getOutputStream().close();
 	
-	return; */
+	return; 
 %>

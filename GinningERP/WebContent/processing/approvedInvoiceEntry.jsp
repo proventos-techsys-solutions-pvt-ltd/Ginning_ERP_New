@@ -1,3 +1,5 @@
+<%@page import="com.prov.dbinsertion.AddPDC"%>
+<%@page import="com.prov.bean.PDC"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.io.FileOutputStream"%>
 <%@page import="net.sf.jasperreports.engine.JasperPrintManager"%>
@@ -124,6 +126,23 @@
 				addAmanat.addAmanat(amanatItemList.get(i));
 			}
 		}
+		
+		JSONObject pdcJson = (JSONObject)json.get("pdcJson");
+		
+		if(pdcJson.size() != 0){
+			PDC pdc = new PDC();
+			
+			pdc.setBankId(Integer.parseInt((String)json.get("bankId")));
+			pdc.setCustomerId(Integer.parseInt((String)json.get("customerId")));
+			pdc.setChequeDate((String)pdcJson.get("pdcDate"));
+			pdc.setInvoiceId(invoiceId);
+            pdc.setChequeAmount(Double.parseDouble((String)pdcJson.get("pdcAmount")));	
+            
+            AddPDC add = new AddPDC();
+            
+            int pdcId = add.addPDC(pdc);
+		}
+		
 		StockMasterReport stockMast = new StockMasterReport();
 		
 		int stockMastId = stockMast.getTodaysStockId((String)json.get("invoiceDate"), companyId);

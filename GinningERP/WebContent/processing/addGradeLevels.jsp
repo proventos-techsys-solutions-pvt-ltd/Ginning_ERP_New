@@ -25,6 +25,6 @@
      	gradeId = agm.addGradeMaster(gm);
      	
         session.setAttribute("gradeId", Integer.toString(gradeId));
-    	response.sendRedirect("../views/SetupGrade.jsp");
+    	response.sendRedirect("../admin/Setup_Grade_Levels.jsp");
     %>
     

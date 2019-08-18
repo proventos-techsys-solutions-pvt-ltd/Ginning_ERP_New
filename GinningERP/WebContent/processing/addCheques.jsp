@@ -22,6 +22,6 @@
    	
     int rowsUpdated = uds.addCheques(lastChequeNo, totalCheques, setupId);
     
-    response.sendRedirect("../views/DailySetup.jsp");
+    response.sendRedirect("../admin/Daily_Setup.jsp");
     
     %>

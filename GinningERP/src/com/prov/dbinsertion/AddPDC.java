@@ -20,7 +20,7 @@ public class AddPDC {
 			e.printStackTrace();
 		}
 		
-		String addPDC = "{ ? = call ADD_PDC(?,?,?,?,?,?) }";
+		String addPDC = "{ ? = call ADD_PDC(?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -33,9 +33,8 @@ public class AddPDC {
 			cs.setInt(2, p.getCustomerId());
 			cs.setInt(3, p.getInvoiceId());
 			cs.setInt(4, p.getBankId());
-			cs.setString(5, p.getPayeeName());
-			cs.setDate(6, date);
-			cs.setDouble(7, p.getChequeAmount());
+			cs.setDate(5, date);
+			cs.setDouble(6, p.getChequeAmount());
 			
 			cs.executeUpdate();
 			

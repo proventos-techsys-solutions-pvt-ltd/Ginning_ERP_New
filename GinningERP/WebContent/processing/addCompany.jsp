@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.prov.bean.StockMast"%>
 <%@page import="com.prov.dbinsertion.AddStockMast"%>
 <%@page import="org.json.JSONObject"%>
@@ -93,8 +94,27 @@
     	
     	companyId = ac.addCompany(c);
     	
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+    	Date date = new Date();
+    	String todaysDate = dateFormat.format(date); 
+    	
+    	StockMast sm = new StockMast();
+    	
+		sm.setCompanyId(companyId);
+		sm.setStockDate(todaysDate);
+		sm.setRawCotton(0);
+		sm.setCottonBales(0);
+		sm.setCottonCakes(0);
+		sm.setCottonSeed(0);
+		sm.setCottonSeedOil(0);
+		sm.setAvgRate(0);
+    	
+    	AddStockMast addStockMast = new AddStockMast();
+    	
+    	addStockMast.addStockMast(sm);
+    	
     	session.setAttribute("companyId", Integer.toString(companyId));
-	    response.sendRedirect("../views/SetupCompanies.jsp");
+	    response.sendRedirect("../admin/Setup_Companies.jsp");
       } catch(Exception ex) {
          System.out.println(ex);
       }

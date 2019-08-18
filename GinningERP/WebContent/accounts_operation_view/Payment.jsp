@@ -134,18 +134,12 @@
 				<table class="table table-bordered">
 					<thead class="table-back">
 						<tr>
-							<th>RST</th>
 							<th>Invoice No</th>
 							<th>Customer Name</th>
 							<th>Amount to Pay</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
+					<tbody id="tableBody">
 					</tbody>
 				</table>
 				</div>
@@ -156,6 +150,49 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script>
+	
+	function getPendingInvReport(){
+		var url="${pageContext.request.contextPath}/processing/pendingInvoiceReport.jsp";
+		if(window.XMLHttpRequest){  
+			invReport=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			invReport=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+		try{  
+			invReport.onreadystatechange=getInvReport;  
+			console.log("AJAX Req sent");
+			invReport.open("GET",url,true);  
+			invReport.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+
+	//Get response of Daily Setup Check performed by AJAX
+	function getInvReport(){
+		if(invReport.readyState == 4){
+			var response = this.response.trim();
+			var data = JSON.parse(response);
+			setPendingTable(data);
+		} 
+	}
+	
+	function setPendingTable(data){
+		
+		var table = document.getElementById("tableBody");
+		for(i=0;i<data.length;i++){
+			var noOfRows = table.rows.length;
+			var row = table.insertRow(noOfRows);
+			
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			
+			cell1.innerHTML = data[i].invoiceNo;
+			cell2.innerHTML = data[i].customerName;
+			cell3.innerHTML = data[i].pendingAmount;
+		}
+	}
+	
 	
 	//Send AJAX req to chech Daily setup
 	function checkDailySetup(){
@@ -190,6 +227,7 @@
 	
 	window.onload = function(){
 		getDailySetupData();
+		getPendingInvReport();
 	}
 	
 	function getDailySetupData(){

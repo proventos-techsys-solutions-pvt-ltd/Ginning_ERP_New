@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="data" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d30c938c-6f7e-4742-be0a-c77cdaba5c20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="data" pageWidth="260" pageHeight="572" columnWidth="220" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d30c938c-6f7e-4742-be0a-c77cdaba5c20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="mm"/>
 	<field name="totalInWords" class="java.lang.String">
 		<fieldDescription><![CDATA[totalInWords]]></fieldDescription>
 	</field>
@@ -45,7 +46,18 @@
 		<fieldDescription><![CDATA[y4]]></fieldDescription>
 	</field>
 	<background>
-		<band splitType="Stretch"/>
+		<band splitType="Stretch">
+			<textField>
+				<reportElement x="190" y="-52" width="12" height="8" uuid="20d418fd-2066-4bd0-a736-9ae50f46d961">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{y4}]]></textFieldExpression>
+			</textField>
+		</band>
 	</background>
 	<title>
 		<band splitType="Stretch"/>
@@ -59,104 +71,89 @@
 	<detail>
 		<band height="230" splitType="Stretch">
 			<textField>
-				<reportElement x="76" y="63" width="248" height="18" uuid="d323e1aa-7df5-441b-b0ca-b13c51ed5e90"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement x="110" y="30" width="20" height="188" isPrintWhenDetailOverflows="true" uuid="d323e1aa-7df5-441b-b0ca-b13c51ed5e90"/>
+				<textElement verticalAlignment="Middle" rotation="Right"/>
 				<textFieldExpression><![CDATA[$F{totalInWords}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="54" y="46" width="246" height="14" uuid="be53d277-2502-494d-91fb-c76e66efacb2"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement x="150" y="20" width="20" height="144" uuid="be53d277-2502-494d-91fb-c76e66efacb2"/>
+				<textElement verticalAlignment="Middle" rotation="Right"/>
 				<textFieldExpression><![CDATA[$F{vendor}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="71" y="107" width="88" height="16" uuid="9c14c921-effa-47c2-9087-28506746d204"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{accountNo}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="367" y="80" width="92" height="20" uuid="df77c548-9074-4d90-b46e-abb87b558573"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{totalInDigits}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="362" y="20" width="12" height="12" uuid="e19c3f0f-a783-404e-af99-9f183f5a57e7">
+				<reportElement x="190" y="108" width="12" height="8" uuid="e19c3f0f-a783-404e-af99-9f183f5a57e7">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Right">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{d1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="374" y="20" width="12" height="12" uuid="94b2d39e-1bec-4b0a-bb9d-4ca3174ad217">
+				<reportElement x="190" y="118" width="12" height="8" uuid="94b2d39e-1bec-4b0a-bb9d-4ca3174ad217">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Right">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{d2}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="386" y="20" width="12" height="12" uuid="9a7c8be9-ace1-45b3-b0e9-2323ea04f5ae">
+				<reportElement x="190" y="128" width="12" height="8" uuid="9a7c8be9-ace1-45b3-b0e9-2323ea04f5ae">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Right">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{m1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="398" y="20" width="12" height="12" uuid="22242c76-cd99-434b-b033-479f44083fa7">
+				<reportElement x="190" y="138" width="12" height="8" uuid="22242c76-cd99-434b-b033-479f44083fa7">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Right">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{m2}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="410" y="20" width="12" height="12" uuid="8ce8e1dc-5ba4-493b-a546-7003a0823b83">
+				<reportElement x="190" y="148" width="12" height="8" uuid="8ce8e1dc-5ba4-493b-a546-7003a0823b83">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Right">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{y1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="422" y="20" width="12" height="12" uuid="a904317e-0f35-4416-8e05-73575336a6ab">
+				<reportElement x="190" y="158" width="12" height="8" uuid="a904317e-0f35-4416-8e05-73575336a6ab">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Right">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{y2}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="434" y="20" width="12" height="12" uuid="db74bd0f-1db5-4302-a55a-bbb401a75faa">
+				<reportElement x="190" y="168" width="12" height="8" uuid="db74bd0f-1db5-4302-a55a-bbb401a75faa">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Right">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{y3}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="446" y="20" width="12" height="12" uuid="20d418fd-2066-4bd0-a736-9ae50f46d961">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="7"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{y4}]]></textFieldExpression>
+				<reportElement x="50" y="140" width="20" height="82" uuid="df77c548-9074-4d90-b46e-abb87b558573"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Right"/>
+				<textFieldExpression><![CDATA[$F{totalInDigits}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

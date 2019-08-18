@@ -17,5 +17,5 @@
  	JSONArray customerArray = new JSONArray(c);
  	
  	out.print(customerArray);
- 	
+ 	out.flush();
  %>

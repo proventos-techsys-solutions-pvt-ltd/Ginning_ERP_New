@@ -25,6 +25,6 @@
      	weighRateId = awrm.addWeighRateMast(wrm);
      	
      	session.setAttribute("weighRateId", Integer.toString(weighRateId));
-     	response.sendRedirect("../views/SetupVehicle.jsp");
+     	response.sendRedirect("../admin/SetupVehicle_Rates.jsp");
     %>
     

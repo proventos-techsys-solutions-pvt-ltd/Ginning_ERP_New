@@ -62,7 +62,7 @@ public class NumberToWords {
 	        Collections.reverse(str);
 	        String Rupees = String.join(" ", str).trim();
 	 
-	        String paise = (decimal) > 0 ? " And Paise " + words.get(Integer.valueOf((int) (decimal - decimal % 10))) + " " + words.get(Integer.valueOf((int) (decimal % 10))) : "";
+	        String paise = (decimal) > 0 ? " And " + words.get(Integer.valueOf((int) (decimal - decimal % 10))) + " " + words.get(Integer.valueOf((int) (decimal % 10))) +" Paise": "";
 	        return "Rupees " + Rupees + paise + " Only";
 	    }
 }
