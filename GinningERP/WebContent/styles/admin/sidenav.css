@@ -23,7 +23,7 @@
 }
 
 .menu-item:hover{
-	background-color:#5eb75b;
+	background-color:#22ab9b;
 }
 .navbar{
 	position:fixed;
@@ -34,7 +34,7 @@
 }
 .submenu{
 	display:none;
-	background-color: #343a40;
+	background-color: #1a1a1a;
   	padding-left: 20px;
 }
 .submenu a:hover{

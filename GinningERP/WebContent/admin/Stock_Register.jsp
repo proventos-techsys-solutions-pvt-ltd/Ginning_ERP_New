@@ -1,46 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<!doctype html>
 <%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
-<html lang="en">
-    <head>
-      <meta charset="utf-8">
-	  <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <!-- Bootstrap CSS -->
-	  <link rel="stylesheet" href="../styles/bootstrap.min.css">	
-	  <link rel="stylesheet" href="../styles/WBStyle.css">
-      <title>Stock Register</title>
-    </head>
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../styles/bootstrap.min.css">
+<link rel="stylesheet" href="../styles/admin/sidenav.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Dashboard</title>
+</head>
+
 <body>
-   <%@include file="../views/NavBar.html" %>
-	<div class="container-fluid">
-		<div class="row mt-2">
+
+<%@include file="../admin/Top_Nav.html" %>
+	<div class="container-fluid container-mr-t">
+	 <%@include file="../admin/Side_bar.html" %>
+	 	<div class="row row-background border-bottom">
 			<div class="col-md-12">
-			<div class="d-flex justify-content-between align-content-center tile-background-row">
-				<div class="d-flex justify-content-start align-content-center tile-background-row">
+			<div class="d-flex justify-content-between align-content-center row-background">
+				<div class="d-flex justify-content-start align-content-center row-background">
 					<img src="../property/img/stock.png" alt="Stock">&nbsp; &nbsp;
 					<h4 class="lbl-rm-all">Stock Register</h4>
 				</div>
-				<div class="d-flex justify-content-start align-content-center tile-background-row">
+				<div class="d-flex justify-content-start align-content-center row-background">
 					<button type="button" class="btn btn-success btn-sm">Print Report</button>
 				</div>
 			</div>
 			</div>
 			</div>
-			<div class="row mt-2">
-			<div class="col-md-12">
-			<div class="d-flex justify-content-between align-content-center tile-background-row">
-				<div class="d-flex justify-content-start align-content-center tile-background-row">
+			<div class="row row-background border-bottom">
+			<div class="col-md-5">
 					<label>Company:</label>
 					<select class="form-control form-control-sm " id="companyId" name="companyId" onchange="">
 		        	    <option selected disabled>Select</option>
 		        	    <option value="0">All</option>
 		        	 	<c:Company />
 	        	    </select>
-				</div>
-			</div>
 			</div>
 		</div>
-		<div class="row mt-2">
+		<div class="row row-background">
 			<div class="col-md-3">
 				<div class="stock-block-heading d-flex justify-content-center align-items-center">
 					Cotton Lint
@@ -118,9 +117,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="row mt-2">
+		<div class="row row-background">
 			<div class="col-md-12">
-				<table class="table table-bordered tile-background-row">
+				<table class="table table-bordered ">
 					<thead>
 						<tr>
 							<th>Date</th>
