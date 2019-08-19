@@ -3,6 +3,7 @@ package com.prov.dbupdation;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
 
@@ -58,4 +59,46 @@ public class UpdatePDC {
 		
 	}
 
+	public int updatePDCData(PDC p)
+	{
+		
+		Connection con = null;
+		int rows = 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		String updateCheque = "{ ? = call UPDATE_PDC(UPDATE PDC_MAST SET\r\n" + 
+								"BANK_ID = ?,\r\n" + 
+								"PAYEE_NAME = ?,\r\n" + 
+								"CHEQUE_NO = ?\r\n" + 
+								"WHERE ID = ?;) }";
+		PreparedStatement stmt;
+		try {
+			stmt = con.prepareStatement(updateCheque);
+			
+			
+			
+			stmt.setInt(1, p.getBankId());
+			stmt.setString(2, p.getPayeeName());
+			stmt.setString(3, p.getChequeNo());
+			stmt.setInt(4, p.getId());
+			
+			rows = stmt.executeUpdate();
+			
+			stmt.close();
+			con.close();
+			
+			System.out.println("Updation Succesful-"+rows);
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return rows;
+		
+	}
+	
+	
 }

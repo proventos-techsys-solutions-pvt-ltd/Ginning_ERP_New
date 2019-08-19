@@ -222,6 +222,30 @@
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script>
+
+//Get current date and time
+function setCurrentDate(){
+	var today = new Date();
+	 var dd = today.getDate();
+	    var mm = today.getMonth()+1; //January is 0!
+	    var yyyy = today.getFullYear();
+
+	    if(dd<10){
+	        dd='0'+dd;
+	    } 
+	    if(mm<10){
+	        mm='0'+mm;
+	    } 
+
+	    todayDate = yyyy+'-'+mm+'-'+dd; 
+	    formattedDate = dd+'-'+mm+'-'+yyyy;
+	var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+	var dateTime = formattedDate+' '+time;
+	
+	document.getElementById("invoiceDate").value = todayDate;
+}
+
+
 //Send AJAX req to chech Daily setup
 	function checkDailySetup(){
 		var url="${pageContext.request.contextPath}/processing/checkDailySetup.jsp";
@@ -677,6 +701,7 @@
 	})
 	
 	checkDailySetup();
+	setCurrentDate()
 	</script>
 </body>
 </html>

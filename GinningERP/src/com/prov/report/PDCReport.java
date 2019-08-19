@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.prov.bean.PDC;
 import com.prov.db.OracleConnection;
 
 public class PDCReport {
@@ -77,4 +78,44 @@ public class PDCReport {
 		return jsonArray;
 	}
 	
+	public PDC getPDCData(int invoiceId) {
+		ResultSet rs = null;
+		Connection con = null;
+
+		PDC pdc = new PDC();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT *" + 
+					"FROM PDC_MAST ,\r\n" + 
+					"WHERE\r\n" + 
+					"pdc.invoice_id = ? \r\n";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				pdc.setId(rs.getInt(1));
+				pdc.setCustomerId(rs.getInt(2));
+				pdc.setInvoiceId(rs.getInt(3));
+				pdc.setBankId(rs.getInt(4));
+				pdc.setPayeeName(rs.getString(5));
+				pdc.setChequeDate(rs.getString(6));
+				pdc.setChequeAmount(rs.getDouble(7));
+				pdc.setChequeNo(rs.getString(8));
+				
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return pdc;
+	}
 }

@@ -9,6 +9,7 @@
 	  	<link rel="stylesheet" href="../styles/bootstrap.min.css">	
 	  	<link rel="stylesheet" href="../styles/WBStyle.css">
 	  	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	  	<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
      <title>Vendor Payment</title>
    </head>
 <body>
@@ -92,7 +93,7 @@
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Date</label>
-							<input type="date" class="form-control form-control-sm" id="chequeDate" name="chequeDate">
+							<input type="date" class="form-control form-control-sm" id="chequeDate" name="chequeDate" value="">
 						</div>
 						<div class="col-md-3">
 							<label class="lbl-rm-all">Name</label>
@@ -150,6 +151,30 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script>
+	
+	
+	//Get current date and time
+	function setCurrentDate(){
+		var today = new Date();
+		 var dd = today.getDate();
+		    var mm = today.getMonth()+1; //January is 0!
+		    var yyyy = today.getFullYear();
+
+		    if(dd<10){
+		        dd='0'+dd;
+		    } 
+		    if(mm<10){
+		        mm='0'+mm;
+		    } 
+
+		    todayDate = yyyy+'-'+mm+'-'+dd; 
+		    formattedDate = dd+'-'+mm+'-'+yyyy;
+		var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+		var dateTime = formattedDate+' '+time;
+		
+		document.getElementById("chequeDate").value = todayDate;
+	}
+	
 	
 	function getPendingInvReport(){
 		var url="${pageContext.request.contextPath}/processing/pendingInvoiceReport.jsp";
@@ -316,6 +341,7 @@
 			document.getElementById('rtgsBank').value = "" ;
 			document.getElementById('rtgsAccountNo').value = "" ;
 			document.getElementById('rtgsIfsc').value = "" ;
+			setCurrentDate();
 		}
 		
 		
@@ -379,6 +405,7 @@
 	}
 		
 	checkDailySetup();
+	setCurrentDate()
 	
 	function openInNewTab(invoiceId) {
 		  var win = window.open("../report/InvoicePDFPrintOnly.jsp?invoiceId="+invoiceId, '_blank');
