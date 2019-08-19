@@ -31,6 +31,17 @@
 						
 						<div class="form-row">
 							<div class="col-md-12">
+								<label class="lbl-rm-all">Module</label>
+								<select class="form-control form-control-lg" name="module" id="moduleId">
+									<option value= "adminMod">Admin Module</option>
+									<option value= "wbMod">WB Module</option>
+									<option value="cashMod">Cashier Module</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-row">
+							<div class="col-md-12">
 								<label class="lbl-rm-all">Role</label>
 								<select class="form-control form-control-lg" name="role" id="role">
 									<option value= "Administrator">Administrator</option>
@@ -57,6 +68,7 @@
 						<div class="form-row">
 							<div class="col-md-12">
 								<button type="button" class="btn btn-success btn-lg" id="submitForm">Log-In</button>
+								<button type="button" class="btn btn-success btn-lg" id="resetForm">Reset</button>
 							</div>
 						</div>
 					
@@ -73,9 +85,15 @@
 <script src="./js/bootstrap.min.js"></script>
 <script>
 	var form = document.getElementById("loginForm");
-	console.log(form);
-	document.getElementById("submitForm").addEventListener("click",function(){
-		document.getElementById("loginForm").submit();
+	var module = document.getElementById("moduleId");
+	var role = document.getElementById("role");
+	
+		document.getElementById("submitForm").addEventListener("click",function(){
+			document.getElementById("loginForm").submit();
+		})
+	
+	document.getElementById("resetForm").addEventListener("click",function(){
+		document.getElementById("loginForm").reset();
 	})
 </script>
 </body>

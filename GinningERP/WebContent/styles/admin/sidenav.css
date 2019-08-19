@@ -11,7 +11,7 @@
 	bottom:0;
 	background-color:#1a1a1a;
 	color:#fff;
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
 .sidebar-menu-panel{
@@ -22,9 +22,6 @@
 	padding:10px 15px 10px 30px;
 }
 
-.menu-item:hover{
-	background-color:#22ab9b;
-}
 .navbar{
 	position:fixed;
 	top:0;
@@ -49,19 +46,21 @@ ul li{
 	padding-top:5px;
 	padding-bottom:5px;
 }
+/*
 li:hover{
 	background-color:#279636;
 	
-}
+}*/
 a{
 	text-decoration:none;
 	color:#fff;
 	cursor:pointer;
 }
+
 a:hover{
 	text-decoration:none;
 	color:#fff;
-
+	cursor:pointer;
 }
 .container-mr-t{
 	margin-top:65px;
