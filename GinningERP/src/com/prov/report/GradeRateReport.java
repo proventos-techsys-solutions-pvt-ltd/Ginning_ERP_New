@@ -62,7 +62,7 @@ public class GradeRateReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT * FROM GRADE_RATE_MASTER WHERE TRUNC(RATE_DATE) = trunc(SYSDATE) and grade_id=1";
+			String sql = "SELECT * FROM GRADE_RATE_MASTER WHERE TRUNC(RATE_DATE) = (select max(RATE_DATE) from GRADE_RATE_MASTER) and id = (select max(id) from GRADE_RATE_MASTER where grade_id = 1)";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			

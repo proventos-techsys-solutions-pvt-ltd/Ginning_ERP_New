@@ -209,7 +209,7 @@
 
 			 // Chart declaration:
 			 var myBarChart = new Chart(ctx, {
-			     type: 'pie',
+			     type: 'doughnut',
 			     data: data,
 			     options: options
 			 });
