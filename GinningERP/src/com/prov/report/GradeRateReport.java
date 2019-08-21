@@ -3,9 +3,7 @@ package com.prov.report;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.prov.bean.GradeRateMaster;
 import com.prov.db.OracleConnection;
@@ -31,12 +29,7 @@ public class GradeRateReport {
 				GradeRateMaster grm = new GradeRateMaster();
 				
 				grm.setId(rs.getInt(1));
-				
-				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(2));
-				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-				String properDate = format2.format(date1);
-				
-				grm.setRateDate(properDate);
+				grm.setRateDate(rs.getString(2));
 				grm.setGradeId(rs.getInt(3));
 				grm.setRate(rs.getDouble(4));
 				
@@ -62,7 +55,7 @@ public class GradeRateReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT * FROM GRADE_RATE_MASTER WHERE TRUNC(RATE_DATE) = (select max(RATE_DATE) from GRADE_RATE_MASTER) and id = (select max(id) from GRADE_RATE_MASTER where grade_id = 1)";
+			String sql = "SELECT * FROM GRADE_RATE_MASTER WHERE RATE_DATE = (select max(RATE_DATE) from GRADE_RATE_MASTER) and grade_id=1";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -71,12 +64,7 @@ public class GradeRateReport {
 			while (rs.next()) {
 				
 				grm.setId(rs.getInt(1));
-				
-				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(2));
-				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-				String properDate = format2.format(date1);
-				
-				grm.setRateDate(properDate);
+				grm.setRateDate(rs.getString(2));
 				grm.setGradeId(rs.getInt(3));
 				grm.setRate(rs.getDouble(4));
 				

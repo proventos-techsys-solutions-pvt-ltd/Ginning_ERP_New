@@ -43,12 +43,12 @@
 			<form id="addChequeForm" action='../processing/addCheques.jsp'>
 					<input type="hidden" name="addCheques" id="addCheques" />
 			</form>
+			<form id="deleteDailySetupForm" action='../processing/deleteDailySetupEntry.jsp'>
+					<input type="hidden" name="dailySetupId" id="dailySetupId" />
+			</form>
 			<div class="row row-background">
 				<div class="col-md-3">
-					<div class="d-flex justify-content-start align-items-center">
-						<img src="../property/img/factory.png" alt="warehouse">&nbsp;
 						<label class="lbl-rm-l">Setup Company</label>
-					</div>
 					<select class="form-control form-control-sm" name="companyId" id="companyId">
 						<option selected disabled>Select</option>
 						<c:Company />
@@ -82,16 +82,19 @@
 						<table class="table table-bordered" id="companySetupTable">
 							<thead>
 								<tr class="table-back">
-									<th rowspan="2" >Hid Fld</th>
+									<th rowspan="2" width="5%" >DS ID</th>
 									<th rowspan="2" width="5%" style="vertical-align:middle;">Sr No</th>
-									<th rowspan="2" width="8%" style="vertical-align:middle;">Date</th>
+									<th rowspan="2" width="9%" style="vertical-align:middle;">Date</th>
 									<th rowspan="2" width="8%" style="vertical-align:middle;">Setup Time</th>
-									<th rowspan="2" width="25%" style="vertical-align:middle;">Company Name</th>
+									<th rowspan="2" width="20%" style="vertical-align:middle;">Company Name</th>
 									<th rowspan="2" width="10%" style="vertical-align:middle;">Heap</th>
 									<th rowspan="2" width="15%" style="vertical-align:middle;">Bank</th>
+									<th rowspan="2" width="5%" style="vertical-align:middle;">Bonus Amount</th>
 									<th colspan="2" style="vertical-align:middle;text-align:center;">Cheque Series</th>
 									<th rowspan="2" width="5%" style="vertical-align:middle;">Setup</th>
 									<th rowspan="2" width="5%" style="vertical-align:middle;">Update</th>
+									<th rowspan="2" >Weighment Entries</th>
+									<th rowspan="2"></th>
 								</tr>
 								<tr class="table-back">
 									<th width="7%" style="vertical-align:middle;text-align:center;">From</th>
@@ -100,26 +103,30 @@
 							</thead>
 							<tbody id="tableBody">
 							 	<tr>
+							 	
 									<td>
 										<input type="text" class="form-control form-control-sm" id="setupId" name="setupId" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="srNoTable" name="srNoTable" readonly>
+										<input type="text" class="form-control form-control-sm" id="srNoTable" name="srNoTable" >
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="dateTable" name="dateTable" readonly>
+										<input type="text" class="form-control form-control-sm" id="dateTable" name="dateTable" >
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="setupTimeTable" readonly>
+										<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="setupTimeTable" >
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="companyNameTable" name="companyNameTable" data-company-id="" value="" readonly>
+										<input type="text" class="form-control form-control-sm" id="companyNameTable" name="companyNameTable" data-company-id="" value="" >
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="heapTable" name="heapTable" readonly>
+										<input type="text" class="form-control form-control-sm" id="heapTable" name="heapTable" >
 									</td>
 									<td>
-										<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" data-bank-id="" readonly>
+										<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" data-bank-id="" >
+									</td>
+									<td>
+										<input type="text" class="form-control form-control-sm" id="bonusAmountTable" name="bonusAmountTable" >
 									</td>
 									<td>
 										<input type="text" class="form-control form-control-sm" name="firstChequeNo" id="firstChequeNo"/>
@@ -132,6 +139,12 @@
 									</td>
 									<td>
 										<button type="button" class="btn btn-success btn-sm" id="update" name="update">Update</button>
+									</td>
+									<td>
+										<input type="text" class="form-control form-control-sm" id="weighmentEntries" name="weighmentEntries" readonly>
+									</td>
+									<td>
+										<img src="../property/img/delete.png" alt="delete">
 									</td>
 								</tr>
 							</tbody>
@@ -409,11 +422,14 @@
 					tableBody.rows[0].cells[5].children[0].value = data[i].cottonHeap;
 					tableBody.rows[0].cells[6].children[0].setAttribute("data-bank-id", data[i].bankId);
 					tableBody.rows[0].cells[6].children[0].value = data[i].bankName;
-					tableBody.rows[0].cells[7].children[0].value = data[i].firstChequeNo;
-					tableBody.rows[0].cells[7].children[0].readOnly = true;
-					tableBody.rows[0].cells[8].children[0].value = data[i].lastChequeNo;
-					tableBody.rows[0].cells[9].children[0].disabled=true;
-					tableBody.rows[0].cells[10].children[0].disabled=false;
+					tableBody.rows[0].cells[7].children[0].value = data[i].bonusAmount;
+					tableBody.rows[0].cells[8].children[0].value = data[i].firstChequeNo;
+					tableBody.rows[0].cells[8].children[0].readOnly = true;
+					tableBody.rows[0].cells[9].children[0].value = data[i].lastChequeNo;
+					tableBody.rows[0].cells[12].children[0].value = data[i].weighmentEntries;
+					tableBody.rows[0].cells[10].children[0].disabled=true;
+					tableBody.rows[0].cells[11].children[0].disabled=false;
+					
 				
 				}else if(i === setupArrLength){
 					var rowNumber = tableBody.rows.length;
@@ -429,6 +445,9 @@
 					var cell9 = row.insertCell(8);
 					var cell10 = row.insertCell(9);
 					var cell11 = row.insertCell(10);
+					var cell12 = row.insertCell(11);
+					var cell13 = row.insertCell(12);
+					
 					//cell1.hidden=true;
 					
 					cell1.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupId" name="setupId" value="" readonly>';
@@ -438,11 +457,14 @@
 					cell5.innerHTML = '<input type="text" class="form-control form-control-sm" id="companyNameTable" name="companyNameTable" data-company-id="" value="" readonly>';
 					cell6.innerHTML = '<input type="text" class="form-control form-control-sm" id="heapTable" name="heapTable" value="" readonly>';
 					cell7.innerHTML = '<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" data-bank-id="" value="" readonly>';
-					cell8.innerHTML = '<input type="text" class="form-control form-control-sm" id="firstChequeNo" name="firstChequeNo" value="">';
-					cell9.innerHTML = '<input type="text" class="form-control form-control-sm" id="lastChequeNo" name="lastChequeNo" value="">';
-					cell10.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="setup" name="setup" disabled="false">Setup</button>';
-					cell11.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="update" name="update" disabled="false">Update</button>';
-				
+					cell8.innerHTML = '<input type="text" class="form-control form-control-sm" id="bonusAmountTable" name="bonusAmountTable" value="" readonly>';
+					cell9.innerHTML = '<input type="text" class="form-control form-control-sm" id="firstChequeNo" name="firstChequeNo" value="">';
+					cell10.innerHTML = '<input type="text" class="form-control form-control-sm" id="lastChequeNo" name="lastChequeNo" value="">';
+					cell11.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="setup" name="setup" disabled="false">Setup</button>';
+					cell12.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="update" name="update" disabled="false">Update</button>';
+					cell13.innerHTML = '<input type="text" class="form-control form-control-sm" id="weighEntries" name="weighEntries" value="" readonly>';
+					
+					
 				}
 				else{
 					var rowNumber = tableBody.rows.length;
@@ -458,7 +480,11 @@
 					var cell9 = row.insertCell(8);
 					var cell10 = row.insertCell(9);
 					var cell11 = row.insertCell(10);
+					var cell12 = row.insertCell(11);
+					var cell13 = row.insertCell(12);
+					var cell14 = row.insertCell(13);
 					//cell1.hidden=true;
+					
 					
 					cell1.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupId" name="setupId" value="'+data[i].id+'" readonly>';
 					cell2.innerHTML = '<input type="text" class="form-control form-control-sm" id="srNoTable" name="srNoTable" value="'+(i+1)+'" readonly>';
@@ -467,10 +493,20 @@
 					cell5.innerHTML = '<input type="text" class="form-control form-control-sm" id="companyNameTable" name="companyNameTable" data-company-id="'+data[i].companyId+'" value="'+data[i].companyName+'" readonly>';
 					cell6.innerHTML = '<input type="text" class="form-control form-control-sm" id="heapTable" name="heapTable" value="'+data[i].cottonHeap+'" readonly>';
 					cell7.innerHTML = '<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" data-company-id="'+data[i].bankId+'" value="'+data[i].bankName+'" readonly>';
-					cell8.innerHTML = '<input type="text" class="form-control form-control-sm" id="firstChequeNo" name="firstChequeNo" value="'+data[i].firstChequeNo+'" readonly>';
-					cell9.innerHTML = '<input type="text" class="form-control form-control-sm" id="lastChequeNo" name="lastChequeNo" value="'+data[i].lastChequeNo+'">';
-					cell10.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="setup" name="setup" disabled="false">Setup</button>';
-					cell11.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="update" name="update" >Update</button>';
+					cell8.innerHTML = '<input type="text" class="form-control form-control-sm" id="bonusAmountTable" name="bonusAmountTable" value="'+data[i].bonusAmount+'" readonly>';
+					cell9.innerHTML = '<input type="text" class="form-control form-control-sm" id="firstChequeNo" name="firstChequeNo" value="'+data[i].firstChequeNo+'" readonly>';
+					cell10.innerHTML = '<input type="text" class="form-control form-control-sm" id="lastChequeNo" name="lastChequeNo" value="'+data[i].lastChequeNo+'">';
+					cell11.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="setup" name="setup" disabled="false">Setup</button>';
+					cell12.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="update" name="update" >Update</button>';
+					cell13.innerHTML = '<input type="text" class="form-control form-control-sm" id="weighEntries" name="weighEntries" value="'+data[i].weighmentEntries+'" readonly>';
+					cell14.innerHTML = '<img src="../property/img/delete.png" alt="delete">';
+				}
+				
+			}
+			var inputElements = document.getElementsByTagName("input")
+			for(j=0;j<inputElements.length;j++){
+				if(inputElements[j].name === "srNoTable" || inputElements[j].name === "dateTable" || inputElements[j].name === "setupTimeTable" || inputElements[j].name === "companyNameTable" ||inputElements[j].name === "heapTable" || inputElements[j].name === "bankTable" || inputElements[j].name === "bonusAmountTable"|| inputElements[j].name === "weighEntries"){
+					inputElements[j].setAttribute("readonly","");
 				}
 			}
 		}
@@ -603,7 +639,7 @@
 	document.addEventListener('click',function(e){
 		if(e.srcElement.name === "update"){
 			var rowIndex = e.srcElement.parentElement.parentElement.rowIndex-2;
-			submitDailySetup(rowIndex);
+			addCheques(rowIndex);
 		}
 	})
 	
@@ -618,7 +654,6 @@
 		var jsonStr = JSON.stringify(jsonObj);
 		document.getElementById('addCheques').value=jsonStr;
 		document.getElementById('addChequeForm').submit();
-		addCheques
 	}
 	
 	function setDisplayDate(){
@@ -645,7 +680,23 @@
 					bankOptions[i].disabled = true;
 				}
 			}
-		})
+	})
+		
+	document.addEventListener("click", function(e){
+		if(e.srcElement.alt==="delete"){
+			var rowIndex = Number(e.srcElement.parentNode.parentNode.rowIndex)-2;
+			var tableBody = document.getElementById("tableBody");
+			var dailySetupId = tableBody.rows[rowIndex].cells[0].children[0].value;
+			deleteDailySetupEntry(dailySetupId);
+		}
+	})
+	
+	function deleteDailySetupEntry(dailySetupId){
+		
+		document.getElementById("dailySetupId").value = dailySetupId;
+		document.getElementById("deleteDailySetupForm").submit()
+		
+	}
 	
 	getSetupReport();
 	setDisplayDate();

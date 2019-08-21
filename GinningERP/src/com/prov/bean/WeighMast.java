@@ -2,7 +2,15 @@ package com.prov.bean;
 
 public class WeighMast {
 
-	private int id, rst, vid; 
+	private int id, rst, vid, dsId; 
+
+	public int getDsId() {
+		return dsId;
+	}
+
+	public void setDsId(int dsId) {
+		this.dsId = dsId;
+	}
 
 	private float gross, tare, net;
 	

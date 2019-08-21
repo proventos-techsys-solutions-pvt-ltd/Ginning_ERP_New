@@ -25,43 +25,7 @@ var uiController = (function(){
 			updateButton : "update"
 	}
 	
-	var insertTableRow = function(){//insert table row
-		
-		if(table.rows[Number(rowNumber-1)].cells[1].children[0].value!==""){
-			
-		var table = appController.hmtlPageObjectsMethod().companySetupTableBody; // fetch table object
-		var rowNumber = table.rows.length; // gives the row count
-			
-			var row = table.insertRow(rowNumber); // 
-			
-			var cell1 = row.insertCell(0);
-			var cell2 = row.insertCell(1);
-			var cell3 = row.insertCell(2);
-			var cell4 = row.insertCell(3);
-			var cell5 = row.insertCell(4);
-			var cell6 = row.insertCell(5);
-			var cell7 = row.insertCell(6);
-			var cell8 = row.insertCell(7);
-			var cell9 = row.insertCell(8);
-			var cell10 = row.insertCell(9);
-			var cell11 = row.insertCell(10);
-			
-			cell1.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="setupId" readonly></td>';
-			cell2.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="srNoTable" readonly></td>';
-			cell3.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="dateTable" readonly></td>';
-			cell4.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="setupTimeTable" readonly></td>';
-			cell5.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="companyNameTable" readonly></td>';
-			cell6.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="heapTable" readonly></td>';
-			cell7.innerHTML = '<td><input type="text" class="form-control form-control-sm" id="" name="bankTable" readonly></td>';
-			cell8.innerHTML = '<td><input class="form-control form-control-sm" name="firstChequeNo" id="firstChequeNo"></td>';
-			cell9.innerHTML = '<td><input class="form-control form-control-sm" name="lastChequeNo" id="lastChequeNo"></td>';
-			cell10.innerHTML = '<td><button type="button" class="btn btn-success btn-sm" id="" name="setup">Setup</button></td>';
-			cell11.innerHTML = '<td><button type="button" class="btn btn-success btn-sm" id="" name="update">Update</button></td>'
-				
-				
-			}
-	}
-	
+
 	var addSetupCompanyRow = function(){//Table row add function
 		
 		if(appController.getDataForSetup().getCompanyName !== null && appController.getDataForSetup().getTodayHeap !== null && 
@@ -75,8 +39,8 @@ var uiController = (function(){
 		console.log("new row number"+rowNumber);
 			
 		console.log(appController.getDataForSetup().getCompanyId);
-				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[0].querySelector('input').value = "1";
-				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[1].querySelector('input').value = "1";
+				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[0].querySelector('input').value = "0";
+				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[1].querySelector('input').value = rowNumber;
 				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[2].querySelector('input').value = appController.getDateAndTime().date;
 				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[3].querySelector('input').value = appController.getDateAndTime().time;
 				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[4].querySelector('input').value = appController.getDataForSetup().getCompanyName;
@@ -84,8 +48,9 @@ var uiController = (function(){
 				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[5].querySelector('input').value = appController.getDataForSetup().getTodayHeap;
 				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[6].querySelector('input').value = appController.getDataForSetup().getBankName;
 				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[6].querySelector('input').setAttribute("data-bank-id",appController.getDataForSetup().getBankId);
-				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[9].querySelector('button').disabled = false;
-				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[10].querySelector('button').disabled = true;
+				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[7].querySelector('input').value = appController.getDataForSetup().getBonusAmount;
+				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[10].querySelector('button').disabled = false;
+				document.getElementById(ids.companyTableBody).rows[(rowNumber-1)].cells[11].querySelector('button').disabled = true;
 				
 				//insertTableRow();//calling insert row function
 		
@@ -99,24 +64,7 @@ var uiController = (function(){
 		
 	}
 	
-	/*var setupCompany = function(){
-		var table = appController.hmtlPageObjectsMethod().companySetupTable; // fetch table object
-		var rowNumber = table.rows.length;
-		
-		var hid = document.getElementById(ids.companyTable).rows[(rowNumber-2)].cells[0].querySelector('input').value;
-		var srNo = document.getElementById(ids.companyTable).rows[(rowNumber-2)].cells[1].querySelector('input').value;
-		var date = document.getElementById(ids.companyTable).rows[(rowNumber-2)].cells[2].querySelector('input').value;
-		var sTime = document.getElementById(ids.companyTable).rows[(rowNumber-2)].cells[3].querySelector('input').value = appController.getDateAndTime().time;
-		var dTime = document.getElementById(ids.companyTable).rows[(rowNumber-2)].cells[4].querySelector('input').value = "00:00";
-		var companyName = document.getElementById(ids.companyTable).rows[(rowNumber-2)].cells[5].querySelector('input').innerHTML;
-		var heap = document.getElementById(ids.companyTable).rows[(rowNumber-2)].cells[6].querySelector('input').value;
-		var bank = document.getElementById(ids.companyTable).rows[(rowNumber-2)].cells[7].querySelector('input').value;
-		var cStart = document.getElementById(ids.companyTable).rows[(rowNumber-2)].cells[8].querySelector('input').value;
-		var cEnd = document.getElementById(ids.companyTable).rows[(rowNumber-2)].cells[9].querySelector('input').value;
-		
-		document.getElementById(ids.companyTable).rows[(rowNumber-2)].cells[10].querySelector('button').disabled = true;
-		
-	}*/
+
 	
 	
 	return {
@@ -128,10 +76,6 @@ var uiController = (function(){
 			return addSetupCompanyRow(); // returns table row
 		},
 		
-		/*setupCompanyFun:function(){
-			return setupCompany; // setup company for the day
-		},*/
-	
 	}
 	
 })();

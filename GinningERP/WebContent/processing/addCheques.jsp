@@ -8,7 +8,7 @@
     <%
     
 
-    String output = request.getParameter("dailySetupOutput");
+    String output = request.getParameter("addCheques");
     
     JSONParser parser = new JSONParser();
     

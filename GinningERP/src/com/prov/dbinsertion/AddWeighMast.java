@@ -21,7 +21,7 @@ public int addWeighMast(WeighMast wm) {
 			e.printStackTrace();
 		}
 
-		String addWeighMast = "{ ? = call ADD_WEIGH(?,?,?,?,?,?,?,?,?) }";
+		String addWeighMast = "{ ? = call ADD_WEIGH(?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -40,6 +40,7 @@ public int addWeighMast(WeighMast wm) {
 			cs.setString(8, wm.getGrossWtTime());
 			cs.setString(9, wm.getTareWtTime());
 			cs.setDate(10, sqlWeighmentDate);
+			cs.setInt(11, wm.getDsId());
 			
 			cs.executeUpdate();
 			

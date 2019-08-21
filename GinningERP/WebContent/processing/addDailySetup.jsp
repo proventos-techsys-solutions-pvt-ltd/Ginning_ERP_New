@@ -45,14 +45,6 @@
    
     int setupId = 0;
     
-    String gradeDate = (String)obj.get("date");
-    
-    SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
-    Date formattedGradeDate =  sdf1.parse(date);
-    
-    SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
-    String formattedGradeDateStr = sdf3.format(formattedDate);
-    
     setupId = ads.addDailySetup(ds);
     
     JSONArray gradeArray = (JSONArray)obj.get("gradeRates");
@@ -61,7 +53,7 @@
     	GradeRateMaster gr = new GradeRateMaster();
     	
     	gr.setGradeId(Integer.parseInt((String)((JSONObject)gradeArray.get(i)).get("gradeId")));
-    	gr.setRateDate(formattedGradeDateStr);
+    	gr.setRateDate(formattedDateStr);
     	gr.setRate(Double.parseDouble((String)((JSONObject)gradeArray.get(i)).get("gradeRate")));
     	
     	AddGradeRateMaster agr = new AddGradeRateMaster();

@@ -9,6 +9,8 @@
     	DailySetupReport dsr = new DailySetupReport();
     
    		JSONArray setupJson = dsr.getTodaysDailySetups();
+   		
+   		System.out.println(setupJson);
     	
     	out.print(setupJson);
     	out.flush(); 

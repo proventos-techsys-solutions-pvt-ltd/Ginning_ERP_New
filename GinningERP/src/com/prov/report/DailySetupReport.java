@@ -130,6 +130,19 @@ public class DailySetupReport {
 			}
 			
 			rs.close();
+			
+			for (int i=0;i<jsonArray.length();i++) {
+				
+				 String sql2 = "select count(wm.id) from weigh_mast wm, daily_setup ds where wm.ds_id = ds.id and ds.id = ?";
+				 stmt = con.prepareStatement(sql2);
+				 stmt.setInt(1, ((JSONObject)jsonArray.getJSONObject(i)).getInt("id"));
+				 rs = stmt.executeQuery();
+				 while (rs.next()) {
+					 
+					 ((JSONObject)jsonArray.getJSONObject(i)).put("weighmentEntries",  rs.getString(1));
+				}
+			}
+			
 			stmt.close();
 			con.close();
 		} catch (Exception e) {
@@ -138,6 +151,5 @@ public class DailySetupReport {
 		
 		return jsonArray;
 	}
-	
 
 }

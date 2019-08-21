@@ -490,15 +490,13 @@ function setGradeUpdationData(data)
 							+	"<c:Grade />"
 							+	"</select>";
 		var textToFind = data[i].grade;	
-		var dd = document.getElementById("grade"+(i+1)+"");
-		loop1:
-		for ( j = 0; j < dd.options.length; j++) {
-		    if (dd.options[j].text === textToFind) {
-		        dd.selectedIndex = j;
-		        var description = dd.options[j].getAttribute('data-description');
-		    }else{
-		    	dd.options[j].disabled = true;
-		    }
+		var gradeDD = document.getElementById("grade"+(i+1)+"");
+		for ( j = 0; j < gradeDD.options.length; j++) {
+		    if (gradeDD.options[j].text === textToFind) {
+		    	gradeDD.selectedIndex = j;
+		        var description = gradeDD.options[j].getAttribute('data-description');
+		        break;
+			}
 		}
 		
 		cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(i+1)+"' name='description' value='"+description+"'>";
@@ -513,12 +511,12 @@ function setGradeUpdationData(data)
 		
 		totalQty = totalQty + Number(data[i].quantity);
 		
-		var inputElements = document.getElementsByClassName('form-control');
+		/* var inputElements = document.getElementsByClassName('form-control');
 		for(k=0;k<inputElements.length;k++){
 			if((inputElements[k].id).includes('srNo') || (inputElements[k].id).includes('tblQty') || (inputElements[k].id).includes('description') || (inputElements[k].id).includes('moisture') || (inputElements[k].id).includes('quantity')){
-				inputElements[k].setAttribute('readonly',true);
+				inputElements[k].setAttribute('readonly',false);
 			}
-		}
+		} */
 		
 	}
 	

@@ -42,6 +42,7 @@ public class WeighReport {
 			wm.setNet(rs.getFloat(7));
 			String grossTime = rs.getString(8);
 			
+			
 			Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(grossTime);
 			SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 			String properDate = format2.format(date1);
@@ -58,6 +59,7 @@ public class WeighReport {
 			date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(weighmentDate); 
 			properDate = format2.format(date1);
 			wm.setWeighmentDate(properDate);
+			wm.setDsId(rs.getInt(11));
 
 			}
 		
@@ -107,6 +109,7 @@ public class WeighReport {
 				SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
 				String properDate = format2.format(date1);
 				wm.setWeighmentDate(properDate);
+				wm.setDsId(rs.getInt(11));
 				list.add(wm);				
 				}
 			

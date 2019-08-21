@@ -42,6 +42,7 @@
       	<form id="newRST" action="${pageContext.request.contextPath}/processing/addWeighmentEntry.jsp" target="_blank">
       	<div class="form-row form-row-ctm">
 	      	<input type="hidden" id="id" name="id" value="0" />
+	      	<input type="hidden" id="dailySetupId" name="dailySetupId" value="0" />
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">RST No</label>
 	        	<div class="d-flex justify-content-start align-items-center">
@@ -240,6 +241,7 @@ function getDailySetupRecords(){
 		console.log("daily Setup---"+response);
 		if(Number(response) > 0){
 			$.unblockUI
+			document.getElementById("dailySetupId").value = response;
 		}
 		else if(Number(response) <= 0){
 			$.blockUI();

@@ -22,7 +22,7 @@ public int updateWeighMast(WeighMast wm) {
 			e.printStackTrace();
 		}
 
-		String updateWeighMast = "{ ? = call UPDATE_WEIGHMAST(?,?,?,?,?,?,?,?,?,?) }";
+		String updateWeighMast = "{ ? = call UPDATE_WEIGHMAST(?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -49,6 +49,7 @@ public int updateWeighMast(WeighMast wm) {
 			cs.setDate(9, grossSqlDate);
 			cs.setDate(10, tareSqlDate);
 			cs.setString(11, wm.getWeighmentDate());
+			cs.setInt(11, wm.getDsId());
 			
 			cs.executeUpdate();
 			

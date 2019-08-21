@@ -2,7 +2,6 @@ package com.prov.dbinsertion;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Types;
 
@@ -28,9 +27,7 @@ public class AddGradeRateMaster {
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
-			Date date = Date.valueOf(grm.getRateDate()); 
-			
-			cs.setDate(2, date );
+			cs.setString(2, grm.getRateDate() );
 			cs.setInt(3, grm.getGradeId() );
 			cs.setDouble(4, grm.getRate());
 			
