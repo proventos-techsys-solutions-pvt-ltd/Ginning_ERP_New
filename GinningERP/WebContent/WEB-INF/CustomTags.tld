@@ -62,5 +62,29 @@
 	<tag-class>com.prov.tags.VehicleCategoryTag</tag-class>
 	<body-content>Empty</body-content>
    </tag>
+   
+   <tag>
+    <name>BankAddModeTag</name>
+	<tag-class>com.prov.tags.BankAddModeTag</tag-class>
+	<body-content>Empty</body-content>
+   </tag>
+   
+   <tag>
+    <name>BankLedgerTag</name>
+	<tag-class>com.prov.tags.BankLedgerTag</tag-class>
+	<body-content>Empty</body-content>
+   </tag>
+   
+   <tag>
+    <name>CashAddModeTag</name>
+	<tag-class>com.prov.tags.CashAddModeTag</tag-class>
+	<body-content>Empty</body-content>
+   </tag>
+   
+   <tag>
+    <name>CashLedgerTag</name>
+	<tag-class>com.prov.tags.CashLedgerTag</tag-class>
+	<body-content>Empty</body-content>
+   </tag>
   
 </taglib>

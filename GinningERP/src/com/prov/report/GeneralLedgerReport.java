@@ -42,7 +42,7 @@ public class GeneralLedgerReport {
 					"					ac.category_name\r\n" + 
 					"					FROM GENERAL_LEDGER gl, account_category ac \r\n" + 
 					"					where gl.ACC_CATEGORY_ID = ac.id\r\n" + 
-					"					 ORDER BY GL.ACCOUNT_ID";
+					"					ORDER BY GL.ACCOUNT_ID";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			rs = stmt.executeQuery();

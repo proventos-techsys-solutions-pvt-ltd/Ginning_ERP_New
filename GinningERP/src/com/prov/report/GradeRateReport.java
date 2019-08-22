@@ -5,12 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.prov.bean.GradeRateMaster;
 import com.prov.db.OracleConnection;
 
 public class GradeRateReport {
 	
-	public ArrayList<GradeRateMaster> getTodaysRate() {
+	public ArrayList<GradeRateMaster> getTodaysRates() {
 		ResultSet rs = null;
 		Connection con = null;
 		ArrayList<GradeRateMaster> gradeRateList = new ArrayList<GradeRateMaster>();
@@ -78,6 +81,44 @@ public class GradeRateReport {
 		}
 		
 		return grm;
+	}
+	
+	public JSONArray getTodaysGradeRates() {
+		ResultSet rs = null;
+		Connection con = null;
+		JSONArray array = new JSONArray();
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT \r\n" + 
+						"gm.id, gm.grade, gr.rate FROM GRADE_MASTER gm, grade_rate_master gr where gm.id = gr.grade_id and \r\n" + 
+						"gr.RATE_DATE = (SELECT MAX(RATE_DATE) FROM GRADE_RATE_MASTER) \r\n" + 
+						"ORDER BY GRADE";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				JSONObject obj = new JSONObject();
+				
+				obj.put("id", rs.getInt(1));
+				obj.put("grade", rs.getString(2));
+				obj.put("rate", rs.getString(3));
+				
+				array.put(obj);
+				
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return array;
 	}
 
 }

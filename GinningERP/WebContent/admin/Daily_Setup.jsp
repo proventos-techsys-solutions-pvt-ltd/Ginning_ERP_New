@@ -249,14 +249,14 @@
 			      			</div>
 			      			<div class="col-md-auto">
 			      				<label>Voucher No</label>
-			      				<input type="text" class="form-control form-control-sm" id="addCashVoucher" name="addCashVoucher">
+			      				<input type="text" class="form-control form-control-sm" id="addCashVoucher" name="addCashVoucher" readonly>
 			      			</div>
 			      		</div>
 			      		<div class="form-row">
 			      			<div class="col-md-2">
 			      				<label>Account</label>
 			      				<select class="form-control form-control-sm" id="addCashAccount" name="addCashAccount">
-			      					<c:AccountLedger/>
+			      					<c:CashLedgerTag/>
 			      				</select>
 			      			</div>
 			      			<div class="col-md-6">
@@ -270,7 +270,7 @@
 			      			<div class="col-md-2">
 			      				<label>Mode</label>
 			      				<select class="form-control form-control-sm" id="addCashMode" name="addCashMode">
-			      					<c:AccountLedger/>
+			      					<c:CashAddModeTag/>
 			      				</select>
 			      			</div>
 			      		</div>
@@ -309,14 +309,14 @@
 			      			</div>
 			      			<div class="col-md-auto">
 			      				<label>Voucher No</label>
-			      				<input type="text" class="form-control form-control-sm" id="addBankVoucher" name="addBankVoucher">
+			      				<input type="text" class="form-control form-control-sm" id="addBankVoucher" name="addBankVoucher" readonly>
 			      			</div>
 			      		</div>
 			      		<div class="form-row">
 			      			<div class="col-md-2">
 			      				<label>Account</label>
 			      				<select class="form-control form-control-sm" id="addBankAccountId" name="addBankAccountId">
-			      					<c:AccountLedger/>
+			      					<c:BankLedgerTag/>
 			      				</select>
 			      			</div>
 			      			<div class="col-md-6">
@@ -330,7 +330,7 @@
 			      			<div class="col-md-2">
 			      				<label>Mode</label>
 			      				<select class="form-control form-control-sm" id="addBankMode" name="addBankMode">
-			      					<c:AccountLedger/>
+			      					<c:BankAddModeTag/>
 			      				</select>
 			      			</div>
 			      		</div>
@@ -464,7 +464,6 @@
 					cell12.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="update" name="update" disabled="false">Update</button>';
 					cell13.innerHTML = '<input type="text" class="form-control form-control-sm" id="weighEntries" name="weighEntries" value="" readonly>';
 					
-					
 				}
 				else{
 					var rowNumber = tableBody.rows.length;
@@ -485,7 +484,6 @@
 					var cell14 = row.insertCell(13);
 					//cell1.hidden=true;
 					
-					
 					cell1.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupId" name="setupId" value="'+data[i].id+'" readonly>';
 					cell2.innerHTML = '<input type="text" class="form-control form-control-sm" id="srNoTable" name="srNoTable" value="'+(i+1)+'" readonly>';
 					cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="dateTable" name="dateTable" value="'+data[i].setupDate+'" readonly>';
@@ -500,8 +498,8 @@
 					cell12.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="update" name="update" >Update</button>';
 					cell13.innerHTML = '<input type="text" class="form-control form-control-sm" id="weighEntries" name="weighEntries" value="'+data[i].weighmentEntries+'" readonly>';
 					cell14.innerHTML = '<img src="../property/img/delete.png" alt="delete">';
-				}
 				
+				}
 			}
 			var inputElements = document.getElementsByTagName("input")
 			for(j=0;j<inputElements.length;j++){
@@ -556,7 +554,7 @@
 			cell1.innerHTML = (i+1);
 			cell2.innerHTML = json[i].id;
 			cell3.innerHTML = json[i].grade;
-			cell4.innerHTML = '<input class="form-control form-control-sm lbl-rm-all" type="text" name="gradeRate'+(i+1)+'" id="gradeRate'+(i+1)+'" />';
+			cell4.innerHTML = '<input class="form-control form-control-sm lbl-rm-all" type="text" name="gradeRate" id="gradeRate'+(i+1)+'" value = "'+json[i].rate+'" />';
 		}
 		setBonusData(gradeData);
 	}
@@ -565,6 +563,7 @@
 	function setBonusData(gradeData){
 		var json = JSON.parse(gradeData);
 		var table = document.getElementById('bonusTableBody');
+		document.getElementById("")
 		for(i=0; i< json.length; i++){
 			var rowNumber = table.rows.length;
 			var row = table.insertRow(rowNumber);
@@ -579,7 +578,7 @@
 			cell1.innerHTML = (i+1);
 			cell2.innerHTML = json[i].id;
 			cell3.innerHTML = json[i].grade;
-			cell4.innerHTML = '<input class="form-control form-control-sm lbl-rm-all" type="text" name="bonusgradeRate'+(i+1)+'" id="bonusgradeRate'+(i+1)+'" />';
+			cell4.innerHTML = '<input class="form-control form-control-sm lbl-rm-all" type="text" name="bonusgradeRate" id="bonusgradeRate'+(i+1)+'"  />';
 		}
 	}
 	
@@ -587,12 +586,12 @@
 	callModalPopup("callCashModal","cashAdditionModal"); // Calling Cash Addition Pop-up
 	callModalPopup("callBankModal","bankAdditionModal"); // Calling Bank Addition Pop-up
 	
-	
-	
-	document.addEventListener('click',function(e){
+	document.addEventListener('click',function(e){// calling submit form function
 		if(e.srcElement.name === "setup"){
 			var rowIndex = e.srcElement.parentElement.parentElement.rowIndex-2;
-			submitDailySetup(rowIndex);
+			if(appController.validateCompanyAndGradeData(rowIndex) === true){
+				submitDailySetup(rowIndex);
+			}
 		}
 	})
 	
@@ -692,15 +691,13 @@
 	})
 	
 	function deleteDailySetupEntry(dailySetupId){
-		
 		document.getElementById("dailySetupId").value = dailySetupId;
 		document.getElementById("deleteDailySetupForm").submit()
-		
 	}
 	
+	gradeReport();
 	getSetupReport();
 	setDisplayDate();
-	gradeReport();
 	fetchVoucherNoSeries();
 	</script>
 </body>

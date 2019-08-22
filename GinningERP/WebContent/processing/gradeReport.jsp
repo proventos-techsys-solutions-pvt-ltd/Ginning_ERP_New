@@ -1,3 +1,4 @@
+<%@page import="com.prov.report.GradeRateReport"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="com.prov.bean.GradeMaster"%>
 <%@page import="java.util.ArrayList"%>
@@ -6,11 +7,10 @@
     pageEncoding="ISO-8859-1"%>
 
     <% 
-    	GradeReport gr = new GradeReport();
+    	GradeRateReport gr = new GradeRateReport();
     	
-    	ArrayList<GradeMaster> list = gr.getReport();
     	
-    	JSONArray jsonArray = new JSONArray(list);
+    	JSONArray jsonArray = gr.getTodaysGradeRates();
     	
     	out.print(jsonArray);
     	out.flush();

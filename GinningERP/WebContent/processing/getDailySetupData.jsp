@@ -1,3 +1,7 @@
+<%@page import="org.json.JSONArray"%>
+<%@page import="com.prov.bean.GradeRateMaster"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.prov.report.GradeRateReport"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="com.prov.report.DailySetupReport"%>
 <%@page import="com.prov.bean.DailySetup"%>
