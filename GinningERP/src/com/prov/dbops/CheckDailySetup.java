@@ -19,7 +19,7 @@ public class CheckDailySetup {
 			e.printStackTrace();
 		}
 	
-		String rstCheck = "SELECT COALESCE( (SELECT to_char(id) id FROM DAILY_SETUP WHERE SETUP_DATE = (select max(setup_date) from daily_setup) and trunc(setup_date)>trunc(sysdate-1)), '0') as ds_id from dual;";
+		String rstCheck = "SELECT COALESCE( (SELECT to_char(id) id FROM DAILY_SETUP WHERE SETUP_DATE = (select max(setup_date) from daily_setup) and trunc(setup_date)>trunc(sysdate-1)), '0') as ds_id from dual";
 		
 		PreparedStatement stmt;
 		try {

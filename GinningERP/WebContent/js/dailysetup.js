@@ -25,6 +25,9 @@ var uiController = (function(){
 			updateButton : "update"
 	}
 	
+	var validationsCriteria = {
+			gradeRate : /^[0-9]+$/
+	}
 
 	var addSetupCompanyRow = function(){//Table row add function
 		
@@ -75,7 +78,9 @@ var uiController = (function(){
 		tableRow:function(){
 			return addSetupCompanyRow(); // returns table row
 		},
-		
+		validate:function(){
+			return validationsCriteria();// return validation parameters
+		}
 	}
 	
 })();
@@ -147,6 +152,44 @@ var appController = (function(){
 		return validData;
 	}
 	
+	var validateInputData = function(rowIndex){//validations 
+		var validate =  /^[0-9]+$/;
+		var globalValidationStatus = false;
+		
+		var firstChequeNo = document.getElementById(uiController.htmlElementIds().companyTableBody).rows[rowIndex].cells[8].querySelector('input');
+		var lastChequeNo = document.getElementById(uiController.htmlElementIds().companyTableBody).rows[rowIndex].cells[9].querySelector('input');
+		var lengthOfGradeRates = document.getElementsByName("gradeRate").length;
+		
+		if(validate.test(firstChequeNo.value.trim())){
+			firstChequeNo.style.border = "2px solid green";
+				if(validate.test(lastChequeNo.value.trim())){
+					lastChequeNo.style.border = "2px solid green";
+				}else{
+					lastChequeNo.style.border = "2px solid red";
+					return globalValidationStatus = false;
+				}
+		}else{
+			firstChequeNo.style.border = "2px solid red";
+			return globalValidationStatus = false;;
+		}
+		
+		for(i=0;i<lengthOfGradeRates;i++){
+			if(validate.test(document.getElementsByName("gradeRate")[i].value.trim())){
+				globalValidationStatus = true;
+			}else{
+				globalValidationStatus = false;
+				break;
+			}
+		}
+		if(globalValidationStatus===false){
+			alert("Only numbers are acceptable in General Grade Rate Table");
+		}
+		console.log(globalValidationStatus);
+		return globalValidationStatus;
+		
+	}
+	
+	
 	
 	return {
 		
@@ -162,8 +205,8 @@ var appController = (function(){
 			return getDateAndTime();
 		},
 		
-		test:function(){
-			console.log(hmtlPageObjects.addCompanyButton);
+		validateCompanyAndGradeData:function(rowIndex){
+			return validateInputData(rowIndex);
 		}
 	}
 	
