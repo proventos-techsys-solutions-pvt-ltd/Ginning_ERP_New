@@ -1,4 +1,3 @@
-<%@page import="com.prov.dbupdation.UpdateGradeDetails"%>
 <%@page import="com.prov.dbops.CheckAlreadyGraded"%>
 <%@page import="java.util.stream.IntStream"%>
 <%@page import="com.prov.dbinsertion.AddGradeDetails"%>
@@ -69,47 +68,6 @@
 		   	
 		   	session.setAttribute("gradeSubmitFlag", contains);
 		   	response.sendRedirect("../admin/Grading.jsp");
-    	}
-    	else if(rowCount>0){
-    		for(int i=0; i<jsonArray.size(); i++ )
-		   	{
-		   		GradeDetails grade = new GradeDetails();
-		       	
-		       	grade.setWeighmentId(Integer.parseInt((String)json.get("weighmentId")));
-		       	grade.setMaterial(((String)json.get("material")).toUpperCase());
-		       	grade.setRst(Integer.parseInt((String)json.get("rst")));
-		       	grade.setAuthorizedBy(((String)json.get("authorizer")).toUpperCase());
-		       	grade.setBonusPerQtl(Float.parseFloat((String)json.get("bonusPerQtl")));
-		       	
-		       	JSONObject gradeJson = (JSONObject)jsonArray.get(i);
-		       	grade.setId(Integer.parseInt((String)gradeJson.get("gradeId")));
-		       	grade.setQuantity(Float.parseFloat((String)gradeJson.get("quantity")));
-		       	grade.setGrade(((String)gradeJson.get("grade")).toUpperCase());
-		       	grade.setMoisture(Float.parseFloat((String)gradeJson.get("moisture")));
-		       	grade.setRate(Float.parseFloat((String)gradeJson.get("rate")));
-		    	
-		       	
-		       	gradeList.add(grade);
-		   	}
-		   	
-		   	UpdateGradeDetails updateRates = new UpdateGradeDetails();
-		   	int i=0;
-		   	ArrayList<Integer> rowsUpdated = new ArrayList<Integer>();
-		   	
-		   	for(GradeDetails grade: gradeList){
-		   		rowsUpdated.add(i, updateRates.updateRatesInGradeDetails(grade));
-		   		i++;
-		   	}
-		   	boolean contains = false;
-		   	for(int j=0;j<rowsUpdated.size();j++)
-		   	{
-		   		if(rowsUpdated.get(j)!=0){
-		   			contains=true;
-		   		}
-		   	}	
-		   	
-			session.setAttribute("gradeSubmitFlag", contains);
-    		response.sendRedirect("../admin/Grading.jsp");
     	}
     	
     %>

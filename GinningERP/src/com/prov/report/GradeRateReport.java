@@ -90,8 +90,10 @@ public class GradeRateReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT \r\n" + 
-						"gm.id, gm.grade, gr.rate FROM GRADE_MASTER gm, grade_rate_master gr where gm.id = gr.grade_id and \r\n" + 
+			String sql = "select gm.id, gm.grade, gr.rate \r\n" + 
+						"from grade_master gm left join grade_rate_master gr \r\n" + 
+						"on gm.id = gr.grade_id \r\n" + 
+						"where gr.grade_id is null or \r\n" + 
 						"gr.RATE_DATE = (SELECT MAX(RATE_DATE) FROM GRADE_RATE_MASTER) \r\n" + 
 						"ORDER BY GRADE";
 			
@@ -105,7 +107,11 @@ public class GradeRateReport {
 				
 				obj.put("id", rs.getInt(1));
 				obj.put("grade", rs.getString(2));
-				obj.put("rate", rs.getString(3));
+				if(rs.getString(3) == null) {
+					obj.put("rate", 0);
+				}else {
+					obj.put("rate", rs.getString(3));
+				}
 				
 				array.put(obj);
 				

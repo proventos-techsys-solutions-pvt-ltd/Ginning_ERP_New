@@ -43,7 +43,7 @@
         
         <div class="row row-background">
 			<div class="col-md-12">
-				<form action='../processing/setGrade.jsp'>
+				<form id="gradeForm" action=''>
 					<input hidden="hidden" id="output" name="output" value=""/>
 				</form>
 				<input type="hidden" id="weighmentId" name="weighmentId"  value="0" />
@@ -68,7 +68,7 @@
 							<input type="text" class="form-control form-control-sm" id="authorizer" name="authorizer" value="NA" >
 						</div>
 					</div>
-					<div class="form-row form-row-ctm">
+					<div class="form-row">
 						<div class="col-md-2">
 							<label class="lbl-rm-all">Vendor Name</label>
 							<input type="text" class="form-control form-control-sm" id="vendorName" name="vendorName" readonly>
@@ -94,7 +94,7 @@
 							<input type="text" class="form-control form-control-sm" id="bonusAmount" name="bonusAmount" value="0" readonly>
 						</div>
 					</div>
-					<div class="form-row form-row-ctm">
+					<div class="form-row">
 						<div class="col-md-12">
 							<table class="table table-bordered">
 								<thead>
@@ -104,8 +104,9 @@
 										<th width="20%">Grade</th>
 										<th>Grade Description</th>
 										<th width="7%">Moisture</th>
-										<th width="7%">Rate per Quintal</th>
-										<th width="5%"></th>
+										<th width="8%">Rate per Qtl</th>
+										<th width="5%" class="text-center">PDC</th>
+										<th width="5%" class="text-center"></th>
 									</tr>
 								</thead>
 								<tbody id="tableBody">
@@ -127,28 +128,42 @@
 							</table>
 						</div>
 					</div>
-					<div class="col-md-2 offset-md-10">
-						<label for="" class="lbl-rm-all">Total Bonus</label> 
-                        <input type="text" id="totalBonus" name="totalBonus" class="form-control form-control-sm" value="0" readonly="readonly">
-						<label for="" class="lbl-rm-all">Total Amount</label> 
-                        <input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm" value="0" readonly="readonly">
+					</div>
+					</div>
+					<div class="row row-background">
+						<div class="col-md-2">
+							<label>PDC Payment</label>
+							<input type="date" id="pdcDate" name="pdcDate" class="form-control form-control-sm" value="">
+						</div>
+						<div class="col-md-2">
+							<label>PDC Rate</label>
+							<input type="text" id="pdcRate" name="pdcRate" class="form-control form-control-sm" value="">
+						</div>
+						<div class="col-md-2">
+							<label>PDC Amount</label>
+							<input type="text" id="pdcAmount" name="pdcAmount" class="form-control form-control-sm" value="" readonly>
+						</div>
+						<div class="col-md-2 offset-md-4">
+							<label for="" class="lbl-rm-all">Total Bonus</label> 
+	                        <input type="text" id="totalBonus" name="totalBonus" class="form-control form-control-sm" value="0" readonly="readonly">
+							<label for="" class="lbl-rm-all">Total Amount</label> 
+	                        <input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm" value="0" readonly="readonly">
+						</div>
+					</div>
 					</div>
 					<div class="form-row border-top">
 						<div class="col-md-1 offset-md-10 r-p-all">
 							<div class="d-flex justify-content-end align-items-center">
-								<button type="button" class="btn btn-success btn-sm change-button " onclick="submitGradingData()">Approve</button>
+								<button type="button" class="btn btn-success btn-sm change-button " id="submitGrades" onclick="submitGradingData()">Approve</button>
 							</div>
 						</div>
 						<div class="col-md-1 r-p-all">
 							<div class="d-flex justify-content-end align-items-center">
-								<button type="button" class="btn btn-success btn-sm change-button ">Discard</button>
+								<button type="button" class="btn btn-success btn-sm change-button " id="updateGrades"  disabled>Update</button>
 							</div>
 						</div>
 					</div>
-					
-			</div>
-        </div>
-</div>
+		
 
 <!-- <script src="../js/jquery-3.3.1.slim.min.js" ></script> -->
 <script src="../js/popper.min.js"></script>
@@ -258,6 +273,10 @@ function setDataForNewGrading(data){
 	var cell5 = row.insertCell(4);
 	var cell6 = row.insertCell(5);
 	var cell7 = row.insertCell(6);
+	var cell8 = row.insertCell(7);
+	
+	cell7.className = "text-center";
+	cell8.className = "text-center";
 
 	cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo1' name='srNo' value='1'>";
 	cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty1' name='dividedQuantity' value=''>";
@@ -268,10 +287,15 @@ function setDataForNewGrading(data){
 	cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description1' name='description'>";
 	cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture1' name='moisture' value=''>";
 	cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate1' name='rate'>"
-						
+	cell7.innerHTML = "<input type='checkbox' class='' id='' name=''>"					
 	
 	document.getElementById("tblQty1").value = totalQuantity;
 	calculateTotal();
+	
+	document.getElementById("submitGrades").disabled=false;
+	document.getElementById("updateGrades").disabled=true;
+	
+	
 	}	
 
 
@@ -301,6 +325,10 @@ document.addEventListener("change",function(e){
 				var cell5 = row.insertCell(4);
 				var cell6 = row.insertCell(5);
 				var cell7 = row.insertCell(6);
+				var cell8 = row.insertCell(7);
+				
+				cell7.className = "text-center";
+				cell8.className = "text-center";
 			
 				cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(noOfRows+1)+"' name='srNo' value="+(noOfRows+1)+">";
 				cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty"+(noOfRows+1)+"' name='dividedQuantity' value="+remainingQuantity+">";
@@ -311,7 +339,8 @@ document.addEventListener("change",function(e){
 				cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(noOfRows+1)+"' name='description'>";
 				cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(noOfRows+1)+"' name='moisture'>";
 				cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate"+(noOfRows+1)+"' name='rate' >"
-				cell7.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow'>";
+				cell7.innerHTML = "<input type='checkbox' class='' id='' name=''>";
+				cell8.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow'>";
 			
 			}
 			noOfRows = document.getElementsByName("dividedQuantity").length;
@@ -407,7 +436,7 @@ function submitGradingData(){
 	
 	document.getElementById('output').value=jsonStr;
 	
-	document.getElementsByTagName('form')[0].submit();
+	document.getElementById('gradeForm').submit();
 }
 
 
@@ -481,7 +510,10 @@ function setGradeUpdationData(data)
 		var cell6 = row.insertCell(5);
 		var cell7 = row.insertCell(6);
 		var cell8 = row.insertCell(7);
-		cell8.setAttribute('hidden',true);
+		var cell9 = row.insertCell(8);
+		cell9.setAttribute('hidden',true);
+		cell7.className = "text-center";
+		cell8.className = "text-center";
 	
 		cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(i+1)+"' name='srNo' value="+(i+1)+">";
 		cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty"+(i+1)+"' name='dividedQuantity' value="+data[i].quantity+">";
@@ -504,20 +536,26 @@ function setGradeUpdationData(data)
 		cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate"+(i+1)+"' name='rate' value="+data[i].rate+" >";
 							
 		if(i>0){
-			cell7.innerHTML = "<img src='../property/img/delete.png' class='delete-row' alt='delete' id='deleteRow"+(i+1)+"'>";
+			cell8.innerHTML = "<img src='../property/img/delete.png' class='delete-row' alt='delete' id='deleteRow"+(i+1)+"'>";
 		}
-		
-		cell8.innerHTML = "<input type='hidden' id='gradeId"+(i+1)+"' name='gradeId' value='"+data[i].gradeId+"'>";
+		cell7.innerHTML = "<input type='checkbox' class='' id='' name=''>";
+		cell9.innerHTML = "<input type='hidden' id='gradeId"+(i+1)+"' name='gradeId' value='"+data[i].gradeId+"'>";
 		
 		totalQty = totalQty + Number(data[i].quantity);
 		
-		/* var inputElements = document.getElementsByClassName('form-control');
-		for(k=0;k<inputElements.length;k++){
-			if((inputElements[k].id).includes('srNo') || (inputElements[k].id).includes('tblQty') || (inputElements[k].id).includes('description') || (inputElements[k].id).includes('moisture') || (inputElements[k].id).includes('quantity')){
-				inputElements[k].setAttribute('readonly',false);
-			}
-		} */
-		
+		if(data[0].invoiceFlag == 1){
+			var inputElements = document.getElementsByClassName('form-control');
+			for(k=0;k<inputElements.length;k++){
+				if((inputElements[k].id).includes('srNo') || (inputElements[k].id).includes('tblQty') || (inputElements[k].id).includes('description') || (inputElements[k].id).includes('moisture') || (inputElements[k].id).includes('quantity')){
+					inputElements[k].setAttribute('readonly',false);
+				}
+			} 
+			document.getElementById("submitGrades").disabled=true;
+			document.getElementById("updateGrades").disabled=true;
+		}else if(data[0].invoiceFlag == 0){
+			document.getElementById("submitGrades").disabled=true;
+			document.getElementById("updateGrades").disabled=false;
+		}
 	}
 	
 	document.getElementById("quantity").value = totalQty;
@@ -589,8 +627,18 @@ function calculateTotal(){
 	}
 }
 
-document.addEventListener('change', function(e){
+document.addEventListener('keyup', function(e){
 	calculateTotal();
+})
+
+document.getElementById("submitGrades").addEventListener('click',function(e){
+	document.getElementById("gradeForm").action = "../processing/setGrade.jsp";
+	submitGradingData();
+})
+
+document.getElementById("updateGrades").addEventListener('click', function(e){
+	document.getElementById("gradeForm").action = "../processing/updateGrades.jsp";
+	submitGradingData();
 })
 
 checkDailySetup();

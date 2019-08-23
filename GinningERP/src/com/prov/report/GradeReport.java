@@ -43,7 +43,7 @@ public class GradeReport {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println(gradeList);
 		return gradeList;
 	}
 }

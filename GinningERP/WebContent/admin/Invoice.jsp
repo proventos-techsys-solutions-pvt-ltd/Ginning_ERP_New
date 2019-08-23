@@ -85,7 +85,15 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label for="" class="lbl-rm-all">Bonus Per Qtl </label>
-                                    <input type="text" id="bonusPerQtl" name="bonusPerQtl" class="form-control form-control-sm" >
+                                    <div class="input-group input-group-sm ">
+									  <div class="input-group-prepend">
+									    <div class="input-group-text">
+									      <input type="checkbox"  id="" name="">
+									    </div>
+									  </div>
+									  <input type="text" class="form-control form-control-sm"  id="bonusPerQtl" name="bonusPerQtl" >
+									</div>
+									                                    
                                 </div>
                                 <div class="col-md-2">
                         			<label for="" class="lbl-rm-all">Membership</label>
@@ -103,15 +111,15 @@
                                     <table class="table table-bordered custom-table">
                                         <thead>
                                         <tr class="table-back">
-                                            <th width="7%">RST No</th>
-                                            <th width="10%">Material</th>
+                                            <th width="5%">RST No</th>
+                                            <th width="8%">Material</th>
                                             <th width="10%">Quantity</th>
                                             <th width="10%">Grade</th>
-                                            <th width="7%">Moisture</th>
-                                            <th width="7%">Rate / Qntl</th>
-                                            <th width="7%">Amount</th>
+                                            <th width="5%">Moisture</th>
+                                            <th width="5%">Rate / Qntl</th>
+                                            <th width="5%">Amount</th>
                                             <th width="2%" class="text-center">Amanat</th>
-                                            <th width="2%" class="text-center">PDC</th>   
+                                            <th width="2%" class="text-center">PDC Amt</th>   
                                         </tr>
                                         </thead>
                                         <tbody id='tableBody'>
@@ -140,21 +148,41 @@
 	                                     <label class="lbl-rm-all">Note :</label>
 	                                     <textarea id="note" name="note" class="form-control form-control-lg">Note</textarea>
 									</div>
-									<div class="col-md-2 offset-md-2">
-										<label for="" class="lbl-rm-all">Total</label> 
+									<div class="col-md-2">
+										<label for="" class="lbl-rm-all">Total Invoice Amt</label> 
 	                                    <input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm" value="0" readonly="readonly">
+									</div>
+									<div class="col-md-2">
 										<label for="" class="lbl-rm-all">Total Bonus</label> 
 	                                    <input type="text" id="totalBonus" name="totalBonus" class="form-control form-control-sm" value="0" readonly="readonly">
-										<label for="" class="lbl-rm-all">Unloading Charges</label> 
-	                                    <input type="text" id="unloadingCharges" name="unloadingCharges" class="form-control form-control-sm" value="0" readonly="readonly">
-	                                    <label for="" class="lbl-rm-all">Weighing Charges </label> 
-	                                    <input type="text" id="weighingCharges" name="weighingCharges" class="form-control form-control-sm" value="0" readonly="readonly">
-										<label for="" class="lbl-rm-all" hidden>Advance </label> 
-	                                    <input type="hidden" id="advance" name="advance" class="form-control form-control-sm" value="0">
-	                                    <label for="" class="lbl-rm-all">Net Payable </label> 
-	                                    <input type="text" id="net" name="net" class="form-control form-control-sm" value="0">
- 									</div>
-								</div>
+	                                 </div>
+	                                 <div class="col-md-2 offset-md-8">
+	                                 	<label for="" class="lbl-rm-all">Total PDC</label> 
+	                                    <input type="text" id="" name="" class="form-control form-control-sm" value="0" readonly="readonly">
+	                                 </div>
+	                                 <div class="col-md-2">
+	                                 	<label for="" class="lbl-rm-all">Gross Total</label> 
+	                                    <input type="text" id="" name="" class="form-control form-control-sm" value="0" readonly="readonly">
+	                                 </div>
+	                                 
+	                             </div>
+	                                   
+	                                    
+                                   <div class="row row-background">
+	                                   	<div class="col-md-2 offset-md-10">
+	                                   		<label for="" class="lbl-rm-all">Less: PDC Issued</label> 
+		                                    <input type="text" id="" name="" class="form-control form-control-sm" value="0" readonly="readonly">
+	                                   		<label for="" class="lbl-rm-all">Less: Unloading Charges</label> 
+		                                    <input type="text" id="unloadingCharges" name="unloadingCharges" class="form-control form-control-sm" value="0" readonly="readonly">
+		                                    <label for="" class="lbl-rm-all">Less: Weighing Charges </label> 
+		                                    <input type="text" id="weighingCharges" name="weighingCharges" class="form-control form-control-sm" value="0" readonly="readonly">
+											<label for="" class="lbl-rm-all" hidden>Advance </label> 
+		                                    <input type="hidden" id="advance" name="advance" class="form-control form-control-sm" value="0">
+		                                    <label for="" class="lbl-rm-all">Net Payable </label> 
+		                                    <input type="text" id="net" name="net" class="form-control form-control-sm" value="0">
+	                                   	</div>
+                                   </div>
+								
 								<div id="paymentSection">
 								</div>
 								<div class="row row-background border-top">
@@ -186,26 +214,6 @@
 												</tbody>
 											</table>
 										</div>
-										<div class="col-md-6" >
-											<table class="table table-bordered">
-												<thead>
-													<tr>
-														<th width="5%" >Type</th>
-														<th width="20%">Date</th>
-														<th width="20%">Amount</th>
-														<th width="5%"></th>
-													</tr>
-												</thead>
-												<tbody id="pdcTableBody">
-													<tr>
-														<td align="center">PDC</td>
-														<td><input type="date" class="form-control form-control-sm" id="pdcDate" name="pdcDate"></td>
-														<td><input type="text" class="form-control form-control-sm" id="pdcAmount" name="pdcAmount" value="0"></td>
-														<td class="text-center"></td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
 								</div>
 								
                                 <div class="row row-background border-top">
@@ -215,9 +223,8 @@
                                     </div>
                                 </div>
                                 </div>
+
 </div>
-
-
 <!-- <script src="../js/jquery-3.3.1.slim.min.js" ></script> -->
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>

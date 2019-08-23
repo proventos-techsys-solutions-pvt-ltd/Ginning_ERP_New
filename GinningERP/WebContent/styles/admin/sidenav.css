@@ -111,6 +111,9 @@ input,button{
 	margin-bottom:.5rem;
 	
 }
+input[type="checkbox"]{
+	margin:0;
+}
 checkbox{
 	margin-bottom:0rem;
 }

@@ -634,6 +634,16 @@
 			element.value = Number(e.srcElement.value)+Number(bonusAmt);
 		}
 	})
+	document.addEventListener('keyup', function(e){
+		if(e.srcElement.id ==='bonusAmount'){
+			var gradeRates = document.getElementsByName('gradeRate');
+			var bonusRates = document.getElementsByName('bonusgradeRate');
+			for(i=0;i<gradeRates.length;i++){
+				gradeRate = gradeRates[i].value;
+				bonusRates[i].value = Number(gradeRate)+Number(e.srcElement.value);
+			}
+		}
+	})
 	
 	document.addEventListener('click',function(e){
 		if(e.srcElement.name === "update"){

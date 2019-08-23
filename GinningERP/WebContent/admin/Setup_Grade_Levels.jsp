@@ -131,7 +131,7 @@
 	}
 		
 		function gradeReport(){
-			var url="../processing/gradeReport.jsp";
+			var url="../processing/gradeMasterReport.jsp";
 			
 			if(window.XMLHttpRequest){  
 				dataRequest=new XMLHttpRequest();  
