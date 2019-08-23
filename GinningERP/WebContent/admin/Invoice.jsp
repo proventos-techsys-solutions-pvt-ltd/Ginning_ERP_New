@@ -233,7 +233,7 @@
 //Get current date and time
 function setCurrentDate(){
 	var today = new Date();
-	 var dd = today.getDate();
+	 	var dd = today.getDate();
 	    var mm = today.getMonth()+1; //January is 0!
 	    var yyyy = today.getFullYear();
 
@@ -478,7 +478,7 @@ function setCurrentDate(){
 			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+data[i].rate+'" readonly>';
 			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+(data[i].rate * (data[i].quantity/100))+'" readonly>';
 			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" >';
-			cell9.innerHTML = '<input type="checkbox" id="pdcCheck'+(rowNo+1)+'" class="lbl-rm-all" name="pdcCheck" value="false" >';
+			cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="0" readonly>';
 			cell10.innerHTML = '<input type="hidden" id="gradeId'+(rowNo+1)+'" class="lbl-rm-all" name="gradeId" value="'+data[i].gradeId+'" >';
 			cell11.innerHTML = '<input type="hidden" id="weighmentId'+(rowNo+1)+'" class="lbl-rm-all" name="weighmentId" value="'+data[i].weighmentId+'" >';
 			cell12.innerHTML = '<input type="hidden" id="gradeDesc'+(rowNo+1)+'" class="lbl-rm-all" name="gradeDesc" value="'+data[i].gradeDesc+'" >';
@@ -587,13 +587,6 @@ function setCurrentDate(){
 		
 		var pdcJson = {};
 
-		if(document.getElementById("pdcAmount")!=0){
-			pdcJson['pdcDate'] = document.getElementById("pdcDate").value;
-			pdcJson['pdcAmount'] = document.getElementById("pdcAmount").value;
-		}
-		
-		jsonObj['pdcJson'] = pdcJson;
-		
 		var jsonStr = JSON.stringify(jsonObj);
 		console.log(jsonStr);
 		
@@ -682,7 +675,7 @@ function setCurrentDate(){
 		}
 	});
 	
-	//Adding PDC check details
+	/* //Adding PDC check details
 	document.addEventListener("change",function(e){
 		if(e.srcElement.name === "pdcCheck" ){
 			if(e.srcElement.checked){
@@ -705,7 +698,7 @@ function setCurrentDate(){
 				document.getElementById("payAmount1").value = cashAmount;
 			}
 		}
-	})
+	}) */
 	
 	checkDailySetup();
 	setCurrentDate()

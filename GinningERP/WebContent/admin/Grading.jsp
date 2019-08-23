@@ -137,15 +137,13 @@
 						</div>
 						<div class="col-md-2">
 							<label>PDC Rate</label>
-							<input type="text" id="pdcRate" name="pdcRate" class="form-control form-control-sm" value="">
+							<input type="text" id="pdcRate" name="pdcRate" class="form-control form-control-sm" value="50">
 						</div>
 						<div class="col-md-2">
 							<label>PDC Amount</label>
 							<input type="text" id="pdcAmount" name="pdcAmount" class="form-control form-control-sm" value="" readonly>
 						</div>
 						<div class="col-md-2 offset-md-4">
-							<label for="" class="lbl-rm-all">Total Bonus</label> 
-	                        <input type="text" id="totalBonus" name="totalBonus" class="form-control form-control-sm" value="0" readonly="readonly">
 							<label for="" class="lbl-rm-all">Total Amount</label> 
 	                        <input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm" value="0" readonly="readonly">
 						</div>
@@ -287,7 +285,7 @@ function setDataForNewGrading(data){
 	cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description1' name='description'>";
 	cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture1' name='moisture' value=''>";
 	cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate1' name='rate'>"
-	cell7.innerHTML = "<input type='checkbox' class='' id='' name=''>"					
+	cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck1' name='pdcCheck'>"					
 	
 	document.getElementById("tblQty1").value = totalQuantity;
 	calculateTotal();
@@ -339,7 +337,7 @@ document.addEventListener("change",function(e){
 				cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(noOfRows+1)+"' name='description'>";
 				cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(noOfRows+1)+"' name='moisture'>";
 				cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate"+(noOfRows+1)+"' name='rate' >"
-				cell7.innerHTML = "<input type='checkbox' class='' id='' name=''>";
+				cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck"+(noOfRows+1)+"' name='pdcCheck'>";
 				cell8.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow'>";
 			
 			}
@@ -538,7 +536,7 @@ function setGradeUpdationData(data)
 		if(i>0){
 			cell8.innerHTML = "<img src='../property/img/delete.png' class='delete-row' alt='delete' id='deleteRow"+(i+1)+"'>";
 		}
-		cell7.innerHTML = "<input type='checkbox' class='' id='' name=''>";
+		cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck"+(i+1)+"' name='pdcCheck'>";
 		cell9.innerHTML = "<input type='hidden' id='gradeId"+(i+1)+"' name='gradeId' value='"+data[i].gradeId+"'>";
 		
 		totalQty = totalQty + Number(data[i].quantity);
@@ -617,18 +615,17 @@ function calculateTotal(){
 	for(i=0; i<rates.length; i++){
 		total = total + (Number(rates[i].value) * (Number(qty[i].value)/100));
 	}
-	var membershipStatus = document.getElementById("vendorMembership");
-	if(membershipStatus.value === "YES"){
-		document.getElementById("totalBonus").value = totalBonus;
-		document.getElementById("totalAmount").value = total+totalBonus;
-	}else if(membershipStatus.value === "NO"){
-		document.getElementById("totalBonus").value = 0;
 		document.getElementById("totalAmount").value = total;
-	}
 }
 
 document.addEventListener('keyup', function(e){
 	calculateTotal();
+})
+
+document.addEventListener('change', function(e){
+	if(e.srcElement.name === "grade"){
+	calculateTotal();
+	}
 })
 
 document.getElementById("submitGrades").addEventListener('click',function(e){
@@ -641,6 +638,26 @@ document.getElementById("updateGrades").addEventListener('click', function(e){
 	submitGradingData();
 })
 
+//Set Date for PDC
+function setPDCDate(){
+	let now = new Date()
+	let next30days = new Date(now.setDate(now.getDate() + 30))
+	var dd = next30days.getDate();
+    var mm = next30days.getMonth()+1; //January is 0!
+    var yyyy = next30days.getFullYear();
+
+    if(dd<10){
+        dd='0'+dd;
+    } 
+    if(mm<10){
+        mm='0'+mm;
+    } 
+
+    todayDate = yyyy+'-'+mm+'-'+dd; 
+	document.getElementById("pdcDate").value = todayDate;
+}
+
+setPDCDate();
 checkDailySetup();
 fetchBonusRate();
 </script>
