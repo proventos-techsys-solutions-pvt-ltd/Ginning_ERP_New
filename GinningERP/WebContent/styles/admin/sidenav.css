@@ -185,6 +185,24 @@ checkbox{
 	height:300px;
 	padding:5px;
 }
+
+/******************************ROW SPAN*************************/
+.row-div{
+	
+}
+.tbl-row-back{
+	background-color:#da5350;	
+	color:#fff;
+}
+.heading{
+	background-color:#da5350;	
+	color:#fff;
+	padding:5px;
+}
+.grade-box{
+	height:240px;
+	padding:5px;
+}
 /*******************************MEDIA ************************/
 @media only screen and (max-width: 768px){
 	.sidebar{

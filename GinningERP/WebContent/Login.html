@@ -5,74 +5,46 @@
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
 	  <!-- Bootstrap CSS -->
 	  <link rel="stylesheet" href="./styles/bootstrap.min.css">	
-	  <link rel="stylesheet" href="./styles/WBStyle.css">
+	  <link rel="stylesheet" href="./styles/login.css">
       <title>Login</title>
-      <style>
-      	h2{
-      		color:#fff;
-      	}
-      	label{
-      		color:#fff;
-      	}
-      </style>
-    </head>
+     </head>
 <body style="background:url(./property/img/background.jpeg);background-size:cover;">
 	<div class="container-fluid" style="background:none;">
 		<div class="row mt-2">
-			<div class="col-md-4 offset-md-4 login border">
-				<form method="post" action="./processing/checkLogin.jsp" id="loginForm">
-						<div class="form-row">
-							<div class="col-md-12">
-								<div class="d-flex justify-content-center">
-									<h2>Login To ERP</h2>
-								</div>
-							</div>
-						</div>
-						
-						<div class="form-row">
-							<div class="col-md-12">
-								<label class="lbl-rm-all">Module</label>
-								<select class="form-control form-control-lg" name="module" id="moduleId">
+			<div class="login-container">
+				<form>
+					<div class="form-row">
+						<div class="col-md-12">
+							<label class="lbl-rm-all">Module</label>
+								<select class="form-control form-control-sm" name="module" id="moduleId">
 									<option value= "adminMod">Admin Module</option>
 									<option value= "wbMod">WB Module</option>
 									<option value="cashMod">Cashier Module</option>
 								</select>
-							</div>
 						</div>
-						
-						<div class="form-row">
-							<div class="col-md-12">
-								<label class="lbl-rm-all">Role</label>
-								<select class="form-control form-control-lg" name="role" id="role">
+						<div class="col-md-12">
+							<label class="lbl-rm-all">Role</label>
+								<select class="form-control form-control-sm" name="role" id="role">
 									<option value= "Administrator">Administrator</option>
 									<option value= "operator">WB Operator</option>
 									<option value="cashier">Cashier</option>
 								</select>
-							</div>
 						</div>
-						
-						<div class="form-row">
-							<div class="col-md-12">
-								<label class="lbl-rm-all">Username</label>
-								<input type="text" class="form-control form-control-lg" id="username" name="username">
-							</div>
+						<div class="col-md-12">
+							<label class="lbl-rm-all">Username</label>
+							<input type="text" class="form-control form-control-sm" id="username" name="username">
 						</div>
-						
-						<div class="form-row">
-							<div class="col-md-12">
-								<label class="lbl-rm-all">Password</label>
-								<input type="password" class="form-control form-control-lg" id="password" name="password">
-							</div>
+						<div class="col-md-12">
+							<label class="lbl-rm-all">Password</label>
+							<input type="password" class="form-control form-control-sm" id="password" name="password">
 						</div>
-						
-						<div class="form-row">
-							<div class="col-md-12">
-								<button type="button" class="btn btn-success btn-lg" id="submitForm">Log-In</button>
-								<button type="button" class="btn btn-success btn-lg" id="resetForm">Reset</button>
-							</div>
+						<div class="col-md-12 mt-2">
+							<button type="button" class="btn btn-success btn-sm" id="submitForm">Log-In</button>
+							<button type="button" class="btn btn-success btn-sm" id="resetForm">Reset</button>
 						</div>
-					
-				</form>			
+					</div>
+				</form>
+				
 			</div>
 		</div>
 	</div>

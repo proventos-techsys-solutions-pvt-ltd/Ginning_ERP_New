@@ -138,38 +138,68 @@
                                 </div>
                                 </div>
                                 <div class="row row-background border-top">
-                                	<div class="col-md-4">
-                                	<label class="lbl-rm-all">Grade Information</label>
-                                		<div class="border mt-2" id="gradeInfo">
-                                			
-                                		</div>
-                                	</div>
 	                               	 <div class="col-md-4 ">
 	                                     <label class="lbl-rm-all">Note :</label>
 	                                     <textarea id="note" name="note" class="form-control form-control-lg">Note</textarea>
 									</div>
-									<div class="col-md-2">
-										<label for="" class="lbl-rm-all">Total Invoice Amt</label> 
-	                                    <input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm" value="0" readonly="readonly">
+									<div class="col-md-2 offset-md-4">
+										<div class="row-div">
+											<label for="" class="lbl-rm-all">Total Invoice Amt</label> 
+	                                    	<input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm" value="0" readonly="readonly">
+											<label for="" class="lbl-rm-all">Total Bonus</label> 
+	                                    	<input type="text" id="totalBonus" name="totalBonus" class="form-control form-control-sm" value="0" readonly="readonly">
+										</div>
+										
 									</div>
 									<div class="col-md-2">
-										<label for="" class="lbl-rm-all">Total Bonus</label> 
-	                                    <input type="text" id="totalBonus" name="totalBonus" class="form-control form-control-sm" value="0" readonly="readonly">
-	                                 </div>
-	                                 <div class="col-md-2 offset-md-8">
-	                                 	<label for="" class="lbl-rm-all">Total PDC</label> 
-	                                    <input type="text" id="" name="" class="form-control form-control-sm" value="0" readonly="readonly">
-	                                 </div>
-	                                 <div class="col-md-2">
-	                                 	<label for="" class="lbl-rm-all">Gross Total</label> 
-	                                    <input type="text" id="" name="" class="form-control form-control-sm" value="0" readonly="readonly">
+										<div class="row-div">
+											<label for="" class="lbl-rm-all">Total PDC</label> 
+	                                    	<input type="text" id="" name="" class="form-control form-control-sm" value="0" readonly="readonly">
+	                                    	<label for="" class="lbl-rm-all">Gross Invoice Total</label> 
+	                                    	<input type="text" id="" name="" class="form-control form-control-sm" value="0" readonly="readonly">
+										</div>
 	                                 </div>
 	                                 
 	                             </div>
 	                                   
 	                                    
                                    <div class="row row-background">
-	                                   	<div class="col-md-2 offset-md-10">
+                                   		<div class="col-md-6">
+                                   			<table class="table table-bordered">
+												<thead>
+													<tr class="tbl-row-back">
+														<th width="20%">Mode Of Payment</th>
+														<th width="20%">Amount</th>
+													</tr>
+												</thead>
+												<tbody id="paymentTableBody">
+													<tr>
+														<td><input type="text" class="form-control form-control-sm" id=" " name="" value="Cash"></td>
+														<td><input type="text" class="form-control form-control-sm" id=" " name=""></td>
+													</tr>
+													<tr>
+														<td><input type="text" class="form-control form-control-sm" id=" " name="" value="Cheque"></td>
+														<td><input type="text" class="form-control form-control-sm" id=" " name=""></td>
+													</tr>
+													<tr>
+														<td><input type="text" class="form-control form-control-sm" id=" " name="" value="RTGS/NEFT"></td>
+														<td><input type="text" class="form-control form-control-sm" id=" " name=""></td>
+													</tr>
+												</tbody>
+											</table>
+                                   		
+                                   		</div>
+                                   		<div class="col-md-4">
+                                   			<div class="heading">
+                                   				<h5>Grade Information</h5>
+                                   			</div>
+                                   			
+                                			<div class="border grade-box" id="gradeInfo">
+                                			
+                                			</div>
+                                   		</div>
+                                   
+	                                   	<div class="col-md-2">
 	                                   		<label for="" class="lbl-rm-all">Less: PDC Issued</label> 
 		                                    <input type="text" id="" name="" class="form-control form-control-sm" value="0" readonly="readonly">
 	                                   		<label for="" class="lbl-rm-all">Less: Unloading Charges</label> 
@@ -182,9 +212,7 @@
 		                                    <input type="text" id="net" name="net" class="form-control form-control-sm" value="0">
 	                                   	</div>
                                    </div>
-								
-								<div id="paymentSection">
-								</div>
+							
 								<div class="row row-background border-top">
 										<div class="col-md-6" >
 											<table class="table table-bordered">
