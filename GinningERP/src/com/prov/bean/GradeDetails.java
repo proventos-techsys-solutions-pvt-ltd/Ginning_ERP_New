@@ -2,8 +2,16 @@ package com.prov.bean;
 
 public class GradeDetails {
 	
-	private int id, weighmentId, rst;
+	private int id, weighmentId, rst, pdcId;
 	
+	public int getPdcId() {
+		return pdcId;
+	}
+
+	public void setPdcId(int pdcId) {
+		this.pdcId = pdcId;
+	}
+
 	private String material, grade, authorizedBy;
 
 	private float bonusPerQtl;

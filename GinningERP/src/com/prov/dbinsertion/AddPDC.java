@@ -54,5 +54,47 @@ public class AddPDC {
 		
 		return id;
 	}
+	
+
+	public int addPDCWhileGrading(PDC p)
+	{
+		Connection con = null;
+		int id = 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		String addPDC = "{ ? = call ADD_PDC(?,?,?) }";
+		CallableStatement cs;
+		try {
+			
+			cs = con.prepareCall(addPDC);
+			
+			cs.registerOutParameter(1, Types.NUMERIC);
+			
+			Date date = Date.valueOf(p.getChequeDate());
+			
+			cs.setInt(2, p.getCustomerId());
+			cs.setDate(3, date);
+			cs.setDouble(4, p.getChequeAmount());
+			
+			cs.executeUpdate();
+			
+			id = cs.getInt(1);
+			
+			p.setId(id);
+			
+			cs.close();
+			con.close();
+			
+			System.out.println("Insertion Succesful-"+id);
+			} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return id;
+	}
 
 }

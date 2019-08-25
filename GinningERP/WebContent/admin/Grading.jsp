@@ -419,6 +419,8 @@ function submitGradingData(){
 	jsonObj['weighmentId'] = document.getElementById("weighmentId").value;
 	jsonObj['authorizer'] = document.getElementById("authorizer").value;
 	jsonObj['bonusPerQtl'] = document.getElementById("bonusAmount").value;
+	jsonObj['pdcAmount'] = document.getElementById("pdcAmount").value;
+	jsonObj['pdcDate'] = document.getElementById("pdcDate").value;
 	
 	var noOfRows = document.getElementById('tableBody').childElementCount;
 	console.log('no of Rows --- '+noOfRows);
@@ -437,6 +439,7 @@ function submitGradingData(){
 		 if(document.getElementById('gradeId'+(i+1)) != null){
 			 grade['gradeId'] = document.getElementById('gradeId'+(i+1)).value;
 			}
+		 grade['pdc'] = document.getElementById('pdcCheck'+(i+1)).value;
 	    
 		 gradeList.push(grade);
 		 
@@ -728,6 +731,10 @@ function calculatePDCBonusOnMonthChange(){
 
 document.getElementById("pdcMonths").addEventListener("change",function(e){
 	setPDCDate();
+	calculatePDCBonusOnMonthChange();
+})
+
+document.getElementById("pdcRate").addEventListener("change",function(e){
 	calculatePDCBonusOnMonthChange();
 })
 

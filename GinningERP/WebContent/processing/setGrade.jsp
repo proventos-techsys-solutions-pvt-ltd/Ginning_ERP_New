@@ -1,3 +1,5 @@
+<%@page import="com.prov.dbinsertion.AddPDC"%>
+<%@page import="com.prov.bean.PDC"%>
 <%@page import="com.prov.dbops.CheckAlreadyGraded"%>
 <%@page import="java.util.stream.IntStream"%>
 <%@page import="com.prov.dbinsertion.AddGradeDetails"%>
@@ -27,6 +29,10 @@
     	
     	int rowCount = checkGradeExists.alreadyGraded(Integer.parseInt((String)json.get("rst")));
     	
+    	PDC pdc = new PDC();
+    	
+    	AddPDC addPdc = new AddPDC();
+    	
     	if(rowCount == 0){
 		   	for(int i=0; i<jsonArray.size(); i++ )
 		   	{
@@ -44,7 +50,6 @@
 		       	grade.setGrade(((String)gradeJson.get("grade")).toUpperCase());
 		       	grade.setMoisture(Float.parseFloat((String)gradeJson.get("moisture")));
 		       	grade.setRate(Float.parseFloat((String)gradeJson.get("rate")));
-		       	
 		       	
 		       	gradeList.add(grade);
 		   	}
