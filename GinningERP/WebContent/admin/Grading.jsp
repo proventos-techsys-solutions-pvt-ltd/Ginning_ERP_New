@@ -131,8 +131,23 @@
 					</div>
 					</div>
 					<div class="row row-background">
+						<div class="col-md-auto">
+							<label>PDC Months</label>
+							<select  id="pdcMonths" name="pdcMonths" class="form-control form-control-sm" >
+								<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5</option>
+								<option>6</option>
+								<option>7</option>
+								<option>8</option>
+								<option>9</option>
+								<option>10</option>
+							</select>
+						</div>
 						<div class="col-md-2">
-							<label>PDC Payment</label>
+							<label>PDC Date</label>
 							<input type="date" id="pdcDate" name="pdcDate" class="form-control form-control-sm" value="">
 						</div>
 						<div class="col-md-2">
@@ -141,9 +156,9 @@
 						</div>
 						<div class="col-md-2">
 							<label>PDC Amount</label>
-							<input type="text" id="pdcAmount" name="pdcAmount" class="form-control form-control-sm" value="" readonly>
+							<input type="text" id="pdcAmount" name="pdcAmount" class="form-control form-control-sm" value="0" readonly>
 						</div>
-						<div class="col-md-2 offset-md-4">
+						<div class="col-md-2 offset-md-3">
 							<label for="" class="lbl-rm-all">Total Amount</label> 
 	                        <input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm" value="0" readonly="readonly">
 						</div>
@@ -285,7 +300,7 @@ function setDataForNewGrading(data){
 	cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description1' name='description'>";
 	cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture1' name='moisture' value=''>";
 	cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate1' name='rate'>"
-	cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck1' name='pdcCheck'>"					
+	cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck1' name='pdcCheck' value='false'>"					
 	
 	document.getElementById("tblQty1").value = totalQuantity;
 	calculateTotal();
@@ -337,7 +352,7 @@ document.addEventListener("change",function(e){
 				cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(noOfRows+1)+"' name='description'>";
 				cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(noOfRows+1)+"' name='moisture'>";
 				cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate"+(noOfRows+1)+"' name='rate' >"
-				cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck"+(noOfRows+1)+"' name='pdcCheck'>";
+				cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck"+(noOfRows+1)+"' name='pdcCheck' value='false'>";
 				cell8.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow'>";
 			
 			}
@@ -536,7 +551,7 @@ function setGradeUpdationData(data)
 		if(i>0){
 			cell8.innerHTML = "<img src='../property/img/delete.png' class='delete-row' alt='delete' id='deleteRow"+(i+1)+"'>";
 		}
-		cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck"+(i+1)+"' name='pdcCheck'>";
+		cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck"+(i+1)+"' name='pdcCheck' value='false'>";
 		cell9.innerHTML = "<input type='hidden' id='gradeId"+(i+1)+"' name='gradeId' value='"+data[i].gradeId+"'>";
 		
 		totalQty = totalQty + Number(data[i].quantity);
@@ -641,7 +656,8 @@ document.getElementById("updateGrades").addEventListener('click', function(e){
 //Set Date for PDC
 function setPDCDate(){
 	let now = new Date()
-	let next30days = new Date(now.setDate(now.getDate() + 30))
+	var noOfMonths = document.getElementById("pdcMonths").value;
+	let next30days = new Date(now.setDate(now.getDate() + (30*Number(noOfMonths))))
 	var dd = next30days.getDate();
     var mm = next30days.getMonth()+1; //January is 0!
     var yyyy = next30days.getFullYear();
@@ -656,6 +672,64 @@ function setPDCDate(){
     todayDate = yyyy+'-'+mm+'-'+dd; 
 	document.getElementById("pdcDate").value = todayDate;
 }
+
+//Set PDC checkbox value
+document.addEventListener('change', function(e){
+	if(e.srcElement.name === 'pdcCheck'){
+		var pdcAmount = document.getElementById("pdcAmount").value;
+		var rowIndex = Number(e.srcElement.parentNode.parentNode.rowIndex)-1;
+		var table = document.getElementById('tableBody');
+		var ratePerQtl = table.rows[rowIndex].cells[5].children[0].value;
+		var quantity = table.rows[rowIndex].cells[1].children[0].value;
+		var qtyInQtl = Number(quantity)/100;
+		var noOfMonths = document.getElementById("pdcMonths").value;
+		var pdcRatePerMonth = document.getElementById("pdcRate").value;
+		var pdcRate = Number(noOfMonths)*Number(pdcRatePerMonth);
+		console.log("pdcRate--"+pdcRate);
+		var pdcBonusAmount = Number(pdcRate)*Number(qtyInQtl);
+		console.log("pdcBonusAmount--"+pdcBonusAmount);
+		var totalAmount = (Number(qtyInQtl) * Number(ratePerQtl))+pdcBonusAmount;
+		console.log("totalAmount--"+totalAmount);
+		if(e.srcElement.value === 'false'){
+			e.srcElement.value = 'true'
+			document.getElementById("pdcAmount").value = Number(pdcAmount)+ Number(totalAmount);
+		}
+		else if(e.srcElement.value === 'true'){
+			e.srcElement.value = 'false'
+			document.getElementById("pdcAmount").value = Number(pdcAmount)- Number(totalAmount);
+		}
+	}
+})
+
+function calculatePDCBonusOnMonthChange(){
+	var noOfMonths = document.getElementById("pdcMonths").value;
+	var pdcCheckBoxes = document.getElementsByName("pdcCheck");
+	document.getElementById("pdcAmount").value = 0;
+	for(i = 0; i< pdcCheckBoxes.length; i++){
+		if(pdcCheckBoxes[i].value === 'true'){
+			document.getElementById("pdcAmount").value;
+			var rowIndex = Number(pdcCheckBoxes[i].parentNode.parentNode.rowIndex)-1;
+			var table = document.getElementById('tableBody');
+			var ratePerQtl = table.rows[rowIndex].cells[5].children[0].value;
+			var quantity = table.rows[rowIndex].cells[1].children[0].value;
+			var qtyInQtl = Number(quantity)/100;
+			var noOfMonths = document.getElementById("pdcMonths").value;
+			var pdcRatePerMonth = document.getElementById("pdcRate").value;
+			var pdcRate = Number(noOfMonths)*Number(pdcRatePerMonth);
+			console.log("pdcRate--"+pdcRate);
+			var pdcBonusAmount = Number(pdcRate)*Number(qtyInQtl);
+			console.log("pdcBonusAmount--"+pdcBonusAmount);
+			var totalAmount = (Number(qtyInQtl) * Number(ratePerQtl))+pdcBonusAmount;
+			console.log("totalAmount--"+totalAmount);
+			document.getElementById("pdcAmount").value = Number(document.getElementById("pdcAmount").value)+Number(totalAmount);
+		}
+	}
+}
+
+document.getElementById("pdcMonths").addEventListener("change",function(e){
+	setPDCDate();
+	calculatePDCBonusOnMonthChange();
+})
 
 setPDCDate();
 checkDailySetup();
