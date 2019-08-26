@@ -1,5 +1,3 @@
-<%@page import="com.prov.dbinsertion.AddPDC"%>
-<%@page import="com.prov.bean.PDC"%>
 <%@page import="com.prov.dbops.CheckAlreadyGraded"%>
 <%@page import="java.util.stream.IntStream"%>
 <%@page import="com.prov.dbinsertion.AddGradeDetails"%>
@@ -18,10 +16,10 @@
     	JSONParser parser = new JSONParser();
     	
     	JSONObject json = (JSONObject) parser.parse(gradeData);
+    	
+    	System.out.println(json);
 
     	JSONArray jsonArray = (JSONArray)json.get("gradeList");
-    	
-    	System.out.println(jsonArray);
     	
     	ArrayList<GradeDetails> gradeList = new ArrayList<GradeDetails>();
     	
@@ -29,9 +27,10 @@
     	
     	int rowCount = checkGradeExists.alreadyGraded(Integer.parseInt((String)json.get("rst")));
     	
-    	PDC pdc = new PDC();
-    	
-    	AddPDC addPdc = new AddPDC();
+    	float pdcRate = 0;
+       	int pdcMonths = 0;
+       	double pdcAmount = 0;
+       	String pdcDate = null;
     	
     	if(rowCount == 0){
 		   	for(int i=0; i<jsonArray.size(); i++ )
@@ -43,6 +42,8 @@
 		       	grade.setRst(Integer.parseInt((String)json.get("rst")));
 		       	grade.setAuthorizedBy(((String)json.get("authorizer")).toUpperCase());
 		       	grade.setBonusPerQtl(Float.parseFloat((String)json.get("bonusPerQtl")));
+		       	pdcRate = Float.parseFloat((String)json.get("pdcRate"));
+		       	pdcMonths = Integer.parseInt((String)json.get("pdcMonths"));
 		       	
 		       	JSONObject gradeJson = (JSONObject)jsonArray.get(i);
 		       	
@@ -50,6 +51,15 @@
 		       	grade.setGrade(((String)gradeJson.get("grade")).toUpperCase());
 		       	grade.setMoisture(Float.parseFloat((String)gradeJson.get("moisture")));
 		       	grade.setRate(Float.parseFloat((String)gradeJson.get("rate")));
+		       	if(((String)gradeJson.get("pdcCheck")).equalsIgnoreCase("true")){
+		       		pdcAmount = ((grade.getQuantity()/100)*(pdcRate*pdcMonths))+((grade.getQuantity()/100)*grade.getRate());
+		       		grade.setPdcAmount(pdcAmount);
+		       		grade.setPdcDate((String)json.get("pdcDate"));
+		       		System.out.println((String)json.get("pdcDate"));
+		       	}else if(((String)gradeJson.get("pdcCheck")).equalsIgnoreCase("false")){
+		       		grade.setPdcAmount(0);
+		       		grade.setPdcDate(null);
+		       	}
 		       	
 		       	gradeList.add(grade);
 		   	}

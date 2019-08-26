@@ -2,6 +2,7 @@ package com.prov.dbinsertion;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Types;
 
@@ -20,7 +21,7 @@ public int addGradeDetails(GradeDetails gd) {
 			e.printStackTrace();
 		}
 
-		String addGradeDetails = "{ ? = call ADD_GRADEDETAILS(?,?,?,?,?,?,?,?,?) }";
+		String addGradeDetails = "{ ? = call ADD_GRADEDETAILS(?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(addGradeDetails);
@@ -36,7 +37,13 @@ public int addGradeDetails(GradeDetails gd) {
 			cs.setString(8, gd.getAuthorizedBy());
 			cs.setDouble(9, gd.getMoisture());
 			cs.setFloat(10, gd.getBonusPerQtl());
-
+			cs.setDouble(11, gd.getPdcAmount());
+			if(gd.getPdcDate() == null) {
+				cs.setNull(12, Types.DATE);
+			}else if(gd.getPdcDate()!= null){
+				Date pdcDate = Date.valueOf(gd.getPdcDate());
+				cs.setDate(12, pdcDate);
+			}
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);

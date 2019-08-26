@@ -134,6 +134,7 @@
 						<div class="col-md-auto">
 							<label>PDC Months</label>
 							<select  id="pdcMonths" name="pdcMonths" class="form-control form-control-sm" >
+								<option>0</option>
 								<option selected>1</option>
 								<option>2</option>
 								<option>3</option>
@@ -419,8 +420,9 @@ function submitGradingData(){
 	jsonObj['weighmentId'] = document.getElementById("weighmentId").value;
 	jsonObj['authorizer'] = document.getElementById("authorizer").value;
 	jsonObj['bonusPerQtl'] = document.getElementById("bonusAmount").value;
-	jsonObj['pdcAmount'] = document.getElementById("pdcAmount").value;
+	jsonObj['pdcMonths'] = document.getElementById("pdcMonths").value;
 	jsonObj['pdcDate'] = document.getElementById("pdcDate").value;
+	jsonObj['pdcRate'] = document.getElementById("pdcRate").value;
 	
 	var noOfRows = document.getElementById('tableBody').childElementCount;
 	console.log('no of Rows --- '+noOfRows);
@@ -439,7 +441,7 @@ function submitGradingData(){
 		 if(document.getElementById('gradeId'+(i+1)) != null){
 			 grade['gradeId'] = document.getElementById('gradeId'+(i+1)).value;
 			}
-		 grade['pdc'] = document.getElementById('pdcCheck'+(i+1)).value;
+		 grade['pdcCheck'] = document.getElementById('pdcCheck'+(i+1)).value;
 	    
 		 gradeList.push(grade);
 		 
@@ -484,7 +486,7 @@ function setGradeUpdationData(data)
 	
 	var blacklisted;
 	var membership;
-	
+	document.getElementById("pdcAmount").value = 0;
 	document.getElementById("vendorName").value = data[0].customerName;
 	document.getElementById("vendorAddress").value = data[0].customerAddress;
 	document.getElementById("vendorMobile").value = data[0].customerMobile;
@@ -554,7 +556,21 @@ function setGradeUpdationData(data)
 		if(i>0){
 			cell8.innerHTML = "<img src='../property/img/delete.png' class='delete-row' alt='delete' id='deleteRow"+(i+1)+"'>";
 		}
-		cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck"+(i+1)+"' name='pdcCheck' value='false'>";
+		if(data[i].pdcAmount>0){
+			cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck"+(i+1)+"' name='pdcCheck' value='true'>";
+			document.getElementById("pdcCheck"+(i+1)).checked = true;
+			document.getElementById("pdcAmount").value = Number(document.getElementById("pdcAmount").value) + Number(data[i].pdcAmount);
+			document.getElementById("pdcDate").value = data[i].pdcDate;
+			var date2 = new Date(data[i].pdcDate);
+			var date1 = new Date(data[i].weighmentDate);
+			document.getElementById("pdcMonths").value = date2.getMonth() - date1.getMonth() + (12 * (date2.getFullYear() - date1.getFullYear()));
+				
+		}
+		else if(data[i].pdcAmount<=0)
+		{
+			cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck"+(i+1)+"' name='pdcCheck' value='false'>";
+		}
+		
 		cell9.innerHTML = "<input type='hidden' id='gradeId"+(i+1)+"' name='gradeId' value='"+data[i].gradeId+"'>";
 		
 		totalQty = totalQty + Number(data[i].quantity);
@@ -579,11 +595,11 @@ function setGradeUpdationData(data)
 	if(data[0].invoiceFlag === 1){
 		var inputElements = document.getElementsByTagName('input');
 		for(i=0;i<inputElements.length;i++){
-			inputElements[i].setAttribute('readonly', '')
+			inputElements[i].setAttribute('readonly', '');
 		}
 		var selectElements = document.getElementsByTagName('select');
 		for(i=0;i<selectElements.length;i++){
-			selectElements[i].setAttribute('disabled', '')
+			selectElements[i].setAttribute('disabled', '');
 		}
 		var deleteIcons = document.getElementsByClassName('delete-row');
 		for(i=0;i<deleteIcons.length;i++){

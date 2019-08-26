@@ -2,6 +2,7 @@ package com.prov.dbupdation;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -22,7 +23,7 @@ public class UpdateGradeDetails {
 			e.printStackTrace();
 		}
 
-		String updateGradeDetails = "{ ? = call UPDATE_GRADEDETAILS(?,?,?,?,?,?,?,?,?,?) }";
+		String updateGradeDetails = "{ ? = call UPDATE_GRADEDETAILS(?,?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(updateGradeDetails);
@@ -39,6 +40,13 @@ public class UpdateGradeDetails {
 			cs.setString(9, gd.getAuthorizedBy());
 			cs.setDouble(10, gd.getMoisture());
 			cs.setFloat(11, gd.getBonusPerQtl());
+			cs.setDouble(12, gd.getPdcAmount());
+			if(gd.getPdcDate().equals(null)) {
+				cs.setNull(13, Types.DATE);
+			}else if(!(gd.getPdcDate().equals(null))){
+				Date pdcDate = Date.valueOf(gd.getPdcDate());
+				cs.setDate(13, pdcDate);
+			}
 			
 			cs.executeUpdate();
 			

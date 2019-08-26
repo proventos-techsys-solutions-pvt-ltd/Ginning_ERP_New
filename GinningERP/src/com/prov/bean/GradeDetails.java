@@ -2,14 +2,26 @@ package com.prov.bean;
 
 public class GradeDetails {
 	
-	private int id, weighmentId, rst, pdcId;
+	private int id, weighmentId, rst;
+	double pdcAmount;
 	
-	public int getPdcId() {
-		return pdcId;
+	String pdcDate;
+
+	
+	public double getPdcAmount() {
+		return pdcAmount;
 	}
 
-	public void setPdcId(int pdcId) {
-		this.pdcId = pdcId;
+	public void setPdcAmount(double pdcAmount) {
+		this.pdcAmount = pdcAmount;
+	}
+
+	public String getPdcDate() {
+		return pdcDate;
+	}
+
+	public void setPdcDate(String pdcDate) {
+		this.pdcDate = pdcDate;
 	}
 
 	private String material, grade, authorizedBy;
