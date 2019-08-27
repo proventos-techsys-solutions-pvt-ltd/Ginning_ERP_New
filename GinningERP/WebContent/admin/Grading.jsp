@@ -559,7 +559,7 @@ function setGradeUpdationData(data)
 		if(data[i].pdcAmount>0){
 			cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck"+(i+1)+"' name='pdcCheck' value='true'>";
 			document.getElementById("pdcCheck"+(i+1)).checked = true;
-			document.getElementById("pdcAmount").value = Number(document.getElementById("pdcAmount").value) + Number(data[i].pdcAmount);
+			document.getElementById("pdcAmount").value = Number(document.getElementById("pdcAmount").value) + Number(Number(data[i].pdcAmount) * (Number(data[i].quantity)/100)) + Number((Number(data[i].quantity)/100)*Number(data[i].rate));
 			document.getElementById("pdcDate").value = data[i].pdcDate;
 			var date2 = new Date(data[i].pdcDate);
 			var date1 = new Date(data[i].weighmentDate);
@@ -620,7 +620,6 @@ function removeElement(element) {
 document.addEventListener("change",function(e){
 	if(e.srcElement.id.includes("grade"))
 	{
-		
 		var selectedGrade = e.srcElement.options[e.srcElement.selectedIndex];
 		var gradeId = selectedGrade.getAttribute('data-gradeId');
 		var rowNo = e.srcElement.parentElement.parentElement.rowIndex;
@@ -636,9 +635,7 @@ document.addEventListener("change",function(e){
 				break;
 			}
 		}
-		
 	}
-	
 });
 
 function calculateTotal(){

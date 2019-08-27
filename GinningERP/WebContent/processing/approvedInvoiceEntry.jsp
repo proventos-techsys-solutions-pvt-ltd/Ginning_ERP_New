@@ -90,20 +90,20 @@
 			invoice.setPaidByoperator(0);
 			invoice.setUnloadingCharges(Float.parseFloat((String)json.get("unloadingCharges")));
 			invoice.setBonusAmount(Float.parseFloat((String)json.get("totalBonus")));
-			if((String)json.get("Cash") == null){
+			if((String)json.get("cashAmount") == null){
 				invoice.setCashAmount(0.0);
 			}else{
-				invoice.setCashAmount(Double.parseDouble((String)json.get("Cash")));
+				invoice.setCashAmount(Double.parseDouble((String)json.get("cashAmount")));
 			}
-			if((String)json.get("Cheque") == null){
+			if((String)json.get("chequeAmount") == null){
 				invoice.setChequeAmount(0.0);
 			}else{
-				invoice.setChequeAmount(Double.parseDouble((String)json.get("Cheque")));
+				invoice.setChequeAmount(Double.parseDouble((String)json.get("chequeAmount")));
 			}
-			if((String)json.get("RTGS/NEFT") == null){
+			if((String)json.get("rtgsAmount") == null){
 				invoice.setRtgsAmount(0.0);
 			}else{
-				invoice.setRtgsAmount(Double.parseDouble((String)json.get("RTGS/NEFT")));
+				invoice.setRtgsAmount(Double.parseDouble((String)json.get("rtgsAmount")));
 			}
 			
 			AddInvoice addinvoice = new AddInvoice();
@@ -127,16 +127,14 @@
 			}
 		}
 		
-		JSONObject pdcJson = (JSONObject)json.get("pdcJson");
-		
-		if(pdcJson.size() != 0){
+		if(Double.parseDouble((String)json.get("pdcAmount")) > 0){
 			PDC pdc = new PDC();
 			
 			pdc.setCustomerId(Integer.parseInt((String)json.get("customerId")));
-			pdc.setChequeDate((String)pdcJson.get("pdcDate"));
+			pdc.setChequeDate((String)json.get("pdcDate"));
 			pdc.setInvoiceId(invoiceId);
-            pdc.setChequeAmount(Double.parseDouble((String)pdcJson.get("pdcAmount")));	
-            pdc.setBankId(0);
+            pdc.setChequeAmount(Double.parseDouble((String)json.get("pdcAmount")));	
+            pdc.setBankId(Integer.parseInt((String)json.get("bankId")));
             pdc.setChequeNo("0");
             pdc.setPayeeName("DUMMY");
             

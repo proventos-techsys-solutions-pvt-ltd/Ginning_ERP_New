@@ -58,12 +58,12 @@
 	       	grade.setMoisture(Float.parseFloat((String)gradeJson.get("moisture")));
 	       	grade.setRate(Float.parseFloat((String)gradeJson.get("rate")));
 	       	if(((String)gradeJson.get("pdcCheck")).equalsIgnoreCase("true")){
-	       		pdcAmount = ((grade.getQuantity()/100)*(pdcRate*pdcMonths))+((grade.getQuantity()/100)*grade.getRate());
-	       		grade.setPdcAmount(pdcAmount);
+	       		pdcAmount = (pdcRate*pdcMonths);
+	       		grade.setPdcBonusAmount(pdcAmount);
 	       		grade.setPdcDate((String)json.get("pdcDate"));
 	       		System.out.println((String)json.get("pdcDate"));
 	       	}else if(((String)gradeJson.get("pdcCheck")).equalsIgnoreCase("false")){
-	       		grade.setPdcAmount(0);
+	       		grade.setPdcBonusAmount(0);
 	       		grade.setPdcDate(null);
 	       	}
 	       	

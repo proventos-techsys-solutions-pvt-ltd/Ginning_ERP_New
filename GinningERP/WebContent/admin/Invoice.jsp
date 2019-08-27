@@ -37,6 +37,7 @@
                         </form>
                         	<input type="hidden" name="bankId" value="" id="bankId" />
                         	<input type="hidden" name="customerId" value="" id="customerId" />
+                        	<input type="date" name="pdcDate" id="pdcDate"/>
                         	<div class="row row-background">
                         		<div class="col-md-3">
                        			  <label for="" class="lbl-rm-all">Company Name </label>
@@ -88,7 +89,7 @@
                                     <div class="input-group input-group-sm ">
 									  <div class="input-group-prepend">
 									    <div class="input-group-text">
-									      <input type="checkbox"  id="" name="">
+									      <input type="checkbox"  id="bonusCheck" name="bonusCheck">
 									    </div>
 									  </div>
 									  <input type="text" class="form-control form-control-sm"  id="bonusPerQtl" name="bonusPerQtl" >
@@ -153,10 +154,10 @@
 									</div>
 									<div class="col-md-2">
 										<div class="row-div">
-											<label for="" class="lbl-rm-all">Total PDC</label> 
-	                                    	<input type="text" id="" name="" class="form-control form-control-sm" value="0" readonly="readonly">
+											<label for="" class="lbl-rm-all">PDC Bonus Amount</label> 
+	                                    	<input type="text" id="pdcBonusAmount" name="pdcBonusAmount" class="form-control form-control-sm" value="0" readonly="readonly">
 	                                    	<label for="" class="lbl-rm-all">Gross Invoice Total</label> 
-	                                    	<input type="text" id="" name="" class="form-control form-control-sm" value="0" readonly="readonly">
+	                                    	<input type="text" id="grossInvoiceTotal" name="grossInvoiceTotal" class="form-control form-control-sm" value="0" readonly="readonly">
 										</div>
 	                                 </div>
 	                                 
@@ -174,16 +175,16 @@
 												</thead>
 												<tbody id="paymentTableBody">
 													<tr>
-														<td><input type="text" class="form-control form-control-sm" id=" " name="" value="Cash"></td>
-														<td><input type="text" class="form-control form-control-sm" id=" " name=""></td>
+														<td><input type="text" class="form-control form-control-sm" id="" name="" value="Cash"></td>
+														<td><input type="text" class="form-control form-control-sm" id="cashAmount" name="cashAmount" value='0'></td>
 													</tr>
 													<tr>
-														<td><input type="text" class="form-control form-control-sm" id=" " name="" value="Cheque"></td>
-														<td><input type="text" class="form-control form-control-sm" id=" " name=""></td>
+														<td><input type="text" class="form-control form-control-sm" id="" name="" value="Cheque"></td>
+														<td><input type="text" class="form-control form-control-sm" id="chequeAmount" name="chequeAmount" value='0'></td>
 													</tr>
 													<tr>
-														<td><input type="text" class="form-control form-control-sm" id=" " name="" value="RTGS/NEFT"></td>
-														<td><input type="text" class="form-control form-control-sm" id=" " name=""></td>
+														<td><input type="text" class="form-control form-control-sm" id="" name="" value="RTGS/NEFT"></td>
+														<td><input type="text" class="form-control form-control-sm" id="rtgsAmount" name="rtgsAmount" value='0'></td>
 													</tr>
 												</tbody>
 											</table>
@@ -201,7 +202,7 @@
                                    
 	                                   	<div class="col-md-2">
 	                                   		<label for="" class="lbl-rm-all">Less: PDC Issued</label> 
-		                                    <input type="text" id="" name="" class="form-control form-control-sm" value="0" readonly="readonly">
+		                                    <input type="text" id="totalPdcAmount" name="totalPdcAmount" class="form-control form-control-sm" value="0" readonly="readonly">
 	                                   		<label for="" class="lbl-rm-all">Less: Unloading Charges</label> 
 		                                    <input type="text" id="unloadingCharges" name="unloadingCharges" class="form-control form-control-sm" value="0" readonly="readonly">
 		                                    <label for="" class="lbl-rm-all">Less: Weighing Charges </label> 
@@ -444,7 +445,6 @@ function setCurrentDate(){
 	{
 		
 		var noOfRows = data.length;
-		
 		var table = document.getElementById("tableBody");
 		document.getElementById("rst").value = data[0].rst;
 		document.getElementById("customerData").value = data[0].customerName + "\n" + data[0].customerAddress + "\n" + data[0].customerMobile;
@@ -504,9 +504,18 @@ function setCurrentDate(){
 			cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+data[i].grade+'" readonly>';
 			cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+data[i].moisture+'" readonly>';
 			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+data[i].rate+'" readonly>';
-			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+(data[i].rate * (data[i].quantity/100))+'" readonly>';
+			var amount = (data[i].rate * (data[i].quantity/100));
+			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+amount+'" readonly>';
 			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" >';
-			cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="0" readonly>';
+			if(data[i].pdcAmount>0){
+				var pdcBonusAmount = Number(data[i].pdcAmount) * (Number(data[i].quantity)/100);
+				cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="'+pdcBonusAmount+'" readonly>';
+				document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) + Number(pdcBonusAmount);
+				document.getElementById('totalPdcAmount').value = Number(document.getElementById('totalPdcAmount').value) + Number(pdcBonusAmount) + Number(amount);
+				document.getElementById('pdcDate').value = data[i].pdcDate;
+			}else if(data[i].pdcAmount<=0){
+				cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="0" readonly>';
+			}
 			cell10.innerHTML = '<input type="hidden" id="gradeId'+(rowNo+1)+'" class="lbl-rm-all" name="gradeId" value="'+data[i].gradeId+'" >';
 			cell11.innerHTML = '<input type="hidden" id="weighmentId'+(rowNo+1)+'" class="lbl-rm-all" name="weighmentId" value="'+data[i].weighmentId+'" >';
 			cell12.innerHTML = '<input type="hidden" id="gradeDesc'+(rowNo+1)+'" class="lbl-rm-all" name="gradeDesc" value="'+data[i].gradeDesc+'" >';
@@ -547,23 +556,17 @@ function setCurrentDate(){
 	
 	//Calculate total amount to be paid
 	function calculateTotal(){
-		var rates = document.getElementsByName("amount");
+		var rates = document.getElementsByName('amount');
 		var total = 0;
 		for(i=0; i<rates.length; i++){
 			total = total + Number(rates[i].value);
 		}
 		document.getElementById("totalAmount").value = total;
-		var membershipStatus = document.getElementById("customerMembership");
-		if(membershipStatus.value === "YES"){
-			total = total + Number(document.getElementById("totalBonus").value) - (Number(document.getElementById('weighingCharges').value) + Number(document.getElementById('unloadingCharges').value));
-			document.getElementById("net").value = total;
-			document.getElementById("payAmount1").value = total;
-		}
-		if(membershipStatus.value === "NO"){
-			total = total - (Number(document.getElementById('weighingCharges').value) + Number(document.getElementById('unloadingCharges').value));
-			document.getElementById("net").value = total;
-			document.getElementById("payAmount1").value = total;
-		}
+		var grossInvoiceAmount = total + Number(document.getElementById('pdcBonusAmount').value) + Number(document.getElementById('totalBonus').value); 
+		var netPayable = Number(grossInvoiceAmount) - (Number(document.getElementById('weighingCharges').value) + Number(document.getElementById('unloadingCharges').value) + Number(document.getElementById('totalPdcAmount').value));
+		document.getElementById('grossInvoiceTotal').value = grossInvoiceAmount;
+		document.getElementById("net").value = netPayable;
+		document.getElementById("cashAmount").value = netPayable;
 	}
 	
 	
@@ -605,16 +608,12 @@ function setCurrentDate(){
 		jsonObj['unloadingCharges'] = document.getElementById('unloadingCharges').value;
 		jsonObj['totalBonus'] = document.getElementById('totalBonus').value;
 		jsonObj['netPayable'] = document.getElementById('net').value;
+		jsonObj['pdcAmount'] = document.getElementById('totalPdcAmount').value;
+		jsonObj['pdcDate'] = document.getElementById('pdcDate').value;
+		jsonObj['cashAmount'] = document.getElementById('cashAmount').value;
+		jsonObj['chequeAmount'] = document.getElementById('chequeAmount').value;
+		jsonObj['rtgsAmount'] = document.getElementById('rtgsAmount').value;
 		
-		var paymentModesTable = document.getElementById('paymentTableBody');
-		console.log(paymentModesTable.rows.length);
-		
-		for(j=0;j<paymentModesTable.rows.length; j++){
-				jsonObj[document.getElementById('paymentMode'+(j+1)).value] = document.getElementById('payAmount'+(j+1)).value;
-			}
-		
-		var pdcJson = {};
-
 		var jsonStr = JSON.stringify(jsonObj);
 		console.log(jsonStr);
 		
@@ -700,6 +699,18 @@ function setCurrentDate(){
 	document.addEventListener('click',function(e){
 		if(e.srcElement.tagName.toString().includes("img") || e.srcElement.id.toString().includes("deleteRow")){
 			deletePaymentMode(e.srcElement.parentNode.parentNode.rowIndex);
+		}
+	});
+	
+	
+	//Add Bonus Amount
+	document.getElementById('bonusCheck').addEventListener('change',function(e){
+		if(e.srcElement.checked===true){
+			document.getElementById('totalBonus').value = Number(document.getElementById('bonusPerQtl').value) * (Number(document.getElementById('totalQty').value)/100);
+			calculateTotal();
+		}else if(e.srcElement.checked != true){
+			document.getElementById('totalBonus').value=0;
+			calculateTotal();
 		}
 	});
 	

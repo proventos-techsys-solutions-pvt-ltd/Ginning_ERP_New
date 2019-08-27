@@ -40,7 +40,7 @@ public class UpdateGradeDetails {
 			cs.setString(9, gd.getAuthorizedBy());
 			cs.setDouble(10, gd.getMoisture());
 			cs.setFloat(11, gd.getBonusPerQtl());
-			cs.setDouble(12, gd.getPdcAmount());
+			cs.setDouble(12, gd.getPdcBonusAmount());
 			if(gd.getPdcDate().equals(null)) {
 				cs.setNull(13, Types.DATE);
 			}else if(!(gd.getPdcDate().equals(null))){

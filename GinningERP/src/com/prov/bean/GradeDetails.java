@@ -3,17 +3,17 @@ package com.prov.bean;
 public class GradeDetails {
 	
 	private int id, weighmentId, rst;
-	double pdcAmount;
+	double pdcBonusAmount;
 	
 	String pdcDate;
 
 	
-	public double getPdcAmount() {
-		return pdcAmount;
+	public double getPdcBonusAmount() {
+		return pdcBonusAmount;
 	}
 
-	public void setPdcAmount(double pdcAmount) {
-		this.pdcAmount = pdcAmount;
+	public void setPdcBonusAmount(double pdcBonusAmount) {
+		this.pdcBonusAmount = pdcBonusAmount;
 	}
 
 	public String getPdcDate() {

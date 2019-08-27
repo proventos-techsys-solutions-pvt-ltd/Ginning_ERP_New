@@ -113,7 +113,7 @@ public class RstReport {
 				jsonObj.put("moisture", rs.getString(8));
 				jsonObj.put("bonusPerQtl", rs.getString(9));
 				jsonObj.put("pdcAmount", rs.getString(10));
-				String date = rs.getString(11);
+				String date = rs.getString("PDC_DATE");
 				if(date != null) {
 					Date formatPdcDate = formatter1.parse(date);
 					String pdcDateStr = formatter2.format(formatPdcDate);

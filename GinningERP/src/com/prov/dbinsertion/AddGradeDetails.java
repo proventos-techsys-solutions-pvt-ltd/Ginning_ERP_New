@@ -37,7 +37,7 @@ public int addGradeDetails(GradeDetails gd) {
 			cs.setString(8, gd.getAuthorizedBy());
 			cs.setDouble(9, gd.getMoisture());
 			cs.setFloat(10, gd.getBonusPerQtl());
-			cs.setDouble(11, gd.getPdcAmount());
+			cs.setDouble(11, gd.getPdcBonusAmount());
 			if(gd.getPdcDate() == null) {
 				cs.setNull(12, Types.DATE);
 			}else if(gd.getPdcDate()!= null){
