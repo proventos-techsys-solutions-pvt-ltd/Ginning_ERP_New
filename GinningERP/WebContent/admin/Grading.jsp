@@ -701,11 +701,8 @@ document.addEventListener('change', function(e){
 		var noOfMonths = document.getElementById("pdcMonths").value;
 		var pdcRatePerMonth = document.getElementById("pdcRate").value;
 		var pdcRate = Number(noOfMonths)*Number(pdcRatePerMonth);
-		console.log("pdcRate--"+pdcRate);
 		var pdcBonusAmount = Number(pdcRate)*Number(qtyInQtl);
-		console.log("pdcBonusAmount--"+pdcBonusAmount);
 		var totalAmount = (Number(qtyInQtl) * Number(ratePerQtl))+pdcBonusAmount;
-		console.log("totalAmount--"+totalAmount);
 		if(e.srcElement.value === 'false'){
 			e.srcElement.value = 'true'
 			document.getElementById("pdcAmount").value = Number(pdcAmount)+ Number(totalAmount);
@@ -732,11 +729,8 @@ function calculatePDCBonusOnMonthChange(){
 			var noOfMonths = document.getElementById("pdcMonths").value;
 			var pdcRatePerMonth = document.getElementById("pdcRate").value;
 			var pdcRate = Number(noOfMonths)*Number(pdcRatePerMonth);
-			console.log("pdcRate--"+pdcRate);
 			var pdcBonusAmount = Number(pdcRate)*Number(qtyInQtl);
-			console.log("pdcBonusAmount--"+pdcBonusAmount);
 			var totalAmount = (Number(qtyInQtl) * Number(ratePerQtl))+pdcBonusAmount;
-			console.log("totalAmount--"+totalAmount);
 			document.getElementById("pdcAmount").value = Number(document.getElementById("pdcAmount").value)+Number(totalAmount);
 		}
 	}

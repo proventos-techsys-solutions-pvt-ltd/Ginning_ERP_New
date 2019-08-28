@@ -465,7 +465,6 @@ function setCurrentDate(){
 		}
 		if(Number(data[0].customerMembership) === 1){
 			membership = 'YES';
-			document.getElementById("totalBonus").value = ((Number(document.getElementById("totalQty").value)/100) * data[0].bonusPerQtl);
 		}else if(Number(data[0].customerMembership) === 0){
 			membership = 'NO';
 		}
@@ -561,12 +560,12 @@ function setCurrentDate(){
 		for(i=0; i<rates.length; i++){
 			total = total + Number(rates[i].value);
 		}
-		document.getElementById("totalAmount").value = total;
+		document.getElementById("totalAmount").value = total.toFixed(2);
 		var grossInvoiceAmount = total + Number(document.getElementById('pdcBonusAmount').value) + Number(document.getElementById('totalBonus').value); 
 		var netPayable = Number(grossInvoiceAmount) - (Number(document.getElementById('weighingCharges').value) + Number(document.getElementById('unloadingCharges').value) + Number(document.getElementById('totalPdcAmount').value));
-		document.getElementById('grossInvoiceTotal').value = grossInvoiceAmount;
-		document.getElementById("net").value = netPayable;
-		document.getElementById("cashAmount").value = netPayable;
+		document.getElementById('grossInvoiceTotal').value = grossInvoiceAmount.toFixed(2);
+		document.getElementById("net").value = netPayable.toFixed(2);
+		document.getElementById("cashAmount").value = netPayable.toFixed(2);
 	}
 	
 	

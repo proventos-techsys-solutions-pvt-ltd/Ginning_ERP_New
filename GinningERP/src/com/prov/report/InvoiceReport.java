@@ -193,11 +193,14 @@ public ArrayList<Invoice> getReport() {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String invSql = "SELECT IM.ID, IM.INVOICE_NO, IM.NET_AMOUNT, IM.AMOUNTPAID, IM.PENDING, IM.INV_DATE, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.AUTHORIZER, \r\n" + 
-					"        IM.NOTE, IM.TOTAL_QUANTITY, IM.CASH_AMOUNT, IM.CHEQUE_AMOUNT, IM.RTGS_AMOUNT, IM.PAID_BY_OP, CM.NAME, CM.ADDRESS, CM.MOBILE\r\n" + 
-					"FROM INVOICE_MAST IM, CUSTOMER_MAST CM\r\n" + 
-					"WHERE IM.CUSTOMER_ID = CM.ID AND\r\n" + 
-					"      IM.INVOICE_NO = ?"; 
+			String invSql = "SELECT IM.ID, IM.INVOICE_NO, IM.NET_AMOUNT, IM.AMOUNTPAID, IM.PENDING, IM.INV_DATE, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.AUTHORIZER,  \r\n" + 
+							"IM.NOTE, IM.TOTAL_QUANTITY, IM.CASH_AMOUNT, IM.CHEQUE_AMOUNT, IM.RTGS_AMOUNT, IM.PAID_BY_OP, CM.NAME, CM.ADDRESS, CM.MOBILE,\r\n" + 
+							"PDC.ID PDC_ID, PDC.BANK_ID, PDC.PAYEE_NAME, PDC.CHEQUE_DATE, PDC.CHEQUE_AMOUNT PDC_AMT, PDC.CHEQUE_NO\r\n" + 
+							"FROM INVOICE_MAST IM \r\n" + 
+							"inner join CUSTOMER_MAST CM on IM.CUSTOMER_ID = CM.ID \r\n" + 
+							"left join PDC_MAST PDC on PDC.INVOICE_ID = IM.ID\r\n" + 
+							"WHERE\r\n" + 
+							"IM.INVOICE_NO = ?"; 
 				
 			PreparedStatement stmt = con.prepareStatement(invSql);
 			
@@ -230,6 +233,19 @@ public ArrayList<Invoice> getReport() {
 				jsonObj.put("customerName", rs.getString(16));
 				jsonObj.put("customerAddress", rs.getString(17));
 				jsonObj.put("customerMobile", rs.getString(18));
+				jsonObj.put("pdcId", rs.getString(19));
+				jsonObj.put("pdcBankId", rs.getString(20));
+				jsonObj.put("pdcPayeeName", rs.getString(21));
+				String pdcDate = rs.getString(22);
+				if(pdcDate!=null) {
+					Date date2=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(pdcDate);
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+					String properPdcDate = format.format(date2);
+					jsonObj.put("pdcChequeDate", properPdcDate);
+				}
+				jsonObj.put("pdcAmount", rs.getString(23));
+				jsonObj.put("pdcChequeNo", rs.getString(24));
+				
 			}
 			stmt.close();
 			con.close();

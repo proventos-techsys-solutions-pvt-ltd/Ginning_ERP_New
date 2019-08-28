@@ -125,6 +125,34 @@
 							</div>
 						</div>
 					</div>
+					<div class="form-row border-top">
+						<div class="col-md-auto">
+							<label class="lbl-rm-all">PDC</label>
+							<input type="text" class="form-control form-control-sm" id="pdcAmount" name="pdcAmount" readonly>
+						</div>
+						<div class="col-md-auto">
+							<label class="lbl-rm-all">Bank</label>
+							<select type="text" class="form-control form-control-sm" id="pdcBank" name="pdcBank">
+								<c:Bank />
+							</select>
+						</div>
+						<div class="col-md-auto">
+							<label class="lbl-rm-all">PDC No</label>
+							<input type="text" class="form-control form-control-sm" id="pdcNo" name="pdcNo" placeholder="Cheque No.">
+						</div>
+						<div class="col-md-auto">
+							<label class="lbl-rm-all">PDC Date</label>
+							<input type="date" class="form-control form-control-sm" id="pdcDate" name="pdcDate" value="">
+						</div>
+						<div class="col-md-3">
+							<label class="lbl-rm-all">Payee Name</label>
+							<div class="d-flex justify-content-start align-items-center">
+							<input type="text" class="form-control form-control-sm" id="pdcPayeeName" name="pdcPayeeName" placeholder="Name on Cheque">
+							<button type="button" class="btn btn-success btn-sm btn-no-radius" id="pdcSubmit" onclick="submitChequeData()">Pay</button>&nbsp;
+							<button type="button" class="btn btn-success btn-sm btn-no-radius">Void</button>
+							</div>
+						</div>
+					</div>
 				<form id='paymentForm' action="../processing/submitPayment.jsp" target="_blank">
 				<input type="hidden" id="output" name="output" />	
 				</form>
@@ -280,7 +308,17 @@
 	}
 	
 	function setDailySetupData(data){
-			var bank=  document.getElementById('chequeBank');
+			var bank =  document.getElementById('chequeBank');
+			for(i=0;i<bank.options.length;i++){
+				if(data.bankId != Number(bank.options[i].value)){
+					bank.options[i].disabled = true;
+				}
+				else if(data.bankId === Number(bank.options[i].value)){
+					bank.options[i].selected = true;
+				}
+			}
+			
+			var bank =  document.getElementById('pdcBank');
 			for(i=0;i<bank.options.length;i++){
 				if(data.bankId != Number(bank.options[i].value)){
 					bank.options[i].disabled = true;
@@ -324,6 +362,17 @@
 		
 		function setData(data){
 			
+			document.getElementById('pdcAmount').disabled = false ;
+			document.getElementById('pdcNo').disabled = false ;
+			document.getElementById('pdcDate').disabled = false ;
+			document.getElementById('pdcPayeeName').disabled = false ;
+			document.getElementById('pdcBank').disabled = false ;
+			document.getElementById('pdcSubmit').disabled = false ;
+			document.getElementById('pdcAmount').value = "" ;
+			document.getElementById('pdcNo').value = "" ;
+			document.getElementById('pdcDate').value = "" ;
+			document.getElementById('pdcPayeeName').value = "" ;
+			
 			document.getElementById('invoiceNo').value = data.invoiceNo ;
 			document.getElementById('invoiceId').value = data.invoiceId;
 			document.getElementById('customerId').value = data.customerId;
@@ -334,13 +383,27 @@
 			document.getElementById('invoiceStatus').value = data.paidByOperator ;
 			document.getElementById('cashAmount').value = data.cashAmount ;
 			document.getElementById('chequeAmount').value = data.chequeAmount ;
-			document.getElementById('chequeBank').value = "" ;
 			document.getElementById('chequeNo').value = "" ;
 			document.getElementById('nameOnCheque').value = "" ;
 			document.getElementById('rtgsAmount').value = data.rtgsAmount ;
 			document.getElementById('rtgsBank').value = "" ;
 			document.getElementById('rtgsAccountNo').value = "" ;
 			document.getElementById('rtgsIfsc').value = "" ;
+			
+			if(data.hasOwnProperty('pdcAmount')){
+				document.getElementById('pdcAmount').value = data.pdcAmount ;
+				document.getElementById('pdcNo').value = "" ;
+				document.getElementById('pdcDate').value = data.pdcChequeDate ;
+				document.getElementById('pdcPayeeName').value = "" ;
+			}else if(!data.hasOwnProperty('pdcAmount')){
+				document.getElementById('pdcAmount').disabled = true ;
+				document.getElementById('pdcNo').disabled = true ;
+				document.getElementById('pdcDate').disabled = true ;
+				document.getElementById('pdcPayeeName').disabled = true ;
+				document.getElementById('pdcBank').disabled = true ;pdcSubmit
+				document.getElementById('pdcSubmit').disabled = true ;
+			}
+			
 			setCurrentDate();
 		}
 		
