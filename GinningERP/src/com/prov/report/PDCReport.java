@@ -21,27 +21,28 @@ public class PDCReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT PDC.ID,\r\n" + 
-					"PDC.ID,\r\n" + 
-					"PDC.CUSTOMER_ID,\r\n" + 
-					"PDC.INVOICE_ID,\r\n" + 
-					"PDC.BANK_ID,\r\n" + 
-					"PDC.PAYEE_NAME,\r\n" + 
-					"PDC.CHEQUE_DATE,\r\n" + 
-					"PDC.CHEQUE_AMOUNT,\r\n" + 
-					"IM.INVOICE_NO,\r\n" + 
-					"BM.BANK_NAME,\r\n" + 
-					"BM.ACCOUNT_NO,\r\n" + 
-					"COMP.ID,\r\n" + 
-					"COMP.NAME\r\n" + 
-					"FROM PDC_MAST PDC,\r\n" + 
-					"INVOICE_MAST IM,\r\n" + 
-					"BANK_MAST BM,\r\n" + 
-					"company_master COMP\r\n" + 
-					"WHERE\r\n" + 
-					"pdc.invoice_id = IM.ID AND\r\n" + 
-					"pdc.bank_id = BM.ID AND\r\n" + 
-					"im.company_id = COMP.ID";
+			String sql = "SELECT " + 
+						"PDC.ID,\r\n" + 
+						"PDC.CUSTOMER_ID,\r\n" + 
+						"PDC.INVOICE_ID,\r\n" + 
+						"PDC.BANK_ID,\r\n" + 
+						"PDC.PAYEE_NAME,\r\n" + 
+						"PDC.CHEQUE_DATE,\r\n" + 
+						"PDC.CHEQUE_AMOUNT,\r\n" + 
+						"IM.INVOICE_NO,\r\n" + 
+						"BM.BANK_NAME,\r\n" + 
+						"BM.ACCOUNT_NO,\r\n" + 
+						"COMP.ID,\r\n" + 
+						"COMP.NAME,\r\n" + 
+						"PDC.CHEQUE_NO\r\n" + 
+						"FROM PDC_MAST PDC,\r\n" + 
+						"INVOICE_MAST IM,\r\n" + 
+						"BANK_MAST BM,\r\n" + 
+						"company_master COMP\r\n" + 
+						"WHERE\r\n" + 
+						"pdc.invoice_id = IM.ID AND\r\n" + 
+						"pdc.bank_id = BM.ID AND\r\n" + 
+						"im.company_id = COMP.ID";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -63,6 +64,7 @@ public class PDCReport {
 				obj.put("accountNo", rs.getString(10));
 				obj.put("companyId", rs.getString(11));
 				obj.put("companyName", rs.getString(12));
+				obj.put("chequeNo", rs.getString(13));
 				
 				jsonArray.put(obj);
 				

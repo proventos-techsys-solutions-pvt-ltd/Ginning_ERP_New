@@ -129,6 +129,7 @@
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">PDC</label>
 							<input type="text" class="form-control form-control-sm" id="pdcAmount" name="pdcAmount" readonly>
+							<input type="hidden" id="pdcId" name="pdcId" />
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Bank</label>
@@ -148,13 +149,13 @@
 							<label class="lbl-rm-all">Payee Name</label>
 							<div class="d-flex justify-content-start align-items-center">
 							<input type="text" class="form-control form-control-sm" id="pdcPayeeName" name="pdcPayeeName" placeholder="Name on Cheque">
-							<button type="button" class="btn btn-success btn-sm btn-no-radius" id="pdcSubmit" onclick="submitChequeData()">Pay</button>&nbsp;
+							<button type="button" class="btn btn-success btn-sm btn-no-radius" id="pdcSubmit" onclick="submitPdc()">Pay</button>&nbsp;
 							<button type="button" class="btn btn-success btn-sm btn-no-radius">Void</button>
 							</div>
 						</div>
 					</div>
 				<form id='paymentForm' action="../processing/submitPayment.jsp" target="_blank">
-				<input type="hidden" id="output" name="output" />	
+					<input type="hidden" id="output" name="output" />	
 				</form>
 				</div>
 			</div>
@@ -391,6 +392,7 @@
 			document.getElementById('rtgsIfsc').value = "" ;
 			
 			if(data.hasOwnProperty('pdcAmount')){
+				document.getElementById('pdcId').value = data.pdcId ;
 				document.getElementById('pdcAmount').value = data.pdcAmount ;
 				document.getElementById('pdcNo').value = "" ;
 				document.getElementById('pdcDate').value = data.pdcChequeDate ;
@@ -400,7 +402,7 @@
 				document.getElementById('pdcNo').disabled = true ;
 				document.getElementById('pdcDate').disabled = true ;
 				document.getElementById('pdcPayeeName').disabled = true ;
-				document.getElementById('pdcBank').disabled = true ;pdcSubmit
+				document.getElementById('pdcBank').disabled = true ;
 				document.getElementById('pdcSubmit').disabled = true ;
 			}
 			
@@ -466,6 +468,24 @@
 		
 		document.getElementById('paymentForm').submit();
 	}
+	
+   function submitPdc(){
+	   
+	   var pdcJson = {};
+	   
+	   pdcJson['dataType'] = 'pdc';
+	   pdcJson['pdcId'] =  document.getElementById('pdcId').value;
+	   pdcJson['pdcAmount'] =  document.getElementById('pdcAmount').value;
+	   pdcJson['pdcNo'] = document.getElementById('pdcNo').value;
+	   pdcJson['pdcDate'] = document.getElementById('pdcDate').value;
+	   pdcJson['pdcPayeeName'] = document.getElementById('pdcPayeeName').value;
+	   
+	   var pdcInfo = JSON.stringify(pdcJson);
+	   console.log(pdcInfo);
+	   document.getElementById('output').value = pdcInfo;
+	   
+	   document.getElementById('paymentForm').submit();
+   }	
 		
 	checkDailySetup();
 	setCurrentDate()

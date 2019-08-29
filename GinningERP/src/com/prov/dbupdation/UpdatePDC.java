@@ -100,5 +100,45 @@ public class UpdatePDC {
 		
 	}
 	
+	public int addChequeNoAndPayee(PDC p)
+	{
+		
+		Connection con = null;
+		int rows = 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		String updateCheque = "UPDATE PDC_MAST \r\n" + 
+								"SET \r\n" + 
+								"PDC_MAST.CHEQUE_NO = ?,\r\n" + 
+								"PDC_MAST.PAYEE_NAME = ?\r\n" + 
+								"WHERE PDC_MAST.ID = ?";
+		PreparedStatement stmt;
+		try {
+			stmt = con.prepareStatement(updateCheque);
+			
+			
+			
+			stmt.setString(1, p.getChequeNo());
+			stmt.setString(2, p.getPayeeName());
+			stmt.setInt(3, p.getId());
+			
+			rows = stmt.executeUpdate();
+			
+			stmt.close();
+			con.close();
+			
+			System.out.println("Updation Succesful-"+rows);
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return rows;
+		
+	}
+	
 	
 }

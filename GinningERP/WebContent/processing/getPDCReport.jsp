@@ -9,7 +9,7 @@
     
     	JSONArray jsonArr = pdcReport.getPDCReport();
     	
-    	out.print(pdcReport);
+    	out.print(jsonArr);
     	out.flush();
     
     %>

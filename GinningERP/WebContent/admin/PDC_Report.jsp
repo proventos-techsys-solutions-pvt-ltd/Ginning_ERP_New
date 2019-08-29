@@ -71,6 +71,8 @@
 	 			<table id="tblCashRegister" class="table table-bordered">
 	 				<thead>
 	 					<tr>
+	 					<th>ID</th>
+	 					<th>company ID</th>
 	 					<th>Sr No</th>
 	 					<th>Invoice No</th>
 	 					<th>Bank Name</th>
@@ -81,15 +83,6 @@
 	 					</tr>
 	 				</thead>
 	 				<tbody id="tableBody">
-	 					<tr>
-	 						<td></td>
-	 						<td></td>
-	 						<td></td>
-	 						<td></td>
-	 						<td></td>
-	 						<td></td>
-	 						<th></th>
-	 					</tr>
 	 				</tbody>
 	 			</table>
 	 		</div>
@@ -104,6 +97,68 @@
     	<script>
     	setTitle("PDC Register");//Setting Title of Page
 		setSearchPlaceholder("Search");//Setting Placeholder of Search Input
+		
+		function getPdcReport(){
+			
+			var url="${pageContext.request.contextPath}/processing/getPDCReport.jsp";
+			if(window.XMLHttpRequest){  
+				request=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				request=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+			try{  
+				request.onreadystatechange=getData;  
+				console.log("AJAX Req sent");
+				request.open("GET",url,true);  
+				request.send();  
+			}catch(e){alert("Unable to connect to server");}
+			
+		}
+		
+		function getData(){
+			if(request.readyState == 4){
+				var response = this.response.trim();
+				console.log(response);
+				var data = JSON.parse(response);
+				setData(data);
+			}
+		}
+		
+		function setData(data){
+			
+			var table = document.getElementById("tableBody");
+			
+			for(i=0; i<data.length;i++){
+
+				var rowIndex = table.rows.length;
+				
+				var row = table.insertRow(rowIndex);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+				var cell3 = row.insertCell(2);
+				var cell4 = row.insertCell(3);
+				var cell5 = row.insertCell(4);
+				var cell6 = row.insertCell(5);
+				var cell7 = row.insertCell(6);
+				var cell8 = row.insertCell(7);
+				var cell9 = row.insertCell(8);
+				
+				cell1.innerHTML = data[i].pdcId;
+				cell2.innerHTML = data[i].companyId;
+				cell3.innerHTML = (i+1);
+				cell4.innerHTML = data[i].invoiceNo;
+				cell5.innerHTML = data[i].bankName;
+				cell6.innerHTML = data[i].chequeDate;
+				cell7.innerHTML = data[i].chequeNo;
+				cell8.innerHTML = data[i].payeeName;
+				cell9.innerHTML = data[i].chequeAmount;
+				
+			}
+		}
+		
+		getPdcReport();
+		
     	</script>
 </body>
 </html>

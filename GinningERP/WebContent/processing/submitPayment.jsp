@@ -1,3 +1,5 @@
+<%@page import="com.prov.bean.PDC"%>
+<%@page import="com.prov.dbupdation.UpdatePDC"%>
 <%@page import="com.prov.dbupdation.UpdateInvoice"%>
 <%@page import="com.prov.dbinsertion.AddRtgs"%>
 <%@page import="com.prov.dbinsertion.AddCheque"%>
@@ -81,6 +83,22 @@
 		
 		session.setAttribute("id", Integer.toString(invoiceId));
 		response.sendRedirect("../report/CashVoucher.jsp");
+		
+	}else if(((String)obj.get("dataType")).equals("pdc")){
+		
+		UpdatePDC updatePdc = new UpdatePDC();
+		
+		PDC pdc = new PDC();
+		
+		pdc.setId(Integer.parseInt((String)obj.get("pdcId")));
+		pdc.setChequeNo((String)obj.get("pdcNo"));
+		pdc.setPayeeName((String)obj.get("pdcPayeeName"));
+		
+		int rows = updatePdc.addChequeNoAndPayee(pdc);
+		
+		session.setAttribute("id", Integer.toString(rows));
+		response.sendRedirect("../report/CashVoucher.jsp");
+		
 	}
 	
 %>
