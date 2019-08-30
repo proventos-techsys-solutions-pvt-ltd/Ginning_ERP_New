@@ -84,21 +84,21 @@ public class ChequeReport {
 				jsonObject.put("vendor", rs.getString(1));
 				double amount = Double.parseDouble(rs.getString(2));
 				String amountInWords = ntw.convertToIndianCurrency(Double.toString(amount));
-				jsonObject.put("totalInDigits", Double.toString(amount));
+				jsonObject.put("totalInDigits", Double.toString(amount) + " /-");
 				jsonObject.put("totalInWords", amountInWords);
 				String date = rs.getString(3);
 				Date dateObj = sdf1.parse(date);
 				String dateFormatted = sdf2.format(dateObj);
 				dateFormatted = dateFormatted.replaceAll("-", "");
 				String[] dateArr = dateFormatted.split("");
-				jsonObject.put("d1", dateArr[0]);
-				jsonObject.put("d2", dateArr[1]);
-				jsonObject.put("m1", dateArr[2]);
-				jsonObject.put("m2", dateArr[3]);
-				jsonObject.put("y1", dateArr[4]);
-				jsonObject.put("y2", dateArr[5]);
-				jsonObject.put("y3", dateArr[6]);
-				jsonObject.put("y4", dateArr[7]);
+				jsonObject.put("d1", dateArr[0].trim());
+				jsonObject.put("d2", dateArr[1].trim());
+				jsonObject.put("m1", dateArr[2].trim());
+				jsonObject.put("m2", dateArr[3].trim());
+				jsonObject.put("y1", dateArr[4].trim());
+				jsonObject.put("y2", dateArr[5].trim());
+				jsonObject.put("y3", dateArr[6].trim());
+				jsonObject.put("y4", dateArr[7].trim());
 				
 			}
 			
