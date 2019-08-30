@@ -90,6 +90,7 @@
 			invoice.setPaidByoperator(0);
 			invoice.setUnloadingCharges(Float.parseFloat((String)json.get("unloadingCharges")));
 			invoice.setBonusAmount(Float.parseFloat((String)json.get("totalBonus")));
+			invoice.setPdcAmount(Double.parseDouble((String)json.get("pdcAmount")));
 			if((String)json.get("cashAmount") == null){
 				invoice.setCashAmount(0.0);
 			}else{
