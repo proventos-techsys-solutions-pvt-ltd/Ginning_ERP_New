@@ -34,7 +34,7 @@
 						</div>
 						<div class="log">
 							<div class="heading">Cheque Leaf</div>
-							<div class="amt">12</div>
+							<div class="amt" id="chequeLeaves">12</div>
 						</div>
 						<div class="log">
 							<div class="heading">Total RTGS/NEFT</div>
@@ -328,6 +328,7 @@
 					bank.options[i].selected = true;
 				}
 			}
+			document.getElementById('chequeLeaves').innerHTML = data.totalCheques;
 		}
 	
 	function fetchInvoiceData(invoiceNo){
@@ -475,6 +476,7 @@
 	   
 	   pdcJson['dataType'] = 'pdc';
 	   pdcJson['pdcId'] =  document.getElementById('pdcId').value;
+	   pdcJson['invoiceId'] = document.getElementById('invoiceId').value;
 	   pdcJson['pdcAmount'] =  document.getElementById('pdcAmount').value;
 	   pdcJson['pdcNo'] = document.getElementById('pdcNo').value;
 	   pdcJson['pdcDate'] = document.getElementById('pdcDate').value;

@@ -1,3 +1,4 @@
+<%@page import="com.prov.dbops.CheckInvoiceSaved"%>
 <%@page import="com.prov.dbops.CheckAlreadyGraded"%>
 <%@page import="com.prov.dbops.CheckRST"%>
 <%@page import="org.json.JSONArray"%>
@@ -53,13 +54,23 @@
 
 	    		}
 	    		else if(gradeRows>0){
+	    			
+	    			CheckInvoiceSaved checkInvoice = new CheckInvoiceSaved();
+	    			
+	    			int invoiceSavedFlag = checkInvoice.invoiceExistsCheck(rst);
+	    			
+	    			if(invoiceSavedFlag==0){
 	        	
-			    	RstReport report = new RstReport();
-		        	
-		        	JSONArray jsonArray =  report.getDataForInvoicing(rst);
-		        	
-			    	out.print(jsonArray);
-			    	out.flush();
+				    	RstReport report = new RstReport();
+			        	
+			        	JSONArray jsonArray =  report.getDataForInvoicing(rst);
+			        	
+				    	out.print(jsonArray);
+				    	out.flush();
+	    			}else if(invoiceSavedFlag>0){
+	    				out.println(3);
+	    				out.flush();
+	    			}
 	    		}
 	    	}
         }

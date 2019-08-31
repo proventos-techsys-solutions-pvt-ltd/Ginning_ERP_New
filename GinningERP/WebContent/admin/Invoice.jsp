@@ -401,6 +401,8 @@ function setCurrentDate(){
 				window.alert("Invalid RST.")
 			}else if(Number(response) === 2){
 				window.alert("Grading fo this RST is not yet done.")
+			}else if(Number(response) === 3){
+				window.alert("Invoice is already created for this RST.")
 			}else{
 				var data = JSON.parse(response);
 				setData(data);
@@ -580,7 +582,7 @@ function setCurrentDate(){
 		var total = Number(document.getElementById('totalAmount').value);
 		jsonObj['total'] = total.toString();
 		jsonObj['amountPaid'] = document.getElementById('advance').value;
-		jsonObj['pending'] = document.getElementById('net').value;
+		jsonObj['pending'] = Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value);
 		jsonObj['invoiceDate'] = document.getElementById('invoiceDate').value;
 		jsonObj['companyId'] = document.getElementById('companyId').value;
 		jsonObj['note'] = document.getElementById('note').value;
@@ -606,7 +608,7 @@ function setCurrentDate(){
 		jsonObj['totalQuantity'] = totalQuantity.toString();
 		jsonObj['unloadingCharges'] = document.getElementById('unloadingCharges').value;
 		jsonObj['totalBonus'] = document.getElementById('totalBonus').value;
-		jsonObj['netPayable'] = document.getElementById('net').value;
+		jsonObj['netPayable'] = Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value);
 		jsonObj['pdcAmount'] = document.getElementById('totalPdcAmount').value;
 		jsonObj['pdcDate'] = document.getElementById('pdcDate').value;
 		jsonObj['cashAmount'] = document.getElementById('cashAmount').value;

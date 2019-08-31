@@ -40,7 +40,7 @@
 	  					Average Rate
 	  				</div>
 	  				<div>
-	  					<i class="fa fa-inr" aria-hidden="true" id="aRate">&nbsp;&nbsp;10000</i>
+	  					<i class="fa fa-inr" aria-hidden="true" id="aRate">&nbsp;&nbsp;</i>
 	  				</div>
 	  			</div>
 	  	</div>
@@ -48,9 +48,17 @@
 	  			<div class="d-flex justify-content-between align-items-center inner2 border">
 	  				<div>
 	  					Total Purchase 
+	  					<br>
+	  					<select name="paymentType" id="paymentType">
+	  						<option value="cash">Cash</option>
+	  						<option value="cheque">Cheque</option>
+	  						<option value="rtgs">RTGS</option>
+	  						<option value="pdc">PDC</option>
+	  						<option value="all" selected>All</option>
+	  					</select>
 	  				</div>
 	  				<div>
-	  					<i class="fa fa-inr" aria-hidden="true">&nbsp;&nbsp;10000</i>
+	  					<i class="fa fa-inr" aria-hidden="true" id="totalPurchase">&nbsp;&nbsp;10000</i>
 	  				</div>
 	  			</div>
 	  	</div>
@@ -257,7 +265,42 @@
 			 }
 		 }
 		
+		function getPurchaseReport(companyId, paymentType){
+			var url="../processing/purchaseReport.jsp?companyId="+companyId+"&paymentType="+paymentType;
+			if(window.XMLHttpRequest){  
+				fetchPurchase=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				fetchPurchase=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+		  
+			try{  
+				fetchPurchase.onreadystatechange=fetchPurchaseAmount;  
+				console.log("AJAX Req sent");
+				fetchPurchase.open("GET",url,true);  
+				fetchPurchase.send();  
+			}catch(e){alert("Unable to connect to server");}
+		}
+		
+		function fetchPurchaseAmount(){
+			if(fetchPurchase.readyState == 4){
+				document.getElementById('totalPurchase').innerHTML = this.response.trim();				
+			}
+		}
+		
+		
+		document.getElementById('paymentType').addEventListener('change',function(e){
+		 	 var companyId = document.getElementById('companyId').value;
+			getPurchaseReport(companyId, e.srcElement.value);
+		});
+		
+		document.getElementById('companyId').addEventListener('change',function(e){
+		 	 var paymentType = document.getElementById('paymentType').value;
+			getPurchaseReport(e.srcElement.value, paymentType);
+		});
+		
 		getTodayCottonRate();
+		getPurchaseReport("0","all");
 		
 		
 		</script>

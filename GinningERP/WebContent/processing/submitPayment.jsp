@@ -71,7 +71,6 @@
 		updateInvoice.updatePendingAmount(rtgs.getRtgsAmount(), rtgs.getInvoiceId());
 		
 		session.setAttribute("id", Integer.toString(id));
-		response.sendRedirect("../report/RTGSVoucher.jsp");
 			
 	}else if(((String)obj.get("dataType")).equals("cash")){
 
@@ -93,11 +92,17 @@
 		pdc.setId(Integer.parseInt((String)obj.get("pdcId")));
 		pdc.setChequeNo((String)obj.get("pdcNo"));
 		pdc.setPayeeName((String)obj.get("pdcPayeeName"));
+		pdc.setChequeAmount(Double.parseDouble((String)obj.get("pdcAmount")));
+		int invoiceId = Integer.parseInt((String)obj.get("invoiceId"));
 		
 		int rows = updatePdc.addChequeNoAndPayee(pdc);
 		
-		session.setAttribute("id", Integer.toString(rows));
-		response.sendRedirect("../report/CashVoucher.jsp");
+		UpdateInvoice updateInvoice = new UpdateInvoice();
+		
+		updateInvoice.updatePendingAmount(pdc.getChequeAmount(), invoiceId);
+		
+		session.setAttribute("pdcId", Integer.toString(pdc.getId()));
+		response.sendRedirect("../report/PDC.jsp");
 		
 	}
 	
