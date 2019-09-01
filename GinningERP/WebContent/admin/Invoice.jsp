@@ -453,7 +453,7 @@ function setCurrentDate(){
 		document.getElementById("customerId").value = data[0].customerId;
 		document.getElementById("totalQty").value = Number(document.getElementById("totalQty").value) + Number(data[0].netQuantity);
 		
-		document.getElementById('unloadingCharges').value = ((Number(document.getElementById("totalQty").value)/100) * 20);
+		document.getElementById('unloadingCharges').value = ((Number(document.getElementById("totalQty").value)/100) * 20).toFixed(2);
 		
 		document.getElementById('weighingCharges').value = Number(document.getElementById('weighingCharges').value) + Number(data[0].weighRate);
 		
@@ -582,7 +582,7 @@ function setCurrentDate(){
 		var total = Number(document.getElementById('totalAmount').value);
 		jsonObj['total'] = total.toString();
 		jsonObj['amountPaid'] = document.getElementById('advance').value;
-		jsonObj['pending'] = Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value);
+		jsonObj['pending'] = (Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value)).toString();
 		jsonObj['invoiceDate'] = document.getElementById('invoiceDate').value;
 		jsonObj['companyId'] = document.getElementById('companyId').value;
 		jsonObj['note'] = document.getElementById('note').value;
@@ -608,12 +608,26 @@ function setCurrentDate(){
 		jsonObj['totalQuantity'] = totalQuantity.toString();
 		jsonObj['unloadingCharges'] = document.getElementById('unloadingCharges').value;
 		jsonObj['totalBonus'] = document.getElementById('totalBonus').value;
-		jsonObj['netPayable'] = Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value);
+		jsonObj['netPayable'] = (Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value)).toString();
 		jsonObj['pdcAmount'] = document.getElementById('totalPdcAmount').value;
 		jsonObj['pdcDate'] = document.getElementById('pdcDate').value;
-		jsonObj['cashAmount'] = document.getElementById('cashAmount').value;
-		jsonObj['chequeAmount'] = document.getElementById('chequeAmount').value;
-		jsonObj['rtgsAmount'] = document.getElementById('rtgsAmount').value;
+		
+		if(document.getElementById('cashAmount').value === ""){
+			jsonObj['cashAmount'] = 0;
+		}else{
+			jsonObj['cashAmount'] = document.getElementById('cashAmount').value;
+		}
+		if(document.getElementById('chequeAmount').value === ""){
+			jsonObj['chequeAmount'] = 0;
+		}else{
+			jsonObj['chequeAmount'] = document.getElementById('chequeAmount').value;
+		}
+		if(document.getElementById('rtgsAmount').value === ""){
+			jsonObj['rtgsAmount'] = 0;
+		}else{
+			jsonObj['rtgsAmount'] = document.getElementById('rtgsAmount').value;
+		}
+		
 		
 		var jsonStr = JSON.stringify(jsonObj);
 		console.log(jsonStr);
@@ -707,7 +721,7 @@ function setCurrentDate(){
 	//Add Bonus Amount
 	document.getElementById('bonusCheck').addEventListener('change',function(e){
 		if(e.srcElement.checked===true){
-			document.getElementById('totalBonus').value = Number(document.getElementById('bonusPerQtl').value) * (Number(document.getElementById('totalQty').value)/100);
+			document.getElementById('totalBonus').value = (Number(document.getElementById('bonusPerQtl').value) * (Number(document.getElementById('totalQty').value)/100)).toFixed(2);
 			calculateTotal();
 		}else if(e.srcElement.checked != true){
 			document.getElementById('totalBonus').value=0;
