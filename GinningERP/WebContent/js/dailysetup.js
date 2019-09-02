@@ -154,15 +154,16 @@ var appController = (function(){
 	
 	var validateInputData = function(rowIndex){//validations 
 		var validate =  /^[0-9]+$/;
+		var chequeValidate = /^[0-9]{6}$/;
 		var globalValidationStatus = false;
 		
 		var firstChequeNo = document.getElementById(uiController.htmlElementIds().companyTableBody).rows[rowIndex].cells[8].querySelector('input');
 		var lastChequeNo = document.getElementById(uiController.htmlElementIds().companyTableBody).rows[rowIndex].cells[9].querySelector('input');
 		var lengthOfGradeRates = document.getElementsByName("gradeRate").length;
 		
-		if(validate.test(firstChequeNo.value.trim())){
+		if(chequeValidate.test(firstChequeNo.value.trim())){
 			firstChequeNo.style.border = "2px solid green";
-				if(validate.test(lastChequeNo.value.trim())){
+				if(chequeValidate.test(lastChequeNo.value.trim())){
 					lastChequeNo.style.border = "2px solid green";
 				}else{
 					lastChequeNo.style.border = "2px solid red";
@@ -173,16 +174,24 @@ var appController = (function(){
 			return globalValidationStatus = false;;
 		}
 		
-		for(i=0;i<lengthOfGradeRates;i++){
-			if(validate.test(document.getElementsByName("gradeRate")[i].value.trim())){
-				globalValidationStatus = true;
-			}else{
-				globalValidationStatus = false;
-				break;
+		if(firstChequeNo.value.trim()>lastChequeNo.value.trim()){
+			alert("Error in cheque numbers.")
+			firstChequeNo.style.border = "2px solid red";
+			lastChequeNo.style.border = "2px solid red";
+			globalValidationStatus = false;
+			
+		}else{
+			for(i=0;i<lengthOfGradeRates;i++){
+				if(validate.test(document.getElementsByName("gradeRate")[i].value.trim())){
+					globalValidationStatus = true;
+				}else{
+					globalValidationStatus = false;
+					break;
+				}
 			}
-		}
-		if(globalValidationStatus===false){
-			alert("Only numbers are acceptable in General Grade Rate Table");
+			if(globalValidationStatus===false){
+				alert("Only numbers are acceptable in General Grade Rate Table");
+			}
 		}
 		console.log(globalValidationStatus);
 		return globalValidationStatus;

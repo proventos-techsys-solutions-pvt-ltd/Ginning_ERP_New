@@ -17,10 +17,7 @@
 <div class="container-fluid container-mr-t">
 	<%@include file="../admin/Side_bar.html" %>
  <div hidden>
-        	<%
-			    out.print(session.getAttribute("setupId"));
-			    session.removeAttribute("setupId");
-			%>
+        	
          </div>
 			<div class="row mt-2 row-background border-bottom">
 				<div class="col-md-3">
@@ -74,7 +71,7 @@
 	      		</div>
 	      		<div class="col-md-auto">
 					<label class="lbl-rm-l">Bonus Addition</label>
-					<input class="form-control form-control-sm" name="bonusAmount" id="bonusAmount">
+					<input class="form-control form-control-sm" name="bonusAmount" id="bonusAmount" value="0">
 				</div>
 			</div>
 				<div class="row row-background">
@@ -194,6 +191,7 @@
 						<img src="../property/img/purse.png" alt="warehouse">&nbsp;
 						<h4 class="lbl-rm-b">Cash Balance</h4>
 						</div>
+						<input type="text" id="responseId" name="" value="<%=session.getAttribute("setupId") %>">
 					</div>
 					
 					<div class="col-md-3">
@@ -344,6 +342,19 @@
 			  </div>
 			</div>
 			</div>
+		<!-- *********************RESPONSE************************  -->		
+		<div class="response-background">
+			<div class="response">
+				<div class="d-flex justify-content-center align-items-center">
+					<div id="responseText"><h4>Company has been setup successfully</h4></div>
+				</div>
+				<div class="d-flex justify-content-center align-items-center mt-2">
+					<button type="button" class="btn btn-success btn-sm ml-1" id="responseBtn">OK</button>
+				</div>
+			</div>
+		</div>
+		
+	
 	
 	
 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
@@ -599,7 +610,7 @@
 		
 		jsonObj = {};
 		
-		jsonObj['bonusAmount'] = document.getElementById('bonusAmount').value
+		jsonObj['bonusAmount'] = document.getElementsByName('bonusAmountTable')[rowIndex].value
 		jsonObj['companyId'] = document.getElementsByName('companyNameTable')[rowIndex].getAttribute("data-company-id");
 		jsonObj['date'] = document.getElementsByName('dateTable')[rowIndex].value;
 		jsonObj['setupTime'] = document.getElementsByName('setupTimeTable')[rowIndex].value;
@@ -696,7 +707,7 @@
 			var rowIndex = Number(e.srcElement.parentNode.parentNode.rowIndex)-2;
 			var tableBody = document.getElementById("tableBody");
 			var dailySetupId = tableBody.rows[rowIndex].cells[0].children[0].value;
-			deleteDailySetupEntry(dailySetupId);
+			deleteDailySetupEntry(dailySetupId);//calling to delete entry method
 		}
 	})
 	
@@ -709,6 +720,29 @@
 	getSetupReport();
 	setDisplayDate();
 	fetchVoucherNoSeries();
+	
+	function responseScreen(){
+		var responseId= document.getElementById("responseId").value;
+		if(responseId>0){
+			document.getElementsByClassName("response-background")[0].style.display = "block";
+			document.getElementsByClassName("response")[0].style.display = "block";
+		}else if(responseId===0){
+			document.getElementsByClassName("response-background")[0].style.display = "block";
+			document.getElementsByClassName("response")[0].style.display = "block";
+			document.getElementById("responseText").querySelector("h4").innerHTML = "Company setup is unsuccessful";
+		}else if(responseId===null){
+			}
+	}
+	
+	
+	document.getElementById("responseBtn").addEventListener("click",function(){
+		document.getElementsByClassName("response-background")[0].style.display = "none";
+		document.getElementsByClassName("response")[0].style.display = "none";
+		document.getElementById("responseId").value=0;
+	})
+	
+	responseScreen();
 	</script>
+	<% session.removeAttribute("setupId"); %>
 </body>
 </html>

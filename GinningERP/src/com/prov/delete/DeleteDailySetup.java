@@ -32,6 +32,7 @@ public class DeleteDailySetup {
 			System.out.println("Deletion Succesful"+id);
 			} catch (SQLException e) {
 			e.printStackTrace();
+			return 0;
 		}
 		
 		return id;

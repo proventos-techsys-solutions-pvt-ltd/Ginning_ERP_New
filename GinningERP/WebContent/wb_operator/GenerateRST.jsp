@@ -479,7 +479,7 @@ function submitRSTEntry(){
 
 //RESET ALL input FIELDS
 function resetFormData(){
-	document.getElementById("newRST").reset();
+	/* document.getElementById("newRST").reset();
 	document.getElementById('vehicleNo').removeAttribute('readonly');
 	document.getElementById('vehicleType').removeAttribute('readonly');
 	document.getElementById('customer').removeAttribute('readonly');
@@ -498,7 +498,9 @@ function resetFormData(){
 	document.getElementById("fetchTareWeight").disabled=true;
 	setCurrentDate();
 	fetchRSTSeriesFunc();
-	decideWeighment(0);
+	decideWeighment(0); */
+	
+	location.reload();
 }
 
 //Check if the entered customer exists in DB

@@ -8,7 +8,9 @@
     
     	DeleteDailySetup ds = new DeleteDailySetup();
     	
-    	ds.deleteDailySetup(dailySetupId);
+    	int id = ds.deleteDailySetup(dailySetupId);
+    	
+    	session.setAttribute("id", id);
     	
     	response.sendRedirect("../admin/Daily_Setup.jsp");
     

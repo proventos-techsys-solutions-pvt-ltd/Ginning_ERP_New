@@ -22,6 +22,7 @@
    	
     int rowsUpdated = uds.addCheques(lastChequeNo, totalCheques, setupId);
     
+	session.setAttribute("id", rowsUpdated);    
     response.sendRedirect("../admin/Daily_Setup.jsp");
     
     %>
