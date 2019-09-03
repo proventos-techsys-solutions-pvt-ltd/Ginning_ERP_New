@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="org.json.JSONArray"%>
 <%@page import="com.prov.report.BankReport"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"

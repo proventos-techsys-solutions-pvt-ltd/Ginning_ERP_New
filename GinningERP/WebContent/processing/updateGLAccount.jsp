@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="com.prov.bean.GeneralLedger"%>
 <%@page import="com.prov.dbupdation.UpdateGeneralLedger"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"

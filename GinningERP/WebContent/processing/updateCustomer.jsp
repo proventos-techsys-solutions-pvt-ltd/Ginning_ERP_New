@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="com.prov.dbupdation.UpdateCustomer"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="com.prov.bean.Customer"%>

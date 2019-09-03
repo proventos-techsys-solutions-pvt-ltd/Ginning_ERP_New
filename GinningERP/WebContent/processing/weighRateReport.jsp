@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="com.prov.report.VehicleRateReport"%>
 <%@page import="com.prov.report.WeighReport"%>
 <%@page import="org.json.JSONArray"%>

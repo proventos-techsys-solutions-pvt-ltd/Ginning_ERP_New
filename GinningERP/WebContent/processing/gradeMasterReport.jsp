@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="com.prov.bean.GradeMaster"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.prov.report.GradeReport"%>

@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="com.prov.dbupdation.UpdateDailySetup"%>
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="org.json.simple.parser.JSONParser"%>

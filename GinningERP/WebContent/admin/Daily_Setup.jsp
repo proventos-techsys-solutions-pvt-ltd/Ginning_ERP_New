@@ -16,9 +16,6 @@
 <%@include file="../admin/Top_Nav.html" %>
 <div class="container-fluid container-mr-t">
 	<%@include file="../admin/Side_bar.html" %>
- <div hidden>
-        	
-         </div>
 			<div class="row mt-2 row-background border-bottom">
 				<div class="col-md-3">
 					<div class="d-flex justify-content-start align-items-center">

@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="com.prov.dbops.CheckInvoiceExists"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="com.prov.dbops.CheckRST"%>

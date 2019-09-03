@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="com.prov.dbops.Login" %>
 <% 
 	String mod = request.getParameter("moduleId");

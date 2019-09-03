@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="com.prov.dbinsertion.AddPDC"%>
 <%@page import="com.prov.bean.PDC"%>
 <%@page import="java.io.PrintWriter"%>

@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="org.json.JSONArray"%>
 <%@page import="com.prov.bean.Customer"%>
 <%@page import="com.prov.report.CustomerReport"%>

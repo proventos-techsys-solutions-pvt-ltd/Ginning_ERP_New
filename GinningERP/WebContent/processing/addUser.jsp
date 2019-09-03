@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="com.prov.dbinsertion.AddUser" %>
 <%@page import="com.prov.bean.User" %>
 

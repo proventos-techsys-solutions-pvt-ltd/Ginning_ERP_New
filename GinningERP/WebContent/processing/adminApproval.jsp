@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="com.prov.dbops.CheckInvoiceSaved"%>
 <%@page import="com.prov.dbops.CheckAlreadyGraded"%>
 <%@page import="com.prov.dbops.CheckRST"%>

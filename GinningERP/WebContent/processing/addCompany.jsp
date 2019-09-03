@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.prov.bean.StockMast"%>
 <%@page import="com.prov.dbinsertion.AddStockMast"%>

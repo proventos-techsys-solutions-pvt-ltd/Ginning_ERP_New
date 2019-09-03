@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="com.prov.dbinsertion.AddStockMast"%>
 <%@page import="com.prov.bean.StockMast"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"

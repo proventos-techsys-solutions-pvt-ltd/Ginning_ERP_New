@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="com.prov.dbops.CheckAlreadyGraded"%>
 <%@page import="java.util.stream.IntStream"%>
 <%@page import="com.prov.dbinsertion.AddGradeDetails"%>

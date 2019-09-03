@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="org.json.simple.parser.JSONParser"%>
 <%@page import="com.prov.dbinsertion.AddWeighRateMast"%>

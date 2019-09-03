@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="com.prov.dbinsertion.AddTransactions"%>
 <%@page import="com.prov.bean.Transactions"%>
 <%@page import="com.prov.bean.GeneralLedger"%>
