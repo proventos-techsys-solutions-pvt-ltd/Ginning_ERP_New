@@ -226,6 +226,46 @@
 		}
 	});
 	
+	
+	document.addEventListener("click", function(e){
+		if(e.srcElement.alt==="delete"){
+			var rowIndex = Number(e.srcElement.parentNode.parentNode.rowIndex)-1;
+			var tableBody = document.getElementById("tableBody");
+			var vehicleId = tableBody.rows[rowIndex].cells[0].innerHTML;
+			deleteVehicle(vehicleId);//calling to delete entry method
+		}
+	});
+	
+	function deleteVehicle(vehicleId){
+		var url="../processing/deleteVehicleRates.jsp?vehicleId="+vehicleId;
+		
+		if(window.XMLHttpRequest){  
+			dataRequest=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			dataRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+	  
+		try{  
+			dataRequest.onreadystatechange=getReponse;  
+			console.log("AJAX Req sent");
+			dataRequest.open("GET",url,true);  
+			dataRequest.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+			
+	function getReponse(){
+		if(dataRequest.readyState == 4){
+			var response = this.response.trim();
+			console.log(response);
+			if(Number(response) === 0){
+				alert("Cannot Delete as invoice has been created for this vehicle Type.");
+			}else if(Number(response) > 0){
+				location.reload();
+			}
+		}
+	}	
+	
 	</script>
 </body>
 </html>
