@@ -78,11 +78,11 @@
                                 </div>
                                  <div class="col-md-2">
                                     <label for="" class="lbl-rm-all">Date </label>
-                                    <input type="date" id="invoiceDate" name="invoiceDate" class="form-control form-control-sm" >
+                                    <input type="date" id="invoiceDate" name="invoiceDate" class="form-control form-control-sm" readonly>
                                 </div>
                                 <div class="col-md-2">
                                     <label for="" class="lbl-rm-all">Total Quantity </label>
-                                    <input type="text" id="totalQty" name="totalQty" class="form-control form-control-sm" >
+                                    <input type="text" id="totalQty" name="totalQty" class="form-control form-control-sm" readonly>
                                 </div>
                                 <div class="col-md-2">
                                     <label for="" class="lbl-rm-all">Bonus Per Qtl </label>
@@ -413,20 +413,21 @@ function setCurrentDate(){
 	
 	//Send the AJAX Request to fetch data
 	function fetchAmanatData(rst){
-		console.log(rst);
-		url = "../processing/amanatInvoice.jsp?rst="+rst;
-		if(window.XMLHttpRequest){  
-			fetchAmanatRequest=new XMLHttpRequest();  
-		}  
-		else if(window.ActiveXObject){  
-			fetchAmanatRequest=new ActiveXObject("Microsoft.XMLHTTP");  
-		}  
-		try{  
-			fetchAmanatRequest.onreadystatechange=getAmanatData;  
-			console.log("AJAX Req sent");
-			fetchAmanatRequest.open("GET",url,true);  
-			fetchAmanatRequest.send();  
-		}catch(e){alert("Unable to connect to server");}
+		if(!checkRstInTable(rst)){
+			url = "../processing/amanatInvoice.jsp?rst="+rst;
+			if(window.XMLHttpRequest){  
+				fetchAmanatRequest=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				fetchAmanatRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+			try{  
+				fetchAmanatRequest.onreadystatechange=getAmanatData;  
+				console.log("AJAX Req sent");
+				fetchAmanatRequest.open("GET",url,true);  
+				fetchAmanatRequest.send();  
+			}catch(e){alert("Unable to connect to server");}
+		}
 	}
 	
 	
@@ -437,8 +438,95 @@ function setCurrentDate(){
 			var response = this.response.trim();
 			console.log(response);
 			var data = JSON.parse(response);
-			setData(data);
+			setAmanatData(data);
 		}
+	}
+	
+	
+	function setAmanatData(data){
+		var noOfRows = data.length;
+		var table = document.getElementById("tableBody");
+		document.getElementById("rst").value = data[0].rst;
+		document.getElementById("customerData").value = data[0].customerName + "\n" + data[0].customerAddress + "\n" + data[0].customerMobile;
+		document.getElementById("customerId").value = data[0].customerId;
+		document.getElementById("totalQty").value = Number(document.getElementById("totalQty").value) + Number(data[0].quantity);
+		
+		//document.getElementById('unloadingCharges').value = ((Number(document.getElementById("totalQty").value)/100) * 20).toFixed(2);
+		
+		//document.getElementById('weighingCharges').value = Number(document.getElementById('weighingCharges').value) + Number(data[0].weighRate);
+	
+		document.getElementById('unloadingCharges').value = 0;
+		
+		document.getElementById('weighingCharges').value = 0;
+
+		
+		var blacklisted;
+		var membership;
+		
+		if(Number(data[0].customerBlacklisted) === 1){
+			blacklisted = 'YES';
+		}else if(Number(data[0].customerBlacklisted) === 0){
+			blacklisted = 'NO'
+		}
+		if(Number(data[0].customerMembership) === 1){
+			membership = 'YES';
+		}else if(Number(data[0].customerMembership) === 0){
+			membership = 'NO';
+		}
+		
+		document.getElementById("customerBlacklisted").value = blacklisted;
+		document.getElementById("customerMembership").value = membership;
+		document.getElementById("bonusPerQtl").value = data[0].bonusPerQtl;
+
+		
+		for(i=0; i<noOfRows; i++ ){
+		
+			var rowNo = tableBody.children.length;
+			
+			var row = table.insertRow(rowNo);
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
+			var cell6 = row.insertCell(5);
+			var cell7 = row.insertCell(6);
+			var cell8 = row.insertCell(7);
+			var cell9 = row.insertCell(8);
+			var cell10 = row.insertCell(9);
+			var cell11 = row.insertCell(10);
+			var cell12 = row.insertCell(11);
+			cell8.className ="text-center";
+			cell9.className = "text-center";
+			cell10.setAttribute('hidden','hidden');
+			cell11.setAttribute('hidden','hidden');
+			cell12.setAttribute('hidden','hidden');
+			
+			cell1.innerHTML = '<input type="text" id="tableRst'+(rowNo+1)+'" class="form-control form-control-sm" name="tableRst" value="'+data[i].rst+'" readonly>';
+			cell2.innerHTML = '<input type="text" id="material'+(rowNo+1)+'" class="form-control form-control-sm" name="material" value="'+data[i].material+'" readonly>';
+			cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+data[i].quantity+'" readonly>';
+			cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+data[i].grade+'" readonly>';
+			cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+data[i].moisture+'" readonly>';
+			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+data[i].rate+'" readonly>';
+			var amount = (data[i].rate * (data[i].quantity/100));
+			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+amount+'" readonly>';
+			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" disabled>';
+			if(data[i].pdcAmount>0){
+				var pdcBonusAmount = Number(data[i].pdcAmount) * (Number(data[i].quantity)/100);
+				cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="'+pdcBonusAmount+'" readonly>';
+				document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) + Number(pdcBonusAmount);
+				document.getElementById('totalPdcAmount').value = Number(document.getElementById('totalPdcAmount').value) + Number(pdcBonusAmount) + Number(amount);
+				document.getElementById('pdcDate').value = data[i].pdcDate;
+			}else{
+				cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="0" readonly>';
+			}
+			cell10.innerHTML = '<input type="hidden" id="gradeId'+(rowNo+1)+'" class="lbl-rm-all" name="gradeId" value="'+data[i].gradeId+'" >';
+			cell11.innerHTML = '<input type="hidden" id="weighmentId'+(rowNo+1)+'" class="lbl-rm-all" name="weighmentId" value="'+data[i].weighmentId+'" >';
+			cell12.innerHTML = '<input type="hidden" id="gradeDesc'+(rowNo+1)+'" class="lbl-rm-all" name="gradeDesc" value="'+data[i].gradeDesc+'" >';
+
+		}
+		calculateTotal();
+		setGradeNote();
 	}
 	
 	
@@ -543,13 +631,28 @@ function setCurrentDate(){
 	//Set Amanat checkbox value
 	document.addEventListener('change', function(e){
 		if(e.srcElement.id.includes('amanatCheck')){
+			
+			var table = document.getElementById("tableBody");
+			
 			if(e.srcElement.value === 'false'){
-				e.srcElement.value = 'true'
-				console.log('Amanat check --- '+e.srcElement.value);
+				e.srcElement.value = 'true';
+				
+				var rowIndex = (e.srcElement.parentNode.parentNode.rowIndex)-1;
+				console.log(rowIndex);
+				var amanatQuantity = table.rows[rowIndex].cells[2].children[0].value;
+				console.log(amanatQuantity);
+				var amanatAmount = table.rows[rowIndex].cells[6].children[0].value;
+				
+				//document.getElementById('totalQty').value = (Number(document.getElementById('totalQty').value) - Number(amanatQuantity)).toFixed(2);
+				//document.getElementById('totalAmount').value = (Number(document.getElementById('totalAmount').value) - Number(amanatAmount)).toFixed(2);
+				calculateTotal();
+				
 			}
 			else if(e.srcElement.value === 'true'){
-				e.srcElement.value = 'false'
-				console.log('Amanat check --- '+e.srcElement.value);
+				e.srcElement.value = 'false';
+	
+				calculateTotal();
+			
 			}
 		}
 	})
@@ -558,9 +661,12 @@ function setCurrentDate(){
 	//Calculate total amount to be paid
 	function calculateTotal(){
 		var rates = document.getElementsByName('amount');
+		var amanatCheck = document.getElementsByName('amanatCheck');
 		var total = 0;
 		for(i=0; i<rates.length; i++){
-			total = total + Number(rates[i].value);
+			if(amanatCheck[i].value === "false"){
+				total = total + Number(rates[i].value);
+			}
 		}
 		document.getElementById("totalAmount").value = total.toFixed(2);
 		var grossInvoiceAmount = total + Number(document.getElementById('pdcBonusAmount').value) + Number(document.getElementById('totalBonus').value); 
@@ -756,6 +862,7 @@ function setCurrentDate(){
 	
 	checkDailySetup();
 	setCurrentDate()
+	
 	</script>
 </body>
 </html>

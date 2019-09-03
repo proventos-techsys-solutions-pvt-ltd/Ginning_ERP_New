@@ -260,8 +260,6 @@ public ArrayList<Invoice> getReport() {
 	
 	public JSONObject getInvoiceForPrinting(int invoiceId) {
 		
-		System.out.println("InvoiceID---" + invoiceId);
-		
 		ResultSet rs = null;
 		Connection con = null;
 		NumberToWords numToWords = new NumberToWords();

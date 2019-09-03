@@ -240,7 +240,16 @@
 	
 	document.getElementById('submitUpdate').addEventListener('click',function(e){
 		document.getElementById('updateGradeForm').submit();
-	})
+	});
+	
+	document.addEventListener("click", function(e){
+		if(e.srcElement.alt==="delete"){
+			var rowIndex = Number(e.srcElement.parentNode.parentNode.rowIndex)-2;
+			var tableBody = document.getElementById("tableBody");
+			var gradeId = tableBody.rows[rowIndex].cells[0].children[0].value;
+			deleteDailySetupEntry(dailySetupId);//calling to delete entry method
+		}
+	});
 			
 	
 	</script>

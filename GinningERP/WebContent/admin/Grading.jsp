@@ -394,6 +394,8 @@ function getData(){
 		}
 		else if(Number(response) === 1){
 			window.alert("Invalid RST.")
+		}else if(Number(response) === 2){
+			window.alert("Second Weighment is pending.")
 		}else{
 			var data = JSON.parse(response);
 			if(Number(data[0].flag) === 0){

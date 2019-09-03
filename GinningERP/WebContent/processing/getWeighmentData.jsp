@@ -38,12 +38,18 @@
 			
 			JSONObject obj = report.getWeighmentData(rst);
 			
-			obj.put("flag", gradeExistsFlag);
+			if(Double.parseDouble((String)obj.get("netWeight")) <= 0){
+				out.println(2);
+				out.flush();
+			}else if(Double.parseDouble((String)obj.get("netWeight")) > 0)
+			{
+				obj.put("flag", gradeExistsFlag);
+				
+				jsonArray.put(obj);
 			
-			jsonArray.put(obj);
-		
-			out.print(jsonArray);
-			out.flush();
+				out.print(jsonArray);
+				out.flush();
+			}
 		}
 		else if(gradeExistsFlag>0)
 		{

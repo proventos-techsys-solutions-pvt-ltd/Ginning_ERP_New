@@ -114,7 +114,7 @@
 							'<td>'+data[i].grade+'</td>'+
 							'<td>'+data[i].quantity+'</td>'+
 							'<td>'+data[i].contractRate+'</td>'+
-							'<td>'+(data[i].quantity * data[i].contractRate)+'</td>'+
+							'<td>'+((data[i].quantity/100) * data[i].contractRate)+'</td>'+
 						'</tr>');
 				 
 				}
