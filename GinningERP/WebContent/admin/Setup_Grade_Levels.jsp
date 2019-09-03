@@ -110,13 +110,59 @@
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script>
+	//                *************       VALIDATION          *******************
+	var appController = (function(){
+		var namesAndIds = {
+				gradeName : "",
+				gradeId : "gradeName",
+				descriptionName : "",
+				descriptionId : "description",
+			}
+		
+		var validations = {
+				specialCharaters : /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+$/g
+		}
+		
+		var validateData = function(){
+			var validData = false;
+			var gradeIdValue = document.getElementById(namesAndIds.gradeId).value.trim();
+			var descriptionIdValue = document.getElementById(namesAndIds.descriptionId).value.trim();
+			if(validations.specialCharaters.test(gradeIdValue) || validations.specialCharaters.test(descriptionIdValue)){
+				alert("Special charters are not allowed!!");
+			}else{
+				if(gradeIdValue ===""){
+					alert("Fields cannot be left blank!!");
+					document.getElementById(namesAndIds.gradeId).style.border = "1px solid red";
+				}else if(descriptionIdValue===""){
+					alert("Fields cannot be left blank!!");
+					document.getElementById(namesAndIds.descriptionId).style.border = "1px solid red";
+				}
+			}
+			
+			return validData;
+		}
+		
+		return{
+			validatedSubmitData:function(){
+				return validateData();
+			} 
+		}
+	})();
+	
+	//--------------------VALIDATION CODE ENED------------------------------------//
+	
+	
+	
 	
 	window.onload = function() {
 		gradeReport();
 	};
 	
 	document.getElementById('submitButton').addEventListener('click',function(e){
-		submitDataNewEntry();
+		if(appController.validatedSubmitData()=== true){
+			submitDataNewEntry();
+		}
+		
 	})
 	
 	function submitDataNewEntry(){

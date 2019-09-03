@@ -7,7 +7,8 @@
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<title>Dashboard</title>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<title>Vendor Master</title>
 <script src="../js/jquery-3.3.1.slim.min.js" ></script>
 </head>
 
@@ -91,8 +92,9 @@
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 		<script src="../js/commonjs.js"></script>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	
 		<script src="../js/export/export2excel.js"></script>
+		
     	<script type="text/javascript">
         function Export() {
             $("#tblCustomer").export2excel({
