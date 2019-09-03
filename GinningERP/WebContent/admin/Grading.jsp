@@ -183,6 +183,22 @@
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script>
+//***********************VALIDATIONS**********************************
+var appController = (function(){
+	var namesAndIds = {
+		rstId : "rst",
+		rstName : "rst",
+		gradeId : "grade1",
+		gradeName : "grade",
+		moistureId : "moisture1",
+		moistureName : "moisture"
+}
+
+})();
+
+//***********************VALIDATIONS ENDED****************************
+
+
 //Send AJAX req to chech Daily setup
 function checkDailySetup(){
 	var url="../processing/checkDailySetup.jsp";

@@ -258,6 +258,22 @@
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script>
+//***********************VALIDATIONS**********************************
+var appController = (function(){
+	var namesAndIds = {
+		rstId : "rst",
+		rstName : "rst",
+		cashAmountId : "cashAmount",
+		cashAmountName : "cashAmount",
+		chequeAmountId : "chequeAmount",
+		chequeAmountName : "chequeAmount",
+		rtgsAmountId : "rtgsAmount",
+		rtgsAmountName : "rtgsAmount"
+}
+
+})();
+
+//***********************VALIDATIONS ENDED****************************
 
 //Get current date and time
 function setCurrentDate(){
