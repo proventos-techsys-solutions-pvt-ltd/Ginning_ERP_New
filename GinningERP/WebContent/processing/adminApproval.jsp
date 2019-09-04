@@ -60,7 +60,7 @@
 	    			
 	    			int invoiceSavedFlag = checkInvoice.invoiceExistsCheck(rst);
 	    			
-	    			if(invoiceSavedFlag==0){
+	    			//if(invoiceSavedFlag==0){
 	        	
 				    	RstReport report = new RstReport();
 			        	
@@ -68,10 +68,10 @@
 			        	
 				    	out.print(jsonArray);
 				    	out.flush();
-	    			}else if(invoiceSavedFlag>0){
-	    				out.println(3);
-	    				out.flush();
-	    			}
+	    			//}else if(invoiceSavedFlag>0){
+	    			//	out.println(3);
+	    				//out.flush();
+	    			//}
 	    		}
 	    	}
         }

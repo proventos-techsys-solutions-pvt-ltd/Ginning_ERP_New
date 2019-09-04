@@ -18,6 +18,8 @@
    
    	JSONObject obj = new JSONObject();
    	
+   	System.out.println(grm.getRate());
+   	
    	obj.put("superRate", grm.getRate());
    	obj.put("averageRate", avgRate);
    	

@@ -152,7 +152,7 @@
 							<input type="date" id="pdcDate" name="pdcDate" class="form-control form-control-sm" value="">
 						</div>
 						<div class="col-md-2">
-							<label>PDC Rate</label>
+							<label>PDC Bonus per qtl. per month</label>
 							<input type="text" id="pdcRate" name="pdcRate" class="form-control form-control-sm" value="50">
 						</div>
 						<div class="col-md-2">

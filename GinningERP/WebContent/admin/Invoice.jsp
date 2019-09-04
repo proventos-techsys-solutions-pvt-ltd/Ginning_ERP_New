@@ -37,7 +37,6 @@
                         </form>
                         	<input type="hidden" name="bankId" value="" id="bankId" />
                         	<input type="hidden" name="customerId" value="" id="customerId" />
-                        	<input type="date" name="pdcDate" id="pdcDate"/>
                         	<div class="row row-background">
                         		<div class="col-md-3">
                        			  <label for="" class="lbl-rm-all">Company Name </label>
@@ -138,12 +137,19 @@
                                     </table>
                                 </div>
                                 </div>
-                                <div class="row row-background border-top">
+                                <div class="row row-background border-top" >
 	                               	 <div class="col-md-4 ">
 	                                     <label class="lbl-rm-all">Note :</label>
 	                                     <textarea id="note" name="note" class="form-control form-control-lg">Note</textarea>
 									</div>
-									<div class="col-md-2 offset-md-4">
+									<div class="col-md-2" id="pdcData" hidden>
+										<div class="row-div">
+											<label for="" class="lbl-rm-all">PDC Date</label> 
+											<input type="date" class="form-control form-control-sm" name="pdcDate" id="pdcDate"/>
+										</div>
+									</div>
+									
+									<div class="col-md-2 offset-md-2">
 										<div class="row-div">
 											<label for="" class="lbl-rm-all">Total Invoice Amt</label> 
 	                                    	<input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm" value="0" readonly="readonly">
@@ -593,11 +599,13 @@ function setCurrentDate(){
 			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+amount+'" readonly>';
 			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" >';
 			if(data[i].pdcAmount>0){
+				document.getElementById('amanatCheck'+(rowNo+1)).disabled=true;
 				var pdcBonusAmount = Number(data[i].pdcAmount) * (Number(data[i].quantity)/100);
 				cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="'+pdcBonusAmount+'" readonly>';
 				document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) + Number(pdcBonusAmount);
 				document.getElementById('totalPdcAmount').value = Number(document.getElementById('totalPdcAmount').value) + Number(pdcBonusAmount) + Number(amount);
 				document.getElementById('pdcDate').value = data[i].pdcDate;
+				document.getElementById("pdcData").hidden = false;
 			}else if(data[i].pdcAmount<=0){
 				cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="0" readonly>';
 			}

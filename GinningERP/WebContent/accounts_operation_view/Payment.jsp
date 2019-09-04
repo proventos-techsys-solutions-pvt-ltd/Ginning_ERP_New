@@ -384,9 +384,9 @@
 			document.getElementById('totalAmount').value = data.totalAmount ;
 			document.getElementById('invoiceStatus').value = data.paidByOperator ;
 			document.getElementById('cashAmount').value = data.cashAmount ;
+			document.getElementById('nameOnCheque').value = data.customerName ;
 			document.getElementById('chequeAmount').value = data.chequeAmount ;
 			document.getElementById('chequeNo').value = "" ;
-			document.getElementById('nameOnCheque').value = "" ;
 			document.getElementById('rtgsAmount').value = data.rtgsAmount ;
 			document.getElementById('rtgsBank').value = "" ;
 			document.getElementById('rtgsAccountNo').value = "" ;
@@ -398,6 +398,7 @@
 				document.getElementById('pdcNo').value = "" ;
 				document.getElementById('pdcDate').value = data.pdcChequeDate ;
 				document.getElementById('pdcPayeeName').value = "" ;
+				document.getElementById('pdcPayeeName').value = data.customerName;
 			}else if(!data.hasOwnProperty('pdcAmount')){
 				document.getElementById('pdcAmount').disabled = true ;
 				document.getElementById('pdcNo').disabled = true ;
