@@ -70,7 +70,7 @@ public int setFinalRate(Amanat a) {
 	}
 
 	String updateInvoice = "UPDATE AMANAT_MAST SET FINAL_RATE = ?"
-							+ "WHERE ID=?";
+							+ "WHERE GRADE_ID=?";
 	PreparedStatement stmt;
 	try {
 		

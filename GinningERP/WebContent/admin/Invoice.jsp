@@ -213,37 +213,6 @@
 		                                    <input type="text" id="net" name="net" class="form-control form-control-sm" value="0">
 	                                   	</div>
                                    </div>
-							
-								<div class="row row-background border-top">
-										<div class="col-md-6" >
-											<table class="table table-bordered">
-												<thead>
-													<tr class="table-back">
-														<th width="5%" >Sr No</th>
-														<th width="20%">Mode Of Payment</th>
-														<th width="20%">Amount</th>
-														<th width="5%"></th>
-														<th width="5%"></th>
-													</tr>
-												</thead>
-												<tbody id="paymentTableBody">
-													<tr>
-														<td align="center">1</td>
-														<td>
-															<select class="form-control form-control-sm" id="paymentMode1" name="paymentMode1">
-						                               			<option value="Cash">Cash</option>
-						                               			<option value="Cheque">Cheque</option>
-						                               			<option value="RTGS/NEFT">RTGS/NEFT</option>
-					                               			</select>
-					                               		</td>
-														<td><input type="text" class="form-control form-control-sm" id="payAmount1" name="payAmount1"></td>
-														<td class="text-center"><img src="../property/img/add.png" alt="add" class="ctm-hover" ></td>
-														<td class="text-center"></td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-								</div>
 								
                                 <div class="row row-background border-top">
                                 <div class="col-md-12">
@@ -523,7 +492,7 @@ function setCurrentDate(){
 			cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+data[i].quantity+'" readonly>';
 			cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+data[i].grade+'" readonly>';
 			cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+data[i].moisture+'" readonly>';
-			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+data[i].rate+'" readonly>';
+			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+data[i].rate+'">';
 			var amount = (data[i].rate * (data[i].quantity/100));
 			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+amount+'" readonly>';
 			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" disabled>';
@@ -544,6 +513,17 @@ function setCurrentDate(){
 		calculateTotal();
 		setGradeNote();
 	}
+	
+	document.addEventListener('change',function(e){
+		if(e.srcElement.name === "rate"){
+			var table = document.getElementById("tableBody");
+			var rowIndex = e.srcElement.parentNode.parentNode.rowIndex-1;
+			
+			var quantity = (table.rows[rowIndex].cells[2].children[0].value/100).toFixed(2);
+			table.rows[rowIndex].cells[6].children[0].value = (quantity * e.srcElement.value).toFixed(2);
+			calculateTotal();
+		}
+	});
 	
 	
 	//Set data in the table
