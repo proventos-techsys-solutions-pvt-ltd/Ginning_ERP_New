@@ -1,4 +1,4 @@
-<%@ page errorPage="../admin/Error.jsp" %>  
+<%-- <%@ page errorPage="../admin/Error.jsp" %>  --%>
 <%@page import="com.prov.dbinsertion.AddPDC"%>
 <%@page import="com.prov.bean.PDC"%>
 <%@page import="java.io.PrintWriter"%>
@@ -41,7 +41,7 @@
 	
 	JSONArray jsonArray = (JSONArray)json.get("items");
 	
-	System.out.println(jsonArray);
+	JSONObject paymentModes = (JSONObject)json.get("paymentModes");
 	
 	Invoice invoice = new Invoice();
 	int invoiceId =0;
@@ -92,20 +92,20 @@
 			invoice.setUnloadingCharges(Float.parseFloat((String)json.get("unloadingCharges")));
 			invoice.setBonusAmount(Float.parseFloat((String)json.get("totalBonus")));
 			invoice.setPdcAmount(Double.parseDouble((String)json.get("pdcAmount")));
-			if((String)json.get("cashAmount") == null){
+			if(paymentModes.containsKey("Cash")){
+				invoice.setCashAmount(Double.parseDouble((String)paymentModes.get("Cash")));
+			}else{
 				invoice.setCashAmount(0.0);
-			}else{
-				invoice.setCashAmount(Double.parseDouble((String)json.get("cashAmount")));
 			}
-			if((String)json.get("chequeAmount") == null){
+			if(paymentModes.containsKey("Cheque")){
+				invoice.setChequeAmount(Double.parseDouble((String)paymentModes.get("Cheque")));
+			}else{
 				invoice.setChequeAmount(0.0);
-			}else{
-				invoice.setChequeAmount(Double.parseDouble((String)json.get("chequeAmount")));
 			}
-			if((String)json.get("rtgsAmount") == null){
-				invoice.setRtgsAmount(0.0);
+			if(paymentModes.containsKey("RTGS/NEFT")){
+				invoice.setRtgsAmount(Double.parseDouble((String)paymentModes.get("RTGS/NEFT")));
 			}else{
-				invoice.setRtgsAmount(Double.parseDouble((String)json.get("rtgsAmount")));
+				invoice.setRtgsAmount(0.0);
 			}
 			
 			AddInvoice addinvoice = new AddInvoice();
@@ -115,7 +115,6 @@
 			AddInvoiceItems addItems = new AddInvoiceItems();
 			
 			for(int i=0; i<invoiceItemList.size(); i++){
-				
 				invoiceItemList.get(i).setInvoiceId(invoiceId);
 				addItems.addInvoiceItems(invoiceItemList.get(i));
 			}

@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
-<title>Dashboard</title>
+<title>Invoice</title>
 </head>
 
 <body>
@@ -145,7 +145,7 @@
 									<div class="col-md-2" >
 										<div class="row-div" id="pdcData" hidden>
 											<label for="" class="lbl-rm-all">PDC Date</label> 
-											<input type="date" class="form-control form-control-sm" name="pdcDate" id="pdcDate"/>
+											<input type="date" class="form-control form-control-sm" name="pdcDate" id="pdcDate" readonly/>
 										</div>
 									</div>
 									
@@ -682,7 +682,13 @@ function setCurrentDate(){
 		document.getElementById('grossInvoiceTotal').value = grossInvoiceAmount.toFixed(2);
 		document.getElementById("net").value = netPayable.toFixed(2);
 		//document.getElementById("cashAmount").value = netPayable.toFixed(2);
-		document.getElementById('payAmount1').value = netPayable.toFixed(2);
+		document.getElementById('payAmount1').value = 0;
+		var payAmounts = document.getElementsByName('payAmount');
+		var totalpayment = 0;
+		for(j=0;j<payAmounts.length;j++){
+			totalpayment = Number(totalpayment) + Number(payAmounts[j].value);
+		}
+		document.getElementById('payAmount1').value =  (Number(netPayable) - Number(totalpayment)).toFixed(2);
 	}
 	
 	
@@ -742,14 +748,22 @@ function setCurrentDate(){
 		}else{
 			jsonObj['rtgsAmount'] = document.getElementById('rtgsAmount').value;
 		} */
+		payment = {};
+		var paymentModes = document.getElementsByName('paymentMode');
+		var paymentAmounts = document.getElementsByName('payAmount');
+		for(j=0;j<paymentModes.length;j++){
+			
+			payment[paymentModes[j].value.trim()] = paymentAmounts[j].value;
+		}
 		
+		jsonObj['paymentModes'] = payment;
 		
 		var jsonStr = JSON.stringify(jsonObj);
 		console.log(jsonStr);
 		
 		document.getElementById('output').value=jsonStr;
 		
-		document.getElementsByTagName('form')[0].submit();
+		document.getElementById('adminApprovalForm').submit();
 	}
 	
 	//Change Total Amount in Payment Mode amount Table
@@ -829,6 +843,15 @@ function setCurrentDate(){
 			}
 			if(netPayable<totalAmount){
 				alert("Amount entered is greater than Net Payable.")
+				var pending = 0
+				for(k=0;k<amounts.length;k++){
+					if(amounts[k].id === e.srcElement.id){
+						continue;
+					}else{
+						pending =  Number(pending) + Number(amounts[k].value);
+					}
+				}
+				e.srcElement.value = netPayable - pending;
 			}
 		}
 	})
