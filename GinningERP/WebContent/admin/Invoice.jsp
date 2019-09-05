@@ -171,31 +171,35 @@
 	                                   
 	                                    
                                    <div class="row row-background">
-                                   		<div class="col-md-6">
-                                   			<table class="table table-bordered">
+										<div class="col-md-6" >
+											<table class="table table-bordered">
 												<thead>
-													<tr class="tbl-row-back">
+													<tr class="table-back heading">
+														<th width="5%" >Sr No</th>
 														<th width="20%">Mode Of Payment</th>
 														<th width="20%">Amount</th>
+														<th width="5%"></th>
+														<th width="5%"></th>
 													</tr>
 												</thead>
 												<tbody id="paymentTableBody">
 													<tr>
-														<td><input type="text" class="form-control form-control-sm" id="" name="" value="Cash"></td>
-														<td><input type="text" class="form-control form-control-sm" id="cashAmount" name="cashAmount" value='0'></td>
-													</tr>
-													<tr>
-														<td><input type="text" class="form-control form-control-sm" id="" name="" value="Cheque"></td>
-														<td><input type="text" class="form-control form-control-sm" id="chequeAmount" name="chequeAmount" value='0'></td>
-													</tr>
-													<tr>
-														<td><input type="text" class="form-control form-control-sm" id="" name="" value="RTGS/NEFT"></td>
-														<td><input type="text" class="form-control form-control-sm" id="rtgsAmount" name="rtgsAmount" value='0'></td>
+														<td align="center">1</td>
+														<td>
+															<select class="form-control form-control-sm" id="paymentMode1" name="paymentMode1">
+						                               			<option value="Cash">Cash</option>
+						                               			<option value="Cheque">Cheque</option>
+						                               			<option value="RTGS/NEFT">RTGS/NEFT</option>
+					                               			</select>
+					                               		</td>
+														<td><input type="text" class="form-control form-control-sm" id="payAmount1" name="payAmount1"></td>
+														<td class="text-center"><img src="../property/img/add.png" alt="add" class="ctm-hover" ></td>
+														<td class="text-center"></td>
 													</tr>
 												</tbody>
 											</table>
+										</div>
                                    		
-                                   		</div>
                                    		<div class="col-md-4">
                                    			<div class="heading">
                                    				<h5>Grade Information</h5>
@@ -227,7 +231,7 @@
                                     </div>
                                 </div>
                                 </div>
-
+                                	
 </div>
 <!-- <script src="../js/jquery-3.3.1.slim.min.js" ></script> -->
 <script src="../js/popper.min.js"></script>
