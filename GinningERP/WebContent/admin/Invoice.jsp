@@ -681,7 +681,8 @@ function setCurrentDate(){
 		var netPayable = Number(grossInvoiceAmount) - (Number(document.getElementById('weighingCharges').value) + Number(document.getElementById('unloadingCharges').value) + Number(document.getElementById('totalPdcAmount').value));
 		document.getElementById('grossInvoiceTotal').value = grossInvoiceAmount.toFixed(2);
 		document.getElementById("net").value = netPayable.toFixed(2);
-		document.getElementById("cashAmount").value = netPayable.toFixed(2);
+		//document.getElementById("cashAmount").value = netPayable.toFixed(2);
+		document.getElementById('payAmount1').value = netPayable.toFixed(2);
 	}
 	
 	
@@ -725,7 +726,7 @@ function setCurrentDate(){
 		jsonObj['netPayable'] = (Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value)).toString();
 		jsonObj['pdcAmount'] = document.getElementById('totalPdcAmount').value;
 		jsonObj['pdcDate'] = document.getElementById('pdcDate').value;
-		
+		/* 
 		if(document.getElementById('cashAmount').value === ""){
 			jsonObj['cashAmount'] = 0;
 		}else{
@@ -740,7 +741,7 @@ function setCurrentDate(){
 			jsonObj['rtgsAmount'] = 0;
 		}else{
 			jsonObj['rtgsAmount'] = document.getElementById('rtgsAmount').value;
-		}
+		} */
 		
 		
 		var jsonStr = JSON.stringify(jsonObj);
