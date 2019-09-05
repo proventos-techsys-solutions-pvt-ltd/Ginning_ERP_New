@@ -10,6 +10,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/bootstrap.min.css">	
   <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/WBStyle.css">
+  
   <link href="https://fonts.googleapis.com/css?family=Vollkorn&display=swap" rel="stylesheet"> 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Bootstrap JS -->
@@ -22,10 +23,6 @@
 <body>
   <%@include file="NavBar.html" %>
    <div hidden>
-   <%
-    out.print(session.getAttribute("weighmentId"));
-    session.removeAttribute("weighmentId");
-	%>
 	</div>
   <div class="container-fluid">
   	<div class="row mt-2 ">
@@ -74,7 +71,11 @@
 	        </div>
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Mobile No</label>
-	        	<input type="text" class="form-control " id="mobile" name="mobile" placeholder="" >
+	        	<div class="d-flex justify-content-start align-items-center">
+	        		<input type="text" class="form-control " id="mobile" name="mobile" placeholder="" >
+	        		<button type="button" class="btn btn-success" id="getCustomer">Get</button>
+	        	</div>
+	        	
 	        </div>
 	    </div>
 	    <div class="form-row form-row-ctm">
@@ -94,7 +95,7 @@
 	    <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Material</label>
-	        	<input type="text" class="form-control " id="material" name="material" placeholder="">
+	        	<input type="text" class="form-control " id="material" name="material" value="Cotton" placeholder="">
 	        </div>
 	    </div>
         <div class="form-row form-row-ctm">
@@ -202,13 +203,15 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-success" onclick="submitNewCustomer()" data-dismiss="modal">Add Customer</button>
+		        <button type="button" class="btn btn-success" onclick="submitNewCustomer()" id="customerAdd">Add Customer</button>
 		      </div>
 		    </div>
 		  </div>
 		</div>
   </div>
-
+  	
+  	
+  	
 <!--Footer code starts here-->
 <nav class="navbar navbar-default navbar-static-bottom footer ">
  
@@ -216,6 +219,8 @@
 <script src="${pageContext.request.contextPath}/js/commonjs.js"></script>
 <script src="${pageContext.request.contextPath}/js/validations/GenerateRST.js"></script>
 <script>
+
+
 
 //Send AJAX req to chech Daily setup
 function checkDailySetup(){
@@ -504,10 +509,16 @@ function resetFormData(){
 }
 
 //Check if the entered customer exists in DB
-document.addEventListener('change',function(e){
-	if(e.srcElement.id === "mobile")
+document.getElementById("getCustomer").addEventListener("click",function(){
+	var customerName = document.getElementById("customer").value.trim();
+	var customerMobile = document.getElementById("mobile").value.trim();
+	if(customerName !=="" && customerMobile !==""){
 		checkEnteredCustomer();
-});
+	}else{
+		alert("Customer name and mobile number is mandatory");
+		
+	}
+})
 
 //Get customer data from input fields and call getCustomerData function.
 function checkEnteredCustomer(){
@@ -591,12 +602,22 @@ function addNewCustomer(){
 }
 
 //Submit New Customer Form
+
 function submitNewCustomer(){
-	var newCustomerName = document.getElementById("newCustomerName").value;
-	var newCustomerMobile = document.getElementById("newCustomerMobile").value;
-	var newCustomerAddress = document.getElementById("newCustomerAddress").value;
+	if(uiController.validateNewForm()!=false){
+		var newCustomerName = document.getElementById("newCustomerName").value;
+		var newCustomerMobile = document.getElementById("newCustomerMobile").value;
+		var newCustomerAddress = document.getElementById("newCustomerAddress").value;
+		saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress);
+		document.getElementById("customerAdd").setAttribute("data-dismiss","modal");
+		
+	}else{
+		alert("Inappropriate Data Entered");
+		document.getElementById("customer").value = "";
+		document.getElementById("mobile").value = "";
+	}
 	
-	saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress);
+	
 }
 
 //Create AJAX Request for new customer form submission
@@ -728,6 +749,7 @@ setCurrentDate();
 fetchRSTSeriesFunc();
 decideWeighment(0);
 checkDailySetup();
+
 
 </script>
 </body>

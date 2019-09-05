@@ -60,16 +60,7 @@ var uiController = (function(){
 		}else{
 			alert("PLEASE SELECT COMPANY NAME, HEAP AND BANK");
 		}
-		
-		
-		
-		
-		
 	}
-	
-
-	
-	
 	return {
 		htmlElementIds:function(){
 			return ids; // returns HMTL element Object Id's
@@ -99,15 +90,9 @@ var appController = (function(){
 	}
 	
 	//lock all buttons
-	//hmtlPageObjects.lockUsers.disabled = "true";
 	hmtlPageObjects.setupButton.disabled = "true";
 	hmtlPageObjects.updateButton.disabled = "true";
 	
-	/*var lockAllUsers = function(){//this will lock all the users to setup new company
-		alert("Do you want to end session of users?");
-		hmtlPageObjects.addCompanyButton.disabled = false;
-		hmtlPageObjects.lockUsers.disabled = "true";
-	}*/
 	
 	var getDateAndTime = function(){ // get date and time 
 		var todayDateAndTime = new Date();
@@ -118,8 +103,6 @@ var appController = (function(){
 	} 
 	
 	hmtlPageObjects.addCompanyButton.addEventListener("click",uiController.tableRow);//Event listener's on click of add company button this should add a row 
-	//hmtlPageObjects.setupButton.addEventListener("click",uiController.setupCompanyFun());//Event listener's call on click of submit button of table
-	//hmtlPageObjects.lockUsers.addEventListener("click",lockAllUsers);//Event listener's
 	
 	
 	var addDataForSetup = function(){ // getting data from input field to add to table
@@ -137,7 +120,9 @@ var appController = (function(){
 					getTodayHeap : null,
 					getBankName : null,
 					getBonusAmount: null
+				
 			};
+			
 		}else{
 			validData = {
 					getCompanyName : companyName,
@@ -148,6 +133,7 @@ var appController = (function(){
 					getBankId : bankId
 					
 			};
+			console.log("working");
 		}
 		return validData;
 	}

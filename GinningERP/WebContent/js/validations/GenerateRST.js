@@ -9,7 +9,10 @@ var uiController = (function(){
 				mobileNo : document.getElementById("mobile"),
 				address : document.getElementById("address"),
 				material : document.getElementById("material"),
-				grossWeight : document.getElementById("gross")
+				grossWeight : document.getElementById("gross"),
+				newCustomerName : document.getElementById("newCustomerName"),
+				newMobileNo : document.getElementById("newCustomerMobile"),
+				newAddress : document.getElementById("newCustomerAddress")
 		}
 		
 		var expressions={
@@ -21,6 +24,7 @@ var uiController = (function(){
 		
 	
 	return{
+			
 		validate:function(){
 			//validations on RST no
 			if(expressions.rstNo.test(elementIds.rst.value.trim())){
@@ -101,7 +105,35 @@ var uiController = (function(){
 					elementIds.rst.title ="Only Numbers are acceptable";
 					return false;
 				}
+			},
+			
+			validateNewForm:function(){
+				if(expressions.customerName.test(elementIds.newCustomerName.value.trim())){
+					elementIds.newCustomerName.style.borderColor ="#ced4da";
+					elementIds.newCustomerName.title ="";
+					if(expressions.mobileNo.test(elementIds.newMobileNo.value.trim())){
+						elementIds.newMobileNo.style.borderColor ="#ced4da";
+						elementIds.newMobileNo.title ="";
+						if(elementIds.newAddress.value.trim()!==""){
+							elementIds.newAddress.style.borderColor ="#ced4da";
+							elementIds.newAddress.title ="";
+						}else{
+							elementIds.newAddress.style.border ="1px red solid";
+							elementIds.newAddress.title ="Cannot be blank";
+							return false;
+						}
+					}else{
+						elementIds.newMobileNo.style.border ="1px red solid";
+						elementIds.newMobileNo.title ="Should be number only and must be 10";
+						return false;
+					}
+				}else{
+					elementIds.newCustomerName.style.border ="1px red solid";
+					elementIds.newCustomerName.title ="Cannot be blank and should be in capital letters only";
+					return false;
+				}
 			}
 		}
+		
 })();
 

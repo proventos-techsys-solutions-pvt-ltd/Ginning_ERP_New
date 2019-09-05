@@ -781,6 +781,29 @@ document.getElementById("pdcRate").addEventListener("change",function(e){
 setPDCDate();
 checkDailySetup();
 fetchBonusRate();
+
+
+function responseScreen(){
+	var responseId= document.getElementById("responseId").value;
+	if(responseId>0){
+		document.getElementsByClassName("response-background")[0].style.display = "block";
+		document.getElementsByClassName("response")[0].style.display = "block";
+	}else if(responseId===0){
+		document.getElementsByClassName("response-background")[0].style.display = "block";
+		document.getElementsByClassName("response")[0].style.display = "block";
+		document.getElementById("responseText").querySelector("h4").innerHTML = "Company setup is unsuccessful";
+	}else if(responseId===null){
+		}
+}
+
+
+document.getElementById("responseBtn").addEventListener("click",function(){
+	document.getElementsByClassName("response-background")[0].style.display = "none";
+	document.getElementsByClassName("response")[0].style.display = "none";
+	document.getElementById("responseId").value=0;
+})
+
+responseScreen();
 </script>
 
 </body>
