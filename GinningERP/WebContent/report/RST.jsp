@@ -10,7 +10,7 @@
     
   	int weighmentId = Integer.parseInt((String)session.getAttribute("weighmentId"));
     
- 	session.removeAttribute("weighmentId");
+ 	//session.removeAttribute("weighmentId");
     
     RstReport report = new RstReport();
     
