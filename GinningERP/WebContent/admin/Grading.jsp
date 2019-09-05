@@ -61,7 +61,7 @@
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Quantity in Kg</label>
-							<input type="text" class="form-control form-control-sm" id="quantity" name="quantity" value="" />
+							<input type="text" class="form-control form-control-sm" id="quantity" name="quantity" value="" readonly/>
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Authorizer</label>
@@ -165,7 +165,7 @@
 							<label>Total PDC Amount</label>
 							<input type="text" id="pdcAmount" name="pdcAmount" class="form-control form-control-sm" value="0" readonly>
 						</div>
-						<div class="col-md-2 offset-md-3">
+						<div class="col-md-2 offset-md-1">
 							<label for="" class="lbl-rm-all">Total Amount</label> 
 	                        <input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm" value="0" readonly="readonly">
 						</div>
@@ -620,7 +620,9 @@ function setGradeUpdationData(data)
 	if(data[0].invoiceFlag === 1){
 		var inputElements = document.getElementsByTagName('input');
 		for(i=0;i<inputElements.length;i++){
-			inputElements[i].setAttribute('readonly', '');
+			if(inputElements[i].id != 'rst'){
+				inputElements[i].disabled=true;
+			}
 		}
 		var selectElements = document.getElementsByTagName('select');
 		for(i=0;i<selectElements.length;i++){
@@ -671,7 +673,7 @@ function calculateTotal(){
 	for(i=0; i<rates.length; i++){
 		total = total + (Number(rates[i].value) * (Number(qty[i].value)/100));
 	}
-		document.getElementById("totalAmount").value = total;
+		document.getElementById("totalAmount").value = total+Number(document.getElementById("pdcBonusAmount").value);
 }
 
 document.addEventListener('keyup', function(e){
@@ -727,17 +729,18 @@ document.addEventListener('change', function(e){
 		var pdcRatePerMonth = document.getElementById("pdcRate").value;
 		var pdcRate = Number(noOfMonths)*Number(pdcRatePerMonth);
 		var pdcBonusAmount = (Number(pdcRate)*Number(qtyInQtl)).toFixed(2);
-		var totalAmount = (Number(qtyInQtl) * Number(ratePerQtl))+pdcBonusAmount;
+		var totalAmount = Number(Number(qtyInQtl) * Number(ratePerQtl))+Number(pdcBonusAmount);
 		if(e.srcElement.value === 'false'){
 			e.srcElement.value = 'true'
-			document.getElementById('pdcBonusAmount').value = pdcBonusAmount;
+			document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) + Number(pdcBonusAmount);
 			document.getElementById("pdcAmount").value = Number(pdcAmount)+ Number(totalAmount);
 		}
 		else if(e.srcElement.value === 'true'){
 			e.srcElement.value = 'false'
-				document.getElementById('pdcBonusAmount').value = 0
+			document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) - Number(pdcBonusAmount);
 			document.getElementById("pdcAmount").value = Number(pdcAmount)- Number(totalAmount);
 		}
+		calculateTotal();
 	}
 })
 
@@ -745,9 +748,10 @@ function calculatePDCBonusOnMonthChange(){
 	var noOfMonths = document.getElementById("pdcMonths").value;
 	var pdcCheckBoxes = document.getElementsByName("pdcCheck");
 	document.getElementById("pdcAmount").value = 0;
+	document.getElementById('pdcBonusAmount').value = 0;
 	for(i = 0; i< pdcCheckBoxes.length; i++){
 		if(pdcCheckBoxes[i].value === 'true'){
-			document.getElementById("pdcAmount").value;
+			//document.getElementById("pdcAmount").value;
 			var rowIndex = Number(pdcCheckBoxes[i].parentNode.parentNode.rowIndex)-1;
 			var table = document.getElementById('tableBody');
 			var ratePerQtl = table.rows[rowIndex].cells[5].children[0].value;
@@ -757,10 +761,12 @@ function calculatePDCBonusOnMonthChange(){
 			var pdcRatePerMonth = document.getElementById("pdcRate").value;
 			var pdcRate = Number(noOfMonths)*Number(pdcRatePerMonth);
 			var pdcBonusAmount = Number(pdcRate)*Number(qtyInQtl);
-			var totalAmount = (Number(qtyInQtl) * Number(ratePerQtl))+pdcBonusAmount;
+			var totalAmount = Number(Number(qtyInQtl) * Number(ratePerQtl))+Number(pdcBonusAmount);
+			document.getElementById('pdcBonusAmount').value =  Number(pdcBonusAmount);
 			document.getElementById("pdcAmount").value = Number(document.getElementById("pdcAmount").value)+Number(totalAmount);
 		}
 	}
+	calculateTotal();
 }
 
 document.getElementById("pdcMonths").addEventListener("change",function(e){
