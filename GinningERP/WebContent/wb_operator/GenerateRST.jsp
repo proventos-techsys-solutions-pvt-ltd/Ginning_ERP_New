@@ -601,7 +601,7 @@ function addNewCustomer(){
 	
 }
 
-//Submit New Customer Form
+//Submit New Customer For
 
 function submitNewCustomer(){
 	if(uiController.validateNewForm()!=false){
