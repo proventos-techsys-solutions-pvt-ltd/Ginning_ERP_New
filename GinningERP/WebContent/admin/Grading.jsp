@@ -131,6 +131,10 @@
 					</div>
 					</div>
 					<div class="row row-background">
+						<div class="col-md-2">
+							<label>PDC Bonus per qtl. per month</label>
+							<input type="text" id="pdcRate" name="pdcRate" class="form-control form-control-sm" value="50">
+						</div>
 						<div class="col-md-auto">
 							<label>PDC Months</label>
 							<select  id="pdcMonths" name="pdcMonths" class="form-control form-control-sm" >
@@ -145,6 +149,8 @@
 								<option>8</option>
 								<option>9</option>
 								<option>10</option>
+								<option>11</option>
+								<option>12</option>
 							</select>
 						</div>
 						<div class="col-md-2">
@@ -152,11 +158,11 @@
 							<input type="date" id="pdcDate" name="pdcDate" class="form-control form-control-sm" value="">
 						</div>
 						<div class="col-md-2">
-							<label>PDC Bonus per qtl. per month</label>
-							<input type="text" id="pdcRate" name="pdcRate" class="form-control form-control-sm" value="50">
+							<label>Total PDC Bonus</label>
+							<input type="text" id="pdcBonusAmount" name="pdcBonusAmount" class="form-control form-control-sm" value="0" readonly>
 						</div>
 						<div class="col-md-2">
-							<label>PDC Amount</label>
+							<label>Total PDC Amount</label>
 							<input type="text" id="pdcAmount" name="pdcAmount" class="form-control form-control-sm" value="0" readonly>
 						</div>
 						<div class="col-md-2 offset-md-3">
@@ -486,6 +492,7 @@ function deleteGradeEntry(index){
 	element.rows[(index-2)].cells[1].children[0].value = (qty1+qty2);
 	
 	document.getElementById('tableBody').deleteRow(index-1);
+	calculateTotal();
 	
 }
 
@@ -657,7 +664,7 @@ document.addEventListener("change",function(e){
 });
 
 function calculateTotal(){
-	var totalBonus = Number(document.getElementById("bonusAmount").value) * Number(document.getElementById("quantity").value /100) ;
+	//var totalBonus = Number(document.getElementById("bonusAmount").value) * Number(document.getElementById("quantity").value /100) ;
 	var rates = document.getElementsByName("rate");
 	var total = 0;
 	var qty = document.getElementsByName("dividedQuantity");
@@ -719,14 +726,16 @@ document.addEventListener('change', function(e){
 		var noOfMonths = document.getElementById("pdcMonths").value;
 		var pdcRatePerMonth = document.getElementById("pdcRate").value;
 		var pdcRate = Number(noOfMonths)*Number(pdcRatePerMonth);
-		var pdcBonusAmount = Number(pdcRate)*Number(qtyInQtl);
+		var pdcBonusAmount = (Number(pdcRate)*Number(qtyInQtl)).toFixed(2);
 		var totalAmount = (Number(qtyInQtl) * Number(ratePerQtl))+pdcBonusAmount;
 		if(e.srcElement.value === 'false'){
 			e.srcElement.value = 'true'
+			document.getElementById('pdcBonusAmount').value = pdcBonusAmount;
 			document.getElementById("pdcAmount").value = Number(pdcAmount)+ Number(totalAmount);
 		}
 		else if(e.srcElement.value === 'true'){
 			e.srcElement.value = 'false'
+				document.getElementById('pdcBonusAmount').value = 0
 			document.getElementById("pdcAmount").value = Number(pdcAmount)- Number(totalAmount);
 		}
 	}

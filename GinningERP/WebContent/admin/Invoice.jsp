@@ -119,7 +119,7 @@
                                             <th width="5%">Rate / Qntl</th>
                                             <th width="5%">Amount</th>
                                             <th width="2%" class="text-center">Amanat</th>
-                                            <th width="2%" class="text-center">PDC Amt</th>   
+                                            <th width="2%" class="text-center">PDC Bonus</th>   
                                         </tr>
                                         </thead>
                                         <tbody id='tableBody'>
@@ -142,8 +142,8 @@
 	                                     <label class="lbl-rm-all">Note :</label>
 	                                     <textarea id="note" name="note" class="form-control form-control-lg">Note</textarea>
 									</div>
-									<div class="col-md-2" id="pdcData" hidden>
-										<div class="row-div">
+									<div class="col-md-2" >
+										<div class="row-div" id="pdcData" hidden>
 											<label for="" class="lbl-rm-all">PDC Date</label> 
 											<input type="date" class="form-control form-control-sm" name="pdcDate" id="pdcDate"/>
 										</div>
