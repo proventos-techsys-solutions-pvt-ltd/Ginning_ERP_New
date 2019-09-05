@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
-<title>Invoice</title>
+<title>Dashboard</title>
 </head>
 
 <body>
@@ -186,13 +186,13 @@
 													<tr>
 														<td align="center">1</td>
 														<td>
-															<select class="form-control form-control-sm" id="paymentMode1" name="paymentMode1">
-						                               			<option value="Cash">Cash</option>
+															<select class="form-control form-control-sm" id="paymentMode1" name="paymentMode">
+						                               			<option value="Cash" selected>Cash</option>
 						                               			<option value="Cheque">Cheque</option>
 						                               			<option value="RTGS/NEFT">RTGS/NEFT</option>
 					                               			</select>
 					                               		</td>
-														<td><input type="text" class="form-control form-control-sm" id="payAmount1" name="payAmount1"></td>
+														<td><input type="text" class="form-control form-control-sm" id="payAmount1" name="payAmount"></td>
 														<td class="text-center"><img src="../property/img/add.png" alt="add" class="ctm-hover" ></td>
 														<td class="text-center"></td>
 													</tr>
@@ -762,52 +762,73 @@ function setCurrentDate(){
 	document.addEventListener('click',function(e){
 		if(e.srcElement.alt === 'add'){
 			
+			var netAmount = document.getElementById('net').value;
+			
 			var table = document.getElementById('paymentTableBody');
 			noOfRows = table.rows.length;
 			
 			if(noOfRows<3){
+				
 				var amount = 0;
 				for(k=0;k<paymentTableBody.rows.length;k++){
 					amount = Number(amount) + Number(paymentTableBody.rows[k].cells[2].children[0].value);			
-					console.log(Number(paymentTableBody.rows[k].cells[2].children[0].value));
-				}
-				var pendingAmount = Number(document.getElementById('net').value) - amount;
-			
-				var row = table.insertRow(noOfRows);
-				var cell1 = row.insertCell(0);
-				var cell2 = row.insertCell(1);
-				var cell3 = row.insertCell(2);
-				var cell4 = row.insertCell(3);
-				var cell5 = row.insertCell(4);
-				
-				cell4.className ="text-center";
-				cell5.className ="text-center";
-							
-				cell1.setAttribute("align","center");
-				cell1.innerHTML = (noOfRows+1);
-				cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode'+(noOfRows+1)+'">'+
-						   			'<option>Cash</option>'+
-						   			'<option>Cheque</option>'+
-						   			'<option>RTGS/NEFT</option>'+
-								'</select>';
-				cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="payAmount'+(noOfRows+1)+'" name="payAmount'+(noOfRows+1)+'" value='+pendingAmount+'>';
-				cell4.innerHTML = '<img src="../property/img/add.png" alt="add" class="ctm-hover" >'
-				cell5.innerHTML = '<img src="../property/img/delete.png" alt="delete" class="ctm-hover" id="deleteRow'+(noOfRows+1)+'" >'
-				
-				var optionsAlreadySelected = [];
-				for(i=0;i<noOfRows;i++){
-					optionsAlreadySelected.push(table.rows[i].cells[1].children[0].value);
-				}
-				console.log(optionsAlreadySelected);
 	
-				var selectElement = document.getElementById('paymentMode'+(noOfRows+1));
-				for(j=0;j<selectElement.options.length;j++){
-					if(optionsAlreadySelected.includes(selectElement.options[j].text)){
-						selectElement.options[j].hidden = true;
-					}else{
-						selectElement.options[j].selected = true;
-					}
 				}
+				var pendingAmount = Number(netAmount) - amount;
+					
+				if(Number(pendingAmount) == 0){
+					alert("Pending amount is 0.");
+				}else if(pendingAmount > netAmount ){
+					alert("Pending amount is greater than net payable.");
+				}else if(Number(pendingAmount) < 0 ){
+					alert("Amount entered is greater than net payable.");
+				}
+				else if(pendingAmount < netAmount ){
+				
+						var row = table.insertRow(noOfRows);
+						var cell1 = row.insertCell(0);
+						var cell2 = row.insertCell(1);
+						var cell3 = row.insertCell(2);
+						var cell4 = row.insertCell(3);
+						var cell5 = row.insertCell(4);
+						
+						cell4.className ="text-center";
+						cell5.className ="text-center";
+									
+						cell1.setAttribute("align","center");
+						cell1.innerHTML = (noOfRows+1);
+					if(noOfRows === 1){
+						cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode">'+
+								   			'<option>Cash</option>'+
+								   			'<option selected>Cheque</option>'+
+								   			'<option>RTGS/NEFT</option>'+
+										  '</select>';
+					}
+					if(noOfRows === 2){
+						cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode">'+
+								   			'<option>Cash</option>'+
+								   			'<option>Cheque</option>'+
+								   			'<option selected>RTGS/NEFT</option>'+
+										  '</select>';
+					}
+						cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="payAmount'+(noOfRows+1)+'" name="payAmount" value='+pendingAmount+'>';
+						cell4.innerHTML = '<img src="../property/img/add.png" alt="add" class="ctm-hover" >'
+						cell5.innerHTML = '<img src="../property/img/delete.png" alt="delete" class="ctm-hover" id="deleteRow'+(noOfRows+1)+'" >'
+				}
+			}
+		}
+	})
+	
+	document.addEventListener("keyup",function(e){
+		if(e.srcElement.name === "payAmount"){
+			var amounts = document.getElementsByName("payAmount");
+			var totalAmount = 0;
+			var netPayable = document.getElementById('net').value;
+			for(i=0;i<amounts.length;i++){
+				totalAmount =  Number(totalAmount) + Number(amounts[i].value);
+			}
+			if(netPayable<totalAmount){
+				alert("Amount entered is greater than Net Payable.")
 			}
 		}
 	})
