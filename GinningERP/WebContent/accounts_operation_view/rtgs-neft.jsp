@@ -9,7 +9,7 @@
 		<!-- Bootstrap CSS -->
 	  	<link rel="stylesheet" href="../styles/bootstrap.min.css">	
 	  	<link rel="stylesheet" href="../styles/WBStyle.css">
-     <title>Vendor Payment</title>
+     <title>RTGS NEFT</title>
    </head>
 <body>
 	<%@include file="../accounts_operation_view/NavBar.html" %>
