@@ -10,7 +10,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/bootstrap.min.css">	
   <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/WBStyle.css">
-  
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Vollkorn&display=swap" rel="stylesheet"> 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Bootstrap JS -->
@@ -749,7 +749,6 @@ setCurrentDate();
 fetchRSTSeriesFunc();
 decideWeighment(0);
 checkDailySetup();
-
 
 </script>
 </body>

@@ -134,6 +134,5 @@ var uiController = (function(){
 				}
 			}
 		}
-		
 })();
 

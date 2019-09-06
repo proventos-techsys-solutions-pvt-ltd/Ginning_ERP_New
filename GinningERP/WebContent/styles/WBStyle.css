@@ -4,6 +4,9 @@
 html{
 	height:100%;
 }
+body{
+	font-family: 'Roboto', sans-serif;
+}
 /**************************************NAV BAR EDIT*************************/
 
 .custom-navbar{
