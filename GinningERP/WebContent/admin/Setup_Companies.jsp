@@ -84,6 +84,10 @@
 								<input type="email" class="form-control  " name="email" id="email">
 							</div>
 							<div class="col-md-3">
+								<label class="lbl-rm-all">Invoice Series</label>
+								<input type="text" class="form-control  " name="invoiceSeries" id="invoiceSeries">
+							</div>
+							<div class="col-md-3">
 								<label class="lbl-rm-all">Logo</label>
 								<input type="file" class="form-control  " name="file" id="logo">
 							</div>

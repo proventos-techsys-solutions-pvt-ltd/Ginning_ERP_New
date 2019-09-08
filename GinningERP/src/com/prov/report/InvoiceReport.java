@@ -1,8 +1,10 @@
 package com.prov.report;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -471,5 +473,32 @@ public ArrayList<Invoice> getReport() {
 		}
 		
 		return report;
+	}
+	
+	public String getInvoiceNoSeries(int companyId) {
+	
+		Connection con = null;
+		String invoiceSeries = null;
+		try {
+			con = OracleConnection.getConnection();
+			
+			String invSql = "{? = call GET_INVOICE_SERIES(?)}";
+			
+			CallableStatement stmt = con.prepareCall(invSql);
+			
+			stmt.registerOutParameter(1, Types.VARCHAR);
+			stmt.setInt(2, companyId);
+			
+		    stmt.executeUpdate();
+			
+		    invoiceSeries = stmt.getString(1);
+			
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return invoiceSeries;
 	}
 }

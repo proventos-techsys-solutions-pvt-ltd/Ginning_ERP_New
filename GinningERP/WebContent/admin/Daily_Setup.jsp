@@ -76,7 +76,7 @@
 						<table class="table table-bordered" id="companySetupTable">
 							<thead>
 								<tr class="table-back">
-									<th rowspan="2" width="5%" >DS ID</th>
+									<th rowspan="2" width="5%" hidden>DS ID</th>
 									<th rowspan="2" width="5%" style="vertical-align:middle;">Sr No</th>
 									<th rowspan="2" width="9%" style="vertical-align:middle;">Date</th>
 									<th rowspan="2" width="8%" style="vertical-align:middle;">Setup Time</th>
@@ -98,8 +98,8 @@
 							<tbody id="tableBody">
 							 	<tr>
 							 	
-									<td>
-										<input type="text" class="form-control form-control-sm" id="setupId" name="setupId" readonly>
+									<td hidden>
+										<input type="hidden" class="form-control form-control-sm" id="setupId" name="setupId" readonly>
 									</td>
 									<td>
 										<input type="text" class="form-control form-control-sm" id="srNoTable" name="srNoTable" >
@@ -188,7 +188,7 @@
 						<img src="../property/img/purse.png" alt="warehouse">&nbsp;
 						<h4 class="lbl-rm-b">Cash Balance</h4>
 						</div>
-						<input type="text" id="responseId" name="" value="<%=session.getAttribute("setupId") %>">
+						<input type="hidden" id="responseId" name="" value="<%=session.getAttribute("setupId") %>">
 					</div>
 					
 					<div class="col-md-3">
@@ -456,9 +456,9 @@
 					var cell12 = row.insertCell(11);
 					var cell13 = row.insertCell(12);
 					
-					//cell1.hidden=true;
+					cell1.hidden=true;
 					
-					cell1.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupId" name="setupId" value="" readonly>';
+					cell1.innerHTML = '<input type="hidden" class="form-control form-control-sm" id="setupId" name="setupId" value="" readonly>';
 					cell2.innerHTML = '<input type="text" class="form-control form-control-sm" id="srNoTable" name="srNoTable" value="'+(i+1)+'" readonly>';
 					cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="dateTable" name="dateTable" value="" readonly>';
 					cell4.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="setupTimeTable" value="" readonly>';
@@ -490,9 +490,9 @@
 					var cell12 = row.insertCell(11);
 					var cell13 = row.insertCell(12);
 					var cell14 = row.insertCell(13);
-					//cell1.hidden=true;
+					cell1.hidden=true;
 					
-					cell1.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupId" name="setupId" value="'+data[i].id+'" readonly>';
+					cell1.innerHTML = '<input type="hidden" class="form-control form-control-sm" id="setupId" name="setupId" value="'+data[i].id+'" readonly>';
 					cell2.innerHTML = '<input type="text" class="form-control form-control-sm" id="srNoTable" name="srNoTable" value="'+(i+1)+'" readonly>';
 					cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="dateTable" name="dateTable" value="'+data[i].setupDate+'" readonly>';
 					cell4.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="setupTimeTable" value="'+data[i].setupTime+'" readonly>';

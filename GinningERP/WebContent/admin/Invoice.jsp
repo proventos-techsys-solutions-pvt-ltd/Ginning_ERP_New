@@ -73,7 +73,7 @@
                             <div class="row row-background">
                                 <div class="col-md-2">
                                     <label for="" class="lbl-rm-all">Invoice No </label>
-                                    <input id="invoiceNo" name="invoiceNo" type="text" class="form-control form-control-sm" placeholder="Invoice No" >
+                                    <input id="invoiceNo" name="invoiceNo" type="text" class="form-control form-control-sm" placeholder="Invoice No" readonly>
                                 </div>
                                  <div class="col-md-2">
                                     <label for="" class="lbl-rm-all">Date </label>
@@ -91,7 +91,7 @@
 									      <input type="checkbox"  id="bonusCheck" name="bonusCheck">
 									    </div>
 									  </div>
-									  <input type="text" class="form-control form-control-sm"  id="bonusPerQtl" name="bonusPerQtl" >
+									  <input type="text" class="form-control form-control-sm"  id="bonusPerQtl" name="bonusPerQtl" readonly>
 									</div>
 									                                    
                                 </div>
@@ -220,7 +220,7 @@
 											<label for="" class="lbl-rm-all" hidden>Advance </label> 
 		                                    <input type="hidden" id="advance" name="advance" class="form-control form-control-sm" value="0">
 		                                    <label for="" class="lbl-rm-all">Net Payable </label> 
-		                                    <input type="text" id="net" name="net" class="form-control form-control-sm" value="0">
+		                                    <input type="text" id="net" name="net" class="form-control form-control-sm" value="0" readonly>
 	                                   	</div>
                                    </div>
 								
@@ -352,6 +352,8 @@ function setCurrentDate(){
 				companySelect.options[i].selected = true;
 			}
 		}
+		
+		document.getElementById('invoiceNo').value = data.invoiceSeries;
 	}
 	
 	function checkRstInTable(rst){

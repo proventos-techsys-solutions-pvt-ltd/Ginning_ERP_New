@@ -3,9 +3,15 @@ package com.prov.bean;
 public class Company {
 	
 	private int id;
-	private String name, address, city, state, pan, tan, cin, gst, email, logoPath, mobile, telephone;
+	private String name, address, city, state, pan, tan, cin, gst, email, logoPath, mobile, telephone, invoiceSeries;
 
 	
+	public String getInvoiceSeries() {
+		return invoiceSeries;
+	}
+	public void setInvoiceSeries(String invoiceSeries) {
+		this.invoiceSeries = invoiceSeries;
+	}
 	public String getTelephone() {
 		return telephone;
 	}

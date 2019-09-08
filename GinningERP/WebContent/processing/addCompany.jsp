@@ -88,6 +88,7 @@
     	c.setTelephone(data.get("telephone"));
     	c.setMobile(data.get("mobile"));
     	c.setEmail(data.get("email"));
+    	c.setInvoiceSeries(data.get("invoiceSeries").toUpperCase());
     	c.setLogoPath(location); 
     	
     	AddCompany ac = new AddCompany();

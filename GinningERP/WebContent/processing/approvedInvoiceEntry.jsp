@@ -44,7 +44,7 @@
 	JSONObject paymentModes = (JSONObject)json.get("paymentModes");
 	
 	Invoice invoice = new Invoice();
-	int invoiceId =0;
+	int invoiceId = 0;
 		
 	ArrayList<InvoiceItems> invoiceItemList = new ArrayList<InvoiceItems>();	
 	ArrayList<Amanat> amanatItemList = new ArrayList<Amanat>();	
