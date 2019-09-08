@@ -112,7 +112,7 @@
 		// override these in your code to change the default behavior and style
 		$.blockUI.defaults = {
 			// message displayed when blocking (use null for no message)
-			message:  '<h1>Daily Setup is not yet done.</h1><br><a href="../admin/Daily_Setup.jsp"><span style="color:blue">Daily Setup Page</a>',
+			message:  '<h1>Daily Setup is not yet done.</h1><br><a href="../wb_operator/GenerateRST.jsp"><span style="color:blue">Check Again.</a>',
 
 			title: null,		// title string; only used when theme == true
 			draggable: true,	// only used when theme == true (requires jquery-ui.js to be loaded)

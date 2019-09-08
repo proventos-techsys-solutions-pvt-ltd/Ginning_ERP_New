@@ -171,6 +171,18 @@ checkbox{
 	width:100%;
 	height:50px;
 }
+
+.cselect{
+	padding:0px;
+	width:50%;
+	background:#eeac4b;
+	color:#fff;
+	border:none;
+	outline:0px;
+	font-weight:bold;
+}
+
+
 .notification-frame{
 	padding:5px;
 }

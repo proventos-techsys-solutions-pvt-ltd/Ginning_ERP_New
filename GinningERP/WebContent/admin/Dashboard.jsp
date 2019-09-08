@@ -45,21 +45,22 @@
 	  			</div>
 	  	</div>
 	  	<div class="col-md-3">
-	  			<div class="d-flex justify-content-between align-items-center inner2 border">
-	  				<div>
-	  					Total Purchase 
-	  					<br>
-	  					<select name="paymentType" id="paymentType">
+	  				<div class="inner2 border">
+	  					<div class="text-center">
+	  					<label>Total Purchase </label>
+	  					</div>
+	  					<div class="d-flex justify-content-between align-items-center">
+	  					<select class="cselect" name="paymentType" id="paymentType">
 	  						<option value="cash">Cash</option>
 	  						<option value="cheque">Cheque</option>
 	  						<option value="rtgs">RTGS</option>
 	  						<option value="pdc">PDC</option>
 	  						<option value="all" selected>All</option>
 	  					</select>
-	  				</div>
-	  				<div>
-	  					<i class="fa fa-inr" aria-hidden="true" id="totalPurchase">&nbsp;&nbsp;10000</i>
-	  				</div>
+		  				<div>
+		  					<i class="fa fa-inr" aria-hidden="true" id="totalPurchase">&nbsp;&nbsp;10000</i>
+		  				</div>
+		  				</div>
 	  			</div>
 	  	</div>
 	  	<div class="col-md-3">
