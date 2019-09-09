@@ -16,7 +16,7 @@
     		    int loginCheck = 0;
     		    loginCheck = cl.checkLogin(username, password);
     		    if(loginCheck>0){
-    		        response.sendRedirect("../wb_operator/GenerateRST.jsp");
+    		        response.sendRedirect("../admin/Dashboard.jsp");
     		    }else{
     		        response.sendRedirect("../Login.html");
     		    }
