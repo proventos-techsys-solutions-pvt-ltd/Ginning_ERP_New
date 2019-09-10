@@ -342,7 +342,15 @@ document.addEventListener("change",function(e){
 	var id = e.srcElement.id.toString();
 	if(id.includes('tblQty') && e.srcElement.value != "0" && e.srcElement.value != ""){
 	totalQuantity = document.getElementById("quantity").value;
-	console.log("total QTY --- "+totalQuantity );
+	var quantityDivisions = document.getElementsByName('dividedQuantity');
+	var sumOfQuantities = 0;
+	for(j=0;j<quantityDivisions.length;j++){
+		sumOfQuantities = Number(sumOfQuantities) + Number(quantityDivisions[j].value); 
+	}
+	if(sumOfQuantities >= totalQuantity){
+		e.srcElement.value = totalQuantity - (sumOfQuantities - e.srcElement.value); 
+		alert('Weight Division is greater then Net Quantity.');
+	}else{
 			var table = document.getElementById("tableBody");
 			var noOfRows = document.getElementsByName("dividedQuantity").length;
 			var remainingQuantity = totalQuantity;
@@ -380,8 +388,9 @@ document.addEventListener("change",function(e){
 			
 			}
 			noOfRows = document.getElementsByName("dividedQuantity").length;
-	}	
-	calculateTotal();
+		}	
+		calculateTotal();
+	}
 })
 
 //Fetch data for grading using RST
@@ -432,53 +441,60 @@ function getData(){
 
 //Submit Grdaing data
 function submitGradingData(){
-	
-	var jsonObj = {};
-	
-	jsonObj['rst'] = document.getElementById('rst').value;
-	jsonObj['material'] = document.getElementById("material").value;
-	jsonObj['totalQuantity'] = document.getElementById("quantity").value;
-	jsonObj['vendorName'] = document.getElementById("vendorName").value;
-	jsonObj['vendorAddress'] = document.getElementById("vendorAddress").value;
-	jsonObj['vendorMobile'] = document.getElementById("vendorMobile").value;
-	jsonObj['weighmentId'] = document.getElementById("weighmentId").value;
-	jsonObj['authorizer'] = document.getElementById("authorizer").value;
-	jsonObj['bonusPerQtl'] = document.getElementById("bonusAmount").value;
-	jsonObj['pdcMonths'] = document.getElementById("pdcMonths").value;
-	jsonObj['pdcDate'] = document.getElementById("pdcDate").value;
-	jsonObj['pdcRate'] = document.getElementById("pdcRate").value;
-	
-	var noOfRows = document.getElementById('tableBody').childElementCount;
-	console.log('no of Rows --- '+noOfRows);
-	
-	var gradeList=[];
-	
-	for(i=0;i<noOfRows;i++){
-		grade={};
-		
-		 grade['srNo'] = document.getElementById('srNo'+(i+1)).value;
-		 grade['quantity'] = document.getElementById('tblQty'+(i+1)).value;
-		 grade['grade'] = document.getElementById('grade'+(i+1)).value;
-		 grade['description'] = document.getElementById('description'+(i+1)).value;
-		 grade['moisture'] = document.getElementById('moisture'+(i+1)).value;
-		 grade['rate'] = document.getElementById('rate'+(i+1)).value;
-		 if(document.getElementById('gradeId'+(i+1)) != null){
-			 grade['gradeId'] = document.getElementById('gradeId'+(i+1)).value;
-			}
-		 grade['pdcCheck'] = document.getElementById('pdcCheck'+(i+1)).value;
-	    
-		 gradeList.push(grade);
-		 
+	var netQuantity = document.getElementById("quantity").value;
+	var quantityDivisions = document.getElementsByName('dividedQuantity');
+	var sumOfQuantities = 0;
+	for(j=0;j<quantityDivisions.length;j++){
+		sumOfQuantities = Number(sumOfQuantities) + Number(quantityDivisions[j].value); 
 	}
-	jsonObj['gradeList']=gradeList;
-	
-	console.log(jsonObj);
-	
-	var jsonStr = JSON.stringify(jsonObj);
-	
-	document.getElementById('output').value=jsonStr;
-	
-	document.getElementById('gradeForm').submit();
+	if(sumOfQuantities >= netQuantity){
+		alert('Weight Division is greater then Net Quantity.');
+	}else{
+		var jsonObj = {};
+		
+		jsonObj['rst'] = document.getElementById('rst').value;
+		jsonObj['material'] = document.getElementById("material").value;
+		jsonObj['totalQuantity'] = document.getElementById("quantity").value;
+		jsonObj['vendorName'] = document.getElementById("vendorName").value;
+		jsonObj['vendorAddress'] = document.getElementById("vendorAddress").value;
+		jsonObj['vendorMobile'] = document.getElementById("vendorMobile").value;
+		jsonObj['weighmentId'] = document.getElementById("weighmentId").value;
+		jsonObj['authorizer'] = document.getElementById("authorizer").value;
+		jsonObj['bonusPerQtl'] = document.getElementById("bonusAmount").value;
+		jsonObj['pdcMonths'] = document.getElementById("pdcMonths").value;
+		jsonObj['pdcDate'] = document.getElementById("pdcDate").value;
+		jsonObj['pdcRate'] = document.getElementById("pdcRate").value;
+		
+		var noOfRows = document.getElementById('tableBody').childElementCount;
+		
+		var gradeList=[];
+		
+		for(i=0;i<noOfRows;i++){
+			grade={};
+			
+			 grade['srNo'] = document.getElementById('srNo'+(i+1)).value;
+			 grade['quantity'] = document.getElementById('tblQty'+(i+1)).value;
+			 grade['grade'] = document.getElementById('grade'+(i+1)).value;
+			 grade['description'] = document.getElementById('description'+(i+1)).value;
+			 grade['moisture'] = document.getElementById('moisture'+(i+1)).value;
+			 grade['rate'] = document.getElementById('rate'+(i+1)).value;
+			 if(document.getElementById('gradeId'+(i+1)) != null){
+				 grade['gradeId'] = document.getElementById('gradeId'+(i+1)).value;
+				}
+			 grade['pdcCheck'] = document.getElementById('pdcCheck'+(i+1)).value;
+		    
+			 gradeList.push(grade);
+		}
+		jsonObj['gradeList']=gradeList;
+		
+		console.log(jsonObj);
+		
+		var jsonStr = JSON.stringify(jsonObj);
+		
+		document.getElementById('output').value=jsonStr;
+		
+		document.getElementById('gradeForm').submit();
+	}
 }
 
 
