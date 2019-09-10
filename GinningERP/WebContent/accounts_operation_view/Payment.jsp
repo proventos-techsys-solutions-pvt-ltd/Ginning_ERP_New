@@ -498,6 +498,18 @@
 		  win.focus();
 		}
 	
+	document.addEventListener('click',function(e){
+		if(e.srcElement.tagName === 'TR' && e.srcElement.parentNode.id === 'tableBody'){
+			var invoiceNo = e.srcElement.children[0].innerHTML.trim();
+			fetchInvoiceData(invoiceNo);
+		}
+		if(e.srcElement.tagName === 'TD' && e.srcElement.parentNode.parentNode.id === 'tableBody'){
+			var row = e.srcElement.parentNode;
+			var invoiceNo = row.children[0].innerHTML.trim();
+			fetchInvoiceData(invoiceNo);
+		}
+	})
+	
 	</script>
 </body>
 </html>	
