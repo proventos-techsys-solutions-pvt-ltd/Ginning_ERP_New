@@ -174,7 +174,7 @@
 					<div class="form-row border-top">
 						<div class="col-md-1 offset-md-10 r-p-all">
 							<div class="d-flex justify-content-end align-items-center">
-								<button type="button" class="btn btn-success btn-sm change-button " id="submitGrades" onclick="submitGradingData()">Approve</button>
+								<button type="button" class="btn btn-success btn-sm change-button " id="submitGrades" >Approve</button>
 							</div>
 						</div>
 						<div class="col-md-1 r-p-all">
@@ -275,6 +275,23 @@ function setDataForNewGrading(data){
 	var blacklisted;
 	var membership;
 	console.log(data);
+	document.getElementById("pdcAmount").value = 0;
+	document.getElementById("pdcBonusAmount").value = 0;
+	document.getElementById("pdcRate").value = 50;
+	document.getElementById("pdcMonths").value = 1;
+	
+	var inputElements = document.getElementsByTagName('input');
+	for(i=0;i<inputElements.length;i++){
+		if(inputElements[i].id != 'rst'){
+			inputElements[i].disabled=false;
+		}
+	}
+	var selectElements = document.getElementsByTagName('select');
+	for(i=0;i<selectElements.length;i++){
+		selectElements[i].disabled = false;
+	}
+
+	setPDCDate();
 	document.getElementById("vendorName").value = data[0].vendorName;
 	document.getElementById("vendorAddress").value = data[0].vendorAddress;
 	document.getElementById("vendorMobile").value = data[0].vendorMobile;
@@ -347,7 +364,7 @@ document.addEventListener("change",function(e){
 	for(j=0;j<quantityDivisions.length;j++){
 		sumOfQuantities = Number(sumOfQuantities) + Number(quantityDivisions[j].value); 
 	}
-	if(sumOfQuantities >= totalQuantity){
+	if(sumOfQuantities > totalQuantity){
 		e.srcElement.value = totalQuantity - (sumOfQuantities - e.srcElement.value); 
 		alert('Weight Division is greater then Net Quantity.');
 	}else{
@@ -447,8 +464,10 @@ function submitGradingData(){
 	for(j=0;j<quantityDivisions.length;j++){
 		sumOfQuantities = Number(sumOfQuantities) + Number(quantityDivisions[j].value); 
 	}
-	if(sumOfQuantities >= netQuantity){
+	if(sumOfQuantities > netQuantity){
 		alert('Weight Division is greater then Net Quantity.');
+	}else if(sumOfQuantities < netQuantity){
+		alert('Weight Division is less then Net Quantity.');
 	}else{
 		var jsonObj = {};
 		
@@ -524,10 +543,22 @@ document.addEventListener('click',function(e){
 function setGradeUpdationData(data)
 {
 	document.getElementById('tableBody').innerHTML = '';
-	
+	var inputElements = document.getElementsByTagName('input');
+	for(i=0;i<inputElements.length;i++){
+		if(inputElements[i].id != 'rst'){
+			inputElements[i].disabled=false;
+		}
+	}
+	var selectElements = document.getElementsByTagName('select');
+	for(i=0;i<selectElements.length;i++){
+		selectElements[i].disabled = false;
+	}
 	var blacklisted;
 	var membership;
 	document.getElementById("pdcAmount").value = 0;
+	document.getElementById("pdcBonusAmount").value = 0;
+	document.getElementById("pdcRate").value = 0;
+	document.getElementById("pdcMonths").value = 1;
 	document.getElementById("vendorName").value = data[0].customerName;
 	document.getElementById("vendorAddress").value = data[0].customerAddress;
 	document.getElementById("vendorMobile").value = data[0].customerMobile;
@@ -604,8 +635,10 @@ function setGradeUpdationData(data)
 			document.getElementById("pdcDate").value = data[i].pdcDate;
 			var date2 = new Date(data[i].pdcDate);
 			var date1 = new Date(data[i].weighmentDate);
-			document.getElementById("pdcMonths").value = date2.getMonth() - date1.getMonth() + (12 * (date2.getFullYear() - date1.getFullYear()));
-				
+			var noOfMonths = date2.getMonth() - date1.getMonth() + (12 * (date2.getFullYear() - date1.getFullYear()));
+			document.getElementById("pdcMonths").value = noOfMonths;
+			document.getElementById("pdcRate").value = 	data[i].pdcAmount/noOfMonths;
+			document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) + Number(data[i].pdcAmount * Number(data[i].quantity)/100)
 		}
 		else if(data[i].pdcAmount<=0)
 		{

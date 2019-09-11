@@ -697,6 +697,18 @@ function setCurrentDate(){
 	//Submit invoice form
 	function submitForm(){
 		
+		vat netAmountPayable = document.getElementById('net').value;
+		var paymentAmounts = document.getElementsByName('payAmount');
+		var totalAmountPaymentMode = 0;
+		for(k=0; k<paymentAmounts; k++){
+			totalAmountPaymentMode = totalAmountPaymentMode + paymentAmounts[k].value;
+		}
+		if(totalAmountPaymentMode < netAmountPayable){
+			alert('Total amount in payment mode table is less than net payable.');
+		}else if(totalAmountPaymentMode > netAmountPayable){
+			alert('Total amount in payment mode table is greater than net payable.');
+		}
+		
 		var jsonObj = {};
 		
 		jsonObj['authorizer'] = document.getElementById('authorizer').value;
