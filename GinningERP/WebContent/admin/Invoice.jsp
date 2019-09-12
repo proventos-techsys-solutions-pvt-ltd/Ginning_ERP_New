@@ -697,87 +697,90 @@ function setCurrentDate(){
 	//Submit invoice form
 	function submitForm(){
 		
-		vat netAmountPayable = document.getElementById('net').value;
+		var netAmountPayable = document.getElementById('net').value;
 		var paymentAmounts = document.getElementsByName('payAmount');
 		var totalAmountPaymentMode = 0;
-		for(k=0; k<paymentAmounts; k++){
-			totalAmountPaymentMode = totalAmountPaymentMode + paymentAmounts[k].value;
+		for(k=0; k<paymentAmounts.length; k++){
+			totalAmountPaymentMode = Number(totalAmountPaymentMode) + Number(paymentAmounts[k].value);
 		}
+		console.log('totalAmountPaymentMode---'+totalAmountPaymentMode);
+		console.log('netAmountPayable---'+netAmountPayable);
 		if(totalAmountPaymentMode < netAmountPayable){
 			alert('Total amount in payment mode table is less than net payable.');
 		}else if(totalAmountPaymentMode > netAmountPayable){
 			alert('Total amount in payment mode table is greater than net payable.');
-		}
+		}else if(totalAmountPaymentMode === netAmountPayable){
 		
-		var jsonObj = {};
-		
-		jsonObj['authorizer'] = document.getElementById('authorizer').value;
-		jsonObj['invoiceNo'] = document.getElementById('invoiceNo').value;
-		jsonObj['customerId'] = document.getElementById('customerId').value;
-		var total = Number(document.getElementById('totalAmount').value);
-		jsonObj['total'] = total.toString();
-		jsonObj['amountPaid'] = document.getElementById('advance').value;
-		jsonObj['pending'] = (Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value)).toString();
-		jsonObj['invoiceDate'] = document.getElementById('invoiceDate').value;
-		jsonObj['companyId'] = document.getElementById('companyId').value;
-		jsonObj['note'] = document.getElementById('note').value;
-		jsonObj['bankId'] = document.getElementById('bankId').value;
-		
-		var noOfRows = document.getElementById('tableBody').childElementCount;
-		console.log('no of Rows --- '+noOfRows);
-		
-		var itemList = [];
-		var totalQuantity=0;
-		for(i=0; i<noOfRows; i++){
-			item = {};
-			 
-				item['weighmentId'] = document.getElementById('weighmentId'+(i+1)).value;
-				item['gradeId'] = document.getElementById('gradeId'+(i+1)).value;
-				item['rst'] = document.getElementById('tableRst'+(i+1)).value;
-				item['amanat'] = document.getElementById('amanatCheck'+(i+1)).value;
-				itemList.push(item);
-				totalQuantity = totalQuantity+ Number(document.getElementById('quantity'+(i+1)).value);
-		}
-		
-		jsonObj['items'] = itemList;
-		jsonObj['totalQuantity'] = totalQuantity.toString();
-		jsonObj['unloadingCharges'] = document.getElementById('unloadingCharges').value;
-		jsonObj['totalBonus'] = document.getElementById('totalBonus').value;
-		jsonObj['netPayable'] = (Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value)).toString();
-		jsonObj['pdcAmount'] = document.getElementById('totalPdcAmount').value;
-		jsonObj['pdcDate'] = document.getElementById('pdcDate').value;
-		/* 
-		if(document.getElementById('cashAmount').value === ""){
-			jsonObj['cashAmount'] = 0;
-		}else{
-			jsonObj['cashAmount'] = document.getElementById('cashAmount').value;
-		}
-		if(document.getElementById('chequeAmount').value === ""){
-			jsonObj['chequeAmount'] = 0;
-		}else{
-			jsonObj['chequeAmount'] = document.getElementById('chequeAmount').value;
-		}
-		if(document.getElementById('rtgsAmount').value === ""){
-			jsonObj['rtgsAmount'] = 0;
-		}else{
-			jsonObj['rtgsAmount'] = document.getElementById('rtgsAmount').value;
-		} */
-		payment = {};
-		var paymentModes = document.getElementsByName('paymentMode');
-		var paymentAmounts = document.getElementsByName('payAmount');
-		for(j=0;j<paymentModes.length;j++){
+			var jsonObj = {};
 			
-			payment[paymentModes[j].value.trim()] = paymentAmounts[j].value;
+			jsonObj['authorizer'] = document.getElementById('authorizer').value;
+			jsonObj['invoiceNo'] = document.getElementById('invoiceNo').value;
+			jsonObj['customerId'] = document.getElementById('customerId').value;
+			var total = Number(document.getElementById('totalAmount').value);
+			jsonObj['total'] = total.toString();
+			jsonObj['amountPaid'] = document.getElementById('advance').value;
+			jsonObj['pending'] = (Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value)).toString();
+			jsonObj['invoiceDate'] = document.getElementById('invoiceDate').value;
+			jsonObj['companyId'] = document.getElementById('companyId').value;
+			jsonObj['note'] = document.getElementById('note').value;
+			jsonObj['bankId'] = document.getElementById('bankId').value;
+			
+			var noOfRows = document.getElementById('tableBody').childElementCount;
+			console.log('no of Rows --- '+noOfRows);
+			
+			var itemList = [];
+			var totalQuantity=0;
+			for(i=0; i<noOfRows; i++){
+				item = {};
+				 
+					item['weighmentId'] = document.getElementById('weighmentId'+(i+1)).value;
+					item['gradeId'] = document.getElementById('gradeId'+(i+1)).value;
+					item['rst'] = document.getElementById('tableRst'+(i+1)).value;
+					item['amanat'] = document.getElementById('amanatCheck'+(i+1)).value;
+					itemList.push(item);
+					totalQuantity = totalQuantity+ Number(document.getElementById('quantity'+(i+1)).value);
+			}
+			
+			jsonObj['items'] = itemList;
+			jsonObj['totalQuantity'] = totalQuantity.toString();
+			jsonObj['unloadingCharges'] = document.getElementById('unloadingCharges').value;
+			jsonObj['totalBonus'] = document.getElementById('totalBonus').value;
+			jsonObj['netPayable'] = (Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value)).toString();
+			jsonObj['pdcAmount'] = document.getElementById('totalPdcAmount').value;
+			jsonObj['pdcDate'] = document.getElementById('pdcDate').value;
+			/* 
+			if(document.getElementById('cashAmount').value === ""){
+				jsonObj['cashAmount'] = 0;
+			}else{
+				jsonObj['cashAmount'] = document.getElementById('cashAmount').value;
+			}
+			if(document.getElementById('chequeAmount').value === ""){
+				jsonObj['chequeAmount'] = 0;
+			}else{
+				jsonObj['chequeAmount'] = document.getElementById('chequeAmount').value;
+			}
+			if(document.getElementById('rtgsAmount').value === ""){
+				jsonObj['rtgsAmount'] = 0;
+			}else{
+				jsonObj['rtgsAmount'] = document.getElementById('rtgsAmount').value;
+			} */
+			payment = {};
+			var paymentModes = document.getElementsByName('paymentMode');
+			var paymentAmounts = document.getElementsByName('payAmount');
+			for(j=0;j<paymentModes.length;j++){
+				
+				payment[paymentModes[j].value.trim()] = paymentAmounts[j].value;
+			}
+			
+			jsonObj['paymentModes'] = payment;
+			
+			var jsonStr = JSON.stringify(jsonObj);
+			console.log(jsonStr);
+			
+			document.getElementById('output').value=jsonStr;
+			
+			document.getElementById('adminApprovalForm').submit();
 		}
-		
-		jsonObj['paymentModes'] = payment;
-		
-		var jsonStr = JSON.stringify(jsonObj);
-		console.log(jsonStr);
-		
-		document.getElementById('output').value=jsonStr;
-		
-		document.getElementById('adminApprovalForm').submit();
 	}
 	
 	//Change Total Amount in Payment Mode amount Table
