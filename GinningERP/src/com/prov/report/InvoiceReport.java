@@ -143,13 +143,20 @@ public ArrayList<Invoice> getReport() {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String invSql = "SELECT IM.ID, IM.INV_DATE, IM.INVOICE_NO, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.PENDING, IM.TOTAL, IM.NET_AMOUNT, IM.AMOUNTPAID, CM.NAME, CM.ADDRESS, CM.MOBILE\r\n" + 
-					"FROM INVOICE_MAST IM, CUSTOMER_MAST CM\r\n" + 
-					"WHERE IM.CUSTOMER_ID = CM.ID";
+			String invSql = "SELECT DISTINCT  \r\n" + 
+					"IM.ID, IM.INV_DATE, IM.INVOICE_NO, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.PENDING, IM.TOTAL, IM.NET_AMOUNT, IM.AMOUNTPAID, \r\n" + 
+					"CM.NAME, CM.ADDRESS, CM.MOBILE,\r\n" + 
+					"II.RST\r\n" + 
+					"FROM INVOICE_MAST IM, CUSTOMER_MAST CM, INVOICE_ITEMS II\r\n" + 
+					"WHERE IM.CUSTOMER_ID = CM.ID AND\r\n" + 
+					"II.INVOICE_ID = IM.ID AND\r\n" + 
+					"IM.PENDING <> 0\r\n" + 
+					"ORDER BY RST";
 			
 			PreparedStatement stmt = con.prepareStatement(invSql);
 			
 			rs = stmt.executeQuery();
+			int i = 0;
 			
 			while (rs.next()) {
 				
@@ -173,9 +180,22 @@ public ArrayList<Invoice> getReport() {
 				jsonObj.put("customerName", rs.getString(10));
 				jsonObj.put("customerAddress", rs.getString(11));
 				jsonObj.put("customerMobile", rs.getString(12));
-				
-				report.put(jsonObj);
-				
+				jsonObj.put("rst", rs.getString(13));
+				if(report.length() != 0) {
+					if(report.getJSONObject(i).getString("invoiceNo").equals(jsonObj.getString("invoiceNo"))){
+						//report.getJSONObject(i).append("rst", ","+jsonObj.getInt("rst"));
+						String previousRst = report.getJSONObject(i).getString("rst");
+						report.getJSONObject(i).remove("rst");
+						report.getJSONObject(i).put("rst", previousRst+", "+jsonObj.getString("rst"));
+						continue;
+					}else if(!report.getJSONObject(i).getString("invoiceNo").equals(jsonObj.getString("invoiceNo")))
+					{
+						report.put(jsonObj);
+						i++;
+					}
+				}else {
+					report.put(jsonObj);
+				}
 			}
 			
 			stmt.close();

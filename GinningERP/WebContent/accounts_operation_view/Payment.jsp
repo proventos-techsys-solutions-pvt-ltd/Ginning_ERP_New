@@ -166,6 +166,7 @@
 						<tr>
 							<th>Invoice No</th>
 							<th>Customer Name</th>
+							<th>RST</th>
 							<th>Amount to Pay</th>
 						</tr>
 					</thead>
@@ -226,6 +227,7 @@
 		if(invReport.readyState == 4){
 			var response = this.response.trim();
 			var data = JSON.parse(response);
+			console.log(data);
 			setPendingTable(data);
 		} 
 	}
@@ -240,10 +242,12 @@
 			var cell1 = row.insertCell(0);
 			var cell2 = row.insertCell(1);
 			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
 			
 			cell1.innerHTML = data[i].invoiceNo;
 			cell2.innerHTML = data[i].customerName;
-			cell3.innerHTML = data[i].pendingAmount;
+			cell3.innerHTML = data[i].rst;
+			cell4.innerHTML = data[i].pendingAmount;
 		}
 	}
 	
