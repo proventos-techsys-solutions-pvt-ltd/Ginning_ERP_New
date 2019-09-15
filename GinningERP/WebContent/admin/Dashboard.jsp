@@ -66,10 +66,10 @@
 	  	<div class="col-md-3">
 	  			<div class="d-flex justify-content-between align-items-center inner3 border">
 	  				<div>
-	  					Financial Year	
+	  					Raw Cotton	
 	  				</div>
 	  				<div>
-	  					2019-20
+	  					1000Qtl
 	  				</div>
 	  			</div>
 	  	</div>

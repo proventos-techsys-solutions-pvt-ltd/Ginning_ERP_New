@@ -24,7 +24,15 @@ public class GradeDetails {
 		this.pdcDate = pdcDate;
 	}
 
-	private String material, grade, authorizedBy;
+	private String material, grade, authorizedBy, modeOfPayment;
+
+	public String getModeOfPayment() {
+		return modeOfPayment;
+	}
+
+	public void setModeOfPayment(String modeOfPayment) {
+		this.modeOfPayment = modeOfPayment;
+	}
 
 	private float bonusPerQtl;
 	

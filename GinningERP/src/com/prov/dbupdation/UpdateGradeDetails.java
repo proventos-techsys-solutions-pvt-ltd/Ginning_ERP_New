@@ -23,7 +23,7 @@ public class UpdateGradeDetails {
 			e.printStackTrace();
 		}
 
-		String updateGradeDetails = "{ ? = call UPDATE_GRADEDETAILS(?,?,?,?,?,?,?,?,?,?,?,?) }";
+		String updateGradeDetails = "{ ? = call UPDATE_GRADEDETAILS(?,?,?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(updateGradeDetails);
@@ -47,6 +47,7 @@ public class UpdateGradeDetails {
 				Date pdcDate = Date.valueOf(gd.getPdcDate());
 				cs.setDate(13, pdcDate);
 			}
+			cs.setString(14, gd.getModeOfPayment());
 			
 			cs.executeUpdate();
 			

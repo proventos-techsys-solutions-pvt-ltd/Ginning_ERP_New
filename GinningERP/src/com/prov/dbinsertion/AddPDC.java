@@ -20,7 +20,7 @@ public class AddPDC {
 			e.printStackTrace();
 		}
 		
-		String addPDC = "{ ? = call ADD_PDC(?,?,?,?,?,?,?) }";
+		String addPDC = "{ ? = call ADD_PDC(?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -28,15 +28,16 @@ public class AddPDC {
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
-			Date date = Date.valueOf(p.getChequeDate());
+			Date payDate = Date.valueOf(p.getPayDate());
 			
 			cs.setInt(2, p.getCustomerId());
 			cs.setInt(3, p.getInvoiceId());
-			cs.setInt(4, p.getBankId());
-			cs.setDate(5, date);
-			cs.setDouble(6, p.getChequeAmount());
-			cs.setString(7, p.getChequeNo());
-			cs.setString(8, p.getPayeeName());
+			cs.setDouble(4, p.getAmount());
+			cs.setDate(5, payDate);
+			cs.setString(6, p.getModeOfPayment());
+			cs.setInt(7, p.getChequeId());
+			cs.setInt(8, p.getRtgsId());
+			cs.setInt(9, p.getGlId());
 			
 			cs.executeUpdate();
 			
@@ -54,47 +55,4 @@ public class AddPDC {
 		
 		return id;
 	}
-	
-
-	public int addPDCWhileGrading(PDC p)
-	{
-		Connection con = null;
-		int id = 0;
-		try {
-			con = OracleConnection.getConnection();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		String addPDC = "{ ? = call ADD_PDC(?,?,?) }";
-		CallableStatement cs;
-		try {
-			
-			cs = con.prepareCall(addPDC);
-			
-			cs.registerOutParameter(1, Types.NUMERIC);
-			
-			Date date = Date.valueOf(p.getChequeDate());
-			
-			cs.setInt(2, p.getCustomerId());
-			cs.setDate(3, date);
-			cs.setDouble(4, p.getChequeAmount());
-			
-			cs.executeUpdate();
-			
-			id = cs.getInt(1);
-			
-			p.setId(id);
-			
-			cs.close();
-			con.close();
-			
-			System.out.println("Insertion Succesful-"+id);
-			} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return id;
-	}
-
 }

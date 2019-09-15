@@ -70,6 +70,16 @@
                                    <textarea id="customerData" name="customerData" class="form-control form-control-sm" rows="3" readonly></textarea>
                                 </div>
                                </div>
+                               <div class="row row-background">
+                               		<div class="col-md-3 col-md-3-margin">
+                               			<label for="" class="lbl-rm-all">Update Invoice</label>
+                                		<div class="d-flex justify-content-start align-items-center">
+	                                    <input id="" name="" type="text" class="form-control form-control-sm" placeholder="Invoice No">
+					    				<button class="btn btn-success btn-sm btn-no-radius" type="button" onclick="">Fetch</button>
+                                	</div>
+                               		</div>
+                               </div>
+                               
                             <div class="row row-background">
                                 <div class="col-md-2">
                                     <label for="" class="lbl-rm-all">Invoice No </label>
@@ -113,13 +123,13 @@
                                         <tr class="table-back">
                                             <th width="5%">RST No</th>
                                             <th width="8%">Material</th>
-                                            <th width="10%">Quantity</th>
-                                            <th width="10%">Grade</th>
+                                            <th width="5%">Quantity</th>
+                                            <th width="7%">Grade</th>
                                             <th width="5%">Moisture</th>
                                             <th width="5%">Rate / Qntl</th>
                                             <th width="5%">Amount</th>
                                             <th width="2%" class="text-center">Amanat</th>
-                                            <th width="2%" class="text-center">PDC Bonus</th>   
+                                            <th width="5%" class="text-center">PDC Bonus</th>   
                                         </tr>
                                         </thead>
                                         <tbody id='tableBody'>
@@ -146,6 +156,8 @@
 										<div class="row-div" id="pdcData" hidden>
 											<label for="" class="lbl-rm-all">PDC Date</label> 
 											<input type="date" class="form-control form-control-sm" name="pdcDate" id="pdcDate" readonly/>
+											<label for="" class="lbl-rm-all">PDC Payment Mode</label> 
+											<input type="text" class="form-control form-control-sm" name="pdcPaymentMode" id="pdcPaymentMode" readonly/>
 										</div>
 									</div>
 									
@@ -225,9 +237,11 @@
                                    </div>
 								
                                 <div class="row row-background border-top">
-                                <div class="col-md-12">
+                                <div class="col-md-12 mt-3 mb-5">
                                     <div class="d-flex justify-content-end">
-                                        <button type="button" class="btn btn-success btn-sm" onclick="submitForm()">Approve</button>
+                                        <button type="button" class="btn btn-success btn_width" onclick="submitForm()">Approve</button>
+                                        <button type="button" class="btn btn-success btn_width ml-1" >Reset</button>
+                                        <button type="button" class="btn btn-success btn_width ml-1" disabled>Delete</button>
                                     </div>
                                 </div>
                                 </div>
@@ -611,6 +625,7 @@ function setCurrentDate(){
 				document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) + Number(pdcBonusAmount);
 				document.getElementById('totalPdcAmount').value = Number(document.getElementById('totalPdcAmount').value) + Number(pdcBonusAmount) + Number(amount);
 				document.getElementById('pdcDate').value = data[i].pdcDate;
+				document.getElementById('pdcPaymentMode').value = data[i].pdcPaymentMode;
 				document.getElementById("pdcData").hidden = false;
 			}else if(data[i].pdcAmount<=0){
 				cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="0" readonly>';
@@ -748,6 +763,7 @@ function setCurrentDate(){
 			jsonObj['netPayable'] = (Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value)).toString();
 			jsonObj['pdcAmount'] = document.getElementById('totalPdcAmount').value;
 			jsonObj['pdcDate'] = document.getElementById('pdcDate').value;
+			jsonObj['pdcPaymentMode'] = document.getElementById('pdcPaymentMode').value;
 			/* 
 			if(document.getElementById('cashAmount').value === ""){
 				jsonObj['cashAmount'] = 0;

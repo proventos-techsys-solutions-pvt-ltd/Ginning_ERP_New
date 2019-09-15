@@ -141,13 +141,9 @@
         <div class="form-row border-top">
 	        <div class="col-md-12">
   			<div class="d-flex justify-content-end align-items-center ">
-  				<button type="button" class="btn btn-success change-button" id="submitRstEntry" onclick="submitRSTEntry()">Submit</button>
-  				&nbsp;
-  				<button type="button" class="btn btn-success change-button" onclick="resetFormData()">Reset</button>
-  				&nbsp;
-  				<button type="button" class="btn btn-success change-button" onclick="printReceipt()">Print</button>
-  				&nbsp;
-  				<button type="button" class="btn btn-success change-button">PDF</button>
+  				<button type="button" class="btn btn-success change-button btn_width" id="submitRstEntry" onclick="submitRSTEntry()">Submit</button>
+  				<button type="button" class="btn btn-success change-button btn_width ml-1" onclick="resetFormData()">Reset</button>
+  				<button type="button" class="btn btn-success change-button btn_width ml-1" onclick="printReceipt()">Print</button>
   			</div>
   			</div>
         </div>
@@ -742,6 +738,18 @@ function printReceipt(){
 	var weighmentId = document.getElementById('id').value;
 	window.open('${pageContext.request.contextPath}/report/RSTPrintOnly.jsp?weighmentId='+weighmentId);
 }
+
+document.addEventListener('click',function(e){
+	if(e.srcElement.tagName === 'TD' && e.srcElement.parentNode.parentNode.id === 'tableBody'){
+		var row = e.srcElement.parentNode;
+		var rst = row.cells[0].innerHTML.trim();
+		fetchDataForSecondWeighment(rst);
+	}
+	if(e.srcElement.tagName === 'TR' && e.srcElement.parentNode.id === 'tableBody'){
+		var rst = e.srcElement.cells[0].innerHTML.trim();
+		fetchDataForSecondWeighment(rst);
+	}
+})
 
 //Function calls on page load
 pendingTareWt();

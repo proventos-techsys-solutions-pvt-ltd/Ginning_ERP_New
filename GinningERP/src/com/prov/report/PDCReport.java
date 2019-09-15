@@ -3,15 +3,12 @@ package com.prov.report;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.prov.bean.PDC;
 import com.prov.db.OracleConnection;
-import com.prov.misc.NumberToWords;
 
 public class PDCReport {
 
@@ -24,28 +21,28 @@ public class PDCReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT " + 
-						"PDC.ID,\r\n" + 
+			String sql = "SELECT \r\n" + 
+						"PDC.ID PDC_ID,\r\n" + 
 						"PDC.CUSTOMER_ID,\r\n" + 
 						"PDC.INVOICE_ID,\r\n" + 
-						"PDC.BANK_ID,\r\n" + 
-						"PDC.PAYEE_NAME,\r\n" + 
-						"PDC.CHEQUE_DATE,\r\n" + 
-						"PDC.CHEQUE_AMOUNT,\r\n" + 
+						"PDC.AMOUNT,\r\n" + 
+						"PDC.PAY_DATE,\r\n" + 
+						"PDC.MODE_OF_PAYMENT,\r\n" + 
+						"PDC.CHEQUE_ID,\r\n" + 
+						"PDC.RTGS_ID,\r\n" + 
+						"PDC.CASH_GL_ID,\r\n" + 
 						"IM.INVOICE_NO,\r\n" + 
-						"BM.BANK_NAME,\r\n" + 
-						"BM.ACCOUNT_NO,\r\n" + 
-						"COMP.ID,\r\n" + 
-						"COMP.NAME,\r\n" + 
-						"PDC.CHEQUE_NO\r\n" + 
+						"COMP.ID COMPANY_ID,\r\n" + 
+						"COMP.NAME COMPANY_NAME,\r\n" + 
+						"CM.NAME CUSTOMER_NAME\r\n" + 
 						"FROM PDC_MAST PDC,\r\n" + 
 						"INVOICE_MAST IM,\r\n" + 
-						"BANK_MAST BM,\r\n" + 
-						"company_master COMP\r\n" + 
+						"company_master COMP,\r\n" + 
+						"CUSTOMER_MAST CM\r\n" + 
 						"WHERE\r\n" + 
 						"pdc.invoice_id = IM.ID AND\r\n" + 
-						"pdc.bank_id = BM.ID AND\r\n" + 
-						"im.company_id = COMP.ID";
+						"im.company_id = COMP.ID AND\r\n" + 
+						"CM.ID = pdc.customer_id";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -108,11 +105,12 @@ public class PDCReport {
 				pdc.setId(rs.getInt(1));
 				pdc.setCustomerId(rs.getInt(2));
 				pdc.setInvoiceId(rs.getInt(3));
-				pdc.setBankId(rs.getInt(4));
-				pdc.setPayeeName(rs.getString(5));
-				pdc.setChequeDate(rs.getString(6));
-				pdc.setChequeAmount(rs.getDouble(7));
-				pdc.setChequeNo(rs.getString(8));
+				pdc.setAmount(rs.getDouble(4));
+				pdc.setPayDate(rs.getString(5));
+				pdc.setModeOfPayment(rs.getString(6));
+				pdc.setChequeId(rs.getInt(7));
+				pdc.setRtgsId(rs.getInt(8));
+				pdc.setGlId(rs.getInt(9));
 				
 			}
 			
@@ -126,56 +124,46 @@ public class PDCReport {
 		return pdc;
 	}
 	
-	public JSONObject getPDCForPrinting(int chequeId) {
-		ResultSet rs = null;
-		Connection con = null;
-		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
-		NumberToWords ntw = new NumberToWords();
-		JSONObject jsonObject = new JSONObject();
-		
-		try {
-			con = OracleConnection.getConnection();
-			
-			String sql = "SELECT PAYEE_NAME, CHEQUE_AMOUNT, CHEQUE_DATE FROM PDC_MAST WHERE ID =?";
-			
-			PreparedStatement stmt = con.prepareStatement(sql);
-			
-			stmt.setInt(1, chequeId);
-			
-			rs = stmt.executeQuery();
-			
-			while (rs.next()) {
-				
-				jsonObject.put("vendor", rs.getString(1));
-				double amount = Double.parseDouble(rs.getString(2));
-				String amountInWords = ntw.convertToIndianCurrency(Double.toString(amount));
-				jsonObject.put("totalInDigits", Double.toString(amount) + " /-");
-				jsonObject.put("totalInWords", amountInWords);
-				String date = rs.getString(3);
-				Date dateObj = sdf1.parse(date);
-				String dateFormatted = sdf2.format(dateObj);
-				dateFormatted = dateFormatted.replaceAll("-", "");
-				String[] dateArr = dateFormatted.split("");
-				jsonObject.put("d1", dateArr[0].trim());
-				jsonObject.put("d2", dateArr[1].trim());
-				jsonObject.put("m1", dateArr[2].trim());
-				jsonObject.put("m2", dateArr[3].trim());
-				jsonObject.put("y1", dateArr[4].trim());
-				jsonObject.put("y2", dateArr[5].trim());
-				jsonObject.put("y3", dateArr[6].trim());
-				jsonObject.put("y4", dateArr[7].trim());
-				
-			}
-			
-			rs.close();
-			stmt.close();
-			con.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return jsonObject;
-	}
+	/*
+	 * public JSONObject getPDCForPrinting(int chequeId) { ResultSet rs = null;
+	 * Connection con = null; SimpleDateFormat sdf1 = new
+	 * SimpleDateFormat("yyyy-MM-dd"); SimpleDateFormat sdf2 = new
+	 * SimpleDateFormat("dd-MM-yyyy"); NumberToWords ntw = new NumberToWords();
+	 * JSONObject jsonObject = new JSONObject();
+	 * 
+	 * try { con = OracleConnection.getConnection();
+	 * 
+	 * String sql =
+	 * "SELECT PAYEE_NAME, CHEQUE_AMOUNT, CHEQUE_DATE FROM PDC_MAST WHERE ID =?";
+	 * 
+	 * PreparedStatement stmt = con.prepareStatement(sql);
+	 * 
+	 * stmt.setInt(1, chequeId);
+	 * 
+	 * rs = stmt.executeQuery();
+	 * 
+	 * while (rs.next()) {
+	 * 
+	 * jsonObject.put("vendor", rs.getString(1)); double amount =
+	 * Double.parseDouble(rs.getString(2)); String amountInWords =
+	 * ntw.convertToIndianCurrency(Double.toString(amount));
+	 * jsonObject.put("totalInDigits", Double.toString(amount) + " /-");
+	 * jsonObject.put("totalInWords", amountInWords); String date = rs.getString(3);
+	 * Date dateObj = sdf1.parse(date); String dateFormatted = sdf2.format(dateObj);
+	 * dateFormatted = dateFormatted.replaceAll("-", ""); String[] dateArr =
+	 * dateFormatted.split(""); jsonObject.put("d1", dateArr[0].trim());
+	 * jsonObject.put("d2", dateArr[1].trim()); jsonObject.put("m1",
+	 * dateArr[2].trim()); jsonObject.put("m2", dateArr[3].trim());
+	 * jsonObject.put("y1", dateArr[4].trim()); jsonObject.put("y2",
+	 * dateArr[5].trim()); jsonObject.put("y3", dateArr[6].trim());
+	 * jsonObject.put("y4", dateArr[7].trim());
+	 * 
+	 * }
+	 * 
+	 * rs.close(); stmt.close(); con.close(); } catch (Exception e) {
+	 * e.printStackTrace(); }
+	 * 
+	 * return jsonObject; }
+	 */
 	
 }

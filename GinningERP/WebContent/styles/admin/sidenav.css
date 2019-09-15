@@ -123,8 +123,18 @@ checkbox{
 .btn{
 	border-radius:0px;
 }
+.btn_width{
+	width:150px;
+	height:40px;
+	font-size:18px;
+}
+
 .table thead th {
     vertical-align: middle;
+}
+
+.col-md-3-margin{
+	margin-top:-50px;
 }
 
 /******************************************************
@@ -259,6 +269,9 @@ checkbox{
 	
 	.row{
 		margin-left:5px;
+	}
+	.col-md-3-margin{
+		margin-top:0px;
 	}
 }
 @media only screen and (min-width: 769px){

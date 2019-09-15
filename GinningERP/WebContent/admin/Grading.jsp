@@ -135,7 +135,7 @@
 							<label>PDC Bonus per qtl. per month</label>
 							<input type="text" id="pdcRate" name="pdcRate" class="form-control form-control-sm" value="50">
 						</div>
-						<div class="col-md-auto">
+						<div class="col-md-1">
 							<label>PDC Months</label>
 							<select  id="pdcMonths" name="pdcMonths" class="form-control form-control-sm" >
 								<option>0</option>
@@ -165,24 +165,29 @@
 							<label>Total PDC Amount</label>
 							<input type="text" id="pdcAmount" name="pdcAmount" class="form-control form-control-sm" value="0" readonly>
 						</div>
-						<div class="col-md-2 offset-md-1">
+						<div class="col-md-1">
+							<label>Mode</label>
+							<select class="form-control form-control-sm" id="pdcPaymentMode" name="pdcPaymentMode">
+								<option value="CHEQUE">Cheque</option>
+								<option value="RTGS">RTGS</option>
+								<option value="CASH">Cash</option>
+							</select>
+						</div>
+						<div class="col-md-2">
 							<label for="" class="lbl-rm-all">Total Amount</label> 
 	                        <input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm" value="0" readonly="readonly">
 						</div>
 					</div>
-					</div>
-					<div class="form-row border-top">
-						<div class="col-md-1 offset-md-10 r-p-all">
+						<div class="row row-background border-top">
+						<div class="col-md-12 mt-2">
 							<div class="d-flex justify-content-end align-items-center">
-								<button type="button" class="btn btn-success btn-sm change-button " id="submitGrades" >Approve</button>
+								<button type="button" class="btn btn-success btn-sm change-button btn_width" id="submitGrades" >Approve</button>
+								<button type="button" class="btn btn-success btn-sm change-button btn_width ml-1" id="updateGrades"  disabled>Update</button>
 							</div>
 						</div>
-						<div class="col-md-1 r-p-all">
-							<div class="d-flex justify-content-end align-items-center">
-								<button type="button" class="btn btn-success btn-sm change-button " id="updateGrades"  disabled>Update</button>
-							</div>
 						</div>
 					</div>
+					
 		
 
 <!-- <script src="../js/jquery-3.3.1.slim.min.js" ></script> -->
@@ -483,6 +488,7 @@ function submitGradingData(){
 		jsonObj['pdcMonths'] = document.getElementById("pdcMonths").value;
 		jsonObj['pdcDate'] = document.getElementById("pdcDate").value;
 		jsonObj['pdcRate'] = document.getElementById("pdcRate").value;
+		jsonObj['pdcPaymentMode'] = document.getElementById("pdcPaymentMode").value;
 		
 		var noOfRows = document.getElementById('tableBody').childElementCount;
 		
@@ -639,6 +645,7 @@ function setGradeUpdationData(data)
 			document.getElementById("pdcMonths").value = noOfMonths;
 			document.getElementById("pdcRate").value = 	data[i].pdcAmount/noOfMonths;
 			document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) + Number(data[i].pdcAmount * Number(data[i].quantity)/100)
+			document.getElementById('pdcPaymentMode').value = data[i].pdcPaymentMode;
 		}
 		else if(data[i].pdcAmount<=0)
 		{

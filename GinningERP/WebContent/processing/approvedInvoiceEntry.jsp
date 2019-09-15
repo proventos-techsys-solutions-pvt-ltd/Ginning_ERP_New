@@ -132,12 +132,10 @@
 			PDC pdc = new PDC();
 			
 			pdc.setCustomerId(Integer.parseInt((String)json.get("customerId")));
-			pdc.setChequeDate((String)json.get("pdcDate"));
+			pdc.setPayDate((String)json.get("pdcDate"));
 			pdc.setInvoiceId(invoiceId);
-            pdc.setChequeAmount(Double.parseDouble((String)json.get("pdcAmount")));	
-            pdc.setBankId(Integer.parseInt((String)json.get("bankId")));
-            pdc.setChequeNo("0");
-            pdc.setPayeeName("DUMMY");
+            pdc.setAmount(Double.parseDouble((String)json.get("pdcAmount")));	
+            pdc.setModeOfPayment((String)json.get("pdcPaymentMode"));
             
             AddPDC add = new AddPDC();
             

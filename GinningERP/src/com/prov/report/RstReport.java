@@ -80,7 +80,7 @@ public class RstReport {
 			con = OracleConnection.getConnection();
 			
 			String sql = "SELECT \r\n" + 
-					"GD.ID, GD.WEIGHMENT_ID, GD.MATERIAL, GD.QUANTITY, GD.GRADE, GD.RATE, GD.AUTHORIZED_BY, GD.MOISTURE, GD.BONUS_PER_QTL, GD.PDC_AMOUNT,GD.PDC_DATE,\r\n" + 
+					"GD.ID, GD.WEIGHMENT_ID, GD.MATERIAL, GD.QUANTITY, GD.GRADE, GD.RATE, GD.AUTHORIZED_BY, GD.MOISTURE, GD.BONUS_PER_QTL, GD.PDC_AMOUNT,GD.PDC_DATE, GD.PDC_PAY_MODE,\r\n" + 
 					"WM.VID, WM.RST, WM.NET, WM.WEIGHMENT_DATE, \r\n" + 
 					"CVM.CID, CVM.WEIGH_RATE, \r\n" + 
 					"CM.NAME, CM.ADDRESS, CM.MOBILE, CM.BLACKLISTED, CM.MEMBERSHIP, \r\n" + 
@@ -119,20 +119,21 @@ public class RstReport {
 					String pdcDateStr = formatter2.format(formatPdcDate);
 					jsonObj.put("pdcDate", pdcDateStr);
 				}
-				jsonObj.put("vehicleId", rs.getString(12));
-				jsonObj.put("rst", rs.getString(13));
-				jsonObj.put("netQuantity", rs.getString(14));
-				Date formatWeighDate = formatter1.parse( rs.getString(15));
+				jsonObj.put("pdcPaymentMode", rs.getString(12));
+				jsonObj.put("vehicleId", rs.getString(13));
+				jsonObj.put("rst", rs.getString(14));
+				jsonObj.put("netQuantity", rs.getString(15));
+				Date formatWeighDate = formatter1.parse( rs.getString(16));
 				String weighDateStr = formatter2.format(formatWeighDate);
 				jsonObj.put("weighmentDate", weighDateStr);
-				jsonObj.put("customerId", rs.getString(16));
-				jsonObj.put("weighRate", rs.getString(17));
-				jsonObj.put("customerName", rs.getString(18));
-				jsonObj.put("customerAddress", rs.getString(19));
-				jsonObj.put("customerMobile", rs.getString(20));
-				jsonObj.put("customerBlacklisted", rs.getInt(21));
-				jsonObj.put("customerMembership", rs.getInt(22));
-				jsonObj.put("gradeDesc", rs.getString(23));
+				jsonObj.put("customerId", rs.getString(17));
+				jsonObj.put("weighRate", rs.getString(18));
+				jsonObj.put("customerName", rs.getString(19));
+				jsonObj.put("customerAddress", rs.getString(20));
+				jsonObj.put("customerMobile", rs.getString(21));
+				jsonObj.put("customerBlacklisted", rs.getInt(22));
+				jsonObj.put("customerMembership", rs.getInt(23));
+				jsonObj.put("gradeDesc", rs.getString(24));
 				
 				jsonArray.put(jsonObj);
 				
@@ -160,32 +161,32 @@ public class RstReport {
 			con = OracleConnection.getConnection();
 			
 			String sql = "SELECT \r\n" + 
-					"										    CM.NAME, \r\n" + 
-					"										    CM.ADDRESS,\r\n" + 
-					"										    CM.MOBILE, \r\n" + 
-					"										    CM.BLACKLISTED, \r\n" + 
-					"										    CM.MEMBERSHIP, \r\n" + 
-					"										    CVM.VEHICLE_NO, \r\n" + 
-					"										    CVM.WEIGH_RATE, \r\n" + 
-					"										    WRM.VEHICLE_NAME, \r\n" + 
-					"										    WM.ID, \r\n" + 
-					"										    WM.MATERIAL, \r\n" + 
-					"										    WM.gross,\r\n" + 
-					"                                            wm.grosswt_time,\r\n" + 
-					"                                            wm.tare,\r\n" + 
-					"                                            wm.tarewt_time,\r\n" + 
-					"                                            wm.net,\r\n" + 
-					"											 wm.weighment_date\r\n" +
-					"										FROM \r\n" + 
-					"										    customer_mast CM, \r\n" + 
-					"										    customer_vehicle_mast CVM, \r\n" + 
-					"										    WEIGH_MAST WM,\r\n" + 
-					"										    WEIGH_RATE_MAST WRM\r\n" + 
-					"										WHERE \r\n" + 
-					"										WM.VID = CVM.ID AND\r\n" + 
-					"										CM.ID = CVM.CID AND\r\n" + 
-					"										CVM.V_TYPE_ID = WRM.ID AND \r\n" + 
-					"										WM.RST="+rst;
+						"CM.NAME, \r\n" + 
+						"CM.ADDRESS,\r\n" + 
+						"CM.MOBILE, \r\n" + 
+						"CM.BLACKLISTED, \r\n" + 
+						"CM.MEMBERSHIP, \r\n" + 
+						"CVM.VEHICLE_NO, \r\n" + 
+						"CVM.WEIGH_RATE, \r\n" + 
+						"WRM.VEHICLE_NAME, \r\n" + 
+						"WM.ID, \r\n" + 
+						"WM.MATERIAL, \r\n" + 
+						"WM.gross,\r\n" + 
+						"wm.grosswt_time,\r\n" + 
+						"wm.tare,\r\n" + 
+						"wm.tarewt_time,\r\n" + 
+						"wm.net,\r\n" + 
+						"wm.weighment_date\r\n" + 
+						"FROM \r\n" + 
+						"customer_mast CM, \r\n" + 
+						"customer_vehicle_mast CVM, \r\n" + 
+						"WEIGH_MAST WM,\r\n" + 
+						"WEIGH_RATE_MAST WRM\r\n" + 
+						"WHERE \r\n" + 
+						"WM.VID = CVM.ID AND\r\n" + 
+						"CM.ID = CVM.CID AND\r\n" + 
+						"CVM.V_TYPE_ID = WRM.ID AND \r\n" + 
+						"WM.RST="+rst;
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			

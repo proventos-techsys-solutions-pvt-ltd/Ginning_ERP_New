@@ -62,10 +62,11 @@
 	       		pdcAmount = (pdcRate*pdcMonths);
 	       		grade.setPdcBonusAmount(pdcAmount);
 	       		grade.setPdcDate((String)json.get("pdcDate"));
-	       		System.out.println((String)json.get("pdcDate"));
+	       		grade.setModeOfPayment(((String)json.get("pdcPaymentMode")).toUpperCase());
 	       	}else if(((String)gradeJson.get("pdcCheck")).equalsIgnoreCase("false")){
 	       		grade.setPdcBonusAmount(0);
 	       		grade.setPdcDate(null);
+	       		grade.setModeOfPayment(null);
 	       	}
 	       	
 	       	gradeList.add(grade);

@@ -15,15 +15,15 @@
 <body>
 	<%@include file="../accounts_operation_view/NavBar.html" %>
 	<div class="container-fluid">
-		<div class="row mt-2 tile-background-row">
+		<div class="row mt-2 tile-background-row border-bottom">
 				<div class="col-md-3">
 					<label class="lbl-rm-all">Search</label>
 					<div class="d-flex justify-content-start align-items-center">
-						<input type="text" class="form-control form-control-sm" id="searchInvoiceNo" name="searchInvoiceNo" placeholder="Invoice No">
-						<button type="button" class="btn btn-success btn-sm btn-no-radius" onclick="fetchInvoiceData(document.getElementById('searchInvoiceNo').value)">Fetch</button>
+						<input type="text" class="form-control" id="searchInvoiceNo" name="searchInvoiceNo" placeholder="Invoice No">
+						<button type="button" class="btn btn-success btn-no-radius" onclick="fetchInvoiceData(document.getElementById('searchInvoiceNo').value)">Fetch</button>
 					</div>
 					<div class="col-md-4">
-						<button type="button" class="btn btn-success btn-sm btn-no-radius" onclick="openInNewTab(document.getElementById('invoiceId').value)">Print Invoice</button>
+						<button type="button" class="btn btn-success btn-no-radius lbl-rm-l" onclick="openInNewTab(document.getElementById('invoiceId').value)">Print Invoice</button>
 					</div>
 				</div>
 				<div class="col-md-4 offset-md-5">
@@ -43,114 +43,114 @@
 					</div>
 				</div>
 		</div>
-		<div class="row mt-2">
+		<div class="row tile-background-row">
 			<div class="col-md-8">
-				<div class="tile-background-row">
+				<div class="">
 					<input type="hidden" id="invoiceId" name="invoiceId" />
 					<input type="hidden" id="customerId" name="customerId" />
 					<input type="hidden" id="customerName" name="customerName" />
 					<div class="form-row">
 						<div class="col-md-3">
 							<label class="lbl-rm-all">Customer Information</label>
-							<textarea id="customerInfo" name="customerInfo" class="form-control form-control-lg" rows="3" readonly></textarea>
+							<textarea id="customerInfo" name="customerInfo" class="form-control " rows="4" readonly></textarea>
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Invoice No</label>
-							<input type="text" class="form-control form-control-sm" id="invoiceNo" name="invoiceNo" readonly>
+							<input type="text" class="form-control " id="invoiceNo" name="invoiceNo" readonly>
 							<label class="lbl-rm-all">Date</label>
-							<input type="text" class="form-control form-control-sm" id="invoiceDate" name="invoiceDate" readonly>
+							<input type="text" class="form-control " id="invoiceDate" name="invoiceDate" readonly>
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Total Amount to Pay</label>
-							<input type="text" class="form-control form-control-sm" id="totalAmount" name="totalAmount" readonly>
+							<input type="text" class="form-control " id="totalAmount" name="totalAmount" readonly>
 							<label class="lbl-rm-all">Status</label>
-							<input type="text" class="form-control form-control-sm" id="invoiceStatus" name="invoiceStatus" value="Paid" readonly>
+							<input type="text" class="form-control " id="invoiceStatus" name="invoiceStatus" value="Paid" readonly>
 						</div>
 					</div>
 					<div class="form-row border-top">
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Cash</label>
 							<div class="d-flex justify-content-start align-items-center">
-								<input type="text" class="form-control form-control-sm" id="cashAmount" name="cashAmount" readonly>
-								<button type="button" class="btn btn-success btn-sm btn-no-radius">Print</button>
+								<input type="text" class="form-control" id="cashAmount" name="cashAmount" readonly>
+								<button type="button" class="btn btn-success btn-no-radius">Pay</button>
 							</div>
 						</div>
 					</div>
 					<div class="form-row border-top">
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Cheque</label>
-							<input type="text" class="form-control form-control-sm" id="chequeAmount" name="" readonly>
+							<input type="text" class="form-control" id="chequeAmount" name="" readonly>
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Bank</label>
-							<select type="text" class="form-control form-control-sm" id="chequeBank" name="chequeBank">
+							<select type="text" class="form-control" id="chequeBank" name="chequeBank">
 								<c:Bank />
 							</select>
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Cheque No</label>
-							<input type="text" class="form-control form-control-sm" id="chequeNo" name="chequeNo" placeholder="Cheque No.">
+							<input type="text" class="form-control" id="chequeNo" name="chequeNo" placeholder="Cheque No.">
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Date</label>
-							<input type="date" class="form-control form-control-sm" id="chequeDate" name="chequeDate" value="">
+							<input type="date" class="form-control" id="chequeDate" name="chequeDate" value="">
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-4">
 							<label class="lbl-rm-all">Name</label>
 							<div class="d-flex justify-content-start align-items-center">
-							<input type="text" class="form-control form-control-sm" id="nameOnCheque" name="nameOnCheque" placeholder="Name on Cheque">
-							<button type="button" class="btn btn-success btn-sm btn-no-radius" onclick="submitChequeData()">Pay</button>&nbsp;
-							<button type="button" class="btn btn-success btn-sm btn-no-radius">Void</button>
+							<input type="text" class="form-control" id="nameOnCheque" name="nameOnCheque" placeholder="Name on Cheque">
+							<button type="button" class="btn btn-success btn-no-radius" onclick="submitChequeData()">Pay</button>&nbsp;
+							<button type="button" class="btn btn-success btn-no-radius">Void</button>
 							</div>
 						</div>
 					</div>
 					<div class="form-row border-top">
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">RTGS/NEFT</label>
-							<input type="text" class="form-control form-control-sm" id="rtgsAmount" name="rtgsAmount" readonly>
+							<input type="text" class="form-control" id="rtgsAmount" name="rtgsAmount" readonly>
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Bank Name</label>
-							<input type="text" class="form-control form-control-sm" id="rtgsBank" name="rtgsBank" placeholder="RTGS Bank Name">
+							<input type="text" class="form-control" id="rtgsBank" name="rtgsBank" placeholder="RTGS Bank Name">
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Account No</label>
-							<input type="text" class="form-control form-control-sm" id="rtgsAccountNo" name="rtgsAccountNo" placeholder="Account No.">
+							<input type="text" class="form-control" id="rtgsAccountNo" name="rtgsAccountNo" placeholder="Account No.">
 						</div>
 						<div class="col-md-3">
 							<label class="lbl-rm-all">IFSC Code</label>
 							<div class="d-flex justify-content-start align-items-center">
-							<input type="text" class="form-control form-control-sm" id="rtgsIfsc" name="rtgsIfsc" placeholder="IFSC Code">
-							<button type="button" class="btn btn-success btn-sm btn-no-radius" onclick="submitRtgsData()">Pay</button>
+							<input type="text" class="form-control" id="rtgsIfsc" name="rtgsIfsc" placeholder="IFSC Code">
+							<button type="button" class="btn btn-success btn-no-radius" onclick="submitRtgsData()">Pay</button>
 							</div>
 						</div>
 					</div>
 					<div class="form-row border-top">
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">PDC</label>
-							<input type="text" class="form-control form-control-sm" id="pdcAmount" name="pdcAmount" readonly>
+							<input type="text" class="form-control" id="pdcAmount" name="pdcAmount" readonly>
 							<input type="hidden" id="pdcId" name="pdcId" />
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Bank</label>
-							<select type="text" class="form-control form-control-sm" id="pdcBank" name="pdcBank">
+							<select class="form-control" id="pdcBank" name="pdcBank">
 								<c:Bank />
 							</select>
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">PDC No</label>
-							<input type="text" class="form-control form-control-sm" id="pdcNo" name="pdcNo" placeholder="Cheque No.">
+							<input type="text" class="form-control" id="pdcNo" name="pdcNo" placeholder="Cheque No.">
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">PDC Date</label>
-							<input type="date" class="form-control form-control-sm" id="pdcDate" name="pdcDate" value="">
+							<input type="date" class="form-control" id="pdcDate" name="pdcDate" value="">
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-4">
 							<label class="lbl-rm-all">Payee Name</label>
 							<div class="d-flex justify-content-start align-items-center">
-							<input type="text" class="form-control form-control-sm" id="pdcPayeeName" name="pdcPayeeName" placeholder="Name on Cheque">
-							<button type="button" class="btn btn-success btn-sm btn-no-radius" id="pdcSubmit" onclick="submitPdc()">Pay</button>&nbsp;
-							<button type="button" class="btn btn-success btn-sm btn-no-radius">Void</button>
+							<input type="text" class="form-control" id="pdcPayeeName" name="pdcPayeeName" placeholder="Name on Cheque">
+							<button type="button" class="btn btn-success  btn-no-radius" id="pdcSubmit" onclick="submitPdc()">Pay</button>&nbsp;
+							<button type="button" class="btn btn-success  btn-no-radius">Void</button>
 							</div>
 						</div>
 					</div>
@@ -159,7 +159,7 @@
 				</form>
 				</div>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-4 border-left">
 				<div class="tile-background-row">
 				<table class="table table-bordered">
 					<thead class="table-back">
