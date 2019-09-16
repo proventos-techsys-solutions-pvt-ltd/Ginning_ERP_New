@@ -11,7 +11,7 @@ import com.prov.db.OracleConnection;
 
 public class AddRtgs {
 
-	public int addCheque(Rtgs r)
+	public int addRtgsEntry(Rtgs r)
 	{
 		Connection con = null;
 		int id = 0;

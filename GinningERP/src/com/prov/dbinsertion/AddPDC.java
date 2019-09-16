@@ -35,9 +35,21 @@ public class AddPDC {
 			cs.setDouble(4, p.getAmount());
 			cs.setDate(5, payDate);
 			cs.setString(6, p.getModeOfPayment());
-			cs.setInt(7, p.getChequeId());
-			cs.setInt(8, p.getRtgsId());
-			cs.setInt(9, p.getGlId());
+			if( p.getChequeId() == 0) {
+				cs.setNull(7, Types.NUMERIC);
+			}else if( p.getChequeId() > 0) {
+				cs.setInt(7, p.getChequeId());
+			}
+			if(  p.getRtgsId() == 0) {
+				cs.setNull(8, Types.NUMERIC);
+			}else if(  p.getRtgsId() > 0) {
+				cs.setInt(8,  p.getRtgsId());
+			}
+			if( p.getGlId() == 0) {
+				cs.setNull(9, Types.NUMERIC);
+			}else if( p.getGlId() > 0) {
+				cs.setInt(9, p.getGlId());
+			}
 			
 			cs.executeUpdate();
 			

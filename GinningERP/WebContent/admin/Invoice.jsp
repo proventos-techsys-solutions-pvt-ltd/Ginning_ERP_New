@@ -720,11 +720,11 @@ function setCurrentDate(){
 		}
 		console.log('totalAmountPaymentMode---'+totalAmountPaymentMode);
 		console.log('netAmountPayable---'+netAmountPayable);
-		if(totalAmountPaymentMode < netAmountPayable){
+		if(Number(totalAmountPaymentMode) < Number(netAmountPayable)){
 			alert('Total amount in payment mode table is less than net payable.');
-		}else if(totalAmountPaymentMode > netAmountPayable){
+		}else if(Number(totalAmountPaymentMode) > Number(netAmountPayable)){
 			alert('Total amount in payment mode table is greater than net payable.');
-		}else if(totalAmountPaymentMode === netAmountPayable){
+		}else if(Number(totalAmountPaymentMode) === Number(netAmountPayable)){
 		
 			var jsonObj = {};
 			

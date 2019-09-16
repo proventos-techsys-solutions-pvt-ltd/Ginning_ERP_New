@@ -136,6 +136,9 @@
 			pdc.setInvoiceId(invoiceId);
             pdc.setAmount(Double.parseDouble((String)json.get("pdcAmount")));	
             pdc.setModeOfPayment((String)json.get("pdcPaymentMode"));
+            pdc.setChequeId(0);
+            pdc.setRtgsId(0);
+            pdc.setGlId(0);
             
             AddPDC add = new AddPDC();
             

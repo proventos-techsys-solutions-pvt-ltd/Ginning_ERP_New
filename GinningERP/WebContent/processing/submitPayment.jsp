@@ -26,7 +26,7 @@
 		Cheque cheque = new Cheque();
 	
 		cheque.setBankId(Integer.parseInt((String)obj.get("chequeBankId")));
-		cheque.setBankName(((String)obj.get("chequeBankName")).toUpperCase());
+		cheque.setBankName(((String)obj.get("pdcBankName")).toUpperCase());
 		cheque.setChequeAmount(Double.parseDouble((String)obj.get("chequeAmount")));
 		cheque.setChequeDate((String)obj.get("chequeDate"));
 		cheque.setChequeNo((String)obj.get("chequeNo"));
@@ -47,8 +47,6 @@
 		response.sendRedirect("../report/Cheque.jsp");
 		
 		
-		
-		
 	}else if(((String)obj.get("dataType")).equals("rtgs")){
 
 		Rtgs rtgs = new Rtgs();
@@ -65,13 +63,14 @@
 		
 		AddRtgs addRtgs = new AddRtgs();
 		
-		id = addRtgs.addCheque(rtgs);
+		id = addRtgs.addRtgsEntry(rtgs);
 
 		UpdateInvoice updateInvoice = new UpdateInvoice();
 		
 		updateInvoice.updatePendingAmount(rtgs.getRtgsAmount(), rtgs.getInvoiceId());
 		
 		session.setAttribute("id", Integer.toString(id));
+		response.sendRedirect("../accounts_operation_view/Payment.jsp");
 			
 	}else if(((String)obj.get("dataType")).equals("cash")){
 
@@ -82,28 +81,74 @@
 		updateInvoice.updatePendingAmount(Double.parseDouble((String)obj.get("cashAmount")),invoiceId);
 		
 		session.setAttribute("id", Integer.toString(invoiceId));
-		response.sendRedirect("../report/CashVoucher.jsp");
+		response.sendRedirect("../accounts_operation_view/Payment.jsp");
 		
 	}else if(((String)obj.get("dataType")).equals("pdc")){
 		
 		UpdatePDC updatePdc = new UpdatePDC();
 		
 		PDC pdc = new PDC();
+		Cheque cheque = new Cheque();
+		AddCheque addCheque = new AddCheque();
 		
 		pdc.setId(Integer.parseInt((String)obj.get("pdcId")));
-		pdc.setChequeNo((String)obj.get("pdcNo"));
-		pdc.setPayeeName((String)obj.get("pdcPayeeName"));
-		pdc.setChequeAmount(Double.parseDouble((String)obj.get("pdcAmount")));
+		
 		int invoiceId = Integer.parseInt((String)obj.get("invoiceId"));
 		
-		int rows = updatePdc.addChequeNoAndPayee(pdc);
+		cheque.setBankId(Integer.parseInt((String)obj.get("pdcBank")));
+		cheque.setBankName((String)obj.get("invoiceId"));
+		cheque.setChequeAmount(Double.parseDouble((String)obj.get("pdcAmount")));
+		cheque.setChequeDate((String)obj.get("pdcDate"));
+		cheque.setChequeNo((String)obj.get("pdcNo"));
+		cheque.setCustomerId(Integer.parseInt((String)obj.get("customerId")));
+		cheque.setCustomerName((String)obj.get("pdcPayeeName"));
+		cheque.setInvoiceId(invoiceId);
+		cheque.setInvoiceNo((String)obj.get("invoiceNo"));
+		
+		int rows = addCheque.addCheque(cheque);
 		
 		UpdateInvoice updateInvoice = new UpdateInvoice();
 		
-		updateInvoice.updatePendingAmount(pdc.getChequeAmount(), invoiceId);
+		updateInvoice.updatePendingAmount(cheque.getChequeAmount(), invoiceId);
 		
-		session.setAttribute("pdcId", Integer.toString(pdc.getId()));
-		response.sendRedirect("../report/PDC.jsp");
+		session.setAttribute("chequeId", Integer.toString(pdc.getId()));
+		response.sendRedirect("../report/Cheque.jsp");
+		
+	}else if(((String)obj.get("dataType")).equals("pdcRtgs")){
+
+		Rtgs rtgs = new Rtgs();
+	
+		rtgs.setBankName(((String)obj.get("pdcRtgsBank")).toUpperCase());
+		rtgs.setRtgsAmount(Double.parseDouble((String)obj.get("pdcRtgsAmount")));
+		rtgs.setAccountNo((String)obj.get("pdcRtgsAccountNo"));
+		rtgs.setRtgsDate((String)obj.get("pdcRtgsDate"));
+		rtgs.setIfsc(((String)obj.get("pdcRtgsIfsc")).toUpperCase());
+		rtgs.setCustomerId(Integer.parseInt((String)obj.get("customerId")));
+		rtgs.setCustomerName(((String)obj.get("customerName")).toUpperCase());
+		rtgs.setInvoiceNo(((String)obj.get("invoiceNo")).toUpperCase());
+		rtgs.setInvoiceId(Integer.parseInt((String)obj.get("invoiceId")));
+		
+		AddRtgs addRtgs = new AddRtgs();
+		
+		id = addRtgs.addRtgsEntry(rtgs);
+
+		UpdateInvoice updateInvoice = new UpdateInvoice();
+		
+		updateInvoice.updatePendingAmount(rtgs.getRtgsAmount(), rtgs.getInvoiceId());
+		
+		session.setAttribute("id", Integer.toString(id));
+		response.sendRedirect("../accounts_operation_view/Payment.jsp");
+			
+	}else if(((String)obj.get("dataType")).equals("pdcCash")){
+
+		UpdateInvoice updateInvoice = new UpdateInvoice();
+		
+		int invoiceId = Integer.parseInt((String)obj.get("invoiceId"));
+		
+		updateInvoice.updatePendingAmount(Double.parseDouble((String)obj.get("pdcCashAmount")),invoiceId);
+		
+		session.setAttribute("id", Integer.toString(invoiceId));
+		response.sendRedirect("../accounts_operation_view/Payment.jsp");
 		
 	}
 	

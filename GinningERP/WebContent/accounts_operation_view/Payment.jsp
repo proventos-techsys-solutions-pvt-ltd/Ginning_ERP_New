@@ -125,10 +125,44 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-row border-top">
+					<div class="form-row border-top" id="pdcCashSection" hidden>
+						<div class="col-md-auto">
+							<label class="lbl-rm-all">PDC Cash</label>
+							<div class="d-flex justify-content-start align-items-center">
+								<input type="text" class="form-control" id="pdcCashAmount" name="pdcCashAmount" readonly>
+								<button type="button" class="btn btn-success btn-no-radius">Pay</button>
+							</div>
+						</div>
+					</div>
+					<div class="form-row border-top" id="pdcRtgsSection" hidden>
+						<div class="col-md-auto">
+							<label class="lbl-rm-all">PDC RTGS/NEFT</label>
+							<input type="text" class="form-control" id="pdcRtgsAmount" name="pdcRtgsAmount" readonly>
+						</div>
+						<div class="col-md-auto">
+							<label class="lbl-rm-all">Bank Name</label>
+							<input type="text" class="form-control" id="pdcRtgsBank" name="pdcRtgsBank" placeholder="RTGS Bank Name">
+						</div>
+						<div class="col-md-auto">
+							<label class="lbl-rm-all">Account No</label>
+							<input type="text" class="form-control" id="pdcRtgsAccountNo" name="pdcRtgsAccountNo" placeholder="Account No.">
+						</div>
+						<div class="col-md-auto">
+							<label class="lbl-rm-all">RTGS Date</label>
+							<input type="date" class="form-control" id="pdcRtgsDate" name="pdcRtgsDate" >
+						</div>
+						<div class="col-md-3">
+							<label class="lbl-rm-all">IFSC Code</label>
+							<div class="d-flex justify-content-start align-items-center">
+							<input type="text" class="form-control" id="pdcRtgsIfsc" name="pdcRtgsIfsc" placeholder="IFSC Code">
+							<button type="button" class="btn btn-success btn-no-radius" onclick="submitRtgsData()">Pay</button>
+							</div>
+						</div>
+					</div>
+					<div class="form-row border-top" id="pdcChequeSection" hidden>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">PDC</label>
-							<input type="text" class="form-control" id="pdcAmount" name="pdcAmount" readonly>
+							<input type="text" class="form-control" id="pdcChequeAmount" name="pdcChequeAmount" readonly>
 							<input type="hidden" id="pdcId" name="pdcId" />
 						</div>
 						<div class="col-md-auto">
@@ -368,7 +402,7 @@
 		
 		function setData(data){
 			
-			document.getElementById('pdcAmount').disabled = false ;
+			/* document.getElementById('pdcAmount').disabled = false ;
 			document.getElementById('pdcNo').disabled = false ;
 			document.getElementById('pdcDate').disabled = false ;
 			document.getElementById('pdcPayeeName').disabled = false ;
@@ -377,7 +411,7 @@
 			document.getElementById('pdcAmount').value = "" ;
 			document.getElementById('pdcNo').value = "" ;
 			document.getElementById('pdcDate').value = "" ;
-			document.getElementById('pdcPayeeName').value = "" ;
+			document.getElementById('pdcPayeeName').value = "" ; */
 			
 			document.getElementById('invoiceNo').value = data.invoiceNo ;
 			document.getElementById('invoiceId').value = data.invoiceId;
@@ -397,19 +431,38 @@
 			document.getElementById('rtgsIfsc').value = "" ;
 			
 			if(data.hasOwnProperty('pdcAmount')){
-				document.getElementById('pdcId').value = data.pdcId ;
-				document.getElementById('pdcAmount').value = data.pdcAmount ;
-				document.getElementById('pdcNo').value = "" ;
-				document.getElementById('pdcDate').value = data.pdcChequeDate ;
-				document.getElementById('pdcPayeeName').value = "" ;
-				document.getElementById('pdcPayeeName').value = data.customerName;
+				if(data.pdcPaymentMode === 'CHEQUE'){
+					document.getElementById('pdcId').value = data.pdcId ;
+					document.getElementById('pdcChequeAmount').value = data.pdcAmount ;
+					document.getElementById('pdcNo').value = "" ;
+					document.getElementById('pdcDate').value = data.pdcPayDate ;
+					document.getElementById('pdcPayeeName').value = "" ;
+					document.getElementById('pdcPayeeName').value = data.customerName;
+					document.getElementById('pdcChequeSection').hidden=false;
+					document.getElementById('pdcCashSection').hidden=true;
+					document.getElementById('pdcRtgsSection').hidden=true;
+				}else if(data.pdcPaymentMode === 'RTGS'){
+					document.getElementById('pdcId').value = data.pdcId ;
+					document.getElementById('pdcRtgsAmount').value = data.pdcAmount;
+					document.getElementById('pdcRtgsBank').value = '' ;
+					document.getElementById('pdcRtgsAccountNo').value = '' ;
+					document.getElementById('pdcRtgsIfsc').value = '' ;
+					document.getElementById('pdcRtgsDate').value = data.pdcPayDate;
+					document.getElementById('pdcRtgsSection').hidden=false;
+					document.getElementById('pdcChequeSection').hidden=true;
+					document.getElementById('pdcCashSection').hidden=true;
+				}else if(data.pdcPaymentMode === 'CASH'){
+					document.getElementById('pdcId').value = data.pdcId ;
+					document.getElementById('pdcCashAmount').value = data.pdcAmount;
+					document.getElementById('pdcCashSection').hidden=false;
+					document.getElementById('pdcRtgsSection').hidden=true;
+					document.getElementById('pdcChequeSection').hidden=true;
+				}
 			}else if(!data.hasOwnProperty('pdcAmount')){
-				document.getElementById('pdcAmount').disabled = true ;
-				document.getElementById('pdcNo').disabled = true ;
-				document.getElementById('pdcDate').disabled = true ;
-				document.getElementById('pdcPayeeName').disabled = true ;
-				document.getElementById('pdcBank').disabled = true ;
-				document.getElementById('pdcSubmit').disabled = true ;
+				document.getElementById('pdcCashSection').hidden=true;
+				document.getElementById('pdcRtgsSection').hidden=true;
+				document.getElementById('pdcChequeSection').hidden=true;
+				
 			}
 			
 			setCurrentDate();
@@ -448,7 +501,7 @@
 			rtgsJson['rtgsIfsc'] = document.getElementById('rtgsIfsc').value;
 			rtgsJson['rtgsDate'] = document.getElementById('invoiceDate').value;
 			rtgsJson['invoiceId'] = document.getElementById('invoiceId').value;
-			rtgsJson['invoiceNo'] = document.getElementById('searchInvoiceNo').value;
+			rtgsJson['invoiceNo'] = document.getElementById('invoiceNo').value;
 			rtgsJson['customerId'] = document.getElementById('customerId').value;
 			rtgsJson['customerName'] = document.getElementById('customerName').value;
 			
@@ -486,6 +539,10 @@
 	   pdcJson['pdcNo'] = document.getElementById('pdcNo').value;
 	   pdcJson['pdcDate'] = document.getElementById('pdcDate').value;
 	   pdcJson['pdcPayeeName'] = document.getElementById('pdcPayeeName').value;
+	   pdcJson['pdcBank'] = document.getElementById('pdcBank').value;
+	   pdcJson['pdcBankName'] = document.getElementById('pdcBank').options[bank.selectedIndex].text.split('-')[0].trim();
+	   pdcJson['customerId'] = document.getElementById('customerId').value;
+	   pdcJson['invoiceNo'] = document.getElementById('invoiceNo').value;
 	   
 	   var pdcInfo = JSON.stringify(pdcJson);
 	   console.log(pdcInfo);
@@ -493,6 +550,46 @@
 	   
 	   document.getElementById('paymentForm').submit();
    }	
+   
+   function submitPdcRtgs(){
+	   
+	   var pdcRtgsJson = {};
+	   
+	   pdcRtgsJson['dataType'] = 'pdcRtgs';
+	   pdcRtgsJson['pdcId'] = document.getElementById('pdcId').value;
+	   pdcRtgsJson['invoiceId'] = document.getElementById('invoiceId').value;
+	   pdcRtgsJson['pdcRtgsAmount'] =  document.getElementById('pdcRtgsAmount').value;
+	   pdcRtgsJson['pdcRtgsBank'] = document.getElementById('pdcRtgsBank').value;
+	   pdcRtgsJson['pdcRtgsAccountNo'] = document.getElementById('pdcRtgsAccountNo').value;
+	   pdcRtgsJson['pdcRtgsIfsc'] = document.getElementById('pdcRtgsIfsc').value;
+	   pdcRtgsJson['pdcRtgsDate'] = document.getElementById('pdcRtgsDate').value;
+	   pdcRtgsJson['invoiceId'] = document.getElementById('invoiceId').value;
+	   pdcRtgsJson['invoiceNo'] = document.getElementById('invoiceNo').value;
+	   pdcRtgsJson['customerId'] = document.getElementById('customerId').value;
+	   pdcRtgsJson['customerName'] = document.getElementById('customerName').value;
+		
+		var pdcRtgsInfo = JSON.stringify(pdcRtgsJson);
+		console.log(rtgsInfo);
+		document.getElementById('output').value = pdcRtgsInfo;
+		
+		document.getElementById('paymentForm').submit();
+   }
+   
+   function submitPdcCash(){
+	   var cashJson = {};
+		
+		cashJson['dataType'] = 'cash';	
+		cashJson['pdcCashAmount'] = document.getElementById('cashAmount').value;
+		cashJson['invoiceId'] = document.getElementById('invoiceId').value;
+		cashJson['customerName'] = document.getElementById('customerName').value;
+		cashJson['customerId'] = document.getElementById('customerId').value;
+		cashJson['invoiceNo'] = document.getElementById('invoiceNo').value;
+		
+		var cashInfo = JSON.stringify(cashJson);
+		document.getElementById('output').value = cashJson;
+		
+		document.getElementById('paymentForm').submit();
+   }
 		
 	checkDailySetup();
 	setCurrentDate()
