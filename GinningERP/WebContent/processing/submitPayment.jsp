@@ -1,4 +1,4 @@
-<%@ page errorPage="../admin/Error.jsp" %>  
+<%-- page errorPage="../admin/Error.jsp" --%>  
 <%@page import="com.prov.bean.PDC"%>
 <%@page import="com.prov.dbupdation.UpdatePDC"%>
 <%@page import="com.prov.dbupdation.UpdateInvoice"%>
@@ -13,11 +13,13 @@
 
 <%
 	
-	String chequeAmt = request.getParameter("output");
+	String data = request.getParameter("data");
+    System.out.print(data);
 	
 	JSONParser parse = new JSONParser();
 	
-	JSONObject obj = (JSONObject)parse.parse(chequeAmt);
+	JSONObject obj = (JSONObject)parse.parse(data);
+	UpdatePDC updatePdc = new UpdatePDC();
 	
 	int id = 0;
 	
@@ -26,7 +28,7 @@
 		Cheque cheque = new Cheque();
 	
 		cheque.setBankId(Integer.parseInt((String)obj.get("chequeBankId")));
-		cheque.setBankName(((String)obj.get("pdcBankName")).toUpperCase());
+		cheque.setBankName(((String)obj.get("chequeBankName")).toUpperCase());
 		cheque.setChequeAmount(Double.parseDouble((String)obj.get("chequeAmount")));
 		cheque.setChequeDate((String)obj.get("chequeDate"));
 		cheque.setChequeNo((String)obj.get("chequeNo"));
@@ -45,6 +47,9 @@
 		
 		session.setAttribute("chequeId", Integer.toString(id));
 		response.sendRedirect("../report/Cheque.jsp");
+		
+		//out.print(id);
+		//out.flush();
 		
 		
 	}else if(((String)obj.get("dataType")).equals("rtgs")){
@@ -69,8 +74,11 @@
 		
 		updateInvoice.updatePendingAmount(rtgs.getRtgsAmount(), rtgs.getInvoiceId());
 		
-		session.setAttribute("id", Integer.toString(id));
-		response.sendRedirect("../accounts_operation_view/Payment.jsp");
+		//session.setAttribute("id", Integer.toString(id));
+		//response.sendRedirect("../accounts_operation_view/Payment.jsp");
+		out.print(id);
+		out.flush();
+		
 			
 	}else if(((String)obj.get("dataType")).equals("cash")){
 
@@ -80,12 +88,12 @@
 		
 		updateInvoice.updatePendingAmount(Double.parseDouble((String)obj.get("cashAmount")),invoiceId);
 		
-		session.setAttribute("id", Integer.toString(invoiceId));
-		response.sendRedirect("../accounts_operation_view/Payment.jsp");
+		//session.setAttribute("id", Integer.toString(invoiceId));
+		//response.sendRedirect("../accounts_operation_view/Payment.jsp");
+		out.print(invoiceId);
+		out.flush();
 		
 	}else if(((String)obj.get("dataType")).equals("pdc")){
-		
-		UpdatePDC updatePdc = new UpdatePDC();
 		
 		PDC pdc = new PDC();
 		Cheque cheque = new Cheque();
@@ -105,14 +113,18 @@
 		cheque.setInvoiceId(invoiceId);
 		cheque.setInvoiceNo((String)obj.get("invoiceNo"));
 		
-		int rows = addCheque.addCheque(cheque);
+		int chequeId = addCheque.addCheque(cheque);
 		
 		UpdateInvoice updateInvoice = new UpdateInvoice();
 		
 		updateInvoice.updatePendingAmount(cheque.getChequeAmount(), invoiceId);
 		
+		updatePdc.addChequeId(chequeId, invoiceId);
+		
 		session.setAttribute("chequeId", Integer.toString(pdc.getId()));
 		response.sendRedirect("../report/Cheque.jsp");
+		//out.print(chequeId);
+		//out.flush();
 		
 	}else if(((String)obj.get("dataType")).equals("pdcRtgs")){
 
@@ -136,8 +148,13 @@
 		
 		updateInvoice.updatePendingAmount(rtgs.getRtgsAmount(), rtgs.getInvoiceId());
 		
-		session.setAttribute("id", Integer.toString(id));
-		response.sendRedirect("../accounts_operation_view/Payment.jsp");
+		updatePdc.addRtgsIdId(id, rtgs.getInvoiceId());
+		
+		//session.setAttribute("id", Integer.toString(id));
+		//response.sendRedirect("../accounts_operation_view/Payment.jsp");
+		
+		out.print(id);
+		out.flush();
 			
 	}else if(((String)obj.get("dataType")).equals("pdcCash")){
 
@@ -146,9 +163,15 @@
 		int invoiceId = Integer.parseInt((String)obj.get("invoiceId"));
 		
 		updateInvoice.updatePendingAmount(Double.parseDouble((String)obj.get("pdcCashAmount")),invoiceId);
+		int glId = 0;
 		
-		session.setAttribute("id", Integer.toString(invoiceId));
-		response.sendRedirect("../accounts_operation_view/Payment.jsp");
+		updatePdc.addGlId(glId, invoiceId);
+		
+		//session.setAttribute("id", Integer.toString(invoiceId));
+		//response.sendRedirect("../accounts_operation_view/Payment.jsp");
+		
+		out.print(glId);
+		out.flush();
 		
 	}
 	

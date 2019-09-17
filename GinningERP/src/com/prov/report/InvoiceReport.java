@@ -241,7 +241,7 @@ public ArrayList<Invoice> getReport() {
 				
 				String date = rs.getString(6);
 				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
-				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+				SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
 				String properDate = format2.format(date1);
 				jsonObj.put("invoiceDate", properDate);
 				

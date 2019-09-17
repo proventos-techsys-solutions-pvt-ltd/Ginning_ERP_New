@@ -40,7 +40,11 @@ public int addGeneralLedger(GeneralLedger gl) {
 			cs.setDouble(9, gl.getCredit());
 			cs.setDouble(10, gl.getClosingBal());
 			cs.setInt(11, gl.getCompanyId());
-			cs.setInt(12, gl.getBankId());
+			if(gl.getBankId() == 0) {
+				cs.setNull(12, Types.NUMERIC);
+			}else {
+				cs.setInt(12, gl.getBankId());
+			}
 			
 			cs.executeUpdate();
 			

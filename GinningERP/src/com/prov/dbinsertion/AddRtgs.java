@@ -4,7 +4,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
 
 import com.prov.bean.Rtgs;
 import com.prov.db.OracleConnection;
@@ -29,14 +28,16 @@ public class AddRtgs {
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
-			java.util.Date date = sdf.parse(r.getRtgsDate());
+			/*
+			 * SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy"); java.util.Date date
+			 * = sdf.parse(r.getRtgsDate());
+			 * 
+			 * SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd"); String
+			 * dateFormatted = sdf2.format(date);
+			 * System.out.println("Date --- "+dateFormatted);
+			 */
 			
-			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-			String dateFormatted = sdf2.format(date);
-			System.out.println("Date --- "+dateFormatted);
-			
-			Date sqlDate = Date.valueOf(dateFormatted);
+			Date sqlDate = Date.valueOf(r.getRtgsDate());
 			
 			cs.setInt(2, r.getInvoiceId());
 			cs.setInt(3, r.getCustomerId());

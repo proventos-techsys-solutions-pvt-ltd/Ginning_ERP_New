@@ -72,7 +72,7 @@
 							<label class="lbl-rm-all">Cash</label>
 							<div class="d-flex justify-content-start align-items-center">
 								<input type="text" class="form-control" id="cashAmount" name="cashAmount" readonly>
-								<button type="button" class="btn btn-success btn-no-radius">Pay</button>
+								<button type="button" class="btn btn-success btn-no-radius" onclick="submitCash()" id="payCash">Pay</button>
 							</div>
 						</div>
 					</div>
@@ -99,7 +99,7 @@
 							<label class="lbl-rm-all">Name</label>
 							<div class="d-flex justify-content-start align-items-center">
 							<input type="text" class="form-control" id="nameOnCheque" name="nameOnCheque" placeholder="Name on Cheque">
-							<button type="button" class="btn btn-success btn-no-radius" onclick="submitChequeData()">Pay</button>&nbsp;
+							<button type="button" class="btn btn-success btn-no-radius" onclick="submitChequeData()" id="payCheque">Pay</button>&nbsp;
 							<button type="button" class="btn btn-success btn-no-radius">Void</button>
 							</div>
 						</div>
@@ -121,7 +121,7 @@
 							<label class="lbl-rm-all">IFSC Code</label>
 							<div class="d-flex justify-content-start align-items-center">
 							<input type="text" class="form-control" id="rtgsIfsc" name="rtgsIfsc" placeholder="IFSC Code">
-							<button type="button" class="btn btn-success btn-no-radius" onclick="submitRtgsData()">Pay</button>
+							<button type="button" class="btn btn-success btn-no-radius" onclick="submitRtgsData()" id="payRtgs">Pay</button>
 							</div>
 						</div>
 					</div>
@@ -130,7 +130,7 @@
 							<label class="lbl-rm-all">PDC Cash</label>
 							<div class="d-flex justify-content-start align-items-center">
 								<input type="text" class="form-control" id="pdcCashAmount" name="pdcCashAmount" readonly>
-								<button type="button" class="btn btn-success btn-no-radius">Pay</button>
+								<button type="button" class="btn btn-success btn-no-radius" onclick="submitPdcCash()" id="payPdcCash">Pay</button>
 							</div>
 						</div>
 					</div>
@@ -149,13 +149,13 @@
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">RTGS Date</label>
-							<input type="date" class="form-control" id="pdcRtgsDate" name="pdcRtgsDate" >
+							<input type="date" class="form-control" id="pdcRtgsDate" name="pdcRtgsDate" readonly>
 						</div>
 						<div class="col-md-3">
 							<label class="lbl-rm-all">IFSC Code</label>
 							<div class="d-flex justify-content-start align-items-center">
 							<input type="text" class="form-control" id="pdcRtgsIfsc" name="pdcRtgsIfsc" placeholder="IFSC Code">
-							<button type="button" class="btn btn-success btn-no-radius" onclick="submitRtgsData()">Pay</button>
+							<button type="button" class="btn btn-success btn-no-radius" onclick="submitPdcRtgs()" id="payPdcRtgs">Pay</button>
 							</div>
 						</div>
 					</div>
@@ -177,19 +177,19 @@
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">PDC Date</label>
-							<input type="date" class="form-control" id="pdcDate" name="pdcDate" value="">
+							<input type=date class="form-control" id="pdcDate" name="pdcDate" value="" readonly>
 						</div>
 						<div class="col-md-4">
 							<label class="lbl-rm-all">Payee Name</label>
 							<div class="d-flex justify-content-start align-items-center">
 							<input type="text" class="form-control" id="pdcPayeeName" name="pdcPayeeName" placeholder="Name on Cheque">
-							<button type="button" class="btn btn-success  btn-no-radius" id="pdcSubmit" onclick="submitPdc()">Pay</button>&nbsp;
+							<button type="button" class="btn btn-success  btn-no-radius" id="payPdc" onclick="submitPdc()">Pay</button>&nbsp;
 							<button type="button" class="btn btn-success  btn-no-radius">Void</button>
 							</div>
 						</div>
 					</div>
 				<form id='paymentForm' action="../processing/submitPayment.jsp" target="_blank">
-					<input type="hidden" id="output" name="output" />	
+					<input type="hidden" id="data" name="data" />	
 				</form>
 				</div>
 			</div>
@@ -413,6 +413,14 @@
 			document.getElementById('pdcDate').value = "" ;
 			document.getElementById('pdcPayeeName').value = "" ; */
 			
+			document.getElementById('payCash').disabled = false ;
+			document.getElementById('payCheque').disabled = false ;
+			document.getElementById('payRtgs').disabled = false ;
+			document.getElementById('payPdcCash').disabled = false ;
+			document.getElementById('payPdcRtgs').disabled = false ;
+			document.getElementById('payPdc').disabled = false ;
+			
+			
 			document.getElementById('invoiceNo').value = data.invoiceNo ;
 			document.getElementById('invoiceId').value = data.invoiceId;
 			document.getElementById('customerId').value = data.customerId;
@@ -481,14 +489,16 @@
 			chequeJson['chequeDate'] = document.getElementById('chequeDate').value;
 			chequeJson['chequeName'] = document.getElementById('nameOnCheque').value;
 			chequeJson['invoiceId'] = document.getElementById('invoiceId').value;
-			chequeJson['invoiceNo'] = document.getElementById('searchInvoiceNo').value;
+			chequeJson['invoiceNo'] = document.getElementById('invoiceNo').value;
 			chequeJson['customerId'] = document.getElementById('customerId').value;
 			chequeJson['customerName'] = document.getElementById('customerName').value;
 			
 			var chequeInfo = JSON.stringify(chequeJson);
-			document.getElementById('output').value = chequeInfo;
+			document.getElementById('data').value = chequeInfo;
 			console.log(chequeInfo);
+			document.getElementById('payCheque').disabled = true;
 			document.getElementById('paymentForm').submit();
+			//submitDataAjax(chequeInfo);
 		}
 		
 	function submitRtgsData(){
@@ -507,9 +517,10 @@
 			
 			var rtgsInfo = JSON.stringify(rtgsJson);
 			console.log(rtgsInfo);
-			document.getElementById('output').value = rtgsInfo;
-			
-			document.getElementById('paymentForm').submit();
+			document.getElementById('data').value = rtgsInfo;
+			document.getElementById('payRtgs').disabled = true;
+			//document.getElementById('paymentForm').submit();
+			submitDataAjax(rtgsInfo);
 		}
 	
 	function submitCash(){
@@ -523,9 +534,11 @@
 		cashJson['invoiceNo'] = document.getElementById('invoiceNo').value;
 		
 		var cashInfo = JSON.stringify(cashJson);
-		document.getElementById('output').value = cashJson;
+		document.getElementById('data').value = cashInfo;
+		document.getElementById('payCash').disabled = true;
 		
-		document.getElementById('paymentForm').submit();
+		//document.getElementById('paymentForm').submit();
+		submitDataAjax(cashInfo);
 	}
 	
    function submitPdc(){
@@ -535,20 +548,23 @@
 	   pdcJson['dataType'] = 'pdc';
 	   pdcJson['pdcId'] =  document.getElementById('pdcId').value;
 	   pdcJson['invoiceId'] = document.getElementById('invoiceId').value;
-	   pdcJson['pdcAmount'] =  document.getElementById('pdcAmount').value;
+	   pdcJson['pdcAmount'] =  document.getElementById('pdcChequeAmount').value;
 	   pdcJson['pdcNo'] = document.getElementById('pdcNo').value;
 	   pdcJson['pdcDate'] = document.getElementById('pdcDate').value;
 	   pdcJson['pdcPayeeName'] = document.getElementById('pdcPayeeName').value;
 	   pdcJson['pdcBank'] = document.getElementById('pdcBank').value;
-	   pdcJson['pdcBankName'] = document.getElementById('pdcBank').options[bank.selectedIndex].text.split('-')[0].trim();
+	   var bank = document.getElementById('pdcBank');
+	   pdcJson['pdcBankName'] = bank.options[bank.selectedIndex].text.split('-')[0].trim();
 	   pdcJson['customerId'] = document.getElementById('customerId').value;
 	   pdcJson['invoiceNo'] = document.getElementById('invoiceNo').value;
 	   
 	   var pdcInfo = JSON.stringify(pdcJson);
 	   console.log(pdcInfo);
-	   document.getElementById('output').value = pdcInfo;
+	   document.getElementById('data').value = pdcInfo;
+	   document.getElementById('payPdc').disbled = true;
 	   
 	   document.getElementById('paymentForm').submit();
+	   //submitDataAjax(pdcInfo);
    }	
    
    function submitPdcRtgs(){
@@ -563,16 +579,17 @@
 	   pdcRtgsJson['pdcRtgsAccountNo'] = document.getElementById('pdcRtgsAccountNo').value;
 	   pdcRtgsJson['pdcRtgsIfsc'] = document.getElementById('pdcRtgsIfsc').value;
 	   pdcRtgsJson['pdcRtgsDate'] = document.getElementById('pdcRtgsDate').value;
-	   pdcRtgsJson['invoiceId'] = document.getElementById('invoiceId').value;
 	   pdcRtgsJson['invoiceNo'] = document.getElementById('invoiceNo').value;
 	   pdcRtgsJson['customerId'] = document.getElementById('customerId').value;
 	   pdcRtgsJson['customerName'] = document.getElementById('customerName').value;
 		
 		var pdcRtgsInfo = JSON.stringify(pdcRtgsJson);
-		console.log(rtgsInfo);
-		document.getElementById('output').value = pdcRtgsInfo;
-		
-		document.getElementById('paymentForm').submit();
+		console.log(pdcRtgsJson);
+		document.getElementById('data').value = pdcRtgsInfo;
+		document.getElementById('payPdcRtgs').diabled = true;
+		//document.getElementById('paymentForm').submit();
+		submitDataAjax(pdcRtgsInfo);
+
    }
    
    function submitPdcCash(){
@@ -586,9 +603,10 @@
 		cashJson['invoiceNo'] = document.getElementById('invoiceNo').value;
 		
 		var cashInfo = JSON.stringify(cashJson);
-		document.getElementById('output').value = cashJson;
-		
-		document.getElementById('paymentForm').submit();
+		document.getElementById('data').value = cashInfo;
+		document.getElementById('payPdcCash').disabled = true;
+		//document.getElementById('paymentForm').submit();
+		submitDataAjax(cashInfo);
    }
 		
 	checkDailySetup();
@@ -610,6 +628,30 @@
 			fetchInvoiceData(invoiceNo);
 		}
 	})
+	
+	function submitDataAjax(data){
+		console.log(data);
+		url = "../processing/submitPayment.jsp?data="+data;
+		if(window.XMLHttpRequest){  
+			submitData=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			submitData=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+		try{  
+			submitData.onreadystatechange=getResponse;  
+			console.log("AJAX Req sent");
+			submitData.open("GET",url,true);  
+			submitData.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	function getResponse(){
+		if(submitData.readyState == 4){
+			var response = this.response.trim();
+			console.log(response);
+		}
+	}
 	
 	</script>
 </body>

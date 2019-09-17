@@ -97,6 +97,80 @@ public class UpdatePDC {
 		
 	}
 	
+	
+	public int addGlId(int glId, int invoiceId)
+	{
+		
+		Connection con = null;
+		int noOfRows  = 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		String updatePdc = "UPDATE PDC_MAST \r\n" + 
+								"SET CASH_GL_ID = ?\r\n" + 
+								"WHERE INVOICE_ID = ?";
+		PreparedStatement stmt;
+		try {
+			stmt = con.prepareStatement(updatePdc);
+			
+			stmt.setInt(1, glId);
+			stmt.setInt(2, invoiceId);
+			
+			noOfRows = stmt.executeUpdate();
+			
+			
+			stmt.close();
+			con.close();
+			
+			System.out.println("Updation Succesful-"+noOfRows);
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return noOfRows;
+		
+	}
+	
+	public int addRtgsIdId(int rtgsId, int invoiceId)
+	{
+		
+		Connection con = null;
+		int noOfRows  = 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		String updatePdc = "UPDATE PDC_MAST \r\n" + 
+								"SET RTGS_ID = ?\r\n" + 
+								"WHERE INVOICE_ID = ?";
+		PreparedStatement stmt;
+		try {
+			stmt = con.prepareStatement(updatePdc);
+			
+			stmt.setInt(1, rtgsId);
+			stmt.setInt(2, invoiceId);
+			
+			noOfRows = stmt.executeUpdate();
+			
+			
+			stmt.close();
+			con.close();
+			
+			System.out.println("Updation Succesful-"+noOfRows);
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return noOfRows;
+		
+	}
+	
+	
 
 	/*
 	 * public int updatePDCData(PDC p) {

@@ -1,3 +1,5 @@
+<%@page import="com.prov.dbinsertion.AddGeneralLedger"%>
+<%@page import="com.prov.bean.GeneralLedger"%>
 <%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.prov.bean.StockMast"%>
@@ -114,6 +116,44 @@
     	AddStockMast addStockMast = new AddStockMast();
     	
     	addStockMast.addStockMast(sm);
+    	
+    	String companyAccountLedgerName = c.getName() + " PURCHASE ACCOUNT";
+    	String companyAccountLedgerDesc = c.getName() + " RAW COTTON PURCHASE ACCOUNT";
+    	
+    	GeneralLedger glPurchaseAccount = new GeneralLedger();
+    	
+    	glPurchaseAccount.setAccountLedger(companyAccountLedgerName);
+    	glPurchaseAccount.setCompanyId(companyId);
+    	glPurchaseAccount.setGlDate(todaysDate);
+    	glPurchaseAccount.setAccountCatId(6);
+    	glPurchaseAccount.setLedgerDesc(companyAccountLedgerDesc);
+    	glPurchaseAccount.setOpeningBal(0);
+   	 	glPurchaseAccount.setCredit(0);
+   		glPurchaseAccount.setDebit(0);
+   		glPurchaseAccount.setClosingBal(0);
+   		glPurchaseAccount.setBankId(0);
+   		
+	   	AddGeneralLedger addGl = new AddGeneralLedger();
+	     
+	    addGl.addGeneralLedger(glPurchaseAccount);
+	    
+	    GeneralLedger glAccountPayable = new GeneralLedger();
+	    
+	    String companyAccountPayableName = c.getName() + " - ACCOUNTS PAYABLE";
+    	String companyAccountPayableDesc = c.getName() + " - PAYABLE ACCOUNTS";
+	    
+		glAccountPayable.setAccountLedger(companyAccountPayableName);
+		glAccountPayable.setCompanyId(companyId);
+		glAccountPayable.setGlDate(todaysDate);
+		glAccountPayable.setAccountCatId(6);
+		glAccountPayable.setLedgerDesc(companyAccountPayableDesc);
+		glAccountPayable.setOpeningBal(0);
+		glAccountPayable.setCredit(0);
+		glAccountPayable.setDebit(0);
+		glAccountPayable.setClosingBal(0);
+		glAccountPayable.setBankId(0);
+	    
+	    addGl.addGeneralLedger(glAccountPayable);
     	
     	session.setAttribute("companyId", Integer.toString(companyId));
 	    response.sendRedirect("../admin/Setup_Companies.jsp");
