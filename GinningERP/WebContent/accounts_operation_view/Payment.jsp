@@ -34,11 +34,11 @@
 						</div>
 						<div class="log">
 							<div class="heading">Cheque Leaf</div>
-							<div class="amt" id="chequeLeaves">12</div>
+							<div class="amt" id="chequeLeaves">0</div>
 						</div>
 						<div class="log">
 							<div class="heading">Total RTGS/NEFT</div>
-							<div class="amt">12</div>
+							<div class="amt" id="rtgsCount">11</div>
 						</div>
 					</div>
 				</div>
@@ -49,6 +49,7 @@
 					<input type="hidden" id="invoiceId" name="invoiceId" />
 					<input type="hidden" id="customerId" name="customerId" />
 					<input type="hidden" id="customerName" name="customerName" />
+					<input type="hidden" id="companyId" name="companyId" />
 					<div class="form-row">
 						<div class="col-md-3">
 							<label class="lbl-rm-all">Customer Information</label>
@@ -354,7 +355,6 @@
 				}
 				else if(data.bankId === Number(bank.options[i].value)){
 					bank.options[i].selected = true;
-				}
 			}
 			
 			var bank =  document.getElementById('pdcBank');
@@ -366,8 +366,35 @@
 					bank.options[i].selected = true;
 				}
 			}
+			document.getElementById('companyId').value = data.companyId;
 			document.getElementById('chequeLeaves').innerHTML = data.totalCheques;
+			getRtgsCount(document.getElementById('companyId').value);
 		}
+	
+	
+	function getRtgsCount(companyId){
+		console.log(companyId);
+		url = "../processing/getTodaysRtgsCount.jsp?companyId="+companyId;
+		if(window.XMLHttpRequest){  
+			fetchRtgsCount=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchDailySetupRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+		try{  
+			fetchRtgsCount.onreadystatechange=fetchRtgsCountData;  
+			console.log("AJAX Req sent");
+			fetchRtgsCount.open("GET",url,true);  
+			fetchRtgsCount.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	function fetchRtgsCountData(){
+		if(fetchRtgsCount.readyState == 4){
+			var response = this.response.trim();
+			document.getElementById('rtgsCount').innerHTML = response;	
+		}
+	}
 	
 	function fetchInvoiceData(invoiceNo){
 			url = "../processing/getDataForOperator.jsp?invoiceNo="+invoiceNo;
@@ -610,7 +637,7 @@
    }
 		
 	checkDailySetup();
-	setCurrentDate()
+	setCurrentDate();
 	
 	function openInNewTab(invoiceId) {
 		  var win = window.open("../report/InvoicePDFPrintOnly.jsp?invoiceId="+invoiceId, '_blank');

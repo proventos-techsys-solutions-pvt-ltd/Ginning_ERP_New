@@ -45,5 +45,36 @@ public class RtgsReport {
 		}
 		return rtgsReport;
 	}
+	
+	
+	public int todaysRtgsCount(int companyId){
+		ResultSet rs = null;
+		Connection con = null;
+		
+		int count = 0;
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "select count(im.id) from rtgs_master rm, invoice_mast im where trunc(RTGS_DATE) = trunc(sysdate) and rm.invoice_id = im.id and im.company_id = ?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, companyId);
+			
+			rs = stmt.executeQuery();
+			
+			
+			while (rs.next()) {
+				count = rs.getInt(1);
+				
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
 
 }
