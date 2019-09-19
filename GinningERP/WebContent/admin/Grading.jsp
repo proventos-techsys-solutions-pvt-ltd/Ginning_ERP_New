@@ -153,15 +153,19 @@
 								<option>12</option>
 							</select>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-auto">
 							<label>PDC Date</label>
 							<input type="date" id="pdcDate" name="pdcDate" class="form-control form-control-sm" value="">
+						</div>
+						<div class="col-md-auto">
+							<label>PDC Bonus Rate</label>
+							<input type="text" id="pdcBonusRate" name="pdcBonusRate" class="form-control form-control-sm" value="0" readonly>
 						</div>
 						<div class="col-md-2">
 							<label>Total PDC Bonus</label>
 							<input type="text" id="pdcBonusAmount" name="pdcBonusAmount" class="form-control form-control-sm" value="0" readonly>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-auto">
 							<label>Total PDC Amount</label>
 							<input type="text" id="pdcAmount" name="pdcAmount" class="form-control form-control-sm" value="0" readonly>
 						</div>
@@ -173,11 +177,14 @@
 								<option value="CASH">Cash</option>
 							</select>
 						</div>
-						<div class="col-md-2">
+					</div>
+					<div class="row row-background">
+						<div class="col-md-2 offset-md-10">
 							<label for="" class="lbl-rm-all">Total Amount</label> 
 	                        <input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm" value="0" readonly="readonly">
 						</div>
 					</div>
+					
 						<div class="row row-background border-top">
 						<div class="col-md-12 mt-2">
 							<div class="d-flex justify-content-end align-items-center">
@@ -857,6 +864,12 @@ document.getElementById("responseBtn").addEventListener("click",function(){
 	document.getElementsByClassName("response-background")[0].style.display = "none";
 	document.getElementsByClassName("response")[0].style.display = "none";
 	document.getElementById("responseId").value=0;
+})
+
+document.addEventListener('change',function(e){
+	if(e.srcElement.id === 'pdcRate' || e.srcElement.id === 'pdcMonths' || e.srcElement.name === 'rate'){
+		 
+	}
 })
 
 responseScreen();

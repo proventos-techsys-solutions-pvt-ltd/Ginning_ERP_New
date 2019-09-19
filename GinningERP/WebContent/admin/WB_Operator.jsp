@@ -38,7 +38,7 @@
 									<th>Gross Weight</th>
 								</tr>
 							</thead>
-							<tbody></tbody>
+							<tbody id='pendingTable'></tbody>
 						</table>
 				</div>
 				<div class="col-md-6">
@@ -50,10 +50,10 @@
 								<tr>
 									<th>Rst No</th>
 									<th>Vendor</th>
-									<th>Gross Weight</th>
+									<th>Net Weight</th>
 								</tr>
 							</thead>
-							<tbody></tbody>
+							<tbody id="completedTable"></tbody>
 						</table>
 				</div>
 	</div>
@@ -64,6 +64,60 @@
 <script src="../js/bootstrap.min.js"></script>
 
 <script>
+
+function getReport(){
+	
+	url = "../processing/weighBridgeReport.jsp";
+	if(window.XMLHttpRequest){  
+		fetchRequest=new XMLHttpRequest();  
+	}  
+	else if(window.ActiveXObject){  
+		fetchRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+	}  
+	try{  
+		fetchRequest.onreadystatechange=getData;  
+		console.log("AJAX Req sent");
+		fetchRequest.open("GET",url,true);  
+		fetchRequest.send();  
+	}catch(e){alert("Unable to connect to server");}	
+}
+
+function getData(){
+	if(fetchRequest.readyState == 4){
+		var response = this.response.trim();
+		var json = JSON.parse(response);
+		var pendingArray = json.pendingReport;
+		var completedArray = json.completedReport;
+		setTableData('pendingTable', pendingArray)
+		setTableData('completedTable', completedArray)
+	}
+}
+
+function setTableData(tableId,array){
+	
+	var table = document.getElementById(tableId);
+	var noOfRows = array.length;
+	for(i=0; i<noOfRows; i++){
+		rowIndex = table.rows.length;
+		
+		var row = table.insertRow(rowIndex);
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var cell3 = row.insertCell(2);
+		
+		cell1.innerHTML = array[i].rst;
+		cell2.innerHTML = array[i].customerName;
+		if(array[i].hasOwnProperty('netWt')){
+			cell3.innerHTML = array[i].netWt;
+		}else if(array[i].hasOwnProperty('grossWt'))
+		{
+		    cell3.innerHTML = array[i].grossWt;
+		}
+	}
+	
+}
+
+getReport();
 
 </script>
 </body>
