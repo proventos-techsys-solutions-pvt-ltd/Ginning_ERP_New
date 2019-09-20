@@ -206,15 +206,15 @@ public class StockMasterReport {
 			
 			
 			String sql = "SELECT\r\n" + 
-					"    SUM(raw_cotton) raw_cotton,\r\n" + 
-					"    SUM(cotton_bales) cotton_bales,\r\n" + 
-					"    SUM(cotton_seed) cotton_seed,\r\n" + 
-					"    SUM(cotton_seed_oil) cotton_seed_oil,\r\n" + 
-					"    SUM(cotton_cakes) cotton_cakes,\r\n" + 
-					"    STOCK_DATE\r\n" + 
-					"    FROM STOCK_MAST\r\n" + 
-					"    WHERE tRUNC(STOCK_DATE) = TRUNC(SYSDATE-1)\r\n" + 
-					"    GROUP BY STOCK_DATE";
+						"SUM(raw_cotton) raw_cotton,\r\n" + 
+						"SUM(cotton_bales) cotton_bales,\r\n" + 
+						"SUM(cotton_seed) cotton_seed,\r\n" + 
+						"SUM(cotton_seed_oil) cotton_seed_oil,\r\n" + 
+						"SUM(cotton_cakes) cotton_cakes,\r\n" + 
+						"STOCK_DATE\r\n" + 
+						"FROM STOCK_MAST\r\n" + 
+						"WHERE TRUNC(STOCK_DATE) = (SELECT MAX(STOCK_DATE) FROM STOCK_MAST WHERE STOCK_DATE < (SELECT MAX(STOCK_DATE) FROM STOCK_MAST))\r\n" + 
+						"GROUP BY STOCK_DATE";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			

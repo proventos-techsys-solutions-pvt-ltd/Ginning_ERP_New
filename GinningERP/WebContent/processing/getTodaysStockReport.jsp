@@ -46,7 +46,7 @@
 		JSONObject stockOpening = report.getTodaysOpeningStockForAll();
 		JSONObject stockCurrent = report.getTodaysStockForAll();
 		
-		System.out.println(stockOpening.toString());
+		System.out.println("todayOpening"+stockOpening.toString());
 		System.out.println(stockCurrent.toString());
 		
 		double rawCotton = stockCurrent.getDouble("rawCotton") - stockOpening.getDouble("rawCotton");

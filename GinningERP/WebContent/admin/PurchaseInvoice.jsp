@@ -21,13 +21,16 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr>
+							<th hidden>Company Id</th>
+							<th hidden>Invoice Id</th>
 							<th>Date</th>
 							<th>Invoice No</th>
 							<th>Vendor Name</th>
 							<th>Address</th>
 							<th>Mobile No</th>
 							<th>Status</th>
-							<th>Print</th>
+							<th class="text-center">Print</th>
+							<th class="text-center">Delete</th>
 						</tr>
 					</thead>
 					<tbody id="tableBody">
@@ -76,13 +79,11 @@
 				if(fetchRequest.readyState == 4){
 					var response = this.response.trim();
 					
-					
 					var element = document.getElementById('tableBody');
 					
 					var jsonResponse = JSON.parse(response);
 					console.log(jsonResponse);
 					var status;
-					
 					
 					for(i=0;i<jsonResponse.length;i++){
 						if(jsonResponse[i].pendingAmount <= 0){
@@ -102,9 +103,9 @@
 								'<td>'+jsonResponse[i].customerMobile+'</td>'+
 								'<td>'+status+'</td>'+
 								'<td id="print" class="text-center"><img src="../property/img/printer.png" alt="print" ></td>'+
+								'<td class="text-center"><img src="../property/img/delete.png" alt="deleteRow" ></td>'+
 							'</tr>');
 					}
-					console.log(element.rows.length);
 				}
 			}
 			
@@ -133,6 +134,48 @@
 			}
 		})
 		
+		document.addEventListener('click',function(e){
+			if(e.srcElement.alt === 'deleteRow'){
+				var table = document.getElementById('tableBody');
+				var rowIndex = e.srcElement.parentNode.parentNode.rowIndex-1;
+				var invoiceId = table.rows[rowIndex].cells[1].innerHTML;
+				deleteInvoiceEntry(invoiceId);
+			}
+		})
+		
+		
+		function deleteInvoiceEntry(invoiceId){
+			url = "../processing/deleteInvoiceEntry.jsp?invoiceId="+invoiceId;
+			if(window.XMLHttpRequest){  
+				deleteRequest=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				deleteRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+			try{  
+				deleteRequest.onreadystatechange=deleteResponse;  
+				console.log("AJAX Req sent");
+				deleteRequest.open("GET",url,true);  
+				deleteRequest.send();  
+			}catch(e){alert("Unable to connect to server");}	
+		}
+		
+		function deleteResponse(){
+			if(deleteRequest.readyState == 4){
+				var response = this.response.trim();
+				console.log(response);
+				if(response.includes('CASH')){
+					window.alert("Cash payment has been done for this invoice by the cashier.");
+				}else if(response.includes('CHEQUE')){
+					window.alert("Cheque has been issued against this invoice by cashier.");
+				}else if(response.includes('RTGS')){
+					window.alert("RTGS entry has been made against this invoice by cashier.");
+				}else{
+					window.alert('Invoice No. '+response+' is deleted successesfully.');
+					location.reload();
+				}
+			} 
+		}
 			
 		</script>
 
