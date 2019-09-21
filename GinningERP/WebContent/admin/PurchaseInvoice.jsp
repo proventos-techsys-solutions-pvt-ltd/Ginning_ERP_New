@@ -115,11 +115,12 @@
 				for(i=0;i<tableBody.rows.length;i++){
 						tableBody.rows.item(i).removeAttribute('hidden');
 					}
-				
-				for(i=0;i<tableBody.rows.length;i++){
-					var id = tableBody.rows.item(i).cells[0].innerHTML;
-					if(companyId != id){
-						tableBody.rows.item(i).setAttribute('hidden','hidden');
+				if(companyId != 0){
+					for(i=0;i<tableBody.rows.length;i++){
+						var id = tableBody.rows.item(i).cells[0].innerHTML;
+						if(companyId != id){
+							tableBody.rows.item(i).setAttribute('hidden','hidden');
+						}
 					}
 				}
 				

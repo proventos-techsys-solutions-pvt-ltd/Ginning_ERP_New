@@ -3,6 +3,8 @@ package com.prov.report;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,9 +30,6 @@ public class PDCReport {
 						"PDC.AMOUNT,\r\n" + 
 						"PDC.PAY_DATE,\r\n" + 
 						"PDC.MODE_OF_PAYMENT,\r\n" + 
-						"PDC.CHEQUE_ID,\r\n" + 
-						"PDC.RTGS_ID,\r\n" + 
-						"PDC.CASH_GL_ID,\r\n" + 
 						"IM.INVOICE_NO,\r\n" + 
 						"COMP.ID COMPANY_ID,\r\n" + 
 						"COMP.NAME COMPANY_NAME,\r\n" + 
@@ -55,16 +54,21 @@ public class PDCReport {
 				obj.put("pdcId", rs.getString(1));
 				obj.put("customerId", rs.getString(2));
 				obj.put("invoiceId", rs.getString(3));
-				obj.put("bankId", rs.getString(4));
-				obj.put("payeeName", rs.getString(5));
-				obj.put("chequeDate", rs.getString(6));
-				obj.put("chequeAmount", rs.getString(7));
-				obj.put("invoiceNo", rs.getString(8));
-				obj.put("bankName", rs.getString(9));
-				obj.put("accountNo", rs.getString(10));
-				obj.put("companyId", rs.getString(11));
-				obj.put("companyName", rs.getString(12));
-				obj.put("chequeNo", rs.getString(13));
+				obj.put("amount", rs.getString(4));
+				
+				String date = rs.getString(5);
+				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat sdf2 = new SimpleDateFormat("MM/dd/yyyy");
+				
+				Date dateObj = sdf1.parse(date);
+				String dateFormatted = sdf2.format(dateObj);
+				
+				obj.put("payDate", dateFormatted);
+				obj.put("modeOfPayment", rs.getString(6));
+				obj.put("invoiceNo", rs.getString(7));
+				obj.put("companyId", rs.getString(8));
+				obj.put("companyName", rs.getString(9));
+				obj.put("customerName", rs.getString(10));
 				
 				jsonArray.put(obj);
 				

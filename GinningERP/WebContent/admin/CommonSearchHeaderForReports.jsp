@@ -9,6 +9,7 @@
 					<label class="lbl-rm-l">Company</label>
 					<select class="form-control form-control-sm" name="" id="companyId">
 						<option selected>Select</option>
+						<option value='0'>All</option>
 						<c:Company />
 					</select>
 			</div>

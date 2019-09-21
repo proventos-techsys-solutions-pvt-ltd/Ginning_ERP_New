@@ -74,8 +74,8 @@
                                		<div class="col-md-3 col-md-3-margin">
                                			<label for="" class="lbl-rm-all">Update Invoice</label>
                                 		<div class="d-flex justify-content-start align-items-center">
-	                                    <input id="" name="" type="text" class="form-control form-control-sm" placeholder="Invoice No">
-					    				<button class="btn btn-success btn-sm btn-no-radius" type="button" onclick="">Fetch</button>
+	                                    <input id="UpdateInvoiceNo" name="" type="text" class="form-control form-control-sm" placeholder="Invoice No">
+					    				<button class="btn btn-success btn-sm btn-no-radius" type="button" onclick="fetchInvoiceUpdateData(document.getElementById('UpdateInvoiceNo').value)">Fetch</button>
                                 	</div>
                                		</div>
                                </div>
@@ -240,7 +240,7 @@
                                 <div class="col-md-12 mt-3 mb-5">
                                     <div class="d-flex justify-content-end">
                                         <button type="button" class="btn btn-success btn_width" onclick="submitForm()">Approve</button>
-                                        <button type="button" class="btn btn-success btn_width ml-1" >Reset</button>
+                                        <button type="button" class="btn btn-success btn_width ml-1" id='reset' >Reset</button>
                                         <button type="button" class="btn btn-success btn_width ml-1" disabled>Delete</button>
                                     </div>
                                 </div>
@@ -356,7 +356,7 @@ function setCurrentDate(){
 	function setDailySetupData(data){
 		
 		var companySelect = document.getElementById('companyId');
-		
+		console.log(data);
 		document.getElementById("bankId").value = data.bankId;
 		for(i=0;i<companySelect.options.length;i++){
 			if(data.companyId != Number(companySelect.options[i].value)){
@@ -366,7 +366,7 @@ function setCurrentDate(){
 				companySelect.options[i].selected = true;
 			}
 		}
-		
+		document.getElementById('bonusPerQtl').value = data.bonusAmount;
 		document.getElementById('invoiceNo').value = data.invoiceSeries;
 	}
 	
@@ -652,6 +652,173 @@ function setCurrentDate(){
 			}
 		}
 	}
+	
+	
+	//Send the AJAX Request to fetch data
+	function fetchInvoiceUpdateData(invoiceNo){
+		if(!checkRstInTable(rst)){
+			url = "../processing/getInvoiceUpdationData.jsp?invoiceNo="+invoiceNo;
+			if(window.XMLHttpRequest){  
+				fetchInvReq=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				fetchInvReq=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+			try{  
+				fetchInvReq.onreadystatechange=getInvData;  
+				console.log("AJAX Req sent");
+				fetchInvReq.open("GET",url,true);  
+				fetchInvReq.send();  
+			}catch(e){alert("Unable to connect to server");}
+		}
+	}
+	
+	function getInvData(){
+		if(fetchInvReq.readyState == 4){
+			var response = this.response.trim();
+			
+			var data = JSON.parse(response);
+			setDataForInvoiceUpdation(data);
+		}
+	}
+	
+	
+	function setDataForInvoiceUpdation(data){
+		console.log(data);
+		
+		var table = document.getElementById("tableBody");
+		//document.getElementById("rst").value = data[0].rst;
+		document.getElementById("invoiceNo").value = data.invoiceNo;
+		document.getElementById("customerData").value = data.vendorName + "\n" + data.vendorAddress + "\n" + data.vendorMobile;
+		document.getElementById("customerId").value = data.customerId;
+		document.getElementById("totalQty").value = data.totalQuantity;
+		
+		document.getElementById('unloadingCharges').value = (data.unloadingCharges).toFixed(2);
+		
+		document.getElementById('weighingCharges').value = data.weighRate;
+		
+		var blacklisted;
+		var membership;
+		
+		if(Number(data.vendorBlacklisted) === 1){
+			blacklisted = 'YES';
+		}else if(Number(data.vendorBlacklisted) === 0){
+			blacklisted = 'NO'
+		}
+		if(Number(data.vendorMembership) === 1){
+			membership = 'YES';
+		}else if(Number(data.vendorMembership) === 0){
+			membership = 'NO';
+		}
+		
+		document.getElementById("customerBlacklisted").value = blacklisted;
+		document.getElementById("customerMembership").value = membership;
+		if(data.bonusAmount != 0){
+			document.getElementById('bonusPerQtl').value = (Number(data.bonusAmount) / Number(data.totalQuantity)) * 100;
+			document.getElementById('bonusCheck').checked = true;
+		}else{
+			document.getElementById('bonusCheck').checked = false;
+		}
+
+		itemData = data.invoiceItems;
+		var noOfRows = itemData.length;
+		
+		for(i=0; i<noOfRows; i++ ){
+		
+			var rowNo = tableBody.children.length;
+			
+			var row = table.insertRow(rowNo);
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
+			var cell6 = row.insertCell(5);
+			var cell7 = row.insertCell(6);
+			var cell8 = row.insertCell(7);
+			var cell9 = row.insertCell(8);
+			var cell10 = row.insertCell(9);
+			var cell11 = row.insertCell(10);
+			var cell12 = row.insertCell(11);
+			cell8.className ="text-center";
+			cell9.className = "text-center";
+			cell10.setAttribute('hidden','hidden');
+			cell11.setAttribute('hidden','hidden');
+			cell12.setAttribute('hidden','hidden');
+			
+			cell1.innerHTML = '<input type="text" id="tableRst'+(rowNo+1)+'" class="form-control form-control-sm" name="tableRst" value="'+itemData[i].rst+'" readonly>';
+			cell2.innerHTML = '<input type="text" id="material'+(rowNo+1)+'" class="form-control form-control-sm" name="material" value="'+itemData[i].material+'" readonly>';
+			cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+itemData[i].quantity+'" readonly>';
+			cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+itemData[i].grade+'" readonly>';
+			cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+itemData[i].moisture+'" readonly>';
+			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+itemData[i].rate+'" readonly>';
+			var amount = (itemData[i].rate * (itemData[i].quantity/100));
+			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+amount+'" readonly>';
+			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" >';
+			if(itemData[i].pdcAmountPerGrade>0){
+				document.getElementById('amanatCheck'+(rowNo+1)).disabled=true;
+				var pdcBonusAmount = Number(itemData[i].pdcAmountPerGrade) * (Number(itemData[i].quantity)/100);
+				cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="'+pdcBonusAmount+'" readonly>';
+				document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) + Number(pdcBonusAmount);
+				document.getElementById('totalPdcAmount').value = Number(document.getElementById('totalPdcAmount').value) + Number(pdcBonusAmount) + Number(amount);
+				document.getElementById('pdcDate').value = itemData[i].pdcDate;
+				document.getElementById('pdcPaymentMode').value = itemData[i].PdcPaymentMode;
+				document.getElementById("pdcData").hidden = false;
+			}else if(itemData[i].pdcAmount<=0){
+				cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="0" readonly>';
+			}
+			cell10.innerHTML = '<input type="hidden" id="gradeId'+(rowNo+1)+'" class="lbl-rm-all" name="gradeId" value="'+itemData[i].gradeId+'" >';
+			cell11.innerHTML = '<input type="hidden" id="weighmentId'+(rowNo+1)+'" class="lbl-rm-all" name="weighmentId" value="'+itemData[i].weighmentId+'" >';
+			cell12.innerHTML = '<input type="hidden" id="gradeDesc'+(rowNo+1)+'" class="lbl-rm-all" name="gradeDesc" value="'+itemData[i].gradeDescription+'" >';
+
+		}
+		calculateTotal();
+		
+		var paymentTable =  document.getElementById('paymentTableBody');
+		
+		var cashAmount = data.cashAmount;
+		document.getElementById('payAmount1').value = cashAmount;
+		var chequeAmount = data.chequeAmount;
+		var rtgsAmount = data.rtgsAmount;
+		for(j=1;j<3;j++){
+			var noOfRowsPayment = paymentTable.rows.length;
+			var row = paymentTable.insertRow(noOfRowsPayment);
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
+			
+			cell4.className ="text-center";
+			cell5.className ="text-center";
+						
+			cell1.setAttribute("align","center");
+			cell1.innerHTML = (noOfRowsPayment+1);
+		if(noOfRowsPayment === 1){
+			cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRowsPayment+1)+'" name="paymentMode">'+
+					   			'<option>Cash</option>'+
+					   			'<option selected>Cheque</option>'+
+					   			'<option>RTGS/NEFT</option>'+
+							  '</select>';
+			cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="payAmount'+(noOfRowsPayment+1)+'" name="payAmount" value='+chequeAmount+'>';
+		}
+		if(noOfRowsPayment === 2){
+			cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRowsPayment+1)+'" name="paymentMode">'+
+					   			'<option>Cash</option>'+
+					   			'<option>Cheque</option>'+
+					   			'<option selected>RTGS/NEFT</option>'+
+							  '</select>';
+			cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="payAmount'+(noOfRowsPayment+1)+'" name="payAmount" value='+rtgsAmount+'>';
+		}
+			
+			cell4.innerHTML = '<img src="../property/img/add.png" alt="add" class="ctm-hover" >'
+			cell5.innerHTML = '<img src="../property/img/delete.png" alt="delete" class="ctm-hover" id="deleteRow'+(noOfRowsPayment+1)+'" >'
+		}
+		
+		
+		setGradeNote();
+	}
+	
 	
 	//Set Amanat checkbox value
 	document.addEventListener('change', function(e){
@@ -945,6 +1112,10 @@ function setCurrentDate(){
 			}
 		}
 	}) */
+	
+	document.getElementById('reset').addEventListener('click', function(e){
+		location.reload();
+	})
 	
 	checkDailySetup();
 	setCurrentDate()

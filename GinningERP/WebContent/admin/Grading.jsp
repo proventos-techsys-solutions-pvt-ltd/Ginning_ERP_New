@@ -829,6 +829,7 @@ function calculatePDCBonusOnMonthChange(){
 			document.getElementById("pdcAmount").value = Number(document.getElementById("pdcAmount").value)+Number(totalAmount);
 		}
 	}
+	setPdcBonusRate();
 	calculateTotal();
 }
 
@@ -860,17 +861,32 @@ function responseScreen(){
 }
 
 
-document.getElementById("responseBtn").addEventListener("click",function(){
+/* document.getElementById("responseBtn").addEventListener("click",function(){
 	document.getElementsByClassName("response-background")[0].style.display = "none";
 	document.getElementsByClassName("response")[0].style.display = "none";
 	document.getElementById("responseId").value=0;
-})
+}) */
 
 document.addEventListener('change',function(e){
-	if(e.srcElement.id === 'pdcRate' || e.srcElement.id === 'pdcMonths' || e.srcElement.name === 'rate'){
-		 
+	if(e.srcElement.id === 'pdcRate' || e.srcElement.id === 'pdcMonths' || e.srcElement.name === 'rate' || e.srcElement.name === 'pdcCheck'){
+		setPdcBonusRate();
 	}
 })
+
+function setPdcBonusRate(){
+	var table = document.getElementById('tableBody');
+	var pdcChecks = document.getElementsByName('pdcCheck');
+	var rates = document.getElementsByName('rate');
+	for(i = 0; i< table.rows.length; i++){
+		if(pdcChecks[i].value === 'true'){
+			document.getElementById('pdcBonusRate').value = Number(rates[i].value) + Number(document.getElementById('pdcRate').value * document.getElementById('pdcMonths').value); 
+			break;
+		}else{
+			document.getElementById('pdcBonusRate').value = 0;
+		}
+	}
+}
+
 
 responseScreen();
 </script>

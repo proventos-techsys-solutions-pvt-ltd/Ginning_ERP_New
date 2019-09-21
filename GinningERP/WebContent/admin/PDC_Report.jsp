@@ -25,8 +25,9 @@
 			<div class="row row-background">
 			<div class="col-md-3">
 					<label class="lbl-rm-l">Company</label>
-					<select class="form-control form-control-sm" name="" id="companyId">
+					<select class="form-control form-control-sm" name="companyId" id="companyId">
 						<option selected>Select</option>
+						<option value="0">All</option>
 						<c:Company />
 					</select>
 			</div>
@@ -44,7 +45,7 @@
 					&nbsp;&nbsp;
 						<input type="date" class="form-control form-control-sm" id="endDate" name="endDate">
 					&nbsp;&nbsp;
-					<button type="button" class="btn btn-success btn-sm" id="dateFilterButton">Filter</button>
+					<button type="button" class="btn btn-success btn-sm" id="dateFilterButton" onclick="dateFilter()">Filter</button>
 				</div>
 			</div>
 			</form>
@@ -71,15 +72,14 @@
 	 			<table id="tblCashRegister" class="table table-bordered">
 	 				<thead>
 	 					<tr>
-	 					<th>ID</th>
-	 					<th>company ID</th>
+	 					<th hidden>ID</th>
+	 					<th hidden>company ID</th>
 	 					<th>Sr No</th>
 	 					<th>Invoice No</th>
-	 					<th>Bank Name</th>
-	 					<th>Chq Date</th>
-	 					<th>Chq No</th>
-	 					<th>Payee</th>
+	 					<th>Vendor Name</th>
 	 					<th>Amount</th>
+	 					<th>Payment Date</th>
+	 					<th>Mode of Payment</th>
 	 					</tr>
 	 				</thead>
 	 				<tbody id="tableBody">
@@ -142,22 +142,122 @@
 				var cell6 = row.insertCell(5);
 				var cell7 = row.insertCell(6);
 				var cell8 = row.insertCell(7);
-				var cell9 = row.insertCell(8);
 				
 				cell1.innerHTML = data[i].pdcId;
 				cell2.innerHTML = data[i].companyId;
 				cell3.innerHTML = (i+1);
 				cell4.innerHTML = data[i].invoiceNo;
-				cell5.innerHTML = data[i].bankName;
-				cell6.innerHTML = data[i].chequeDate;
-				cell7.innerHTML = data[i].chequeNo;
-				cell8.innerHTML = data[i].payeeName;
-				cell9.innerHTML = data[i].chequeAmount;
+				cell5.innerHTML = data[i].customerName;
+				cell6.innerHTML = data[i].amount;
+				cell7.innerHTML = data[i].payDate;
+				cell8.innerHTML = data[i].modeOfPayment;
+				
+				cell1.hidden = true;
+				cell2.hidden = true;
 				
 			}
 		}
 		
+		function companyFilter(companyId)
+		{
+			var tableBody = document.getElementById("tableBody");
+			for(i=0;i<tableBody.rows.length;i++){
+					tableBody.rows.item(i).removeAttribute('hidden');
+				}
+			if(companyId != 0 ){
+				for(i=0;i<tableBody.rows.length;i++){
+					var id = tableBody.rows.item(i).cells[1].innerHTML;
+					if(companyId != id){
+						tableBody.rows.item(i).setAttribute('hidden','hidden');
+					}
+				}
+			}
+		} 
+		
+		document.getElementById("companyId").addEventListener("change",function(){
+			companyFilter(this.value);
+		})
+		
+		
+		function dateFilter(){
+
+	        var startDate = (dates.convert(document.getElementById('startDate').value)).toDateString();
+	        var endDate = (dates.convert(document.getElementById('endDate').value)).toDateString();
+	        
+			var tableBody = document.getElementById("tableBody");
+			for(i=0;i<tableBody.rows.length;i++){
+				tableBody.rows.item(i).removeAttribute('hidden');
+			}
+
+	        for(i=0;i<tableBody.rows.length;i++){
+	        	var date = tableBody.rows[i].cells[6].innerHTML;
+	        	var d = (dates.convert(date)).toDateString();
+		        if(dates.inRange (d,startDate,endDate)){
+		        	console.log('true');
+		        	tableBody.rows.item(i).hidden = false;
+		        }else if(!dates.inRange (d,startDate,endDate)){
+		        	console.log('false');
+		        	tableBody.rows.item(i).hidden = true;
+		        }else{
+		        	alert('Choose proper dates from the filters.')
+		        }
+	        }
+		} 
+		
 		getPdcReport();
+		
+		
+		var dates = {
+			    convert:function(d) {
+			        // Converts the date in d to a date-object. The input can be:
+			        //   a date object: returned without modification
+			        //  an array      : Interpreted as [year,month,day]. NOTE: month is 0-11.
+			        //   a number     : Interpreted as number of milliseconds
+			        //                  since 1 Jan 1970 (a timestamp) 
+			        //   a string     : Any format supported by the javascript engine, like
+			        //                  "YYYY/MM/DD", "MM/DD/YYYY", "Jan 31 2009" etc.
+			        //  an object     : Interpreted as an object with year, month and date
+			        //                  attributes.  **NOTE** month is 0-11.
+			        return (
+			            d.constructor === Date ? d :
+			            d.constructor === Array ? new Date(d[0],d[1],d[2]) :
+			            d.constructor === Number ? new Date(d) :
+			            d.constructor === String ? new Date(d) :
+			            typeof d === "object" ? new Date(d.year,d.month,d.date) :
+			            NaN
+			        );
+			    },
+			    compare:function(a,b) {
+			        // Compare two dates (could be of any type supported by the convert
+			        // function above) and returns:
+			        //  -1 : if a < b
+			        //   0 : if a = b
+			        //   1 : if a > b
+			        // NaN : if a or b is an illegal date
+			        // NOTE: The code inside isFinite does an assignment (=).
+			        return (
+			            isFinite(a=this.convert(a).valueOf()) &&
+			            isFinite(b=this.convert(b).valueOf()) ?
+			            (a>b)-(a<b) :
+			            NaN
+			        );
+			    },
+			    inRange:function(d,start,end) {
+			        // Checks if date in d is between dates in start and end.
+			        // Returns a boolean or NaN:
+			        //    true  : if d is between start and end (inclusive)
+			        //    false : if d is before start or after end
+			        //    NaN   : if one or more of the dates is illegal.
+			        // NOTE: The code inside isFinite does an assignment (=).
+			       return (
+			            isFinite(d=this.convert(d).valueOf()) &&
+			            isFinite(start=this.convert(start).valueOf()) &&
+			            isFinite(end=this.convert(end).valueOf()) ?
+			            start <= d && d <= end :
+			            NaN
+			        );
+			    }
+			}
 		
     	</script>
 </body>

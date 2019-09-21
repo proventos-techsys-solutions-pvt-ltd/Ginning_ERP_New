@@ -519,4 +519,184 @@ public ArrayList<Invoice> getReport() {
 		
 		return invoiceSeries;
 	}
+	
+	public JSONObject getInvoiceDataForUpdation(String invoiceNo) {
+		
+		ResultSet rs = null;
+		Connection con = null;
+		NumberToWords numToWords = new NumberToWords();
+		JSONObject jsonObj = new JSONObject();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String invSql = "SELECT \r\n" + 
+					"							IM.ID INV_ID, \r\n" + 
+					"							IM.INVOICE_NO,\r\n" + 
+					"							IM.TOTAL TOTAL_AMOUNT,\r\n" + 
+					"							IM.AMOUNTPAID,\r\n" + 
+					"							IM.PENDING,\r\n" + 
+					"							IM.INV_DATE,\r\n" + 
+					"							IM.COMPANY_ID,\r\n" + 
+					"							IM.CUSTOMER_ID,\r\n" + 
+					"							IM.AUTHORIZER,\r\n" + 
+					"							IM.NOTE,\r\n" + 
+					"							IM.TOTAL_QUANTITY,\r\n" + 
+					"							IM.CASH_AMOUNT,\r\n" + 
+					"							IM.CHEQUE_AMOUNT,\r\n" + 
+					"							IM.RTGS_AMOUNT,\r\n" + 
+					"							IM.PAID_BY_OP,\r\n" + 
+					"					       IM.UNLOADING_CHARGES,\r\n" + 
+					"					       IM.BONUS,\r\n" + 
+					"					       IM.NET_AMOUNT,\r\n" + 
+					"					       IM.PDC_AMOUNT,\r\n" + 
+					"							COMP.NAME COMP_NAME,\r\n" + 
+					"							COMP.ADDRESS COMP_ADDR,\r\n" + 
+					"							COMP.TELEPHONE COMP_TEL,\r\n" + 
+					"							COMP.GST,\r\n" + 
+					"							COMP.STATE COMP_STATE,\r\n" + 
+					"							CUST.NAME CUST_NAME,\r\n" + 
+					"							CUST.ADDRESS CUST_ADDR,\r\n" + 
+					"							CUST.MOBILE CUST_MOB,\r\n" + 
+					"							II.ID INV_ITEM_ID,\r\n" + 
+					"							II.WEIGHMENT_ID,\r\n" + 
+					"							II.GRADE_ID,\r\n" + 
+					"							II.RST,\r\n" + 
+					"							WM.VID VEH_ID,\r\n" + 
+					"							GD.MATERIAL,\r\n" + 
+					"							GD.QUANTITY,\r\n" + 
+					"							GD.GRADE,\r\n" + 
+					"							GD.RATE,\r\n" + 
+					"							GD.MOISTURE,\r\n" + 
+					"                            gd.pdc_amount PDC_PER_GRADE,\r\n" + 
+					"                            gd.pdc_date,\r\n" + 
+					"                            gd.pdc_pay_mode,\r\n" + 
+					"							GD.AUTHORIZED_BY,\r\n" + 
+					"							GM.DESCRIPTION,\r\n" + 
+					"							CV.WEIGH_RATE, \r\n" + 
+					"							COMP.EMAIL COMP_EMAIL,\r\n" + 
+					"                            CUST.BLACKLISTED,\r\n" + 
+					"                            CUST.MEMBERSHIP\r\n" + 
+					"					FROM\r\n" + 
+					"							INVOICE_MAST IM,\r\n" + 
+					"							COMPANY_MASTER COMP,\r\n" + 
+					"							CUSTOMER_MAST CUST,\r\n" + 
+					"							invoice_items II,\r\n" + 
+					"							weigh_mast WM,\r\n" + 
+					"							grade_details GD,\r\n" + 
+					"							customer_vehicle_mast CV,\r\n" + 
+					"							grade_master GM\r\n" + 
+					"					WHERE \r\n" + 
+					"							im.id = ii.invoice_id AND\r\n" + 
+					"							im.company_id = comp.id AND\r\n" + 
+					"							im.customer_id = cust.id AND\r\n" + 
+					"							ii.grade_id = gd.id AND\r\n" + 
+					"							gd.weighment_id = wm.id AND\r\n" + 
+					"							GM.GRADE = gd.grade AND\r\n" + 
+					"							wm.vid = cv.id AND\r\n" + 
+					"							IM.INVOICE_NO=?"; 
+				
+			PreparedStatement stmt = con.prepareStatement(invSql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+				    ResultSet.CONCUR_READ_ONLY);
+			
+			stmt.setString(1, invoiceNo);
+			
+			rs = stmt.executeQuery();
+			
+			rs.first();
+			
+			jsonObj.put("invoiceId", rs.getInt(1));
+			jsonObj.put("invoiceNo", rs.getString(2));
+			jsonObj.put("totalAmount","Rs. "+ rs.getString(3));
+			
+			
+			jsonObj.put("amountPaid", rs.getDouble(4));
+			jsonObj.put("amountPending", rs.getDouble(5));
+			jsonObj.put("invoiceDate", rs.getString(6));
+			jsonObj.put("companyId", rs.getInt(7));
+			jsonObj.put("customerId", rs.getInt(8));
+			jsonObj.put("authorizer", rs.getString(9));
+			jsonObj.put("note", rs.getString(10));
+			jsonObj.put("totalQuantity", rs.getString(11));
+			jsonObj.put("cashAmount", rs.getDouble(12));
+			jsonObj.put("chequeAmount", rs.getDouble(13));
+			jsonObj.put("rtgsAmount", rs.getDouble(14));
+			jsonObj.put("paidByOperator", rs.getInt(15));
+			jsonObj.put("unloadingCharges", rs.getFloat(16));
+			jsonObj.put("bonusAmount", rs.getFloat(17));
+			
+			String amountInWords = numToWords.convertToIndianCurrency(rs.getString(18));
+			
+			jsonObj.put("totalInWords", amountInWords);
+			
+			jsonObj.put("netAmount","Rs. "+ rs.getString(18));
+			jsonObj.put("pdcAmount", rs.getString(19));
+			jsonObj.put("companyName", rs.getString(20));
+			jsonObj.put("companyAddress", rs.getString(21));
+			jsonObj.put("companyTelephone", rs.getString(22));
+			jsonObj.put("companyGst", rs.getString(23));
+			jsonObj.put("companyState", rs.getString(24));
+			jsonObj.put("vendorName", rs.getString(25));
+			jsonObj.put("vendorAddress", rs.getString(26));
+			jsonObj.put("vendorMobile", rs.getString(27));
+			jsonObj.put("weighRate", rs.getDouble(43));
+			jsonObj.put("companyEmail", rs.getString(44));
+			jsonObj.put("vendorBlacklisted", rs.getString(45));
+			jsonObj.put("vendorMembership", rs.getString(46));
+			JSONArray jsonArr = new JSONArray();
+			
+			rs.previous();
+			while (rs.next()) {
+				
+				JSONObject invoiceItems = new JSONObject();
+				
+				invoiceItems.put("invoiceItemId", rs.getInt(28));
+				invoiceItems.put("weighmentId", rs.getInt(29));
+				invoiceItems.put("gradeId", rs.getInt(30));
+				invoiceItems.put("rst", rs.getInt(31));
+				invoiceItems.put("vehicleId", rs.getInt(32));
+				invoiceItems.put("material", rs.getString(33));
+				invoiceItems.put("quantity", rs.getDouble(34));
+				invoiceItems.put("grade", rs.getString(35));
+				invoiceItems.put("rate", rs.getDouble(36));
+				invoiceItems.put("moisture", rs.getFloat(37));
+				invoiceItems.put("pdcAmountPerGrade", rs.getFloat(38));
+				if(rs.getFloat(38) == 0) {
+					invoiceItems.put("pdcDate", "null");
+				}else {
+					String date = rs.getString(39);
+					Date date1=new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").parse(date);
+					SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+					String properDate = format2.format(date1);
+					invoiceItems.put("pdcDate",properDate);
+				}
+				if(rs.getFloat(38) == 0) {
+					invoiceItems.put("PdcPaymentMode", "null");
+				}else {
+					invoiceItems.put("PdcPaymentMode", rs.getString(40));
+				}
+				
+				invoiceItems.put("gradeAuthorizer", rs.getString(41));
+				invoiceItems.put("gradeDescription", rs.getString(42));
+				
+				double amount =  (rs.getDouble(34)/100) * rs.getDouble(34);
+						
+				invoiceItems.put("amount", amount);
+				
+				jsonArr.put(invoiceItems);
+				
+			}
+			
+			jsonObj.put("invoiceItems", jsonArr);
+			
+			System.out.println(jsonObj);
+			
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jsonObj;
+		
+	}
 }
