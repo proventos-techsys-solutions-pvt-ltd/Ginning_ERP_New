@@ -35,6 +35,7 @@
                         <form action="../processing/approvedInvoiceEntry.jsp" id="adminApprovalForm">
                         	<input type="hidden" name="output" id="output" value="" />
                         </form>
+                        	<input type="hidden" name="invoiceId" value="" id="invoiceId"/>
                         	<input type="hidden" name="bankId" value="" id="bankId" />
                         	<input type="hidden" name="customerId" value="" id="customerId" />
                         	<div class="row row-background">
@@ -239,7 +240,8 @@
                                 <div class="row row-background border-top">
                                 <div class="col-md-12 mt-3 mb-5">
                                     <div class="d-flex justify-content-end">
-                                        <button type="button" class="btn btn-success btn_width" onclick="submitForm()">Approve</button>
+                                        <button type="button" class="btn btn-success btn_width" onclick="submitForm()" id='submitButton'>Approve</button>
+                                        <button type="button" class="btn btn-success btn_width ml-1" onclick="" id='updateButton' disabled>Update</button>
                                         <button type="button" class="btn btn-success btn_width ml-1" id='reset' >Reset</button>
                                         <button type="button" class="btn btn-success btn_width ml-1" disabled>Delete</button>
                                     </div>
@@ -448,15 +450,37 @@ function setCurrentDate(){
 		if(fetchAmanatRequest.readyState == 4){
 			var response = this.response.trim();
 			console.log(response);
-			var data = JSON.parse(response);
-			setAmanatData(data);
+			if(Number(response) === 0 ){
+				window.alert("RST entered is either blank or 0.")
+			}
+			else if(Number(response) === 1){
+				window.alert("Invalid RST.")
+			}else if(Number(response) === 2){
+				window.alert("Grading fo this RST is not yet done.")
+			}else if(Number(response) === 3){
+				window.alert("RST does not exist in Amanat list.")
+			}else{
+				var data = JSON.parse(response);
+				setAmanatData(data);
+			}
+			
 		}
 	}
 	
 	
 	function setAmanatData(data){
+		
+		document.getElementById('rst').disabled = true;
+		//document.getElementById('amanatRst').disabled = true;
+		document.getElementById('UpdateInvoiceNo').disabled = true;
+		
 		var noOfRows = data.length;
 		var table = document.getElementById("tableBody");
+		
+		table.innerHTML = '';
+		
+		document.getElementById('gradeInfo').innerHTML = '';
+		
 		document.getElementById("rst").value = data[0].rst;
 		document.getElementById("customerData").value = data[0].customerName + "\n" + data[0].customerAddress + "\n" + data[0].customerMobile;
 		document.getElementById("customerId").value = data[0].customerId;
@@ -536,6 +560,9 @@ function setCurrentDate(){
 			cell12.innerHTML = '<input type="hidden" id="gradeDesc'+(rowNo+1)+'" class="lbl-rm-all" name="gradeDesc" value="'+data[i].gradeDesc+'" >';
 
 		}
+		document.getElementById('updateButton').disabled = true;
+		document.getElementById('submitButton').disabled = false;
+		
 		calculateTotal();
 		setGradeNote();
 	}
@@ -555,6 +582,10 @@ function setCurrentDate(){
 	//Set data in the table
 	function setData(data)
 	{
+		
+		//document.getElementById('rst').disabled = true;
+		document.getElementById('amanatRst').disabled = true;
+		document.getElementById('UpdateInvoiceNo').disabled = true;
 		
 		var noOfRows = data.length;
 		var table = document.getElementById("tableBody");
@@ -635,6 +666,9 @@ function setCurrentDate(){
 			cell12.innerHTML = '<input type="hidden" id="gradeDesc'+(rowNo+1)+'" class="lbl-rm-all" name="gradeDesc" value="'+data[i].gradeDesc+'" >';
 
 		}
+		
+		document.getElementById('updateButton').disabled = true;
+		document.getElementById('submitButton').disabled = false;
 		calculateTotal();
 		setGradeNote();
 	}
@@ -687,7 +721,16 @@ function setCurrentDate(){
 		console.log(data);
 		
 		var table = document.getElementById("tableBody");
+		table.innerHTML = '';
+		
+		document.getElementById('rst').disabled = true;
+		document.getElementById('amanatRst').disabled = true;
+		document.getElementById('UpdateInvoiceNo').disabled = true;
+		
+		document.getElementById('gradeInfo').innerHTML = '';
+		
 		//document.getElementById("rst").value = data[0].rst;
+		document.getElementById("invoiceId").value = data.invoiceId;
 		document.getElementById("invoiceNo").value = data.invoiceNo;
 		document.getElementById("customerData").value = data.vendorName + "\n" + data.vendorAddress + "\n" + data.vendorMobile;
 		document.getElementById("customerId").value = data.customerId;
@@ -815,7 +858,8 @@ function setCurrentDate(){
 			cell5.innerHTML = '<img src="../property/img/delete.png" alt="delete" class="ctm-hover" id="deleteRow'+(noOfRowsPayment+1)+'" >'
 		}
 		
-		
+		document.getElementById('updateButton').disabled = false;
+		document.getElementById('submitButton').disabled = true;
 		setGradeNote();
 	}
 	
@@ -895,6 +939,7 @@ function setCurrentDate(){
 		
 			var jsonObj = {};
 			
+			jsonObj['invoiceId'] = document.getElementById('invoiceId').value
 			jsonObj['authorizer'] = document.getElementById('authorizer').value;
 			jsonObj['invoiceNo'] = document.getElementById('invoiceNo').value;
 			jsonObj['customerId'] = document.getElementById('customerId').value;
@@ -965,6 +1010,18 @@ function setCurrentDate(){
 			document.getElementById('adminApprovalForm').submit();
 		}
 	}
+	
+	
+	document.getElementById('submitButton').addEventListener('click',function(e){
+		if(e.srcElement.id === 'submitButton'){
+			document.getElementById('adminApprovalForm').action = "../processing/approvedInvoiceEntry.jsp";
+			submitForm();
+		}else if(e.srcElement.id === 'updateButton'){
+			document.getElementById('adminApprovalForm').action = "../processing/updateInvoice.jsp";
+			submitForm();
+		}
+		
+	})
 	
 	//Change Total Amount in Payment Mode amount Table
 	document.getElementById('net').addEventListener('change', function(e){

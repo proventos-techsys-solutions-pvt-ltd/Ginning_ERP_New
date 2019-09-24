@@ -1,3 +1,6 @@
+<%@page import="com.prov.dbops.CheckAmanatRstExists"%>
+<%@page import="com.prov.dbops.CheckAlreadyGraded"%>
+<%@page import="com.prov.dbops.CheckRST"%>
 <%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="com.prov.report.AmanatReport"%>
 <%@page import="org.json.JSONArray"%>
@@ -7,15 +10,61 @@
     
     <%
     
-    	int rst = Integer.parseInt(request.getParameter("rst"));
+    String rstString = request.getParameter("rst");
     
-    	System.out.println(rst);
+    
+    if(rstString.equals("0") || rstString == "")
+    {
+    	out.println(0);	
+		out.flush();
 
-    	AmanatReport rep = new AmanatReport();
+    }else{
+    	int rst=0;
+    	try{
+    		rst = Integer.parseInt(rstString);
+    	}catch(Exception e){
+    		out.println(0);	
+    		out.flush();
+    	}
+        CheckRST cr = new CheckRST();
     	
-    	JSONArray json = rep.getAmanatDataInvoicing(rst);
+    	int rstExistFlag = cr.checkRstExistsInWeighMast(rst);
+    	
+    	if(rstExistFlag <= 0){
+    		out.println(1);
+    		out.flush();
+    	}
+    	else if(rstExistFlag > 0){
+    		CheckAlreadyGraded checkGrade = new CheckAlreadyGraded();
+    		int gradeRows = checkGrade.alreadyGraded(rst);
+    		if(gradeRows <= 0){
+    			
+    			out.println(2);
+	    		out.flush();
 
-    	out.print(json);
-    	out.flush();
+    		}
+    		else if(gradeRows>0){
+    			
+    			CheckAmanatRstExists checkAmanat = new CheckAmanatRstExists();
+    			
+    			int AmanatRstFlag = checkAmanat.checkRstExistsInAmanat(rst);
+    			
+    			if(AmanatRstFlag > 0){
+	    			AmanatReport rep = new AmanatReport();
+	    	    	
+	    	    	JSONArray json = rep.getAmanatDataInvoicing(rst);
+	
+	    	    	out.print(json);
+	    	    	out.flush();
+    			}else if(AmanatRstFlag == 0){
+    				out.println(3);
+    	    		out.flush();
+
+    			}
     	
+			}
+		}
+	}
+
+    
     %>

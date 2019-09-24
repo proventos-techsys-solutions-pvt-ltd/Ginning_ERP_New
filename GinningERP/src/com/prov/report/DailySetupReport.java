@@ -151,5 +151,83 @@ public class DailySetupReport {
 		
 		return jsonArray;
 	}
+	
+	public JSONArray getDailySetupReport() {
+
+		ResultSet rs = null;
+		Connection con = null;
+		JSONArray jsonArray = new JSONArray();
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT\r\n" + 
+						"DS.ID,\r\n" + 
+						"DS.SETUP_DATE,\r\n" + 
+						"DS.COTTON_HEAP,\r\n" + 
+						"DS.COMPANY_ID,\r\n" + 
+						"DS.BANK_ID,\r\n" + 
+						"DS.FIRST_CHEQUE_NO,\r\n" + 
+						"DS.LAST_CHEQUE_NO,\r\n" + 
+						"DS.TOTAL_CHEQUES,\r\n" + 
+						"DS.BONUS_AMOUNT,\r\n" + 
+						"CM.NAME,\r\n" + 
+						"BM.BANK_NAME\r\n" + 
+						"FROM \r\n" + 
+						"DAILY_SETUP DS,\r\n" + 
+						"COMPANY_MASTER CM,\r\n" + 
+						"BANK_MAST BM\r\n" + 
+						"WHERE DS.COMPANY_ID = CM.ID AND\r\n" + 
+						"DS.BANK_ID = BM.ID\r\n" + 
+						"ORDER BY\r\n" + 
+						"SETUP_DATE";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+			SimpleDateFormat sdf0 = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/yyyy");
+			
+			while (rs.next()) {
+				
+				
+				DailySetup ds = new DailySetup();
+
+				ds.setId(rs.getInt(1));
+				
+				Timestamp setupTimeStamp = rs.getTimestamp(2);
+				
+				Date setupDate = setupTimeStamp;
+				String setupTimeStr = sdf.format(setupDate);
+				String[] setupTimeArr = setupTimeStr.split(" ");
+				
+				Date date = sdf0.parse(setupTimeArr[0]);
+				
+				String dateStr = sdf1.format(date);
+				
+				ds.setSetupDate(dateStr);
+				ds.setSetupTime(setupTimeArr[1]);
+				ds.setCottonHeap(rs.getString(3));
+				ds.setCompanyId(rs.getInt(4));
+				ds.setBankId(rs.getInt(5));
+				ds.setFirstChequeNo(rs.getString(6));
+				ds.setLastChequeNo(rs.getString(7));
+				ds.setTotalCheques(rs.getInt(8));
+				ds.setBonusAmount(rs.getFloat(9));
+				
+				JSONObject obj = new JSONObject(ds);
+				obj.put("companyName", rs.getString(10));
+				obj.put("bankName", rs.getString(11));
+				
+				jsonArray.put(obj);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jsonArray;
+	}
 
 }
