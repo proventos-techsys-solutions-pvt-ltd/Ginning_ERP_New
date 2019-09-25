@@ -32,6 +32,7 @@
 	 	String netWtTime = request.getParameter("netWtTime");
 	 	double weighRate = Double.parseDouble(request.getParameter("weighRate"));
 	 	int dailySetupId = Integer.parseInt(request.getParameter("dailySetupId"));
+	 	String operator = request.getParameter("operator");
 	 		
 			CustomerVehicle cv = new CustomerVehicle();
 			Invoice inv = new Invoice();
@@ -57,6 +58,7 @@
 			w.setTareWtTime(tareWtTime);
 			w.setWeighmentDate(date);
 			w.setDsId(dailySetupId);
+			w.setWbOperator(operator);
 			
 			AddWeighMast addWeigh = new AddWeighMast();
 			int weighMastId=0;

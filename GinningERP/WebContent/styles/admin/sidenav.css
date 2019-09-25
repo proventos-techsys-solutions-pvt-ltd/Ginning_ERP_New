@@ -1,3 +1,7 @@
+body{
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
 .bg-dark {
     background-color: #1a1a1a!important;
 }
@@ -75,7 +79,7 @@ a:hover{
 body{
 	background:#eceef1;
 	height:100%;
-	font-family:"Times New Roman", Times, serif;
+	font-family:'Source Sans Pro', sans-serif;
 }
 .row{
 	margin-left:225px;

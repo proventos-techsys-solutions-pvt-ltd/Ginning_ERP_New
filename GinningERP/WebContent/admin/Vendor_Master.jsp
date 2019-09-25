@@ -14,7 +14,7 @@
 
 <body>
 
-<%@include file="../admin/Top_Nav.html" %>
+<%@include file="../admin/Top_Nav.jsp" %>
 	<div class="container-fluid container-mr-t">
 	 <%@include file="../admin/Side_bar.html" %>
 	 <%@include file="../admin/CommonSearchHeaderForReports.jsp" %>

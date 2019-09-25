@@ -14,7 +14,15 @@ public class WeighMast {
 
 	private float gross, tare, net;
 	
-	private String material, grossWtTime, tareWtTime, weighmentDate;
+	private String material, grossWtTime, tareWtTime, weighmentDate, wbOperator;
+
+	public String getWbOperator() {
+		return wbOperator;
+	}
+
+	public void setWbOperator(String wbOperator) {
+		this.wbOperator = wbOperator;
+	}
 
 	public int getId() {
 		return id;

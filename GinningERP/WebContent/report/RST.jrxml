@@ -55,6 +55,9 @@
 	<field name="grossTime" class="java.lang.String">
 		<fieldDescription><![CDATA[grossTime]]></fieldDescription>
 	</field>
+	<field name="wbOperator" class="java.lang.String">
+		<fieldDescription><![CDATA[wbOperator]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -343,18 +346,18 @@
 				<text><![CDATA[Weighing Charges:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="288" y="170" width="110" height="20" uuid="c3416770-b350-43ea-a74e-7646c9255c76"/>
+				<reportElement x="325" y="170" width="110" height="20" uuid="c3416770-b350-43ea-a74e-7646c9255c76"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Grader's Signature:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="170" width="120" height="20" uuid="592d32b9-a00b-497e-82b5-463ecfd032ae"/>
+				<reportElement x="10" y="170" width="50" height="20" uuid="592d32b9-a00b-497e-82b5-463ecfd032ae"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Opearator's Signature]]></text>
+				<text><![CDATA[WB Operator:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="140" y="195" width="270" height="20" uuid="2251ecae-d7d4-4cdf-be02-652631067053"/>
@@ -363,6 +366,13 @@
 				</textElement>
 				<text><![CDATA[Designed and Developed by Proventos Techsys Solutions Pvt. Ltd.]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="60" y="170" width="111" height="20" uuid="3de3aa1f-c65c-40aa-926b-fc9ae1d4059b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{wbOperator}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<pageFooter>

@@ -20,7 +20,7 @@ public int addUser(User u) {
 			e.printStackTrace();
 		}
 
-		String addUser = "{ ? = call ADD_USER(?,?,?,?,?) }";
+		String addUser = "{ ? = call ADD_USERS(?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(addUser);
@@ -42,7 +42,7 @@ public int addUser(User u) {
 			cs.close();
 			con.close();
 			
-			System.out.println("Insertion Succesful"+id);
+			System.out.println("Insertion Succesful---"+id);
 			} catch (SQLException e) {
 			e.printStackTrace();
 		}

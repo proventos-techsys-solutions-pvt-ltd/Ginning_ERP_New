@@ -61,7 +61,7 @@ public int logoutUser(User u) {
 			e.printStackTrace();
 		}
 
-		String updateUser = "UPDATE USERS SET STATUS=1 WHERE ID="+u.getId();
+		String updateUser = "UPDATE USERS SET STATUS=0 WHERE ID="+u.getId();
 		PreparedStatement stmt;
 		try {
 			stmt = con.prepareStatement(updateUser);

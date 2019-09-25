@@ -10,7 +10,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/bootstrap.min.css">	
   <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/WBStyle.css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Vollkorn&display=swap" rel="stylesheet"> 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Bootstrap JS -->
@@ -21,7 +21,7 @@
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </head>
 <body>
-  <%@include file="NavBar.html" %>
+  <%@include file="NavBar.jsp" %>
    <div hidden>
 	</div>
   <div class="container-fluid">
@@ -95,7 +95,11 @@
 	    <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Material</label>
-	        	<input type="text" class="form-control " id="material" name="material" value="Cotton" placeholder="">
+	        	<input type="text" class="form-control " id="material" name="material" value="RAW COTTON" placeholder="">
+	        </div>
+	         <div class="col-md-4">
+	        	<label class="lbl-rm-all">WB Operator</label>
+	        	<input type="text" class="form-control " id="operator" name="operator" value="<%= currentUser.getName() %>" readonly>
 	        </div>
 	    </div>
         <div class="form-row form-row-ctm">
@@ -367,6 +371,7 @@ function setFirstWeighmentData(response){
 	}else if(Number(data.vendorMembership) === 0){
 		membership = 'NO';
 	}
+	document.getElementById('rst').value = data.rst;
 	document.getElementById('id').value = data.weighmentId;
 	document.getElementById('date').value = data.weighmentDate ;
 	document.getElementById('vehicleNo').value = data.vehicleNo ;
@@ -381,6 +386,7 @@ function setFirstWeighmentData(response){
 	document.getElementById('tare').value = data.tareWt ;
 	document.getElementById('net').value = data.netWt ;
 	document.getElementById('weighRate').value = data.weighRate ;
+	document.getElementById('operator').value = data.wbOperator;
 	document.getElementById('date').setAttribute('readonly','');
 	document.getElementById('vehicleNo').setAttribute('readonly','');
 	document.getElementById('vehicleType').setAttribute('readonly','');

@@ -15,7 +15,7 @@
 
 <body>
 
-<%@include file="../admin/Top_Nav.html" %>
+<%@include file="../admin/Top_Nav.jsp" %>
 <div class="container-fluid container-mr-t">
 	 <%@include file="../admin/Side_bar.html" %>
 	 <div class="row row-background border-bottom">
@@ -48,7 +48,7 @@
                         		</div>
                         		<div class="col-md-4 offset-md-5">
                         			<label class="lbl-rm-all">Authorized By</label>
-                                    <input id="authorizer" name="authorizer"  type="text" class="form-control form-control-sm" placeholder="" value="Authorizer" readonly>
+                                    <input id="authorizer" name="authorizer"  type="text" class="form-control form-control-sm" placeholder="" value="<%= currentUser.getName() %>" readonly>
                         		</div>
                         	</div>
                             <div class="row row-background">
@@ -80,7 +80,12 @@
                                 	</div>
                                		</div>
                                </div>
-                               
+                             <div class="row row-background">
+                             	 <div class="col-md-2">
+                                    <label for="" class="lbl-rm-all">Last Authorizer</label>
+                                    <input id="lastAuthorizer" name="lastAuthorizer" type="text" class="form-control form-control-sm" placeholder="NA" readonly>
+                                </div>
+                             </div>
                             <div class="row row-background">
                                 <div class="col-md-2">
                                     <label for="" class="lbl-rm-all">Invoice No </label>
@@ -247,6 +252,24 @@
                                     </div>
                                 </div>
                                 </div>
+                         <div class="row row-background border-top">
+							<div class="col-md-12 mt-2">
+								<h4>Pending RST's for Invoicing</h4>
+							</div>
+							<div class="col-md-12 mt-2">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>RST</th>
+											<th>Customer Name</th>
+											<th>Net Qty</th>
+										</tr>
+									</thead>
+									<tbody id='pendingInvoicingTable'>
+									</tbody>
+								</table>
+							</div>
+						</div>
                                 	
 </div>
 <!-- <script src="../js/jquery-3.3.1.slim.min.js" ></script> -->
@@ -482,9 +505,11 @@ function setCurrentDate(){
 		document.getElementById('gradeInfo').innerHTML = '';
 		
 		document.getElementById("rst").value = data[0].rst;
+		document.getElementById("lastAuthorizer").value = data[0].authorizer;
 		document.getElementById("customerData").value = data[0].customerName + "\n" + data[0].customerAddress + "\n" + data[0].customerMobile;
 		document.getElementById("customerId").value = data[0].customerId;
 		document.getElementById("totalQty").value = Number(document.getElementById("totalQty").value) + Number(data[0].quantity);
+		
 		
 		//document.getElementById('unloadingCharges').value = ((Number(document.getElementById("totalQty").value)/100) * 20).toFixed(2);
 		
@@ -1173,6 +1198,51 @@ function setCurrentDate(){
 	document.getElementById('reset').addEventListener('click', function(e){
 		location.reload();
 	})
+	
+	function pendingInvoicingReports(){
+	var url="${pageContext.request.contextPath}/processing/pendingInvoicingReport.jsp";
+	if(window.XMLHttpRequest){  
+		fetchPendingInvoicing=new XMLHttpRequest();  
+	}  
+	else if(window.ActiveXObject){  
+		fetchPendingInvoicing=new ActiveXObject("Microsoft.XMLHTTP");  
+	}  
+	try{  
+		fetchPendingInvoicing.onreadystatechange=getPendingInvoicingData;  
+		console.log("AJAX Req sent");
+		fetchPendingInvoicing.open("GET",url,true);  
+		fetchPendingInvoicing.send();  
+	}catch(e){alert("Unable to connect to server");}
+}
+
+function getPendingInvoicingData(){
+	if(fetchPendingInvoicing.readyState == 4){
+		var response = this.response.trim();
+		var data = JSON.parse(response);
+		setPendingInvoicingData(data);
+	}
+}
+
+function setPendingInvoicingData(data){
+	var table = document.getElementById('pendingInvoicingTable');
+	
+	for(i=0; i<data.length; i++){
+		
+		var noOfRows = table.rows.length;
+		
+		var row = table.insertRow(noOfRows);
+		
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var cell3 = row.insertCell(2);
+		
+		cell1.innerHTML = data[i].rst;
+		cell2.innerHTML = data[i].vendorName;
+		cell3.innerHTML = data[i].netWeight;
+	}
+}
+
+pendingInvoicingReports();
 	
 	checkDailySetup();
 	setCurrentDate()

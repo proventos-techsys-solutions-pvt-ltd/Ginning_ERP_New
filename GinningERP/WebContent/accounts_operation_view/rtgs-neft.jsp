@@ -12,7 +12,7 @@
      <title>RTGS NEFT</title>
    </head>
 <body>
-	<%@include file="../accounts_operation_view/NavBar.html" %>
+	<%@include file="../accounts_operation_view/NavBar.jsp" %>
 	<div class="container-fluid">
 		<div class="row mt-2 tile-background-row">
 			<div class="col-md-12">

@@ -176,7 +176,8 @@ public class RstReport {
 						"wm.tare,\r\n" + 
 						"wm.tarewt_time,\r\n" + 
 						"wm.net,\r\n" + 
-						"wm.weighment_date\r\n" + 
+						"wm.weighment_date,\r\n" + 
+						"wm.WB_OPERATOR\r\n" +
 						"FROM \r\n" + 
 						"customer_mast CM, \r\n" + 
 						"customer_vehicle_mast CVM, \r\n" + 
@@ -216,6 +217,8 @@ public class RstReport {
 				String dateStr = sdf.format(date);
 				
 				jsonObj.put("weighmentDate", dateStr);
+				jsonObj.put("rst", rst);
+				jsonObj.put("wbOperator", rs.getString(17));
 				
 			}
 			
@@ -256,7 +259,8 @@ public class RstReport {
 						"CUST.MOBILE,\r\n" + 
 						"COMP.NAME COMP_NAME, \r\n" + 
 						"COMP.ADDRESS COMP_NAME, \r\n" + 
-						"COMP.MOBILE COMP_MOBILE \r\n" + 
+						"COMP.MOBILE COMP_MOBILE, \r\n" + 
+						"WM.WB_OPERATOR \r\n" + 
 						"FROM WEIGH_MAST WM, CUSTOMER_VEHICLE_MAST CVM, WEIGH_RATE_MAST WRM, CUSTOMER_MAST CUST, COMPANY_MASTER COMP \r\n" + 
 						"WHERE  \r\n" + 
 						"WM.VID = CVM.ID AND \r\n" + 
@@ -288,6 +292,7 @@ public class RstReport {
 				jsonObj.put("companyName", rs.getString(15));
 				jsonObj.put("companyAddress", rs.getString(16));
 				jsonObj.put("companyMobileNo", rs.getString(17));
+				jsonObj.put("wbOperator", rs.getString(18));
 				
 			}
 			

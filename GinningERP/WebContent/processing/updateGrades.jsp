@@ -8,7 +8,6 @@
 <%@page import="com.prov.bean.GradeDetails"%>
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="org.json.simple.parser.JSONParser"%>
-<%@page import="com.prov.dbops.Grading"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     

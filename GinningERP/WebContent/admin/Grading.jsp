@@ -9,13 +9,14 @@
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
 <title>Goods Grading Note</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
 </head>
 
 <body>
-<%@include file="../admin/Top_Nav.html" %>
+<%@include file="../admin/Top_Nav.jsp" %>
 
 <div class="container-fluid container-mr-t">
 	 <%@include file="../admin/Side_bar.html" %>
@@ -64,8 +65,12 @@
 							<input type="text" class="form-control form-control-sm" id="quantity" name="quantity" value="" readonly/>
 						</div>
 						<div class="col-md-auto">
+							<label class="lbl-rm-all">Last Authorizer</label>
+							<input type="text" class="form-control form-control-sm" id="lastAuthorizer" name="lastAuthorizer" value="" readonly="readonly">
+						</div>
+						<div class="col-md-auto">
 							<label class="lbl-rm-all">Authorizer</label>
-							<input type="text" class="form-control form-control-sm" id="authorizer" name="authorizer" value="NA" >
+							<input type="text" class="form-control form-control-sm" id="authorizer" name="authorizer" value="<%= currentUser.getName() %>" readonly>
 						</div>
 					</div>
 					<div class="form-row">
@@ -193,6 +198,27 @@
 							</div>
 						</div>
 						</div>
+						
+						<div class="row row-background border-top">
+							<div class="col-md-12 mt-2">
+								<h4>Pending Grading</h4>
+							</div>
+							<div class="col-md-12 mt-2">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>RST</th>
+											<th>Customer Name</th>
+											<th>Net Qty</th>
+										</tr>
+									</thead>
+									<tbody id="pendingGradingTable">
+									</tbody>
+								</table>
+							</div>
+						</div>
+						
+						
 					</div>
 					
 		
@@ -578,7 +604,7 @@ function setGradeUpdationData(data)
 	document.getElementById("material").value = data[0].material;
 	document.getElementById("quantity").value = data[0].netWeight;
 	document.getElementById("weighmentId").value = data[0].weighmentId;
-	document.getElementById("authorizer").value = data[0].authorizer;
+	document.getElementById("lastAuthorizer").value = data[0].authorizer;
 	document.getElementById("bonusAmount").value = data[0].bonusPerQtl;
 	
 	if(Number(data[0].customerBlacklisted) === 1){
@@ -887,7 +913,50 @@ function setPdcBonusRate(){
 	}
 }
 
+function pendingGradeReports(){
+	var url="${pageContext.request.contextPath}/processing/pendingGradeReport.jsp";
+	if(window.XMLHttpRequest){  
+		fetchPendingGrade=new XMLHttpRequest();  
+	}  
+	else if(window.ActiveXObject){  
+		fetchPendingGrade=new ActiveXObject("Microsoft.XMLHTTP");  
+	}  
+	try{  
+		fetchPendingGrade.onreadystatechange=getPendingGradeData;  
+		console.log("AJAX Req sent");
+		fetchPendingGrade.open("GET",url,true);  
+		fetchPendingGrade.send();  
+	}catch(e){alert("Unable to connect to server");}
+}
 
+function getPendingGradeData(){
+	if(fetchPendingGrade.readyState == 4){
+		var response = this.response.trim();
+		var data = JSON.parse(response);
+		setPedingGradData(data);
+	}
+}
+
+function setPedingGradData(data){
+	var table = document.getElementById('pendingGradingTable');
+	
+	for(i=0; i<data.length; i++){
+		
+		var noOfRows = table.rows.length;
+		
+		var row = table.insertRow(noOfRows);
+		
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var cell3 = row.insertCell(2);
+		
+		cell1.innerHTML = data[i].rst;
+		cell2.innerHTML = data[i].vendorName;
+		cell3.innerHTML = data[i].netWeight;
+	}
+}
+
+pendingGradeReports();
 responseScreen();
 </script>
 

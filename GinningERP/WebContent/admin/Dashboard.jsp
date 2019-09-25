@@ -13,7 +13,7 @@
 
 <body>
 
-<%@include file="../admin/Top_Nav.html" %>
+<%@include file="../admin/Top_Nav.jsp" %>
 <div class="container-fluid container-mr-t">
 	  <%@include file="../admin/Side_bar.html" %>
 	  <div class="row row-background">
@@ -84,14 +84,6 @@
              			<c:Company />
              		</select>
              	</div>
-             		<div class="col-md-2">
-             		<label class="lbl-rm-l">Range</label>
-             		<select class="form-control form-control-sm">
-             			<option value="">Today's </option>
-             			<option value="">Month</option>
-             			<option value="">Year</option>
-             		</select>
-             	</div>
              </div>
              <div class="row row-background">
              	<div class="col-md-8">
@@ -108,23 +100,7 @@
              							<th>Status</th>
              						</tr>
              					</thead>
-             					<tbody>
-             						<tr>
-             							<td>Ameya Pagore</td>
-             							<td>Active</td>
-             						</tr>
-             							<tr>
-             							<td>Ameya Pagore</td>
-             							<td>Active</td>
-             						</tr>
-             							<tr>
-             							<td>Ameya Pagore</td>
-             							<td>Active</td>
-             						</tr>
-             							<tr>
-             							<td>Ameya Pagore</td>
-             							<td>Active</td>
-             						</tr>
+             					<tbody id="usersTable">
              					</tbody>
              				</table>
              			</div>
@@ -300,8 +276,56 @@
 			getPurchaseReport(e.srcElement.value, paymentType);
 		});
 		
+		
+		function getUserStatus(){
+				var url="../processing/userStatusData.jsp";
+				if(window.XMLHttpRequest){  
+					fetchStatus=new XMLHttpRequest();  
+				}  
+				else if(window.ActiveXObject){  
+					fetchStatus=new ActiveXObject("Microsoft.XMLHTTP");  
+				}  
+			  
+				try{  
+					fetchStatus.onreadystatechange=fetchUserStatus;  
+					console.log("AJAX Req sent");
+					fetchStatus.open("GET",url,true);  
+					fetchStatus.send();  
+				}catch(e){alert("Unable to connect to server");}
+		}
+		
+		function fetchUserStatus(){
+			if(fetchStatus.readyState == 4){
+				var response = this.response.trim();
+				var data = JSON.parse(response);
+				setUserData(data);
+			}
+		}
+		
+		function setUserData(data){
+			
+			var table = document.getElementById("usersTable");
+			
+			for(i=0; i<data.length; i++){
+				var noOfRows = table.rows.length;
+				
+				var row = table.insertRow(noOfRows);
+				
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+				
+				cell1.innerHTML = data[i].name;
+				if(Number(data[i].status) === 1){
+					cell2.innerHTML = 'Active';
+				}if(Number(data[i].status) === 0){
+					cell2.innerHTML = 'Inactive';
+				}
+			}
+		}
+		
 		getTodayCottonRate();
 		getPurchaseReport("0","all");
+		getUserStatus();
 		
 		
 		</script>

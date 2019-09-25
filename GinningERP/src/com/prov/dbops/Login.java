@@ -22,12 +22,6 @@ public class Login {
 		String password = bean.getPassword();
 		
 		String searchQuery = "SELECT * FROM USERS WHERE USERNAME=? AND PASSWORD=?";
-		    
-	      // "System.out.println" prints in the console; Normally used to trace the process
-	      System.out.println("Your user name is " + username);          
-	      System.out.println("Your password is " + password);
-	      System.out.println("Query: "+searchQuery);
-		    
 	      try 
 	      {
 	         //connect to DB 
@@ -40,8 +34,6 @@ public class Login {
 	         // if user does not exist set the isValid variable to false
 	         if (!more) 
 	         {
-	            System.out.println("Sorry, you are not a registered user! Please sign up first");
-	            bean.setStatus(0);
 	            bean.setValid(false);
 	         } 
 		        
