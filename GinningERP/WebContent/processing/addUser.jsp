@@ -6,9 +6,9 @@
     String Username = request.getParameter("name").toUpperCase();
     String UserName = request.getParameter("username").toUpperCase();
     String UserPassword = request.getParameter("password").toUpperCase();
-    String UserRole = request.getParameter("role").toUpperCase();
+    int UserRole = Integer.parseInt(request.getParameter("role"));
 
-    if(Username == null || Username == "" || UserName == null || UserName == "" || UserPassword == null || UserPassword == "" || UserRole == null || UserRole == "")
+    if(Username == null || Username == "" || UserName == null || UserName == "" || UserPassword == null || UserPassword == "" )
     {
     	out.println("Please enter valid information.");
     }

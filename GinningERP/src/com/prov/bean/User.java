@@ -2,9 +2,35 @@ package com.prov.bean;
 
 public class User {
 
-	private int id;
+	private int id, status, role;
+	
+	public int getRole() {
+		return role;
+	}
 
-	private String name, username, password, role;
+	public void setRole(int role) {
+		this.role = role;
+	}
+
+	boolean isValid;
+
+	public boolean isValid() {
+		return isValid;
+	}
+
+	public void setValid(boolean isValid) {
+		this.isValid = isValid;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	private String name, username, password;
 
 	public int getId() {
 		return id;
@@ -37,15 +63,4 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-
-
 }

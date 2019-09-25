@@ -20,7 +20,7 @@ public int addUser(User u) {
 			e.printStackTrace();
 		}
 
-		String addUser = "{ ? = call ADD_USER(?,?,?,?) }";
+		String addUser = "{ ? = call ADD_USER(?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(addUser);
@@ -30,7 +30,8 @@ public int addUser(User u) {
 			cs.setString(2, u.getName() );
 			cs.setString(3, u.getUsername() );
 			cs.setString(4, u.getPassword());
-			cs.setString(5, u.getRole());
+			cs.setInt(5, u.getRole());
+			cs.setInt(6, 0);
 			
 			cs.executeUpdate();
 			
