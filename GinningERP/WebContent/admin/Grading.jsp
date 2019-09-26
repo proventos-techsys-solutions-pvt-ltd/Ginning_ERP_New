@@ -66,7 +66,7 @@
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Last Authorizer</label>
-							<input type="text" class="form-control form-control-sm" id="lastAuthorizer" name="lastAuthorizer" value="" readonly="readonly">
+							<input type="text" class="form-control form-control-sm" id="lastAuthorizer" name="lastAuthorizer" value="Default" readonly="readonly">
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Authorizer</label>
@@ -137,11 +137,11 @@
 					</div>
 					<div class="row row-background">
 						<div class="col-md-2">
-							<label>PDC Bonus per qtl. per month</label>
+							<label>PDP Bonus per qtl. per month</label>
 							<input type="text" id="pdcRate" name="pdcRate" class="form-control form-control-sm" value="50">
 						</div>
 						<div class="col-md-1">
-							<label>PDC Months</label>
+							<label>PDP Months</label>
 							<select  id="pdcMonths" name="pdcMonths" class="form-control form-control-sm" >
 								<option>0</option>
 								<option selected>1</option>
@@ -159,19 +159,19 @@
 							</select>
 						</div>
 						<div class="col-md-auto">
-							<label>PDC Date</label>
+							<label>PDP Date</label>
 							<input type="date" id="pdcDate" name="pdcDate" class="form-control form-control-sm" value="">
 						</div>
 						<div class="col-md-auto">
-							<label>PDC Bonus Rate</label>
+							<label>PDP Bonus Rate</label>
 							<input type="text" id="pdcBonusRate" name="pdcBonusRate" class="form-control form-control-sm" value="0" readonly>
 						</div>
 						<div class="col-md-2">
-							<label>Total PDC Bonus</label>
+							<label>Total PDP Bonus</label>
 							<input type="text" id="pdcBonusAmount" name="pdcBonusAmount" class="form-control form-control-sm" value="0" readonly>
 						</div>
 						<div class="col-md-auto">
-							<label>Total PDC Amount</label>
+							<label>Total PDP Amount</label>
 							<input type="text" id="pdcAmount" name="pdcAmount" class="form-control form-control-sm" value="0" readonly>
 						</div>
 						<div class="col-md-1">
@@ -226,6 +226,8 @@
 <!-- <script src="../js/jquery-3.3.1.slim.min.js" ></script> -->
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
+<script src="../js/validations/CommonValidations.js"></script>
+
 <script>
 //***********************VALIDATIONS**********************************
 var appController = (function(){
@@ -369,14 +371,14 @@ function setDataForNewGrading(data){
 	cell7.className = "text-center";
 	cell8.className = "text-center";
 
-	cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo1' name='srNo' value='1'>";
+	cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo1' name='srNo' value='1' readonly>";
 	cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty1' name='dividedQuantity' value=''>";
 	cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='grade1' name='grade'>"
 						+	"<option>Select</option>"
 						+	"<c:Grade />"
 						+	"</select>";
-	cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description1' name='description'>";
-	cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture1' name='moisture' value=''>";
+	cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description1' name='description' readonly>";
+	cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture1' name='moisture' value='' required>";
 	cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate1' name='rate'>"
 	cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck1' name='pdcCheck' value='false'>"					
 	
@@ -429,13 +431,13 @@ document.addEventListener("change",function(e){
 				cell7.className = "text-center";
 				cell8.className = "text-center";
 			
-				cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(noOfRows+1)+"' name='srNo' value="+(noOfRows+1)+">";
+				cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(noOfRows+1)+"' name='srNo' value="+(noOfRows+1)+" readonly>";
 				cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty"+(noOfRows+1)+"' name='dividedQuantity' value="+remainingQuantity+">";
 				cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='grade"+(noOfRows+1)+"' name='grade'>"
 									+	"<option>Select</option>"
 									+	"<c:Grade />"
 									+	"</select>";
-				cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(noOfRows+1)+"' name='description'>";
+				cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(noOfRows+1)+"' name='description' readonly>";
 				cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(noOfRows+1)+"' name='moisture'>";
 				cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate"+(noOfRows+1)+"' name='rate' >"
 				cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck"+(noOfRows+1)+"' name='pdcCheck' value='false'>";
@@ -776,14 +778,22 @@ document.addEventListener('change', function(e){
 })
 
 document.getElementById("submitGrades").addEventListener('click',function(e){
-	document.getElementById("gradeForm").action = "../processing/setGrade.jsp";
-	submitGradingData();
+	if(gradingValidations()===true){
+		document.getElementById("gradeForm").action = "../processing/setGrade.jsp";
+		submitGradingData();
+	}else{
+		alert("Moisture box elements cannot be empty!!!");
+	}
 })
 
 document.getElementById("updateGrades").addEventListener('click', function(e){
-	document.getElementById("gradeForm").action = "../processing/updateGrades.jsp";
-	submitGradingData();
-})
+	if(gradingValidations()===true){
+		document.getElementById("gradeForm").action = "../processing/updateGrades.jsp";
+		submitGradingData();
+	}else{
+		alert("Moisture box elements cannot be empty!!!");
+	}
+	})
 
 //Set Date for PDC
 function setPDCDate(){

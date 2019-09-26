@@ -708,14 +708,15 @@ public ArrayList<Invoice> getReport() {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT WM.RST, CM.NAME,  WM.NET\r\n" + 
-						"FROM WEIGH_MAST WM, CUSTOMER_MAST CM, CUSTOMER_VEHICLE_MAST CVM\r\n" + 
+			String sql = "SELECT DISTINCT GD.RST, CM.NAME,  WM.NET\r\n" + 
+						"FROM GRADE_DETAILS GD, CUSTOMER_MAST CM, CUSTOMER_VEHICLE_MAST CVM, WEIGH_MAST WM\r\n" + 
 						"WHERE \r\n" + 
 						"NOT EXISTS \r\n" + 
 						"(SELECT * \r\n" + 
 						"FROM INVOICE_ITEMS IM \r\n" + 
-						"WHERE WM.RST = IM.RST)\r\n" + 
+						"WHERE GD.RST = IM.RST)\r\n" + 
 						"AND\r\n" + 
+						"WM.ID = GD.WEIGHMENT_ID AND\r\n" + 
 						"WM.VID = CVM.ID AND\r\n" + 
 						"CVM.CID = CM.ID AND\r\n" + 
 						"WM.NET>0\r\n" + 
