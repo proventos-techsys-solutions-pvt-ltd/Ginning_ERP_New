@@ -106,9 +106,18 @@
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		<script src="../js/export/export2excel.js"></script>
     	<script type="text/javascript">
+    	
+    	function getCurrentDate(){
+			var today = new Date();
+			var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+			var time = today.getHours()+ "_" + today.getMinutes()+ "_" + today.getSeconds();
+			var dateTime = date+'_'+time;
+			return dateTime;
+		}
+    	
         function Export() {
             $("#tblBankRegister").export2excel({
-            	filename: "Bank_Register.xls"
+            	filename: "Bank_Register_"+getCurrentDate()+".xlsx"
             });
         }
 		</script>

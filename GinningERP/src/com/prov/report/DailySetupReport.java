@@ -171,15 +171,20 @@ public class DailySetupReport {
 						"DS.TOTAL_CHEQUES,\r\n" + 
 						"DS.BONUS_AMOUNT,\r\n" + 
 						"CM.NAME,\r\n" + 
-						"BM.BANK_NAME\r\n" + 
+						"BM.BANK_NAME,\r\n" + 
+						"GRM.RATE\r\n" + 
 						"FROM \r\n" + 
 						"DAILY_SETUP DS,\r\n" + 
 						"COMPANY_MASTER CM,\r\n" + 
-						"BANK_MAST BM\r\n" + 
-						"WHERE DS.COMPANY_ID = CM.ID AND\r\n" + 
-						"DS.BANK_ID = BM.ID\r\n" + 
+						"BANK_MAST BM,\r\n" + 
+						"GRADE_RATE_MASTER GRM\r\n" + 
+						"WHERE\r\n" + 
+						"DS.COMPANY_ID = CM.ID AND\r\n" + 
+						"DS.BANK_ID = BM.ID AND\r\n" + 
+						"DS.SETUP_DATE = GRM.RATE_DATE AND \r\n" + 
+						"GRM.GRADE_ID = 1\r\n" + 
 						"ORDER BY\r\n" + 
-						"SETUP_DATE";
+						"SETUP_DATE DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			rs = stmt.executeQuery();
@@ -218,6 +223,7 @@ public class DailySetupReport {
 				JSONObject obj = new JSONObject(ds);
 				obj.put("companyName", rs.getString(10));
 				obj.put("bankName", rs.getString(11));
+				obj.put("gradeRate", rs.getString(12));
 				
 				jsonArray.put(obj);
 			}

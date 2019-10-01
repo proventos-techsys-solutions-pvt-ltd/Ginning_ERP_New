@@ -18,7 +18,7 @@
 		<%@include file="../admin/CommonSearchHeaderForReports.jsp" %>
 		<div class="row mt-2 tile-background-row">
 			<div class="col-md-12">
-				<table class="table table-bordered">
+				<table id="tblInvoiceReport" class="table table-bordered">
 					<thead>
 						<tr>
 							<th hidden>Company Id</th>
@@ -44,9 +44,28 @@
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 		<script src="../js/commonjs.js"></script>
+		<script src="../js/export/export2excel.js"></script>
 		<script>
 			setTitle("Purchase Invoices");//Setting Title of Page
 			setSearchPlaceholder("Invoice No");//Setting Placeholder of Search Input
+			
+			function getCurrentDate(){
+				var today = new Date();
+				var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+				var time = today.getHours()+ "_" + today.getMinutes()+ "_" + today.getSeconds();
+				var dateTime = date+'_'+time;
+				return dateTime;
+			}
+			
+			function Export() {
+	            $("#tblInvoiceReport").export2excel({
+	            	filename: "Invoice_Report_"+getCurrentDate()+".xls"
+	            });
+	        }
+		
+		 document.getElementById("exportToExcel").addEventListener("click",function(){
+				Export();
+				})			
 			
 			document.getElementById("companyId").addEventListener("change",function(){
 				companyFilter(this.value);

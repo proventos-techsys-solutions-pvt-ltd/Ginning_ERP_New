@@ -69,10 +69,10 @@
 	 		<div class="col-md-12">
 	 		<input type="hidden" name="jsonOutput" id="jsonOutput" value='<%= session.getAttribute("jsonArray") %>' />
 	 		<% session.removeAttribute("jsonArray"); %>
-	 			<table id="tblCashRegister" class="table table-bordered">
+	 			<table id="tblDailySetupRegister" class="table table-bordered">
 	 				<thead>
 	 					<tr>
-		 					<th>Company ID</th>
+		 					<th hidden>Company ID</th>
 		 					<th>Sr No</th>
 		 					<th>Setup Date</th>
 		 					<th>Setup Time</th>
@@ -83,6 +83,7 @@
 		 					<th>Total Cheques</th>
 		 					<th>Bonus Amount</th>
 		 					<th>Heap</th>
+		 					<th>Super Grade Rate</th>
 	 					</tr>
 	 				</thead>
 	 				<tbody id="tableBody">
@@ -100,6 +101,24 @@
     	<script>
     	setTitle("Daily Setup Report");//Setting Title of Page
 		setSearchPlaceholder("Search");//Setting Placeholder of Search Input
+		
+		function getCurrentDate(){
+			var today = new Date();
+			var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+			var time = today.getHours()+ "_" + today.getMinutes()+ "_" + today.getSeconds();
+			var dateTime = date+'_'+time;
+			return dateTime;
+		}
+		
+		 function Export() {
+	            $("#tblDailySetupRegister").export2excel({
+	            	filename: "Daily_Setup_Register_"+getCurrentDate()+".xls"
+	            });
+	        }
+		
+		 document.getElementById("exportToExcel").addEventListener("click",function(){
+				Export();
+				})
 		
 		function getPdcReport(){
 			
@@ -148,6 +167,7 @@
 				var cell9 = row.insertCell(8);
 				var cell10 = row.insertCell(9);
 				var cell11 = row.insertCell(10);
+				var cell12 = row.insertCell(11);
 				
 				cell1.innerHTML = data[i].companyId;
 				cell2.innerHTML = (i+1);
@@ -160,8 +180,9 @@
 				cell9.innerHTML = data[i].totalCheques;
 				cell10.innerHTML = data[i].bonusAmount;
 				cell11.innerHTML = data[i].cottonHeap;
+				cell12.innerHTML = data[i].gradeRate;
 				
-				//cell1.hidden = true;
+				cell1.hidden = true;
 				
 			}
 		}

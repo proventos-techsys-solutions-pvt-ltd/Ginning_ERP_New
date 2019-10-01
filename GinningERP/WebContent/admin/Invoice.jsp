@@ -26,10 +26,10 @@
                			</div>
                		</div>
                 </div>
-                <div hidden>
+                <div >
             	  <%
-				    out.print(session.getAttribute("InvoiceNo"));
-				    session.removeAttribute("InvoiceNo");
+				    out.print(session.getAttribute("invoiceNo"));
+				    session.removeAttribute("invoiceNo");
 				%>
             	</div>
                         <form action="../processing/approvedInvoiceEntry.jsp" id="adminApprovalForm">
@@ -159,7 +159,7 @@
 	                                     <textarea id="note" name="note" class="form-control form-control-lg">Note</textarea>
 									</div>
 									<div class="col-md-2" >
-										<div class="row-div" id="pdcData" hidden>
+										<div class="row-div" id="pdcData">
 											<label for="" class="lbl-rm-all">PDC Date</label> 
 											<input type="date" class="form-control form-control-sm" name="pdcDate" id="pdcDate" readonly/>
 											<label for="" class="lbl-rm-all">PDC Payment Mode</label> 
@@ -245,8 +245,8 @@
                                 <div class="row row-background border-top">
                                 <div class="col-md-12 mt-3 mb-5">
                                     <div class="d-flex justify-content-end">
-                                        <button type="button" class="btn btn-success btn_width" onclick="submitForm()" id='submitButton'>Approve</button>
-                                        <button type="button" class="btn btn-success btn_width ml-1" onclick="" id='updateButton' disabled>Update</button>
+                                        <button type="button" class="btn btn-success btn_width" id='submitButton'>Approve</button>
+                                        <button type="button" class="btn btn-success btn_width ml-1" id='updateButton' disabled>Update</button>
                                         <button type="button" class="btn btn-success btn_width ml-1" id='reset' >Reset</button>
                                         <button type="button" class="btn btn-success btn_width ml-1" disabled>Delete</button>
                                     </div>
@@ -1037,7 +1037,7 @@ function setCurrentDate(){
 	}
 	
 	
-	document.getElementById('submitButton').addEventListener('click',function(e){
+	document.addEventListener('click',function(e){
 		if(e.srcElement.id === 'submitButton'){
 			document.getElementById('adminApprovalForm').action = "../processing/approvedInvoiceEntry.jsp";
 			submitForm();

@@ -69,7 +69,7 @@
 	 		<div class="col-md-12">
 	 		<input type="hidden" name="jsonOutput" id="jsonOutput" value='<%= session.getAttribute("jsonArray") %>' />
 	 		<% session.removeAttribute("jsonArray"); %>
-	 			<table id="tblCashRegister" class="table table-bordered">
+	 			<table id="tblPdcReport" class="table table-bordered">
 	 				<thead>
 	 					<tr>
 	 					<th hidden>ID</th>
@@ -97,6 +97,25 @@
     	<script>
     	setTitle("PDC Register");//Setting Title of Page
 		setSearchPlaceholder("Search");//Setting Placeholder of Search Input
+		
+		function getCurrentDate(){
+			var today = new Date();
+			var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+			var time = today.getHours()+ "_" + today.getMinutes()+ "_" + today.getSeconds();
+			var dateTime = date+'_'+time;
+			return dateTime;
+		}
+		
+		function Export() {
+            $("#tblPdcReport").export2excel({
+            	filename: "PDC_Report_"+getCurrentDate()+".xls"
+            });
+        }
+	
+	 document.getElementById("exportToExcel").addEventListener("click",function(){
+			Export();
+			})
+		
 		
 		function getPdcReport(){
 			
