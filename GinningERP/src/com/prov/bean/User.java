@@ -1,9 +1,21 @@
 package com.prov.bean;
 
+import com.prov.weighing.SerialReaderRunnable;
+
 public class User {
 
 	private int id, status, role;
 	
+	private SerialReaderRunnable sr;
+	
+	public SerialReaderRunnable getSr() {
+		return sr;
+	}
+
+	public void setSr(SerialReaderRunnable sr) {
+		this.sr = sr;
+	}
+
 	public int getRole() {
 		return role;
 	}

@@ -37,7 +37,7 @@
     
    	String invoiceDeleteStatus = deleteInvoice.deleteInvoiceEntry(invoiceId);
     
-    if(invoiceDeleteStatus == (String)json.get("invoiceNo")){
+    if(invoiceDeleteStatus.equalsIgnoreCase((String)json.get("invoiceNo"))){
     
 	    Invoice invoice = new Invoice();
 		
@@ -174,7 +174,7 @@
 				us.updateStockOnEntry(sm);
 			}
 			
-			session.setAttribute("invoiceNo", Integer.toString(invoiceId));
+			session.setAttribute("invoiceNo", invoice.getInvoiceNo());
 		    response.sendRedirect("../admin/Invoice.jsp");
 		    
   	  }else {

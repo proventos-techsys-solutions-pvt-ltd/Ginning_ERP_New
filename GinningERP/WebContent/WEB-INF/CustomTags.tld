@@ -86,5 +86,11 @@
 	<tag-class>com.prov.tags.CashLedgerTag</tag-class>
 	<body-content>Empty</body-content>
    </tag>
+   
+   <tag>
+    <name>ExpenseAccountTag</name>
+	<tag-class>com.prov.tags.ExpenseAccount</tag-class>
+	<body-content>Empty</body-content>
+   </tag>
   
 </taglib>

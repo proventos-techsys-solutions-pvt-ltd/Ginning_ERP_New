@@ -4,7 +4,7 @@
     pageEncoding="ISO-8859-1"%>
 <%
 	
-	String invoiceNo = request.getParameter("invoiceNo").toUpperCase(); 
+	String invoiceNo = request.getParameter("invoiceNo").toUpperCase().trim(); 
 
 	InvoiceReport report = new InvoiceReport();
 	JSONObject obj = report.getInvoiceDataForUpdation(invoiceNo);

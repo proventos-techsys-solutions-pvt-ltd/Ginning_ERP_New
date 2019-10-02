@@ -14,7 +14,7 @@
         exclude: ".noExl",
         name: "Export2Excel",
         filename: "export2excel",
-        fileext: ".xls",
+        fileext: ".xlsx",
         exclude_img: true,
         exclude_links: true,
         exclude_inputs: true
@@ -58,7 +58,7 @@
             // get contents of table except for exclude
             $(e.element).each(function (i, o) {
                 var tempRows = "";
-                $(o).find("tr").not(e.settings.exclude).each(function (i, p) {
+                $(o).find("tr:visible").not(e.settings.exclude).each(function (i, p) {
 
                     tempRows += "<tr>";
                     $(p).find("td,th").not(e.settings.exclude).each(function (i, q) { // p did not exist, I corrected

@@ -220,8 +220,6 @@
 <script src="${pageContext.request.contextPath}/js/validations/GenerateRST.js"></script>
 <script>
 
-
-
 //Send AJAX req to chech Daily setup
 function checkDailySetup(){
 	var url="${pageContext.request.contextPath}/processing/checkDailySetup.jsp";
@@ -475,9 +473,17 @@ function fetchGrossWt(){
 //Submit RST Weigh Bridge Form
 function submitRSTEntry(){
 	if(uiController.validate()===true){
-		document.getElementById("newRST").submit();	
-		resetFormData();
-		
+		if(!document.getElementById('fetchGrossWeight').disabled){
+				document.getElementById("newRST").submit();	
+				resetFormData();
+		}else if(document.getElementById('fetchGrossWeight').disabled){
+			if(Number(document.getElementById('tare').value)>0){
+				document.getElementById("newRST").submit();	
+				resetFormData();
+			}else if(Number(document.getElementById('tare').value) <= 0){
+				alert("Tare or Net Weight is zero.");
+			}
+		}
 	}else{
 		alert("Please check if data has been properly entered!!!");
 	}
@@ -756,6 +762,21 @@ document.addEventListener('click',function(e){
 		fetchDataForSecondWeighment(rst);
 	}
 })
+
+function fetchdata(){
+ $.ajax({
+  url: '../processing/',
+  type: 'post',
+  success: function(response){
+   // Perform operation on the return value
+   alert(response);
+  }
+ });
+}
+
+$(document).ready(function(){
+ setInterval(fetchdata,5000);
+});
 
 //Function calls on page load
 pendingTareWt();

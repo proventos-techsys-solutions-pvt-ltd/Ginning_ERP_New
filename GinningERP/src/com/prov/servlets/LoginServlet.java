@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import com.prov.bean.User;
 import com.prov.dbops.Login;
+import com.prov.weighing.SerialReaderRunnable;
+import com.prov.weighing.TwoWaySerialCommThread;
 
 public class LoginServlet extends HttpServlet {
 
@@ -32,6 +34,17 @@ public class LoginServlet extends HttpServlet {
 				if(user.getRole() == 1) {
 					response.sendRedirect("admin/Dashboard.jsp"); //logged-in page  
 				}else if(user.getRole() == 2) {
+					SerialReaderRunnable serialReaderObj = null;
+					 try
+				        {
+				         serialReaderObj =  (new TwoWaySerialCommThread()).connect("COM1");
+				        }
+				        catch ( Exception e )
+				        {
+				            // TODO Auto-generated catch block
+				            e.printStackTrace();
+				        }
+					 user.setSr(serialReaderObj);
 					response.sendRedirect("wb_operator/GenerateRST.jsp"); //logged-in page  
 				}else if(user.getRole() == 3) {
 					response.sendRedirect("accounts_operation_view/Payment.jsp"); //logged-in page  

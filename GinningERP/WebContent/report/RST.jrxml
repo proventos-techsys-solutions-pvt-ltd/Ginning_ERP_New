@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RST" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1f40c7f7-6260-4085-a6ef-bbe945e0c222">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RST" pageWidth="595" pageHeight="370" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1f40c7f7-6260-4085-a6ef-bbe945e0c222">
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -63,27 +63,29 @@
 	</background>
 	<title>
 		<band height="65" splitType="Stretch">
-			<textField>
-				<reportElement x="50" y="-2" width="460" height="32" uuid="cefc5a11-1123-4eec-b3fb-59bbddb47f2d"/>
+			<staticText>
+				<reportElement x="40" y="0" width="491" height="30" uuid="f702ba77-91ea-48e5-a314-c693ca7af345"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{companyName}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="50" y="29" width="460" height="21" uuid="e2a2db2b-bc52-4798-b7d1-0cf4c2faf429"/>
+				<text><![CDATA[Sameer Cotton Industries Pvt. Ltd.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="30" width="431" height="15" uuid="956330f1-4d32-482a-800d-5fbc127726d2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{companyAddress}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="200" y="50" width="161" height="13" uuid="ed29bce4-2f31-4199-81b3-034b5a15787d"/>
+				<text><![CDATA[Survey no. 212/1, Mouja Gonhi, Ghubdmet, Saoner Road, Tehsil Katol, Dist Nagpur, 441302]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="45" width="390" height="15" uuid="a444113b-6901-4e8b-a098-c5396b9d7dc2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{companyMobileNo}]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[Mob: 9112987758, Email: info@samirgroup.co.in, Website: www.samirgroup.com]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>

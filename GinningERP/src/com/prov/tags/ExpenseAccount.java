@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 import com.prov.db.OracleConnection;
 
-public class CashLedgerTag extends SimpleTagSupport{
+public class ExpenseAccount extends SimpleTagSupport {
 	
 	public static JSONArray getAccountCats() {			
 		Connection con=null;
@@ -22,7 +22,7 @@ public class CashLedgerTag extends SimpleTagSupport{
 		JSONArray jsonArray = new JSONArray();
 		try {
 			 con = OracleConnection.getConnection();
-			 String accountQuery = "Select acc_ledger, account_id, company_id from general_ledger where acc_category_id=2 order by acc_ledger";
+			 String accountQuery = "Select acc_ledger, account_id, COMPANY_ID from general_ledger where acc_category_id=4 order by acc_ledger";
 			 Statement stmt = con.createStatement();
 			 accountCatResultSet = stmt.executeQuery(accountQuery);
 			 while(accountCatResultSet.next()) {

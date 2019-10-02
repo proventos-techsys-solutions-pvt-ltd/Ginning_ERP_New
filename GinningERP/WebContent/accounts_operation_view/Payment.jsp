@@ -370,6 +370,7 @@
 			document.getElementById('chequeLeaves').innerHTML = data.totalCheques;
 			getRtgsCount(document.getElementById('companyId').value);
 		}
+	}
 	
 	
 	function getRtgsCount(companyId){
@@ -592,7 +593,7 @@
 	   
 	   document.getElementById('paymentForm').submit();
 	   //submitDataAjax(pdcInfo);
-   }	
+   }
    
    function submitPdcRtgs(){
 	   

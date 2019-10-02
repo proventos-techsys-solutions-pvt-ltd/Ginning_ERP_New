@@ -4,47 +4,51 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.Map.Entry;
 
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.prov.db.OracleConnection;
 
 public class BankAddModeTag extends SimpleTagSupport {
 	
-	public static TreeMap<Integer,String> getAccountCats() {			
+	public static JSONArray getAccountCats() {			
 		Connection con=null;
 		ResultSet accountCatResultSet = null;
-		TreeMap<Integer,String> accountCategory = new TreeMap<Integer,String>();
+		JSONArray jsonArray = new JSONArray();
 		try {
 			 con = OracleConnection.getConnection();
-			 String accountQuery = "Select acc_ledger, account_id from general_ledger where acc_category_id=2 or acc_category_id = 3 order by acc_ledger";
+			 String accountQuery = "Select acc_ledger, account_id, company_id from general_ledger where acc_category_id=2 or acc_category_id = 3 order by acc_ledger";
 			 Statement stmt = con.createStatement();
 			 accountCatResultSet = stmt.executeQuery(accountQuery);
 			 while(accountCatResultSet.next()) {
-				 accountCategory.put(accountCatResultSet.getInt("account_id"),accountCatResultSet.getString("acc_ledger"));
+				 JSONObject obj = new JSONObject();
+				  obj.put("accLedger", accountCatResultSet.getString("acc_ledger"));
+				  obj.put("accId",accountCatResultSet.getString("account_id"));
+				  obj.put("companyId", accountCatResultSet.getString("company_id"));
+				  jsonArray.put(obj);
 				}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return accountCategory;
+		return jsonArray;
 	}
 	
 	
 	public void doTag() throws IOException {
 		JspWriter out = getJspContext().getOut();
-		Set<Entry<Integer,String>> accountSet = getAccountCats().entrySet();
-		Iterator<Entry<Integer,String>> compItr = accountSet.iterator();
-		while(compItr.hasNext()) {
-			Map.Entry<Integer,String> accountData = (Map.Entry<Integer,String>)compItr.next();
-			String accountKey = (String)accountData.getValue();
-			int accountValue = (int)accountData.getKey();
-			out.println("<option value='"+accountValue+"'>"+accountKey+"</option>");
+		JSONArray jsonArray = getAccountCats();
+		for(int i=0;i<jsonArray.length();i++) {
+			try {
+				out.println("<option data-company-id='"+jsonArray.getJSONObject(i).get("companyId")+"' value='"+jsonArray.getJSONObject(i).get("accId")+"'>"+jsonArray.getJSONObject(i).get("accLedger")+"</option>");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

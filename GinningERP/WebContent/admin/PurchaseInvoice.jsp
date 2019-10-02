@@ -25,6 +25,7 @@
 							<th hidden>Invoice Id</th>
 							<th>Date</th>
 							<th>Invoice No</th>
+							<th>RSTs</th>
 							<th>Vendor Name</th>
 							<th>Address</th>
 							<th>Mobile No</th>
@@ -117,6 +118,7 @@
 								'<td hidden>'+jsonResponse[i].invoiceId+'</td>'+
 								'<td>'+jsonResponse[i].invoiceDate+'</td>'+
 								'<td>'+jsonResponse[i].invoiceNo+'</td>'+
+								'<td>'+jsonResponse[i].rst+'</td>'+
 								'<td>'+jsonResponse[i].customerName+'</td>'+
 								'<td>'+jsonResponse[i].customerAddress+'</td>'+
 								'<td>'+jsonResponse[i].customerMobile+'</td>'+
@@ -185,11 +187,7 @@
 				var response = this.response.trim();
 				console.log(response);
 				if(response.includes('CASH')){
-					window.alert("Cash payment has been done for this invoice by the cashier.");
-				}else if(response.includes('CHEQUE')){
-					window.alert("Cheque has been issued against this invoice by cashier.");
-				}else if(response.includes('RTGS')){
-					window.alert("RTGS entry has been made against this invoice by cashier.");
+					window.alert(response+" HAS BEEN ALREADY PAID. PLEASE DELETE THESE ENTRIES FIRST.");
 				}else{
 					window.alert('Invoice No. '+response+' is deleted successesfully.');
 					location.reload();

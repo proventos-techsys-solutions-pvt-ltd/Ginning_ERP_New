@@ -207,6 +207,78 @@ public ArrayList<Invoice> getReport() {
 		return report;
 	}
 	
+	public JSONArray getAllInvoiceReport() {
+		ResultSet rs = null;
+		Connection con = null;
+		
+		JSONArray report = new JSONArray();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String invSql = "SELECT DISTINCT  \r\n" + 
+					"IM.ID, IM.INV_DATE, IM.INVOICE_NO, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.PENDING, IM.TOTAL, IM.NET_AMOUNT, IM.AMOUNTPAID, \r\n" + 
+					"CM.NAME, CM.ADDRESS, CM.MOBILE,\r\n" + 
+					"II.RST\r\n" + 
+					"FROM INVOICE_MAST IM, CUSTOMER_MAST CM, INVOICE_ITEMS II\r\n" + 
+					"WHERE IM.CUSTOMER_ID = CM.ID AND\r\n" + 
+					"II.INVOICE_ID = IM.ID\r\n" + 
+					"ORDER BY RST";
+			
+			PreparedStatement stmt = con.prepareStatement(invSql);
+			
+			rs = stmt.executeQuery();
+			int i = 0;
+			
+			while (rs.next()) {
+				
+				JSONObject jsonObj = new JSONObject();
+				
+				jsonObj.put("invoiceId", rs.getString(1));
+				
+				String date = rs.getString(2);
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+				String properDate = format2.format(date1);
+				
+				jsonObj.put("invoiceDate", properDate);
+				jsonObj.put("invoiceNo", rs.getString(3));
+				jsonObj.put("companyId", rs.getInt(4));
+				jsonObj.put("customerId", rs.getInt(5));
+				jsonObj.put("pendingAmount", rs.getDouble(6));
+				jsonObj.put("totalAmount", rs.getDouble(7));
+				jsonObj.put("netPayable", rs.getDouble(8));
+				jsonObj.put("amountPaid", rs.getDouble(9));
+				jsonObj.put("customerName", rs.getString(10));
+				jsonObj.put("customerAddress", rs.getString(11));
+				jsonObj.put("customerMobile", rs.getString(12));
+				jsonObj.put("rst", rs.getString(13));
+				if(report.length() != 0) {
+					if(report.getJSONObject(i).getString("invoiceNo").equals(jsonObj.getString("invoiceNo"))){
+						//report.getJSONObject(i).append("rst", ","+jsonObj.getInt("rst"));
+						String previousRst = report.getJSONObject(i).getString("rst");
+						report.getJSONObject(i).remove("rst");
+						report.getJSONObject(i).put("rst", previousRst+", "+jsonObj.getString("rst"));
+						continue;
+					}else if(!report.getJSONObject(i).getString("invoiceNo").equals(jsonObj.getString("invoiceNo")))
+					{
+						report.put(jsonObj);
+						i++;
+					}
+				}else {
+					report.put(jsonObj);
+				}
+			}
+			
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return report;
+	}
+	
 	public JSONObject getInvoiceForOperator(String invoiceNo) {
 		ResultSet rs = null;
 		Connection con = null;

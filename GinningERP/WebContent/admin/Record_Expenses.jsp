@@ -22,11 +22,11 @@
 						<h4>Expenses</h4>
 				</div>
 			</div>
-		<form action="../processing/expenseEntry.jsp" >
+		<form action="../processing/addExpense.jsp" >
 			<div class="row row-background">
 				<div class="col-md-3">
 						<label class="lbl-rm-l ">Select Company</label> 
-				<select class="form-control form-control-sm" name="companyId" id="companyId" onchange="setBank(this.value)">
+				<select class="form-control form-control-sm" name="companyId" id="companyId" onchange="setPaymentModes(this.value)">
 					<option selected="selected" disabled>Select</option>
 					<c:Company />
 				</select>
@@ -40,7 +40,7 @@
 				</div>
 				<div class="col-md-2">
 						<label class="lbl-rm-it">Voucher No</label>
-						<input type="text" class="form-control form-control-sm" name="voucherNo" id="voucherNo" value="" placeholder="V001">
+						<input type="text" class="form-control form-control-sm" name="voucherNo" id="voucherNo" value="" readonly="readonly">
 				</div>
 				<div class="col-md-2">
 						<label class="lbl-rm-it">Reference</label>
@@ -53,6 +53,7 @@
 						<label class="lbl-rm-l">Expense Account</label>
 						<select class="form-control form-control-sm" name="accountId" id="accountId">
 							<option selected="selected" disabled>Select</option>
+							<c:ExpenseAccountTag/>
 						</select>
 				</div>
 				<div class="col-md-5">
@@ -67,7 +68,8 @@
 						<label class="lbl-rm-l">Payment Mode</label>
 						<select class="form-control form-control-sm" name="paymentMode" id="paymentMode">
 							<option selected disabled>Select</option>
-							<c:Bank />
+							<c:BankLedgerTag/>
+							<c:CashLedgerTag/>
 						</select>
 				</div>
 			</div>
@@ -87,15 +89,11 @@
 	<script>
 	
 		function expenseEntry(){
-			
 			document.getElementsByTagName('form')[0].submit();
-			
 		}
 	
-		function setBank(companyId){
-			
+		function setPaymentModes(companyId){
 			var options = document.getElementById("paymentMode").options;
-			
 			for(i=0; i<options.length;i++)
 				{
 					if(options[i].getAttribute('data-company-id') != companyId && options[i].getAttribute('data-company-id') != 0){
@@ -104,10 +102,36 @@
 						options[i].hidden=false;
 					}
 				}
-			
 		}
 		
-	
+		
+		
+		function fetchVoucherNoSeries(){
+			var url="../processing/getVoucherNoSeries.jsp";
+			if(window.XMLHttpRequest){  
+				fetchVoucherNo=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				fetchVoucherNo=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+		  
+			try{  
+				fetchVoucherNo.onreadystatechange=getVoucherNo;  
+				console.log("AJAX Req sent");
+				fetchVoucherNo.open("GET",url,true);  
+				fetchVoucherNo.send();  
+			}catch(e){alert("Unable to connect to server");}
+		}
+		
+		function getVoucherNo(){
+			if(fetchVoucherNo.readyState == 4){
+				var voucherNo = this.response.trim();
+				console.log("voucher---"+voucherNo);
+				document.getElementById("voucherNo").value = voucherNo;
+			}
+		}
+		
+	fetchVoucherNoSeries();
 	</script>
 </body>
 </html>

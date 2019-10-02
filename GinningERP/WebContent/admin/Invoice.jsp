@@ -26,12 +26,6 @@
                			</div>
                		</div>
                 </div>
-                <div >
-            	  <%
-				    out.print(session.getAttribute("invoiceNo"));
-				    session.removeAttribute("invoiceNo");
-				%>
-            	</div>
                         <form action="../processing/approvedInvoiceEntry.jsp" id="adminApprovalForm">
                         	<input type="hidden" name="output" id="output" value="" />
                         </form>
@@ -45,6 +39,7 @@
                                       <option value="0" selected="selected" disabled="disabled">Select</option>
                                       <c:Company/>
                                   </select>
+                                  <input type="hidden" id="responseId" name="" value="<%=session.getAttribute("invoiceNo") %>">
                         		</div>
                         		<div class="col-md-4 offset-md-5">
                         			<label class="lbl-rm-all">Authorized By</label>
@@ -272,6 +267,18 @@
 						</div>
                                 	
 </div>
+<!-- *********************RESPONSE************************  -->		
+		<div class="response-background">
+			<div class="response">
+				<div class="d-flex justify-content-center align-items-center">
+					<div id="responseText"><h4></h4></div>
+				</div>
+				<div class="d-flex justify-content-center align-items-center mt-2">
+					<button type="button" class="btn btn-success btn-sm ml-1" id="responseBtn">OK</button>
+				</div>
+			</div>
+		</div>
+
 <!-- <script src="../js/jquery-3.3.1.slim.min.js" ></script> -->
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
@@ -1242,8 +1249,34 @@ function setPendingInvoicingData(data){
 	}
 }
 
-pendingInvoicingReports();
-	
+
+function responseScreen(){
+	var responseId= document.getElementById("responseId").value.trim();
+	console.log(responseId);
+	if(responseId.includes('CASH')){
+		document.getElementsByClassName("response-background")[0].style.display = "block";
+		document.getElementsByClassName("response")[0].style.display = "block";
+		document.getElementById("responseText").querySelector("h4").innerHTML = responseId+" HAS BEEN ALREADY PAID. PLEASE DELETE THESE ENTRIES FIRST.";
+	}else if(responseId === 'null'){
+	}else if(responseId != 'null'){
+		document.getElementsByClassName("response-background")[0].style.display = "block";
+		document.getElementsByClassName("response")[0].style.display = "block";
+		document.getElementById("responseText").querySelector("h4").innerHTML = "Invoice "+responseId+" has been updated successfully.";
+	}
+}
+
+
+document.getElementById("responseBtn").addEventListener("click",function(){
+	document.getElementsByClassName("response-background")[0].style.display = "none";
+	document.getElementsByClassName("response")[0].style.display = "none";
+	document.getElementById("responseId").value='null';
+})
+
+<% session.removeAttribute("invoiceNo"); %>
+
+
+	responseScreen();
+	pendingInvoicingReports();
 	checkDailySetup();
 	setCurrentDate()
 	
