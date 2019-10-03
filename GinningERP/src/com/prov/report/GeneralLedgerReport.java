@@ -26,23 +26,24 @@ public class GeneralLedgerReport {
 			con = OracleConnection.getConnection();
 			
 			String sql = "SELECT \r\n" + 
-					"					gl.ID,\r\n" + 
-					"					gl.VOUCHER_NO,\r\n" + 
-					"					gl.ACCOUNT_ID,\r\n" + 
-					"					gl.ACC_CATEGORY_ID,\r\n" + 
-					"					gl.ACC_LEDGER,\r\n" + 
-					"					gl.LEDGER_DESC,\r\n" + 
-					"					gl.LEDGER_DATE,\r\n" + 
-					"					gl.MONTH_ID,\r\n" + 
-					"					gl.OPENING_BAL,\r\n" + 
-					"					gl.DEBIT,\r\n" + 
-					"					gl.CREDIT,\r\n" + 
-					"					gl.CLOSING_BAL,\r\n" + 
-					"					gl.COMPANY_ID,\r\n" + 
-					"					ac.category_name\r\n" + 
-					"					FROM GENERAL_LEDGER gl, account_category ac \r\n" + 
-					"					where gl.ACC_CATEGORY_ID = ac.id\r\n" + 
-					"					ORDER BY GL.ACCOUNT_ID";
+					"gl.ID,\r\n" + 
+					"gl.VOUCHER_NO,\r\n" + 
+					"gl.ACCOUNT_ID,\r\n" + 
+					"gl.ACC_CATEGORY_ID,\r\n" + 
+					"gl.ACC_LEDGER,\r\n" + 
+					"gl.LEDGER_DESC,\r\n" + 
+					"gl.LEDGER_DATE,\r\n" + 
+					"gl.MONTH_ID,\r\n" + 
+					"gl.OPENING_BAL,\r\n" + 
+					"gl.DEBIT,\r\n" + 
+					"gl.CREDIT,\r\n" + 
+					"gl.CLOSING_BAL,\r\n" + 
+					"gl.COMPANY_ID,\r\n" + 
+					"ac.category_name\r\n" + 
+					"FROM GENERAL_LEDGER gl, account_category ac \r\n" + 
+					"where gl.ACC_CATEGORY_ID = ac.id \r\n" + 
+					"and gl.MONTH_ID = (select MAX(MONTH_ID) FROM GENERAL_LEDGER where ID = gl.ID)\r\n" + 
+					"ORDER BY GL.ACCOUNT_ID";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			rs = stmt.executeQuery();

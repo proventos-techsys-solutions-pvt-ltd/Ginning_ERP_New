@@ -22,7 +22,7 @@ public class AccountLedgerTag extends SimpleTagSupport{
 		JSONArray jsonArray = new JSONArray();
 		try {
 			 con = OracleConnection.getConnection();
-			 String accountQuery = "Select acc_ledger, account_id, company_id from general_ledger order by acc_ledger";
+			 String accountQuery = "Select unique acc_ledger, account_id, company_id from general_ledger order by acc_ledger";
 			 Statement stmt = con.createStatement();
 			 accountCatResultSet = stmt.executeQuery(accountQuery);
 			 while(accountCatResultSet.next()) {

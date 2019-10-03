@@ -48,7 +48,7 @@ public int addTransactions(Transactions t) {
 			cs.close();
 			con.close();
 			
-			System.out.println("Insertion Succesful"+id);
+			System.out.println("Insertion Succesful -- "+id);
 			} catch (SQLException e) {
 			e.printStackTrace();
 		}

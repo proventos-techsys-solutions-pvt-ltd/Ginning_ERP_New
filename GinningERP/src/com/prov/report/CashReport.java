@@ -39,7 +39,7 @@ public class CashReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT \r\n" + 
+			String sql = "SELECT UNIQUE \r\n" + 
 					"TR.ID TR_ID, TR.TRANSACTION_DATE, TR.VOUCH_NO, TR.VOUCH_REF, TR.ACCOUNT_ID, TR.DEBIT, TR.CREDIT, TR.NARRATION, \r\n" + 
 					"GL.COMPANY_ID,\r\n" + 
 					"AC.ID ACC_CAT_ID, AC.CATEGORY_NAME,\r\n" + 
