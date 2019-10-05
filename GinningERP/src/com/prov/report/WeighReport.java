@@ -207,4 +207,54 @@ public class WeighReport {
 		return jsonArray;
 	}
 	
+	
+	public ArrayList<WeighMast> getWeighBridgeReport() {
+
+		ResultSet rs = null;
+		Connection con = null;
+		
+		ArrayList<WeighMast> list = new ArrayList<WeighMast>();
+		
+		try {
+			
+			con=OracleConnection.getConnection();
+				
+			String weighSql = "SELECT * FROM WEIGH_MAST ORDER BY RST";
+			
+			PreparedStatement stmt = con.prepareStatement(weighSql);
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				WeighMast wm = new WeighMast();
+				
+				wm.setId(rs.getInt(1));
+				wm.setRst(rs.getInt(2));
+				wm.setVid(rs.getInt(3));
+				wm.setMaterial(rs.getString(4));
+				wm.setGross(rs.getFloat(5));
+				wm.setTare(rs.getFloat(6));
+				wm.setNet(rs.getFloat(7));
+				wm.setGrossWtTime(rs.getString(8));
+				wm.setTareWtTime(rs.getString(9));
+				String weighmentDate = rs.getString(10);
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(weighmentDate); 
+				SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+				String properDate = format2.format(date1);
+				wm.setWeighmentDate(properDate);
+				wm.setDsId(rs.getInt(11));
+				list.add(wm);				
+				}
+			
+			stmt.close();
+			rs.close();
+			con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return list;
+		
+		}
+	
 }

@@ -17,7 +17,6 @@
 	<div class="container-fluid container-mr-t">
 	 <%@include file="../admin/Side_bar.html" %>
 	 	<div class="row mt-2 row-background">
-			
 				<div class="col-md-12">
 						<h4>Expenses</h4>
 				</div>

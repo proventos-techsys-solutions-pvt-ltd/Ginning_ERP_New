@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<title>Post Dated Cheque's Report</title>
+<title>Weighment  Report</title>
 </head>
 
 <body>
@@ -21,7 +21,7 @@
 			<div class="col-md-12 ">
 					<h4 id="report-title" class="lbl-rm-l"></h4>
 			</div>
-			</div>
+	</div>
 			<div class="row row-background">
 			<div class="col-md-3">
 					<label class="lbl-rm-l">Company</label>
@@ -69,17 +69,21 @@
 	 		<div class="col-md-12">
 	 		<input type="hidden" name="jsonOutput" id="jsonOutput" value='<%= session.getAttribute("jsonArray") %>' />
 	 		<% session.removeAttribute("jsonArray"); %>
-	 			<table id="tblPdcReport" class="table table-bordered">
+	 			<table id="tblDailySetupRegister" class="table table-bordered">
 	 				<thead>
 	 					<tr>
-	 					<th hidden>ID</th>
-	 					<th hidden>company ID</th>
-	 					<th>Sr No</th>
-	 					<th>Invoice No</th>
-	 					<th>Vendor Name</th>
-	 					<th>Amount</th>
-	 					<th>Payment Date</th>
-	 					<th>Mode of Payment</th>
+		 					<th hidden>Company ID</th>
+		 					<th>Sr No</th>
+		 					<th>Setup Date</th>
+		 					<th>Setup Time</th>
+		 					<th>Company Name</th>
+		 					<th>Bank Name</th>
+		 					<th>First Cheque No.</th>
+		 					<th>Last Cheque No.</th>
+		 					<th>Total Cheques</th>
+		 					<th>Bonus Amount</th>
+		 					<th>Heap</th>
+		 					<th>Super Grade Rate</th>
 	 					</tr>
 	 				</thead>
 	 				<tbody id="tableBody">
@@ -95,7 +99,7 @@
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		<script src="../js/export/export2excel.js"></script>
     	<script>
-    	setTitle("PDC Register");//Setting Title of Page
+    	setTitle("Daily Setup Report");//Setting Title of Page
 		setSearchPlaceholder("Search");//Setting Placeholder of Search Input
 		
 		function getCurrentDate(){
@@ -106,20 +110,19 @@
 			return dateTime;
 		}
 		
-		function Export() {
-            $("#tblPdcReport").export2excel({
-            	filename: "PDC_Report_"+getCurrentDate()+".xls"
-            });
-        }
-	
-	 document.getElementById("exportToExcel").addEventListener("click",function(){
-			Export();
-			})
+		 function Export() {
+	            $("#tblDailySetupRegister").export2excel({
+	            	filename: "Daily_Setup_Register_"+getCurrentDate()+".xls"
+	            });
+	        }
 		
+		 document.getElementById("exportToExcel").addEventListener("click",function(){
+				Export();
+				})
 		
 		function getPdcReport(){
 			
-			var url="${pageContext.request.contextPath}/processing/getPDCReport.jsp";
+			var url="${pageContext.request.contextPath}/processing/getDailySetupReport.jsp";
 			if(window.XMLHttpRequest){  
 				request=new XMLHttpRequest();  
 			}  
@@ -161,56 +164,76 @@
 				var cell6 = row.insertCell(5);
 				var cell7 = row.insertCell(6);
 				var cell8 = row.insertCell(7);
+				var cell9 = row.insertCell(8);
+				var cell10 = row.insertCell(9);
+				var cell11 = row.insertCell(10);
+				var cell12 = row.insertCell(11);
 				
-				cell1.innerHTML = data[i].pdcId;
-				cell2.innerHTML = data[i].companyId;
-				cell3.innerHTML = (i+1);
-				cell4.innerHTML = data[i].invoiceNo;
-				cell5.innerHTML = data[i].customerName;
-				cell6.innerHTML = data[i].amount;
-				cell7.innerHTML = data[i].payDate;
-				cell8.innerHTML = data[i].modeOfPayment;
+				cell1.innerHTML = data[i].companyId;
+				cell2.innerHTML = (i+1);
+				cell3.innerHTML = data[i].setupDate;
+				cell4.innerHTML = data[i].setupTime;
+				cell5.innerHTML = data[i].companyName;
+				cell6.innerHTML = data[i].bankName;
+				cell7.innerHTML = data[i].firstChequeNo;
+				cell8.innerHTML = data[i].lastChequeNo;
+				cell9.innerHTML = data[i].totalCheques;
+				cell10.innerHTML = data[i].bonusAmount;
+				cell11.innerHTML = data[i].cottonHeap;
+				cell12.innerHTML = data[i].gradeRate;
 				
 				cell1.hidden = true;
-				cell2.hidden = true;
 				
 			}
 		}
+		
+		/* function companyFilter(companyId)
+		{
+			var tableBody = document.getElementById("tableBody");
+			for(i=0;i<tableBody.rows.length;i++){
+					tableBody.rows.item(i).removeAttribute('hidden');
+				}
+			if(companyId != 0 ){
+				for(i=0;i<tableBody.rows.length;i++){
+					var id = tableBody.rows.item(i).cells[0].innerHTML;
+					if(companyId != id){
+						tableBody.rows.item(i).setAttribute('hidden','hidden');
+					}
+				}
+			}
+		} 
+		
+		document.getElementById("companyId").addEventListener("change",function(){
+			companyFilter(this.value);
+			
+		}) */
 		
 		
 		function dateFilter(){
 
 	        var startDate = (dates.convert(document.getElementById('startDate').value)).toDateString();
 	        var endDate = (dates.convert(document.getElementById('endDate').value)).toDateString();
-	        var companyId = document.getElementById('companyId').value;
 	        
 			var tableBody = document.getElementById("tableBody");
+			for(i=0;i<tableBody.rows.length;i++){
+				tableBody.rows.item(i).removeAttribute('hidden');
+			}
+
 	        for(i=0;i<tableBody.rows.length;i++){
-	        	var date = tableBody.rows[i].cells[6].innerHTML;
-	        	var id = tableBody.rows.item(i).cells[1].innerHTML;
+	        	var date = tableBody.rows[i].cells[2].innerHTML;
 	        	var d = (dates.convert(date)).toDateString();
-	        	
-	        	if(companyId != 0){
-			        if(dates.inRange (d,startDate,endDate) && companyId === id ){
-			        	tableBody.rows.item(i).hidden = false;
-			        }else if(!dates.inRange (d,startDate,endDate) || companyId != id){
-			        	tableBody.rows.item(i).hidden = true;
-			        }else{
-			        	alert('Choose proper dates from the filters.')
-			        }
-	        	}else if(Number(companyId) === 0){
-			        if(dates.inRange (d,startDate,endDate)){
-			        	tableBody.rows.item(i).hidden = false;
-			        }else if(!dates.inRange (d,startDate,endDate)){
-			        	tableBody.rows.item(i).hidden = true;
-			        }else{
-			        	alert('Choose proper dates from the filters.')
-			        }
-	        	}
+	        	console.log(d);
+		        if(dates.inRange (d,startDate,endDate)){
+		        	console.log('true');
+		        	tableBody.rows.item(i).hidden = false;
+		        }else if(!dates.inRange (d,startDate,endDate)){
+		        	console.log('false');
+		        	tableBody.rows.item(i).hidden = true;
+		        }else{
+		        	alert('Choose proper dates from the filters.')
+		        }
 	        }
 		} 
-		
-		
 		
 		getPdcReport();
 		

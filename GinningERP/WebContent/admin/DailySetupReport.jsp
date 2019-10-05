@@ -26,7 +26,7 @@
 			<div class="col-md-3">
 					<label class="lbl-rm-l">Company</label>
 					<select class="form-control form-control-sm" name="companyId" id="companyId">
-						<option selected>Select</option>
+						<option selected disabled>Select</option>
 						<option value="0">All</option>
 						<c:Company />
 					</select>
@@ -34,7 +34,6 @@
 		</div>
 		
 		<div class="row row-background">
-		<form action="../processing/getCashReport.jsp" id="dateFilterForm">
 			<div class="col-md-auto">
 				<div class="d-flex justify-content-start align-items-center">
 					<label>From</label>
@@ -48,7 +47,6 @@
 					<button type="button" class="btn btn-success btn-sm" id="dateFilterButton" onclick="dateFilter()">Filter</button>
 				</div>
 			</div>
-			</form>
 			
 			<div class="col-md-auto">
 				<div class="d-flex justify-content-start align-items-center">
@@ -120,7 +118,7 @@
 				Export();
 				})
 		
-		function getPdcReport(){
+		function getDailySetupReport(){
 			
 			var url="${pageContext.request.contextPath}/processing/getDailySetupReport.jsp";
 			if(window.XMLHttpRequest){  
@@ -187,7 +185,7 @@
 			}
 		}
 		
-		function companyFilter(companyId)
+		/* function companyFilter(companyId)
 		{
 			var tableBody = document.getElementById("tableBody");
 			for(i=0;i<tableBody.rows.length;i++){
@@ -206,35 +204,41 @@
 		document.getElementById("companyId").addEventListener("change",function(){
 			companyFilter(this.value);
 		})
-		
+		 */
 		
 		function dateFilter(){
 
 	        var startDate = (dates.convert(document.getElementById('startDate').value)).toDateString();
 	        var endDate = (dates.convert(document.getElementById('endDate').value)).toDateString();
+	        var companyId = document.getElementById('companyId').value;
 	        
 			var tableBody = document.getElementById("tableBody");
-			for(i=0;i<tableBody.rows.length;i++){
-				tableBody.rows.item(i).removeAttribute('hidden');
-			}
-
 	        for(i=0;i<tableBody.rows.length;i++){
 	        	var date = tableBody.rows[i].cells[2].innerHTML;
+	        	var id = tableBody.rows.item(i).cells[0].innerHTML;
 	        	var d = (dates.convert(date)).toDateString();
-	        	console.log(d);
-		        if(dates.inRange (d,startDate,endDate)){
-		        	console.log('true');
-		        	tableBody.rows.item(i).hidden = false;
-		        }else if(!dates.inRange (d,startDate,endDate)){
-		        	console.log('false');
-		        	tableBody.rows.item(i).hidden = true;
-		        }else{
-		        	alert('Choose proper dates from the filters.')
-		        }
+	        	
+	        	if(companyId != 0){
+			        if(dates.inRange (d,startDate,endDate) && companyId === id ){
+			        	tableBody.rows.item(i).hidden = false;
+			        }else if(!dates.inRange (d,startDate,endDate) || companyId != id){
+			        	tableBody.rows.item(i).hidden = true;
+			        }else{
+			        	alert('Choose proper dates from the filters.')
+			        }
+	        	}else if(Number(companyId) === 0){
+			        if(dates.inRange (d,startDate,endDate)){
+			        	tableBody.rows.item(i).hidden = false;
+			        }else if(!dates.inRange (d,startDate,endDate)){
+			        	tableBody.rows.item(i).hidden = true;
+			        }else{
+			        	alert('Choose proper dates from the filters.')
+			        }
+	        	}
 	        }
 		} 
 		
-		getPdcReport();
+		getDailySetupReport();
 		
 		
 		var dates = {

@@ -25,9 +25,6 @@ public class LogoutServlet extends HttpServlet {
          HttpSession session=request.getSession(); 
          User user = (User)session.getAttribute("currentSessionUser");
          
-         if(user.getRole() == 2) {
-        	 user.getSr().stopRunning();
-         }
          session.invalidate();
          
          UpdateUser update = new UpdateUser();

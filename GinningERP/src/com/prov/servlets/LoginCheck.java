@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.prov.bean.User;
+import com.prov.dbupdation.UpdateUser;
+
 /**
  * Servlet Filter implementation class LoginCheck
  */
@@ -30,7 +33,7 @@ public class LoginCheck implements Filter {
 	        if (loggedIn || loginRequest) {
 	            chain.doFilter(request, response);
 	        }else {
-	            response.sendRedirect(loginURI);
+				response.sendRedirect(loginURI);
 	        }
 	}
 
