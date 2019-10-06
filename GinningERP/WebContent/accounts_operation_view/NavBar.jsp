@@ -17,7 +17,7 @@
         <a class="nav-link" href="./rtgs-neft.jsp">RTGS/NEFT Report<span class="sr-only">(current)</span></a>
       </li>
       
-      <li class="nav-item active">
+      <li class="nav-item active" id="cashier-admin" hidden>
         <a class="nav-link" href="../admin/Dashboard.jsp">Admin View<span class="sr-only">(current)</span></a>
       </li>
        
@@ -32,6 +32,18 @@
 				<i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i><a href="../LogoutServlet">Sign-Out</a>
 			</div>
 		</div>
-    
-
 </nav>
+<script>
+var role = <%=currentUser.getRole() %>
+if(role===1){
+	document.getElementById("cashier-admin").hidden = false;
+}
+
+
+
+
+
+
+
+
+</script>
