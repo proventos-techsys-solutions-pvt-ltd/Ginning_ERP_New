@@ -22,17 +22,6 @@
 					<h4 id="report-title" class="lbl-rm-l"></h4>
 			</div>
 	</div>
-			<div class="row row-background">
-			<div class="col-md-3">
-					<label class="lbl-rm-l">Company</label>
-					<select class="form-control form-control-sm" name="companyId" id="companyId">
-						<option selected>Select</option>
-						<option value="0">All</option>
-						<c:Company />
-					</select>
-			</div>
-		</div>
-		
 		<div class="row row-background">
 		<form action="../processing/getCashReport.jsp" id="dateFilterForm">
 			<div class="col-md-auto">
@@ -63,27 +52,24 @@
 				<img src="../property/img/exportexcel.png" alt="option" class="img-set" id="exportToExcel">
 			</div>
 			</div>
-	 
-	 
 	 	<div class="row row-background">
 	 		<div class="col-md-12">
 	 		<input type="hidden" name="jsonOutput" id="jsonOutput" value='<%= session.getAttribute("jsonArray") %>' />
 	 		<% session.removeAttribute("jsonArray"); %>
-	 			<table id="tblDailySetupRegister" class="table table-bordered">
+	 			<table id="tblWeighBridgeReport" class="table table-bordered">
 	 				<thead>
 	 					<tr>
-		 					<th hidden>Company ID</th>
+		 					<th hidden>Id</th>
 		 					<th>Sr No</th>
-		 					<th>Setup Date</th>
-		 					<th>Setup Time</th>
-		 					<th>Company Name</th>
-		 					<th>Bank Name</th>
-		 					<th>First Cheque No.</th>
-		 					<th>Last Cheque No.</th>
-		 					<th>Total Cheques</th>
-		 					<th>Bonus Amount</th>
-		 					<th>Heap</th>
-		 					<th>Super Grade Rate</th>
+		 					<th>RST</th>
+		 					<th>Vendor Name</th>
+		 					<th>Mobile</th>
+		 					<th>Date</th>
+		 					<th>Vehicle No.</th>
+		 					<th>Vehicle Name</th>
+		 					<th>Gross Wt. (Kgs)</th>
+		 					<th>Net Wt. (Kgs)</th>
+		 					<th>WB Operator</th>
 	 					</tr>
 	 				</thead>
 	 				<tbody id="tableBody">
@@ -99,7 +85,7 @@
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		<script src="../js/export/export2excel.js"></script>
     	<script>
-    	setTitle("Daily Setup Report");//Setting Title of Page
+    	setTitle("Weigh Bridge Report");//Setting Title of Page
 		setSearchPlaceholder("Search");//Setting Placeholder of Search Input
 		
 		function getCurrentDate(){
@@ -111,8 +97,8 @@
 		}
 		
 		 function Export() {
-	            $("#tblDailySetupRegister").export2excel({
-	            	filename: "Daily_Setup_Register_"+getCurrentDate()+".xls"
+	            $("#tblWeighBridgeReport").export2excel({
+	            	filename: "Weigh_Bridge_Report_"+getCurrentDate()+".xls"
 	            });
 	        }
 		
@@ -120,9 +106,9 @@
 				Export();
 				})
 		
-		function getPdcReport(){
+		function getWeighBridgeReport(){
 			
-			var url="${pageContext.request.contextPath}/processing/getDailySetupReport.jsp";
+			var url="${pageContext.request.contextPath}/processing/getWeighBridgeReport.jsp";
 			if(window.XMLHttpRequest){  
 				request=new XMLHttpRequest();  
 			}  
@@ -167,47 +153,23 @@
 				var cell9 = row.insertCell(8);
 				var cell10 = row.insertCell(9);
 				var cell11 = row.insertCell(10);
-				var cell12 = row.insertCell(11);
 				
-				cell1.innerHTML = data[i].companyId;
+				cell1.innerHTML = data[i].wmId;
 				cell2.innerHTML = (i+1);
-				cell3.innerHTML = data[i].setupDate;
-				cell4.innerHTML = data[i].setupTime;
-				cell5.innerHTML = data[i].companyName;
-				cell6.innerHTML = data[i].bankName;
-				cell7.innerHTML = data[i].firstChequeNo;
-				cell8.innerHTML = data[i].lastChequeNo;
-				cell9.innerHTML = data[i].totalCheques;
-				cell10.innerHTML = data[i].bonusAmount;
-				cell11.innerHTML = data[i].cottonHeap;
-				cell12.innerHTML = data[i].gradeRate;
+				cell3.innerHTML = data[i].rst;
+				cell4.innerHTML = data[i].vendorName;
+				cell5.innerHTML = data[i].vendorMobile;
+				cell6.innerHTML = data[i].weighDate;
+				cell7.innerHTML = data[i].vehicleNo;
+				cell8.innerHTML = data[i].vehicleName;
+				cell9.innerHTML = data[i].gross;
+				cell10.innerHTML = data[i].net;
+				cell11.innerHTML = data[i].wbOperator;
 				
 				cell1.hidden = true;
 				
 			}
 		}
-		
-		/* function companyFilter(companyId)
-		{
-			var tableBody = document.getElementById("tableBody");
-			for(i=0;i<tableBody.rows.length;i++){
-					tableBody.rows.item(i).removeAttribute('hidden');
-				}
-			if(companyId != 0 ){
-				for(i=0;i<tableBody.rows.length;i++){
-					var id = tableBody.rows.item(i).cells[0].innerHTML;
-					if(companyId != id){
-						tableBody.rows.item(i).setAttribute('hidden','hidden');
-					}
-				}
-			}
-		} 
-		
-		document.getElementById("companyId").addEventListener("change",function(){
-			companyFilter(this.value);
-			
-		}) */
-		
 		
 		function dateFilter(){
 
@@ -220,14 +182,11 @@
 			}
 
 	        for(i=0;i<tableBody.rows.length;i++){
-	        	var date = tableBody.rows[i].cells[2].innerHTML;
+	        	var date = tableBody.rows[i].cells[5].innerHTML;
 	        	var d = (dates.convert(date)).toDateString();
-	        	console.log(d);
 		        if(dates.inRange (d,startDate,endDate)){
-		        	console.log('true');
 		        	tableBody.rows.item(i).hidden = false;
 		        }else if(!dates.inRange (d,startDate,endDate)){
-		        	console.log('false');
 		        	tableBody.rows.item(i).hidden = true;
 		        }else{
 		        	alert('Choose proper dates from the filters.')
@@ -235,7 +194,7 @@
 	        }
 		} 
 		
-		getPdcReport();
+		getWeighBridgeReport();
 		
 		
 		var dates = {

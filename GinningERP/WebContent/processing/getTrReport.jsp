@@ -1,3 +1,4 @@
+<%@page import="com.prov.report.TransactionReport"%>
 <%@page import="org.json.JSONObject"%>
 <%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="org.json.JSONArray"%>
@@ -9,14 +10,14 @@
     
     String startDate = request.getParameter("startDate");
 	String endDate = request.getParameter("endDate");
-	int bankId = Integer.parseInt(request.getParameter("bankId"));
+	int accId = Integer.parseInt(request.getParameter("accId"));
 	int companyId = Integer.parseInt(request.getParameter("companyId"));
 	
-	BankReport report = new BankReport();
+	TransactionReport report = new TransactionReport();
 	
-	double openingBalance = report.getOpeningBalForLedger(bankId, companyId, startDate);
+	double openingBalance = report.getOpeningBalForLedger(accId, companyId, startDate);
 	
-	JSONArray jsonArray = report.getBankTransactions(startDate, endDate, bankId, companyId);
+	JSONArray jsonArray = report.getTransactions(startDate, endDate, accId, companyId);
 	
 	JSONObject parentObj = new JSONObject();
 	

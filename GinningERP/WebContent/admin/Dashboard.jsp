@@ -97,7 +97,7 @@
              					<thead>
              						<tr>
              							<th>Username</th>
-             							<th>Status</th>
+             							<th class="text-center">Status</th>
              						</tr>
              					</thead>
              					<tbody id="usersTable">
@@ -314,12 +314,16 @@
 				var cell1 = row.insertCell(0);
 				var cell2 = row.insertCell(1);
 				
+				
+				
 				cell1.innerHTML = data[i].name;
 				if(Number(data[i].status) === 1){
-					cell2.innerHTML = 'Active';
+					cell2.innerHTML = '<div class="online"></div>';
 				}if(Number(data[i].status) === 0){
-					cell2.innerHTML = 'Inactive';
+					cell2.innerHTML = '<div class="offline"></div>';
 				}
+				
+				cell2.className = "text-center";
 			}
 		}
 		

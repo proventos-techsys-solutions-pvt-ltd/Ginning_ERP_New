@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<title>Bank Register</title>
+<title>Expenses Register</title>
 </head>
 
 <body>
@@ -21,7 +21,7 @@
 					<h4 id="report-title" class="lbl-rm-l"></h4>
 			</div>
 			</div>
-			<form action="../processing/getBankTrReport.jsp" id="dateFilterForm">
+			<form action="../processing/getTrReport.jsp" id="dateFilterForm">
 			<div class="row row-background">
 			<div class="col-md-3">
 					<label class="lbl-rm-l">Company</label>
@@ -31,10 +31,10 @@
 					</select>
 			</div>
 			<div class="col-md-3">
-					<label class="lbl-rm-l">Bank</label>
-					<select class="form-control form-control-sm" name="bankId" id="bankId">
+					<label class="lbl-rm-l">Expense Ledger</label>
+					<select class="form-control form-control-sm" name="accId" id="accId">
 						<option selected>Select</option>
-						<c:Bank />
+						<c:AccountLedger />
 					</select>
 			</div>
 		</div>
@@ -62,14 +62,15 @@
 				</div>
 			</div>
 			<div class="col-md-auto">
-				<img src="../property/img/setting.png" alt="option" class="img-set" id="options">
 				<img src="../property/img/exportpdf.png" alt="option" class="img-set" id="exportToPdf">
 				<img src="../property/img/exportexcel.png" alt="option" class="img-set" id="exportToExcel">
 			</div>
 			</div>
 	 	<div class="row row-background">
 	 		<div class="col-md-12">
-	 			<table id="tblBankRegister" class="table table-bordered">
+	 		<input type="hidden" name="jsonOutput" id="jsonOutput" value='<%= session.getAttribute("jsonArray") %>' />
+	 		<% session.removeAttribute("jsonArray"); %>
+	 			<table id="tblAccRegister" class="table table-bordered">
 	 				<thead>
 	 					<tr>
 	 					<th>Date</th>
@@ -114,23 +115,22 @@
 		}
     	
         function Export() {
-            $("#tblBankRegister").export2excel({
-            	filename: "Bank_Register_"+getCurrentDate()+".xlsx"
+            $("#tblAccRegister").export2excel({
+            	filename: "Expense_Register"+getCurrentDate()+".xlsx"
             });
         }
 		</script>
 		<script>
-		setTitle("Bank Register");//Setting Title of Page
+		setTitle("General Ledgers");//Setting Title of Page
 		setSearchPlaceholder("Search");//Setting Placeholder of Search Input
-		
 		
 		function fetchReport(){
 			var companyId = document.getElementById("companyId").value;
-			var bankId = document.getElementById("bankId").value;
+			var accId = document.getElementById("accId").value;
 			var startDate = document.getElementById("startDate").value;
 			var endDate = document.getElementById("endDate").value;
 			
-			url = "../processing/getBankTrReport.jsp?companyId="+companyId+"&bankId="+bankId+"&startDate="+startDate+"&endDate="+endDate;
+			url = "../processing/getTrReport.jsp?companyId="+companyId+"&accId="+accId+"&startDate="+startDate+"&endDate="+endDate;
 			console.log(url);
 			if(window.XMLHttpRequest){  
 				fetchRequest=new XMLHttpRequest();  
@@ -163,13 +163,13 @@
 		})
 		
 		document.getElementById("companyId").addEventListener("change",function(e){
-			var bankOptions = document.getElementById("bankId").options;
-			for(i=0; i<bankOptions.length; i++){
-					bankOptions[i].disabled = false;
+			var accOptions = document.getElementById("accId").options;
+			for(i=0; i<accOptions.length; i++){
+				accOptions[i].disabled = false;
 				}
-			for(i=0; i<bankOptions.length; i++){
-				if(e.srcElement.value != bankOptions[i].getAttribute("data-company-id")){
-					bankOptions[i].disabled = true;
+			for(i=0; i<accOptions.length; i++){
+				if(e.srcElement.value != accOptions[i].getAttribute("data-company-id")){
+					accOptions[i].disabled = true;
 				}
 			}
 		})
@@ -213,7 +213,6 @@
 		document.getElementById("exportToExcel").addEventListener("click",function(){
 			Export();
 			})
-		
 		
 		</script>
 </body>

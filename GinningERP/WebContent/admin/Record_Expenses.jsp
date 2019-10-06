@@ -75,7 +75,7 @@
 			</form>
 			<div class="row row-background">
 				<div class="col-md-2 offset-md-10 text-right">
-					<button type="button" class="btn btn-success" onclick="expenseEntry()">Save</button>
+					<button type="button" class="btn btn-success" id="save-expense-entry">Save</button>
 					<button type="button" class="btn btn-success">Save & Print</button>
 				</div>
 			</div>
@@ -86,7 +86,50 @@
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script>
+	//-----------------------------------Validations
 	
+
+	document.getElementById("save-expense-entry").addEventListener("click",function(){
+		if(document.getElementById("date").value.trim()!=""){
+			if(document.getElementById("voucherNo").value.trim()!=""){
+				if(document.getElementById("voucherReference").value.trim()!=""){
+					if(document.getElementById("description").value.trim()!=""){
+						if(document.getElementById("amount").value.trim()!=""){
+							expenseEntry();
+						}else{
+							alert("Form cannot be left blank!!")
+						}
+					}else{
+						alert("Form cannot be left blank!!")
+					}
+				}else{
+					alert("Form cannot be left blank!!")
+				}
+			}else{
+				alert("Form cannot be left blank!!")
+			}
+		}else{
+			alert("Form cannot be left blank!!")
+		}
+		
+		
+		if(document.getElementById("companyId").value.trim()!="Select"){
+			if(document.getElementById("accountId").value.trim()!="Select"){
+				if(document.getElementById("paymentMode").value.trim()!="Select"){
+					
+				}else{
+					alert("Dropdown must have some values!!")
+				}
+			}else{
+				alert("Dropdown must have some values!!")
+			}
+		}else{
+			alert("Dropdown must have some values!!")
+		}
+		
+	})
+
+	//---------------------------------------validations end here
 		function expenseEntry(){
 			document.getElementsByTagName('form')[0].submit();
 		}

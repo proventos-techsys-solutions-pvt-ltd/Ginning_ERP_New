@@ -35,11 +35,7 @@
 								<label class="lbl-rm-all">Company Name</label>
 								<input type="text" class="form-control  " name="name" id="name">
 								<label class="lbl-rm-all">Company Address</label>
-								<textarea class="form-control form-control-lg " name="address" id="address">
-								</textarea>
-							</div>
-							<div class="col-md-2">
-								<img src="../property/img/logo.jpg" alt="Logo" class="img-thumbnail">
+								<textarea class="form-control form-control-lg " name="address" id="address"></textarea>
 							</div>
 						</div>
 						<div class="form-row">

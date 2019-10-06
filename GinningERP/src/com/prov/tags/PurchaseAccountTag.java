@@ -14,15 +14,15 @@ import org.json.JSONObject;
 
 import com.prov.db.OracleConnection;
 
-public class AccountLedgerTag extends SimpleTagSupport{
-
+public class PurchaseAccountTag extends SimpleTagSupport{
+	
 	public static JSONArray getAccountCats() {			
 		Connection con=null;
 		ResultSet accountCatResultSet = null;
 		JSONArray jsonArray = new JSONArray();
 		try {
 			 con = OracleConnection.getConnection();
-			 String accountQuery = "Select unique acc_ledger, account_id, company_id from ACCOUNT_NAME order by acc_ledger";
+			 String accountQuery = "Select UNIQUE acc_ledger, account_id, COMPANY_ID from ACCOUNT_NAME where ACC_CATEGORY_ID=5 order by acc_ledger";
 			 Statement stmt = con.createStatement();
 			 accountCatResultSet = stmt.executeQuery(accountQuery);
 			 while(accountCatResultSet.next()) {
@@ -51,5 +51,6 @@ public class AccountLedgerTag extends SimpleTagSupport{
 			}
 		}
 	}
+
 
 }

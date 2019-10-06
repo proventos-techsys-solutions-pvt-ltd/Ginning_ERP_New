@@ -31,12 +31,8 @@
 	        </div>
 	        <div class="col-md-1 offset-md-8">
 	      </div>
-	     <div hidden>
-		   <%
-		    out.print(session.getAttribute("gradeSubmitFlag"));
-		    session.removeAttribute("gradeSubmitFlag");
-			%>
-		</div>  
+	      <input type="hidden" id="responseId" name="" value="<%=session.getAttribute("gradeSubmitFlag") %>">
+		   
         </div>
         <select id="gradeRate" hidden>
         	<c:GradeRate/>
@@ -217,11 +213,24 @@
 								</table>
 							</div>
 						</div>
-						
-						
 					</div>
 					
-		
+		<!-- *********************RESPONSE************************  -->		
+		<div class="response-background">
+			<div class="response">
+				<div class="response-header">
+					<h4></h4>
+				</div>
+				<div class="d-flex justify-content-center align-items-center">
+					<div id="responseText"><h4></h4></div>
+				</div>
+				<div class="response-footer">
+					<div class="d-flex justify-content-center align-items-center">
+						<button type="button" class="btn btn-success btn-sm btn-width-confirm mt-1" id="responseBtn">OK</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
 <!-- <script src="../js/jquery-3.3.1.slim.min.js" ></script> -->
 <script src="../js/popper.min.js"></script>
@@ -883,25 +892,28 @@ checkDailySetup();
 fetchBonusRate();
 
 
+//**********confirmation box code
+
 function responseScreen(){
-	var responseId= document.getElementById("responseId").value;
+	var responseId= document.getElementById("responseId").value.trim();
 	if(responseId>0){
 		document.getElementsByClassName("response-background")[0].style.display = "block";
 		document.getElementsByClassName("response")[0].style.display = "block";
 	}else if(responseId===0){
 		document.getElementsByClassName("response-background")[0].style.display = "block";
 		document.getElementsByClassName("response")[0].style.display = "block";
-		document.getElementById("responseText").querySelector("h4").innerHTML = "Company setup is unsuccessful";
+		document.getElementById("responseText").querySelector("h4").innerHTML = "Grading has been saved successfully!!";
 	}else if(responseId===null){
 		}
 }
 
-
-/* document.getElementById("responseBtn").addEventListener("click",function(){
+document.getElementById("responseBtn").addEventListener("click",function(){
 	document.getElementsByClassName("response-background")[0].style.display = "none";
 	document.getElementsByClassName("response")[0].style.display = "none";
-	document.getElementById("responseId").value=0;
-}) */
+	document.getElementById("responseId").value='null';
+})
+
+
 
 document.addEventListener('change',function(e){
 	if(e.srcElement.id === 'pdcRate' || e.srcElement.id === 'pdcMonths' || e.srcElement.name === 'rate' || e.srcElement.name === 'pdcCheck'){
@@ -965,7 +977,9 @@ function setPedingGradData(data){
 		cell3.innerHTML = data[i].netWeight;
 	}
 }
-
+<%
+session.removeAttribute("gradeSubmitFlag");
+%>
 pendingGradeReports();
 responseScreen();
 </script>

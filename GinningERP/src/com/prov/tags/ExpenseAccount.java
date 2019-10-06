@@ -22,7 +22,7 @@ public class ExpenseAccount extends SimpleTagSupport {
 		JSONArray jsonArray = new JSONArray();
 		try {
 			 con = OracleConnection.getConnection();
-			 String accountQuery = "Select UNIQUE acc_ledger, account_id, COMPANY_ID from general_ledger where acc_category_id=4 order by acc_ledger";
+			 String accountQuery = "Select UNIQUE acc_ledger, account_id, COMPANY_ID from ACCOUNT_NAME where ACC_CATEGORY_ID=4 or ACC_CATEGORY_ID=7 order by acc_ledger";
 			 Statement stmt = con.createStatement();
 			 accountCatResultSet = stmt.executeQuery(accountQuery);
 			 while(accountCatResultSet.next()) {

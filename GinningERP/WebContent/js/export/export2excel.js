@@ -61,7 +61,7 @@
                 $(o).find("tr:visible").not(e.settings.exclude).each(function (i, p) {
 
                     tempRows += "<tr>";
-                    $(p).find("td,th").not(e.settings.exclude).each(function (i, q) { // p did not exist, I corrected
+                    $(p).find("td:visible,th:visible").not(e.settings.exclude).each(function (i, q) { // p did not exist, I corrected
 
                         var rc = {
                             rows: $(this).attr("rowspan"),

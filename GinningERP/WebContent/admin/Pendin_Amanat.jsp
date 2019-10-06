@@ -52,6 +52,17 @@
             	filename: "Pending_Amanat.xls"
             });
         }
+        
+      //*********************Search 
+        $(document).ready(function(){
+          $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#tableBody tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+        
 		</script>
 		<script>
 		setTitle("Pending Amanat");//Setting Title of Page

@@ -22,17 +22,17 @@
 		    session.removeAttribute("bankId");
 			%>
 		</div> 
-       		<div class="row border-bottom">
+       		<div class="row border-bottom row-background">
        			<div class="col-md-12">
-       				<div class="d-flex justify-content-start align-items-center row-background">
+       				<div class="d-flex justify-content-start align-items-center">
 	       				<img src="../property/img/money-bag.png" alt="banks">
 	       				<h4 class="lbl-rm-all">Setup Bank Accounts</h4>
        				</div>
        			</div>
        		</div>
-       		<div class="row mt-1">
+       		<div class="row row-background">
        		<div class="col-md-8">
-       		<div class="row-background" id="getHeight">
+       		<div class="" id="getHeight">
 				<form action="../processing/addBank.jsp" name="bankForm">
 					<div class="form-row">
 						<div class="form-group col-md-4">
@@ -78,8 +78,8 @@
 					</div>
 				</div>
        			</div>
-       			<div class="col-md-4">
-       			<div class="row-background scroll">
+       			<div class="col-md-4 border-left">
+       			<div class=" scroll">
        					<div class="col-md-12 ">
        						<table class="table ">
        							<thead>

@@ -4,7 +4,13 @@ public class Invoice {
 	
 	private float bonusAmount;
 	
-	private int id, customerId, companyId, paidByoperator ;
+	private int id, customerId, companyId, paidByoperator, voucherNo ;
+	public int getVoucherNo() {
+		return voucherNo;
+	}
+	public void setVoucherNo(int voucherNo) {
+		this.voucherNo = voucherNo;
+	}
 	public int getPaidByoperator() {
 		return paidByoperator;
 	}

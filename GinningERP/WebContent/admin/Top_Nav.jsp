@@ -5,7 +5,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 <div style="width:100%;" class="d-flex justify-content-between align-items-center">
 	<div class="d-flex justify-content-center align-items-center">
-		<a class="navbar-brand" href="./Dashboard.jsp">Samir Cotton Industries</a>
+		<a class="navbar-brand" href="./Dashboard.jsp"><img src="../property/img/logo.png" alt="Sameer Cotton Industries" width="300px"height="80px;"></a>
 	</div>
 	
 	<div style="width:100%;" class="d-flex justify-content-end align-items-center">

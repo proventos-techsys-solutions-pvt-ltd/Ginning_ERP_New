@@ -1,3 +1,5 @@
+<%@page import="com.prov.dbinsertion.AddAccountName"%>
+<%@page import="com.prov.bean.AccountName"%>
 <%@page import="com.prov.dbinsertion.AddGeneralLedger"%>
 <%@page import="com.prov.bean.GeneralLedger"%>
 <%@ page errorPage="../admin/Error.jsp" %>  
@@ -98,7 +100,7 @@
     	
     	companyId = ac.addCompany(c);
     	
-    	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     	Date date = new Date();
     	String todaysDate = dateFormat.format(date); 
     	
@@ -121,37 +123,55 @@
     	String companyAccountLedgerDesc = c.getName() + " RAW COTTON PURCHASE ACCOUNT";
     	
     	GeneralLedger glPurchaseAccount = new GeneralLedger();
+       	AccountName anPurchase = new AccountName();
+
     	
-    	glPurchaseAccount.setAccountLedger(companyAccountLedgerName);
-    	glPurchaseAccount.setCompanyId(companyId);
+       	anPurchase.setAccountLedger(companyAccountLedgerName);
+       	anPurchase.setCompanyId(companyId);
+       	anPurchase.setAccCategoryId(5);
+       	anPurchase.setLedgerDesc(companyAccountLedgerDesc);
+       	anPurchase.setLedgerDate(todaysDate);
+       	anPurchase.setBankId(0);
+       	anPurchase.setOpeningBal(0);
+    	
+
+   		AddAccountName addAccount = new AddAccountName();
+   		
+   		int accPurchaseId = addAccount.addAccountName(anPurchase);
+    	
+   		glPurchaseAccount.setAccNameId(accPurchaseId);
     	glPurchaseAccount.setGlDate(todaysDate);
-    	glPurchaseAccount.setAccountCatId(6);
-    	glPurchaseAccount.setLedgerDesc(companyAccountLedgerDesc);
     	glPurchaseAccount.setOpeningBal(0);
    	 	glPurchaseAccount.setCredit(0);
    		glPurchaseAccount.setDebit(0);
    		glPurchaseAccount.setClosingBal(0);
-   		glPurchaseAccount.setBankId(0);
    		
 	   	AddGeneralLedger addGl = new AddGeneralLedger();
 	     
 	    addGl.addGeneralLedger(glPurchaseAccount);
 	    
-	    GeneralLedger glAccountPayable = new GeneralLedger();
-	    
 	    String companyAccountPayableName = c.getName() + " - ACCOUNTS PAYABLE";
     	String companyAccountPayableDesc = c.getName() + " - PAYABLE ACCOUNTS";
+    	
+    	GeneralLedger glAccountPayable = new GeneralLedger();
+    	AccountName anPayable = new AccountName();
+ 	    
+ 	    anPayable.setAccountLedger(companyAccountPayableName);
+ 	    anPayable.setCompanyId(companyId);
+ 	    anPayable.setAccCategoryId(6);
+ 	    anPayable.setLedgerDesc(companyAccountPayableDesc);
+ 	    anPayable.setLedgerDate(todaysDate);
+ 	    anPayable.setBankId(0);
+ 	    anPayable.setOpeningBal(0);
 	    
-		glAccountPayable.setAccountLedger(companyAccountPayableName);
-		glAccountPayable.setCompanyId(companyId);
+   		int accPayableId = addAccount.addAccountName(anPayable);
+
+   		glAccountPayable.setAccNameId(accPayableId);
 		glAccountPayable.setGlDate(todaysDate);
-		glAccountPayable.setAccountCatId(6);
-		glAccountPayable.setLedgerDesc(companyAccountPayableDesc);
 		glAccountPayable.setOpeningBal(0);
 		glAccountPayable.setCredit(0);
 		glAccountPayable.setDebit(0);
 		glAccountPayable.setClosingBal(0);
-		glAccountPayable.setBankId(0);
 	    
 	    addGl.addGeneralLedger(glAccountPayable);
     	

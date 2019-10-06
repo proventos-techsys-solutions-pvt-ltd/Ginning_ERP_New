@@ -1,3 +1,5 @@
+<%@page import="com.prov.dbinsertion.AddAccountName"%>
+<%@page import="com.prov.bean.AccountName"%>
 <%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="com.prov.dbinsertion.AddGeneralLedger"%>
 <%@page import="com.prov.bean.GeneralLedger"%>
@@ -31,18 +33,28 @@
     
     String bankAccountName = b.getBankName()+" - "+(b.getAccountNo().substring(b.getAccountNo().length() - 4));
     
+   	AccountName an = new AccountName();
+    
     GeneralLedger gl = new GeneralLedger();
     
-    gl.setAccountLedger(bankAccountName);
-    gl.setCompanyId(b.getCompanyId());
+    an.setAccountLedger(bankAccountName);
+    an.setCompanyId(b.getCompanyId());
+    an.setAccCategoryId(1);
+    an.setLedgerDesc(b.getBankName());
+    an.setLedgerDate(date);
+	an.setBankId(bankId);
+	an.setOpeningBal(openingBalance);
+	
+	AddAccountName addAccount = new AddAccountName();
+	
+	int accId = addAccount.addAccountName(an);
+	
+	gl.setAccNameId(accId);
     gl.setGlDate(date);
-    gl.setAccountCatId(1);
-    gl.setLedgerDesc(b.getBankName());
-    gl.setOpeningBal(openingBalance);
+	gl.setOpeningBal(openingBalance);
     gl.setCredit(0);
     gl.setDebit(0);
-	gl.setClosingBal(0);
-	gl.setBankId(bankId);
+	gl.setClosingBal(openingBalance);
     
     AddGeneralLedger addGl = new AddGeneralLedger();
     

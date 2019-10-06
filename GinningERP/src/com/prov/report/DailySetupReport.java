@@ -25,7 +25,22 @@ public class DailySetupReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT * FROM DAILY_SETUP WHERE SETUP_DATE = (SELECT MAX(SETUP_DATE) FROM DAILY_SETUP)";
+			String sql = "SELECT \r\n" + 
+					"DS.ID,\r\n" + 
+					"DS.SETUP_DATE,\r\n" + 
+					"DS.COTTON_HEAP,\r\n" + 
+					"DS.COMPANY_ID,\r\n" + 
+					"DS.BANK_ID,\r\n" + 
+					"DS.FIRST_CHEQUE_NO,\r\n" + 
+					"DS.LAST_CHEQUE_NO,\r\n" + 
+					"DS.TOTAL_CHEQUES,\r\n" + 
+					"DS.BONUS_AMOUNT,\r\n" + 
+					"DS.DISCARD_DATE,\r\n" + 
+					"an.account_id\r\n" + 
+					"FROM DAILY_SETUP DS, ACCOUNT_NAME AN\r\n" + 
+					"WHERE SETUP_DATE = (SELECT MAX(SETUP_DATE) FROM DAILY_SETUP) AND\r\n" + 
+					"AN.COMPANY_ID = DS.COMPANY_ID AND\r\n" + 
+					"AN.ACC_CATEGORY_ID = 6";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			rs = stmt.executeQuery();
@@ -41,6 +56,7 @@ public class DailySetupReport {
 				ds.setTotalCheques(rs.getInt(8));
 				ds.setBonusAmount(rs.getFloat(9));
 				ds.setDiscardTime(rs.getString(10));
+				ds.setAccPayableId(rs.getInt(11));
 			}
 			
 			rs.close();

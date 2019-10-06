@@ -92,5 +92,11 @@
 	<tag-class>com.prov.tags.ExpenseAccount</tag-class>
 	<body-content>Empty</body-content>
    </tag>
+   
+   <tag>
+    <name>PurchaseAccountTag</name>
+	<tag-class>com.prov.tags.PurchaseAccountTag</tag-class>
+	<body-content>Empty</body-content>
+   </tag>
   
 </taglib>

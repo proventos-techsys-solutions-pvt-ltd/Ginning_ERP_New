@@ -158,7 +158,7 @@
   
     <div class="col-md-4">
       <div class="col-md-12 scroll tile-background-row" >
-        <input class="form-control mr-sm-2" type="search" placeholder="Enter RST To Search" aria-label="Search">
+        <input class="form-control mr-sm-2" type="search" id="search-box" placeholder="Enter RST To Search" aria-label="Search">
         <table class="table">
           <thead class="thead-dark">
               <tr>
@@ -219,6 +219,17 @@
 <script src="${pageContext.request.contextPath}/js/commonjs.js"></script>
 <script src="${pageContext.request.contextPath}/js/validations/GenerateRST.js"></script>
 <script>
+//*********************Search rst pending for tare weight
+$(document).ready(function(){
+  $("#search-box").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#tableBody tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+
+
 
 //Send AJAX req to chech Daily setup
 function checkDailySetup(){

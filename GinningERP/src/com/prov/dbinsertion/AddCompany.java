@@ -20,7 +20,7 @@ public class AddCompany {
 			e.printStackTrace();
 		}
 
-		String addCustomer = "{ ? = call ADD_COMPANY(?,?,?,?,?,?,?,?,?,?,?,?) }";
+		String addCustomer = "{ ? = call ADD_COMPANY(?,?,?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(addCustomer);
@@ -39,6 +39,7 @@ public class AddCompany {
 			cs.setString(11, c.getMobile());
 			cs.setString(12, c.getEmail());
 			cs.setString(13, c.getLogoPath());
+			cs.setString(14, c.getInvoiceSeries());
 			
 			cs.executeUpdate();
 			

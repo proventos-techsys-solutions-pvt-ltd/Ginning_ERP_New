@@ -8,8 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import com.prov.bean.User;
 import com.prov.dbops.Login;
-import com.prov.weighing.SerialReaderRunnable;
-import com.prov.weighing.TwoWaySerialCommThread;
 
 public class LoginServlet extends HttpServlet {
 

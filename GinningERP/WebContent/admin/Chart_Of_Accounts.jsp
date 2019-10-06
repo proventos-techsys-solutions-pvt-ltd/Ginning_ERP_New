@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <title>Chart Of Accounts</title>
 </head>
 
@@ -32,29 +33,25 @@
 			</div>
 		</div>
 		
-		<div class="row row-background">
+		<div class="row row-background border-bottom">
 			<div class="col-md-3 ">
-				<div class="d-flex flex-row flex-wrap align-items-center">
-					<div class="p-2">
-						<input type="text" class="form-control form-control-sm " name="" id="" placeholder="Filter">
-					</div>
-					<div class="p-2">
-						<img src="../property/img/add.png" alt="add" id="callAddAccount" class="ctm-hover" >
-					</div>
+				<div class="d-flex justify-content-center align-items-center">
+						<input type="text" class="form-control form-control-sm " name="" id="searchInput" placeholder="Filter">
+						<img style="margin-bottom:.5rem;" src="../property/img/add.png" alt="add" id="callAddAccount" class="ctm-hover ml-2" >
 				</div>
 			</div>
 		</div>
 		
-		<div class="row mt-2 row-background">
+		<div class="row row-background">
 			<div class="col-md-12">
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<th>Account ID</th>
-							<th>Account Name</th>
-							<th>Account Category</th>
-							<th>Description</th>
-							<th>Opening Balance</th>
+							<th width="10px">Account ID</th>
+							<th width="30px">Account Name</th>
+							<th width="20px">Account Category</th>
+							<th width="30px">Description</th>
+							<th width="10px">Balance</th>
 						</tr>
 					</thead>
 					<tbody id="tableBody">
@@ -127,8 +124,20 @@
 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
-	<script src="../js/commonjs.js"></script>
+	<!--  <script src="../js/commonjs.js"></script>-->
 	<script>
+	
+	//*********************Search
+    $(document).ready(function(){
+      $("#searchInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#tableBody tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+	
+	
 	
 	document.getElementById("callAddAccount").addEventListener("click",function(e){
 		var companyId = document.getElementById("company").value;
@@ -193,18 +202,22 @@
 				var cell6 = row.insertCell(5);
 				var cell7 = row.insertCell(6);
 				var cell8 = row.insertCell(7);
+				var cell9 = row.insertCell(8);
+				
 				cell1.hidden=true;
 				cell7.hidden=true;
 				cell8.hidden=true;
-				
+				cell9.hidden=true;
+
 				cell1.innerHTML = data[i].id;
 				cell2.innerHTML = data[i].accountId;
-				cell3.innerHTML = data[i].accountLedger;
-				cell4.innerHTML = data[i].groupName;
+				cell3.innerHTML = data[i].ledgerName;
+				cell4.innerHTML = data[i].accountCategory;
 				cell5.innerHTML = data[i].ledgerDesc;
-				cell6.innerHTML = data[i].openingBal;
-				cell7.innerHTML = data[i].glDate;
-				cell8.innerHTML = data[i].companyId;
+				cell6.innerHTML = data[i].closingBal;
+				cell7.innerHTML = data[i].companyId;
+				cell8.innerHTML = data[i].ledgerDate;
+				cell9.innerHTML = data[i].openingBal;
 			}
 		}
 	}
@@ -224,18 +237,18 @@
 					}
 			}
 			var selectTrans = document.getElementById("openingBalType");
-				if(table.rows[rowIndex].cells[5].innerHTML > 0 ){
+				if(table.rows[rowIndex].cells[5].innerHTML < 0 ){
 					selectTrans.options[0].selected=true;
 				}
-				else if(table.rows[rowIndex].cells[5].innerHTML < 0 ){
+				else if(table.rows[rowIndex].cells[5].innerHTML > 0 ){
 					selectTrans.options[1].selected=true;
 				}
-			document.getElementById("companyId").value = table.rows[rowIndex].cells[7].innerHTML;
+			document.getElementById("companyId").value = table.rows[rowIndex].cells[6].innerHTML;
 			document.getElementById("accountId").value = table.rows[rowIndex].cells[1].innerHTML;
-			document.getElementById("openingBal").value = table.rows[rowIndex].cells[5].innerHTML;
 			document.getElementById("accountLedgerName").value = table.rows[rowIndex].cells[2].innerHTML;
 			document.getElementById("ledgerDesc").value = table.rows[rowIndex].cells[4].innerHTML;
-			document.getElementById("openingBalDate").value = table.rows[rowIndex].cells[6].innerHTML;
+			document.getElementById("openingBal").value = table.rows[rowIndex].cells[8].innerHTML;
+			document.getElementById("openingBalDate").value = table.rows[rowIndex].cells[7].innerHTML;
 			
 			$("#addAccount").modal();
 		}
@@ -251,18 +264,18 @@
 				}
 			}
 			var selectTrans = document.getElementById("openingBalType");
-				if(table.rows[rowIndex].cells[5].innerHTML > 0 ){
+				if(table.rows[rowIndex].cells[5].innerHTML < 0 ){
 					selectTrans.options[0].selected=true;
 				}
-				else if(table.rows[rowIndex].cells[5].innerHTML < 0 ){
+				else if(table.rows[rowIndex].cells[5].innerHTML > 0 ){
 					selectTrans.options[1].selected=true;
 				}
-			document.getElementById("companyId").value = table.rows[rowIndex].cells[7].innerHTML;
-			document.getElementById("accountId").value = table.rows[rowIndex].cells[1].innerHTML;
-			document.getElementById("openingBal").value = table.rows[rowIndex].cells[5].innerHTML.replace('-','');
-			document.getElementById("accountLedgerName").value = table.rows[rowIndex].cells[2].innerHTML;
-			document.getElementById("ledgerDesc").value = table.rows[rowIndex].cells[4].innerHTML;
-			document.getElementById("openingBalDate").value = table.rows[rowIndex].cells[6].innerHTML;
+				document.getElementById("companyId").value = table.rows[rowIndex].cells[6].innerHTML;
+				document.getElementById("accountId").value = table.rows[rowIndex].cells[1].innerHTML;
+				document.getElementById("accountLedgerName").value = table.rows[rowIndex].cells[2].innerHTML;
+				document.getElementById("ledgerDesc").value = table.rows[rowIndex].cells[4].innerHTML;
+				document.getElementById("openingBal").value = table.rows[rowIndex].cells[8].innerHTML;
+				document.getElementById("openingBalDate").value = table.rows[rowIndex].cells[7].innerHTML;
 
 			$("#addAccount").modal();
 		}
@@ -282,7 +295,7 @@
 					tableBody.rows.item(i).removeAttribute('hidden');
 				}
 			for(i=0;i<tableBody.rows.length;i++){
-				var id = tableBody.rows.item(i).cells[7].innerHTML;
+				var id = tableBody.rows.item(i).cells[6].innerHTML;
 				if(companyId != id){
 					tableBody.rows.item(i).setAttribute('hidden','hidden');
 				}
@@ -293,6 +306,9 @@
 			}
 		}
 	})
+	
+	<%= session.getAttribute("accountId") %>
+	<% session.removeAttribute("accountId");%>
 	
 	
 	</script>	

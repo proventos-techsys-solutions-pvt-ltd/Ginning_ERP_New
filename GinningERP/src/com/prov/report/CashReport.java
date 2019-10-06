@@ -14,7 +14,7 @@ import com.prov.db.OracleConnection;
 
 public class CashReport {
 	
-	public JSONArray getCashReport(String startDate, String endDate) {
+public JSONArray getTransactions(String startDate, String endDate, int accId, int companyId) {
 		
 		ResultSet rs = null;
 		Connection con = null;
@@ -36,37 +36,42 @@ public class CashReport {
 		java.sql.Date sqlStartDate = java.sql.Date.valueOf(properStartDate);
 		java.sql.Date sqlEndDate = java.sql.Date.valueOf(properEndDate);
 		
+		
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT UNIQUE \r\n" + 
+			String sql = "SELECT UNIQUE\r\n" + 
 					"TR.ID TR_ID, TR.TRANSACTION_DATE, TR.VOUCH_NO, TR.VOUCH_REF, TR.ACCOUNT_ID, TR.DEBIT, TR.CREDIT, TR.NARRATION, \r\n" + 
-					"GL.COMPANY_ID,\r\n" + 
 					"AC.ID ACC_CAT_ID, AC.CATEGORY_NAME,\r\n" + 
 					"AG.ID ACC_GRP_ID, AG.GROUP_NAME\r\n" + 
 					"FROM\r\n" + 
 					"TRANSACTIONS TR,\r\n" + 
-					"GENERAL_LEDGER GL,\r\n" + 
+					"ACCOUNT_NAME AN,\r\n" + 
 					"ACCOUNT_CATEGORY AC,\r\n" + 
 					"ACCOUNT_GROUP AG\r\n" + 
-					"WHERE TR.ACCOUNT_ID = GL.ACCOUNT_ID AND\r\n" + 
-					"GL.ACC_CATEGORY_ID = AC.ID AND\r\n" + 
-					"AC.ACC_GROUP_ID = AG.ID AND \r\n" + 
-					"AC.ID=2 and\r\n" + 
-					"TR.TRANSACTION_DATE BETWEEN ? AND ? \r\n" + 
+					"WHERE TR.ACCOUNT_ID = AN.ACCOUNT_ID AND\r\n" + 
+					"AN.ACC_CATEGORY_ID = AC.ID AND\r\n" + 
+					"AC.ACC_GROUP_ID = AG.ID AND\r\n"
+					+ "AC.ID=2 AND" + 
+					"AN.COMPANY_ID = ? AND\r\n" + 
+					"AN.ACCOUNT_ID = ? AND\r\n" + 
+					"TR.TRANSACTION_DATE BETWEEN ? AND ?\r\n" + 
 					"ORDER BY TR.VOUCH_NO, TR.TRANSACTION_DATE";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
-			stmt.setDate(1, sqlStartDate);
-			stmt.setDate(2, sqlEndDate);
+			stmt.setInt(1, companyId);
+			stmt.setInt(2, accId);
+			stmt.setDate(3, sqlStartDate);
+			stmt.setDate(4, sqlEndDate);
+			
 			
 			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
 				
 				JSONObject obj = new JSONObject();
-				
+
 				obj.put("transactionId", rs.getString(1));
 				
 				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(2));
@@ -80,14 +85,12 @@ public class CashReport {
 				obj.put("debit", rs.getString(6));
 				obj.put("credit", rs.getString(7));
 				obj.put("narration", rs.getString(8));
-				obj.put("companyId", rs.getString(9));
-				obj.put("accountCategoryId", rs.getString(10));
-				obj.put("accountCategoryName", rs.getString(11));
-				obj.put("accountGroupId", rs.getString(12));
-				obj.put("accountGroupName", rs.getString(13));
+				obj.put("accountCategoryId", rs.getString(9));
+				obj.put("accountCategoryName", rs.getString(10));
+				obj.put("accountGroupId", rs.getString(11));
+				obj.put("accountGroupName", rs.getString(12));
 				
 				jsonArr.put(obj);
-				
 			}
 			
 			rs.close();
@@ -96,9 +99,7 @@ public class CashReport {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return jsonArr;
-		
 	}
 	
 }

@@ -22,7 +22,7 @@ public class BankAddModeTag extends SimpleTagSupport {
 		JSONArray jsonArray = new JSONArray();
 		try {
 			 con = OracleConnection.getConnection();
-			 String accountQuery = "Select unique acc_ledger, account_id, company_id from general_ledger where acc_category_id=2 or acc_category_id = 3 order by acc_ledger";
+			 String accountQuery = "Select unique acc_ledger, account_id, company_id from ACCOUNT_NAME where acc_category_id=2 or acc_category_id = 3 order by acc_ledger";
 			 Statement stmt = con.createStatement();
 			 accountCatResultSet = stmt.executeQuery(accountQuery);
 			 while(accountCatResultSet.next()) {

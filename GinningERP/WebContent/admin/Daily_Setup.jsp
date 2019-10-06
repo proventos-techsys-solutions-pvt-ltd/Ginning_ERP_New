@@ -182,40 +182,46 @@
 						
 					</div>
 				
-			<div class="row  row-background border-top">
-					<div class="col-md-3">
+			<div class="row  row-background border-top" >
+				<div id="cashBalance" style="width:100%;">
+				<div class="form-row">
+					<div class="col-md-6">
 						<div class="d-flex justify-content-start align-items-center">
 						<img src="../property/img/purse.png" alt="warehouse">&nbsp;
-						<h4 class="lbl-rm-b">Cash Balance</h4>
+						<h6 class="lbl-rm-b" id="ledgerName">Cash Balance</h6>
 						</div>
-						<input type="hidden" id="responseId" name="" value="<%=session.getAttribute("setupId") %>">
 					</div>
 					
-					<div class="col-md-3">
+					<div class="col-md-6">
 						<div class="d-flex justify-content-start align-items-center">
 						<input type="text" class="form-control form-control-sm" name="cashAddition" id="cashAddition" readonly>
 						&nbsp;&nbsp;
 						<img src="../property/img/add.png" alt="add" class="ctm-hover" id="callCashModal">
 						</div>
 					</div>
-					
-					<div class="col-md-3">
+					</div>
+				</div>
+				<div id="bankBalance">
+				<div class="form-row">
+					<div class="col-md-6">
 						<div class="d-flex justify-content-start align-items-center">
 						<img src="../property/img/purse.png" alt="warehouse">&nbsp;
-						<h4 class="lbl-rm-b">Bank Balance</h4>
+						<h6 class="lbl-rm-b">Bank Balance</h6>
 						</div>
 					</div>
 					
-					<div class="col-md-3">
+					<div class="col-md-6">
 						<div class="d-flex justify-content-start align-items-center">
 						<input type="text" class="form-control form-control-sm" name="bankAddition" id="bankAddition" readonly>
 						&nbsp;&nbsp;
 						<img src="../property/img/add.png" alt="add" class="ctm-hover" id="callBankModal">
 						</div>
 					</div>
+					</div>
+				</div>
 			</div>
 			
-			
+			<input type="hidden" id="responseId" name="" value="<%=session.getAttribute("setupId") %>">
 			<div class="row row-background" id="bankDetails">
 				
 			</div>
@@ -339,18 +345,23 @@
 			  </div>
 			</div>
 			</div>
+	
 		<!-- *********************RESPONSE************************  -->		
 		<div class="response-background">
 			<div class="response">
-				<div class="d-flex justify-content-center align-items-center">
-					<div id="responseText"><h4>Company has been setup successfully</h4></div>
+				<div class="response-header">
+					<h4></h4>
 				</div>
-				<div class="d-flex justify-content-center align-items-center mt-2">
-					<button type="button" class="btn btn-success btn-sm ml-1" id="responseBtn">OK</button>
+				<div class="d-flex justify-content-center align-items-center">
+					<h4>Company has been setup successfully</h4>
+				</div>
+				<div class="response-footer">
+					<div class="d-flex justify-content-center align-items-center">
+						<button type="button" class="btn btn-success btn-sm btn-width-confirm mt-1" id="responseBtn">OK</button>
+					</div>
 				</div>
 			</div>
 		</div>
-		
 	
 	
 	
@@ -498,7 +509,7 @@
 					cell4.innerHTML = '<input type="text" class="form-control form-control-sm" id="setupTimeTable" name="setupTimeTable" value="'+data[i].setupTime+'" readonly>';
 					cell5.innerHTML = '<input type="text" class="form-control form-control-sm" id="companyNameTable" name="companyNameTable" data-company-id="'+data[i].companyId+'" value="'+data[i].companyName+'" readonly>';
 					cell6.innerHTML = '<input type="text" class="form-control form-control-sm" id="heapTable" name="heapTable" value="'+data[i].cottonHeap+'" readonly>';
-					cell7.innerHTML = '<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" data-company-id="'+data[i].bankId+'" value="'+data[i].bankName+'" readonly>';
+					cell7.innerHTML = '<input type="text" class="form-control form-control-sm" id="bankTable" name="bankTable" data-bank-id="'+data[i].bankId+'" value="'+data[i].bankName+'" readonly>';
 					cell8.innerHTML = '<input type="text" class="form-control form-control-sm" id="bonusAmountTable" name="bonusAmountTable" value="'+data[i].bonusAmount+'" readonly>';
 					cell9.innerHTML = '<input type="text" class="form-control form-control-sm" id="firstChequeNo" name="firstChequeNo" value="'+data[i].firstChequeNo+'" readonly>';
 					cell10.innerHTML = '<input type="text" class="form-control form-control-sm" id="lastChequeNo" name="lastChequeNo" value="'+data[i].lastChequeNo+'">';
@@ -515,6 +526,12 @@
 					inputElements[j].setAttribute("readonly","");
 				}
 			}
+			var companies = document.getElementsByName('companyNameTable');
+			var banks = document.getElementsByName('bankTable');
+			
+			var lastNo = companies.length-2;
+			console.log('lastNo--'+lastNo)
+			getBalances(companies[lastNo].getAttribute('data-company-id'), banks[lastNo].getAttribute('data-bank-id'));
 		}
 	}
 	
@@ -737,6 +754,63 @@
 		document.getElementsByClassName("response")[0].style.display = "none";
 		document.getElementById("responseId").value=0;
 	})
+	
+	function getBalances(companyId, bankId){
+		var url="../processing/getBalancesForDS.jsp?companyId="+companyId+"&bankId="+bankId;
+		
+		if(window.XMLHttpRequest){  
+			balReq=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			balReq=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+	  
+		try{  
+			balReq.onreadystatechange=getBalData;  
+			console.log("AJAX Req sent");
+			balReq.open("GET",url,true);  
+			balReq.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	
+	function getBalData(){
+		if(balReq.readyState == 4){
+			var response = this.response;
+			var parent = JSON.parse(response);
+			var bankBalance = parent.bankBalance;
+			var cashData = parent.cashBalances;
+			
+			setBalanceData(bankBalance, cashData);
+		}
+	}
+	
+	function setBalanceData(bankBalance, cashData){
+		document.getElementById('bankAddition').value = bankBalance;
+		var cashSection = document.getElementById('cashBalance');
+		for(i=0; i<cashData.length; i++){
+			
+			if(i===0){
+				document.getElementById('cashAddition').value = cashData[i].balance;
+				document.getElementById('ledgerName').innerHTML = cashData[i].ledgerName;
+			}
+			cashBalance.insertAdjacentHTML('beforeend','<div class="col-md-3">'+
+					'<div class="d-flex justify-content-start align-items-center">'+
+			'<img src="../property/img/purse.png" alt="warehouse">&nbsp;'+
+			'<h4 class="lbl-rm-b" id="ledgerName"'+(i+1)+'>'+cashData[i].ledgerName+' Balance</h4>'+
+			'</div>'+
+		'</div>'+
+		''+
+		'<div class="col-md-3">'+
+			'<div class="d-flex justify-content-start align-items-center">'+
+			'<input type="text" class="form-control form-control-sm" name="cashAddition" id="cashAddition'+(i+1)+'" value='+cashData[i].balance+' readonly>'+
+			'&nbsp;&nbsp;'+
+			'<img src="../property/img/add.png" alt="add" class="ctm-hover" id="callCashModal">'+
+			'</div>'+
+		'</div>')
+		}
+		
+	}
 	
 	responseScreen();
 	</script>

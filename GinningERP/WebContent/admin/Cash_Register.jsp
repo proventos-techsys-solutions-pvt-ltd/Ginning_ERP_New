@@ -122,16 +122,57 @@
 		setSearchPlaceholder("Search");//Setting Placeholder of Search Input
 		
 		document.getElementById("dateFilterButton").addEventListener('click',function(e){
-			document.getElementById('dateFilterForm').submit();
+		document.getElementById('dateFilterForm').submit();
 		})
 		
 		
-		function setReportInTable(){
-			var data = document.getElementById("jsonOutput").value;
+		function fetchReport(){
+			var companyId = document.getElementById("companyId").value;
+			var bankId = document.getElementById("bankId").value;
+			var startDate = document.getElementById("startDate").value;
+			var endDate = document.getElementById("endDate").value;
+			
+			url = "../processing/getCashReport.jsp?companyId="+companyId+"&accId="+bankId+"&startDate="+startDate+"&endDate="+endDate;
+			console.log(url);
+			if(window.XMLHttpRequest){  
+				fetchRequest=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				fetchRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+			try{  
+				fetchRequest.onreadystatechange=getLedgerData;  
+				console.log("AJAX Req sent");
+				fetchRequest.open("GET",url,true);  
+				fetchRequest.send();  
+			}catch(e){alert("Unable to connect to server");}
+		}
+		
+		function getLedgerData(){
+			if(fetchRequest.readyState == 4){
+				var response = this.response.trim();
+				console.log(response);
+				var parent = JSON.parse(response);
+				var openingBalance = parent.openingBal;
+				var json = parent.array;
+				setReportInTable(json, openingBalance);
+			}
+		}
+		
+		
+		function setReportInTable(json, openingBalance){
 			var table = document.getElementById("tableBody");
-			if(data != "null"){
-				json = JSON.parse(data);
-				console.log(json);
+			table.innerHTML = '<tr>'+
+					'<td></td>'+
+						'<td></td>'+
+						'<td></td>'+
+						'<td>Opening Balance</td>'+
+						'<td></td>'+
+						'<td></td>'+
+						'<th>0</th>'+
+					'</tr>';
+					
+					table.rows[0].cells[6].innerHTML = openingBalance;
 				for(i=0;i<json.length;i++){
 					var noOfRows = table.rows.length;
 					
@@ -152,11 +193,8 @@
 					cell6.innerHTML = json[i].credit;
 					cell7.innerHTML = Number(table.rows[noOfRows-1].cells[6].innerHTML) + Number(json[i].debit) - Number(json[i].credit);
 					
-				}
 			}
 		}	
-		
-		setReportInTable();
 		
 		document.getElementById("exportToExcel").addEventListener("click",function(){
 			Export();

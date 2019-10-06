@@ -2,50 +2,9 @@ package com.prov.bean;
 
 public class GeneralLedger {
 	
-	private int id, voucherNo, accountId, monthId, accountCatId, companyId, bankId;
+	private int id, accNameId , monthId;
 	
-	public int getBankId() {
-		return bankId;
-	}
-
-	public void setBankId(int bankId) {
-		this.bankId = bankId;
-	}
-
-	public int getCompanyId() {
-		return companyId;
-	}
-
-	public void setCompanyId(int companyId) {
-		this.companyId = companyId;
-	}
-
-	private String glDate, accountLedger, ledgerDesc;
-
-
-	public int getAccountCatId() {
-		return accountCatId;
-	}
-
-	public void setAccountCatId(int accountCatId) {
-		this.accountCatId = accountCatId;
-	}
-
-	public String getAccountLedger() {
-		return accountLedger;
-	}
-
-	public void setAccountLedger(String accountLedger) {
-		this.accountLedger = accountLedger;
-	}
-
-	public String getLedgerDesc() {
-		return ledgerDesc;
-	}
-
-	public void setLedgerDesc(String ledgerDesc) {
-		this.ledgerDesc = ledgerDesc;
-	}
+	private String glDate;
 
 	public double getClosingBal() {
 		return closingBal;
@@ -65,20 +24,12 @@ public class GeneralLedger {
 		this.id = id;
 	}
 
-	public int getVoucherNo() {
-		return voucherNo;
+	public int getAccNameId() {
+		return accNameId;
 	}
 
-	public void setVoucherNo(int voucherNo) {
-		this.voucherNo = voucherNo;
-	}
-
-	public int getAccountId() {
-		return accountId;
-	}
-
-	public void setAccountId(int accountId) {
-		this.accountId = accountId;
+	public void setAccNameId(int accNameId) {
+		this.accNameId = accNameId;
 	}
 
 	public int getMonthId() {

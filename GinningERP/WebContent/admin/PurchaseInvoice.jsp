@@ -3,20 +3,20 @@
 <!doctype html>
 <html lang="en">
     <head>
-      <meta charset="utf-8">
-	  <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <!-- Bootstrap CSS -->
-	  <link rel="stylesheet" href="../styles/bootstrap.min.css">	
-	  <link rel="stylesheet" href="../styles/admin/sidenav.css">
-	  <link rel="stylesheet" href="../styles/WBStyle.css">
-      <title>Purchase Invoices</title>
+	    <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../styles/bootstrap.min.css">
+		<link rel="stylesheet" href="../styles/admin/sidenav.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	    <title>Purchase Invoices</title>
     </head>
 <body>
 <%@include file="../admin/Top_Nav.jsp" %>
 		<div class="container-fluid container-mr-t">
 		 <%@include file="../admin/Side_bar.html" %>
 		<%@include file="../admin/CommonSearchHeaderForReports.jsp" %>
-		<div class="row mt-2 tile-background-row">
+		<div class="row row-background">
 			<div class="col-md-12">
 				<table id="tblInvoiceReport" class="table table-bordered">
 					<thead>
@@ -47,6 +47,20 @@
 		<script src="../js/commonjs.js"></script>
 		<script src="../js/export/export2excel.js"></script>
 		<script>
+		
+		 //*********************Search 
+        $(document).ready(function(){
+          $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#tableBody tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+    	
+		
+		
+		
 			setTitle("Purchase Invoices");//Setting Title of Page
 			setSearchPlaceholder("Invoice No");//Setting Placeholder of Search Input
 			

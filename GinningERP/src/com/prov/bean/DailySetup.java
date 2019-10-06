@@ -2,7 +2,14 @@ package com.prov.bean;
 
 public class DailySetup {
 	
-	private int id, companyId, bankId, totalCheques;
+	private int id, companyId, bankId, totalCheques, accPayableId;
+	public int getAccPayableId() {
+		return accPayableId;
+	}
+	public void setAccPayableId(int accPayableId) {
+		this.accPayableId = accPayableId;
+	}
+
 	public float bonusAmount;
 	public float getBonusAmount() {
 		return bonusAmount;

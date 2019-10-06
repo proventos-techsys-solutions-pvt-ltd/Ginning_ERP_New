@@ -32,6 +32,7 @@
                         	<input type="hidden" name="invoiceId" value="" id="invoiceId"/>
                         	<input type="hidden" name="bankId" value="" id="bankId" />
                         	<input type="hidden" name="customerId" value="" id="customerId" />
+                        	<input type="hidden" name="accPayableId" value="" id="accPayableId" />
                         	<div class="row row-background">
                         		<div class="col-md-3">
                        			  <label for="" class="lbl-rm-all">Company Name </label>
@@ -79,6 +80,16 @@
                              	 <div class="col-md-2">
                                     <label for="" class="lbl-rm-all">Last Authorizer</label>
                                     <input id="lastAuthorizer" name="lastAuthorizer" type="text" class="form-control form-control-sm" placeholder="NA" readonly>
+                                </div>
+                                 <div class="col-md-2 offset-md-6">
+                                    <label for="" class="lbl-rm-all">Voucher No</label>
+                                    <input id="voucherNo" name="voucherNo" type="text" class="form-control form-control-sm" placeholder="" readonly>
+                                </div>
+                                 <div class="col-md-2">
+                                    <label for="" class="lbl-rm-all">Account</label>
+                                    <select class="form-control form-control-sm" id="accountId" name="accountId">
+                                    	<c:PurchaseAccountTag/>
+                                    </select>
                                 </div>
                              </div>
                             <div class="row row-background">
@@ -149,19 +160,11 @@
                                 </div>
                                 </div>
                                 <div class="row row-background border-top" >
-	                               	 <div class="col-md-4 ">
+	                               	 <div class="col-md-6 ">
 	                                     <label class="lbl-rm-all">Note :</label>
 	                                     <textarea id="note" name="note" class="form-control form-control-lg">Note</textarea>
 									</div>
-									<div class="col-md-2" >
-										<div class="row-div" id="pdcData">
-											<label for="" class="lbl-rm-all">PDC Date</label> 
-											<input type="date" class="form-control form-control-sm" name="pdcDate" id="pdcDate" readonly/>
-											<label for="" class="lbl-rm-all">PDC Payment Mode</label> 
-											<input type="text" class="form-control form-control-sm" name="pdcPaymentMode" id="pdcPaymentMode" readonly/>
-										</div>
-									</div>
-									
+								
 									<div class="col-md-2 offset-md-2">
 										<div class="row-div">
 											<label for="" class="lbl-rm-all">Total Invoice Amt</label> 
@@ -213,15 +216,14 @@
 											</table>
 										</div>
                                    		
-                                   		<div class="col-md-4">
-                                   			<div class="heading">
-                                   				<h5>Grade Information</h5>
-                                   			</div>
-                                   			
-                                			<div class="border grade-box" id="gradeInfo">
-                                			
-                                			</div>
-                                   		</div>
+                                   		<div class="col-md-2 offset-md-2" >
+										<div class="row-div" id="pdcData">
+											<label for="" class="lbl-rm-all">PDC Date</label> 
+											<input type="date" class="form-control form-control-sm" name="pdcDate" id="pdcDate" readonly/>
+											<label for="" class="lbl-rm-all">PDC Payment Mode</label> 
+											<input type="text" class="form-control form-control-sm" name="pdcPaymentMode" id="pdcPaymentMode" readonly/>
+										</div>
+										</div>			
                                    
 	                                   	<div class="col-md-2">
 	                                   		<label for="" class="lbl-rm-all">Less: PDC Issued</label> 
@@ -235,6 +237,16 @@
 		                                    <label for="" class="lbl-rm-all">Net Payable </label> 
 		                                    <input type="text" id="net" name="net" class="form-control form-control-sm" value="0" readonly>
 	                                   	</div>
+                                   </div>
+                                   
+                                   <div class="row row-background">
+                                   		<div class="col-md-6" style="margin-top:-180px;">
+	                               			<div class="heading">
+	                               				<h5>Grade Information</h5>
+	                               			</div>
+	                            			<div class="border grade-box" id="gradeInfo">
+	                            			</div>
+                                   		</div>
                                    </div>
 								
                                 <div class="row row-background border-top">
@@ -270,11 +282,16 @@
 <!-- *********************RESPONSE************************  -->		
 		<div class="response-background">
 			<div class="response">
+				<div class="response-header">
+					<h4></h4>
+				</div>
 				<div class="d-flex justify-content-center align-items-center">
 					<div id="responseText"><h4></h4></div>
 				</div>
-				<div class="d-flex justify-content-center align-items-center mt-2">
-					<button type="button" class="btn btn-success btn-sm ml-1" id="responseBtn">OK</button>
+				<div class="response-footer">
+					<div class="d-flex justify-content-center align-items-center">
+						<button type="button" class="btn btn-success btn-sm btn-width-confirm mt-1" id="responseBtn">OK</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -344,7 +361,6 @@ function setCurrentDate(){
 	function getDailySetupRecords(){
 		if(dailySetup.readyState == 4){
 			var response = this.response.trim();
-			console.log("daily Setup---"+response);
 			if(Number(response) > 0){
 				$.unblockUI
 			}
@@ -398,8 +414,21 @@ function setCurrentDate(){
 				companySelect.options[i].selected = true;
 			}
 		}
+		
+		var purchaseAccounts = document.getElementById('accountId');
+		for(i=0;i<purchaseAccounts.options.length;i++){
+			if(data.companyId != Number(purchaseAccounts.options[i].getAttribute("data-company-id"))){
+				purchaseAccounts.options[i].disabled = true;
+			}
+			else if(data.companyId === Number(purchaseAccounts.options[i].getAttribute("data-company-id"))){
+				purchaseAccounts.options[i].selected = true;
+			}
+		}
+		
 		document.getElementById('bonusPerQtl').value = data.bonusAmount;
 		document.getElementById('invoiceNo').value = data.invoiceSeries;
+		document.getElementById('accPayableId').value = data.accPayableId;
+		
 	}
 	
 	function checkRstInTable(rst){
@@ -972,6 +1001,9 @@ function setCurrentDate(){
 			var jsonObj = {};
 			
 			jsonObj['invoiceId'] = document.getElementById('invoiceId').value
+			jsonObj['accountPurchaseId'] = document.getElementById('accountId').value;
+			jsonObj['accountPayableId'] = document.getElementById('accPayableId').value;
+			jsonObj['voucherNo'] = document.getElementById('voucherNo').value;
 			jsonObj['authorizer'] = document.getElementById('authorizer').value;
 			jsonObj['invoiceNo'] = document.getElementById('invoiceNo').value;
 			jsonObj['customerId'] = document.getElementById('customerId').value;
@@ -1207,20 +1239,20 @@ function setCurrentDate(){
 	})
 	
 	function pendingInvoicingReports(){
-	var url="${pageContext.request.contextPath}/processing/pendingInvoicingReport.jsp";
-	if(window.XMLHttpRequest){  
-		fetchPendingInvoicing=new XMLHttpRequest();  
-	}  
-	else if(window.ActiveXObject){  
-		fetchPendingInvoicing=new ActiveXObject("Microsoft.XMLHTTP");  
-	}  
-	try{  
-		fetchPendingInvoicing.onreadystatechange=getPendingInvoicingData;  
-		console.log("AJAX Req sent");
-		fetchPendingInvoicing.open("GET",url,true);  
-		fetchPendingInvoicing.send();  
-	}catch(e){alert("Unable to connect to server");}
-}
+		var url="${pageContext.request.contextPath}/processing/pendingInvoicingReport.jsp";
+		if(window.XMLHttpRequest){  
+			fetchPendingInvoicing=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchPendingInvoicing=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+		try{  
+			fetchPendingInvoicing.onreadystatechange=getPendingInvoicingData;  
+			console.log("AJAX Req sent");
+			fetchPendingInvoicing.open("GET",url,true);  
+			fetchPendingInvoicing.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
 
 function getPendingInvoicingData(){
 	if(fetchPendingInvoicing.readyState == 4){
@@ -1249,14 +1281,29 @@ function setPendingInvoicingData(data){
 	}
 }
 
+//**********confirmation box code
+
+function responseInvoice(){
+	var responseId= document.getElementById("responseId").value.trim();
+	if(responseId>0){
+		document.getElementsByClassName("response-background")[0].style.display = "block";
+		document.getElementsByClassName("response")[0].style.display = "block";
+	}else if(responseId===0){
+		document.getElementsByClassName("response-background")[0].style.display = "block";
+		document.getElementsByClassName("response")[0].style.display = "block";
+		document.getElementById("responseText").querySelector("h4").innerHTML = "Invoice has been saved successfully!!";
+	}else if(responseId===null){
+		}
+}
+
 
 function responseScreen(){
 	var responseId= document.getElementById("responseId").value.trim();
-	console.log(responseId);
+	console.log("Response id value"+responseId);
 	if(responseId.includes('CASH')){
 		document.getElementsByClassName("response-background")[0].style.display = "block";
 		document.getElementsByClassName("response")[0].style.display = "block";
-		document.getElementById("responseText").querySelector("h4").innerHTML = responseId+" HAS BEEN ALREADY PAID. PLEASE DELETE THESE ENTRIES FIRST.";
+		document.getElementById("responseText").querySelector("h6").innerHTML = responseId+" HAS BEEN ALREADY PAID. PLEASE DELETE THESE ENTRIES FIRST.";
 	}else if(responseId === 'null'){
 	}else if(responseId != 'null'){
 		document.getElementsByClassName("response-background")[0].style.display = "block";
@@ -1265,20 +1312,43 @@ function responseScreen(){
 	}
 }
 
-
-document.getElementById("responseBtn").addEventListener("click",function(){
+	document.getElementById("responseBtn").addEventListener("click",function(){
 	document.getElementsByClassName("response-background")[0].style.display = "none";
 	document.getElementsByClassName("response")[0].style.display = "none";
 	document.getElementById("responseId").value='null';
 })
 
+function getVocuherNo(){
+		var url="${pageContext.request.contextPath}/processing/getVoucherNoSeries.jsp";
+		if(window.XMLHttpRequest){  
+			fetchVouch=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchVouch=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+		try{  
+			fetchVouch.onreadystatechange=getVoucher;  
+			console.log("AJAX Req sent");
+			fetchVouch.open("GET",url,true);  
+			fetchVouch.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+
+	function getVoucher(){
+		if(fetchVouch.readyState == 4){
+			var response = this.response.trim();
+			document.getElementById('voucherNo').value = response;
+		}
+	}
+
 <% session.removeAttribute("invoiceNo"); %>
 
-
+responseInvoice();
 	responseScreen();
 	pendingInvoicingReports();
 	checkDailySetup();
-	setCurrentDate()
+	getVocuherNo();
+	setCurrentDate();
 	
 	</script>
 </body>

@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <title>Vendor Master</title>
 <script src="../js/jquery-3.3.1.slim.min.js" ></script>
 </head>
@@ -18,8 +19,8 @@
 	<div class="container-fluid container-mr-t">
 	 <%@include file="../admin/Side_bar.html" %>
 	 <%@include file="../admin/CommonSearchHeaderForReports.jsp" %>
-		<div class="row mt-2 row-background">
-			<div class="col-md-12">
+		<div class="row row-background border-top">
+			<div class="col-md-12 mt-4">
 				<table id="tblCustomer" class="table table-bordered">
 					<thead>
 						<tr>
@@ -96,6 +97,19 @@
 		<script src="../js/export/export2excel.js"></script>
 		
     	<script type="text/javascript">
+    	
+    	 //*********************Search 
+	        $(document).ready(function(){
+	          $("#searchInput").on("keyup", function() {
+	            var value = $(this).val().toLowerCase();
+	            $("#tableBody tr").filter(function() {
+	              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	            });
+	          });
+	        });
+	    	
+    	
+    	
         function Export() {
             $("#tblCustomer").export2excel({
             	filename: "Customers.xls"

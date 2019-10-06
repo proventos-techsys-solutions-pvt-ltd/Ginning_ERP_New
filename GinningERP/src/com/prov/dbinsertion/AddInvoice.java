@@ -19,7 +19,7 @@ public int addInvoice(Invoice i) {
 			e.printStackTrace();
 		}
 
-		String addInvoice = "{ ? = call ADD_INVOICE(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
+		String addInvoice = "{ ? = call ADD_INVOICE(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -46,6 +46,7 @@ public int addInvoice(Invoice i) {
 			cs.setFloat(17, i.getBonusAmount());
 			cs.setDouble(18, i.getNetPayable());
 			cs.setDouble(19, i.getPdcAmount());
+			cs.setInt(20, i.getVoucherNo());
 			
 			cs.executeUpdate();
 			
@@ -74,7 +75,7 @@ public int addInvoiceWithId(Invoice i) {
 		e.printStackTrace();
 	}
 
-	String addInvoice = "{ ? = call ADD_INVOICE_WITH_ID(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
+	String addInvoice = "{ ? = call ADD_INVOICE_WITH_ID(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
 	CallableStatement cs;
 	try {
 		
@@ -102,6 +103,7 @@ public int addInvoiceWithId(Invoice i) {
 		cs.setDouble(18, i.getNetPayable());
 		cs.setDouble(19, i.getPdcAmount());
 		cs.setInt(20, i.getId());
+		cs.setInt(21, i.getVoucherNo());
 		
 		cs.executeUpdate();
 		
