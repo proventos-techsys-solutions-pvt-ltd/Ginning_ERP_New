@@ -1,4 +1,10 @@
 <%-- page errorPage="../admin/Error.jsp" --%>  
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="com.prov.report.AccountNameReport"%>
+<%@page import="com.prov.dbinsertion.AddTransactions"%>
+<%@page import="com.prov.dbops.VoucherSeries"%>
+<%@page import="com.prov.bean.Transactions"%>
 <%@page import="com.prov.bean.PDC"%>
 <%@page import="com.prov.dbupdation.UpdatePDC"%>
 <%@page import="com.prov.dbupdation.UpdateInvoice"%>
@@ -41,6 +47,37 @@
 		
 		id = addCheque.addCheque(cheque);
 		
+		VoucherSeries vs = new VoucherSeries();
+		
+		int voucherNo = vs.getVoucherNo();
+		
+		Transactions chequeTrDb = new Transactions();
+		
+		chequeTrDb.setAccountId(Integer.parseInt((String)obj.get("accountPayableId")));
+		chequeTrDb.setContactId((String)obj.get("customerId"));
+		chequeTrDb.setDebit(cheque.getChequeAmount());
+		chequeTrDb.setCredit(0);
+		chequeTrDb.setTransactionDate(cheque.getChequeDate());
+		chequeTrDb.setNarration("RAW COTTON PURCHASE");
+		chequeTrDb.setVouchRef("RAW COTTON");
+		chequeTrDb.setVouchNo(voucherNo);
+		
+		Transactions chequeTrCr = new Transactions();
+		
+		chequeTrCr.setAccountId(Integer.parseInt((String)obj.get("bankAccountId")));
+		chequeTrCr.setContactId((String)obj.get("customerId"));
+		chequeTrCr.setDebit(0);
+		chequeTrCr.setCredit(cheque.getChequeAmount());
+		chequeTrCr.setTransactionDate(cheque.getChequeDate());
+		chequeTrCr.setNarration("RAW COTTON PURCHASE");
+		chequeTrCr.setVouchRef("RAW COTTON");
+		chequeTrCr.setVouchNo(voucherNo);
+		
+		AddTransactions addTr = new AddTransactions();
+		
+		addTr.addTransactions(chequeTrDb);
+		addTr.addTransactions(chequeTrCr);
+		
 		UpdateInvoice updateInvoice = new UpdateInvoice();
 		
 		updateInvoice.updatePendingAmount(cheque.getChequeAmount(), cheque.getInvoiceId());
@@ -74,6 +111,41 @@
 		
 		updateInvoice.updatePendingAmount(rtgs.getRtgsAmount(), rtgs.getInvoiceId());
 		
+		VoucherSeries vs = new VoucherSeries();
+		
+		int voucherNo = vs.getVoucherNo();
+		
+		Transactions rtgsTrDb = new Transactions();
+		
+		rtgsTrDb.setAccountId(Integer.parseInt((String)obj.get("accountPayableId")));
+		rtgsTrDb.setContactId((String)obj.get("customerId"));
+		rtgsTrDb.setDebit(rtgs.getRtgsAmount());
+		rtgsTrDb.setCredit(0);
+		rtgsTrDb.setTransactionDate(rtgs.getRtgsDate());
+		rtgsTrDb.setNarration("RAW COTTON PURCHASE");
+		rtgsTrDb.setVouchRef("RAW COTTON");
+		rtgsTrDb.setVouchNo(voucherNo);
+		
+		Transactions rtgsTrCr = new Transactions();
+		
+		AccountNameReport anr = new AccountNameReport();
+		
+		int bankAccountId = anr.getAccountId(Integer.parseInt((String)obj.get("companyId")), Integer.parseInt((String)obj.get("dsBankId")));
+		
+		rtgsTrCr.setAccountId(bankAccountId);
+		rtgsTrCr.setContactId((String)obj.get("customerId"));
+		rtgsTrCr.setDebit(0);
+		rtgsTrCr.setCredit(rtgs.getRtgsAmount());
+		rtgsTrCr.setTransactionDate(rtgs.getRtgsDate());
+		rtgsTrCr.setNarration("RAW COTTON PURCHASE");
+		rtgsTrCr.setVouchRef("RAW COTTON");
+		rtgsTrCr.setVouchNo(voucherNo);
+		
+		AddTransactions addTr = new AddTransactions();
+		
+		addTr.addTransactions(rtgsTrDb);
+		addTr.addTransactions(rtgsTrCr);
+		
 		//session.setAttribute("id", Integer.toString(id));
 		//response.sendRedirect("../accounts_operation_view/Payment.jsp");
 		out.print(id);
@@ -87,6 +159,44 @@
 		int invoiceId = Integer.parseInt((String)obj.get("invoiceId"));
 		
 		updateInvoice.updatePendingAmount(Double.parseDouble((String)obj.get("cashAmount")),invoiceId);
+		
+		VoucherSeries vs = new VoucherSeries();
+		
+		int voucherNo = vs.getVoucherNo();
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+		Date date = new Date(); 
+		String todaysDate = formatter.format(date);
+		
+		Transactions cashTrDb = new Transactions();
+		
+		cashTrDb.setAccountId(Integer.parseInt((String)obj.get("accountPayableId")));
+		cashTrDb.setContactId((String)obj.get("customerId"));
+		cashTrDb.setDebit(Double.parseDouble((String)obj.get("cashAmount")));
+		cashTrDb.setCredit(0);
+		cashTrDb.setTransactionDate(todaysDate);
+		cashTrDb.setNarration("RAW COTTON PURCHASE");
+		cashTrDb.setVouchRef("RAW COTTON");
+		cashTrDb.setVouchNo(voucherNo);
+		
+		Transactions cashTrCr = new Transactions();
+		
+		AccountNameReport anr = new AccountNameReport();
+		
+		cashTrCr.setAccountId(Integer.parseInt((String)obj.get("cashAccountId")));
+		cashTrCr.setContactId((String)obj.get("customerId"));
+		cashTrCr.setDebit(0);
+		cashTrCr.setCredit(Double.parseDouble((String)obj.get("cashAmount")));
+		cashTrCr.setTransactionDate(todaysDate);
+		cashTrCr.setNarration("RAW COTTON PURCHASE");
+		cashTrCr.setVouchRef("RAW COTTON");
+		cashTrCr.setVouchNo(voucherNo);
+		
+		AddTransactions addTr = new AddTransactions();
+		
+		addTr.addTransactions(cashTrDb);
+		addTr.addTransactions(cashTrCr);
+		
 		
 		//session.setAttribute("id", Integer.toString(invoiceId));
 		//response.sendRedirect("../accounts_operation_view/Payment.jsp");
@@ -121,6 +231,37 @@
 		
 		updatePdc.addChequeId(chequeId, invoiceId);
 		
+		VoucherSeries vs = new VoucherSeries();
+		
+		int voucherNo = vs.getVoucherNo();
+		
+		Transactions chequeTrDb = new Transactions();
+		
+		chequeTrDb.setAccountId(Integer.parseInt((String)obj.get("accountPayableId")));
+		chequeTrDb.setContactId((String)obj.get("customerId"));
+		chequeTrDb.setDebit(cheque.getChequeAmount());
+		chequeTrDb.setCredit(0);
+		chequeTrDb.setTransactionDate(cheque.getChequeDate());
+		chequeTrDb.setNarration("RAW COTTON PURCHASE");
+		chequeTrDb.setVouchRef("RAW COTTON");
+		chequeTrDb.setVouchNo(voucherNo);
+		
+		Transactions chequeTrCr = new Transactions();
+		
+		chequeTrCr.setAccountId(Integer.parseInt((String)obj.get("bankAccountId")));
+		chequeTrCr.setContactId((String)obj.get("customerId"));
+		chequeTrCr.setDebit(0);
+		chequeTrCr.setCredit(cheque.getChequeAmount());
+		chequeTrCr.setTransactionDate(cheque.getChequeDate());
+		chequeTrCr.setNarration("RAW COTTON PURCHASE");
+		chequeTrCr.setVouchRef("RAW COTTON");
+		chequeTrCr.setVouchNo(voucherNo);
+		
+		AddTransactions addTr = new AddTransactions();
+		
+		addTr.addTransactions(chequeTrDb);
+		addTr.addTransactions(chequeTrCr);
+		
 		session.setAttribute("chequeId", Integer.toString(pdc.getId()));
 		response.sendRedirect("../report/Cheque.jsp");
 		//out.print(chequeId);
@@ -150,6 +291,41 @@
 		
 		updatePdc.addRtgsIdId(id, rtgs.getInvoiceId());
 		
+		VoucherSeries vs = new VoucherSeries();
+		
+		int voucherNo = vs.getVoucherNo();
+		
+		Transactions rtgsPdcTrDb = new Transactions();
+		
+		rtgsPdcTrDb.setAccountId(Integer.parseInt((String)obj.get("accountPayableId")));
+		rtgsPdcTrDb.setContactId((String)obj.get("customerId"));
+		rtgsPdcTrDb.setDebit(rtgs.getRtgsAmount());
+		rtgsPdcTrDb.setCredit(0);
+		rtgsPdcTrDb.setTransactionDate(rtgs.getRtgsDate());
+		rtgsPdcTrDb.setNarration("RAW COTTON PURCHASE");
+		rtgsPdcTrDb.setVouchRef("RAW COTTON");
+		rtgsPdcTrDb.setVouchNo(voucherNo);
+		
+		Transactions rtgsPdcTrCr = new Transactions();
+		
+		AccountNameReport anr = new AccountNameReport();
+		
+		int bankAccountId = anr.getAccountId(Integer.parseInt((String)obj.get("companyId")), Integer.parseInt((String)obj.get("dsBankId")));
+		
+		rtgsPdcTrCr.setAccountId(bankAccountId);
+		rtgsPdcTrCr.setContactId((String)obj.get("customerId"));
+		rtgsPdcTrCr.setDebit(0);
+		rtgsPdcTrCr.setCredit(rtgs.getRtgsAmount());
+		rtgsPdcTrCr.setTransactionDate(rtgs.getRtgsDate());
+		rtgsPdcTrCr.setNarration("RAW COTTON PURCHASE");
+		rtgsPdcTrCr.setVouchRef("RAW COTTON");
+		rtgsPdcTrCr.setVouchNo(voucherNo);
+		
+		AddTransactions addTr = new AddTransactions();
+		
+		addTr.addTransactions(rtgsPdcTrDb);
+		addTr.addTransactions(rtgsPdcTrCr);
+		
 		//session.setAttribute("id", Integer.toString(id));
 		//response.sendRedirect("../accounts_operation_view/Payment.jsp");
 		
@@ -166,6 +342,43 @@
 		int glId = 0;
 		
 		updatePdc.addGlId(glId, invoiceId);
+		
+		VoucherSeries vs = new VoucherSeries();
+		
+		int voucherNo = vs.getVoucherNo();
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+		Date date = new Date(); 
+		String todaysDate = formatter.format(date);
+		
+		Transactions cashTrDb = new Transactions();
+		
+		cashTrDb.setAccountId(Integer.parseInt((String)obj.get("accountPayableId")));
+		cashTrDb.setContactId((String)obj.get("customerId"));
+		cashTrDb.setDebit(Double.parseDouble((String)obj.get("pdcCashAmount")));
+		cashTrDb.setCredit(0);
+		cashTrDb.setTransactionDate(todaysDate);
+		cashTrDb.setNarration("RAW COTTON PURCHASE");
+		cashTrDb.setVouchRef("RAW COTTON");
+		cashTrDb.setVouchNo(voucherNo);
+		
+		Transactions cashTrCr = new Transactions();
+		
+		AccountNameReport anr = new AccountNameReport();
+		
+		cashTrCr.setAccountId(Integer.parseInt((String)obj.get("cashAccountId")));
+		cashTrCr.setContactId((String)obj.get("customerId"));
+		cashTrCr.setDebit(0);
+		cashTrCr.setCredit(Double.parseDouble((String)obj.get("pdcCashAmount")));
+		cashTrCr.setTransactionDate(todaysDate);
+		cashTrCr.setNarration("RAW COTTON PURCHASE");
+		cashTrCr.setVouchRef("RAW COTTON");
+		cashTrCr.setVouchNo(voucherNo);
+		
+		AddTransactions addTr = new AddTransactions();
+		
+		addTr.addTransactions(cashTrDb);
+		addTr.addTransactions(cashTrCr);
 		
 		//session.setAttribute("id", Integer.toString(invoiceId));
 		//response.sendRedirect("../accounts_operation_view/Payment.jsp");

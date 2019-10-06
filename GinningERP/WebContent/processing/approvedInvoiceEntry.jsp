@@ -203,7 +203,7 @@
 		trDebit.setTransactionDate(invoice.getInvDate());
 		trDebit.setVouchNo(Integer.parseInt((String)json.get("voucherNo")));
 		trDebit.setNarration("RAW COTTON PURCHASE");
-		trDebit .setVouchRef("RAW COTTON");
+		trDebit.setVouchRef("RAW COTTON");
 		
 		AddTransactions addTr = new AddTransactions();
 		

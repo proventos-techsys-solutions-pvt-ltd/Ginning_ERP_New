@@ -50,6 +50,8 @@
 					<input type="hidden" id="customerId" name="customerId" />
 					<input type="hidden" id="customerName" name="customerName" />
 					<input type="hidden" id="companyId" name="companyId" />
+					<input type="hidden" id="accountPayableId" name="accountPayableId" />
+					<input type="hidden" id="DsBankId" name="DsBankId" />
 					<div class="form-row">
 						<div class="col-md-3">
 							<label class="lbl-rm-all">Customer Information</label>
@@ -69,13 +71,22 @@
 						</div>
 					</div>
 					<div class="form-row border-top">
-						<div class="col-md-auto">
+					<div class="col-md-3">
+							<label class="lbl-rm-all">Cash Account</label>
+							<div class="d-flex justify-content-start align-items-center">
+								<select class="form-control" id="cashAccountId" name="cashAccountId">
+									<option>
+										<c:CashLedgerTag/>
+									</option>
+								</select>
+							</div>
+						</div>
+					<div class="col-md-auto">
 							<label class="lbl-rm-all">Cash</label>
 							<div class="d-flex justify-content-start align-items-center">
 								<input type="text" class="form-control" id="cashAmount" name="cashAmount" readonly>
 								<button type="button" class="btn btn-success btn-no-radius" onclick="submitCash()" id="payCash">Pay</button>
 							</div>
-						</div>
 					</div>
 					<div class="form-row border-top">
 						<div class="col-md-auto">
@@ -130,6 +141,14 @@
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">PDC Cash</label>
 							<div class="d-flex justify-content-start align-items-center">
+							<label class="lbl-rm-all">Cash Account</label>
+							<div class="d-flex justify-content-start align-items-center">
+								<select class="form-control" id="pdcCashAccountId" name="pdcCashAccountId">
+									<option>
+										<c:CashLedgerTag/>
+									</option>
+								</select>
+							</div>
 								<input type="text" class="form-control" id="pdcCashAmount" name="pdcCashAmount" readonly>
 								<button type="button" class="btn btn-success btn-no-radius" onclick="submitPdcCash()" id="payPdcCash">Pay</button>
 							</div>
@@ -193,6 +212,7 @@
 					<input type="hidden" id="data" name="data" />	
 				</form>
 				</div>
+			</div>
 			</div>
 			<div class="col-md-4 border-left">
 				<div class="tile-background-row">
@@ -366,8 +386,31 @@
 					bank.options[i].selected = true;
 				}
 			}
+			
+			var cashAccounts = document.getElementById('cashAccountId');
+			for(i=0;i<cashAccounts.options.length;i++){
+				if(data.companyId != Number(cashAccounts.options[i].getAttribute('data-company-id'))){
+					cashAccounts.options[i].disabled = true;
+				}
+				else if(data.companyId === Number(cashAccounts.options[i].getAttribute('data-company-id'))){
+					cashAccounts.options[i].selected = true;
+				}
+			}
+			
+			var pdcCashAccounts = document.getElementById('pdcCashAccountId');
+			for(i=0;i<pdcCashAccounts.options.length;i++){
+				if(data.companyId != Number(pdcCashAccounts.options[i].getAttribute('data-company-id'))){
+					pdcCashAccounts.options[i].disabled = true;
+				}
+				else if(data.companyId === Number(pdcCashAccounts.options[i].getAttribute('data-company-id'))){
+					pdcCashAccounts.options[i].selected = true;
+				}
+			}
+			
 			document.getElementById('companyId').value = data.companyId;
 			document.getElementById('chequeLeaves').innerHTML = data.totalCheques;
+			document.getElementById('accountPayableId').value = data.accPayableId;
+			document.getElementById('DsBankId').value = data.bankId;
 			getRtgsCount(document.getElementById('companyId').value);
 		}
 	}
@@ -487,6 +530,7 @@
 					document.getElementById('pdcRtgsSection').hidden=false;
 					document.getElementById('pdcChequeSection').hidden=true;
 					document.getElementById('pdcCashSection').hidden=true;
+					document.getElementById('pdcCashSection').hidden=true;
 				}else if(data.pdcPaymentMode === 'CASH'){
 					document.getElementById('pdcId').value = data.pdcId ;
 					document.getElementById('pdcCashAmount').value = data.pdcAmount;
@@ -520,6 +564,8 @@
 			chequeJson['invoiceNo'] = document.getElementById('invoiceNo').value;
 			chequeJson['customerId'] = document.getElementById('customerId').value;
 			chequeJson['customerName'] = document.getElementById('customerName').value;
+			chequeJson['bankAccountId'] = bank.options[bank.selectedIndex].getAttribute('data-account-id');
+			chequeJson['accountPayableId'] = document.getElementById('accountPayableId').value;
 			
 			var chequeInfo = JSON.stringify(chequeJson);
 			document.getElementById('data').value = chequeInfo;
@@ -542,7 +588,10 @@
 			rtgsJson['invoiceNo'] = document.getElementById('invoiceNo').value;
 			rtgsJson['customerId'] = document.getElementById('customerId').value;
 			rtgsJson['customerName'] = document.getElementById('customerName').value;
-			
+			rtgsJson['dsBankId'] = document.getElementById('DsBankId').value;
+			rtgsJson['accountPayableId'] = document.getElementById('accountPayableId').value;
+			rtgsJson['companyId'] = document.getElementById('companyId').value;
+
 			var rtgsInfo = JSON.stringify(rtgsJson);
 			console.log(rtgsInfo);
 			document.getElementById('data').value = rtgsInfo;
@@ -560,7 +609,9 @@
 		cashJson['customerName'] = document.getElementById('customerName').value;
 		cashJson['customerId'] = document.getElementById('customerId').value;
 		cashJson['invoiceNo'] = document.getElementById('invoiceNo').value;
-		
+		cashJson['accountPayableId'] = document.getElementById('accountPayableId').value;
+		cashJson['cashAccountId'] = document.getElementById('cashAccountId').value;
+
 		var cashInfo = JSON.stringify(cashJson);
 		document.getElementById('data').value = cashInfo;
 		document.getElementById('payCash').disabled = true;
@@ -585,6 +636,10 @@
 	   pdcJson['pdcBankName'] = bank.options[bank.selectedIndex].text.split('-')[0].trim();
 	   pdcJson['customerId'] = document.getElementById('customerId').value;
 	   pdcJson['invoiceNo'] = document.getElementById('invoiceNo').value;
+	   pdcJson['bankAccountId'] = bank.options[bank.selectedIndex].getAttribute('data-account-id');
+	   pdcJson['accountPayableId'] = document.getElementById('accountPayableId').value;
+	   pdcJson['bankAccountId'] = bank.options[bank.selectedIndex].getAttribute('data-account-id');
+	   pdcJson['accountPayableId'] = document.getElementById('accountPayableId').value;
 	   
 	   var pdcInfo = JSON.stringify(pdcJson);
 	   console.log(pdcInfo);
@@ -610,7 +665,11 @@
 	   pdcRtgsJson['invoiceNo'] = document.getElementById('invoiceNo').value;
 	   pdcRtgsJson['customerId'] = document.getElementById('customerId').value;
 	   pdcRtgsJson['customerName'] = document.getElementById('customerName').value;
-		
+	   pdcRtgsJson['dsBankId'] = document.getElementById('dsBankId').value;
+	   pdcRtgsJson['accountPayableId'] = document.getElementById('accountPayableId').value;
+	   pdcRtgsJson['companyId'] = document.getElementById('companyId').value;
+
+	   
 		var pdcRtgsInfo = JSON.stringify(pdcRtgsJson);
 		console.log(pdcRtgsJson);
 		document.getElementById('data').value = pdcRtgsInfo;
@@ -629,6 +688,8 @@
 		cashJson['customerName'] = document.getElementById('customerName').value;
 		cashJson['customerId'] = document.getElementById('customerId').value;
 		cashJson['invoiceNo'] = document.getElementById('invoiceNo').value;
+		cashJson['accountPayableId'] = document.getElementById('accountPayableId').value;
+		cashJson['cashAccountId'] = document.getElementById('pdcCashAccountId').value;
 		
 		var cashInfo = JSON.stringify(cashJson);
 		document.getElementById('data').value = cashInfo;
