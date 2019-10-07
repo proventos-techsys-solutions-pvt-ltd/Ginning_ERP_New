@@ -14,7 +14,7 @@ public class AccountNameReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String invSql = "SELECT account_id FROM account_name WHERE bank_id = ? and companyId=?";
+			String invSql = "SELECT account_id FROM account_name WHERE bank_id = ? and company_Id=?";
 			
 			PreparedStatement stmt = con.prepareStatement(invSql);
 			

@@ -183,7 +183,7 @@
 					</div>
 				
 			<div class="row  row-background border-top" >
-				<div id="cashBalance" style="width:100%;">
+				<div id="cashBalance" style="width:50%;">
 				<div class="form-row">
 					<div class="col-md-6">
 						<div class="d-flex justify-content-start align-items-center">
@@ -201,7 +201,7 @@
 					</div>
 					</div>
 				</div>
-				<div id="bankBalance">
+				<div id="bankBalance" style="width:50%;">
 				<div class="form-row">
 					<div class="col-md-6">
 						<div class="d-flex justify-content-start align-items-center">
