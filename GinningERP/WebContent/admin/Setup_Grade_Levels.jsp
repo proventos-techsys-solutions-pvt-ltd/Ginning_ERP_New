@@ -16,14 +16,15 @@
 <%@include file="../admin/Top_Nav.jsp" %>
 <div class="container-fluid container-mr-t">
 	 <%@include file="../admin/Side_bar.html" %>
-	 <div hidden>
-		   <%
-		    out.print(session.getAttribute("gradeId"));
-		    session.removeAttribute("gradeId");
-			%>
-		</div> 
+	
 		<div class="row mt-2 row-background border-bottom">
 			<div class="d-flex justify-content-between align-items-center">
+						<div class="c-nav-collapse" onclick="myFunction(this)">
+						  <div class="bar1"></div>
+						  <div class="bar2"></div>
+						  <div class="bar3"></div>
+						</div>
+					&nbsp;&nbsp;
 				<img src="../property/img/grade.png" alt="Grade"/>&nbsp;
 				<h4>Setup Grading Levels</h4>
 			</div>
@@ -104,66 +105,51 @@
 		      </div>
 		    </div>
 		  </div>
-	 
 	 </div>
+	 
+<!-- Response modal pop up -->
+<div class="response-back-display"></div>
+<div class="response-body">
+	<div class="response-header">
+		<h5>Information</h5>
+	</div>
+	<div class="response-content">
+		<div class="d-flex justify-content-center align-items-center">
+		<h5 id="response-text" class="ml-4"></h5>
+		</div>
+	</div>
+	<div class="response-footer">
+		<button type="button" class="btn btn-success btn-response" id="response-button">Ok</button>
+	</div>
+</div>	 
+	 
+	 
 <script src="../js/jquery-3.3.1.slim.min.js" ></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
+<script src="../js/Validation.js"></script>
 <script>
-	//                *************       VALIDATION          *******************
-	var appController = (function(){
-		var namesAndIds = {
-				gradeName : "",
-				gradeId : "gradeName",
-				descriptionName : "",
-				descriptionId : "description",
-			}
-		
-		var validations = {
-				specialCharaters : /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+$/g
-		}
-		
-		var validateData = function(){
-			var validData = false;
-			var gradeIdValue = document.getElementById(namesAndIds.gradeId).value.trim();
-			var descriptionIdValue = document.getElementById(namesAndIds.descriptionId).value.trim();
-			if(validations.specialCharaters.test(gradeIdValue) || validations.specialCharaters.test(descriptionIdValue)){
-				alert("Special charters are not allowed!!");
+/***********************
+ Form validation & Submission
+ ***********************/
+ $(document).ready(function(){
+	$("#submitButton").click(function(){
+		if($.fn.validateData($("#gradeName").val(),/^([A-Za-z0-9 ]+)$/)){
+			if($.fn.validateData($("#description").val(),/(^[A-Za-z0-9 ]+)$/)){
+				submitDataNewEntry();
 			}else{
-				if(gradeIdValue ===""){
-					alert("Fields cannot be left blank!!");
-					document.getElementById(namesAndIds.gradeId).style.border = "1px solid red";
-				}else if(descriptionIdValue===""){
-					alert("Fields cannot be left blank!!");
-					document.getElementById(namesAndIds.descriptionId).style.border = "1px solid red";
-				}
+				$.fn.checkStatus(1,"Invalid grade description!")	
 			}
-			
-			return validData;
+		}else{
+			$.fn.checkStatus(1,"Invalid grade name!")	
 		}
-		
-		return{
-			validatedSubmitData:function(){
-				return validateData();
-			} 
-		}
-	})();
-	
-	//--------------------VALIDATION CODE ENED------------------------------------//
-	
-	
-	
-	
+	})
+ })
+
 	window.onload = function() {
 		gradeReport();
 	};
-	
-	document.getElementById('submitButton').addEventListener('click',function(e){
-		if(appController.validatedSubmitData()=== true){
-			submitDataNewEntry();
-		}
-		
-	})
 	
 	function submitDataNewEntry(){
 		var json={};
@@ -274,12 +260,38 @@
 			var response = this.response.trim();
 			console.log(response);
 			if(Number(response) === 0){
-				alert("Cannot Delete as invoice has been created with this grade.");
+				$.fn.checkStatus(1,"Invoice already created for this grade!")
 			}else if(Number(response) > 0){
 				location.reload();
 			}
 		}
 	}	
+	/**************************************
+	Response window code
+	**************************************/
+	var sessionId = {
+			"getSessionId":<%=session.getAttribute("gradeId") %>,
+	}
+	$(document).ready(function(){
+		$.fn.checkStatus(sessionId.getSessionId,"Grade successfully saved!")
+	})
+	
+	function myFunction(x) {
+  		x.classList.toggle("change");
+	}
+	
+	$(document).ready(function(){
+		$(".c-nav-collapse").click(function(){
+				$(".sidebar").toggle(); 
+				if($(".sidebar").css("display")==="none"){
+					$(".row").css("margin-left","10px"); 
+				}else{
+					$(".row").css("margin-left","225px"); 
+				}
+				
+		})
+	})
+	  <%	    session.removeAttribute("gradeId");		%>
 	</script>
 </body>
 </html>
