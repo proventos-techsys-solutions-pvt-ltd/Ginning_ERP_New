@@ -198,8 +198,8 @@
 		
 		trDebit.setContactId(Integer.toString(invoice.getCustomerId()));
 		trDebit.setAccountId(Integer.parseInt((String)json.get("accountPayableId")));
-		trDebit.setCredit(Double.parseDouble((String)json.get("pending")));
-		trDebit.setDebit(0);
+		trDebit.setCredit(0);
+		trDebit.setDebit(Double.parseDouble((String)json.get("pending")));
 		trDebit.setTransactionDate(invoice.getInvDate());
 		trDebit.setVouchNo(Integer.parseInt((String)json.get("voucherNo")));
 		trDebit.setNarration("RAW COTTON PURCHASE");
