@@ -45,13 +45,12 @@
 		<script src="../js/bootstrap.min.js"></script>
 		<script src="../js/commonjs.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="../js/Validation.js"></script>
 		<script src="../js/export/export2excel.js"></script>
     	<script type="text/javascript">
-        function Export() {
-            $("#tblPendingAmanat").export2excel({
-            	filename: "Pending_Amanat.xls"
-            });
-        }
+    	
+    
         
       //*********************Search 
         $(document).ready(function(){
@@ -130,11 +129,45 @@
 				 
 				}
 			}
-			
-			document.getElementById("exportToExcel").addEventListener("click",function(){
-				Export();
-				})
-			
+	/**************************************
+	Exporting report to excel
+	**************************************/
+    function Export() {
+        $("#tblPendingAmanat").export2excel({
+        	filename: "Pending_Amanat.xls"
+        });
+    }
+	$(document).ready(function(){
+		$("#exportToExcel").click(function(){
+			Export();
+		})
+	})
+	
+	/**************************************
+	Response window code
+	**************************************/
+	var sessionId = {
+			"getSessionId":<%=session.getAttribute("invoiceId") %>,
+	}
+
+	$(document).ready(function(){
+	$.fn.checkStatus(sessionId.getSessionId,"Invoice has been successfully saved!")
+	})
+	
+	function myFunction(x) {
+			x.classList.toggle("change");
+	}
+
+	$(document).ready(function(){
+		$(".c-nav-collapse").click(function(){
+				$(".sidebar").toggle(); 
+				if($(".sidebar").css("display")==="none"){
+					$(".row").css("margin-left","10px"); 
+				}else{
+					$(".row").css("margin-left","225px"); 
+				}
+		})
+	})
 		</script>
 </body>
 </html>

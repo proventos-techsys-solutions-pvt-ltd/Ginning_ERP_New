@@ -19,7 +19,15 @@
 	 
 	 <div class="row mt-2 row-background border-bottom">
 			<div class="col-md-12 ">
+					<div class="d-flex justify-content-start align-items-center">
+						<div class="c-nav-collapse" onclick="myFunction(this)">
+						  <div class="bar1"></div>
+						  <div class="bar2"></div>
+						  <div class="bar3"></div>
+						</div>
+						&nbsp;&nbsp;
 					<h4 id="report-title" class="lbl-rm-l"></h4>
+					</div>
 			</div>
 	</div>
 		<div class="row row-background">
@@ -70,6 +78,7 @@
 		 					<th>Gross Wt. (Kgs)</th>
 		 					<th>Net Wt. (Kgs)</th>
 		 					<th>WB Operator</th>
+		 					<th></th>
 	 					</tr>
 	 				</thead>
 	 				<tbody id="tableBody">
@@ -78,12 +87,32 @@
 	 		</div>
 	 	</div>
 	 </div>
+	 
+	 <!-- Response modal pop up -->
+<div class="response-back-display"></div>
+<div class="response-body">
+	<div class="response-header">
+		<h5>Information</h5>
+	</div>
+	<div class="response-content">
+		<div class="d-flex justify-content-center align-items-center">
+		<h5 id="response-text" class="ml-4"></h5>
+		</div>
+	</div>
+	<div class="response-footer">
+		<button type="button" class="btn btn-success btn-response" id="response-button">Ok</button>
+	</div>
+</div>
+	 
+	 
 	 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 		<script src="../js/commonjs.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		<script src="../js/export/export2excel.js"></script>
+		<script src="../js/Validation.js"></script>
     	<script>
     	setTitle("Weigh Bridge Report");//Setting Title of Page
 		setSearchPlaceholder("Search");//Setting Placeholder of Search Input
@@ -95,16 +124,6 @@
 			var dateTime = date+'_'+time;
 			return dateTime;
 		}
-		
-		 function Export() {
-	            $("#tblWeighBridgeReport").export2excel({
-	            	filename: "Weigh_Bridge_Report_"+getCurrentDate()+".xls"
-	            });
-	        }
-		
-		 document.getElementById("exportToExcel").addEventListener("click",function(){
-				Export();
-				})
 		
 		function getWeighBridgeReport(){
 			
@@ -153,6 +172,7 @@
 				var cell9 = row.insertCell(8);
 				var cell10 = row.insertCell(9);
 				var cell11 = row.insertCell(10);
+				var cell12 = row.insertCell(11);
 				
 				cell1.innerHTML = data[i].wmId;
 				cell2.innerHTML = (i+1);
@@ -165,8 +185,10 @@
 				cell9.innerHTML = data[i].gross;
 				cell10.innerHTML = data[i].net;
 				cell11.innerHTML = data[i].wbOperator;
+				cell12.innerHTML = '<img src="../property/img/delete.png" alt="delete">';
 				
 				cell1.hidden = true;
+				cell12.className="text-center";
 				
 			}
 		}
@@ -248,7 +270,56 @@
 			        );
 			    }
 			}
+		/**************************************
+		Search in table
+		**************************************/
+		        $(document).ready(function(){
+		          $("#searchInput").on("keyup", function() {
+		            var value = $(this).val().toLowerCase();
+		            $("#tableBody tr").filter(function() {
+		              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		            });
+		          });
+		        });
+		/*************************************
+		Export in excel
+		**************************************/
+		 function Export() {
+            $("#tblWeighBridgeReport").export2excel({
+            	filename: "Weigh_Bridge_Report_"+getCurrentDate()+".xls"
+            });
+        }
+		$(document).ready(function(){
+			$("#exportToExcel").click(function(){
+				Export();
+			})
+		})
+		/**************************************
+		Response window code
+		**************************************/
+		var sessionId = {
+				"getSessionId":<%=session.getAttribute("") %>,
+		}
+		$(document).ready(function(){
+			$.fn.checkStatus(sessionId.getSessionId,"Ledger has been created successfully!")
+		})
 		
+		function myFunction(x) {
+	  		x.classList.toggle("change");
+		}
+		
+		$(document).ready(function(){
+			$(".c-nav-collapse").click(function(){
+					$(".sidebar").toggle(); 
+					if($(".sidebar").css("display")==="none"){
+						$(".row").css("margin-left","10px"); 
+					}else{
+						$(".row").css("margin-left","225px"); 
+					}
+					
+			})
+		})
+		<% session.removeAttribute("");%>
     	</script>
 </body>
 </html>

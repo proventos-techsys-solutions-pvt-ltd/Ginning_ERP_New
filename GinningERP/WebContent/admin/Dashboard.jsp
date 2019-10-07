@@ -17,9 +17,15 @@
 <div class="container-fluid container-mr-t">
 	  <%@include file="../admin/Side_bar.html" %>
 	  <div class="row row-background">
-	  	<div class="col-md-12">
-	  		<h4>Dashboard</h4>
-	  	</div>
+	  <div class="d-flex justify-content-start align-items-center">
+						<div class="c-nav-collapse" onclick="myFunction(this)">
+						  <div class="bar1"></div>
+						  <div class="bar2"></div>
+						  <div class="bar3"></div>
+						</div>
+						&nbsp;&nbsp;
+						<h4 class="lbl-rm-all">Dashboard</h4>
+					</div>
 	  </div>
 	  
 	  
@@ -115,6 +121,8 @@
 <script src="../js/jquery-3.3.1.slim.min.js" ></script>
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="../js/Validation.js"></script>
 <script src="../chart/package/dist/Chart.js" ></script>
 <script src="../chart/package/dist/Chart.bundle.js" ></script>
 	<script>
@@ -326,7 +334,20 @@
 				cell2.className = "text-center";
 			}
 		}
+		function myFunction(x) {
+	  		x.classList.toggle("change");
+		}
 		
+		$(document).ready(function(){
+			$(".c-nav-collapse").click(function(){
+					$(".sidebar").toggle(); 
+					if($(".sidebar").css("display")==="none"){
+						$(".row").css("margin-left","10px"); 
+					}else{
+						$(".row").css("margin-left","225px"); 
+					}
+			})
+		})
 		getTodayCottonRate();
 		getPurchaseReport("0","all");
 		getUserStatus();

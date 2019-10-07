@@ -1,7 +1,15 @@
 <%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <div class="row mt-2 row-background border-bottom">
 			<div class="col-md-12 ">
+			<div class="d-flex justify-content-start align-items-center">
+					<div class="c-nav-collapse" onclick="myFunction(this)">
+							  <div class="bar1"></div>
+							  <div class="bar2"></div>
+							  <div class="bar3"></div>
+							</div>
+							&nbsp;&nbsp;
 					<h4 id="report-title" class="lbl-rm-l"></h4>
+					</div>
 			</div>
 			</div>
 			<div class="row row-background">

@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Daily Setup</title>
 </head>
-
 <body>
 
 <%@include file="../admin/Top_Nav.jsp" %>
@@ -19,6 +18,12 @@
 			<div class="row mt-2 row-background border-bottom">
 				<div class="col-md-3">
 					<div class="d-flex justify-content-start align-items-center">
+						<div class="c-nav-collapse" onclick="myFunction(this)">
+						  <div class="bar1"></div>
+						  <div class="bar2"></div>
+						  <div class="bar3"></div>
+						</div>
+						&nbsp;&nbsp;
 						<img src="../property/img/factory.png" alt="warehouse">&nbsp;
 						<h4 class="lbl-rm-all">Daily Setup</h4>
 					</div>
@@ -87,7 +92,7 @@
 									<th colspan="2" style="vertical-align:middle;text-align:center;">Cheque Series</th>
 									<th rowspan="2" width="5%" style="vertical-align:middle;">Setup</th>
 									<th rowspan="2" width="5%" style="vertical-align:middle;">Update</th>
-									<th rowspan="2" >Weighment Entries</th>
+									<th rowspan="2" >Wt Entries</th>
 									<th rowspan="2"></th>
 								</tr>
 								<tr class="table-back">
@@ -221,7 +226,6 @@
 				</div>
 			</div>
 			
-			<input type="hidden" id="responseId" name="" value="<%=session.getAttribute("setupId") %>">
 			<div class="row row-background" id="bankDetails">
 				
 			</div>
@@ -346,28 +350,29 @@
 			</div>
 			</div>
 	
-		<!-- *********************RESPONSE************************  -->		
-		<div class="response-background">
-			<div class="response">
-				<div class="response-header">
-					<h4></h4>
-				</div>
-				<div class="d-flex justify-content-center align-items-center">
-					<h4>Company has been setup successfully</h4>
-				</div>
-				<div class="response-footer">
-					<div class="d-flex justify-content-center align-items-center">
-						<button type="button" class="btn btn-success btn-sm btn-width-confirm mt-1" id="responseBtn">OK</button>
-					</div>
-				</div>
-			</div>
+	<!-- Response modal pop up -->
+<div class="response-back-display"></div>
+<div class="response-body">
+	<div class="response-header">
+		<h5>Information</h5>
+	</div>
+	<div class="response-content">
+		<div class="d-flex justify-content-center align-items-center">
+		<h5 id="response-text" ></h5>
 		</div>
+	</div>
+	<div class="response-footer">
+		<button type="button" class="btn btn-success btn-response" id="response-button">Ok</button>
+	</div>
+</div>
 	
 	
 	
 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="../js/Validation.js"></script>
 	<script src="../js/dailysetup.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script>
@@ -735,26 +740,6 @@
 	setDisplayDate();
 	fetchVoucherNoSeries();
 	
-	function responseScreen(){
-		var responseId= document.getElementById("responseId").value;
-		if(responseId>0){
-			document.getElementsByClassName("response-background")[0].style.display = "block";
-			document.getElementsByClassName("response")[0].style.display = "block";
-		}else if(responseId===0){
-			document.getElementsByClassName("response-background")[0].style.display = "block";
-			document.getElementsByClassName("response")[0].style.display = "block";
-			document.getElementById("responseText").querySelector("h4").innerHTML = "Company setup is unsuccessful";
-		}else if(responseId===null){
-			}
-	}
-	
-	
-	document.getElementById("responseBtn").addEventListener("click",function(){
-		document.getElementsByClassName("response-background")[0].style.display = "none";
-		document.getElementsByClassName("response")[0].style.display = "none";
-		document.getElementById("responseId").value=0;
-	})
-	
 	function getBalances(companyId, bankId){
 		var url="../processing/getBalancesForDS.jsp?companyId="+companyId+"&bankId="+bankId;
 		
@@ -793,27 +778,61 @@
 			if(i===0){
 				document.getElementById('cashAddition').value = cashData[i].balance;
 				document.getElementById('ledgerName').innerHTML = cashData[i].ledgerName;
-			}
-			cashBalance.insertAdjacentHTML('beforeend','<div class="col-md-3">'+
+			}else{
+			cashBalance.insertAdjacentHTML('beforeend','<div class="form-row"><div class="col-md-6">'+
 					'<div class="d-flex justify-content-start align-items-center">'+
 			'<img src="../property/img/purse.png" alt="warehouse">&nbsp;'+
-			'<h4 class="lbl-rm-b" id="ledgerName"'+(i+1)+'>'+cashData[i].ledgerName+' Balance</h4>'+
+			'<h6 class="lbl-rm-b" id="ledgerName"'+(i+1)+'>'+cashData[i].ledgerName+' </h6>'+
 			'</div>'+
 		'</div>'+
 		''+
-		'<div class="col-md-3">'+
+		'<div class="col-md-6">'+
 			'<div class="d-flex justify-content-start align-items-center">'+
 			'<input type="text" class="form-control form-control-sm" name="cashAddition" id="cashAddition'+(i+1)+'" value='+cashData[i].balance+' readonly>'+
 			'&nbsp;&nbsp;'+
 			'<img src="../property/img/add.png" alt="add" class="ctm-hover" id="callCashModal">'+
 			'</div>'+
+		'</div>'+
 		'</div>')
 		}
-		
+		}
 	}
 	
-	responseScreen();
+	/**************************************
+	Response window code
+	**************************************/
+	var sessionId = {
+			"getSessionId":<%=session.getAttribute("setupId") %>,
+			"getSessionUpdatedId":<%=session.getAttribute("id") %>,
+	}
+	$(document).ready(function(){
+		if(sessionId.getSessionId != null){
+			$.fn.checkStatus(sessionId.getSessionId,"Company has been setup successfully!")
+		}else if(sessionId.getSessionUpdatedId !=null){
+			$.fn.checkStatus(sessionId.getSessionUpdatedId,"Cheque series has been updated successfully!")
+		}
+	})
+	
+	function myFunction(x) {
+  		x.classList.toggle("change");
+	}
+	
+	$(document).ready(function(){
+		$(".c-nav-collapse").click(function(){
+				$(".sidebar").toggle(); 
+				if($(".sidebar").css("display")==="none"){
+					$(".row").css("margin-left","10px"); 
+				}else{
+					$(".row").css("margin-left","225px"); 
+				}
+				
+		})
+	})
+	<% 
+	session.removeAttribute("setupId"); 
+	session.removeAttribute("id"); 
+	%>
 	</script>
-	<% session.removeAttribute("setupId"); %>
+	
 </body>
 </html>

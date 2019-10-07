@@ -24,6 +24,12 @@
         	<div class="col-md-12">
         		<div class="d-flex justify-content-between align-items-center">
 		        	<div class="d-flex justify-content-start align-items-center">
+		        		<div class="c-nav-collapse" onclick="myFunction(this)">
+						  <div class="bar1"></div>
+						  <div class="bar2"></div>
+						  <div class="bar3"></div>
+						</div>
+						&nbsp;&nbsp;
 		        		<img src="../property/img/bill.png" alt="recipt">&nbsp;
 		        		<h4 class="lbl-rm-all">Goods Grading Note</h4>&nbsp;&nbsp;
 		        	</div>
@@ -31,7 +37,6 @@
 	        </div>
 	        <div class="col-md-1 offset-md-8">
 	      </div>
-	      <input type="hidden" id="responseId" name="" value="<%=session.getAttribute("gradeSubmitFlag") %>">
 		   
         </div>
         <select id="gradeRate" hidden>
@@ -215,26 +220,27 @@
 						</div>
 					</div>
 					
-		<!-- *********************RESPONSE************************  -->		
-		<div class="response-background">
-			<div class="response">
-				<div class="response-header">
-					<h4></h4>
-				</div>
-				<div class="d-flex justify-content-center align-items-center">
-					<div id="responseText"><h4></h4></div>
-				</div>
-				<div class="response-footer">
-					<div class="d-flex justify-content-center align-items-center">
-						<button type="button" class="btn btn-success btn-sm btn-width-confirm mt-1" id="responseBtn">OK</button>
-					</div>
-				</div>
-			</div>
+<!-- Response modal pop up -->
+<div class="response-back-display"></div>
+<div class="response-body">
+	<div class="response-header">
+		<h5>Information</h5>
+	</div>
+	<div class="response-content">
+		<div class="d-flex justify-content-center align-items-center">
+		<h5 id="response-text" class="ml-4"></h5>
 		</div>
+	</div>
+	<div class="response-footer">
+		<button type="button" class="btn btn-success btn-response" id="response-button">Ok</button>
+	</div>
+</div>
 
 <!-- <script src="../js/jquery-3.3.1.slim.min.js" ></script> -->
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="../js/Validation.js"></script>
 <script src="../js/validations/CommonValidations.js"></script>
 
 <script>
@@ -791,7 +797,7 @@ document.getElementById("submitGrades").addEventListener('click',function(e){
 		document.getElementById("gradeForm").action = "../processing/setGrade.jsp";
 		submitGradingData();
 	}else{
-		alert("Moisture box elements cannot be empty!!!");
+		$.fn.checkStatus(1,"Moisture box elements cannot be empty!");
 	}
 })
 
@@ -800,7 +806,7 @@ document.getElementById("updateGrades").addEventListener('click', function(e){
 		document.getElementById("gradeForm").action = "../processing/updateGrades.jsp";
 		submitGradingData();
 	}else{
-		alert("Moisture box elements cannot be empty!!!");
+		$.fn.checkStatus(1,"Moisture box elements cannot be empty!");
 	}
 	})
 
@@ -894,26 +900,6 @@ fetchBonusRate();
 
 //**********confirmation box code
 
-function responseScreen(){
-	var responseId= document.getElementById("responseId").value.trim();
-	if(responseId>0){
-		document.getElementsByClassName("response-background")[0].style.display = "block";
-		document.getElementsByClassName("response")[0].style.display = "block";
-	}else if(responseId===0){
-		document.getElementsByClassName("response-background")[0].style.display = "block";
-		document.getElementsByClassName("response")[0].style.display = "block";
-		document.getElementById("responseText").querySelector("h4").innerHTML = "Grading has been saved successfully!!";
-	}else if(responseId===null){
-		}
-}
-
-document.getElementById("responseBtn").addEventListener("click",function(){
-	document.getElementsByClassName("response-background")[0].style.display = "none";
-	document.getElementsByClassName("response")[0].style.display = "none";
-	document.getElementById("responseId").value='null';
-})
-
-
 
 document.addEventListener('change',function(e){
 	if(e.srcElement.id === 'pdcRate' || e.srcElement.id === 'pdcMonths' || e.srcElement.name === 'rate' || e.srcElement.name === 'pdcCheck'){
@@ -977,12 +963,36 @@ function setPedingGradData(data){
 		cell3.innerHTML = data[i].netWeight;
 	}
 }
+
+/**************************************
+Response window code
+**************************************/
+var sessionId = {
+		"getSessionId":<%=session.getAttribute("gradeSubmitFlag") %>,
+}
+
+$(document).ready(function(){
+	$.fn.checkStatus(sessionId.getSessionId,"Grading information has been saved successfully!")
+})
+
+function myFunction(x) {
+		x.classList.toggle("change");
+}
+
+$(document).ready(function(){
+	$(".c-nav-collapse").click(function(){
+			$(".sidebar").toggle(); 
+			if($(".sidebar").css("display")==="none"){
+				$(".row").css("margin-left","10px"); 
+			}else{
+				$(".row").css("margin-left","225px"); 
+			}
+	})
+})
+pendingGradeReports();
+</script>
 <%
 session.removeAttribute("gradeSubmitFlag");
 %>
-pendingGradeReports();
-responseScreen();
-</script>
-
 </body>
 </html>
