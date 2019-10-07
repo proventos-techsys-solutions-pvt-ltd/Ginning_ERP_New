@@ -11,7 +11,7 @@
     	
     	int id = ds.deleteDailySetup(dailySetupId);
     	
-    	session.setAttribute("id", id);
+    	session.setAttribute("deleteDailySetupId", id);
     	
     	response.sendRedirect("../admin/Daily_Setup.jsp");
     

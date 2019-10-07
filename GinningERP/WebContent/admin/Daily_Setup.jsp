@@ -431,10 +431,9 @@
 	function setSetupDataInTable(response){
 		var data = JSON.parse(response);
 		var setupArrLength = data.length;
-		
+		console.log(data);
 		var tableBody = document.getElementById("tableBody");
 		if(setupArrLength != 0){
-			console.log(data);
 			for(i=0; i<=setupArrLength; i++){
 				if(i===0){
 					tableBody.rows[0].cells[0].children[0].value = data[i].id;
@@ -804,12 +803,15 @@
 	var sessionId = {
 			"getSessionId":<%=session.getAttribute("setupId") %>,
 			"getSessionUpdatedId":<%=session.getAttribute("id") %>,
+			"getDeleteSetupId":<%= session.getAttribute("deleteDailySetupId")%>
 	}
 	$(document).ready(function(){
 		if(sessionId.getSessionId != null){
 			$.fn.checkStatus(sessionId.getSessionId,"Company has been setup successfully!")
 		}else if(sessionId.getSessionUpdatedId !=null){
 			$.fn.checkStatus(sessionId.getSessionUpdatedId,"Cheque series has been updated successfully!")
+		}else if(sessionId.getDeleteSetupId !=null){
+			$.fn.checkStatus(sessionId.getDeleteSetupId,"Setup has been successfully deleted!")
 		}
 	})
 	

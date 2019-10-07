@@ -243,6 +243,8 @@ public class DailySetupReport {
 				
 				jsonArray.put(obj);
 			}
+			
+			System.out.println(jsonArray);
 			rs.close();
 			stmt.close();
 			con.close();

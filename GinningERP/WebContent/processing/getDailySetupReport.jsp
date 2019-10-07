@@ -8,7 +8,6 @@
     	DailySetupReport dsReport = new DailySetupReport();
 		
     	JSONArray jsonArray = dsReport.getDailySetupReport();
-    	
     	out.println(jsonArray);
     	out.flush();
     
