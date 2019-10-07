@@ -833,6 +833,7 @@
 	<% 
 	session.removeAttribute("setupId"); 
 	session.removeAttribute("id"); 
+	session.removeAttribute("deleteDailySetupId"); 
 	%>
 	</script>
 	
