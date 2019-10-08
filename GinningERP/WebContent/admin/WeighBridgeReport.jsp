@@ -78,7 +78,8 @@
 		 					<th>Gross Wt. (Kgs)</th>
 		 					<th>Net Wt. (Kgs)</th>
 		 					<th>WB Operator</th>
-		 					<th></th>
+		 					<th>Delete</th>
+		 					<th>Reset Weight</th>
 	 					</tr>
 	 				</thead>
 	 				<tbody id="tableBody">
@@ -173,6 +174,7 @@
 				var cell10 = row.insertCell(9);
 				var cell11 = row.insertCell(10);
 				var cell12 = row.insertCell(11);
+				var cell13 = row.insertCell(12);
 				
 				cell1.innerHTML = data[i].wmId;
 				cell2.innerHTML = (i+1);
@@ -186,12 +188,96 @@
 				cell10.innerHTML = data[i].net;
 				cell11.innerHTML = data[i].wbOperator;
 				cell12.innerHTML = '<img src="../property/img/delete.png" alt="delete">';
+				cell13.innerHTML = '<img src="../property/img/delete.png" alt="resetWeight">';
 				
 				cell1.hidden = true;
 				cell12.className="text-center";
+				cell13.className="text-center";
 				
 			}
 		}
+		
+		function resetWeight(rst){
+			var url="${pageContext.request.contextPath}/processing/resetWeight.jsp?rst="+rst;
+			if(window.XMLHttpRequest){  
+				resetWtReq=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				resetWtReq=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+			try{  
+				resetWtReq.onreadystatechange=resetWtResponse;  
+				console.log("AJAX Req sent");
+				resetWtReq.open("GET",url,true);  
+				resetWtReq.send();  
+			}catch(e){alert("Unable to connect to server");}
+		}
+		
+		function resetWtResponse(){
+			if(resetWtReq.readyState === 4){
+				var response = this.response.trim();
+				console.log("Response --"+response)
+				if(Number(response) === 4){
+					$.fn.checkStatus(1,"Tare and Net Weight is reset.");
+				}else if(Number(response) === 3){
+					$.fn.checkStatus(1,"Gross Weight is reset");
+				}else if(Number(response) === 2){
+					$.fn.checkStatus(1,"Gross Weight is already 0.");
+				}else if(Number(response) === 1){
+					$.fn.checkStatus(1,"Cannot reset weights as Grading is done, Please delete Grade Entries.");
+				}else if(Number(response) === 0){
+					$.fn.checkStatus(1,"RST does not exist in Weighment data.");
+				}
+				//location.reload();
+			}
+		}
+		
+		document.addEventListener('click', function(e){
+			if(e.srcElement.alt === 'resetWeight'){
+				var table = document.getElementById('tableBody');
+				var rowIndex = e.srcElement.parentNode.parentNode.rowIndex - 1;
+				var rst = table.rows[rowIndex].cells[2].innerHTML;
+				resetWeight(rst);
+			}
+		});
+		
+		function deleteRst(rst){
+			var url="${pageContext.request.contextPath}/processing/deleteWeighment.jsp?rst="+rst;
+			if(window.XMLHttpRequest){  
+				deleteWtReq=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				deleteWtReq=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+			try{  
+				deleteWtReq.onreadystatechange=deleteWtResponse;  
+				console.log("AJAX Req sent");
+				deleteWtReq.open("GET",url,true);  
+				deleteWtReq.send();  
+			}catch(e){alert("Unable to connect to server");} 
+		}
+		
+		function deleteWtResponse(){
+			if(deleteWtReq.readyState == 4){
+				var response = this.response.trim();
+				if(Number(response) === 1){
+					$.fn.checkStatus(1,"Weighment Entry deleted successfully.");
+				}else if(Number(response) === 0){
+					$.fn.checkStatus(1,"Grading is done for this RST, please delete the Grade Entry first.");
+				}
+				//location.reload();
+			}
+		}
+		
+		document.addEventListener('click',function(e){
+			if(e.srcElement.alt === 'delete'){
+				var table = document.getElementById('tableBody');
+				var rowIndex = e.srcElement.parentNode.parentNode.rowIndex - 1;
+				var rst = table.rows[rowIndex].cells[2].innerHTML;
+				deleteRst(rst);
+			}
+		});
+		
 		
 		function dateFilter(){
 
