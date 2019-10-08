@@ -290,6 +290,11 @@ a.article:hover {
     #sidebarCollapse span {
         display: none;
     }
+    .logo-margin{
+	position:absolute;
+	top:15px;
+	left:220px;
+}
 }
 /***********************************************************/
 .container-mr-t{

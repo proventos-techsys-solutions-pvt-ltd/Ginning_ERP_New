@@ -3,7 +3,7 @@
     pageEncoding="ISO-8859-1"%>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 				<img src="../property/img/logo.png" alt="logo" width="200px" height="50px;"> 
-            	<button type="button" id="sidebarCollapse" class="btn btn-info logo-margin">
+            	<button type="button" id="sidebarCollapse" class="btn btn-info logo-margin ">
                         <i class="fa fa-bars"></i>
                         <span></span>
                     </button>
