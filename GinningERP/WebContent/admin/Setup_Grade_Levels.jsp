@@ -12,19 +12,13 @@
 </head>
 
 <body>
-
 <%@include file="../admin/Top_Nav.jsp" %>
-<div class="container-fluid container-mr-t">
-	 <%@include file="../admin/Side_bar.html" %>
-	
-		<div class="row mt-2 row-background border-bottom">
+<div class="wrapper">
+  <%@include file="../admin/Side_bar.html" %>
+  <div id="content">
+  	<div class="container-fluid ">
+		<div class="row  row-background border-bottom">
 			<div class="d-flex justify-content-between align-items-center">
-						<div class="c-nav-collapse" onclick="myFunction(this)">
-						  <div class="bar1"></div>
-						  <div class="bar2"></div>
-						  <div class="bar3"></div>
-						</div>
-					&nbsp;&nbsp;
 				<img src="../property/img/grade.png" alt="Grade"/>&nbsp;
 				<h4>Setup Grading Levels</h4>
 			</div>
@@ -122,7 +116,8 @@
 		<button type="button" class="btn btn-success btn-response" id="response-button">Ok</button>
 	</div>
 </div>	 
-	 
+	 </div>
+</div>	 
 	 
 <script src="../js/jquery-3.3.1.slim.min.js" ></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -276,10 +271,6 @@
 		$.fn.checkStatus(sessionId.getSessionId,"Grade successfully saved!")
 	})
 	
-	function myFunction(x) {
-  		x.classList.toggle("change");
-	}
-	
 	$(document).ready(function(){
 		$(".c-nav-collapse").click(function(){
 				$(".sidebar").toggle(); 
@@ -291,6 +282,15 @@
 				
 		})
 	})
+	
+			/***********************
+			Side bar 
+			************************/
+			$(document).ready(function () {
+			    $('#sidebarCollapse').on('click', function () {
+			        $('#sidebar').toggleClass('active');
+			    });
+			});
 	  <%	    session.removeAttribute("gradeId");		%>
 	</script>
 </body>

@@ -12,10 +12,11 @@
 </head>
 
 <body>
-
 <%@include file="../admin/Top_Nav.jsp" %>
-<div class="container-fluid container-mr-t">
-	 <%@include file="../admin/Side_bar.html" %>
+<div class="wrapper">
+  <%@include file="../admin/Side_bar.html" %>
+  <div id="content">
+  	<div class="container-fluid ">
 		<div class="row row-background border-bottom">
 			<div class="col-md-12">
 					<h4>Manage User's</h4>
@@ -90,6 +91,8 @@
 							</tbody>
 						</table>
 					</div>
+				</div>
+</div>
 				</div>
 </div>
 <script>
@@ -239,7 +242,14 @@ function deleteUserData(){
 }
 
 usersData();
-
+/***********************
+Side bar 
+************************/
+$(document).ready(function () {
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+    });
+});
 </script>
 <script src="../js/jquery-3.3.1.slim.min.js" ></script>
 <script src="../js/popper.min.js"></script>

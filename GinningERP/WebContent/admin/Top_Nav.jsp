@@ -2,7 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            	<button type="button" id="sidebarCollapse" class="btn btn-info">
+				<img src="../property/img/logo.png" alt="logo" width="200px" height="50px;"> 
+            	<button type="button" id="sidebarCollapse" class="btn btn-info logo-margin">
                         <i class="fa fa-bars"></i>
                         <span></span>
                     </button>
@@ -13,16 +14,16 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Daily Setup</a>
+                                <a class="nav-link c-nav-link" href="Daily_Setup.jsp">Daily Setup</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Grading</a>
+                                <a class="nav-link c-nav-link1" href="Grading.jsp">Grading</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Invoicing</a>
+                                <a class="nav-link c-nav-link2" href="Invoice.jsp">Invoicing</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link fa fa-user" > &nbsp;<%= currentUser.getName()%></a> 
+                                <a class="nav-link c-nav-link3"  href="#" >User :  &nbsp;<%= currentUser.getName()%></a> 
                             </li>
                         </ul>
                     </div>

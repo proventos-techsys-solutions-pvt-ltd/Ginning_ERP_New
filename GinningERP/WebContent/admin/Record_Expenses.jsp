@@ -17,7 +17,7 @@
   <%@include file="../admin/Side_bar.html" %>
   <div id="content">
 	<div class="container-fluid ">
-	 	<div class="row mt-2 row-background">
+	 	<div class="row  row-background">
 				<div class="col-md-12">
 				<div class="d-flex justify-content-start align-items-center">
 						<div class="c-nav-collapse" onclick="myFunction(this)">

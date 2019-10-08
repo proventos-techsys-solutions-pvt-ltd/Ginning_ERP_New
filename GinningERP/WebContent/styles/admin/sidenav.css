@@ -164,12 +164,12 @@ ul ul a {
 }
 
 ul.CTAs {
-    padding: 20px;
+    padding: 10px;
 }
 
 ul.CTAs a {
     text-align: center;
-    font-size: 0.9em !important;
+    font-size: 1rem !important;
     display: block;
     border-radius: 5px;
     margin-bottom: 5px;
@@ -185,7 +185,49 @@ a.article:hover {
     background: #6d7fcc !important;
     color: #fff !important;
 }
-
+.c-nav-link{
+	font-size:1.2rem;
+	color:#fff;
+	margin-left:5px;
+	background:#7d5d81;
+	padding:10px;
+	border-radius:5px;
+	margin-top:3px;
+}
+.c-nav-link1{
+	font-size:1.2rem;
+	color:#fff;
+	margin-left:5px;
+	background:#b34048;
+	padding:10px;
+	border-radius:5px;
+	margin-top:3px;
+}
+.c-nav-link2{
+	font-size:1.2rem;
+	color:#fff;
+	margin-left:5px;
+	background:#314190;
+	padding:10px;
+	border-radius:5px;
+	margin-top:3px;
+}
+.c-nav-link3{
+	font-size:1.2rem;
+	color:#fff;
+	margin-left:5px;
+	background:#769e64;
+	padding:10px;
+	border-radius:5px;
+	margin-top:3px;
+}
+.logo-margin{
+	position:absolute;
+	left:250px;
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: #fff;
+}
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
@@ -249,7 +291,7 @@ a.article:hover {
         display: none;
     }
 }
-/***************************THIS NEEDS TO CHANGE*********************************/
+/***********************************************************/
 .container-mr-t{
 	margin-top:100px;
 }

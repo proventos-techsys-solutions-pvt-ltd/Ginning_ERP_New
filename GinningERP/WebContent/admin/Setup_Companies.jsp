@@ -11,10 +11,11 @@
 </head>
 
 <body>
-
 <%@include file="../admin/Top_Nav.jsp" %>
-<div class="container-fluid container-mr-t ">
-	 <%@include file="../admin/Side_bar.html" %>
+<div class="wrapper">
+  <%@include file="../admin/Side_bar.html" %>
+  <div id="content">
+	<div class="container-fluid ">
 	 <div hidden>
 		   <%
 		    out.print(session.getAttribute("companyId"));
@@ -108,6 +109,8 @@
 				</div>
 			</div>
 		</div>
+		</div>
+		</div>
 </div>
 <script src="../js/jquery-3.3.1.slim.min.js" ></script>
 <script src="../js/popper.min.js"></script>
@@ -170,11 +173,16 @@
 						  '</ul>'+
 						  '<div class="border-top border-mr-btm"></div>');
 					}
-					 
-					
 				}
-				
 			}
+			/***********************
+			Side bar 
+			************************/
+			$(document).ready(function () {
+			    $('#sidebarCollapse').on('click', function () {
+			        $('#sidebar').toggleClass('active');
+			    });
+			});
 		</script>
 </body>
 </html>

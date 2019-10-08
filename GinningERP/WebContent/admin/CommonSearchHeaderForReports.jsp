@@ -1,5 +1,5 @@
 <%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
-<div class="row mt-2 row-background border-bottom">
+<div class="row  row-background border-bottom">
 			<div class="col-md-12 ">
 					<h4 id="report-title" class="lbl-rm-l"></h4>
 					</div>

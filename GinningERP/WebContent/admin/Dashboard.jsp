@@ -18,13 +18,11 @@
   <%@include file="../admin/Side_bar.html" %>
   <div id="content">
 <div class="container-fluid ">
-	
 	  <div class="row row-background">
 	  <div class="d-flex justify-content-start align-items-center">
 						<h4 class="lbl-rm-all">Dashboard</h4>
 					</div>
 	  </div>
-	  
 	  <div class="row row-background">
 	  	<div class="col-md-3">
 	  			<div class="d-flex justify-content-between align-items-center inner border">
