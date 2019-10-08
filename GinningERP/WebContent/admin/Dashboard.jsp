@@ -14,20 +14,16 @@
 <body>
 
 <%@include file="../admin/Top_Nav.jsp" %>
-<div class="container-fluid container-mr-t">
-	  <%@include file="../admin/Side_bar.html" %>
+<div class="wrapper">
+  <%@include file="../admin/Side_bar.html" %>
+  <div id="content">
+<div class="container-fluid ">
+	
 	  <div class="row row-background">
 	  <div class="d-flex justify-content-start align-items-center">
-						<div class="c-nav-collapse" onclick="myFunction(this)">
-						  <div class="bar1"></div>
-						  <div class="bar2"></div>
-						  <div class="bar3"></div>
-						</div>
-						&nbsp;&nbsp;
 						<h4 class="lbl-rm-all">Dashboard</h4>
 					</div>
 	  </div>
-	  
 	  
 	  <div class="row row-background">
 	  	<div class="col-md-3">
@@ -115,7 +111,8 @@
              	</div>
              </div>
                 
-         
+ </div>        
+</div>
 </div>
 
 <script src="../js/jquery-3.3.1.slim.min.js" ></script>
@@ -334,10 +331,6 @@
 				cell2.className = "text-center";
 			}
 		}
-		function myFunction(x) {
-	  		x.classList.toggle("change");
-		}
-		
 		$(document).ready(function(){
 			$(".c-nav-collapse").click(function(){
 					$(".sidebar").toggle(); 
@@ -351,8 +344,14 @@
 		getTodayCottonRate();
 		getPurchaseReport("0","all");
 		getUserStatus();
-		
-		
+		/***********************
+			Side bar 
+		************************/
+	       $(document).ready(function () {
+	            $('#sidebarCollapse').on('click', function () {
+	                $('#sidebar').toggleClass('active');
+	            });
+	        });
 		</script>
 </body>
 </html>

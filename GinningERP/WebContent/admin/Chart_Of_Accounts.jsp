@@ -13,10 +13,11 @@
 </head>
 
 <body>
-
 <%@include file="../admin/Top_Nav.jsp" %>
-	<div class="container-fluid container-mr-t">
-	 <%@include file="../admin/Side_bar.html" %>
+<div class="wrapper">
+  <%@include file="../admin/Side_bar.html" %>
+  <div id="content">
+	<div class="container-fluid ">
 	<div class="row mt-2 row-background border-bottom">
 		<div class="col-md-12">
 				<div class="d-flex justify-content-start align-items-center">
@@ -127,7 +128,8 @@
 		  </div>
 		</div>
 	</div>
-
+	</div>
+	</div>
 	
 <!-- Response modal pop up -->
 <div class="response-back-display"></div>
@@ -359,6 +361,14 @@
 		})
 	})
 	<% session.removeAttribute("accountId");%>
+	/***********************
+	Side bar 
+	************************/
+	$(document).ready(function () {
+	    $('#sidebarCollapse').on('click', function () {
+	        $('#sidebar').toggleClass('active');
+	    });
+	});
 	</script>	
 </body>
 </html>

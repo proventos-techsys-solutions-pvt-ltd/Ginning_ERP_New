@@ -1,85 +1,141 @@
+  <!-- Sidebar  -->
+        <nav id="sidebar">
 
-<div class="sidebar">
+            <ul class="list-unstyled components">
+              <li>
+                    <a href="Dashboard.jsp">
+                        <i class="fa fa-tachometer"></i>
+                        Dashboard
+                    </a>
+                      <a href="Daily_Setup.jsp" style="background:#7d5d81">
+                        <i class="fa fa-hand-o-right" ></i>
+                        Daily Setup
+                    </a>
+                      <a href="Grading.jsp" style="background:#b34048">
+                        <i class="fa fa-check"></i>
+                        Grading
+                    </a>
+                      <a href="Invoice.jsp" style="background:#314190">
+                        <i class="fa fa-tasks"></i>
+                        Invoicing
+                    </a>
+                      <a href="Pendin_Amanat.jsp">
+                        <i class="fa fa-tasks"></i>
+                        Amanat
+                    </a>
+                       <a href="WB_Operator.jsp">
+                        <i class="fa fa-balance-scale"></i>
+                        WB Operations
+                    </a>
+                      <a href="Cashier.jsp">
+                        <i class="fa fa-money"></i>
+                        Cashier Operations
+                    </a>
+             </li>
+                <li >
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fa fa-money"></i>
+                        Accounts
+                    </a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="Chart_Of_Accounts.jsp">Chart of Accounts</a>
+                        </li>
+                        <li>
+                            <a href="Record_Expenses.jsp">Record Expenses</a>
+                        </li>
+                    </ul>
+                </li>
+                       <li>
+                    <a href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fa fa-hand-o-right"></i>
+                        Masters
+                    </a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu1">
+                        <li>
+                            <a href="Vendor_Master.jsp">Vendor Master</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fa fa-hand-o-right"></i>
+                        Reports
+                    </a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu2">
+                        <li>
+                            <a href="PurchaseInvoice.jsp">Purchase Invoice Report</a>
+                        </li>
+                        <li>
+                            <a href="PDC_Report.jsp">Post Payments Report</a>
+                        </li>
+                           <li>
+                            <a href="DailySetupReport.jsp">Daily Setup Report</a>
+                        </li>
+                           <li>
+                            <a href="WeighBridgeReport.jsp">WB Report</a>
+                        </li>
+                    </ul>
+                </li>
+                       <li>
+                    <a href="#pageSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fa fa-hand-o-right"></i>
+                        Ledgers
+                    </a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu3">
+                        <li>
+                            <a href="Bank_Register.jsp">Bank Ledger</a>
+                        </li>
+                         <li>
+                            <a href="Stock_Register.jsp">Stock Ledger</a>
+                        </li>
+                         <li>
+                            <a href="Expenses_Register.jsp">General Ledger</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                 <li>
+                    <a href="#pageSubmenu4" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fa fa-cog"></i>
+                        Setup
+                    </a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu4">
+                        <li>
+                            <a href="Setup_Companies.jsp">Setup Companies</a>
+                        </li>
+                         <li>
+                            <a href="Setup_Bank.jsp">Setup Bank</a>
+                        </li>
+                         <li>
+                            <a href="Setup_Grade_Levels.jsp">Setup Grade Levels</a>
+                        </li>
+                         <li>
+                            <a href="Setup_Vehicle_Rates.jsp">Setup Vehicle Rates</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                   <li>
+                    <a href="#pageSubmenu5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fa fa-cogs"></i>
+                        Settings
+                    </a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu5">
+                        <li>
+                            <a href="NewUserRegistration.jsp">Manage Users</a>
+                        </li>
+                    </ul>
+                </li>
+                
+            </ul>
 
-
-
-		<div class="sidebar-menu-panel">
-			<div class="menu-item"><i class="fa fa-tachometer" aria-hidden="true">&nbsp;</i><a href="Dashboard.jsp">Dashboard</a></div>
-			<div class="menu-item" style="background-color:#7d5d81;"><i class="fa fa-hand-o-right" aria-hidden="true">&nbsp;</i><a href="Daily_Setup.jsp">Daily Setup</a></div>	
-			<div class="menu-item" style="background-color:#b34048;"><i class="fa fa-check" aria-hidden="true">&nbsp;</i><a href="Grading.jsp">Grading</a></div>	
-			<div class="menu-item" style="background-color:#314190;"><i class="fa fa-tasks" aria-hidden="true">&nbsp;</i><a href="Invoice.jsp">Invoicing</a></div>
-			<div class="menu-item"><i class="fa fa-tasks" aria-hidden="true">&nbsp;</i><a href="Pendin_Amanat.jsp">Amanat</a></div>
-			<div class="menu-item"><i class="fa fa-balance-scale " aria-hidden="true">&nbsp;</i><a class="sub drp-down">Accounts&nbsp;&nbsp;</a>
-				<ul class="submenu">
-					<li><a href="Chart_Of_Accounts.jsp">Chart of Accounts</a></li>
-					<li><a href="Record_Expenses.jsp">Record Expenses</a></li>
-				</ul>
-			</div>	
-			<div class="menu-item"><i class="fa fa-balance-scale" aria-hidden="true">&nbsp;</i><a href="WB_Operator.jsp">WB-Operator Status</a></div>
-			<div class="menu-item"><i class="fa fa-money" aria-hidden="true">&nbsp;</i><a href="../accounts_operation_view/Payment.jsp">Cashier</a></div>	
-			<div class="menu-item"><i class="fa fa-hand-o-right " aria-hidden="true">&nbsp;</i><a class="sub drp-down">Masters&nbsp;&nbsp;</a>
-				<ul class="submenu">
-					<li><a href="Vendor_Master.jsp">Vendor Master</a></li>
-				</ul>
-			</div>	
-			<div class="menu-item"><i class="fa fa-hand-o-right " aria-hidden="true">&nbsp;</i><a class="sub drp-down">Reports&nbsp;&nbsp;</a>
-				<ul class="submenu">
-					<li><a href="PurchaseInvoice.jsp">Invoice Report</a></li>
-					<li><a href="PDC_Report.jsp">PDC Report</a></li>
-					<li><a href="DailySetupReport.jsp">Daily Setup Report</a></li>
-					<li><a href="WeighBridgeReport.jsp">Weigh Bridge Report</a></li>	
-				</ul>
-			</div>	
-			<div class="menu-item"><i class="fa fa-hand-o-right " aria-hidden="true">&nbsp;</i><a class="sub drp-down">Ledgers&nbsp;&nbsp;</a>
-				<ul class="submenu">
-					<li><a href="Bank_Register.jsp">Bank Ledger</a></li>
-					<li><a href="Stock_Register.jsp">Stock Ledger</a></li>
-					<li><a href="Expenses_Register.jsp">General Ledger</a></li>				
-				</ul>
-			</div>
-			<div class="menu-item"><i class="fa fa-cog " aria-hidden="true">&nbsp;</i><a class="sub drp-down">Setup&nbsp;&nbsp;</a>
-				<ul class="submenu">
-					<li><a href="Setup_Companies.jsp">Setup Companies</a></li>
-					<li><a href="Setup_Bank.jsp">Setup Bank</a></li>
-					<li><a href="Setup_Grade_Levels.jsp">Setup Grade Levels</a></li>
-					<li><a href="Setup_Vehicle_Rates.jsp">Setup Vehicle Rates</a></li>	
-				</ul>
-			</div>		
-			
-			<div class="menu-item"><i class="fa fa-cogs" aria-hidden="true">&nbsp;</i><a class="sub drp-down">Settings&nbsp;&nbsp;</a>
-				<ul class="submenu">
-					<li><a href="NewUserRegistration.jsp">Manage Users</a></li>
-									
-				</ul>
-			</div>		
-			<div class="menu-item"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i><a href="../LogoutServlet">Sign-Out</a></div>
-				
-		</div>
-	</div>
-	
-<script>
-	var len = document.getElementsByClassName("drp-down").length;
-	console.log(len);
-	for(i=0;i<len;i++){
-		 
-		document.getElementsByClassName("drp-down")[i].addEventListener("click",function(){
-			var dropdownContent = this.nextElementSibling;
-			  if (dropdownContent.style.display === "block") {
-			 	 dropdownContent.style.display = "none";
-			  } else {
-				 dropdownContent.style.display = "block";
-			  }
-		})
-	}
-	
-	document.getElementById("toggleBar").addEventListener("click",function(){
-		  if (document.getElementsByClassName("sidebar")[0].style.display === "none") {
-			  document.getElementsByClassName("sidebar")[0].style.display = "block";
-		  } else {
-			  document.getElementsByClassName("sidebar")[0].style.display = "none";
-		  }
-	})
-	
-</script>
-	
-	    
+            <ul class="list-unstyled CTAs">
+                <li>
+                 <a href="../LogoutServlet">
+                        <i class="fa fa-sign-out"></i>
+                        Sign-out
+                    </a>
+                </li>
+            </ul>
+        </nav>

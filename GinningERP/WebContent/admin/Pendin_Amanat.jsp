@@ -9,12 +9,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Pending Amanat</title>
 </head>
-
 <body>
-
 <%@include file="../admin/Top_Nav.jsp" %>
-	<div class="container-fluid container-mr-t">
-	 <%@include file="../admin/Side_bar.html" %>
+<div class="wrapper">
+  <%@include file="../admin/Side_bar.html" %>
+  <div id="content">
+	<div class="container-fluid ">
 	 <%@include file="../admin/CommonSearchHeaderForReports.jsp" %>
 		<div class="row row-background">
 			<div class="col-md-12">
@@ -39,6 +39,8 @@
 			</div>
 			</div>
 		</div>
+	</div>
+	</div>
 	</div>
         <script src="../js/jquery-3.3.1.slim.min.js" ></script>
 		<script src="../js/popper.min.js"></script>
@@ -168,6 +170,15 @@
 				}
 		})
 	})
+	
+	/***********************
+Side bar 
+************************/
+$(document).ready(function () {
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+    });
+});
 		</script>
 </body>
 </html>

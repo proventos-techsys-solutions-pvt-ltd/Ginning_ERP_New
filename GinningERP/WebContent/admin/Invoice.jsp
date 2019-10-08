@@ -14,19 +14,14 @@
 </head>
 
 <body>
-
 <%@include file="../admin/Top_Nav.jsp" %>
-<div class="container-fluid container-mr-t">
-	 <%@include file="../admin/Side_bar.html" %>
+<div class="wrapper">
+  <%@include file="../admin/Side_bar.html" %>
+  <div id="content">
+<div class="container-fluid ">
 	 <div class="row row-background border-bottom">
                 	<div class="col-md-auto">
                			<div class="d-flex justify-content-start align-items-center">
-               				<div class="c-nav-collapse" onclick="myFunction(this)">
-							  <div class="bar1"></div>
-							  <div class="bar2"></div>
-							  <div class="bar3"></div>
-							</div>
-						&nbsp;&nbsp;
                 			<img src="../property/img/invoicing.png" alt="Invoicing">
                 			<h4 class="lbl-rm-all ">Invoicing</h4>
                			</div>
@@ -287,6 +282,8 @@
 							</div>
 						</div>
                                 	
+</div>
+</div>
 </div>
 <!-- Response modal pop up -->
 <div class="response-back-display"></div>
@@ -1325,9 +1322,6 @@ function getVocuherNo(){
 	$.fn.checkStatus(sessionId.getSessionId,"Invoice has been successfully saved!")
 	})
 	
-	function myFunction(x) {
-			x.classList.toggle("change");
-	}
 
 	$(document).ready(function(){
 		$(".c-nav-collapse").click(function(){
@@ -1339,7 +1333,14 @@ function getVocuherNo(){
 				}
 		})
 	})
-
+/***********************
+Side bar 
+************************/
+$(document).ready(function () {
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+    });
+});
 
 	pendingInvoicingReports();
 	checkDailySetup();

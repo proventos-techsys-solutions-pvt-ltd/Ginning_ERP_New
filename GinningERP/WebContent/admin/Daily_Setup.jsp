@@ -13,17 +13,13 @@
 <body>
 
 <%@include file="../admin/Top_Nav.jsp" %>
-<div class="container-fluid container-mr-t">
-	<%@include file="../admin/Side_bar.html" %>
+<div class="wrapper">
+  <%@include file="../admin/Side_bar.html" %>
+  <div id="content">
+<div class="container-fluid ">
 			<div class="row mt-2 row-background border-bottom">
 				<div class="col-md-3">
 					<div class="d-flex justify-content-start align-items-center">
-						<div class="c-nav-collapse" onclick="myFunction(this)">
-						  <div class="bar1"></div>
-						  <div class="bar2"></div>
-						  <div class="bar3"></div>
-						</div>
-						&nbsp;&nbsp;
 						<img src="../property/img/factory.png" alt="warehouse">&nbsp;
 						<h4 class="lbl-rm-all">Daily Setup</h4>
 					</div>
@@ -349,6 +345,8 @@
 			  </div>
 			</div>
 			</div>
+			</div>
+			</div>
 	
 	<!-- Response modal pop up -->
 <div class="response-back-display"></div>
@@ -602,7 +600,7 @@
 			var cell4 = row.insertCell(3);
 			
 			cell2.hidden=true;
-			cell2.id= "bonusGradeId"+(i+1);
+			cell2.id= "gradeId"+(i+1);
 			
 			cell1.innerHTML = (i+1);
 			cell2.innerHTML = json[i].id;
@@ -640,14 +638,11 @@
 
 		jsonArray = [];
 		
-		
-		var gradeRates = document.getElementsByName('gradeRate');
-		var noOfRows = gradeRates.length;
-		
+		var noOfRows = document.getElementById('gradeTableBody').childElementCount;
 		for(i=0; i<noOfRows;i++){
 			gradeRate = {};
 			gradeRate['gradeId'] = document.getElementById('gradeId'+(i+1)).innerHTML;
-			gradeRate['gradeRate'] = gradeRates[i].value;
+			gradeRate['gradeRate'] = document.getElementById('gradeRate'+(i+1)).value;
 			
 			jsonArray.push(gradeRate);
 		}
@@ -818,10 +813,6 @@
 		}
 	})
 	
-	function myFunction(x) {
-  		x.classList.toggle("change");
-	}
-	
 	$(document).ready(function(){
 		$(".c-nav-collapse").click(function(){
 				$(".sidebar").toggle(); 
@@ -833,6 +824,14 @@
 				
 		})
 	})
+		/***********************
+			Side bar 
+		************************/
+	       $(document).ready(function () {
+	            $('#sidebarCollapse').on('click', function () {
+	                $('#sidebar').toggleClass('active');
+	            });
+	        });
 	<% 
 	session.removeAttribute("setupId"); 
 	session.removeAttribute("id"); 

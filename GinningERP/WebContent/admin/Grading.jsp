@@ -16,19 +16,16 @@
 </head>
 
 <body>
-<%@include file="../admin/Top_Nav.jsp" %>
 
-<div class="container-fluid container-mr-t">
-	 <%@include file="../admin/Side_bar.html" %>
+<%@include file="../admin/Top_Nav.jsp" %>
+<div class="wrapper">
+  <%@include file="../admin/Side_bar.html" %>
+  <div id="content">
+<div class="container-fluid ">
 	  <div class="row row-background border-bottom">
         	<div class="col-md-12">
         		<div class="d-flex justify-content-between align-items-center">
 		        	<div class="d-flex justify-content-start align-items-center">
-		        		<div class="c-nav-collapse" onclick="myFunction(this)">
-						  <div class="bar1"></div>
-						  <div class="bar2"></div>
-						  <div class="bar3"></div>
-						</div>
 						&nbsp;&nbsp;
 		        		<img src="../property/img/bill.png" alt="recipt">&nbsp;
 		        		<h4 class="lbl-rm-all">Goods Grading Note</h4>&nbsp;&nbsp;
@@ -217,6 +214,8 @@
 									</tbody>
 								</table>
 							</div>
+						</div>
+					</div>
 						</div>
 					</div>
 					
@@ -990,6 +989,14 @@ $(document).ready(function(){
 	})
 })
 pendingGradeReports();
+/***********************
+Side bar 
+************************/
+$(document).ready(function () {
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+    });
+});
 </script>
 <%
 session.removeAttribute("gradeSubmitFlag");
