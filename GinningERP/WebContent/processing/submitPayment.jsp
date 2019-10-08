@@ -35,7 +35,7 @@
 	
 		cheque.setBankId(Integer.parseInt((String)obj.get("chequeBankId")));
 		cheque.setBankName(((String)obj.get("chequeBankName")).toUpperCase());
-		cheque.setChequeAmount(Double.parseDouble((String)obj.get("chequeAmount")));
+		cheque.setChequeAmount(Long.parseLong((String)obj.get("chequeAmount")));
 		cheque.setChequeDate((String)obj.get("chequeDate"));
 		cheque.setChequeNo((String)obj.get("chequeNo"));
 		cheque.setCustomerId(Integer.parseInt((String)obj.get("customerId")));
@@ -94,7 +94,7 @@
 		Rtgs rtgs = new Rtgs();
 	
 		rtgs.setBankName(((String)obj.get("rtgsBank")).toUpperCase());
-		rtgs.setRtgsAmount(Double.parseDouble((String)obj.get("rtgsAmount")));
+		rtgs.setRtgsAmount(Long.parseLong((String)obj.get("rtgsAmount")));
 		rtgs.setAccountNo((String)obj.get("rtgsAccountNo"));
 		rtgs.setRtgsDate((String)obj.get("rtgsDate"));
 		rtgs.setIfsc(((String)obj.get("rtgsIfsc")).toUpperCase());
@@ -158,7 +158,7 @@
 		
 		int invoiceId = Integer.parseInt((String)obj.get("invoiceId"));
 		
-		updateInvoice.updatePendingAmount(Double.parseDouble((String)obj.get("cashAmount")),invoiceId);
+		updateInvoice.updatePendingAmount(Long.parseLong((String)obj.get("cashAmount")),invoiceId);
 		
 		VoucherSeries vs = new VoucherSeries();
 		
@@ -172,7 +172,7 @@
 		
 		cashTrDb.setAccountId(Integer.parseInt((String)obj.get("accountPayableId")));
 		cashTrDb.setContactId((String)obj.get("customerId"));
-		cashTrDb.setDebit(Double.parseDouble((String)obj.get("cashAmount")));
+		cashTrDb.setDebit(Long.parseLong((String)obj.get("cashAmount")));
 		cashTrDb.setCredit(0);
 		cashTrDb.setTransactionDate(todaysDate);
 		cashTrDb.setNarration("RAW COTTON PURCHASE");
@@ -186,7 +186,7 @@
 		cashTrCr.setAccountId(Integer.parseInt((String)obj.get("cashAccountId")));
 		cashTrCr.setContactId((String)obj.get("customerId"));
 		cashTrCr.setDebit(0);
-		cashTrCr.setCredit(Double.parseDouble((String)obj.get("cashAmount")));
+		cashTrCr.setCredit(Long.parseLong((String)obj.get("cashAmount")));
 		cashTrCr.setTransactionDate(todaysDate);
 		cashTrCr.setNarration("RAW COTTON PURCHASE");
 		cashTrCr.setVouchRef("RAW COTTON");
@@ -215,7 +215,7 @@
 		
 		cheque.setBankId(Integer.parseInt((String)obj.get("pdcBank")));
 		cheque.setBankName((String)obj.get("invoiceId"));
-		cheque.setChequeAmount(Double.parseDouble((String)obj.get("pdcAmount")));
+		cheque.setChequeAmount(Long.parseLong((String)obj.get("pdcAmount")));
 		cheque.setChequeDate((String)obj.get("pdcDate"));
 		cheque.setChequeNo((String)obj.get("pdcNo"));
 		cheque.setCustomerId(Integer.parseInt((String)obj.get("customerId")));
@@ -272,7 +272,7 @@
 		Rtgs rtgs = new Rtgs();
 	
 		rtgs.setBankName(((String)obj.get("pdcRtgsBank")).toUpperCase());
-		rtgs.setRtgsAmount(Double.parseDouble((String)obj.get("pdcRtgsAmount")));
+		rtgs.setRtgsAmount(Long.parseLong((String)obj.get("pdcRtgsAmount")));
 		rtgs.setAccountNo((String)obj.get("pdcRtgsAccountNo"));
 		rtgs.setRtgsDate((String)obj.get("pdcRtgsDate"));
 		rtgs.setIfsc(((String)obj.get("pdcRtgsIfsc")).toUpperCase());
@@ -338,7 +338,7 @@
 		
 		int invoiceId = Integer.parseInt((String)obj.get("invoiceId"));
 		
-		updateInvoice.updatePendingAmount(Double.parseDouble((String)obj.get("pdcCashAmount")),invoiceId);
+		updateInvoice.updatePendingAmount(Long.parseLong((String)obj.get("pdcCashAmount")),invoiceId);
 		int glId = 0;
 		
 		updatePdc.addGlId(glId, invoiceId);
@@ -355,7 +355,7 @@
 		
 		cashTrDb.setAccountId(Integer.parseInt((String)obj.get("accountPayableId")));
 		cashTrDb.setContactId((String)obj.get("customerId"));
-		cashTrDb.setDebit(Double.parseDouble((String)obj.get("pdcCashAmount")));
+		cashTrDb.setDebit(Long.parseLong((String)obj.get("pdcCashAmount")));
 		cashTrDb.setCredit(0);
 		cashTrDb.setTransactionDate(todaysDate);
 		cashTrDb.setNarration("RAW COTTON PURCHASE");
@@ -369,7 +369,7 @@
 		cashTrCr.setAccountId(Integer.parseInt((String)obj.get("cashAccountId")));
 		cashTrCr.setContactId((String)obj.get("customerId"));
 		cashTrCr.setDebit(0);
-		cashTrCr.setCredit(Double.parseDouble((String)obj.get("pdcCashAmount")));
+		cashTrCr.setCredit(Long.parseLong((String)obj.get("pdcCashAmount")));
 		cashTrCr.setTransactionDate(todaysDate);
 		cashTrCr.setNarration("RAW COTTON PURCHASE");
 		cashTrCr.setVouchRef("RAW COTTON");

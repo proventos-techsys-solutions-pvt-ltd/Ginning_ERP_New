@@ -17,18 +17,18 @@ public class Invoice {
 	public void setPaidByoperator(int paidByoperator) {
 		this.paidByoperator = paidByoperator;
 	}
-	private double total, amountPaid, pending, totalQuanity, cashAmount, chequeAmount, rtgsAmount, netPayable, pdcAmount ;
+	private long total, amountPaid, pending, totalQuanity, cashAmount, chequeAmount, rtgsAmount, netPayable, pdcAmount ;
 	
-	public double getPdcAmount() {
+	public long getPdcAmount() {
 		return pdcAmount;
 	}
-	public void setPdcAmount(double pdcAmount) {
+	public void setPdcAmount(long pdcAmount) {
 		this.pdcAmount = pdcAmount;
 	}
-	public double getNetPayable() {
+	public long getNetPayable() {
 		return netPayable;
 	}
-	public void setNetPayable(double netPayable) {
+	public void setNetPayable(long netPayable) {
 		this.netPayable = netPayable;
 	}
 	public float getBonusAmount() {
@@ -45,28 +45,28 @@ public class Invoice {
 	public void setUnloadingCharges(float unloadingCharges) {
 		this.unloadingCharges = unloadingCharges;
 	}
-	public double getCashAmount() {
+	public long getCashAmount() {
 		return cashAmount;
 	}
-	public void setCashAmount(double cashAmount) {
+	public void setCashAmount(long cashAmount) {
 		this.cashAmount = cashAmount;
 	}
-	public double getChequeAmount() {
+	public long getChequeAmount() {
 		return chequeAmount;
 	}
-	public void setChequeAmount(double chequeAmount) {
+	public void setChequeAmount(long chequeAmount) {
 		this.chequeAmount = chequeAmount;
 	}
-	public double getRtgsAmount() {
+	public long getRtgsAmount() {
 		return rtgsAmount;
 	}
-	public void setRtgsAmount(double rtgsAmount) {
+	public void setRtgsAmount(long rtgsAmount) {
 		this.rtgsAmount = rtgsAmount;
 	}
-	public double getTotalQuanity() {
+	public long getTotalQuanity() {
 		return totalQuanity;
 	}
-	public void setTotalQuanity(double totalQuanity) {
+	public void setTotalQuanity(long totalQuanity) {
 		this.totalQuanity = totalQuanity;
 	}
 	private String invoiceNo, invDate, authorizer, note;
@@ -101,22 +101,22 @@ public class Invoice {
 	public void setCompanyId(int companyId) {
 		this.companyId = companyId;
 	}
-	public double getTotal() {
+	public long getTotal() {
 		return total;
 	}
-	public void setTotal(double total) {
+	public void setTotal(long total) {
 		this.total = total;
 	}
-	public double getAmountPaid() {
+	public long getAmountPaid() {
 		return amountPaid;
 	}
-	public void setAmountPaid(double amountPaid) {
+	public void setAmountPaid(long amountPaid) {
 		this.amountPaid = amountPaid;
 	}
-	public double getPending() {
+	public long getPending() {
 		return pending;
 	}
-	public void setPending(double pending) {
+	public void setPending(long pending) {
 		this.pending = pending;
 	}
 	public String getInvoiceNo() {

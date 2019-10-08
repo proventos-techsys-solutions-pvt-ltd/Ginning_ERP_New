@@ -44,7 +44,7 @@ public class AddRtgs {
 			cs.setString(4, r.getAccountNo());
 			cs.setString(5, r.getBankName());
 			cs.setString(6, r.getIfsc());
-			cs.setDouble(7, r.getRtgsAmount());
+			cs.setLong(7, r.getRtgsAmount());
 			cs.setDate(8, sqlDate);
 			cs.setString(9, r.getCustomerName());
 			cs.setString(10, r.getInvoiceNo());

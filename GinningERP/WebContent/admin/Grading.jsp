@@ -193,6 +193,8 @@
 							<div class="d-flex justify-content-end align-items-center">
 								<button type="button" class="btn btn-success btn-sm change-button btn_width" id="submitGrades" >Approve</button>
 								<button type="button" class="btn btn-success btn-sm change-button btn_width ml-1" id="updateGrades"  disabled>Update</button>
+								<button type="button" class="btn btn-success btn-sm change-button btn_width ml-1" id="deleteGrades" disabled>Delete</button>
+								
 							</div>
 						</div>
 						</div>
@@ -717,6 +719,7 @@ function setGradeUpdationData(data)
 		}else if(data[0].invoiceFlag == 0){
 			document.getElementById("submitGrades").disabled=true;
 			document.getElementById("updateGrades").disabled=false;
+			document.getElementById("deleteGrades").disabled=false;
 		}
 	}
 	
@@ -808,6 +811,12 @@ document.getElementById("updateGrades").addEventListener('click', function(e){
 		$.fn.checkStatus(1,"Moisture box elements cannot be empty!");
 	}
 	})
+	
+document.getElementById("deleteGrades").addEventListener('click', function(e){
+	var rst = document.getElementById('rst').value;
+	var weighmentId = document.getElementById('weighmentId').value;
+	deleteGrades(rst, weighmentId);
+})
 
 //Set Date for PDC
 function setPDCDate(){
@@ -960,6 +969,34 @@ function setPedingGradData(data){
 		cell1.innerHTML = data[i].rst;
 		cell2.innerHTML = data[i].vendorName;
 		cell3.innerHTML = data[i].netWeight;
+	}
+}
+
+
+function deleteGrades(rst, weighmentData){
+	var url="${pageContext.request.contextPath}/processing/deleteGrading.jsp?rst"+rst+"?weighmentId="+weighmentId;
+	if(window.XMLHttpRequest){  
+		delGradeReq=new XMLHttpRequest();  
+	}  
+	else if(window.ActiveXObject){  
+		delGradeReq=new ActiveXObject("Microsoft.XMLHTTP");  
+	}  
+	try{  
+		delGradeReq.onreadystatechange=getDeletResp;  
+		console.log("AJAX Req sent");
+		delGradeReq.open("GET",url,true);  
+		delGradeReq.send();  
+	}catch(e){alert("Unable to connect to server");}
+}
+
+function getDeletResp(){
+	if(delGradeReq.readyState == 4){
+		var response = this.response.trim();
+		if(response > 0){
+			$.fn.checkStatus(1,"Grading information has been deleted successfully!");
+		}else{
+			$.fn.checkStatus(1,"Cannot delete as Invoice has been created for This RST.");
+		}
 	}
 }
 

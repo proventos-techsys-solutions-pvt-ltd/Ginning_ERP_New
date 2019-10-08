@@ -1015,9 +1015,9 @@ function setCurrentDate(){
 			jsonObj['invoiceNo'] = document.getElementById('invoiceNo').value;
 			jsonObj['customerId'] = document.getElementById('customerId').value;
 			var total = Number(document.getElementById('totalAmount').value);
-			jsonObj['total'] = total.toString();
-			jsonObj['amountPaid'] = document.getElementById('advance').value;
-			jsonObj['pending'] = (Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value)).toString();
+			jsonObj['total'] = (Math.round(total.toString())).toString();
+			jsonObj['amountPaid'] = (Math.round(document.getElementById('advance').value)).toString();
+			jsonObj['pending'] = (Math.round((Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value)).toString())).toString();
 			jsonObj['invoiceDate'] = document.getElementById('invoiceDate').value;
 			jsonObj['companyId'] = document.getElementById('companyId').value;
 			jsonObj['note'] = document.getElementById('note').value;
@@ -1040,11 +1040,11 @@ function setCurrentDate(){
 			}
 			
 			jsonObj['items'] = itemList;
-			jsonObj['totalQuantity'] = totalQuantity.toString();
-			jsonObj['unloadingCharges'] = document.getElementById('unloadingCharges').value;
-			jsonObj['totalBonus'] = document.getElementById('totalBonus').value;
-			jsonObj['netPayable'] = (Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value)).toString();
-			jsonObj['pdcAmount'] = document.getElementById('totalPdcAmount').value;
+			jsonObj['totalQuantity'] = (Math.round(totalQuantity.toString())).toString();
+			jsonObj['unloadingCharges'] = (Math.round(document.getElementById('unloadingCharges').value)).toString();
+			jsonObj['totalBonus'] = (Math.round(document.getElementById('totalBonus').value)).toString();
+			jsonObj['netPayable'] = (Math.round((Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value)).toString())).toString();
+			jsonObj['pdcAmount'] = (Math.round(document.getElementById('totalPdcAmount').value)).toString();
 			jsonObj['pdcDate'] = document.getElementById('pdcDate').value;
 			jsonObj['pdcPaymentMode'] = document.getElementById('pdcPaymentMode').value;
 			/* 
@@ -1065,10 +1065,10 @@ function setCurrentDate(){
 			} */
 			payment = {};
 			var paymentModes = document.getElementsByName('paymentMode');
-			var paymentAmounts = document.getElementsByName('payAmount');
+			var paymentAmounts = document.getElementsByName('payAmount');	
 			for(j=0;j<paymentModes.length;j++){
 				
-				payment[paymentModes[j].value.trim()] = paymentAmounts[j].value;
+				payment[paymentModes[j].value.trim()] = (Math.round(paymentAmounts[j].value)).toString();
 			}
 			
 			jsonObj['paymentModes'] = payment;

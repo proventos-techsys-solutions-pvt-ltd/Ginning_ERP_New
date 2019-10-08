@@ -10,7 +10,7 @@ public class Rtgs {
 	public void setInvoiceNo(String invoiceNo) {
 		this.invoiceNo = invoiceNo;
 	}
-	private double rtgsAmount;
+	private long rtgsAmount;
 
 	public int getId() {
 		return id;
@@ -60,10 +60,10 @@ public class Rtgs {
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
-	public double getRtgsAmount() {
+	public long getRtgsAmount() {
 		return rtgsAmount;
 	}
-	public void setRtgsAmount(double rtgsAmount) {
+	public void setRtgsAmount(long rtgsAmount) {
 		this.rtgsAmount = rtgsAmount;
 	}
 	

@@ -37,7 +37,7 @@ public class UpdateRtgs {
 			cs.setString(5, r.getAccountNo());
 			cs.setString(6, r.getBankName());
 			cs.setString(7, r.getIfsc());
-			cs.setDouble(8, r.getRtgsAmount());
+			cs.setLong(8, r.getRtgsAmount());
 			cs.setDate(9, date);
 			cs.setString(10, r.getCustomerName());
 			cs.setString(11, r.getInvoiceNo());

@@ -38,7 +38,7 @@ public class UpdateCheque {
 			cs.setString(7, c.getInvoiceNo());
 			cs.setString(8, c.getBankName());
 			cs.setString(9, c.getChequeNo());
-			cs.setDouble(10, c.getChequeAmount());
+			cs.setLong(10, c.getChequeAmount());
 			cs.setDate(11, date);
 			cs.executeUpdate();
 			
