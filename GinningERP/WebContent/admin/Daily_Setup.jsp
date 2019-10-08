@@ -602,7 +602,7 @@
 			var cell4 = row.insertCell(3);
 			
 			cell2.hidden=true;
-			cell2.id= "gradeId"+(i+1);
+			cell2.id= "bonusGradeId"+(i+1);
 			
 			cell1.innerHTML = (i+1);
 			cell2.innerHTML = json[i].id;
@@ -640,11 +640,14 @@
 
 		jsonArray = [];
 		
-		var noOfRows = document.getElementById('gradeTableBody').childElementCount;
+		
+		var gradeRates = document.getElementsByName('gradeRate');
+		var noOfRows = gradeRates.length;
+		
 		for(i=0; i<noOfRows;i++){
 			gradeRate = {};
 			gradeRate['gradeId'] = document.getElementById('gradeId'+(i+1)).innerHTML;
-			gradeRate['gradeRate'] = document.getElementById('gradeRate'+(i+1)).value;
+			gradeRate['gradeRate'] = gradeRates[i].value;
 			
 			jsonArray.push(gradeRate);
 		}
