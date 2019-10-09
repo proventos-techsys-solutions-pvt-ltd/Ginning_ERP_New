@@ -74,33 +74,33 @@
 			if(invoiceItemList.size()>0){
 				invoice.setCompanyId(companyId);
 				invoice.setInvoiceNo((String)json.get("invoiceNo").toString().toUpperCase());
-				invoice.setTotal(Double.parseDouble((String)json.get("total")));
-				invoice.setNetPayable(Double.parseDouble((String)json.get("netPayable")));
-				invoice.setAmountPaid(Double.parseDouble((String)json.get("amountPaid")));
-				invoice.setPending(Double.parseDouble((String)json.get("pending")));
+				invoice.setTotal(Long.parseLong((String)json.get("total")));
+				invoice.setNetPayable(Long.parseLong((String)json.get("netPayable")));
+				invoice.setAmountPaid(Long.parseLong((String)json.get("amountPaid")));
+				invoice.setPending(Long.parseLong((String)json.get("pending")));
 				invoice.setInvDate((String)json.get("invoiceDate"));
 				invoice.setCustomerId(Integer.parseInt((String)json.get("customerId")));
 				invoice.setAuthorizer((String)json.get("authorizer").toString().toUpperCase());
 				invoice.setNote((String)json.get("note").toString().toUpperCase());
-				invoice.setTotalQuanity(Double.parseDouble((String)json.get("totalQuantity")));
+				invoice.setTotalQuanity(Long.parseLong((String)json.get("totalQuantity")));
 				invoice.setPaidByoperator(0);
 				invoice.setUnloadingCharges(Float.parseFloat((String)json.get("unloadingCharges")));
 				invoice.setBonusAmount(Float.parseFloat((String)json.get("totalBonus")));
-				invoice.setPdcAmount(Double.parseDouble((String)json.get("pdcAmount")));
+				invoice.setPdcAmount(Long.parseLong((String)json.get("pdcAmount")));
 				if(paymentModes.containsKey("Cash")){
-					invoice.setCashAmount(Double.parseDouble((String)paymentModes.get("Cash")));
+					invoice.setCashAmount(Long.parseLong((String)paymentModes.get("Cash")));
 				}else{
-					invoice.setCashAmount(0.0);
+					invoice.setCashAmount(0);
 				}
 				if(paymentModes.containsKey("Cheque")){
-					invoice.setChequeAmount(Double.parseDouble((String)paymentModes.get("Cheque")));
+					invoice.setChequeAmount(Long.parseLong((String)paymentModes.get("Cheque")));
 				}else{
-					invoice.setChequeAmount(0.0);
+					invoice.setChequeAmount(0);
 				}
 				if(paymentModes.containsKey("RTGS/NEFT")){
-					invoice.setRtgsAmount(Double.parseDouble((String)paymentModes.get("RTGS/NEFT")));
+					invoice.setRtgsAmount(Long.parseLong((String)paymentModes.get("RTGS/NEFT")));
 				}else{
-					invoice.setRtgsAmount(0.0);
+					invoice.setRtgsAmount(0);
 				}
 				
 				AddInvoice addinvoice = new AddInvoice();
@@ -123,13 +123,13 @@
 				}
 			}
 			
-			if(Double.parseDouble((String)json.get("pdcAmount")) > 0){
+			if(Long.parseLong((String)json.get("pdcAmount")) > 0){
 				PDC pdc = new PDC();
 				
 				pdc.setCustomerId(Integer.parseInt((String)json.get("customerId")));
 				pdc.setPayDate((String)json.get("pdcDate"));
 				pdc.setInvoiceId(invoiceId);
-	            pdc.setAmount(Double.parseDouble((String)json.get("pdcAmount")));	
+	            pdc.setAmount(Long.parseLong((String)json.get("pdcAmount")));	
 	            pdc.setModeOfPayment((String)json.get("pdcPaymentMode"));
 	            pdc.setChequeId(0);
 	            pdc.setRtgsId(0);
@@ -148,8 +148,8 @@
 			
 			if(invoiceId>0){
 				StockDetails stock = new StockDetails();
-				double totalQuantity = Double.parseDouble((String)json.get("totalQuantity"));
-				double totalAmount = Double.parseDouble((String)json.get("total"));
+				double totalQuantity = Long.parseLong((String)json.get("totalQuantity"));
+				double totalAmount = Long.parseLong((String)json.get("total"));
 				double averageRate = totalAmount/(totalQuantity/100);
 				stock.setInvId(invoiceId);
 				stock.setTotalQuantity(totalQuantity);

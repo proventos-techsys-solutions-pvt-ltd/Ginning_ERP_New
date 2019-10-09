@@ -186,7 +186,7 @@
 		Transactions trCredit = new Transactions();
 		
 		trCredit.setContactId(Integer.toString(invoice.getCustomerId()));
-		trCredit.setAccountId(Integer.parseInt((String)json.get("accountPurchaseId")));
+		trCredit.setAccountId(Integer.parseInt((String)json.get("accountPayableId")));
 		trCredit.setCredit(Long.parseLong((String)json.get("pending")));
 		trCredit.setDebit(0);
 		trCredit.setTransactionDate(invoice.getInvDate());
@@ -197,7 +197,7 @@
 		Transactions trDebit = new Transactions();
 		
 		trDebit.setContactId(Integer.toString(invoice.getCustomerId()));
-		trDebit.setAccountId(Integer.parseInt((String)json.get("accountPayableId")));
+		trDebit.setAccountId(Integer.parseInt((String)json.get("accountPurchaseId")));
 		trDebit.setCredit(0);
 		trDebit.setDebit(Long.parseLong((String)json.get("pending")));
 		trDebit.setTransactionDate(invoice.getInvDate());

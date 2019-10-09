@@ -778,9 +778,13 @@ function setCurrentDate(){
 	function getInvData(){
 		if(fetchInvReq.readyState == 4){
 			var response = this.response.trim();
-			
-			var data = JSON.parse(response);
-			setDataForInvoiceUpdation(data);
+			console.log('response--'+response);
+			if(Number(response) === 0){
+				alert('Invalid Invoie No.')
+			}else{
+				var data = JSON.parse(response);
+				setDataForInvoiceUpdation(data);
+			}
 		}
 	}
 	

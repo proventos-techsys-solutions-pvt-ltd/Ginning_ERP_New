@@ -738,7 +738,7 @@ function setGradeUpdationData(data)
 		}
 		var deleteIcons = document.getElementsByClassName('delete-row');
 		for(i=0;i<deleteIcons.length;i++){
-			removeElement(deleteIcons[i]);
+			deleteIcons[i].hidden=true;
 		}
 		document.getElementById('rst').removeAttribute('readonly');
 	}
