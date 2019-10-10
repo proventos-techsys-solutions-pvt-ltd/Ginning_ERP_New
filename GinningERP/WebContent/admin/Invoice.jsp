@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
 <title>Invoice</title>
@@ -304,7 +305,6 @@
 <!-- <script src="../js/jquery-3.3.1.slim.min.js" ></script> -->
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="../js/Validation.js"></script>
 <script>
 //***********************VALIDATIONS**********************************

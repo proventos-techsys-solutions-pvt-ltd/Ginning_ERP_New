@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
 <title>Goods Grading Note</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
 </head>
@@ -240,7 +241,7 @@
 <!-- <script src="../js/jquery-3.3.1.slim.min.js" ></script> -->
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <script src="../js/Validation.js"></script>
 <script src="../js/validations/CommonValidations.js"></script>
 
@@ -447,13 +448,13 @@ document.addEventListener("change",function(e){
 				cell7.className = "text-center";
 				cell8.className = "text-center";
 			
-				cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(noOfRows+1)+"' name='srNo' value="+(noOfRows+1)+" readonly>";
+				cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(noOfRows+1)+"' name='srNo' value="+(noOfRows+1)+">";
 				cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty"+(noOfRows+1)+"' name='dividedQuantity' value="+remainingQuantity+">";
 				cell3.innerHTML = "<select class='form-control form-control-sm lbl-rm-all' id='grade"+(noOfRows+1)+"' name='grade'>"
 									+	"<option>Select</option>"
 									+	"<c:Grade />"
 									+	"</select>";
-				cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(noOfRows+1)+"' name='description' readonly>";
+				cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description"+(noOfRows+1)+"' name='description'>";
 				cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(noOfRows+1)+"' name='moisture'>";
 				cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate"+(noOfRows+1)+"' name='rate' >"
 				cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck"+(noOfRows+1)+"' name='pdcCheck' value='false'>";
@@ -841,55 +842,48 @@ function setPDCDate(){
 //Set PDC checkbox value
 document.addEventListener('change', function(e){
 	if(e.srcElement.name === 'pdcCheck'){
-		var pdcAmount = document.getElementById("pdcAmount").value;
-		var rowIndex = Number(e.srcElement.parentNode.parentNode.rowIndex)-1;
-		var table = document.getElementById('tableBody');
-		var ratePerQtl = table.rows[rowIndex].cells[5].children[0].value;
-		var quantity = table.rows[rowIndex].cells[1].children[0].value;
-		var qtyInQtl = Number(quantity)/100;
-		var noOfMonths = document.getElementById("pdcMonths").value;
-		var pdcRatePerMonth = document.getElementById("pdcRate").value;
-		var pdcRate = Number(noOfMonths)*Number(pdcRatePerMonth);
-		var pdcBonusAmount = (Number(pdcRate)*Number(qtyInQtl)).toFixed(2);
-		var totalAmount = Number(Number(qtyInQtl) * Number(ratePerQtl))+Number(pdcBonusAmount);
 		if(e.srcElement.value === 'false'){
 			e.srcElement.value = 'true'
-			document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) + Number(pdcBonusAmount);
-			document.getElementById("pdcAmount").value = Number(pdcAmount)+ Number(totalAmount);
+			setPdcInputBoxes();
 		}
 		else if(e.srcElement.value === 'true'){
 			e.srcElement.value = 'false'
-			document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) - Number(pdcBonusAmount);
-			document.getElementById("pdcAmount").value = Number(pdcAmount)- Number(totalAmount);
+			setPdcInputBoxes();
 		}
-		calculateTotal();
 	}
 })
 
-function calculatePDCBonusOnMonthChange(){
-	var noOfMonths = document.getElementById("pdcMonths").value;
-	var pdcCheckBoxes = document.getElementsByName("pdcCheck");
-	document.getElementById("pdcAmount").value = 0;
+function setPdcInputBoxes(){
 	document.getElementById('pdcBonusAmount').value = 0;
-	for(i = 0; i< pdcCheckBoxes.length; i++){
-		if(pdcCheckBoxes[i].value === 'true'){
-			//document.getElementById("pdcAmount").value;
-			var rowIndex = Number(pdcCheckBoxes[i].parentNode.parentNode.rowIndex)-1;
+	document.getElementById("pdcAmount").value = 0;
+	var table = document.getElementById('tableBody');
+	var noOfRows = table.rows.length;
+	var pdcChecks = document.getElementsByName('pdcCheck');
+	setPdcBonusRate();
+	for(i=0; i<noOfRows; i++){
+		if(pdcChecks[i].checked === true){
 			var table = document.getElementById('tableBody');
-			var ratePerQtl = table.rows[rowIndex].cells[5].children[0].value;
-			var quantity = table.rows[rowIndex].cells[1].children[0].value;
+			var pdcAmount = document.getElementById("pdcAmount").value;
+			var ratePerQtl = table.rows[i].cells[5].children[0].value;
+			var quantity = table.rows[i].cells[1].children[0].value;
 			var qtyInQtl = Number(quantity)/100;
 			var noOfMonths = document.getElementById("pdcMonths").value;
 			var pdcRatePerMonth = document.getElementById("pdcRate").value;
 			var pdcRate = Number(noOfMonths)*Number(pdcRatePerMonth);
-			var pdcBonusAmount = Number(pdcRate)*Number(qtyInQtl);
+			var pdcBonusAmount = (Number(pdcRate)*Number(qtyInQtl)).toFixed(2);
 			var totalAmount = Number(Number(qtyInQtl) * Number(ratePerQtl))+Number(pdcBonusAmount);
-			document.getElementById('pdcBonusAmount').value =  Number(pdcBonusAmount);
-			document.getElementById("pdcAmount").value = Number(document.getElementById("pdcAmount").value)+Number(totalAmount);
+			document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) + Number(pdcBonusAmount);
+			document.getElementById("pdcAmount").value = Number(pdcAmount)+ Number(totalAmount);
 		}
 	}
-	setPdcBonusRate();
 	calculateTotal();
+}
+		
+		
+		
+
+function calculatePDCBonusOnMonthChange(){
+	setPdcInputBoxes()
 }
 
 document.getElementById("pdcMonths").addEventListener("change",function(e){
@@ -910,8 +904,9 @@ fetchBonusRate();
 
 
 document.addEventListener('change',function(e){
-	if(e.srcElement.id === 'pdcRate' || e.srcElement.id === 'pdcMonths' || e.srcElement.name === 'rate' || e.srcElement.name === 'pdcCheck'){
+	if(e.srcElement.id === 'pdcRate' || e.srcElement.id === 'pdcMonths' || e.srcElement.name === 'rate' || e.srcElement.name === 'grade' || e.srcElement.name === 'dividedQuantity'){
 		setPdcBonusRate();
+		setPdcInputBoxes()
 	}
 })
 

@@ -13,7 +13,7 @@ public class FetchWeight {
 	    	try {
 	    		weightStr = (new TwoWaySerialComm()).connect("COM1");
 	    	}catch (Exception e1) {
-	    		e.printStackTrace();
+	    		e1.printStackTrace();
 			}
 	        e.printStackTrace();
 	    }
