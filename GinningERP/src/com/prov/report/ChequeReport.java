@@ -40,7 +40,7 @@ public class ChequeReport {
 				c.setInvoiceNo(rs.getString(6));
 				c.setBankName(rs.getString(7));
 				c.setChequeNo(rs.getString(8));
-				c.setChequeAmount(Double.parseDouble(rs.getString(9)));
+				c.setChequeAmount(Long.parseLong(rs.getString(9)));
 				c.setChequeDate(rs.getString(10));
 			
 			}
@@ -82,9 +82,9 @@ public class ChequeReport {
 			while (rs.next()) {
 				
 				jsonObject.put("vendor", rs.getString(1));
-				double amount = Double.parseDouble(rs.getString(2));
-				String amountInWords = ntw.convertToIndianCurrency(Double.toString(amount));
-				jsonObject.put("totalInDigits", Double.toString(amount) + " /-");
+				long amount = Long.parseLong(rs.getString(2));
+				String amountInWords = ntw.convertToIndianCurrency(Long.toString(amount));
+				jsonObject.put("totalInDigits", Long.toString(amount) + " /-");
 				jsonObject.put("totalInWords", amountInWords);
 				String date = rs.getString(3);
 				Date dateObj = sdf1.parse(date);

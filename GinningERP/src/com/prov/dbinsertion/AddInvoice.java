@@ -29,23 +29,23 @@ public int addInvoice(Invoice i) {
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
 			cs.setString(2, i.getInvoiceNo());
-			cs.setDouble(3, i.getTotal());
-			cs.setDouble(4, i.getAmountPaid());
-			cs.setDouble(5, i.getPending());
+			cs.setLong(3, i.getTotal());
+			cs.setLong(4, i.getAmountPaid());
+			cs.setLong(5, i.getPending());
 			cs.setDate(6, date);
 			cs.setInt(7, i.getCompanyId());
 			cs.setInt(8, i.getCustomerId());
 			cs.setString(9, i.getAuthorizer());
 			cs.setString(10, i.getNote());
-			cs.setDouble(11, i.getTotalQuanity());
-			cs.setDouble(12, i.getCashAmount());
-			cs.setDouble(13, i.getChequeAmount());
-			cs.setDouble(14, i.getRtgsAmount());
+			cs.setLong(11, i.getTotalQuanity());
+			cs.setLong(12, i.getCashAmount());
+			cs.setLong(13, i.getChequeAmount());
+			cs.setLong(14, i.getRtgsAmount());
 			cs.setInt(15, i.getPaidByoperator());
 			cs.setFloat(16, i.getUnloadingCharges());
 			cs.setFloat(17, i.getBonusAmount());
-			cs.setDouble(18, i.getNetPayable());
-			cs.setDouble(19, i.getPdcAmount());
+			cs.setLong(18, i.getNetPayable());
+			cs.setLong(19, i.getPdcAmount());
 			cs.setInt(20, i.getVoucherNo());
 			
 			cs.executeUpdate();
@@ -85,23 +85,23 @@ public int addInvoiceWithId(Invoice i) {
 		cs.registerOutParameter(1, Types.NUMERIC);
 		
 		cs.setString(2, i.getInvoiceNo());
-		cs.setDouble(3, i.getTotal());
-		cs.setDouble(4, i.getAmountPaid());
-		cs.setDouble(5, i.getPending());
+		cs.setLong(3, i.getTotal());
+		cs.setLong(4, i.getAmountPaid());
+		cs.setLong(5, i.getPending());
 		cs.setDate(6, date);
 		cs.setInt(7, i.getCompanyId());
 		cs.setInt(8, i.getCustomerId());
 		cs.setString(9, i.getAuthorizer());
 		cs.setString(10, i.getNote());
-		cs.setDouble(11, i.getTotalQuanity());
-		cs.setDouble(12, i.getCashAmount());
-		cs.setDouble(13, i.getChequeAmount());
-		cs.setDouble(14, i.getRtgsAmount());
+		cs.setLong(11, i.getTotalQuanity());
+		cs.setLong(12, i.getCashAmount());
+		cs.setLong(13, i.getChequeAmount());
+		cs.setLong(14, i.getRtgsAmount());
 		cs.setInt(15, i.getPaidByoperator());
 		cs.setFloat(16, i.getUnloadingCharges());
 		cs.setFloat(17, i.getBonusAmount());
-		cs.setDouble(18, i.getNetPayable());
-		cs.setDouble(19, i.getPdcAmount());
+		cs.setLong(18, i.getNetPayable());
+		cs.setLong(19, i.getPdcAmount());
 		cs.setInt(20, i.getId());
 		cs.setInt(21, i.getVoucherNo());
 		

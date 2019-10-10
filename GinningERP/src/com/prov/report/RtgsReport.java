@@ -30,7 +30,7 @@ public class RtgsReport {
 				rtgs.setAccountNo(rs.getString(4));
 				rtgs.setBankName(rs.getString(5));
 				rtgs.setIfsc(rs.getString(6));
-				rtgs.setRtgsAmount(rs.getDouble(7));
+				rtgs.setRtgsAmount(rs.getLong(7));
 				rtgs.setRtgsDate(rs.getString(8));
 				rtgs.setCustomerName(rs.getString(9));
 				rtgs.setInvoiceNo(rs.getString(10));

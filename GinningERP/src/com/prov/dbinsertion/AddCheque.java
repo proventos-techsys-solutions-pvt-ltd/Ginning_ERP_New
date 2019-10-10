@@ -37,7 +37,7 @@ public class AddCheque {
 			cs.setString(6, c.getInvoiceNo());
 			cs.setString(7, c.getBankName());
 			cs.setString(8, c.getChequeNo());
-			cs.setDouble(9, c.getChequeAmount());
+			cs.setLong(9, c.getChequeAmount());
 			cs.setDate(10, date);
 			
 			cs.executeUpdate();

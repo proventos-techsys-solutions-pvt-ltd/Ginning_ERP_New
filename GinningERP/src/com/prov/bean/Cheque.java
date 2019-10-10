@@ -4,7 +4,7 @@ public class Cheque {
 	
 	private int id, customerId, bankId, invoiceId;
 	private String customerName, invoiceNo, bankName, chequeDate, chequeNo;
-	private double chequeAmount;
+	private long chequeAmount;
 	
 	public int getId() {
 		return id;
@@ -60,10 +60,10 @@ public class Cheque {
 	public void setChequeDate(String chequeDate) {
 		this.chequeDate = chequeDate;
 	}
-	public double getChequeAmount() {
+	public long getChequeAmount() {
 		return chequeAmount;
 	}
-	public void setChequeAmount(double chequeAmount) {
+	public void setChequeAmount(long chequeAmount) {
 		this.chequeAmount = chequeAmount;
 	}
 

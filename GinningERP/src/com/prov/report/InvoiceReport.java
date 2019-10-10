@@ -39,9 +39,9 @@ public Invoice getInvoiceData(int id) {
 			while (rs.next()) {
 				inv.setId(rs.getInt(1));
 				inv.setInvoiceNo(rs.getString(2));
-				inv.setTotal(rs.getDouble(3));
-				inv.setAmountPaid(rs.getDouble(4));
-				inv.setPending(rs.getDouble(5));
+				inv.setTotal(rs.getLong(3));
+				inv.setAmountPaid(rs.getLong(4));
+				inv.setPending(rs.getLong(5));
 				
 				String date = rs.getString(6);
 				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
@@ -53,15 +53,15 @@ public Invoice getInvoiceData(int id) {
 				inv.setCustomerId(rs.getInt(8));
 				inv.setAuthorizer(rs.getString(9));
 				inv.setNote(rs.getString(10));
-				inv.setTotalQuanity(rs.getDouble(11));
-				inv.setCashAmount(rs.getDouble(12));
-				inv.setChequeAmount(rs.getDouble(13));
-				inv.setRtgsAmount(rs.getDouble(14));
+				inv.setTotalQuanity(rs.getLong(11));
+				inv.setCashAmount(rs.getLong(12));
+				inv.setChequeAmount(rs.getLong(13));
+				inv.setRtgsAmount(rs.getLong(14));
 				inv.setPaidByoperator(rs.getInt(15));
 				inv.setUnloadingCharges(rs.getFloat(16));
 				inv.setBonusAmount(rs.getFloat(17));
-				inv.setNetPayable(rs.getDouble(18));
-				inv.setPdcAmount(rs.getDouble(19));
+				inv.setNetPayable(rs.getLong(18));
+				inv.setPdcAmount(rs.getLong(19));
 			}
 			
 			stmt.close();
@@ -97,9 +97,9 @@ public ArrayList<Invoice> getReport() {
 			
 			inv.setId(rs.getInt(1));
 			inv.setInvoiceNo(rs.getString(2));
-			inv.setTotal(rs.getDouble(3));
-			inv.setAmountPaid(rs.getDouble(4));
-			inv.setPending(rs.getDouble(5));
+			inv.setTotal(rs.getLong(3));
+			inv.setAmountPaid(rs.getLong(4));
+			inv.setPending(rs.getLong(5));
 			
 			String date = rs.getString(6);
 			
@@ -112,15 +112,15 @@ public ArrayList<Invoice> getReport() {
 			inv.setCustomerId(rs.getInt(8));
 			inv.setAuthorizer(rs.getString(9));
 			inv.setNote(rs.getString(10));
-			inv.setTotalQuanity(rs.getDouble(11));
-			inv.setCashAmount(rs.getDouble(12));
-			inv.setChequeAmount(rs.getDouble(13));
-			inv.setRtgsAmount(rs.getDouble(14));
+			inv.setTotalQuanity(rs.getLong(11));
+			inv.setCashAmount(rs.getLong(12));
+			inv.setChequeAmount(rs.getLong(13));
+			inv.setRtgsAmount(rs.getLong(14));
 			inv.setPaidByoperator(rs.getInt(15));
 			inv.setUnloadingCharges(rs.getFloat(16));
 			inv.setBonusAmount(rs.getFloat(17));
-			inv.setNetPayable(rs.getDouble(18));
-			inv.setPdcAmount(rs.getDouble(19));
+			inv.setNetPayable(rs.getLong(18));
+			inv.setPdcAmount(rs.getLong(19));
 			reportList.add(inv);
 			
 		}
@@ -173,10 +173,10 @@ public ArrayList<Invoice> getReport() {
 				jsonObj.put("invoiceNo", rs.getString(3));
 				jsonObj.put("companyId", rs.getInt(4));
 				jsonObj.put("customerId", rs.getInt(5));
-				jsonObj.put("pendingAmount", rs.getDouble(6));
-				jsonObj.put("totalAmount", rs.getDouble(7));
-				jsonObj.put("netPayable", rs.getDouble(8));
-				jsonObj.put("amountPaid", rs.getDouble(9));
+				jsonObj.put("pendingAmount", rs.getLong(6));
+				jsonObj.put("totalAmount", rs.getLong(7));
+				jsonObj.put("netPayable", rs.getLong(8));
+				jsonObj.put("amountPaid", rs.getLong(9));
 				jsonObj.put("customerName", rs.getString(10));
 				jsonObj.put("customerAddress", rs.getString(11));
 				jsonObj.put("customerMobile", rs.getString(12));
@@ -245,10 +245,10 @@ public ArrayList<Invoice> getReport() {
 				jsonObj.put("invoiceNo", rs.getString(3));
 				jsonObj.put("companyId", rs.getInt(4));
 				jsonObj.put("customerId", rs.getInt(5));
-				jsonObj.put("pendingAmount", rs.getDouble(6));
-				jsonObj.put("totalAmount", rs.getDouble(7));
-				jsonObj.put("netPayable", rs.getDouble(8));
-				jsonObj.put("amountPaid", rs.getDouble(9));
+				jsonObj.put("pendingAmount", rs.getLong(6));
+				jsonObj.put("totalAmount", rs.getLong(7));
+				jsonObj.put("netPayable", rs.getLong(8));
+				jsonObj.put("amountPaid", rs.getLong(9));
 				jsonObj.put("customerName", rs.getString(10));
 				jsonObj.put("customerAddress", rs.getString(11));
 				jsonObj.put("customerMobile", rs.getString(12));
@@ -307,9 +307,9 @@ public ArrayList<Invoice> getReport() {
 			while (rs.next()) {
 				jsonObj.put("invoiceId", rs.getString(1));
 				jsonObj.put("invoiceNo", rs.getString(2));
-				jsonObj.put("totalAmount", rs.getDouble(3));
-				jsonObj.put("amountPaid", rs.getDouble(4));
-				jsonObj.put("pendingAmount", rs.getDouble(5));
+				jsonObj.put("totalAmount", rs.getLong(3));
+				jsonObj.put("amountPaid", rs.getLong(4));
+				jsonObj.put("pendingAmount", rs.getLong(5));
 				
 				String date = rs.getString(6);
 				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
@@ -321,12 +321,12 @@ public ArrayList<Invoice> getReport() {
 				jsonObj.put("customerId", rs.getInt(8));
 				jsonObj.put("authorizer", rs.getString(9));
 				jsonObj.put("invoiceNote", rs.getString(10));
-				jsonObj.put("totalQuantity", rs.getDouble(11));
-				jsonObj.put("cashAmount", rs.getDouble(12));
-				jsonObj.put("chequeAmount", rs.getDouble(13));
-				jsonObj.put("rtgsAmount", rs.getDouble(14));
-				jsonObj.put("pdcAmount", rs.getDouble(15));
-				jsonObj.put("paidByOperator", rs.getDouble(16));
+				jsonObj.put("totalQuantity", rs.getLong(11));
+				jsonObj.put("cashAmount", rs.getLong(12));
+				jsonObj.put("chequeAmount", rs.getLong(13));
+				jsonObj.put("rtgsAmount", rs.getLong(14));
+				jsonObj.put("pdcAmount", rs.getLong(15));
+				jsonObj.put("paidByOperator", rs.getLong(16));
 				jsonObj.put("customerName", rs.getString(17));
 				jsonObj.put("customerAddress", rs.getString(18));
 				jsonObj.put("customerMobile", rs.getString(19));
@@ -435,17 +435,17 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("totalAmount","Rs. "+ rs.getString(3)+" /-");
 			
 			
-			jsonObj.put("amountPaid", rs.getDouble(4));
-			jsonObj.put("amountPending", rs.getDouble(5));
+			jsonObj.put("amountPaid", rs.getLong(4));
+			jsonObj.put("amountPending", rs.getLong(5));
 			jsonObj.put("invoiceDate", rs.getString(6));
 			jsonObj.put("companyId", rs.getInt(7));
 			jsonObj.put("customerId", rs.getInt(8));
 			jsonObj.put("authorizer", rs.getString(9));
 			jsonObj.put("note", rs.getString(10));
 			jsonObj.put("totalQuantity", rs.getString(11)+" Kgs");
-			jsonObj.put("cashAmount", rs.getDouble(12));
-			jsonObj.put("chequeAmount", rs.getDouble(13));
-			jsonObj.put("rtgsAmount", rs.getDouble(14));
+			jsonObj.put("cashAmount", rs.getLong(12));
+			jsonObj.put("chequeAmount", rs.getLong(13));
+			jsonObj.put("rtgsAmount", rs.getLong(14));
 			jsonObj.put("paidByOperator", rs.getInt(15));
 			jsonObj.put("unloadingCharges", rs.getFloat(16));
 			jsonObj.put("bonusAmount", rs.getFloat(17));
@@ -464,7 +464,7 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("vendorName", rs.getString(25));
 			jsonObj.put("vendorAddress", rs.getString(26));
 			jsonObj.put("vendorMobile", rs.getString(27));
-			jsonObj.put("weighRate", rs.getDouble(40));
+			jsonObj.put("weighRate", rs.getLong(40));
 			jsonObj.put("companyEmail", rs.getString(41));
 			
 			JSONArray jsonArr = new JSONArray();
@@ -481,14 +481,14 @@ public ArrayList<Invoice> getReport() {
 				invoiceItems.put("rst", rs.getInt(31));
 				invoiceItems.put("vehicleId", rs.getInt(32));
 				invoiceItems.put("material", rs.getString(33));
-				invoiceItems.put("quantity", rs.getDouble(34));
+				invoiceItems.put("quantity", rs.getLong(34));
 				invoiceItems.put("grade", rs.getString(35));
-				invoiceItems.put("rate", rs.getDouble(36));
+				invoiceItems.put("rate", rs.getLong(36));
 				invoiceItems.put("moisture", rs.getFloat(37));
 				invoiceItems.put("gradeAuthorizer", rs.getString(38));
 				invoiceItems.put("gradeDescription", rs.getString(39));
 				
-				double amount =  (rs.getDouble(34)/100) * rs.getDouble(34);
+				double amount =  (rs.getLong(34)/100) * rs.getLong(34);
 						
 				invoiceItems.put("amount", amount);
 				
@@ -544,10 +544,10 @@ public ArrayList<Invoice> getReport() {
 				jsonObj.put("invoiceNo", rs.getString(3));
 				jsonObj.put("companyId", rs.getInt(4));
 				jsonObj.put("customerId", rs.getInt(5));
-				jsonObj.put("pendingAmount", rs.getDouble(6));
-				jsonObj.put("totalAmount", rs.getDouble(7));
-				jsonObj.put("netPayable", rs.getDouble(8));
-				jsonObj.put("amountPaid", rs.getDouble(9));
+				jsonObj.put("pendingAmount", rs.getLong(6));
+				jsonObj.put("totalAmount", rs.getLong(7));
+				jsonObj.put("netPayable", rs.getLong(8));
+				jsonObj.put("amountPaid", rs.getLong(9));
 				jsonObj.put("customerName", rs.getString(10));
 				jsonObj.put("customerAddress", rs.getString(11));
 				jsonObj.put("customerMobile", rs.getString(12));
@@ -682,17 +682,17 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("totalAmount","Rs. "+ rs.getString(3));
 			
 			
-			jsonObj.put("amountPaid", rs.getDouble(4));
-			jsonObj.put("amountPending", rs.getDouble(5));
+			jsonObj.put("amountPaid", rs.getLong(4));
+			jsonObj.put("amountPending", rs.getLong(5));
 			jsonObj.put("invoiceDate", rs.getString(6));
 			jsonObj.put("companyId", rs.getInt(7));
 			jsonObj.put("customerId", rs.getInt(8));
 			jsonObj.put("authorizer", rs.getString(9));
 			jsonObj.put("note", rs.getString(10));
 			jsonObj.put("totalQuantity", rs.getString(11));
-			jsonObj.put("cashAmount", rs.getDouble(12));
-			jsonObj.put("chequeAmount", rs.getDouble(13));
-			jsonObj.put("rtgsAmount", rs.getDouble(14));
+			jsonObj.put("cashAmount", rs.getLong(12));
+			jsonObj.put("chequeAmount", rs.getLong(13));
+			jsonObj.put("rtgsAmount", rs.getLong(14));
 			jsonObj.put("paidByOperator", rs.getInt(15));
 			jsonObj.put("unloadingCharges", rs.getFloat(16));
 			jsonObj.put("bonusAmount", rs.getFloat(17));
@@ -711,7 +711,7 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("vendorName", rs.getString(25));
 			jsonObj.put("vendorAddress", rs.getString(26));
 			jsonObj.put("vendorMobile", rs.getString(27));
-			jsonObj.put("weighRate", rs.getDouble(43));
+			jsonObj.put("weighRate", rs.getLong(43));
 			jsonObj.put("companyEmail", rs.getString(44));
 			jsonObj.put("vendorBlacklisted", rs.getString(45));
 			jsonObj.put("vendorMembership", rs.getString(46));
@@ -728,9 +728,9 @@ public ArrayList<Invoice> getReport() {
 				invoiceItems.put("rst", rs.getInt(31));
 				invoiceItems.put("vehicleId", rs.getInt(32));
 				invoiceItems.put("material", rs.getString(33));
-				invoiceItems.put("quantity", rs.getDouble(34));
+				invoiceItems.put("quantity", rs.getLong(34));
 				invoiceItems.put("grade", rs.getString(35));
-				invoiceItems.put("rate", rs.getDouble(36));
+				invoiceItems.put("rate", rs.getLong(36));
 				invoiceItems.put("moisture", rs.getFloat(37));
 				invoiceItems.put("pdcAmountPerGrade", rs.getFloat(38));
 				if(rs.getFloat(38) == 0) {
@@ -751,7 +751,7 @@ public ArrayList<Invoice> getReport() {
 				invoiceItems.put("gradeAuthorizer", rs.getString(41));
 				invoiceItems.put("gradeDescription", rs.getString(42));
 				
-				double amount =  (rs.getDouble(34)/100) * rs.getDouble(34);
+				double amount =  (rs.getLong(34)/100) * rs.getLong(34);
 						
 				invoiceItems.put("amount", amount);
 				
