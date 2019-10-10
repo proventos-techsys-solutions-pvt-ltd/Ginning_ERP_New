@@ -186,6 +186,13 @@
 		      <div class="modal-body">
 		       <form id="newCustomer" action="${pageContext.request.contextPath}/processing/addCustomer.jsp">
 		       	<div class="form-row">
+		       	 	<div class="col-md-6">
+			       		    <video id="video" width="213" height="160" autoplay></video>
+			       	</div>	
+			       	<div class="col-md-6">
+						        <canvas id="canvas" width="213" height="160"  name="ImageFile1" style="display: none;"></canvas>
+						        <img id="canvasImg" name="ImageFile"><img>
+			       	</div>	
 			       	<div class="col-md-6">
 			       		<label class="lbl-rm-all">Name</label>
 			       		<input type="text" id="newCustomerName" class="form-control" name="name">
@@ -202,15 +209,14 @@
 		       </form>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		      <button type="button" class="btn btn-secondary" id="click-customer-photo">Take Photo</button>
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-customer-add-form">Close</button>
 		        <button type="button" class="btn btn-success" onclick="submitNewCustomer()" id="customerAdd">Add Customer</button>
 		      </div>
 		    </div>
 		  </div>
 		</div>
   </div>
-  	
-  	
   	
 <!--Footer code starts here-->
 <nav class="navbar navbar-default navbar-static-bottom footer ">
@@ -219,6 +225,63 @@
 <script src="${pageContext.request.contextPath}/js/commonjs.js"></script>
 <script src="${pageContext.request.contextPath}/js/validations/GenerateRST.js"></script>
 <script>
+/*************************
+ Photo code
+ ****************************/
+// Grab elements, create settings, etc.
+var canvas = document.getElementById("canvas"),
+        context = canvas.getContext("2d"),
+        video = document.getElementById("video"),
+        videoObj = {"video": true},
+errBack = function (error) {
+    console.log("Video capture error: ", error.code);
+};
+// Put event listeners into place
+document.getElementById("getCustomer").addEventListener("click",function(){
+    // Put video listeners into place
+    if (navigator.getUserMedia) { // Standard
+        navigator.getUserMedia(videoObj, function (stream) {
+        video.srcObject = stream;    
+        video.play();
+        }, errBack);
+    } else if (navigator.webkitGetUserMedia) { // WebKit-prefixed
+        navigator.webkitGetUserMedia(videoObj, function (stream) {
+            video.srcObject = stream;
+            video.play();
+        }, errBack);
+    } else if (navigator.mozGetUserMedia) { // WebKit-prefixed
+        navigator.mozGetUserMedia(videoObj, function (stream) {
+        video.srcObject = stream;    
+        video.play();
+        }, errBack);
+    }
+    // Trigger photo take
+    document.getElementById("click-customer-photo").addEventListener("click", function () {
+        context.drawImage(video, 0, 0, 213, 160);
+        document.getElementById('canvasImg').src = canvas.toDataURL("image/png");
+//            document.getElementById('video').style.display = "none";  // hide the live image video portin after click on take picture
+    });
+}, false);
+
+document.getElementById("close-customer-add-form").addEventListener("click",function(){
+	 if (navigator.getUserMedia) { // Standard
+	        navigator.getUserMedia(videoObj, function (stream) {
+	        video.srcObject = stream;    
+	        stream.getTracks().forEach(function(track) { track.stop(); })
+	        }, errBack);
+	    } else if (navigator.webkitGetUserMedia) { // WebKit-prefixed
+	        navigator.webkitGetUserMedia(videoObj, function (stream) {
+	            video.srcObject = stream;
+	            stream.getTracks().forEach(function(track) { track.stop(); })
+	        }, errBack);
+	    } else if (navigator.mozGetUserMedia) { // WebKit-prefixed
+	        navigator.mozGetUserMedia(videoObj, function (stream) {
+	        video.srcObject = stream;    
+	        stream.getTracks().forEach(function(track) { track.stop(); })
+	        }, errBack);
+	    }
+})
+
 //*********************Search rst pending for tare weight
 $(document).ready(function(){
   $("#search-box").on("keyup", function() {
@@ -774,20 +837,7 @@ document.addEventListener('click',function(e){
 	}
 })
 
-function fetchdata(){
- $.ajax({
-  url: '../processing/',
-  type: 'post',
-  success: function(response){
-   // Perform operation on the return value
-   alert(response);
-  }
- });
-}
 
-$(document).ready(function(){
- setInterval(fetchdata,5000);
-});
 
 //Function calls on page load
 pendingTareWt();

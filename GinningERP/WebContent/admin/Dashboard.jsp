@@ -108,7 +108,6 @@
              		<div></div>
              	</div>
              </div>
-                
  </div>        
 </div>
 </div>
@@ -308,25 +307,20 @@
 		function setUserData(data){
 			
 			var table = document.getElementById("usersTable");
-			
 			for(i=0; i<data.length; i++){
 				var noOfRows = table.rows.length;
-				
 				var row = table.insertRow(noOfRows);
 				
 				var cell1 = row.insertCell(0);
 				var cell2 = row.insertCell(1);
-				
-				
-				
+				cell2.className = "d-flex justify-content-center align-items-center";
 				cell1.innerHTML = data[i].name;
-				if(Number(data[i].status) === 1){
-					cell2.innerHTML = '<div class="online"></div>';
-				}if(Number(data[i].status) === 0){
-					cell2.innerHTML = '<div class="offline"></div>';
-				}
 				
-				cell2.className = "text-center";
+				if(Number(data[i].status) === 1){
+					cell2.innerHTML = '<tr><td><div class="online"></div></td></tr>';
+				}if(Number(data[i].status) === 0){
+					cell2.innerHTML = '<tr><td><div class="offline"></div></td></tr>';
+				}
 			}
 		}
 		$(document).ready(function(){
@@ -342,12 +336,14 @@
 		getTodayCottonRate();
 		getPurchaseReport("0","all");
 		getUserStatus();
+		
 		/***********************
 			Side bar 
 		************************/
 	       $(document).ready(function () {
 	            $('#sidebarCollapse').on('click', function () {
 	                $('#sidebar').toggleClass('active');
+	                
 	            });
 	        });
 		</script>
