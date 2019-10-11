@@ -37,6 +37,7 @@ public class TwoWaySerialComm
 	                //(new Thread(new SerialWriter(out))).start();
 	                
 	                weight = ((new SerialReader(in)).run());
+	                System.out.println(weight);
 	            }
 	            else
 	            {

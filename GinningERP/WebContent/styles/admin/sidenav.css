@@ -361,6 +361,11 @@ checkbox{
 	height:40px;
 	font-size:18px;
 }
+.btn_width-for-justify{
+	width:200px;
+	height:40px;
+	font-size:18px;
+}
 
 .btn-width-confirm{
 	width:120px;

@@ -6,7 +6,7 @@
     <% 
     	FetchWeight fetch = new FetchWeight();
     	String weightStr = fetch.fetch();
-    	double weight = fetch.parseWeight(weightStr);
+    	double weight = Double.parseDouble(weightStr);
     
     	out.println(weight);
     	out.flush();

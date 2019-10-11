@@ -80,6 +80,9 @@ label{
 .btn-no-radius{
 	border-radius:0;
 }
+.btn_width-for-justify{
+	width:250px;
+}
 /***************************TABLE PROPERTIES*****************************************/
 .table{
 	overflow-y:auto;

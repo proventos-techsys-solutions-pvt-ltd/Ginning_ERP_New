@@ -22,9 +22,7 @@
 					<div class="d-flex justify-content-start align-items-center">
 						<input type="text" class="form-control" id="searchInvoiceNo" name="searchInvoiceNo" placeholder="Invoice No">
 						<button type="button" class="btn btn-success btn-no-radius" onclick="fetchInvoiceData(document.getElementById('searchInvoiceNo').value)">Fetch</button>
-					</div>
-					<div class="col-md-4">
-						<button type="button" class="btn btn-success btn-no-radius lbl-rm-l" onclick="openInNewTab(document.getElementById('invoiceId').value)">Print Invoice</button>
+						<button type="button" class="btn btn-success btn-no-radius lbl-rm-l btn_width-for-justify ml-1" onclick="openInNewTab(document.getElementById('invoiceId').value)">Print Invoice</button>
 					</div>
 				</div>
 				<div class="col-md-4 offset-md-5">
@@ -112,7 +110,7 @@
 							<label class="lbl-rm-all">Name</label>
 							<div class="d-flex justify-content-start align-items-center">
 							<input type="text" class="form-control" id="nameOnCheque" name="nameOnCheque" placeholder="Name on Cheque">
-							<button type="button" class="btn btn-success btn-no-radius" onclick="submitChequeData()" id="payCheque">Pay</button>&nbsp;
+							<button type="button" class="btn btn-success btn-no-radius" onclick="submitChequeData()" id="payCheque">Print</button>&nbsp;
 							<button type="button" class="btn btn-success btn-no-radius">Void</button>
 							</div>
 						</div>
@@ -208,6 +206,11 @@
 							<button type="button" class="btn btn-success  btn-no-radius">Void</button>
 							</div>
 						</div>
+					</div>
+					<div class="form-row border-top" >
+					<div class="col-md-4">
+							<button type="button" class="btn btn-success  btn-no-radius" onclick="submitPayment()">Submit Payment</button>
+					</div>
 					</div>
 				<form id='paymentForm' action="../processing/submitPayment.jsp" target="_blank">
 					<input type="hidden" id="data" name="data" />	
@@ -550,6 +553,49 @@
 		}
 		
 		
+		function submitPayment(){
+			
+			var cashAmount = document.getElementById('cashAmount').value;
+			var chequeAmount = document.getElementById('chequeAmount').value;
+			var rtgsAmount = document.getElementById('rtgsAmount').value;
+			var pdcCashFlag = document.getElementById('pdcCashSection').hasAttribute('hidden');
+			var pdcChequeFlag = document.getElementById('pdcChequeSection').hasAttribute('hidden');
+			var pdcRtgsFlag = document.getElementById('pdcRtgsSection').hasAttribute('hidden');
+			
+			var parentJson = {};
+			
+			if(Number(cashAmount) > 0){
+				var cashJson = submitCash();
+				parentJson['cashJson'] = cashJson;
+			}
+			if(Number(chequeAmount) > 0){
+				var chequeJson = submitChequeData();
+				parentJson['chequeJson'] = chequeJson;
+			}
+			if(Number(rtgsAmount) > 0){
+				var rtgsJson = submitRtgsData();
+				parentJson['rtgsJson'] = rtgsJson;
+			}
+			if(pdcCashFlag === false){
+				var pdcCashJson = submitPdcCash();
+				parentJson['pdcCashJson'] = pdcCashJson;
+			}
+			if(pdcChequeFlag === false){
+				var pdcChequeJson = submitPdc();
+				parentJson['pdcChequeJson'] = pdcChequeJson;
+			}
+			if(pdcRtgsFlag === false){
+				var pdcRtgsJson = submitPdcRtgs();
+				parentJson['pdcRtgsJson'] = pdcRtgsJson;
+			}
+			
+			console.log(parentJson);
+			var jaonData = JSON.stringify(parentJson);
+			document.getElementById('data').value = chequeInfo;
+			
+		}
+		
+		
 		function submitChequeData(){
 			
 			var chequeJson = {};
@@ -568,12 +614,14 @@
 			chequeJson['bankAccountId'] = bank.options[bank.selectedIndex].getAttribute('data-account-id');
 			chequeJson['accountPayableId'] = document.getElementById('accountPayableId').value;
 			
-			var chequeInfo = JSON.stringify(chequeJson);
+			/* var chequeInfo = JSON.stringify(chequeJson);
 			document.getElementById('data').value = chequeInfo;
 			console.log(chequeInfo);
 			document.getElementById('payCheque').disabled = true;
 			document.getElementById('paymentForm').submit();
-			//submitDataAjax(chequeInfo);
+			//submitDataAjax(chequeInfo); */
+			
+			return chequeJson;
 		}
 		
 	function submitRtgsData(){
@@ -593,12 +641,14 @@
 			rtgsJson['accountPayableId'] = document.getElementById('accountPayableId').value;
 			rtgsJson['companyId'] = document.getElementById('companyId').value;
 
-			var rtgsInfo = JSON.stringify(rtgsJson);
+			/* var rtgsInfo = JSON.stringify(rtgsJson);
 			console.log(rtgsInfo);
 			document.getElementById('data').value = rtgsInfo;
 			document.getElementById('payRtgs').disabled = true;
 			//document.getElementById('paymentForm').submit();
-			submitDataAjax(rtgsInfo);
+			submitDataAjax(rtgsInfo); */
+			
+			return rtgsJson;
 		}
 	
 	function submitCash(){
@@ -613,12 +663,14 @@
 		cashJson['accountPayableId'] = document.getElementById('accountPayableId').value;
 		cashJson['cashAccountId'] = document.getElementById('cashAccountId').value;
 
-		var cashInfo = JSON.stringify(cashJson);
+		/* var cashInfo = JSON.stringify(cashJson);
 		document.getElementById('data').value = cashInfo;
 		document.getElementById('payCash').disabled = true;
 		
 		//document.getElementById('paymentForm').submit();
-		submitDataAjax(cashInfo);
+		submitDataAjax(cashInfo); */
+		
+		return cashJson;
 	}
 	
    function submitPdc(){
@@ -642,13 +694,16 @@
 	   pdcJson['bankAccountId'] = bank.options[bank.selectedIndex].getAttribute('data-account-id');
 	   pdcJson['accountPayableId'] = document.getElementById('accountPayableId').value;
 	   
-	   var pdcInfo = JSON.stringify(pdcJson);
+	   /* var pdcInfo = JSON.stringify(pdcJson);
 	   console.log(pdcInfo);
 	   document.getElementById('data').value = pdcInfo;
 	   document.getElementById('payPdc').disbled = true;
 	   
 	   document.getElementById('paymentForm').submit();
-	   //submitDataAjax(pdcInfo);
+	   //submitDataAjax(pdcInfo); */
+	   
+	   return pdcJson;
+	   
    }
    
    function submitPdcRtgs(){
@@ -671,32 +726,36 @@
 	   pdcRtgsJson['companyId'] = document.getElementById('companyId').value;
 
 	   
-		var pdcRtgsInfo = JSON.stringify(pdcRtgsJson);
+		/* var pdcRtgsInfo = JSON.stringify(pdcRtgsJson);
 		console.log(pdcRtgsJson);
 		document.getElementById('data').value = pdcRtgsInfo;
 		document.getElementById('payPdcRtgs').diabled = true;
 		//document.getElementById('paymentForm').submit();
-		submitDataAjax(pdcRtgsInfo);
+		submitDataAjax(pdcRtgsInfo); */
+		
+		return pdcRtgsJson;
 
    }
    
    function submitPdcCash(){
-	   var cashJson = {};
+	   var pdcCashJson = {};
 		
-		cashJson['dataType'] = 'cash';	
-		cashJson['pdcCashAmount'] = document.getElementById('cashAmount').value;
-		cashJson['invoiceId'] = document.getElementById('invoiceId').value;
-		cashJson['customerName'] = document.getElementById('customerName').value;
-		cashJson['customerId'] = document.getElementById('customerId').value;
-		cashJson['invoiceNo'] = document.getElementById('invoiceNo').value;
-		cashJson['accountPayableId'] = document.getElementById('accountPayableId').value;
-		cashJson['cashAccountId'] = document.getElementById('pdcCashAccountId').value;
+	  	pdcCashJson['dataType'] = 'cash';	
+		pdcCashJson['pdcCashAmount'] = document.getElementById('cashAmount').value;
+		pdcCashJson['invoiceId'] = document.getElementById('invoiceId').value;
+		pdcCashJson['customerName'] = document.getElementById('customerName').value;
+		pdcCashJson['customerId'] = document.getElementById('customerId').value;
+		pdcCashJson['invoiceNo'] = document.getElementById('invoiceNo').value;
+		pdcCashJson['accountPayableId'] = document.getElementById('accountPayableId').value;
+		pdcCashJson['cashAccountId'] = document.getElementById('pdcCashAccountId').value;
 		
-		var cashInfo = JSON.stringify(cashJson);
+		/* var cashInfo = JSON.stringify(cashJson);
 		document.getElementById('data').value = cashInfo;
 		document.getElementById('payPdcCash').disabled = true;
 		//document.getElementById('paymentForm').submit();
-		submitDataAjax(cashInfo);
+		submitDataAjax(cashInfo); */
+		
+		return pdcCashJson;
    }
 		
 	checkDailySetup();

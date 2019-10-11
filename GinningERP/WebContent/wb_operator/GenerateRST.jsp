@@ -317,7 +317,7 @@ function getDailySetupRecords(){
 		var response = this.response.trim();
 		console.log("daily Setup---"+response);
 		if(Number(response) > 0){
-			$.unblockUI
+			 $.unblockUI();
 			document.getElementById("dailySetupId").value = response;
 		}
 		else if(Number(response) <= 0){
@@ -501,12 +501,14 @@ function fetchGrossWt(){
 		console.log("AJAX Req sent");
 		fetchData.open("GET",url,true);  
 		fetchData.send();  
+		$.blockUI();
 	}catch(e){alert("Unable to connect to server");}
 }
 
 //Set gross weight obtained by AJAX in input field
  function fetchGrossWeighData(){
 	 if(fetchData.readyState == 4){
+		 $.unblockUI();
 		 var response = this.response.trim();
 		 console.log('Weight --- '+response);
 		 var grossWtInput = document.getElementById('gross');
@@ -528,12 +530,14 @@ function fetchGrossWt(){
 			console.log("AJAX Req sent");
 			fetchData.open("GET",url,true);  
 			fetchData.send();  
+			$.blockUI();
 		}catch(e){alert("Unable to connect to server");}
 	}
 	
  //Set tare weight obtained by AJAX in input field
 	 function fetchTareWeighData(){
 		 if(fetchData.readyState == 4){
+			 $.unblockUI();
 			 var response = this.response.trim();
 			 console.log('Weight --- '+response);
 			 var tareWtInput = document.getElementById('tare');
