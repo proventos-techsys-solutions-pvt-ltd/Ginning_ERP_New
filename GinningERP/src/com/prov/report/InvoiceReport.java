@@ -830,4 +830,32 @@ public ArrayList<Invoice> getReport() {
 		}
 		return arr;
 	}
+	
+	public int getInvoicePaymentStatus(int invoiceId) {
+		ResultSet rs = null;
+		Connection con = null;
+		int status = 0;
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT PAID_BY_OP FROM INVOICE_MAST WHERE ID = ?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, invoiceId);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				status = rs.getInt(1);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return status;
+	}
 }

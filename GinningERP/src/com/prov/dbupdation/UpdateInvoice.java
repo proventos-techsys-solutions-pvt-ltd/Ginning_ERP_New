@@ -105,6 +105,37 @@ public int updateInvoice(Invoice i) {
 		}
 		return rowCount;
 	}
+	
+	public int updateInvoicePaidStatus(int invoiceId) {
+		
+		Connection con = null;
+		int rowCount = 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		String updateInvoice = "UPDATE INVOICE_MAST SET PAID_BY_OP = ? WHERE ID = ?";
+		PreparedStatement stmt;
+		try {
+			
+			stmt = con.prepareStatement(updateInvoice);
+
+			stmt.setInt(1, 1);
+			stmt.setInt(2, invoiceId);
+			
+			rowCount = stmt.executeUpdate();
+			
+			stmt.close();
+			con.close();
+			
+			System.out.println("Updation Succesful - "+rowCount);
+			} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rowCount;
+	}
 }
 
 	

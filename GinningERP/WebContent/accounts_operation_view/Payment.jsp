@@ -209,7 +209,10 @@
 					</div>
 					<div class="form-row border-top" >
 					<div class="col-md-4">
-							<button type="button" class="btn btn-success  btn-no-radius" onclick="submitPayment()">Submit Payment</button>
+							<button type="button" class="btn btn-success  btn-no-radius" id="submitButton" onclick="submitPayment()">Submit Payment</button>
+					</div>
+					<div class="col-md-6">
+							<button type="button" class="btn btn-success  btn-no-radius" id="" onclick="location.reload()">Reset</button>
 					</div>
 					</div>
 				<form id='paymentForm' action="../processing/submitPayment.jsp" target="_blank">
@@ -550,6 +553,20 @@
 			}
 			
 			setCurrentDate();
+			
+			if(Number(data.paidByOperator) === 1){
+				var inputElements = document.getElementsByTagName('input');
+				var selectElements = document.getElementsByTagName('select');
+				var submitButton = document.getElementById('submitButton');
+				
+				for(i=0; i<inputElements.length; i++){
+					inputElements[i].disabled = true;
+				}
+				for(j=0; j<selectElements.length; j++){
+					selectElements[j].disabled = true;
+				}
+				submitButton.disabled = true;
+			}
 		}
 		
 		
@@ -563,6 +580,7 @@
 			var pdcRtgsFlag = document.getElementById('pdcRtgsSection').hasAttribute('hidden');
 			
 			var parentJson = {};
+			parentJson['invoiceId'] = document.getElementById('invoiceId').value;
 			
 			if(Number(cashAmount) > 0){
 				var cashJson = submitCash();
@@ -590,9 +608,9 @@
 			}
 			
 			console.log(parentJson);
-			var jaonData = JSON.stringify(parentJson);
-			document.getElementById('data').value = chequeInfo;
+			var jsonData = JSON.stringify(parentJson);
 			
+			submitDataAjax(jsonData);
 		}
 		
 		
