@@ -42,6 +42,7 @@ public class ChequeReport {
 				c.setChequeNo(rs.getString(8));
 				c.setChequeAmount(Long.parseLong(rs.getString(9)));
 				c.setChequeDate(rs.getString(10));
+				c.setStatus(rs.getInt(11));
 			
 			}
 			

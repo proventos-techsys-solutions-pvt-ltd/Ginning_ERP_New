@@ -2,7 +2,7 @@ package com.prov.bean;
 
 public class PDC {
 	
-	private int id, customerId, invoiceId, chequeId, rtgsId, glId;
+	private int id, customerId, invoiceId, chequeId, rtgsId, voucherNo;
 	public int getChequeId() {
 		return chequeId;
 	}
@@ -15,11 +15,11 @@ public class PDC {
 	public void setRtgsId(int rtgsId) {
 		this.rtgsId = rtgsId;
 	}
-	public int getGlId() {
-		return glId;
+	public int getVoucherNo() {
+		return voucherNo;
 	}
-	public void setGlId(int glId) {
-		this.glId = glId;
+	public void setVoucherNo(int voucherNo) {
+		this.voucherNo = voucherNo;
 	}
 	private String payDate, modeOfPayment;
 	private double amount;

@@ -3,6 +3,7 @@ package com.prov.dbupdation;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
 
@@ -10,6 +11,12 @@ import com.prov.bean.Cheque;
 import com.prov.db.OracleConnection;
 
 public class UpdateCheque {
+	
+	/**
+	 * 
+	 * @param c
+	 * @return
+	 */
 	public int updateCheque(Cheque c)
 	{
 		
@@ -53,9 +60,76 @@ public class UpdateCheque {
 			} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return id;
+	}
+	
+	/**
+	 * 
+	 * @param chequeId
+	 * @return
+	 */
+	public int voidCheque(int chequeId) {
+		Connection con = null;
+		int rowCount = 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		String updateCheque = "UPDATE CHEQUE_MAST SET STATUS = 1 WHERE ID = ?";
+		PreparedStatement stmt;
+		try {
+			stmt = con.prepareStatement(updateCheque);
+			
+			stmt.setInt(1, chequeId);
+			
+			rowCount = stmt.executeUpdate();
+			
+			stmt.close();
+			con.close();
+			
+			System.out.println("Updation Succesful-"+rowCount);
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return rowCount;
 		
 	}
+	
+	/**
+	 * 
+	 * @param chequeId
+	 * @return
+	 */
+	public int updatePaymentStatus(int chequeId) {
+		Connection con = null;
+		int rowCount = 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 
+		String updateCheque = "UPDATE CHEQUE_MAST SET PAYMENT_STATUS = 1 WHERE ID = ?";
+		PreparedStatement stmt;
+		try {
+			stmt = con.prepareStatement(updateCheque);
+			
+			stmt.setInt(1, chequeId);
+			
+			rowCount = stmt.executeUpdate();
+			
+			stmt.close();
+			con.close();
+			
+			System.out.println("Updation Succesful-"+rowCount);
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return rowCount;
+		
+	}
 }

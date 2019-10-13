@@ -21,7 +21,7 @@ public class UpdateCustomer {
 			e.printStackTrace();
 		}
 
-		String updateCustomer = "{ ? = call UPDATE_CUSTOMER(?,?,?,?,?,?) }";
+		String updateCustomer = "{ ? = call UPDATE_CUSTOMER(?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(updateCustomer);
@@ -34,6 +34,7 @@ public class UpdateCustomer {
 			cs.setString(5, c.getMobile());
 			cs.setInt(6, c.getBlacklist());
 			cs.setInt(7, c.getMembership());
+			cs.setString(8, c.getPhoto());
 			
 			cs.executeUpdate();
 			

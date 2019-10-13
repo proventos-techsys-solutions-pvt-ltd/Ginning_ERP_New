@@ -4,7 +4,15 @@ public class Customer {
 	
 	private int id, membership, blacklist;
 	
-	private String name, address, mobile;
+	private String name, address, mobile, photo;
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
 
 	public int getId() {
 		return id;

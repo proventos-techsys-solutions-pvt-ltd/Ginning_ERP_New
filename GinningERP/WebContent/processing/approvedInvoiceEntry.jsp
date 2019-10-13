@@ -141,7 +141,7 @@
             pdc.setModeOfPayment((String)json.get("pdcPaymentMode"));
             pdc.setChequeId(0);
             pdc.setRtgsId(0);
-            pdc.setGlId(0);
+            pdc.setVoucherNo(0);
             
             AddPDC add = new AddPDC();
             
@@ -191,8 +191,8 @@
 		trCredit.setDebit(0);
 		trCredit.setTransactionDate(invoice.getInvDate());
 		trCredit.setVouchNo(Integer.parseInt((String)json.get("voucherNo")));
-		trCredit.setNarration("RAW COTTON PURCHASE");
-		trCredit.setVouchRef("RAW COTTON");
+		trCredit.setNarration("RAW COTTON PURCHASE - "+(String)json.get("invoiceNo").toString().toUpperCase());
+		trCredit.setVouchRef("RAW COTTON +"+(String)json.get("invoiceNo").toString().toUpperCase());
 		
 		Transactions trDebit = new Transactions();
 		
@@ -202,8 +202,8 @@
 		trDebit.setDebit(Long.parseLong((String)json.get("pending")));
 		trDebit.setTransactionDate(invoice.getInvDate());
 		trDebit.setVouchNo(Integer.parseInt((String)json.get("voucherNo")));
-		trDebit.setNarration("RAW COTTON PURCHASE");
-		trDebit.setVouchRef("RAW COTTON");
+		trDebit.setNarration("RAW COTTON PURCHASE - "+(String)json.get("invoiceNo").toString().toUpperCase());
+		trDebit.setVouchRef("RAW COTTON - "+ (String)json.get("invoiceNo").toString().toUpperCase());
 		
 		AddTransactions addTr = new AddTransactions();
 		

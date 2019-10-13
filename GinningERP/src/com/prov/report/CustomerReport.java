@@ -36,6 +36,7 @@ public class CustomerReport {
 				customer.setMobile(rs.getString(4));
 				customer.setBlacklist(rs.getInt(5));
 				customer.setMembership(rs.getInt(6));
+				customer.setPhoto(rs.getString(7));
 			}
 			
 			rs.close();
@@ -71,6 +72,7 @@ public class CustomerReport {
 				customer.setMobile(rs.getString(4));
 				customer.setBlacklist(rs.getInt(5));
 				customer.setMembership(rs.getInt(6));
+				customer.setPhoto(rs.getString(7));
 			}
 			
 			rs.close();
@@ -107,6 +109,7 @@ public class CustomerReport {
 				customer.setMobile(rs.getString(4));
 				customer.setBlacklist(rs.getInt(5));
 				customer.setMembership(rs.getInt(6));
+				customer.setPhoto(rs.getString(7));
 				
 				customerList.add(customer);
 			}

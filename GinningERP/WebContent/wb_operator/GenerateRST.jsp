@@ -192,6 +192,7 @@
 			       	<div class="col-md-6">
 						        <canvas id="canvas" width="213" height="160"  name="ImageFile1" style="display: none;"></canvas>
 						        <img id="canvasImg" name="ImageFile"><img>
+						        <input type="hidden" name="ImageData" id="ImageData" >
 			       	</div>	
 			       	<div class="col-md-6">
 			       		<label class="lbl-rm-all">Name</label>
@@ -259,7 +260,8 @@ document.getElementById("getCustomer").addEventListener("click",function(){
     document.getElementById("click-customer-photo").addEventListener("click", function () {
         context.drawImage(video, 0, 0, 213, 160);
         document.getElementById('canvasImg').src = canvas.toDataURL("image/png");
-//            document.getElementById('video').style.display = "none";  // hide the live image video portin after click on take picture
+        document.getElementById('ImageData').value = canvas.toDataURL("image/png"); 
+        //document.getElementById('video').style.display = "none";  // hide the live image video portin after click on take picture
     });
 }, false);
 
@@ -627,7 +629,7 @@ function getCustomerData(customerName,mobile){
 	try{  
 		checkRequest.onreadystatechange=checkCustomer;  
 		console.log("AJAX Req sent");
-		checkRequest.open("GET",url,true);  
+		checkRequest.open("POST",url,true);  
 		checkRequest.send();  
 	}catch(e){alert("Unable to connect to server");}
 }
@@ -694,7 +696,8 @@ function submitNewCustomer(){
 		var newCustomerName = document.getElementById("newCustomerName").value;
 		var newCustomerMobile = document.getElementById("newCustomerMobile").value;
 		var newCustomerAddress = document.getElementById("newCustomerAddress").value;
-		saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress);
+		var customerImage = document.getElementById("ImageData").value);
+		saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress,customerImage);
 		document.getElementById("customerAdd").setAttribute("data-dismiss","modal");
 		
 	}else{
@@ -707,10 +710,11 @@ function submitNewCustomer(){
 }
 
 //Create AJAX Request for new customer form submission
-function saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress){
-	var url="${pageContext.request.contextPath}/processing/addCustomer.jsp?name="+newCustomerName+"&mobile="+newCustomerMobile+"&address="+newCustomerAddress;
+function saveCustomerRequest(newCustomerName, newCustomerMobile, newCustomerAddress, customerImage){
+	console.log(customerImage);
+	var url="${pageContext.request.contextPath}/processing/addCustomer.jsp?name="+newCustomerName+"&mobile="+newCustomerMobile+"&address="+newCustomerAddress+"&image="+customerImage;
 	if(window.XMLHttpRequest){  
-		newCustomerRequest=new XMLHttpRequest();  
+		newCustomerRequest=new XMLHttpRequest();
 	}  
 	else if(window.ActiveXObject){  
 		newCustomerRequest=new ActiveXObject("Microsoft.XMLHTTP");  

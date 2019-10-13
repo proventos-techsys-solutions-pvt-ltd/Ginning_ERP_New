@@ -114,7 +114,7 @@ public class PDCReport {
 				pdc.setModeOfPayment(rs.getString(6));
 				pdc.setChequeId(rs.getInt(7));
 				pdc.setRtgsId(rs.getInt(8));
-				pdc.setGlId(rs.getInt(9));
+				pdc.setVoucherNo(rs.getInt(9));
 				
 			}
 			

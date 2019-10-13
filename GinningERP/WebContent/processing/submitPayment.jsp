@@ -42,8 +42,14 @@
 		
 		if(parent.containsKey("chequeJson")){
 			
+			VoucherSeries vs = new VoucherSeries();
+			
+			int voucherNo = vs.getVoucherNo();
+			
 			JSONObject chequeJson = (JSONObject)parent.get("chequeJson");
 	
+			String invoiceNo = (String)chequeJson.get("invoiceNo");
+			
 			Cheque cheque = new Cheque();
 		
 			cheque.setBankId(Integer.parseInt((String)chequeJson.get("chequeBankId")));
@@ -55,14 +61,15 @@
 			cheque.setCustomerName(((String)chequeJson.get("chequeName")).toUpperCase());
 			cheque.setInvoiceNo(((String)chequeJson.get("invoiceNo")).toUpperCase());
 			cheque.setInvoiceId(Integer.parseInt((String)chequeJson.get("invoiceId")));
+			cheque.setStatus(0);
+			cheque.setPaymentStatus(0);
+			cheque.setVoucherNo(voucherNo);
 			
 			AddCheque addCheque = new AddCheque();
 			
 			id[0] = addCheque.addCheque(cheque);
 			
-			VoucherSeries vs = new VoucherSeries();
 			
-			int voucherNo = vs.getVoucherNo();
 			
 			Transactions chequeTrDb = new Transactions();
 			
@@ -71,8 +78,8 @@
 			chequeTrDb.setDebit(cheque.getChequeAmount());
 			chequeTrDb.setCredit(0);
 			chequeTrDb.setTransactionDate(cheque.getChequeDate());
-			chequeTrDb.setNarration("RAW COTTON PURCHASE");
-			chequeTrDb.setVouchRef("RAW COTTON");
+			chequeTrDb.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
+			chequeTrDb.setVouchRef("RAW COTTON - "+invoiceNo);
 			chequeTrDb.setVouchNo(voucherNo);
 			
 			Transactions chequeTrCr = new Transactions();
@@ -82,8 +89,8 @@
 			chequeTrCr.setDebit(0);
 			chequeTrCr.setCredit(cheque.getChequeAmount());
 			chequeTrCr.setTransactionDate(cheque.getChequeDate());
-			chequeTrCr.setNarration("RAW COTTON PURCHASE");
-			chequeTrCr.setVouchRef("RAW COTTON");
+			chequeTrCr.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
+			chequeTrCr.setVouchRef("RAW COTTON - "+invoiceNo);
 			chequeTrCr.setVouchNo(voucherNo);
 			
 			AddTransactions addTr = new AddTransactions();
@@ -103,8 +110,12 @@
 			
 		} if(parent.containsKey("rtgsJson")){
 			
+			VoucherSeries vs = new VoucherSeries();
+			
+			int voucherNo = vs.getVoucherNo();
+			
 			JSONObject rtgsJson = (JSONObject)parent.get("rtgsJson");
-	
+			String invoiceNo = (String)rtgsJson.get("invoiceNo");
 			Rtgs rtgs = new Rtgs();
 		
 			rtgs.setBankName(((String)rtgsJson.get("rtgsBank")).toUpperCase());
@@ -116,6 +127,7 @@
 			rtgs.setCustomerName(((String)rtgsJson.get("customerName")).toUpperCase());
 			rtgs.setInvoiceNo(((String)rtgsJson.get("invoiceNo")).toUpperCase());
 			rtgs.setInvoiceId(Integer.parseInt((String)rtgsJson.get("invoiceId")));
+			rtgs.setVoucherNo(voucherNo);
 			
 			AddRtgs addRtgs = new AddRtgs();
 			
@@ -125,9 +137,7 @@
 			
 			updateInvoice.updatePendingAmount(rtgs.getRtgsAmount(), rtgs.getInvoiceId());
 			
-			VoucherSeries vs = new VoucherSeries();
 			
-			int voucherNo = vs.getVoucherNo();
 			
 			Transactions rtgsTrDb = new Transactions();
 			
@@ -151,8 +161,8 @@
 			rtgsTrCr.setDebit(0);
 			rtgsTrCr.setCredit(rtgs.getRtgsAmount());
 			rtgsTrCr.setTransactionDate(rtgs.getRtgsDate());
-			rtgsTrCr.setNarration("RAW COTTON PURCHASE");
-			rtgsTrCr.setVouchRef("RAW COTTON");
+			rtgsTrCr.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
+			rtgsTrCr.setVouchRef("RAW COTTON - "+invoiceNo);
 			rtgsTrCr.setVouchNo(voucherNo);
 			
 			AddTransactions addTr = new AddTransactions();
@@ -169,7 +179,7 @@
 		} if(parent.containsKey("cashJson")){
 	
 			JSONObject cashJson = (JSONObject)parent.get("cashJson");
-			
+			String invoiceNo = (String)cashJson.get("invoiceNo");
 			int invoiceId = Integer.parseInt((String)cashJson.get("invoiceId"));
 			
 			id[2] = updateInvoice.updatePendingAmount(Long.parseLong((String)cashJson.get("cashAmount")),invoiceId);
@@ -189,8 +199,8 @@
 			cashTrDb.setDebit(Long.parseLong((String)cashJson.get("cashAmount")));
 			cashTrDb.setCredit(0);
 			cashTrDb.setTransactionDate(todaysDate);
-			cashTrDb.setNarration("RAW COTTON PURCHASE");
-			cashTrDb.setVouchRef("RAW COTTON");
+			cashTrDb.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
+			cashTrDb.setVouchRef("RAW COTTON - "+invoiceNo);
 			cashTrDb.setVouchNo(voucherNo);
 			
 			Transactions cashTrCr = new Transactions();
@@ -202,8 +212,8 @@
 			cashTrCr.setDebit(0);
 			cashTrCr.setCredit(Long.parseLong((String)cashJson.get("cashAmount")));
 			cashTrCr.setTransactionDate(todaysDate);
-			cashTrCr.setNarration("RAW COTTON PURCHASE");
-			cashTrCr.setVouchRef("RAW COTTON");
+			cashTrCr.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
+			cashTrCr.setVouchRef("RAW COTTON - "+invoiceNo);
 			cashTrCr.setVouchNo(voucherNo);
 			
 			AddTransactions addTr = new AddTransactions();
@@ -219,8 +229,12 @@
 			
 		} if(parent.containsKey("pdcChequeJson")){
 			
-			JSONObject pdcChequeJson = (JSONObject)parent.get("pdcChequeJson");
+			VoucherSeries vs = new VoucherSeries();
 			
+			int voucherNo = vs.getVoucherNo();
+			
+			JSONObject pdcChequeJson = (JSONObject)parent.get("pdcChequeJson");
+			String invoiceNo = (String)pdcChequeJson.get("invoiceNo");
 			
 			PDC pdc = new PDC();
 			Cheque cheque = new Cheque();
@@ -239,6 +253,9 @@
 			cheque.setCustomerName((String)pdcChequeJson.get("pdcPayeeName"));
 			cheque.setInvoiceId(invoiceId);
 			cheque.setInvoiceNo((String)pdcChequeJson.get("invoiceNo"));
+			cheque.setStatus(0);
+			cheque.setPaymentStatus(0);
+			cheque.setVoucherNo(voucherNo);
 			
 			int chequeId = addCheque.addCheque(cheque);
 			
@@ -249,9 +266,6 @@
 			
 			updatePdc.addChequeId(chequeId, invoiceId);
 			
-			VoucherSeries vs = new VoucherSeries();
-			
-			int voucherNo = vs.getVoucherNo();
 			
 			Transactions chequeTrDb = new Transactions();
 			
@@ -260,8 +274,8 @@
 			chequeTrDb.setDebit(cheque.getChequeAmount());
 			chequeTrDb.setCredit(0);
 			chequeTrDb.setTransactionDate(cheque.getChequeDate());
-			chequeTrDb.setNarration("RAW COTTON PURCHASE");
-			chequeTrDb.setVouchRef("RAW COTTON");
+			chequeTrDb.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
+			chequeTrDb.setVouchRef("RAW COTTON - "+invoiceNo);
 			chequeTrDb.setVouchNo(voucherNo);
 			
 			Transactions chequeTrCr = new Transactions();
@@ -271,8 +285,8 @@
 			chequeTrCr.setDebit(0);
 			chequeTrCr.setCredit(cheque.getChequeAmount());
 			chequeTrCr.setTransactionDate(cheque.getChequeDate());
-			chequeTrCr.setNarration("RAW COTTON PURCHASE");
-			chequeTrCr.setVouchRef("RAW COTTON");
+			chequeTrCr.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
+			chequeTrCr.setVouchRef("RAW COTTON - "+invoiceNo);
 			chequeTrCr.setVouchNo(voucherNo);
 			
 			AddTransactions addTr = new AddTransactions();
@@ -287,8 +301,12 @@
 			
 		} if(parent.containsKey("pdcRtgsJson")){
 			
+			VoucherSeries vs = new VoucherSeries();
+			
+			int voucherNo = vs.getVoucherNo();
+			
 			JSONObject pdcRtgsJson = (JSONObject)parent.get("pdcRtgsJson");
-	
+			String invoiceNo = (String)pdcRtgsJson.get("invoiceNo");
 			Rtgs rtgs = new Rtgs();
 		
 			rtgs.setBankName(((String)pdcRtgsJson.get("pdcRtgsBank")).toUpperCase());
@@ -300,6 +318,7 @@
 			rtgs.setCustomerName(((String)pdcRtgsJson.get("customerName")).toUpperCase());
 			rtgs.setInvoiceNo(((String)pdcRtgsJson.get("invoiceNo")).toUpperCase());
 			rtgs.setInvoiceId(Integer.parseInt((String)pdcRtgsJson.get("invoiceId")));
+			rtgs.setVoucherNo(voucherNo);
 			
 			AddRtgs addRtgs = new AddRtgs();
 			
@@ -312,9 +331,6 @@
 			
 			updatePdc.addRtgsIdId(rtgsId, rtgs.getInvoiceId());
 			
-			VoucherSeries vs = new VoucherSeries();
-			
-			int voucherNo = vs.getVoucherNo();
 			
 			Transactions rtgsPdcTrDb = new Transactions();
 			
@@ -323,8 +339,8 @@
 			rtgsPdcTrDb.setDebit(rtgs.getRtgsAmount());
 			rtgsPdcTrDb.setCredit(0);
 			rtgsPdcTrDb.setTransactionDate(rtgs.getRtgsDate());
-			rtgsPdcTrDb.setNarration("RAW COTTON PURCHASE");
-			rtgsPdcTrDb.setVouchRef("RAW COTTON");
+			rtgsPdcTrDb.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
+			rtgsPdcTrDb.setVouchRef("RAW COTTON - "+invoiceNo);
 			rtgsPdcTrDb.setVouchNo(voucherNo);
 			
 			Transactions rtgsPdcTrCr = new Transactions();
@@ -338,8 +354,8 @@
 			rtgsPdcTrCr.setDebit(0);
 			rtgsPdcTrCr.setCredit(rtgs.getRtgsAmount());
 			rtgsPdcTrCr.setTransactionDate(rtgs.getRtgsDate());
-			rtgsPdcTrCr.setNarration("RAW COTTON PURCHASE");
-			rtgsPdcTrCr.setVouchRef("RAW COTTON");
+			rtgsPdcTrCr.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
+			rtgsPdcTrCr.setVouchRef("RAW COTTON - "+invoiceNo);
 			rtgsPdcTrCr.setVouchNo(voucherNo);
 			
 			AddTransactions addTr = new AddTransactions();
@@ -355,18 +371,19 @@
 				
 		} if(parent.containsKey("pdcCashJson")){
 			
-			JSONObject pdcCashJson = (JSONObject)parent.get("pdcCashJson");
+
+			VoucherSeries vs = new VoucherSeries();
 			
+			int voucherNo = vs.getVoucherNo();
+			
+			JSONObject pdcCashJson = (JSONObject)parent.get("pdcCashJson");
+			String invoiceNo = (String)pdcCashJson.get("invoiceNo");
 			int invoiceId = Integer.parseInt((String)pdcCashJson.get("invoiceId"));
 			
 			id[5] = updateInvoice.updatePendingAmount(Long.parseLong((String)pdcCashJson.get("pdcCashAmount")),invoiceId);
 			int glId = 0;
 			
-			updatePdc.addGlId(glId, invoiceId);
-			
-			VoucherSeries vs = new VoucherSeries();
-			
-			int voucherNo = vs.getVoucherNo();
+			updatePdc.addGlId(voucherNo, invoiceId);
 			
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
 			Date date = new Date(); 
@@ -379,8 +396,8 @@
 			cashTrDb.setDebit(Long.parseLong((String)pdcCashJson.get("pdcCashAmount")));
 			cashTrDb.setCredit(0);
 			cashTrDb.setTransactionDate(todaysDate);
-			cashTrDb.setNarration("RAW COTTON PURCHASE");
-			cashTrDb.setVouchRef("RAW COTTON");
+			cashTrDb.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
+			cashTrDb.setVouchRef("RAW COTTON - "+invoiceNo);
 			cashTrDb.setVouchNo(voucherNo);
 			
 			Transactions cashTrCr = new Transactions();

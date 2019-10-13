@@ -20,7 +20,7 @@ public class AddCheque {
 			e.printStackTrace();
 		}
 		
-		String addAccountName = "{ ? = call ADD_CHEQUE(?,?,?,?,?,?,?,?,?) }";
+		String addAccountName = "{ ? = call ADD_CHEQUE(?,?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -39,6 +39,9 @@ public class AddCheque {
 			cs.setString(8, c.getChequeNo());
 			cs.setLong(9, c.getChequeAmount());
 			cs.setDate(10, date);
+			cs.setInt(11, c.getStatus());
+			cs.setInt(12, c.getPaymentStatus());
+			cs.setInt(13, c.getVoucherNo());
 			
 			cs.executeUpdate();
 			

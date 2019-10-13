@@ -20,7 +20,7 @@ public class AddRtgs {
 			e.printStackTrace();
 		}
 		
-		String addRtgs = "{ ? = call ADD_RTGS(?,?,?,?,?,?,?,?,?) }";
+		String addRtgs = "{ ? = call ADD_RTGS(?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -48,6 +48,7 @@ public class AddRtgs {
 			cs.setDate(8, sqlDate);
 			cs.setString(9, r.getCustomerName());
 			cs.setString(10, r.getInvoiceNo());
+			cs.setInt(11, r.getVoucherNo());
 			
 			cs.executeUpdate();
 			

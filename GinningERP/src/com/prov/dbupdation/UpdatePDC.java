@@ -40,7 +40,7 @@ public class UpdatePDC {
 			cs.setString(7, p.getModeOfPayment());
 			cs.setInt(8, p.getChequeId());
 			cs.setInt(9, p.getRtgsId());
-			cs.setInt(10, p.getGlId());
+			cs.setInt(10, p.getVoucherNo());
 			
 			cs.executeUpdate();
 			
@@ -98,7 +98,7 @@ public class UpdatePDC {
 	}
 	
 	
-	public int addGlId(int glId, int invoiceId)
+	public int addGlId(int voucherNo, int invoiceId)
 	{
 		
 		Connection con = null;
@@ -110,13 +110,13 @@ public class UpdatePDC {
 		}
 
 		String updatePdc = "UPDATE PDC_MAST \r\n" + 
-								"SET CASH_GL_ID = ?\r\n" + 
+								"SET VOUCHER_NO = ?\r\n" + 
 								"WHERE INVOICE_ID = ?";
 		PreparedStatement stmt;
 		try {
 			stmt = con.prepareStatement(updatePdc);
 			
-			stmt.setInt(1, glId);
+			stmt.setInt(1, voucherNo);
 			stmt.setInt(2, invoiceId);
 			
 			noOfRows = stmt.executeUpdate();

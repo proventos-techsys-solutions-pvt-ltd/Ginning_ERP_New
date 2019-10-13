@@ -45,10 +45,10 @@ public class AddPDC {
 			}else if(  p.getRtgsId() > 0) {
 				cs.setInt(8,  p.getRtgsId());
 			}
-			if( p.getGlId() == 0) {
+			if( p.getVoucherNo() == 0) {
 				cs.setNull(9, Types.NUMERIC);
-			}else if( p.getGlId() > 0) {
-				cs.setInt(9, p.getGlId());
+			}else if( p.getVoucherNo() > 0) {
+				cs.setInt(9, p.getVoucherNo());
 			}
 			
 			cs.executeUpdate();
