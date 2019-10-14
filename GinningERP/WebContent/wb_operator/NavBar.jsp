@@ -3,11 +3,12 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <nav class="navbar navbar-expand-lg custom-navbar">
+
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a class="navbar-brand" href="./home.jsp">Samir Cotton Industries</a>
+    <a class="navbar-brand" href="./home.jsp"><img src="../property/img/logo.png" alt="logo" width="200px" height="50px;"> </a>
    
     	<div style="width:100%;" class="d-flex justify-content-end align-items-center">
     		 <% User currentUser = (User)session.getAttribute("currentSessionUser"); %>
