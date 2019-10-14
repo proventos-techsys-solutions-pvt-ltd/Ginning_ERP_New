@@ -290,13 +290,13 @@ public ArrayList<Invoice> getReport() {
 			con = OracleConnection.getConnection();
 			
 			String invSql = "SELECT IM.ID, IM.INVOICE_NO, IM.NET_AMOUNT, IM.AMOUNTPAID, IM.PENDING, IM.INV_DATE, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.AUTHORIZER,  \r\n" + 
-					"IM.NOTE, IM.TOTAL_QUANTITY, IM.CASH_AMOUNT, IM.CHEQUE_AMOUNT, IM.RTGS_AMOUNT, IM.PDC_AMOUNT, IM.PAID_BY_OP, CM.NAME, CM.ADDRESS, CM.MOBILE,\r\n" + 
-					"PDC.ID PDC_ID, pdc.pay_date , pdc.amount PDC_AMT, pdc.mode_of_payment\r\n" + 
-					"FROM INVOICE_MAST IM \r\n" + 
-					"inner join CUSTOMER_MAST CM on IM.CUSTOMER_ID = CM.ID \r\n" + 
-					"left join PDC_MAST PDC on PDC.INVOICE_ID = IM.ID\r\n" + 
-					"WHERE\r\n" + 
-					"IM.INVOICE_NO = ?"; 
+							"IM.NOTE, IM.TOTAL_QUANTITY, IM.CASH_AMOUNT, IM.CHEQUE_AMOUNT, IM.RTGS_AMOUNT, IM.PDC_AMOUNT, IM.PAID_BY_OP, CM.NAME, CM.ADDRESS, CM.MOBILE,\r\n" + 
+							"PDC.ID PDC_ID, pdc.pay_date , pdc.amount PDC_AMT, pdc.mode_of_payment\r\n" + 
+							"FROM INVOICE_MAST IM \r\n" + 
+							"inner join CUSTOMER_MAST CM on IM.CUSTOMER_ID = CM.ID \r\n" + 
+							"left join PDC_MAST PDC on PDC.INVOICE_ID = IM.ID\r\n" + 
+							"WHERE\r\n" + 
+							"IM.INVOICE_NO = ?"; 
 				
 			PreparedStatement stmt = con.prepareStatement(invSql);
 			

@@ -87,6 +87,7 @@
 							</div>
 					</div>
 					<div class="form-row border-top">
+					<input type="hidden" id="chequeId" />
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Cheque</label>
 							<input type="text" class="form-control" id="chequeAmount" name="" readonly>
@@ -177,6 +178,7 @@
 						</div>
 					</div>
 					<div class="form-row border-top" id="pdcChequeSection" hidden>
+						<input type="hidden" id="pdcChequeId" />
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">PDC</label>
 							<input type="text" class="form-control" id="pdcChequeAmount" name="pdcChequeAmount" readonly>
@@ -517,7 +519,6 @@
 			document.getElementById('customerName').value = data.customerName;
 			document.getElementById('invoiceDate').value = data.invoiceDate ;
 			document.getElementById('totalAmount').value = data.totalAmount ;
-			document.getElementById('invoiceStatus').value = data.paidByOperator ;
 			document.getElementById('cashAmount').value = data.cashAmount ;
 			document.getElementById('nameOnCheque').value = data.customerName ;
 			document.getElementById('chequeAmount').value = data.chequeAmount ;
@@ -566,6 +567,7 @@
 			setCurrentDate();
 			
 			if(Number(data.paidByOperator) === 1){
+				document.getElementById('invoiceStatus').value = "Paid by Operator";
 				var inputElements = document.getElementsByTagName('input');
 				var selectElements = document.getElementsByTagName('select');
 				var submitButton = document.getElementById('submitButton');
@@ -577,6 +579,8 @@
 					selectElements[j].disabled = true;
 				}
 				submitButton.disabled = true;
+			}else{
+				document.getElementById('invoiceStatus').value = "Payment Pending";
 			}
 		}
 		
@@ -645,6 +649,8 @@
 			
 			console.log(parentJson);
 			var jsonData = JSON.stringify(parentJson);
+			
+			document.getElementById("submitButton").disabled = true;
 			
 			submitDataAjax(jsonData);
 		}

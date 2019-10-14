@@ -16,6 +16,7 @@
   <!-- Bootstrap JS -->
    	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   	<!-- script src="${pageContext.request.contextPath}/js/jquery-3.3.1.slim.min.js" ></script> -->
+  	<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockWeigh.js" ></script>
   	<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
 	<script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
@@ -507,7 +508,7 @@ function fetchGrossWt(){
 		console.log("AJAX Req sent");
 		fetchData.open("GET",url,true);  
 		fetchData.send();  
-		$.blockUI();
+		$.blockWeigh();
 	}catch(e){alert("Unable to connect to server");}
 	
 }
@@ -515,7 +516,7 @@ function fetchGrossWt(){
 //Set gross weight obtained by AJAX in input field
  function fetchGrossWeighData(){
 	 if(fetchData.readyState == 4){
-		 $.unblockUI();
+		 $.unblockWeigh();
 		 var response = this.response.trim();
 		 console.log('Weight --- '+response);
 		 var grossWtInput = document.getElementById('gross');
@@ -537,14 +538,14 @@ function fetchGrossWt(){
 			console.log("AJAX Req sent");
 			fetchData.open("GET",url,true);  
 			fetchData.send();  
-			$.blockUI();
+			$.blockWeigh();
 		}catch(e){alert("Unable to connect to server");}
 	}
 	
  //Set tare weight obtained by AJAX in input field
 	 function fetchTareWeighData(){
 		 if(fetchData.readyState == 4){
-			 $.unblockUI();
+			 $.unblockWeigh();
 			 var response = this.response.trim();
 			 console.log('Weight --- '+response);
 			 var tareWtInput = document.getElementById('tare');

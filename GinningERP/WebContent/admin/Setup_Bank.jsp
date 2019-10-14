@@ -17,12 +17,6 @@
   <%@include file="../admin/Side_bar.html" %>
   <div id="content">
 	<div class="container-fluid ">
-	 	<div hidden>
-		   <%
-		    out.print(session.getAttribute("bankId"));
-		    session.removeAttribute("bankId");
-			%>
-		</div> 
        		<div class="row border-bottom row-background">
        			<div class="col-md-12">
        				<div class="d-flex justify-content-start align-items-center">
@@ -99,10 +93,28 @@
 </div>
      		</div>
 </div>
-<script src="../js/jquery-3.3.1.slim.min.js" ></script>
+
+<!-- Response modal pop up -->
+<div class="response-back-display"></div>
+<div class="response-body">
+	<div class="response-header">
+		<h5>Information</h5>
+	</div>
+	<div class="response-content">
+		<div class="d-flex justify-content-center align-items-center">
+		<h5 id="response-text" class="ml-4"></h5>
+		</div>
+	</div>
+	<div class="response-footer">
+		<button type="button" class="btn btn-success btn-response" id="response-button">Ok</button>
+	</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
+	<script src="../js/Validation.js"></script>
 <script>
 		
 		
@@ -158,6 +170,33 @@
 					}
 				}
 			}
+			
+			/**************************************
+			Response window code
+			**************************************/
+			var sessionId = {
+					"getSessionId":<%=session.getAttribute("bankId") %>,
+			}
+
+			$(document).ready(function(){
+				$.fn.checkStatus(sessionId.getSessionId,"Bank has been saved successfully!")
+			})
+
+			function myFunction(x) {
+					x.classList.toggle("change");
+			}
+
+			$(document).ready(function(){
+				$(".c-nav-collapse").click(function(){
+						$(".sidebar").toggle(); 
+						if($(".sidebar").css("display")==="none"){
+							$(".row").css("margin-left","10px"); 
+						}else{
+							$(".row").css("margin-left","225px"); 
+						}
+				})
+			})
+			
 			/***********************
 			Side bar 
 			************************/
@@ -168,5 +207,8 @@
 			});
 			
 		</script>
+		<%
+session.removeAttribute("bankId");
+%>
 </body>
 </html>

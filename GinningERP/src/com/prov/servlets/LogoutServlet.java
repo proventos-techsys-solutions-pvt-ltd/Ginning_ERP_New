@@ -21,7 +21,7 @@ public class LogoutServlet extends HttpServlet {
          PrintWriter out=response.getWriter();  
            
          //request.getRequestDispatcher("link.html").include(request, response);  
-           
+         try {  
          HttpSession session=request.getSession(); 
          User user = (User)session.getAttribute("currentSessionUser");
          
@@ -34,5 +34,8 @@ public class LogoutServlet extends HttpServlet {
          response.sendRedirect("Login.html");  
            
          out.close();  
+         }catch (Exception e) {
+        	 response.sendRedirect("Login.html");  
+         }
 	}
 }

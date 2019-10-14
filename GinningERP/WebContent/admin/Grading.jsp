@@ -782,7 +782,7 @@ function calculateTotal(){
 	for(i=0; i<rates.length; i++){
 		total = total + (Number(rates[i].value) * (Number(qty[i].value)/100));
 	}
-		document.getElementById("totalAmount").value = total+Number(document.getElementById("pdcBonusAmount").value);
+		document.getElementById("totalAmount").value = (total+Number(document.getElementById("pdcBonusAmount").value)).toFixed(2);
 }
 
 document.addEventListener('keyup', function(e){

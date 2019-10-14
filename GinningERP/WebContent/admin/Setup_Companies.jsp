@@ -16,12 +16,6 @@
   <%@include file="../admin/Side_bar.html" %>
   <div id="content">
 	<div class="container-fluid ">
-	 <div hidden>
-		   <%
-		    out.print(session.getAttribute("companyId"));
-		    session.removeAttribute("companyId");
-			%>
-		</div> 
 		<div class="row row-background border-bottom">
 			<div class="col-md-12">
 					<h4>Setup Companies</h4>
@@ -112,9 +106,27 @@
 		</div>
 		</div>
 </div>
-<script src="../js/jquery-3.3.1.slim.min.js" ></script>
+
+<!-- Response modal pop up -->
+<div class="response-back-display"></div>
+<div class="response-body">
+	<div class="response-header">
+		<h5>Information</h5>
+	</div>
+	<div class="response-content">
+		<div class="d-flex justify-content-center align-items-center">
+		<h5 id="response-text" class="ml-4"></h5>
+		</div>
+	</div>
+	<div class="response-footer">
+		<button type="button" class="btn btn-success btn-response" id="response-button">Ok</button>
+	</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
+<script src="../js/Validation.js"></script>
 <script>
 		window.onload = function() {
 			  getCompanyData();
@@ -175,6 +187,33 @@
 					}
 				}
 			}
+			
+			/**************************************
+			Response window code
+			**************************************/
+			var sessionId = {
+					"getSessionId":<%=session.getAttribute("companyId") %>,
+			}
+
+			$(document).ready(function(){
+				$.fn.checkStatus(sessionId.getSessionId,"Company has been saved successfully!")
+			})
+
+			function myFunction(x) {
+					x.classList.toggle("change");
+			}
+
+			$(document).ready(function(){
+				$(".c-nav-collapse").click(function(){
+						$(".sidebar").toggle(); 
+						if($(".sidebar").css("display")==="none"){
+							$(".row").css("margin-left","10px"); 
+						}else{
+							$(".row").css("margin-left","225px"); 
+						}
+				})
+			})
+			
 			/***********************
 			Side bar 
 			************************/
@@ -184,5 +223,8 @@
 			    });
 			});
 		</script>
+<%
+session.removeAttribute("companyId");
+%>
 </body>
 </html>

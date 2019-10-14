@@ -112,4 +112,90 @@ public class ChequeReport {
 		System.out.println(jsonObject);
 		return jsonObject;
 	}
+	
+	
+	public JSONObject getChequeForInvoice(int invoiceId) {
+		ResultSet rs = null;
+		Connection con = null;
+		JSONObject json = new JSONObject();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT * FROM CHEQUE_MAST WHERE ID = (SELECT MAX(ID) FROM CHEQUE_MAST WHERE INVOICE_ID = ?)";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, invoiceId);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				json.put("chequeId", rs.getString(1));
+				json.put("chqCustId", rs.getString(2));
+				json.put("chqInvId", rs.getString(3));
+				json.put("chqBnkId", rs.getString(4));
+				json.put("chqName", rs.getString(5));
+				json.put("chqInvNo", rs.getString(6));
+				json.put("chqBnkName", rs.getString(7));
+				json.put("chqNo", rs.getString(8));
+				json.put("chqAmt", rs.getString(9));
+				json.put("chqDate", rs.getString(10));
+				json.put("chqStatus", rs.getString(11));
+			
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return json;
+	}
+	
+	public JSONObject getChequeForInvoicePdc(int invoiceId) {
+		ResultSet rs = null;
+		Connection con = null;
+		JSONObject json = new JSONObject();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT * FROM CHEQUE_MAST WHERE ID = (SELECT MAX(ID) FROM CHEQUE_MAST WHERE INVOICE_ID = ?)";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, invoiceId);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				json.put("chequeId", rs.getString(1));
+				json.put("chqCustId", rs.getString(2));
+				json.put("chqInvId", rs.getString(3));
+				json.put("chqBnkId", rs.getString(4));
+				json.put("chqName", rs.getString(5));
+				json.put("chqInvNo", rs.getString(6));
+				json.put("chqBnkName", rs.getString(7));
+				json.put("chqNo", rs.getString(8));
+				json.put("chqAmt", rs.getString(9));
+				json.put("chqDate", rs.getString(10));
+				json.put("chqStatus", rs.getString(11));
+			
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return json;
+	}
+
 }
