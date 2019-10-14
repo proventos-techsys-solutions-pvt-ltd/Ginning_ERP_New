@@ -421,3 +421,63 @@ h6{
 	height:40px;
 	font-size:18px;
 }
+
+/**********************************
+				Response Classes
+************************************/
+.response-back-display{
+	display:none;
+	position:fixed;
+	top:0;right:0;bottom:0;left:0;
+	background:black;
+	opacity:0.5;
+	z-index:1;
+}
+.response-body{
+	display:none;
+	position:fixed;
+	top:50%;
+	left:50%;
+	width:400px;
+	height:175px;
+	margin-top:-125px;
+	margin-left:-175px;
+	background:#fff;
+	border-radius:5px;
+	z-index:2;
+}
+.response-header{
+	display:flex;
+	justify-content:start;
+	align-items:center;
+	background:#efefef;
+	width:100%;
+	height:40px;
+	border-bottom:1px solid gray;
+	border-radius:5px 5px 0px 0px;
+	padding:10px;
+	color:black;
+}
+
+.response-content{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	width:100%;
+	height:85px;
+	padding:5px;
+}
+
+.response-footer{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	width:100%;
+	height:50px;
+}
+.btn-response{
+	height:auto;
+	width:100px;
+	border-radius:4px;
+}
+

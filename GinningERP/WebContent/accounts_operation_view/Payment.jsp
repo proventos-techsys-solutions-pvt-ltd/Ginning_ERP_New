@@ -17,7 +17,7 @@
 	<%@include file="../accounts_operation_view/NavBar.jsp" %>
 	<div class="container-fluid">
 		<div class="row mt-2 tile-background-row border-bottom">
-				<div class="col-md-3">
+				<div class="col-md-5">
 					<label class="lbl-rm-all">Search</label>
 					<div class="d-flex justify-content-start align-items-center">
 						<input type="text" class="form-control" id="searchInvoiceNo" name="searchInvoiceNo" placeholder="Invoice No">
@@ -25,12 +25,12 @@
 						<button type="button" class="btn btn-success btn-no-radius lbl-rm-l btn_width-for-justify ml-1" onclick="openInNewTab(document.getElementById('invoiceId').value)">Print Invoice</button>
 					</div>
 				</div>
-				<div class="col-md-4 offset-md-5">
+				<div class="col-md-4 offset-md-3">
 					<div class="d-flex justify-content-end align-items-center">
-						<div class="log">
+					<!--<div class="log">
 							<div class="heading">Balance Cash</div>
 							<div class="amt">100000</div>
-						</div>
+						</div>  -->	
 						<div class="log">
 							<div class="heading">Cheque Leaf</div>
 							<div class="amt" id="chequeLeaves">0</div>
@@ -84,7 +84,6 @@
 							<label class="lbl-rm-all">Cash</label>
 							<div class="d-flex justify-content-start align-items-center">
 								<input type="text" class="form-control" id="cashAmount" name="cashAmount" readonly>
-								<button type="button" class="btn btn-success btn-no-radius" onclick="submitCash()" id="payCash">Pay</button>
 							</div>
 					</div>
 					<div class="form-row border-top">
@@ -132,7 +131,6 @@
 							<label class="lbl-rm-all">IFSC Code</label>
 							<div class="d-flex justify-content-start align-items-center">
 							<input type="text" class="form-control" id="rtgsIfsc" name="rtgsIfsc" placeholder="IFSC Code">
-							<button type="button" class="btn btn-success btn-no-radius" onclick="submitRtgsData()" id="payRtgs">Pay</button>
 							</div>
 						</div>
 					</div>
@@ -207,12 +205,12 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-row border-top" >
-					<div class="col-md-4">
-							<button type="button" class="btn btn-success  btn-no-radius" id="submitButton" onclick="submitPayment()">Submit Payment</button>
-					</div>
-					<div class="col-md-6">
-							<button type="button" class="btn btn-success  btn-no-radius" id="" onclick="location.reload()">Reset</button>
+					<div class="form-row border-top" style="width:100%;" >
+					<div class="col-md-12">
+						<div class="d-flex justify-content-end align-items-center">
+							<button type="button" class="btn btn-success  btn-no-radius" id="submitButton" >Submit Payment</button>
+							<button type="button" class="btn btn-success  btn-no-radius ml-1" id="" onclick="location.reload()">Reset</button>
+						</div>
 					</div>
 					</div>
 				<form id='paymentForm' action="../processing/submitPayment.jsp" target="_blank">
@@ -239,8 +237,25 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- Response modal pop up -->
+<div class="response-back-display"></div>
+<div class="response-body">
+	<div class="response-header">
+		<h5>Information</h5>
+	</div>
+	<div class="response-content">
+		<div class="d-flex justify-content-center align-items-center">
+		<h5 id="response-text" class="ml-4"></h5>
+		</div>
+	</div>
+	<div class="response-footer">
+		<button type="button" class="btn btn-success btn-response" id="response-button">Ok</button>
+	</div>
+</div>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/Validation.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script>
 	
@@ -491,11 +506,7 @@
 			document.getElementById('pdcDate').value = "" ;
 			document.getElementById('pdcPayeeName').value = "" ; */
 			
-			document.getElementById('payCash').disabled = false ;
 			document.getElementById('payCheque').disabled = false ;
-			document.getElementById('payRtgs').disabled = false ;
-			document.getElementById('payPdcCash').disabled = false ;
-			document.getElementById('payPdcRtgs').disabled = false ;
 			document.getElementById('payPdc').disabled = false ;
 			
 			
@@ -570,8 +581,33 @@
 		}
 		
 		
-		function submitPayment(){
-			
+		$(document).ready(function(){
+			$("#submitButton").click(function(){
+				if($.fn.validateData($("#chequeNo").val(),/^[0-9]{6}$/)){
+					if(!$.fn.validateData($("#nameOnCheque").val(),/^\s*$/)){
+						if(!$.fn.validateData($("#rtgsBank").val(),/^\s*$/)){
+							if(!$.fn.validateData($("#rtgsAccountNo").val(),/^\s*$/)){
+								if(!$.fn.validateData($("#rtgsIfsc").val(),/^\s*$/)){
+									submitPayment();
+								}else{
+									$.fn.checkStatus(1,"Invalid IFSC Code number!.")
+								}
+							}else{
+								$.fn.checkStatus(1,"Invalid account number!.")
+							}
+						}else{
+							$.fn.checkStatus(1,"Invalid bank name!.")
+						}
+					}else{
+						$.fn.checkStatus(1,"Invalid name on cheque!.")
+					}
+				}else{
+					$.fn.checkStatus(1,"Invalid cheque number!.")
+				}
+			})
+		})
+		
+		function submitPayment(){//submit form data
 			var cashAmount = document.getElementById('cashAmount').value;
 			var chequeAmount = document.getElementById('chequeAmount').value;
 			var rtgsAmount = document.getElementById('rtgsAmount').value;
@@ -819,6 +855,16 @@
 			console.log(response);
 		}
 	}
+	/**************************************
+	Response window code
+	**************************************/
+	var sessionId = {
+			"getSessionId":<%=session.getAttribute("gradeSubmitFlag") %>,
+	}
+
+	$(document).ready(function(){
+		$.fn.checkStatus(sessionId.getSessionId,"Grading information has been saved successfully!")
+	})
 	
 	</script>
 </body>
