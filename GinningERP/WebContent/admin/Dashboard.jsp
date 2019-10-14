@@ -69,7 +69,7 @@
 	  					Raw Cotton	
 	  				</div>
 	  				<div>
-	  					1000Qtl
+	  					<span aria-hidden="true" id="totalRawCotton">&nbsp;&nbsp;</span>
 	  				</div>
 	  			</div>
 	  	</div>
@@ -157,7 +157,7 @@
 			 
 			 var obj = JSON.parse(data);
 			 console.log(obj);
-			 
+			 document.getElementById("totalRawCotton").innerHTML = obj.closingStock.rawCotton+" Kgs.";
 			 var canvas = document.getElementById("myChart");
 			 var ctx = canvas.getContext('2d');
 

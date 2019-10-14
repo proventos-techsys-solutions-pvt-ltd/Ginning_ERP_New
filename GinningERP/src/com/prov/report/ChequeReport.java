@@ -118,11 +118,11 @@ public class ChequeReport {
 		ResultSet rs = null;
 		Connection con = null;
 		JSONObject json = new JSONObject();
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT * FROM CHEQUE_MAST WHERE ID = (SELECT MAX(ID) FROM CHEQUE_MAST WHERE INVOICE_ID = ?)";
+			String sql = "SELECT * FROM CHEQUE_MAST WHERE ID = (SELECT MAX(ID) FROM CHEQUE_MAST WHERE INVOICE_ID = ? AND NOT EXISTS (SELECT * FROM PDC_MAST WHERE CHEQUE_MAST.ID = pdc_mast.cheque_iD))";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -141,7 +141,11 @@ public class ChequeReport {
 				json.put("chqBnkName", rs.getString(7));
 				json.put("chqNo", rs.getString(8));
 				json.put("chqAmt", rs.getString(9));
-				json.put("chqDate", rs.getString(10));
+				String date = rs.getString(10);
+				Date dateFormat = sdf.parse(date);
+				String dateStr = sdf.format(dateFormat);
+				
+				json.put("chqDate", dateStr);
 				json.put("chqStatus", rs.getString(11));
 			
 			}
@@ -164,7 +168,7 @@ public class ChequeReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT * FROM CHEQUE_MAST WHERE ID = (SELECT MAX(ID) FROM CHEQUE_MAST WHERE INVOICE_ID = ?)";
+			String sql = "SELECT * FROM CHEQUE_MAST WHERE ID = (SELECT MAX(CHEQUE_ID) FROM PDC_MAST WHERE iNVOICE_ID = ?)";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -174,17 +178,17 @@ public class ChequeReport {
 			
 			while (rs.next()) {
 				
-				json.put("chequeId", rs.getString(1));
-				json.put("chqCustId", rs.getString(2));
-				json.put("chqInvId", rs.getString(3));
-				json.put("chqBnkId", rs.getString(4));
-				json.put("chqName", rs.getString(5));
-				json.put("chqInvNo", rs.getString(6));
-				json.put("chqBnkName", rs.getString(7));
-				json.put("chqNo", rs.getString(8));
-				json.put("chqAmt", rs.getString(9));
-				json.put("chqDate", rs.getString(10));
-				json.put("chqStatus", rs.getString(11));
+				json.put("pdChequeId", rs.getString(1));
+				json.put("pdchqCustId", rs.getString(2));
+				json.put("pdchqInvId", rs.getString(3));
+				json.put("pdchqBnkId", rs.getString(4));
+				json.put("pdchqName", rs.getString(5));
+				json.put("pdchqInvNo", rs.getString(6));
+				json.put("pdchqBnkName", rs.getString(7));
+				json.put("pdchqNo", rs.getString(8));
+				json.put("pdchqAmt", rs.getString(9));
+				json.put("pdchqDate", rs.getString(10));
+				json.put("pdchqStatus", rs.getString(11));
 			
 			}
 			

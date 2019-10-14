@@ -87,7 +87,7 @@
 							</div>
 					</div>
 					<div class="form-row border-top">
-					<input type="hidden" id="chequeId" />
+					<input type="hidden" id="chequeId" value="0" />
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Cheque</label>
 							<input type="text" class="form-control" id="chequeAmount" name="" readonly>
@@ -110,8 +110,8 @@
 							<label class="lbl-rm-all">Name</label>
 							<div class="d-flex justify-content-start align-items-center">
 							<input type="text" class="form-control" id="nameOnCheque" name="nameOnCheque" placeholder="Name on Cheque">
-							<button type="button" class="btn btn-success btn-no-radius" onclick="submitChequeData()" id="payCheque">Print</button>&nbsp;
-							<button type="button" class="btn btn-success btn-no-radius">Void</button>
+							<button type="button" class="btn btn-success btn-no-radius" onclick="PrintChequeData(document.getElementById('chequeId').value)" id="payCheque">Print</button>&nbsp;
+							<button type="button" class="btn btn-success btn-no-radius" onclick="voidCheque(document.getElementById('chequeId').value)">Void</button>
 							</div>
 						</div>
 					</div>
@@ -178,7 +178,7 @@
 						</div>
 					</div>
 					<div class="form-row border-top" id="pdcChequeSection" hidden>
-						<input type="hidden" id="pdcChequeId" />
+						<input type="hidden" id="pdcChequeId" value="0"/>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">PDC</label>
 							<input type="text" class="form-control" id="pdcChequeAmount" name="pdcChequeAmount" readonly>
@@ -202,8 +202,8 @@
 							<label class="lbl-rm-all">Payee Name</label>
 							<div class="d-flex justify-content-start align-items-center">
 							<input type="text" class="form-control" id="pdcPayeeName" name="pdcPayeeName" placeholder="Name on Cheque">
-							<button type="button" class="btn btn-success  btn-no-radius" id="payPdc" onclick="submitPdc()">Pay</button>&nbsp;
-							<button type="button" class="btn btn-success  btn-no-radius">Void</button>
+							<button type="button" class="btn btn-success  btn-no-radius" id="payPdc" onclick="PrintChequeData(document.getElementById('pdcChequeId').value)">Print</button>&nbsp;
+							<button type="button" class="btn btn-success  btn-no-radius" onclick="voidCheque(document.getElementById('pdcChequeId').value)">Void</button>
 							</div>
 						</div>
 					</div>
@@ -563,8 +563,23 @@
 				document.getElementById('pdcChequeSection').hidden=true;
 				
 			}
-			
 			setCurrentDate();
+			
+			if(data.hasOwnProperty('chequeId')){
+				document.getElementById('chequeBank').value = data.chqBnkId;
+				document.getElementById('chequeNo').value = data.chqNo ;
+				document.getElementById('chequeDate').value = data.chqDate ;
+				document.getElementById('nameOnCheque').value = data.chqName ;
+				document.getElementById('chequeId').value = data.chequeId ;
+			}
+			if(data.hasOwnProperty('pdChequeId')){
+				document.getElementById('pdcBank').value = data.pdchqBnkId;
+				document.getElementById('pdcNo').value = data.pdchqNo ;
+				document.getElementById('pdcDate').value = data.pdchqDate ;
+				document.getElementById('pdcPayeeName').value = data.pdchqName ;
+				console.log("pdcChequeId--"+data.pdChequeId);
+				document.getElementById('pdcChequeId').value = data.pdChequeId ;
+			}
 			
 			if(Number(data.paidByOperator) === 1){
 				document.getElementById('invoiceStatus').value = "Paid by Operator";
@@ -858,19 +873,62 @@
 	function getResponse(){
 		if(submitData.readyState == 4){
 			var response = this.response.trim();
+			var ids = response.split(',');
+			document.getElementById("chequeId").value = ids[1];
+			document.getElementById("pdcChequeId").value = ids[2];
 			console.log(response);
+			$.fn.checkStatus(ids[0],"Payment Information has been saved successfully!")
 		}
 	}
+	
+	function voidCheque(chequeId){
+		console.log(data);
+		if(Number(chequeId)>0){
+		
+			url = "../processing/voidCheque.jsp?chequeId="+chequeId;
+			if(window.XMLHttpRequest){  
+				chqVoid=new XMLHttpRequest();  
+			}  
+			else if(window.ActiveXObject){  
+				chqVoid=new ActiveXObject("Microsoft.XMLHTTP");  
+			}  
+			try{  
+				chqVoid.onreadystatechange=getDelChqId;  
+				console.log("AJAX Req sent");
+				chqVoid.open("GET",url,true);  
+				chqVoid.send();  
+			}catch(e){alert("Unable to connect to server");}
+		}else if (Number(chequeId) === 0) {
+			alert("Invalid cheque");
+		}
+	}
+	
+	
+	function getDelChqId(){
+		if(chqVoid.readyState == 4){
+			var response = this.response.trim();
+			console.log(response);
+			$.fn.checkStatus(response,"Cheque is void.")
+		}
+	}
+	
+	function PrintChequeData(chequeId){
+		 var win = window.open("../report/Cheque.jsp?chequeId="+chequeId, '_blank');
+		  win.focus();	
+	}
+	
+	
+	
 	/**************************************
 	Response window code
 	**************************************/
-	var sessionId = {
+	<%-- var sessionId = {
 			"getSessionId":<%=session.getAttribute("gradeSubmitFlag") %>,
 	}
 
 	$(document).ready(function(){
 		$.fn.checkStatus(sessionId.getSessionId,"Grading information has been saved successfully!")
-	})
+	}) --%>
 	
 	</script>
 </body>

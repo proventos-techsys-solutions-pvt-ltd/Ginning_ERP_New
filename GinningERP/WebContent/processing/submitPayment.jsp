@@ -31,6 +31,8 @@
 	InvoiceReport invReport = new InvoiceReport();
 	
 	int invStatus = invReport.getInvoicePaymentStatus(paymentInvoiceId);
+	int chequeId = 0;
+	int pdcChequeId = 0;
 	
 	if(invStatus == 0){
 	
@@ -67,9 +69,9 @@
 			
 			AddCheque addCheque = new AddCheque();
 			
-			id[0] = addCheque.addCheque(cheque);
+			chequeId = addCheque.addCheque(cheque);
 			
-			
+			id[0] = chequeId;
 			
 			Transactions chequeTrDb = new Transactions();
 			
@@ -257,7 +259,7 @@
 			cheque.setPaymentStatus(0);
 			cheque.setVoucherNo(voucherNo);
 			
-			int chequeId = addCheque.addCheque(cheque);
+			pdcChequeId = addCheque.addCheque(cheque);
 			
 			id[3] = chequeId;
 			
@@ -433,7 +435,7 @@
 			out.flush();
 		}else{
 			updateInvoice.updateInvoicePaidStatus(paymentInvoiceId);
-			out.print(1);
+			out.print("1,"+chequeId+","+pdcChequeId);
 			out.flush();
 		}
 	}else{

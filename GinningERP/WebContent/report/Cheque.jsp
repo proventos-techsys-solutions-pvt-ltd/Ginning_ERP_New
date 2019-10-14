@@ -13,7 +13,7 @@
 <%@ page import="java.sql.DriverManager"%>
 <%@ page import="java.sql.SQLException"%>
 <%
-	int chequeId = Integer.parseInt((String)session.getAttribute("chequeId"));
+	int chequeId = Integer.parseInt((String)request.getParameter("chequeId"));
  	session.removeAttribute("chequeId");
 	
 	ChequeReport cr = new ChequeReport();

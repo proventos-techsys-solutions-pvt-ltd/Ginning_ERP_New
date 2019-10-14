@@ -93,10 +93,10 @@ public class PDCReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT *" + 
-					"FROM PDC_MAST ,\r\n" + 
-					"WHERE\r\n" + 
-					"pdc.invoice_id = ? \r\n";
+			String sql = "SELECT *\r\n" + 
+					"FROM PDC_MAST\r\n" + 
+					"WHERE \r\n" + 
+					"PDC_MAST.invoice_id =? \r\n";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
