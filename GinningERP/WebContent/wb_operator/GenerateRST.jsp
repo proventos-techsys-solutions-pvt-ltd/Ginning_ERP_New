@@ -230,6 +230,8 @@
  Photo code
  ****************************/
 // Grab elements, create settings, etc.
+var dataUrl;
+
 var canvas = document.getElementById("canvas"),
         context = canvas.getContext("2d"),
         video = document.getElementById("video"),
@@ -260,7 +262,7 @@ document.getElementById("getCustomer").addEventListener("click",function(){
     document.getElementById("click-customer-photo").addEventListener("click", function () {
         context.drawImage(video, 0, 0, 213, 160);
         document.getElementById('canvasImg').src = canvas.toDataURL("image/png");
-        document.getElementById('ImageData').value = canvas.toDataURL("image/png"); 
+        dataUrl = canvas.toDataURL();
         //document.getElementById('video').style.display = "none";  // hide the live image video portin after click on take picture
     });
 }, false);
@@ -489,8 +491,10 @@ function setFirstWeighmentData(response){
 	decideWeighment(1);
 }
 
+
 //fetch Gross weight from weigh machine
 function fetchGrossWt(){
+	
 	var url="${pageContext.request.contextPath}/processing/fetchWeight.jsp";
 	if(window.XMLHttpRequest){  
 		fetchData=new XMLHttpRequest();  
@@ -505,8 +509,9 @@ function fetchGrossWt(){
 		fetchData.send();  
 		$.blockUI();
 	}catch(e){alert("Unable to connect to server");}
+	
 }
-
+	
 //Set gross weight obtained by AJAX in input field
  function fetchGrossWeighData(){
 	 if(fetchData.readyState == 4){
@@ -696,7 +701,8 @@ function submitNewCustomer(){
 		var newCustomerName = document.getElementById("newCustomerName").value;
 		var newCustomerMobile = document.getElementById("newCustomerMobile").value;
 		var newCustomerAddress = document.getElementById("newCustomerAddress").value;
-		var customerImage = document.getElementById("ImageData").value);
+		var customerImage = dataUrl;
+		
 		saveCustomerRequest(newCustomerName,newCustomerMobile,newCustomerAddress,customerImage);
 		document.getElementById("customerAdd").setAttribute("data-dismiss","modal");
 		
@@ -711,32 +717,28 @@ function submitNewCustomer(){
 
 //Create AJAX Request for new customer form submission
 function saveCustomerRequest(newCustomerName, newCustomerMobile, newCustomerAddress, customerImage){
-	console.log(customerImage);
-	var url="${pageContext.request.contextPath}/processing/addCustomer.jsp?name="+newCustomerName+"&mobile="+newCustomerMobile+"&address="+newCustomerAddress+"&image="+customerImage;
-	if(window.XMLHttpRequest){  
-		newCustomerRequest=new XMLHttpRequest();
-	}  
-	else if(window.ActiveXObject){  
-		newCustomerRequest=new ActiveXObject("Microsoft.XMLHTTP");  
-	}  
-  
-	try{  
-		newCustomerRequest.onreadystatechange=setNewCustomerData;  
-		console.log("AJAX Req sent");
-		newCustomerRequest.open("GET",url,true);  
-		newCustomerRequest.send();  
-	}catch(e){alert("Unable to connect to server");}
+	
+	$.ajax({
+		  type: "POST",
+		  url: "${pageContext.request.contextPath}/processing/addCustomer.jsp",
+		  data: { 
+		     name : newCustomerName,
+		     address : newCustomerAddress,
+		     mobile : newCustomerMobile,
+		     customerImage : customerImage
+		  }
+		}).done(function(o) {
+		 	console.log("repsonse---"+o.trim());
+		 	setNewCustomerData(o)
+		});
 }
 
 //Set data in RST form fields of newly added customer
-function setNewCustomerData(){
-	
-	if(newCustomerRequest.readyState==4){
-		
+function setNewCustomerData(data){
 		console.log("New Customer Added!!!");
 		var blacklisted;
 		var membership;
-		var customer = JSON.parse(this.response.trim());
+		var customer = JSON.parse(data);
 		
 		if(customer.blacklist === '1'){
 			blacklisted = 'YES';
@@ -754,7 +756,6 @@ function setNewCustomerData(){
 		document.getElementById("mobile").value = customer.mobile;
 		document.getElementById("blacklist").value = blacklisted;
 		document.getElementById("membership").value = membership;
-	}
 }
 
 //Sen AJAX request to get the tare weight pending RSTs

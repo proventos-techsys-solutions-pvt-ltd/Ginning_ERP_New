@@ -98,7 +98,7 @@ var appController = (function(){
 		var todayDateAndTime = new Date();
 		return 	dateAndTime={
 					date :todayDateAndTime.getDate()+"/"+(todayDateAndTime.getMonth()+1)+"/"+todayDateAndTime.getFullYear() ,
-					time :todayDateAndTime.getHours()+":"+todayDateAndTime.getMinutes()
+					time :todayDateAndTime.getHours()+":"+todayDateAndTime.getMinutes()+":"+todayDateAndTime.getSeconds()
 		}
 	} 
 	

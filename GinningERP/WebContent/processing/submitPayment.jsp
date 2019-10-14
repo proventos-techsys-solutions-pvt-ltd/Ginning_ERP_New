@@ -177,16 +177,16 @@
 			
 				
 		} if(parent.containsKey("cashJson")){
+			
+			VoucherSeries vs = new VoucherSeries();
+			
+			int voucherNo = vs.getVoucherNo();
 	
 			JSONObject cashJson = (JSONObject)parent.get("cashJson");
 			String invoiceNo = (String)cashJson.get("invoiceNo");
 			int invoiceId = Integer.parseInt((String)cashJson.get("invoiceId"));
 			
-			id[2] = updateInvoice.updatePendingAmount(Long.parseLong((String)cashJson.get("cashAmount")),invoiceId);
-			
-			VoucherSeries vs = new VoucherSeries();
-			
-			int voucherNo = vs.getVoucherNo();
+			id[2] = updateInvoice.updatePendingCashAmount(Long.parseLong((String)cashJson.get("cashAmount")),invoiceId, voucherNo);
 			
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
 			Date date = new Date(); 

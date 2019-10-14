@@ -9,10 +9,7 @@
 <%@page import="com.prov.bean.Customer"%>
 
 <% 
-	String data = request.getParameter("json");
-
-System.out.print(data);
-
+	
     String CustomerName = request.getParameter("name").toUpperCase();
     String CustomerAddress = request.getParameter("address").toUpperCase();
     String CustomerMobile = request.getParameter("mobile").toUpperCase();

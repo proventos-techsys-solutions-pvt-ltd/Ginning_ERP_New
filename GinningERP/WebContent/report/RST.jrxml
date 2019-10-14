@@ -58,6 +58,9 @@
 	<field name="wbOperator" class="java.lang.String">
 		<fieldDescription><![CDATA[wbOperator]]></fieldDescription>
 	</field>
+	<field name="photo" class="java.lang.String">
+		<fieldDescription><![CDATA[photo]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -105,7 +108,7 @@
 				<reportElement x="0" y="182" width="557" height="1" uuid="5fc90068-37a0-4a02-a9ee-4f420cb918ff"/>
 			</line>
 			<textField>
-				<reportElement x="102" y="10" width="100" height="19" uuid="b09951fa-f377-458d-a8e7-98e28d528631">
+				<reportElement x="70" y="10" width="100" height="19" uuid="b09951fa-f377-458d-a8e7-98e28d528631">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -114,7 +117,7 @@
 				<textFieldExpression><![CDATA[$F{RSTNO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="102" y="29" width="100" height="19" uuid="2296e8c1-fb88-4864-a0ec-9462ed7e5d32">
+				<reportElement x="70" y="29" width="100" height="19" uuid="2296e8c1-fb88-4864-a0ec-9462ed7e5d32">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -123,7 +126,7 @@
 				<textFieldExpression><![CDATA[$F{customerName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="102" y="48" width="100" height="19" uuid="6622b99e-23a6-4fce-b001-2e62ccfb9857">
+				<reportElement x="70" y="48" width="100" height="19" uuid="6622b99e-23a6-4fce-b001-2e62ccfb9857">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -132,7 +135,7 @@
 				<textFieldExpression><![CDATA[$F{customerAddress}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="102" y="67" width="100" height="19" uuid="4e81409b-1f80-4acc-9d84-13299c12f240">
+				<reportElement x="70" y="67" width="100" height="19" uuid="4e81409b-1f80-4acc-9d84-13299c12f240">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -141,7 +144,7 @@
 				<textFieldExpression><![CDATA[$F{customerMobileNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="380" y="10" width="100" height="19" uuid="947d00a9-0316-4b98-9ff5-381b50429f08">
+				<reportElement x="290" y="10" width="100" height="19" uuid="947d00a9-0316-4b98-9ff5-381b50429f08">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -150,7 +153,7 @@
 				<textFieldExpression><![CDATA[$F{vehicleNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="380" y="29" width="100" height="19" uuid="cf4d1710-66c3-4b65-8744-c7ac9b23122e">
+				<reportElement x="290" y="29" width="100" height="19" uuid="cf4d1710-66c3-4b65-8744-c7ac9b23122e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -159,7 +162,7 @@
 				<textFieldExpression><![CDATA[$F{vehicleType}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="380" y="48" width="100" height="19" uuid="6739bd40-e6f6-4941-b4d8-8e54c2cafb8c">
+				<reportElement x="290" y="48" width="100" height="19" uuid="6739bd40-e6f6-4941-b4d8-8e54c2cafb8c">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -172,12 +175,12 @@
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{grossWt}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="380" y="67" width="140" height="19" uuid="e24136a8-595e-42a2-b720-97b04f110a17">
+				<reportElement x="290" y="67" width="140" height="19" uuid="e24136a8-595e-42a2-b720-97b04f110a17">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -199,7 +202,7 @@
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tare}]]></textFieldExpression>
 			</textField>
@@ -218,7 +221,7 @@
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{net}]]></textFieldExpression>
 			</textField>
@@ -239,56 +242,56 @@
 				<textFieldExpression><![CDATA[$F{charges}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="10" width="92" height="19" uuid="27fddc4c-79a5-411e-9009-d139bf9146b9"/>
+				<reportElement x="10" y="10" width="60" height="19" uuid="27fddc4c-79a5-411e-9009-d139bf9146b9"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[RST No.:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="29" width="92" height="19" uuid="1e20487c-7af8-43cd-8e47-d21eb240cc17"/>
+				<reportElement x="10" y="29" width="60" height="19" uuid="1e20487c-7af8-43cd-8e47-d21eb240cc17"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Vendor Name:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="48" width="92" height="19" uuid="58ec6f1f-05e6-42e2-b020-492423d6a585"/>
+				<reportElement x="10" y="48" width="60" height="19" uuid="58ec6f1f-05e6-42e2-b020-492423d6a585"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Vendor Addr.:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="67" width="92" height="19" uuid="b5fb96ae-61f4-4689-a55f-312b1e63da4c"/>
+				<reportElement x="10" y="67" width="60" height="19" uuid="b5fb96ae-61f4-4689-a55f-312b1e63da4c"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Vendor Mob.:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="288" y="10" width="92" height="19" uuid="0d867a1c-4e9d-438e-8f25-5448a7777ce2"/>
+				<reportElement x="231" y="10" width="59" height="19" uuid="0d867a1c-4e9d-438e-8f25-5448a7777ce2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Vehicle No.:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="288" y="29" width="92" height="19" uuid="6abe95f4-9b48-4905-b8e7-fbdbf84a2170"/>
+				<reportElement x="231" y="29" width="59" height="19" uuid="6abe95f4-9b48-4905-b8e7-fbdbf84a2170"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Vehicle Type:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="288" y="48" width="92" height="19" uuid="01e51f66-4e6f-48b7-b6b5-fef94f7e32d1"/>
+				<reportElement x="231" y="48" width="59" height="19" uuid="01e51f66-4e6f-48b7-b6b5-fef94f7e32d1"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Material:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="288" y="67" width="92" height="19" uuid="cee7c557-446a-4bbc-bfae-9ad5a89bfde2"/>
+				<reportElement x="231" y="67" width="59" height="19" uuid="cee7c557-446a-4bbc-bfae-9ad5a89bfde2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -377,6 +380,10 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{wbOperator}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="460" y="5" width="81" height="81" uuid="446cedc7-1141-492f-ae62-248c4dc4fa27"/>
+				<imageExpression><![CDATA[$F{photo}]]></imageExpression>
+			</image>
 		</band>
 	</pageHeader>
 	<pageFooter>

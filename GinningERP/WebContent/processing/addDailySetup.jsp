@@ -24,7 +24,7 @@
     DailySetup ds = new DailySetup();
     
     
-    String date = (String)obj.get("date") +" "+ (String)obj.get("setupTime")+":00";
+    String date = (String)obj.get("date") +" "+ (String)obj.get("setupTime");
     
     
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
