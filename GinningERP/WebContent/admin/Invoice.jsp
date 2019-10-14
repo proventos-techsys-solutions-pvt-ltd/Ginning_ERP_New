@@ -1144,18 +1144,50 @@ function setCurrentDate(){
 						cell1.setAttribute("align","center");
 						cell1.innerHTML = (noOfRows+1);
 					if(noOfRows === 1){
-						cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode">'+
-								   			'<option>Cash</option>'+
-								   			'<option selected>Cheque</option>'+
-								   			'<option>RTGS/NEFT</option>'+
-										  '</select>';
+						if(document.getElementById("paymentMode1").options[document.getElementById("paymentMode1").selectedIndex].innerText ==="Cash"){
+							cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode">'+
+				   			'<option selected>Cheque</option>'+
+				   			'<option>RTGS/NEFT</option>'+
+						  '</select>';
+						}else if(document.getElementById("paymentMode1").options[document.getElementById("paymentMode1").selectedIndex].innerText ==="Cheque"){
+							cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode">'+
+				   			'<option>Cash</option>'+
+				   			'<option selected>RTGS/NEFT</option>'+
+						  '</select>';
+						}else if(document.getElementById("paymentMode1").options[document.getElementById("paymentMode1").selectedIndex].innerText ==="RTGS/NEFT"){
+							cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode">'+
+							'<option>Cash</option>'+
+				   			'<option>Cheque</option>'+
+						  '</select>'
+						}
+						
 					}
 					if(noOfRows === 2){
-						cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode">'+
-								   			'<option>Cash</option>'+
-								   			'<option>Cheque</option>'+
-								   			'<option selected>RTGS/NEFT</option>'+
-										  '</select>';
+						if(document.getElementById("paymentMode2").options[document.getElementById("paymentMode2").selectedIndex].innerText ==="Cash"
+							||
+							document.getElementById("paymentMode1").options[document.getElementById("paymentMode1").selectedIndex].innerText ==="Cash"
+						){
+							cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode">'+
+				   			'<option selected>Cheque</option>'+
+				   			'<option>RTGS/NEFT</option>'+
+						  '</select>';
+						}else if(document.getElementById("paymentMode2").options[document.getElementById("paymentMode2").selectedIndex].innerText ==="Cheque"
+							||		
+							document.getElementById("paymentMode1").options[document.getElementById("paymentMode1").selectedIndex].innerText ==="Cheque"
+						){
+							cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode">'+
+				   			'<option>Cash</option>'+
+				   			'<option selected>RTGS/NEFT</option>'+
+						  '</select>';
+						}else if(document.getElementById("paymentMode2").options[document.getElementById("paymentMode2").selectedIndex].innerText ==="RTGS/NEFT"
+						||
+						document.getElementById("paymentMode1").options[document.getElementById("paymentMode1").selectedIndex].innerText ==="RTGS/NEFT"
+						){
+							cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode">'+
+							'<option>Cash</option>'+
+				   			'<option>Cheque</option>'+
+						  '</select>'
+						}
 					}
 						cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="payAmount'+(noOfRows+1)+'" name="payAmount" value='+pendingAmount+'>';
 						cell4.innerHTML = '<img src="../property/img/add.png" alt="add" class="ctm-hover" >'
