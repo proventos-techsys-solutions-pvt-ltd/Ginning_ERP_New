@@ -27,6 +27,9 @@ public class RtgsReport {
 				
 				Rtgs rtgs = new Rtgs();
 				
+				rtgs.setId(rs.getInt(1));
+				rtgs.setInvoiceId(rs.getInt(2));
+				rtgs.setCustomerId(rs.getInt(3));
 				rtgs.setAccountNo(rs.getString(4));
 				rtgs.setBankName(rs.getString(5));
 				rtgs.setIfsc(rs.getString(6));

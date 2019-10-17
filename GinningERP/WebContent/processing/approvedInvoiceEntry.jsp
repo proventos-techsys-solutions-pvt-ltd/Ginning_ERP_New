@@ -192,7 +192,7 @@
 		trCredit.setTransactionDate(invoice.getInvDate());
 		trCredit.setVouchNo(Integer.parseInt((String)json.get("voucherNo")));
 		trCredit.setNarration("RAW COTTON PURCHASE - "+(String)json.get("invoiceNo").toString().toUpperCase());
-		trCredit.setVouchRef("RAW COTTON +"+(String)json.get("invoiceNo").toString().toUpperCase());
+		trCredit.setVouchRef("RAW COTTON - "+(String)json.get("invoiceNo").toString().toUpperCase());
 		
 		Transactions trDebit = new Transactions();
 		

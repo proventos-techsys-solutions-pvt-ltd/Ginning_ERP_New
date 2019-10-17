@@ -3,7 +3,6 @@
 <%@page import="java.awt.image.BufferedImage"%>
 <%@page import="javax.imageio.ImageIO"%>
 <%@page import="javax.xml.bind.DatatypeConverter"%>
-<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="org.json.JSONObject"%>
 <%@page import="com.prov.dbinsertion.AddCustomer"%>
 <%@page import="com.prov.bean.Customer"%>
@@ -17,9 +16,9 @@
     int CustomerMembership = 0;
     int CustomerBlacklisted = 0;
    
-    if(CustomerName == null || CustomerName == "" || CustomerAddress == null || CustomerAddress == "" || CustomerMobile == null || CustomerMobile == "")
+    if(CustomerName == null || CustomerName == "" || CustomerAddress == null || CustomerAddress == "" || CustomerMobile == null || CustomerMobile == "" || img == "" || img == null)
     {
-    	out.println("Please enter valid information.");
+    	out.println(0);
     }
     else
     {
@@ -27,7 +26,8 @@
     	byte[] imagedata = DatatypeConverter.parseBase64Binary(img.substring(img.indexOf(",") + 1)); 
     	BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagedata)); 
     	//String path= request.getSession().getServletContext().getRealPath("/").concat("images/");
-    	String path = "E:/customerImages/";
+    	//String path = "//SCI-PC6/Vendor_Images/";
+    	String path = "E:/customerImages";
     	String fileName=CustomerName+"_"+CustomerMobile.substring(CustomerMobile.length()-5)+".png"; 
     	File file= new File(path+fileName);	
     	ImageIO.write(bufferedImage, "png",file); 

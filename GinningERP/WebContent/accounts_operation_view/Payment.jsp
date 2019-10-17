@@ -50,7 +50,7 @@
 					<input type="hidden" id="customerName" name="customerName" />
 					<input type="hidden" id="companyId" name="companyId" />
 					<input type="hidden" id="accountPayableId" name="accountPayableId" />
-					<input type="hidden" id="DsBankId" name="DsBankId" />
+					<input type="hidden" id="dsBankId" name="dsBankId" />
 					<div class="form-row">
 						<div class="col-md-3">
 							<label class="lbl-rm-all">Customer Information</label>
@@ -74,9 +74,7 @@
 							<label class="lbl-rm-all">Cash Account</label>
 							<div class="d-flex justify-content-start align-items-center">
 								<select class="form-control" id="cashAccountId" name="cashAccountId">
-									<option>
-										<c:CashLedgerTag/>
-									</option>
+									<c:CashLedgerTag/>
 								</select>
 							</div>
 						</div>
@@ -173,7 +171,6 @@
 							<label class="lbl-rm-all">IFSC Code</label>
 							<div class="d-flex justify-content-start align-items-center">
 							<input type="text" class="form-control" id="pdcRtgsIfsc" name="pdcRtgsIfsc" placeholder="IFSC Code">
-							<button type="button" class="btn btn-success btn-no-radius" onclick="submitPdcRtgs()" id="payPdcRtgs">Pay</button>
 							</div>
 						</div>
 					</div>
@@ -434,7 +431,7 @@
 			document.getElementById('companyId').value = data.companyId;
 			document.getElementById('chequeLeaves').innerHTML = data.totalCheques;
 			document.getElementById('accountPayableId').value = data.accPayableId;
-			document.getElementById('DsBankId').value = data.bankId;
+			document.getElementById('dsBankId').value = data.bankId;
 			getRtgsCount(document.getElementById('companyId').value);
 		}
 	}
@@ -712,7 +709,7 @@
 			rtgsJson['invoiceNo'] = document.getElementById('invoiceNo').value;
 			rtgsJson['customerId'] = document.getElementById('customerId').value;
 			rtgsJson['customerName'] = document.getElementById('customerName').value;
-			rtgsJson['dsBankId'] = document.getElementById('DsBankId').value;
+			rtgsJson['dsBankId'] = document.getElementById('dsBankId').value;
 			rtgsJson['accountPayableId'] = document.getElementById('accountPayableId').value;
 			rtgsJson['companyId'] = document.getElementById('companyId').value;
 

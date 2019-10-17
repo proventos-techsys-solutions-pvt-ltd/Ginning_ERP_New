@@ -493,7 +493,7 @@ function getData(){
 	
 	if(fetchRequest.readyState == 4){
 		var response = this.response.trim();
-		console.log(response);
+		//console.log(response);
 		if(Number(response) === 0 ){
 			window.alert("RST entered is either blank or 0.")
 		}
@@ -503,6 +503,7 @@ function getData(){
 			window.alert("Second Weighment is pending.")
 		}else{
 			var data = JSON.parse(response);
+			console.log(data);
 			if(Number(data[0].flag) === 0){
 				setDataForNewGrading(data);
 			}
@@ -686,7 +687,7 @@ function setGradeUpdationData(data)
 		if(i>0){
 			cell8.innerHTML = "<img src='../property/img/delete.png' class='delete-row' alt='delete' id='deleteRow"+(i+1)+"'>";
 		}
-		if(data[i].pdcAmount>0){
+		if(Number(data[i].pdcAmount)>0){
 			cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck"+(i+1)+"' name='pdcCheck' value='true'>";
 			document.getElementById("pdcCheck"+(i+1)).checked = true;
 			document.getElementById("pdcAmount").value = Number(document.getElementById("pdcAmount").value) + Number(Number(data[i].pdcAmount) * (Number(data[i].quantity)/100)) + Number((Number(data[i].quantity)/100)*Number(data[i].rate));
@@ -969,7 +970,7 @@ function setPedingGradData(data){
 
 
 function deleteGrades(rst, weighmentData){
-	var url="${pageContext.request.contextPath}/processing/deleteGrading.jsp?rst"+rst+"?weighmentId="+weighmentId;
+	var url="${pageContext.request.contextPath}/processing/deleteGrading.jsp?rst="+rst+"&weighmentId="+weighmentData;
 	if(window.XMLHttpRequest){  
 		delGradeReq=new XMLHttpRequest();  
 	}  

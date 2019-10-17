@@ -1,4 +1,4 @@
-<%@ page errorPage="../admin/Error.jsp" %>  
+<%-- page errorPage="../admin/Error.jsp" --%>
 <%@page import="com.prov.delete.DeleteGradeDetails"%>
 <%@page import="com.prov.dbops.CheckAlreadyGraded"%>
 <%@page import="java.util.stream.IntStream"%>

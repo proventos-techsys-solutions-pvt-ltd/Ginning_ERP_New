@@ -231,7 +231,7 @@
  Photo code
  ****************************/
 // Grab elements, create settings, etc.
-var dataUrl;
+var dataUrl="";
 
 var canvas = document.getElementById("canvas"),
         context = canvas.getContext("2d"),
@@ -565,7 +565,6 @@ function submitRSTEntry(){
 		}else if(document.getElementById('fetchGrossWeight').disabled){
 			if(Number(document.getElementById('tare').value)>0){
 				document.getElementById("newRST").submit();	
-				resetFormData();
 			}else if(Number(document.getElementById('tare').value) <= 0){
 				alert("Tare or Net Weight is zero.");
 			}
@@ -739,24 +738,29 @@ function setNewCustomerData(data){
 		console.log("New Customer Added!!!");
 		var blacklisted;
 		var membership;
-		var customer = JSON.parse(data);
 		
-		if(customer.blacklist === '1'){
-			blacklisted = 'YES';
+		if(Number(data) === 0){
+			alert("Please enter correct customer data.")
 		}else{
-			blacklisted = 'NO'
+			var customer = JSON.parse(data);
+			
+			if(customer.blacklist === '1'){
+				blacklisted = 'YES';
+			}else{
+				blacklisted = 'NO'
+			}
+			if(customer.membership === '1'){
+				membership = 'YES';
+			}else{
+				membership = 'NO';
+			}
+			document.getElementById("id").value = customer.id;
+			document.getElementById("customer").value = customer.name;
+			document.getElementById("address").value = customer.address;
+			document.getElementById("mobile").value = customer.mobile;
+			document.getElementById("blacklist").value = blacklisted;
+			document.getElementById("membership").value = membership;
 		}
-		if(customer.membership === '1'){
-			membership = 'YES';
-		}else{
-			membership = 'NO';
-		}
-		document.getElementById("id").value = customer.id;
-		document.getElementById("customer").value = customer.name;
-		document.getElementById("address").value = customer.address;
-		document.getElementById("mobile").value = customer.mobile;
-		document.getElementById("blacklist").value = blacklisted;
-		document.getElementById("membership").value = membership;
 }
 
 //Sen AJAX request to get the tare weight pending RSTs

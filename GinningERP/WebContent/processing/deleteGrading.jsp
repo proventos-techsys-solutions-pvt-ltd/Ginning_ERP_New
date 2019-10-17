@@ -3,8 +3,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%
-	int rst = Integer.parseInt("rst");
-	int weighmentId = Integer.parseInt("weighmentId");
+
+	int rst = Integer.parseInt(request.getParameter("rst"));
+	int weighmentId = Integer.parseInt(request.getParameter("weighmentId"));
 	
 	int deleteFlag = 0; 
 	

@@ -78,15 +78,15 @@
                                		</div>
                                </div>
                              <div class="row row-background">
-                             	 <div class="col-md-2">
+                             	<div class="col-md-2">
                                     <label for="" class="lbl-rm-all">Last Authorizer</label>
                                     <input id="lastAuthorizer" name="lastAuthorizer" type="text" class="form-control form-control-sm" placeholder="NA" readonly>
                                 </div>
-                                 <div class="col-md-2 offset-md-6">
+                                 <div class="col-md-1 offset-md-6">
                                     <label for="" class="lbl-rm-all">Voucher No</label>
                                     <input id="voucherNo" name="voucherNo" type="text" class="form-control form-control-sm" placeholder="" readonly>
                                 </div>
-                                 <div class="col-md-2">
+                                 <div class="col-md-3">
                                     <label for="" class="lbl-rm-all">Account</label>
                                     <select class="form-control form-control-sm" id="accountId" name="accountId">
                                     	<c:PurchaseAccountTag/>
@@ -808,7 +808,7 @@ function setCurrentDate(){
 		document.getElementById("customerId").value = data.customerId;
 		document.getElementById("totalQty").value = data.totalQuantity;
 		
-		document.getElementById('unloadingCharges').value = (data.unloadingCharges).toFixed(2);
+		document.getElementById('unloadingCharges').value = (data.unloadingCharges).toFixed(0);
 		
 		document.getElementById('weighingCharges').value = data.weighRate;
 		
@@ -829,7 +829,7 @@ function setCurrentDate(){
 		document.getElementById("customerBlacklisted").value = blacklisted;
 		document.getElementById("customerMembership").value = membership;
 		if(data.bonusAmount != 0){
-			document.getElementById('bonusPerQtl').value = (Number(data.bonusAmount) / Number(data.totalQuantity)) * 100;
+			document.getElementById('bonusPerQtl').value = ((Number(data.bonusAmount) / Number(data.totalQuantity)) * 100).toFixed(0);
 			document.getElementById('bonusCheck').checked = true;
 		}else{
 			document.getElementById('bonusCheck').checked = false;
