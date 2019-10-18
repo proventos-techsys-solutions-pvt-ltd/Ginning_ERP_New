@@ -1,15 +1,13 @@
-<iframe id="myIframe" src="http://192.168.1.250/" width="600px" height="600px"></iframe>
 
+<OBJECT classid="clsid:9BE31822-FDAD-461B-AD51-BE1D1C159921"
+        codebase="http://downloads.videolan.org/pub/videolan/vlc/latest/win32/axvlc.cab"
+        width="640" height="441" id="vlc" events="True">
 
-<script>
-/* var myIframe = document.getElementById('myIframe');
-myIframe.contentWindow.addEventListener('message', function(event) {
-    console.log(JSON.parse(event.data));
-}, false);
+    <param name="Src" value="http://192.168.1.250" />
+    <param name="ShowDisplay" value="True" />
+    <param name="AutoLoop" value="False" />
+    <param name="AutoPlay" value="True" />
 
-
-window._sendMessage = function() {
-    var json ={"method":"global.login","params":{"userName":"admin","password":"admin123","clientType":"Web3.0","loginType":"Direct","authorityType":"Default"},"id":3,"session":""} ;
-    myIframe.contentWindow.postMessage(JSON.stringify(json), '');
-} */
-</script>
+    <embed id="vlcEmb"  type="application/x-google-vlc-plugin" quality="high" version="VideoLAN.VLCPlugin.2" autoplay="yes" loop="no" width="640" height="441"
+           target="http://192.168.1.250" >               
+    </embed>

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.json.JSONObject;
@@ -32,6 +33,7 @@ public class ChequeReport {
 			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
+				
 				c.setId(rs.getInt(1));
 				c.setCustomerId(Integer.parseInt(rs.getString(2)));
 				c.setInvoiceId(Integer.parseInt(rs.getString(3)));
@@ -43,6 +45,8 @@ public class ChequeReport {
 				c.setChequeAmount(Long.parseLong(rs.getString(9)));
 				c.setChequeDate(rs.getString(10));
 				c.setStatus(rs.getInt(11));
+				c.setPaymentStatus(rs.getInt(12));
+				c.setVoucherNo(rs.getInt(13));
 			
 			}
 			
@@ -55,6 +59,61 @@ public class ChequeReport {
 		
 		return c;
 	}
+	
+	
+	public ArrayList<Cheque> getChequeReport() {
+		
+		ResultSet rs = null;
+		Connection con = null;
+		ArrayList<Cheque> chequeList = new ArrayList<Cheque>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/yyyy");
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT * FROM CHEQUE_MAST";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				Cheque c = new Cheque();
+				
+				c.setId(rs.getInt(1));
+				c.setCustomerId(Integer.parseInt(rs.getString(2)));
+				c.setInvoiceId(Integer.parseInt(rs.getString(3)));
+				c.setBankId(Integer.parseInt(rs.getString(4)));
+				c.setCustomerName(rs.getString(5));
+				c.setInvoiceNo(rs.getString(6));
+				c.setBankName(rs.getString(7));
+				c.setChequeNo(rs.getString(8));
+				c.setChequeAmount(Long.parseLong(rs.getString(9)));
+				
+				String date = rs.getString(10);
+				Date date1 = sdf.parse(date);
+				String formattedDate = sdf1.format(date1);
+				
+				c.setChequeDate(formattedDate);
+				c.setStatus(rs.getInt(11));
+				c.setPaymentStatus(rs.getInt(12));
+				c.setVoucherNo(rs.getInt(13));
+				
+				chequeList.add(c);
+			
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return chequeList;
+	}
+	
 	
 	public JSONObject getChequeForPrinting(int chequeId) {
 		ResultSet rs = null;
