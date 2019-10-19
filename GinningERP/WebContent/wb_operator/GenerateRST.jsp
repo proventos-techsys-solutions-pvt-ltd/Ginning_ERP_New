@@ -227,6 +227,7 @@
 <script src="${pageContext.request.contextPath}/js/commonjs.js"></script>
 <script src="${pageContext.request.contextPath}/js/validations/GenerateRST.js"></script>
 <script>
+
 /*************************
  Photo code
  ****************************/
@@ -240,6 +241,7 @@ var canvas = document.getElementById("canvas"),
 errBack = function (error) {
     console.log("Video capture error: ", error.code);
 };
+
 // Put event listeners into place
 document.getElementById("getCustomer").addEventListener("click",function(){
     // Put video listeners into place
