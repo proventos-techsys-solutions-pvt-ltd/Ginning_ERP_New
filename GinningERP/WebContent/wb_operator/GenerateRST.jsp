@@ -228,6 +228,19 @@
 <script src="${pageContext.request.contextPath}/js/validations/GenerateRST.js"></script>
 <script>
 
+/******
+ * Multiple camera access code
+ */
+navigator.mediaDevices.enumerateDevices()
+.then(function(devices) {
+  devices.forEach(function(device) {
+    console.log(device.kind + ":" + device.label +
+                " id = " + device.deviceId);
+  });
+})
+.catch(function(err) {
+  console.log(err.name + ": " + err.message);
+});
 /*************************
  Photo code
  ****************************/
@@ -237,7 +250,7 @@ var dataUrl="";
 var canvas = document.getElementById("canvas"),
         context = canvas.getContext("2d"),
         video = document.getElementById("video"),
-        videoObj = {"video": true},
+      	videoObj = {"video": true},
 errBack = function (error) {
     console.log("Video capture error: ", error.code);
 };
@@ -256,7 +269,7 @@ document.getElementById("getCustomer").addEventListener("click",function(){
             video.play();
         }, errBack);
     } else if (navigator.mozGetUserMedia) { // WebKit-prefixed
-        navigator.mozGetUserMedia(videoObj, function (stream) {
+        navigator.mozGetUserMedia({video:{deviceId: { exact: camera1Id }}}, function (stream) {
         video.srcObject = stream;    
         video.play();
         }, errBack);

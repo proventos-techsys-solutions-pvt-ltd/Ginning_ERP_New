@@ -20,7 +20,7 @@ public int addPaymentDetails(PaymentDetails pd) {
 			e.printStackTrace();
 		}
 
-		String addPaymentDetails = "{ ? = call ADD_PAYMENTDETAILS(?,?,?,?,?,?) }";
+		String addPaymentDetails = "{ ? = call ADD_PAYMENT_DETAILS(?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(addPaymentDetails);
@@ -28,11 +28,13 @@ public int addPaymentDetails(PaymentDetails pd) {
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
 			cs.setInt(2, pd.getInvoiceId() );
-			cs.setString(3, pd.getPaymentMode() );
-			cs.setString(4, pd.getAccountName());
+			cs.setInt(3, pd.getModeId() );
+			cs.setLong(4, pd.getAmount());
 			cs.setDouble(5, pd.getAmount());
-			cs.setInt(6, pd.getRtgsNo());
-			cs.setInt(7, pd.getChequeNo());
+			cs.setInt(6, pd.getPaymentStatus());
+			cs.setInt(7, Types.NULL);
+			cs.setInt(8, Types.NULL);
+			cs.setInt(9, Types.NULL);
 					
 			cs.executeUpdate();
 			
@@ -43,7 +45,7 @@ public int addPaymentDetails(PaymentDetails pd) {
 			cs.close();
 			con.close();
 			
-			System.out.println("Insertion Succesful"+id);
+			System.out.println("Insertion Succesful--"+id);
 			} catch (SQLException e) {
 			e.printStackTrace();
 		}

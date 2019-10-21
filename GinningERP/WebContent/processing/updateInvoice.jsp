@@ -1,3 +1,5 @@
+<%@page import="com.prov.dbinsertion.AddTransactions"%>
+<%@page import="com.prov.bean.Transactions"%>
 <%@page import="com.prov.bean.PDC"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.prov.bean.Invoice"%>
@@ -173,6 +175,33 @@
 				
 				us.updateStockOnEntry(sm);
 			}
+			
+			Transactions trCredit = new Transactions();
+			
+			trCredit.setContactId(Integer.toString(invoice.getCustomerId()));
+			trCredit.setAccountId(Integer.parseInt((String)json.get("accountPayableId")));
+			trCredit.setCredit(Long.parseLong((String)json.get("pending")));
+			trCredit.setDebit(0);
+			trCredit.setTransactionDate(invoice.getInvDate());
+			trCredit.setVouchNo(Integer.parseInt((String)json.get("voucherNo")));
+			trCredit.setNarration("RAW COTTON PURCHASE - "+(String)json.get("invoiceNo").toString().toUpperCase());
+			trCredit.setVouchRef("RAW COTTON - "+(String)json.get("invoiceNo").toString().toUpperCase());
+			
+			Transactions trDebit = new Transactions();
+			
+			trDebit.setContactId(Integer.toString(invoice.getCustomerId()));
+			trDebit.setAccountId(Integer.parseInt((String)json.get("accountPurchaseId")));
+			trDebit.setCredit(0);
+			trDebit.setDebit(Long.parseLong((String)json.get("pending")));
+			trDebit.setTransactionDate(invoice.getInvDate());
+			trDebit.setVouchNo(Integer.parseInt((String)json.get("voucherNo")));
+			trDebit.setNarration("RAW COTTON PURCHASE - "+(String)json.get("invoiceNo").toString().toUpperCase());
+			trDebit.setVouchRef("RAW COTTON - "+ (String)json.get("invoiceNo").toString().toUpperCase());
+			
+			AddTransactions addTr = new AddTransactions();
+			
+			addTr.addTransactions(trCredit);
+			addTr.addTransactions(trDebit);
 			
 			session.setAttribute("invoiceNo", invoice.getInvoiceNo());
 		    response.sendRedirect("../admin/Invoice.jsp");

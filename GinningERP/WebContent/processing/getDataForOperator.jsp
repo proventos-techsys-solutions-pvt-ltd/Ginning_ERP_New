@@ -19,40 +19,24 @@
     	if(invoiceNo.equals("") || invoiceNo.equals("0")){
     		out.print(0);
     		out.flush();
-    	}else if(check.invoiceExistsCheckByNo(invoiceNo)<=0){
-    		out.print(0);
-    		out.flush();
-    	}else if(check.invoiceExistsCheckByNo(invoiceNo)>0){
-    		
-    		InvoiceReport invoice = new InvoiceReport();
-    		JSONObject obj = invoice.getInvoiceForOperator(invoiceNo);
-    		
-    		if((Long)obj.get("paidByOperator") == 0){
-    			out.print(obj);
-        		out.flush();
-    		}else{
-    			if((Long)obj.get("chequeAmount") > 0){
-    				ChequeReport cr = new ChequeReport();
-    				
-    				JSONObject chqObj = cr.getChequeForInvoice(Integer.parseInt((String)obj.get("invoiceId")));
-    				obj = mergeJson.mergeJSONObjects(obj, chqObj);
-    			}
-    			if(Long.parseLong((String)obj.get("pdcAmount")) > 0){
-    				
-    				PDCReport pdcReport = new PDCReport();
-    				
-    				PDC pdc = pdcReport.getPDCData(Integer.parseInt((String)obj.get("invoiceId")));
-    				
-    				if(pdc.getChequeId() > 0){
-    					ChequeReport cr = new ChequeReport();
-    					JSONObject pdcObj = cr.getChequeForInvoicePdc(Integer.parseInt((String)obj.get("invoiceId")));
-    					obj = mergeJson.mergeJSONObjects(obj, pdcObj);
-    				}
-    				
-    			}
-    			out.print(obj);
-        		out.flush();
-    		}
+    	}else{
+    		int invoiceExistFlag = check.invoiceExistsCheckByNo(invoiceNo);
+    		if(invoiceExistFlag<=0){
+ 		    	out.print(0);
+	    		out.flush();
+	    	}else if(invoiceExistFlag>0){
+	    		InvoiceReport invoice = new InvoiceReport();
+	    		int paymentStatus = invoice.getInvoicePaymentStatus(invoiceNo);
+	    		if(paymentStatus == 0){
+		    		JSONObject obj = invoice.getInvoiceForOperator(invoiceNo);
+	    			out.print(obj);
+	        		out.flush();
+	    		}else if(paymentStatus == 1){
+	    			
+	    			JSONObject paymentAmounts = invoice.getInvoicePaymentDetails(invoiceNo);
+	    			
+	    		}
+	    	}
     	}
     
     %>

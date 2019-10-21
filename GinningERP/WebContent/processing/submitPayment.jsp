@@ -38,76 +38,80 @@
 	
 		UpdateInvoice updateInvoice = new UpdateInvoice();
 		UpdatePDC updatePdc = new UpdatePDC();
+		
 	
 		
 		int[] id = new int[6];
 		
 		if(parent.containsKey("chequeJson")){
 			
-			VoucherSeries vs = new VoucherSeries();
+			if(true){
 			
-			int voucherNo = vs.getVoucherNo();
-			
-			JSONObject chequeJson = (JSONObject)parent.get("chequeJson");
-	
-			String invoiceNo = (String)chequeJson.get("invoiceNo");
-			
-			Cheque cheque = new Cheque();
+				VoucherSeries vs = new VoucherSeries();
+				
+				int voucherNo = vs.getVoucherNo();
+				
+				JSONObject chequeJson = (JSONObject)parent.get("chequeJson");
 		
-			cheque.setBankId(Integer.parseInt((String)chequeJson.get("chequeBankId")));
-			cheque.setBankName(((String)chequeJson.get("chequeBankName")).toUpperCase());
-			cheque.setChequeAmount(Long.parseLong((String)chequeJson.get("chequeAmount")));
-			cheque.setChequeDate((String)chequeJson.get("chequeDate"));
-			cheque.setChequeNo((String)chequeJson.get("chequeNo"));
-			cheque.setCustomerId(Integer.parseInt((String)chequeJson.get("customerId")));
-			cheque.setCustomerName(((String)chequeJson.get("chequeName")).toUpperCase());
-			cheque.setInvoiceNo(((String)chequeJson.get("invoiceNo")).toUpperCase());
-			cheque.setInvoiceId(Integer.parseInt((String)chequeJson.get("invoiceId")));
-			cheque.setStatus(0);
-			cheque.setPaymentStatus(0);
-			cheque.setVoucherNo(voucherNo);
+				String invoiceNo = (String)chequeJson.get("invoiceNo");
+				
+				Cheque cheque = new Cheque();
 			
-			AddCheque addCheque = new AddCheque();
-			
-			chequeId = addCheque.addCheque(cheque);
-			
-			id[0] = chequeId;
-			
-			Transactions chequeTrDb = new Transactions();
-			
-			chequeTrDb.setAccountId(Integer.parseInt((String)chequeJson.get("accountPayableId")));
-			chequeTrDb.setContactId((String)chequeJson.get("customerId"));
-			chequeTrDb.setDebit(cheque.getChequeAmount());
-			chequeTrDb.setCredit(0);
-			chequeTrDb.setTransactionDate(cheque.getChequeDate());
-			chequeTrDb.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
-			chequeTrDb.setVouchRef("RAW COTTON - "+invoiceNo);
-			chequeTrDb.setVouchNo(voucherNo);
-			
-			Transactions chequeTrCr = new Transactions();
-			
-			chequeTrCr.setAccountId(Integer.parseInt((String)chequeJson.get("bankAccountId")));
-			chequeTrCr.setContactId((String)chequeJson.get("customerId"));
-			chequeTrCr.setDebit(0);
-			chequeTrCr.setCredit(cheque.getChequeAmount());
-			chequeTrCr.setTransactionDate(cheque.getChequeDate());
-			chequeTrCr.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
-			chequeTrCr.setVouchRef("RAW COTTON - "+invoiceNo);
-			chequeTrCr.setVouchNo(voucherNo);
-			
-			AddTransactions addTr = new AddTransactions();
-			
-			addTr.addTransactions(chequeTrDb);
-			addTr.addTransactions(chequeTrCr);
-			
-			
-			updateInvoice.updatePendingAmount(cheque.getChequeAmount(), cheque.getInvoiceId());
-			
-			//session.setAttribute("chequeId", Integer.toString(id));
-			//response.sendRedirect("../report/Cheque.jsp");
-			
-			//out.print(id);
-			//out.flush();
+				cheque.setBankId(Integer.parseInt((String)chequeJson.get("chequeBankId")));
+				cheque.setBankName(((String)chequeJson.get("chequeBankName")).toUpperCase());
+				cheque.setChequeAmount(Long.parseLong((String)chequeJson.get("chequeAmount")));
+				cheque.setChequeDate((String)chequeJson.get("chequeDate"));
+				cheque.setChequeNo((String)chequeJson.get("chequeNo"));
+				cheque.setCustomerId(Integer.parseInt((String)chequeJson.get("customerId")));
+				cheque.setCustomerName(((String)chequeJson.get("chequeName")).toUpperCase());
+				cheque.setInvoiceNo(((String)chequeJson.get("invoiceNo")).toUpperCase());
+				cheque.setInvoiceId(Integer.parseInt((String)chequeJson.get("invoiceId")));
+				cheque.setStatus(0);
+				cheque.setPaymentStatus(0);
+				cheque.setVoucherNo(voucherNo);
+				
+				AddCheque addCheque = new AddCheque();
+				
+				chequeId = addCheque.addCheque(cheque);
+				
+				id[0] = chequeId;
+				
+				Transactions chequeTrDb = new Transactions();
+				
+				chequeTrDb.setAccountId(Integer.parseInt((String)chequeJson.get("accountPayableId")));
+				chequeTrDb.setContactId((String)chequeJson.get("customerId"));
+				chequeTrDb.setDebit(cheque.getChequeAmount());
+				chequeTrDb.setCredit(0);
+				chequeTrDb.setTransactionDate(cheque.getChequeDate());
+				chequeTrDb.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
+				chequeTrDb.setVouchRef("RAW COTTON - "+invoiceNo);
+				chequeTrDb.setVouchNo(voucherNo);
+				
+				Transactions chequeTrCr = new Transactions();
+				
+				chequeTrCr.setAccountId(Integer.parseInt((String)chequeJson.get("bankAccountId")));
+				chequeTrCr.setContactId((String)chequeJson.get("customerId"));
+				chequeTrCr.setDebit(0);
+				chequeTrCr.setCredit(cheque.getChequeAmount());
+				chequeTrCr.setTransactionDate(cheque.getChequeDate());
+				chequeTrCr.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
+				chequeTrCr.setVouchRef("RAW COTTON - "+invoiceNo);
+				chequeTrCr.setVouchNo(voucherNo);
+				
+				AddTransactions addTr = new AddTransactions();
+				
+				addTr.addTransactions(chequeTrDb);
+				addTr.addTransactions(chequeTrCr);
+				
+				
+				updateInvoice.updatePendingAmount(cheque.getChequeAmount(), cheque.getInvoiceId());
+				
+				//session.setAttribute("chequeId", Integer.toString(id));
+				//response.sendRedirect("../report/Cheque.jsp");
+				
+				//out.print(id);
+				//out.flush();
+			}
 			
 			
 		} if(parent.containsKey("rtgsJson")){

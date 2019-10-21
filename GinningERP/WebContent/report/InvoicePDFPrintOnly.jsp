@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONArray"%>
 <%@ page contentType="application/pdf"%>
 <%@page import="net.sf.jasperreports.engine.JasperExportManager"%>
 <%@page import="net.sf.jasperreports.engine.JasperPrint"%>
@@ -13,6 +14,10 @@
     InvoiceReport invReport = new InvoiceReport();
 	
 	org.json.JSONObject printObj = invReport.getInvoiceForPrinting(invoiceId);
+	
+	JSONArray invoiceItems = printObj.getJSONArray("invoiceItems");
+	
+	System.out.println(invoiceItems);
 
 	JasperReports printReport = new JasperReports();
 

@@ -102,7 +102,7 @@
 			var cell8 = row.insertCell(7);
 			var cell9 = row.insertCell(8);
 			
-			//cell6.hidden = true;
+			cell6.hidden = true;
 			cell7.hidden = true;
 			cell8.hidden = true;
 			cell9.align = "center";
@@ -148,6 +148,7 @@
 		if(deleteReq.readyState == 4){
 			var response = this.response.trim();
 			console.log(response);
+			getReport();
 		}
 	}
 	

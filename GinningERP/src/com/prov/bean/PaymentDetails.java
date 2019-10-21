@@ -2,11 +2,9 @@ package com.prov.bean;
 
 public class PaymentDetails {
 
-	private int id, invoiceId, rtgsNo, chequeNo; 
+	private int id, invoiceId, rtgsId, chequeId, modeId, cashVouhNo, paymentStatus; 
 	
-	private String paymentMode, accountName; 
-	
-	private Double amount;
+	private long amount;
 
 	public int getId() {
 		return id;
@@ -24,45 +22,53 @@ public class PaymentDetails {
 		this.invoiceId = invoiceId;
 	}
 
-	public int getRtgsNo() {
-		return rtgsNo;
+	public int getRtgsId() {
+		return rtgsId;
 	}
 
-	public void setRtgsNo(int rtgsNo) {
-		this.rtgsNo = rtgsNo;
+	public void setRtgsId(int rtgsId) {
+		this.rtgsId = rtgsId;
 	}
 
-	public int getChequeNo() {
-		return chequeNo;
+	public int getChequeId() {
+		return chequeId;
 	}
 
-	public void setChequeNo(int chequeNo) {
-		this.chequeNo = chequeNo;
+	public void setChequeId(int chequeId) {
+		this.chequeId = chequeId;
 	}
 
-	public String getPaymentMode() {
-		return paymentMode;
+	public int getModeId() {
+		return modeId;
 	}
 
-	public void setPaymentMode(String paymentMode) {
-		this.paymentMode = paymentMode;
+	public void setModeId(int modeId) {
+		this.modeId = modeId;
 	}
 
-	public String getAccountName() {
-		return accountName;
+	public int getCashVouhNo() {
+		return cashVouhNo;
 	}
 
-	public void setAccountName(String accountName) {
-		this.accountName = accountName;
+	public void setCashVouhNo(int cashVouhNo) {
+		this.cashVouhNo = cashVouhNo;
 	}
 
-	public Double getAmount() {
+	public int getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(int paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+
+	public long getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Double amount) {
+	public void setAmount(long amount) {
 		this.amount = amount;
 	}
-	
+
 	
 }

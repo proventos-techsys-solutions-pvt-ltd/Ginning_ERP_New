@@ -81,14 +81,14 @@
 					<div class="col-md-auto">
 							<label class="lbl-rm-all">Cash</label>
 							<div class="d-flex justify-content-start align-items-center">
-								<input type="text" class="form-control" id="cashAmount" name="cashAmount" readonly>
+								<input type="text" class="form-control input-cash" id="cashAmount" name="cashAmount" readonly>
 							</div>
 					</div>
 					<div class="form-row border-top">
 					<input type="hidden" id="chequeId" value="0" />
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Cheque</label>
-							<input type="text" class="form-control" id="chequeAmount" name="" readonly>
+							<input type="text" class="form-control input-cash" id="chequeAmount" name="" readonly>
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Bank</label>
@@ -109,14 +109,13 @@
 							<div class="d-flex justify-content-start align-items-center">
 							<input type="text" class="form-control" id="nameOnCheque" name="nameOnCheque" placeholder="Name on Cheque">
 							<button type="button" class="btn btn-success btn-no-radius" onclick="PrintChequeData(document.getElementById('chequeId').value)" id="payCheque">Print</button>&nbsp;
-							<button type="button" class="btn btn-success btn-no-radius" onclick="voidCheque(document.getElementById('chequeId').value)">Void</button>
 							</div>
 						</div>
 					</div>
 					<div class="form-row border-top">
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">RTGS/NEFT</label>
-							<input type="text" class="form-control" id="rtgsAmount" name="rtgsAmount" readonly>
+							<input type="text" class="form-control input-cash" id="rtgsAmount" name="rtgsAmount" readonly>
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Bank Name</label>
@@ -133,27 +132,24 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-row border-top" id="pdcCashSection" hidden>
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">PDC Cash</label>
-							<div class="d-flex justify-content-start align-items-center">
-							<label class="lbl-rm-all">Cash Account</label>
-							<div class="d-flex justify-content-start align-items-center">
+					<div class="form-row border-top" id="pdcCashSection" style="width:100%;" hidden>
+						<div class="col-md-4">
+							<label class="lbl-rm-all">PDC Cash Amount</label>
+							<input type="text" class="form-control input-cash" id="pdcCashAmount" name="pdcCashAmount" readonly>
+						</div>
+							<div class="col-md-4">
+							<label class="lbl-rm-all">PDC Cash Account</label>
 								<select class="form-control" id="pdcCashAccountId" name="pdcCashAccountId">
 									<option>
 										<c:CashLedgerTag/>
 									</option>
 								</select>
 							</div>
-								<input type="text" class="form-control" id="pdcCashAmount" name="pdcCashAmount" readonly>
-								<button type="button" class="btn btn-success btn-no-radius" onclick="submitPdcCash()" id="payPdcCash">Pay</button>
 							</div>
-						</div>
-					</div>
 					<div class="form-row border-top" id="pdcRtgsSection" hidden>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">PDC RTGS/NEFT</label>
-							<input type="text" class="form-control" id="pdcRtgsAmount" name="pdcRtgsAmount" readonly>
+							<input type="text" class="form-control input-cash" id="pdcRtgsAmount" name="pdcRtgsAmount" readonly>
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Bank Name</label>
@@ -178,7 +174,7 @@
 						<input type="hidden" id="pdcChequeId" value="0"/>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">PDC</label>
-							<input type="text" class="form-control" id="pdcChequeAmount" name="pdcChequeAmount" readonly>
+							<input type="text" class="form-control input-cash" id="pdcChequeAmount" name="pdcChequeAmount" readonly>
 							<input type="hidden" id="pdcId" name="pdcId" />
 						</div>
 						<div class="col-md-auto">
@@ -200,7 +196,6 @@
 							<div class="d-flex justify-content-start align-items-center">
 							<input type="text" class="form-control" id="pdcPayeeName" name="pdcPayeeName" placeholder="Name on Cheque">
 							<button type="button" class="btn btn-success  btn-no-radius" id="payPdc" onclick="PrintChequeData(document.getElementById('pdcChequeId').value)">Print</button>&nbsp;
-							<button type="button" class="btn btn-success  btn-no-radius" onclick="voidCheque(document.getElementById('pdcChequeId').value)">Void</button>
 							</div>
 						</div>
 					</div>
@@ -595,33 +590,203 @@
 				document.getElementById('invoiceStatus').value = "Payment Pending";
 			}
 		}
+		/******************************************************
+						VALIDATING DATA
+		*******************************************************/
 		
+		$.fn.validateCheque = (function(){//validating cheque function
+			if($.fn.validateData($("#chequeNo").val(),/^[0-9]{6}$/)){
+				if(!$.fn.validateData($("#nameOnCheque").val(),/^\s*$/)){
+					return true;
+				}else{
+					$.fn.checkStatus(1,"Invalid name on cheque!.");
+					return false;
+				}
+			}else{
+				$.fn.checkStatus(1,"Invalid cheque number!.");
+				return false;
+			}
+		})
 		
+		$.fn.validateRtgs = (function(){//validating rtgs
+			if(!$.fn.validateData($("#rtgsBank").val(),/^\s*$/)){
+				if(!$.fn.validateData($("#rtgsAccountNo").val(),/^\s*$/)){
+					if(!$.fn.validateData($("#rtgsIfsc").val(),/^\s*$/)){
+						return true;
+					}else{
+						$.fn.checkStatus(1,"Invalid IFSC Code number!.")
+				}
+				}else{
+					$.fn.checkStatus(1,"Invalid account number!.")
+				}			
+			}else{
+				$.fn.checkStatus(1,"Invalid bank name!.")
+			}
+		})
+		
+		$.fn.validatePdcRtgs = (function(){//validating pdc rtgs
+			if(!$.fn.validateData($("#pdcRtgsBank").val(),/^\s*$/)){
+				if(!$.fn.validateData($("#pdcRtgsAccountNo").val(),/^\s*$/)){
+					if(!$.fn.validateData($("#pdcRtgsIfsc").val(),/^\s*$/)){
+						return true;
+					}else{
+						$.fn.checkStatus(1,"Invalid PDC IFSC Code number!.")
+				}
+				}else{
+					$.fn.checkStatus(1,"Invalid PDC account number!.")
+				}			
+			}else{
+				$.fn.checkStatus(1,"Invalid PDC bank name!.")
+			}
+		})
+		
+		$.fn.validatePdcCheque = (function(){//validating pdc cheque function
+			if($.fn.validateData($("#pdcNo").val(),/^[0-9]{6}$/)){
+				if(!$.fn.validateData($("#pdcPayeeName").val(),/^\s*$/)){
+					return true;
+				}else{
+					$.fn.checkStatus(1,"Invalid name on Pdc cheque!.")
+				}
+			}else{
+				$.fn.checkStatus(1,"Invalid cheque Pdc number!.")
+			}
+		})
+		
+		//validating data on form submission
 		$(document).ready(function(){
 			$("#submitButton").click(function(){
-				if($.fn.validateData($("#chequeNo").val(),/^[0-9]{6}$/)){
-					if(!$.fn.validateData($("#nameOnCheque").val(),/^\s*$/)){
-						if(!$.fn.validateData($("#rtgsBank").val(),/^\s*$/)){
-							if(!$.fn.validateData($("#rtgsAccountNo").val(),/^\s*$/)){
-								if(!$.fn.validateData($("#rtgsIfsc").val(),/^\s*$/)){
-									submitPayment();
+				if($("#chequeAmount").val()!=0){
+					if($.fn.validateCheque()=== true){
+						if($("#rtgsAmount").val()!=0){
+							if($.fn.validateRtgs()===true){
+								if($("#pdcRtgsSection").is(":hidden")){
+									$("#pdcRtgsAmount").val("");
+									$("#pdcRtgsBank").val("");
+									$("#pdcRtgsAccountNo").val("");
+									$("#pdcRtgsDate").val("");
+									$("#pdcRtgsIfsc").val("");
+									if(($("#pdcChequeSection").is(":hidden"))){
+										$("#pdcRtgsAmount").val("");
+										$("#pdcRtgsBank").val("");
+										$("#pdcRtgsAccountNo").val("");
+										$("#pdcRtgsDate").val("");
+										$("#pdcRtgsIfsc").val("");
+										submitPayment();//calling submit function after reseting hidden fields values
+									}else{
+										if($.fn.validatePdcCheque()===true){
+											submitPayment();
+										}
+									}
 								}else{
-									$.fn.checkStatus(1,"Invalid IFSC Code number!.")
+									if($.fn.validatePdcRtgs()===true){
+										if(($("#pdcChequeSection").is(":hidden"))){
+											$("#pdcRtgsAmount").val("");
+											$("#pdcRtgsBank").val("");
+											$("#pdcRtgsAccountNo").val("");
+											$("#pdcRtgsDate").val("");
+											$("#pdcRtgsIfsc").val("");
+											submitPayment();//calling submit function after reseting hidden fields values
+										}else{
+											if($.fn.validatePdcCheque()===true){
+												submitPayment();
+											}
+										}
+									}
 								}
 							}else{
-								$.fn.checkStatus(1,"Invalid account number!.")
+								//if rtgs amount is zero
+								$("#rtgsAmount").val("");
+								$("#rtgsBank").val("");
+								$("#rtgsAccountNo").val("");
+								$("#rtgsDate").val("");
+								$("#rtgsIfsc").val("");
+								if($("#pdcRtgsSection").is(":hidden")){
+									$("#pdcRtgsAmount").val("");
+									$("#pdcRtgsBank").val("");
+									$("#pdcRtgsAccountNo").val("");
+									$("#pdcRtgsDate").val("");
+									$("#pdcRtgsIfsc").val("");
+									if(($("#pdcChequeSection").is(":hidden"))){
+										$("#pdcRtgsAmount").val("");
+										$("#pdcRtgsBank").val("");
+										$("#pdcRtgsAccountNo").val("");
+										$("#pdcRtgsDate").val("");
+										$("#pdcRtgsIfsc").val("");
+										submitPayment();//calling submit function after reseting hidden fields values
+									}else{
+										if($.fn.validatePdcCheque()===true){
+											submitPayment();
+										}
+									}
+								}else{
+									if($.fn.validatePdcRtgs()===true){
+										if(($("#pdcChequeSection").is(":hidden"))){
+											$("#pdcRtgsAmount").val("");
+											$("#pdcRtgsBank").val("");
+											$("#pdcRtgsAccountNo").val("");
+											$("#pdcRtgsDate").val("");
+											$("#pdcRtgsIfsc").val("");
+											submitPayment();//calling submit function after reseting hidden fields values
+										}else{
+											if($.fn.validatePdcCheque()===true){
+												submitPayment();
+											}
+										}
+									}
+								}
 							}
-						}else{
-							$.fn.checkStatus(1,"Invalid bank name!.")
 						}
-					}else{
-						$.fn.checkStatus(1,"Invalid name on cheque!.")
 					}
 				}else{
-					$.fn.checkStatus(1,"Invalid cheque number!.")
+					//if check amoount is not zero
+					$("#chequeAmount").val("");
+					$("#chequeBank").val("");
+					$("#chequeNo").val("");
+					$("#chequeDate").val("");
+					$("#nameOnCheque").val("");
+					if($("#rtgsAmount").val()!=0){//checking rtgs data when cheque data is zero
+						if($.fn.validateRtgs()===true){
+							if($("#pdcRtgsSection").is(":hidden")){
+								$("#pdcRtgsAmount").val("");
+								$("#pdcRtgsBank").val("");
+								$("#pdcRtgsAccountNo").val("");
+								$("#pdcRtgsDate").val("");
+								$("#pdcRtgsIfsc").val("");
+								if(($("#pdcChequeSection").is(":hidden"))){
+									$("#pdcRtgsAmount").val("");
+									$("#pdcRtgsBank").val("");
+									$("#pdcRtgsAccountNo").val("");
+									$("#pdcRtgsDate").val("");
+									$("#pdcRtgsIfsc").val("");
+									submitPayment();//calling submit function after reseting hidden fields values
+								}else{
+									if($.fn.validatePdcCheque()===true){
+										submitPayment();
+									}
+								}
+							}else{
+								if($.fn.validatePdcRtgs()===true){
+									if(($("#pdcChequeSection").is(":hidden"))){
+										$("#pdcRtgsAmount").val("");
+										$("#pdcRtgsBank").val("");
+										$("#pdcRtgsAccountNo").val("");
+										$("#pdcRtgsDate").val("");
+										$("#pdcRtgsIfsc").val("");
+										submitPayment();//calling submit function after reseting hidden fields values
+									}else{
+										if($.fn.validatePdcCheque()===true){
+											submitPayment();
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 			})
 		})
+		
+		
 		
 		function submitPayment(){//submit form data
 			var cashAmount = document.getElementById('cashAmount').value;
@@ -834,9 +999,14 @@
 	setCurrentDate();
 	
 	function openInNewTab(invoiceId) {
+		if(Number(invoiceId) === 0 || invoiceId===""){
+			alert("Invalid Invoice No.");
+		}
+		else{
 		  var win = window.open("../report/InvoicePDFPrintOnly.jsp?invoiceId="+invoiceId, '_blank');
 		  win.focus();
-		}
+			}
+	}
 	
 	document.addEventListener('click',function(e){
 		if(e.srcElement.tagName === 'TR' && e.srcElement.parentNode.id === 'tableBody'){
@@ -874,6 +1044,7 @@
 			document.getElementById("chequeId").value = ids[1];
 			document.getElementById("pdcChequeId").value = ids[2];
 			console.log(response);
+			getPendingInvReport();
 			$.fn.checkStatus(ids[0],"Payment Information has been saved successfully!")
 		}
 	}

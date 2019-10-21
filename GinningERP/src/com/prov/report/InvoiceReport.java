@@ -307,9 +307,9 @@ public ArrayList<Invoice> getReport() {
 			while (rs.next()) {
 				jsonObj.put("invoiceId", rs.getString(1));
 				jsonObj.put("invoiceNo", rs.getString(2));
-				jsonObj.put("totalAmount", rs.getLong(3));
-				jsonObj.put("amountPaid", rs.getLong(4));
-				jsonObj.put("pendingAmount", rs.getLong(5));
+				jsonObj.put("totalAmount", rs.getString(3));
+				jsonObj.put("amountPaid", rs.getString(4));
+				jsonObj.put("pendingAmount", rs.getString(5));
 				
 				String date = rs.getString(6);
 				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
@@ -317,16 +317,16 @@ public ArrayList<Invoice> getReport() {
 				String properDate = format2.format(date1);
 				jsonObj.put("invoiceDate", properDate);
 				
-				jsonObj.put("companyId", rs.getInt(7));
-				jsonObj.put("customerId", rs.getInt(8));
+				jsonObj.put("companyId", rs.getString(7));
+				jsonObj.put("customerId", rs.getString(8));
 				jsonObj.put("authorizer", rs.getString(9));
 				jsonObj.put("invoiceNote", rs.getString(10));
-				jsonObj.put("totalQuantity", rs.getLong(11));
-				jsonObj.put("cashAmount", rs.getLong(12));
-				jsonObj.put("chequeAmount", rs.getLong(13));
-				jsonObj.put("rtgsAmount", rs.getLong(14));
-				jsonObj.put("pdcAmount", rs.getLong(15));
-				jsonObj.put("paidByOperator", rs.getLong(16));
+				jsonObj.put("totalQuantity", rs.getString(11));
+				jsonObj.put("cashAmount", rs.getString(12));
+				jsonObj.put("chequeAmount", rs.getString(13));
+				jsonObj.put("rtgsAmount", rs.getString(14));
+				jsonObj.put("pdcAmount", rs.getString(15));
+				jsonObj.put("paidByOperator", rs.getString(16));
 				jsonObj.put("customerName", rs.getString(17));
 				jsonObj.put("customerAddress", rs.getString(18));
 				jsonObj.put("customerMobile", rs.getString(19));
@@ -337,11 +337,12 @@ public ArrayList<Invoice> getReport() {
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 					String properPdcDate = format.format(date2);
 					jsonObj.put("pdcPayDate", properPdcDate);
+					jsonObj.put("pdcAmount", rs.getString(22));
+					jsonObj.put("pdcPaymentMode", rs.getString(23));
 				}
-				jsonObj.put("pdcAmount", rs.getString(22));
-				jsonObj.put("pdcPaymentMode", rs.getString(23));
-				
 			}
+			
+			System.out.println(jsonObj);
 			stmt.close();
 			con.close();
 		} catch (Exception e) {
@@ -503,8 +504,7 @@ public ArrayList<Invoice> getReport() {
 				invoiceItems.put("gradeAuthorizer", rs.getString(38));
 				invoiceItems.put("gradeDescription", rs.getString(39));
 				
-				double amount =  (rs.getLong(34)/100) * rs.getLong(34);
-						
+				double amount =  (rs.getLong(34)/100) * rs.getLong(36);
 				invoiceItems.put("amount", amount);
 				
 				jsonArr.put(invoiceItems);
@@ -512,8 +512,6 @@ public ArrayList<Invoice> getReport() {
 			}
 			
 			jsonObj.put("invoiceItems", jsonArr);
-			
-			System.out.println(jsonObj);
 			
 			stmt.close();
 			con.close();
@@ -858,4 +856,73 @@ public ArrayList<Invoice> getReport() {
 		}
 		return status;
 	}
+	
+	public int getInvoicePaymentStatus(String invoiceNo) {
+		ResultSet rs = null;
+		Connection con = null;
+		int status = 0;
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT PAID_BY_OP FROM INVOICE_MAST WHERE INVOICE_NO = ?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setString(1, invoiceNo);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				status = rs.getInt(1);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return status;
+	}
+	
+	public JSONObject getInvoicePaymentDetails(String invoiceNo) {
+		ResultSet rs = null;
+		Connection con = null;
+		JSONObject obj = new JSONObject();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT \r\n" + 
+						"CASH_AMOUNT,\r\n" + 
+						"CHEQUE_AMOUNT,\r\n" + 
+						"RTGS_AMOUNT,\r\n" + 
+						"PDC_AMOUNT\r\n" + 
+						"FROM \r\n" + 
+						"INVOICE_MAST WHERE\r\n" + 
+						"INVOICE_NO = ?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setString(1, invoiceNo);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				obj.put("cashAmount", rs.getString(1));
+				obj.put("chequeAmount", rs.getString(2));
+				obj.put("rtgsAmount", rs.getString(3));
+				obj.put("pdpAmount", rs.getString(4));
+				
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return obj;
+	}
+	
+	
 }

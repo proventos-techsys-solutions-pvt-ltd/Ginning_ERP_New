@@ -1,3 +1,4 @@
+<%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="com.prov.dbinsertion.AddAccountName"%>
 <%@page import="com.prov.bean.AccountName"%>
 <%@page import="com.prov.dbinsertion.AddGeneralLedger"%>

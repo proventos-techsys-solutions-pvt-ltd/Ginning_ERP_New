@@ -197,6 +197,11 @@ select {
 	margin-top:.5rem;
 	margin-right:.5rem;
 }
+.input-cash{
+	background:yellow !important;
+	color:black !important;
+	font-weight:bolder !important;	
+}
 /**************************HEADER CLASSES********************************************/
 
 h3{

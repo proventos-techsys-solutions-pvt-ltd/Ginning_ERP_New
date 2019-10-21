@@ -86,7 +86,7 @@
 						<div class="form-row border-top">
 							<div class="col-md-12">
 								<div class="d-flex justify-content-end align-items-center">
-									<button type="button" class="btn btn-success btn-sm" onclick="submitForm()">Add</button>
+									<button type="button" class="btn btn-success btn-sm" id="add-company">Add</button>
 									&nbsp;&nbsp;
 									<button type="button" class="btn btn-success btn-sm">Reset</button>
 								</div>
@@ -131,6 +131,61 @@
 		window.onload = function() {
 			  getCompanyData();
 			};
+			
+			$(document).ready(function(){
+				$("#add-company").click(function(){
+					if(!$.fn.validateData($("#name").val(),/^\s*$/)){
+						if(!$.fn.validateData($("#address").val(),/^\s*$/)){
+							if(!$.fn.validateData($("#city").val(),/^\s*$/)){
+								if(!$.fn.validateData($("#state").val(),/^\s*$/)){
+									if(!$.fn.validateData($("#pan").val(),/^\s*$/)){
+										if(!$.fn.validateData($("#tan").val(),/^\s*$/)){
+											if(!$.fn.validateData($("#cin").val(),/^\s*$/)){
+												if(!$.fn.validateData($("#gst").val(),/^\s*$/)){
+													if(!$.fn.validateData($("#telephone").val(),/^\s*$/)){
+														if(!$.fn.validateData($("#mobile").val(),/^\s*$/)){
+															if(!$.fn.validateData($("#email").val(),/^\s*$/)){
+																if(!$.fn.validateData($("#invoiceSeries").val(),/^\s*$/)){
+																	submitForm()
+																}else{
+																	$.fn.checkStatus(1,"Blank data not acceptable!")
+																}
+															}else{
+																$.fn.checkStatus(1,"Blank data not acceptable!")
+															}
+														}else{
+															$.fn.checkStatus(1,"Blank data not acceptable!")
+														}
+													}else{
+														$.fn.checkStatus(1,"Blank data not acceptable!")
+													}
+												}else{
+													$.fn.checkStatus(1,"Blank data not acceptable!")
+												}
+											}else{
+												$.fn.checkStatus(1,"Blank data not acceptable!")
+											}
+										}else{
+											$.fn.checkStatus(1,"Blank data not acceptable!")
+										}
+									}else{
+										$.fn.checkStatus(1,"Blank data not acceptable!")
+									}
+								}else{
+									$.fn.checkStatus(1,"Blank data not acceptable!")
+								}
+							}else{
+								$.fn.checkStatus(1,"Blank data not acceptable!")
+							}
+						}else{
+							$.fn.checkStatus(1,"Blank data not acceptable!")
+						}
+					}else{
+						$.fn.checkStatus(1,"Blank data not acceptable!")
+					}
+				})
+			
+			})
 			
 			function submitForm(){
 				document.getElementsByName("companyForm")[0].submit();
