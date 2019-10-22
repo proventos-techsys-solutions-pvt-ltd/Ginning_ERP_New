@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 import com.prov.bean.Rtgs;
 import com.prov.db.OracleConnection;
 
@@ -47,6 +49,43 @@ public class RtgsReport {
 			e.printStackTrace();
 		}
 		return rtgsReport;
+	}
+	
+	public JSONObject rtgsReport(int rtgsId){
+		ResultSet rs = null;
+		Connection con = null;
+		JSONObject obj = new JSONObject();
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT * FROM RTGS_MASTER WHERE ID = ?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setInt(1, rtgsId);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				obj.put("id",rs.getInt(1));
+				obj.put("invoiceId",rs.getInt(2));
+				obj.put("customerId",rs.getInt(3));
+				obj.put("accountNo",rs.getString(4));
+				obj.put("bankName",rs.getString(5));
+				obj.put("ifscCode",rs.getString(6));
+				obj.put("rtgsAmount",rs.getLong(7));
+				obj.put("rtgsDate",rs.getString(8));
+				obj.put("cuatomerName",rs.getString(9));
+				obj.put("invoiceNo",rs.getString(10));
+				obj.put("rtgsVoucherNo",rs.getString(11));
+				
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return obj;
 	}
 	
 	

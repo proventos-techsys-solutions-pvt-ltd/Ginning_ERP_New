@@ -141,5 +141,39 @@ public JSONArray getTransactions(String startDate, String endDate, int accId, in
 		}
 		return jsonArr;
 	}
+
+	public int getAccountId(int voucherNo) {
+		Connection con = null;
+		ResultSet rs = null;
+		int accountId = 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	
+		String sql = "SELECT DISTINCT ACCOUNT_ID FROM TRANSACTIONS WHERE VOUCH_NO = ? AND CREDIT > 0";
+		PreparedStatement stmt = null;
+		try {
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, voucherNo);
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				accountId = rs.getInt(1);
+			}
+			
+			stmt.close();
+			con.close();
+			
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return accountId;
+	}
+
 	
 }

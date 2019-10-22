@@ -20,7 +20,7 @@ public class AddPDC {
 			e.printStackTrace();
 		}
 		
-		String addPDC = "{ ? = call ADD_PDC(?,?,?,?,?,?,?,?) }";
+		String addPDC = "{ ? = call ADD_PDC(?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -50,6 +50,7 @@ public class AddPDC {
 			}else if( p.getVoucherNo() > 0) {
 				cs.setInt(9, p.getVoucherNo());
 			}
+			cs.setInt(10, p.getPayStatus());
 			
 			cs.executeUpdate();
 			

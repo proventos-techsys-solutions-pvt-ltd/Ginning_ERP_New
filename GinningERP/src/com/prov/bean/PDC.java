@@ -2,7 +2,13 @@ package com.prov.bean;
 
 public class PDC {
 	
-	private int id, customerId, invoiceId, chequeId, rtgsId, voucherNo;
+	private int id, customerId, invoiceId, chequeId, rtgsId, voucherNo, payStatus;
+	public int getPayStatus() {
+		return payStatus;
+	}
+	public void setPayStatus(int payStatus) {
+		this.payStatus = payStatus;
+	}
 	public int getChequeId() {
 		return chequeId;
 	}

@@ -142,6 +142,7 @@
             pdc.setChequeId(0);
             pdc.setRtgsId(0);
             pdc.setVoucherNo(0);
+            pdc.setPayStatus(0);
             
             AddPDC add = new AddPDC();
             

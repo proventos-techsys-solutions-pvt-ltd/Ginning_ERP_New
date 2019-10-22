@@ -139,11 +139,7 @@
 			
 			id[1] = addRtgs.addRtgsEntry(rtgs);
 	
-			
-			
 			updateInvoice.updatePendingAmount(rtgs.getRtgsAmount(), rtgs.getInvoiceId());
-			
-			
 			
 			Transactions rtgsTrDb = new Transactions();
 			
