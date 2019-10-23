@@ -20,7 +20,7 @@ public class ChequeReport {
 		ResultSet rs = null;
 		Connection con = null;
 		Cheque c = new Cheque();
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			con = OracleConnection.getConnection();
 			
@@ -43,7 +43,11 @@ public class ChequeReport {
 				c.setBankName(rs.getString(7));
 				c.setChequeNo(rs.getString(8));
 				c.setChequeAmount(Long.parseLong(rs.getString(9)));
-				c.setChequeDate(rs.getString(10));
+				String date = rs.getString(10);
+				Date dateFormat = sdf.parse(date);
+				String dateStr = sdf.format(dateFormat);
+				
+				c.setChequeDate(dateStr);
 				c.setStatus(rs.getInt(11));
 				c.setPaymentStatus(rs.getInt(12));
 				c.setVoucherNo(rs.getInt(13));

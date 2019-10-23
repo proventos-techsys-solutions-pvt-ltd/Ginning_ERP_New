@@ -364,7 +364,6 @@ public ArrayList<Invoice> getReport() {
 				}
 			}
 			
-			System.out.println(jsonObj);
 			stmt.close();
 			con.close();
 		} catch (Exception e) {

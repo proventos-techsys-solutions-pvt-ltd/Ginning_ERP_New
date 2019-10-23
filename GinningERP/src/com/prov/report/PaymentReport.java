@@ -59,9 +59,11 @@ public class PaymentReport {
 			try {
 				con = OracleConnection.getConnection();
 				
-				String sql = "SELECT * FROM PAYMENT_DETAILS WHERE MODE_ID = 1 INVOICE_ID = ?";
+				String sql = "SELECT * FROM PAYMENT_DETAILS WHERE MODE_ID = 1 AND INVOICE_ID = ?";
 				
 				PreparedStatement stmt = con.prepareStatement(sql);
+				
+				stmt.setInt(1, invoiceId);
 				
 				rs = stmt.executeQuery();
 				
@@ -93,10 +95,10 @@ public class PaymentReport {
 				try {
 					con = OracleConnection.getConnection();
 					
-					String sql = "SELECT * FROM PAYMENT_DETAILS WHERE MODE_ID = 2 INVOICE_ID = ?";
+					String sql = "SELECT * FROM PAYMENT_DETAILS WHERE MODE_ID = 2 AND INVOICE_ID = ?";
 					
 					PreparedStatement stmt = con.prepareStatement(sql);
-					
+					stmt.setInt(1, invoiceId);
 					rs = stmt.executeQuery();
 					
 					while (rs.next()) {
@@ -128,10 +130,10 @@ public class PaymentReport {
 			try {
 				con = OracleConnection.getConnection();
 				
-				String sql = "SELECT * FROM PAYMENT_DETAILS WHERE MODE_ID = 3 INVOICE_ID = ?";
+				String sql = "SELECT * FROM PAYMENT_DETAILS WHERE MODE_ID = 3 AND INVOICE_ID = ?";
 				
 				PreparedStatement stmt = con.prepareStatement(sql);
-				
+				stmt.setInt(1, invoiceId);
 				rs = stmt.executeQuery();
 				
 				while (rs.next()) {

@@ -16,8 +16,6 @@
     	
     	String invoiceNo = request.getParameter("invoiceNo").toUpperCase();
     
-    	MergeJSON mergeJson = new MergeJSON();	
-    
     	CheckInvoiceSaved check = new CheckInvoiceSaved();
     	
     	if(invoiceNo.equals("") || invoiceNo.equals("0")){
@@ -62,7 +60,31 @@
 	    				rtgsJson =  mergeJson.mergeJSONObjects(cheqeuDataJson, rtgsJson);
 	    			}
 	    			mainJsonObj.put("rtgsJson", rtgsJson);
-	    		}	
+	    		}
+	    		if(Long.parseLong(invoiceJson.getString("pdcAmount")) > 0){
+	    			PDCReport pdcReport = new PDCReport();
+	    			JSONObject pdcJson = pdcReport.getPDCJsonData(invoiceId);
+	    			//int paymentStatus = Integer.parseInt(pdcJson.getString("pdcPayStatus"));
+	    			String modeOfPayment = pdcJson.getString("modeOfPayment");
+	    			if(pdcJson.has("voucherNo") == true && modeOfPayment.equalsIgnoreCase("CASH")){
+	    				TransactionReport trReport = new TransactionReport();
+	    				int accountId = trReport.getAccountId(Integer.parseInt(pdcJson.getString("voucherNo")));
+	    				pdcJson.put("accountId", accountId);
+	    			}
+	    			if(pdcJson.has("chequeId") == true && modeOfPayment.equalsIgnoreCase("CHEQUE")){
+	    				ChequeReport chequeReport = new ChequeReport();
+	    				JSONObject cheqeuDataJson = new JSONObject(chequeReport.getChequeReport(Integer.parseInt(pdcJson.getString("chequeId"))));
+	    				System.out.print(cheqeuDataJson);
+	    				
+	    				pdcJson =  mergeJson.mergeJSONObjects(cheqeuDataJson, pdcJson);
+	    			}
+	    			if(pdcJson.has("rtgsId") == true && modeOfPayment.equalsIgnoreCase("RTGS")){
+	    				RtgsReport rtgsReport = new RtgsReport();
+	    				JSONObject cheqeuDataJson = rtgsReport.rtgsReport(Integer.parseInt(pdcJson.getString("rtgsId")));
+	    				pdcJson =  mergeJson.mergeJSONObjects(cheqeuDataJson, pdcJson);
+	    			}
+	    			mainJsonObj.put("pdcJson", pdcJson);
+	    		}
     			out.print(mainJsonObj);
         		out.flush();
 	    	}

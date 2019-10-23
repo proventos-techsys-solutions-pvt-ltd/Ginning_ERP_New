@@ -115,6 +115,7 @@ public class PDCReport {
 				pdc.setChequeId(rs.getInt(7));
 				pdc.setRtgsId(rs.getInt(8));
 				pdc.setVoucherNo(rs.getInt(9));
+				pdc.setPayStatus(rs.getInt(10));
 				
 			}
 			
@@ -127,6 +128,51 @@ public class PDCReport {
 		
 		return pdc;
 	}
+	
+	public JSONObject getPDCJsonData(int invoiceId) {
+		ResultSet rs = null;
+		Connection con = null;
+		JSONObject obj = new JSONObject();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT *\r\n" + 
+					"FROM PDC_MAST\r\n" + 
+					"WHERE \r\n" + 
+					"PDC_MAST.invoice_id =? \r\n";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, invoiceId);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				obj.put("pdcId", rs.getString(1));
+				obj.put("customerId", rs.getString(2));
+				obj.put("invoiceId", rs.getString(3));
+				obj.put("pdcAmount", rs.getString(4));
+				obj.put("payDate", rs.getString(5));
+				obj.put("modeOfPayment", rs.getString(6));
+				obj.put("chequeId", rs.getString("CHEQUE_ID"));
+				obj.put("rtgsId", rs.getString("RTGS_ID"));
+				obj.put("voucherNo", rs.getString("VOUCHER_NO"));
+				obj.put("pdcPayStatus", rs.getString(10) );
+				
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return obj;
+	}
+	
 	
 	/*
 	 * public JSONObject getPDCForPrinting(int chequeId) { ResultSet rs = null;

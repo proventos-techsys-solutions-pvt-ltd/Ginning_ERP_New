@@ -71,6 +71,7 @@
 					</div>
 					<div class="form-row border-top">
 					<div class="col-md-3">
+						<input type="hidden" id="cashPaymentStatus" value="0" />
 							<label class="lbl-rm-all">Cash Account</label>
 							<div class="d-flex justify-content-start align-items-center">
 								<select class="form-control" id="cashAccountId" name="cashAccountId">
@@ -86,9 +87,10 @@
 					</div>
 					<div class="form-row border-top">
 					<input type="hidden" id="chequeId" value="0" />
+					<input type="hidden" id="chequePaymentStatus" value="0" />
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Cheque</label>
-							<input type="text" class="form-control input-cash" id="chequeAmount" name="" readonly>
+							<input type="text" class="form-control input-cash" id="chequeAmount" value="0" name="" readonly>
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Bank</label>
@@ -113,9 +115,10 @@
 						</div>
 					</div>
 					<div class="form-row border-top">
+						<input type="hidden" id="rtgsPaymentStatus" value="0" />
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">RTGS/NEFT</label>
-							<input type="text" class="form-control input-cash" id="rtgsAmount" name="rtgsAmount" readonly>
+							<input type="text" class="form-control input-cash" id="rtgsAmount" name="rtgsAmount" value="0" readonly>
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Bank Name</label>
@@ -133,9 +136,10 @@
 						</div>
 					</div>
 					<div class="form-row border-top" id="pdcCashSection" style="width:100%;" hidden>
+						<input type="hidden" id="pdcCashPaymentStatus" value="0" />
 						<div class="col-md-4">
 							<label class="lbl-rm-all">PDC Cash Amount</label>
-							<input type="text" class="form-control input-cash" id="pdcCashAmount" name="pdcCashAmount" readonly>
+							<input type="text" class="form-control input-cash" id="pdcCashAmount" name="pdcCashAmount" value="0" readonly>
 						</div>
 							<div class="col-md-4">
 							<label class="lbl-rm-all">PDC Cash Account</label>
@@ -147,9 +151,10 @@
 							</div>
 							</div>
 					<div class="form-row border-top" id="pdcRtgsSection" hidden>
+						<input type="hidden" id="pdcRtgsPaymentStatus" value="0" />
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">PDC RTGS/NEFT</label>
-							<input type="text" class="form-control input-cash" id="pdcRtgsAmount" name="pdcRtgsAmount" readonly>
+							<input type="text" class="form-control input-cash" id="pdcRtgsAmount" name="pdcRtgsAmount" value="0" readonly>
 						</div>
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">Bank Name</label>
@@ -172,9 +177,10 @@
 					</div>
 					<div class="form-row border-top" id="pdcChequeSection" hidden>
 						<input type="hidden" id="pdcChequeId" value="0"/>
+						<input type="hidden" id="pdcChequePaymentStatus" value="0" />
 						<div class="col-md-auto">
 							<label class="lbl-rm-all">PDC</label>
-							<input type="text" class="form-control input-cash" id="pdcChequeAmount" name="pdcChequeAmount" readonly>
+							<input type="text" class="form-control input-cash" id="pdcChequeAmount" name="pdcChequeAmount" value="0" readonly>
 							<input type="hidden" id="pdcId" name="pdcId" />
 						</div>
 						<div class="col-md-auto">
@@ -253,7 +259,7 @@
 	<script src="../js/commonjs.js"></script>
 	<script>
 	
-	
+
 	//Get current date and time
 	function setCurrentDate(){
 		var today = new Date();
@@ -346,7 +352,7 @@
 			var response = this.response.trim();
 			console.log("daily Setup---"+response);
 			if(Number(response) > 0){
-				$.unblockUI
+				$.unblockUI();
 			}
 			else if(Number(response) <= 0){
 				$.blockUI();
@@ -357,7 +363,7 @@
 	window.onload = function(){
 		getDailySetupData();
 		getPendingInvReport();
-	}
+	};
 	
 	function getDailySetupData(){
 		url = "../processing/setDailyInvSetup.jsp";
@@ -384,22 +390,22 @@
 	}
 	
 	function setDailySetupData(data){
-			var bank =  document.getElementById('chequeBank');
-			for(i=0;i<bank.options.length;i++){
-				if(data.bankId != Number(bank.options[i].value)){
-					bank.options[i].disabled = true;
+			var chequeBank =  document.getElementById('chequeBank');
+			for(i=0;i<chequeBank.options.length;i++){
+				if(chequeBank.bankId != Number(chequeBank.options[i].value)){
+					chequeBank.options[i].disabled = true;
 				}
-				else if(data.bankId === Number(bank.options[i].value)){
-					bank.options[i].selected = true;
+				else if(chequeBank.bankId === Number(chequeBank.options[i].value)){
+					chequeBank.options[i].selected = true;
 			}
 			
-			var bank =  document.getElementById('pdcBank');
-			for(i=0;i<bank.options.length;i++){
-				if(data.bankId != Number(bank.options[i].value)){
-					bank.options[i].disabled = true;
+			var pdcBank =  document.getElementById('pdcBank');
+			for(i=0;i<pdcBank.options.length;i++){
+				if(pdcBank.bankId != Number(pdcBank.options[i].value)){
+					pdcBank.options[i].disabled = true;
 				}
-				else if(data.bankId === Number(bank.options[i].value)){
-					bank.options[i].selected = true;
+				else if(data.bankId === Number(pdcBank.options[i].value)){
+					pdcBank.options[i].selected = true;
 				}
 			}
 			
@@ -479,16 +485,17 @@
 				var response = this.response.trim();
 				console.log(response);
 				if(Number(response) === 0){
-					window.alert('Invalid Invoice Number entered. Please check the Invoice No. and search again.')
+					window.alert('Invalid Invoice Number entered. Please check the Invoice No. and search again.');
 				}else{
 					var data = JSON.parse(response);
 					setData(data);
+					//console.log(data);
 				}
 			}
 		}
 		
 		function setData(data){
-			
+			console.log(data);
 			/* document.getElementById('pdcAmount').disabled = false ;
 			document.getElementById('pdcNo').disabled = false ;
 			document.getElementById('pdcDate').disabled = false ;
@@ -500,80 +507,112 @@
 			document.getElementById('pdcDate').value = "" ;
 			document.getElementById('pdcPayeeName').value = "" ; */
 			
-			document.getElementById('payCheque').disabled = false ;
-			document.getElementById('payPdc').disabled = false ;
+			setCurrentDate();
+			var invoiceJson = data.invoiceJson;
+			
+			document.getElementById('invoiceNo').value = invoiceJson.invoiceNo ;
+			document.getElementById('invoiceId').value = invoiceJson.invoiceId;
+			document.getElementById('customerId').value = invoiceJson.customerId;
+			document.getElementById('customerInfo').value = invoiceJson.customerName +'\n' + invoiceJson.customerAddress + '\n' + invoiceJson.customerMobile  ;
+			document.getElementById('customerName').value = invoiceJson.customerName;
+			document.getElementById('invoiceDate').value = invoiceJson.invoiceDate ;
+			document.getElementById('totalAmount').value = invoiceJson.totalAmount ;
 			
 			
-			document.getElementById('invoiceNo').value = data.invoiceNo ;
-			document.getElementById('invoiceId').value = data.invoiceId;
-			document.getElementById('customerId').value = data.customerId;
-			document.getElementById('customerInfo').value = data.customerName +'\n' + data.customerAddress + '\n' + data.customerMobile  ;
-			document.getElementById('customerName').value = data.customerName;
-			document.getElementById('invoiceDate').value = data.invoiceDate ;
-			document.getElementById('totalAmount').value = data.totalAmount ;
-			document.getElementById('cashAmount').value = data.cashAmount ;
-			document.getElementById('nameOnCheque').value = data.customerName ;
-			document.getElementById('chequeAmount').value = data.chequeAmount ;
-			document.getElementById('chequeNo').value = "" ;
-			document.getElementById('rtgsAmount').value = data.rtgsAmount ;
-			document.getElementById('rtgsBank').value = "" ;
-			document.getElementById('rtgsAccountNo').value = "" ;
-			document.getElementById('rtgsIfsc').value = "" ;
-			
-			if(data.hasOwnProperty('pdcAmount')){
-				if(data.pdcPaymentMode === 'CHEQUE'){
-					document.getElementById('pdcId').value = data.pdcId ;
-					document.getElementById('pdcChequeAmount').value = data.pdcAmount ;
-					document.getElementById('pdcNo').value = "" ;
-					document.getElementById('pdcDate').value = data.pdcPayDate ;
-					document.getElementById('pdcPayeeName').value = "" ;
-					document.getElementById('pdcPayeeName').value = data.customerName;
+			if(data.hasOwnProperty("cashJson")){
+				var cashJson = data.cashJson;
+				document.getElementById('cashAmount').value = cashJson.amount ;
+				document.getElementById('cashPaymentStatus').value = cashJson.paymentStatus;
+				if(Number(cashJson.paymentStatus) === 1){
+					document.getElementById("cashAccountId").value = cashJson.accountId;
+				}
+			}
+			if(data.hasOwnProperty("chequeJson")){
+				var chequeJson = data.chequeJson;
+				document.getElementById('chequeAmount').value = chequeJson.amount ;
+				document.getElementById('chequePaymentStatus').value = chequeJson.paymentStatus ;
+				if(Number(chequeJson.paymentStatus) === 1){
+					document.getElementById('chequeBank').value = chequeJson.bankId;
+					document.getElementById('chequeNo').value = chequeJson.chequeNo ;
+					document.getElementById('chequeDate').value = chequeJson.chequeDate ;
+					document.getElementById('nameOnCheque').value = chequeJson.customerName ;
+					document.getElementById('chequeId').value = chequeJson.id ;
+				}else{
+					document.getElementById('chequeNo').value = "" ;
+					document.getElementById('nameOnCheque').value = invoiceJson.customerName ;
+					}
+				}
+			if(data.hasOwnProperty("rtgsJson")){
+				var rtgsJson = data.rtgsJson;
+				document.getElementById('rtgsAmount').value = rtgsJson.amount ;
+				document.getElementById('rtgsPaymentStatus').value = rtgsJson.paymentStatus ;
+				if(Number(rtgsJson.paymentStatus) === 1){
+					document.getElementById('rtgsBank').value = rtgsJson.bankName ;
+					document.getElementById('rtgsBank').value = rtgsJson.bankName ;
+					document.getElementById('rtgsAccountNo').value = rtgsJson.accountNo ;
+					document.getElementById('rtgsIfsc').value = rtgsJson.ifscCode ;
+				}else{
+					document.getElementById('rtgsBank').value = "" ;
+					document.getElementById('rtgsAccountNo').value = "" ;
+					document.getElementById('rtgsIfsc').value = "" ;
+				}
+			}
+			if(data.hasOwnProperty('pdcJson')){
+				var pdcJson = data.pdcJson;
+				if(invoiceJson.pdcPaymentMode === 'CHEQUE'){
+					document.getElementById('pdcId').value = invoiceJson.pdcId ;
+					document.getElementById('pdcChequeAmount').value = invoiceJson.pdcAmount ;
 					document.getElementById('pdcChequeSection').hidden=false;
 					document.getElementById('pdcCashSection').hidden=true;
 					document.getElementById('pdcRtgsSection').hidden=true;
-				}else if(data.pdcPaymentMode === 'RTGS'){
-					document.getElementById('pdcId').value = data.pdcId ;
-					document.getElementById('pdcRtgsAmount').value = data.pdcAmount;
-					document.getElementById('pdcRtgsBank').value = '' ;
-					document.getElementById('pdcRtgsAccountNo').value = '' ;
-					document.getElementById('pdcRtgsIfsc').value = '' ;
-					document.getElementById('pdcRtgsDate').value = data.pdcPayDate;
+					document.getElementById('pdcChequePaymentStatus').value = pdcJson.pdcPayStatus ;
+					if(Number(pdcJson.pdcPayStatus) === 1){
+						document.getElementById('pdcChequeId').value = pdcJson.chequeId;
+						document.getElementById('pdcDate').value = pdcJson.chequeDate;
+						document.getElementById('pdcPayeeName').value = pdcJson.customerName;
+						document.getElementById('pdcNo').value = pdcJson.chequeNo ;
+					}else{
+						document.getElementById('pdcChequeId').value = "";
+						document.getElementById('pdcDate').value = invoiceJson.pdcPayDate ;
+						document.getElementById('pdcPayeeName').value = invoiceJson.customerName;
+						document.getElementById('pdcNo').value = "";
+					}
+				}else if(invoiceJson.pdcPaymentMode === 'RTGS'){
+					document.getElementById('pdcId').value = invoiceJson.pdcId ;
+					document.getElementById('pdcRtgsAmount').value = invoiceJson.pdcAmount;
+					document.getElementById('pdcRtgsPaymentStatus').value = pdcJson.pdcPayStatus;
+					if(Number(pdcJson.pdcPayStatus) === 1){
+						document.getElementById('pdcRtgsBank').value = pdcJson.bankName ;
+						document.getElementById('pdcRtgsAccountNo').value = pdcJson.accountNo ;
+						document.getElementById('pdcRtgsIfsc').value = pdc.ifscCode ;
+						document.getElementById('pdcRtgsDate').value = invoiceJson.pdcPayDate;
+					}else{
+						document.getElementById('pdcRtgsBank').value = '' ;
+						document.getElementById('pdcRtgsAccountNo').value = '' ;
+						document.getElementById('pdcRtgsIfsc').value = '' ;
+						document.getElementById('pdcRtgsDate').value = invoiceJson.pdcPayDate;
+					}
 					document.getElementById('pdcRtgsSection').hidden=false;
 					document.getElementById('pdcChequeSection').hidden=true;
 					document.getElementById('pdcCashSection').hidden=true;
 					document.getElementById('pdcCashSection').hidden=true;
-				}else if(data.pdcPaymentMode === 'CASH'){
-					document.getElementById('pdcId').value = data.pdcId ;
-					document.getElementById('pdcCashAmount').value = data.pdcAmount;
+				}else if(invoiceJson.pdcPaymentMode === 'CASH'){
+					document.getElementById('pdcId').value = invoiceJson.pdcId ;
+					document.getElementById('pdcCashAmount').value = invoiceJson.pdcAmount;
+					document.getElementById('pdcCashPaymentStatus').value = pdcJson.pdcPayStatus;
+					if(Number(pdcJson.pdcPayStatus) === 1){
+						document.getElementById('pdcCashAccountId').value = pdcJson.accountId  ;
+					}
 					document.getElementById('pdcCashSection').hidden=false;
 					document.getElementById('pdcRtgsSection').hidden=true;
 					document.getElementById('pdcChequeSection').hidden=true;
 				}
-			}else if(!data.hasOwnProperty('pdcAmount')){
+			}else if(!data.hasOwnProperty('pdcJson')){
 				document.getElementById('pdcCashSection').hidden=true;
 				document.getElementById('pdcRtgsSection').hidden=true;
 				document.getElementById('pdcChequeSection').hidden=true;
-				
 			}
-			setCurrentDate();
-			
-			if(data.hasOwnProperty('chequeId')){
-				document.getElementById('chequeBank').value = data.chqBnkId;
-				document.getElementById('chequeNo').value = data.chqNo ;
-				document.getElementById('chequeDate').value = data.chqDate ;
-				document.getElementById('nameOnCheque').value = data.chqName ;
-				document.getElementById('chequeId').value = data.chequeId ;
-			}
-			if(data.hasOwnProperty('pdChequeId')){
-				document.getElementById('pdcBank').value = data.pdchqBnkId;
-				document.getElementById('pdcNo').value = data.pdchqNo ;
-				document.getElementById('pdcDate').value = data.pdchqDate ;
-				document.getElementById('pdcPayeeName').value = data.pdchqName ;
-				console.log("pdcChequeId--"+data.pdChequeId);
-				document.getElementById('pdcChequeId').value = data.pdChequeId ;
-			}
-			
-			if(Number(data.paidByOperator) === 1){
+			if(Number(invoiceJson.paidByOperator) === 1){
 				document.getElementById('invoiceStatus').value = "Paid by Operator";
 				var inputElements = document.getElementsByTagName('input');
 				var selectElements = document.getElementsByTagName('select');
@@ -606,7 +645,7 @@
 				$.fn.checkStatus(1,"Invalid cheque number!.");
 				return false;
 			}
-		})
+		});
 		
 		$.fn.validateRtgs = (function(){//validating rtgs
 			if(!$.fn.validateData($("#rtgsBank").val(),/^\s*$/)){
@@ -614,15 +653,15 @@
 					if(!$.fn.validateData($("#rtgsIfsc").val(),/^\s*$/)){
 						return true;
 					}else{
-						$.fn.checkStatus(1,"Invalid IFSC Code number!.")
+						$.fn.checkStatus(1,"Invalid IFSC Code number!.");
 				}
 				}else{
-					$.fn.checkStatus(1,"Invalid account number!.")
+					$.fn.checkStatus(1,"Invalid account number!.");
 				}			
 			}else{
-				$.fn.checkStatus(1,"Invalid bank name!.")
+				$.fn.checkStatus(1,"Invalid bank name!.");
 			}
-		})
+		});
 		
 		$.fn.validatePdcRtgs = (function(){//validating pdc rtgs
 			if(!$.fn.validateData($("#pdcRtgsBank").val(),/^\s*$/)){
@@ -630,27 +669,27 @@
 					if(!$.fn.validateData($("#pdcRtgsIfsc").val(),/^\s*$/)){
 						return true;
 					}else{
-						$.fn.checkStatus(1,"Invalid PDC IFSC Code number!.")
+						$.fn.checkStatus(1,"Invalid PDC IFSC Code number!.");
 				}
 				}else{
-					$.fn.checkStatus(1,"Invalid PDC account number!.")
+					$.fn.checkStatus(1,"Invalid PDC account number!.");
 				}			
 			}else{
-				$.fn.checkStatus(1,"Invalid PDC bank name!.")
+				$.fn.checkStatus(1,"Invalid PDC bank name!.");
 			}
-		})
+		});
 		
 		$.fn.validatePdcCheque = (function(){//validating pdc cheque function
 			if($.fn.validateData($("#pdcNo").val(),/^[0-9]{6}$/)){
 				if(!$.fn.validateData($("#pdcPayeeName").val(),/^\s*$/)){
 					return true;
 				}else{
-					$.fn.checkStatus(1,"Invalid name on Pdc cheque!.")
+					$.fn.checkStatus(1,"Invalid name on Pdc cheque!.");
 				}
 			}else{
-				$.fn.checkStatus(1,"Invalid cheque Pdc number!.")
+				$.fn.checkStatus(1,"Invalid cheque Pdc number!.");
 			}
-		})
+		});
 		
 		//validating data on form submission
 		$(document).ready(function(){
@@ -783,8 +822,8 @@
 						}
 					}
 				}
-			})
-		})
+			});
+		});
 		
 		
 		
@@ -850,13 +889,7 @@
 			chequeJson['customerName'] = document.getElementById('customerName').value;
 			chequeJson['bankAccountId'] = bank.options[bank.selectedIndex].getAttribute('data-account-id');
 			chequeJson['accountPayableId'] = document.getElementById('accountPayableId').value;
-			
-			/* var chequeInfo = JSON.stringify(chequeJson);
-			document.getElementById('data').value = chequeInfo;
-			console.log(chequeInfo);
-			document.getElementById('payCheque').disabled = true;
-			document.getElementById('paymentForm').submit();
-			//submitDataAjax(chequeInfo); */
+			chequeJson['paymentStatus'] = document.getElementById('chequePaymentStatus').value;
 			
 			return chequeJson;
 		}
@@ -877,13 +910,7 @@
 			rtgsJson['dsBankId'] = document.getElementById('dsBankId').value;
 			rtgsJson['accountPayableId'] = document.getElementById('accountPayableId').value;
 			rtgsJson['companyId'] = document.getElementById('companyId').value;
-
-			/* var rtgsInfo = JSON.stringify(rtgsJson);
-			console.log(rtgsInfo);
-			document.getElementById('data').value = rtgsInfo;
-			document.getElementById('payRtgs').disabled = true;
-			//document.getElementById('paymentForm').submit();
-			submitDataAjax(rtgsInfo); */
+			rtgsJson['paymentStatus'] = document.getElementById('rtgsPaymentStatus').value;
 			
 			return rtgsJson;
 		}
@@ -899,13 +926,7 @@
 		cashJson['invoiceNo'] = document.getElementById('invoiceNo').value;
 		cashJson['accountPayableId'] = document.getElementById('accountPayableId').value;
 		cashJson['cashAccountId'] = document.getElementById('cashAccountId').value;
-
-		/* var cashInfo = JSON.stringify(cashJson);
-		document.getElementById('data').value = cashInfo;
-		document.getElementById('payCash').disabled = true;
-		
-		//document.getElementById('paymentForm').submit();
-		submitDataAjax(cashInfo); */
+		cashJson['paymentStatus'] = document.getElementById('cashPaymentStatus').value;
 		
 		return cashJson;
 	}
@@ -930,14 +951,7 @@
 	   pdcJson['accountPayableId'] = document.getElementById('accountPayableId').value;
 	   pdcJson['bankAccountId'] = bank.options[bank.selectedIndex].getAttribute('data-account-id');
 	   pdcJson['accountPayableId'] = document.getElementById('accountPayableId').value;
-	   
-	   /* var pdcInfo = JSON.stringify(pdcJson);
-	   console.log(pdcInfo);
-	   document.getElementById('data').value = pdcInfo;
-	   document.getElementById('payPdc').disbled = true;
-	   
-	   document.getElementById('paymentForm').submit();
-	   //submitDataAjax(pdcInfo); */
+	   pdcJson['paymentStatus'] = document.getElementById('pdcChequePaymentStatus').value;
 	   
 	   return pdcJson;
 	   
@@ -961,15 +975,8 @@
 	   pdcRtgsJson['dsBankId'] = document.getElementById('dsBankId').value;
 	   pdcRtgsJson['accountPayableId'] = document.getElementById('accountPayableId').value;
 	   pdcRtgsJson['companyId'] = document.getElementById('companyId').value;
+	   pdcRtgsJson['paymentStatus'] = document.getElementById('pdcRtgsPaymentStatus').value;
 
-	   
-		/* var pdcRtgsInfo = JSON.stringify(pdcRtgsJson);
-		console.log(pdcRtgsJson);
-		document.getElementById('data').value = pdcRtgsInfo;
-		document.getElementById('payPdcRtgs').diabled = true;
-		//document.getElementById('paymentForm').submit();
-		submitDataAjax(pdcRtgsInfo); */
-		
 		return pdcRtgsJson;
 
    }
@@ -985,12 +992,7 @@
 		pdcCashJson['invoiceNo'] = document.getElementById('invoiceNo').value;
 		pdcCashJson['accountPayableId'] = document.getElementById('accountPayableId').value;
 		pdcCashJson['cashAccountId'] = document.getElementById('pdcCashAccountId').value;
-		
-		/* var cashInfo = JSON.stringify(cashJson);
-		document.getElementById('data').value = cashInfo;
-		document.getElementById('payPdcCash').disabled = true;
-		//document.getElementById('paymentForm').submit();
-		submitDataAjax(cashInfo); */
+		pdcCashJson['paymentStatus'] = document.getElementById('pdcCashPaymentStatus').value;
 		
 		return pdcCashJson;
    }
