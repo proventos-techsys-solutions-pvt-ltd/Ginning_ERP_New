@@ -224,6 +224,22 @@
 <nav class="navbar navbar-default navbar-static-bottom footer ">
  
 </nav>
+<!-- Response modal pop up -->
+<div class="response-back-display"></div>
+<div class="response-body">
+	<div class="response-header">
+		<h5>Information</h5>
+	</div>
+	<div class="response-content">
+		<div class="d-flex justify-content-center align-items-center">
+		<h5 id="response-text" class="ml-4"></h5>
+		</div>
+	</div>
+	<div class="response-footer">
+		<button type="button" class="btn btn-success btn-response" id="response-button">Ok</button>
+	</div>
+</div>
+
 <script src="${pageContext.request.contextPath}/js/commonjs.js"></script>
 <script src="${pageContext.request.contextPath}/js/validations/GenerateRST.js"></script>
 <script>
@@ -865,7 +881,22 @@ document.addEventListener('click',function(e){
 		fetchDataForSecondWeighment(rst);
 	}
 })
+/**************************************
+Response window code
+**************************************/
+var sessionId = {
+		"getSessionId":<%=session.getAttribute("") %>,
+}
 
+$(document).ready(function(){
+	$.fn.checkStatus(sessionId.getSessionId,"Weighment has been saved successfully!")
+})
+
+$(document).ready(function(){
+	$("#response-button").click(function(){
+		alert("Ameya put reload code and printing code here!!");
+	})
+})
 
 
 //Function calls on page load
@@ -875,6 +906,9 @@ fetchRSTSeriesFunc();
 decideWeighment(0);
 checkDailySetup();
 
+<%
+session.removeAttribute("");
+%>
 </script>
 </body>
 </html>
