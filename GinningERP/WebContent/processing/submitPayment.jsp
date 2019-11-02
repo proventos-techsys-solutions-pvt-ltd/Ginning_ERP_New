@@ -159,7 +159,7 @@
 				PaymentDetails rtgsPayment = new PaymentDetails();
 				
 				rtgsPayment.setInvoiceId(paymentInvoiceId);
-				rtgsPayment.setModeId(2);
+				rtgsPayment.setModeId(3);
 				rtgsPayment.setChequeId(0);
 				rtgsPayment.setCashVouhNo(0);
 				rtgsPayment.setRtgsId(rtgsId);
@@ -224,7 +224,7 @@
 				PaymentDetails cashPayment = new PaymentDetails();
 				
 				cashPayment.setInvoiceId(paymentInvoiceId);
-				cashPayment.setModeId(2);
+				cashPayment.setModeId(1);
 				cashPayment.setChequeId(0);
 				cashPayment.setCashVouhNo(voucherNo);
 				cashPayment.setRtgsId(0);
@@ -291,8 +291,8 @@
 				
 				int invoiceId = Integer.parseInt((String)pdcChequeJson.get("invoiceId"));
 				
-				cheque.setBankId(Integer.parseInt((String)pdcChequeJson.get("pdcBankName")));
-				cheque.setBankName((String)pdcChequeJson.get("invoiceId"));
+				cheque.setBankId(Integer.parseInt((String)pdcChequeJson.get("pdcBank")));
+				cheque.setBankName((String)pdcChequeJson.get("pdcBankName"));
 				cheque.setChequeAmount(Long.parseLong((String)pdcChequeJson.get("pdcAmount")));
 				cheque.setChequeDate((String)pdcChequeJson.get("pdcDate"));
 				cheque.setChequeNo((String)pdcChequeJson.get("pdcNo"));

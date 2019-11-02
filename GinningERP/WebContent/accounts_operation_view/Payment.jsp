@@ -985,7 +985,7 @@
 	   var pdcCashJson = {};
 		
 	  	pdcCashJson['dataType'] = 'cash';	
-		pdcCashJson['pdcCashAmount'] = document.getElementById('cashAmount').value;
+		pdcCashJson['pdcCashAmount'] = document.getElementById('pdcCashAmount').value;
 		pdcCashJson['invoiceId'] = document.getElementById('invoiceId').value;
 		pdcCashJson['customerName'] = document.getElementById('customerName').value;
 		pdcCashJson['customerId'] = document.getElementById('customerId').value;

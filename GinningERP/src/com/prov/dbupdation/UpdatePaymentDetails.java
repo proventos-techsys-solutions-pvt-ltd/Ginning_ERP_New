@@ -34,22 +34,22 @@ public int updatePaymentStatus(PaymentDetails pd) {
 			
 			stmt = con.prepareStatement(updateWeighMast);
 			
-			stmt.setInt(1, pd.getInvoiceId());
-			stmt.setInt(2, pd.getModeId());
+			stmt.setInt(4, pd.getInvoiceId());
+			stmt.setInt(5, pd.getModeId());
 			if(pd.getCashVouhNo() == 0) {
-				stmt.setNull(3, Types.NUMERIC);
+				stmt.setNull(1, Types.NUMERIC);
 			}else {
-				stmt.setInt(3, pd.getCashVouhNo());
+				stmt.setInt(1, pd.getCashVouhNo());
 			}
 			if(pd.getChequeId() == 0) {
-				stmt.setNull(4, Types.NUMERIC);			
+				stmt.setNull(2, Types.NUMERIC);			
 			}else {
-				stmt.setInt(4, pd.getChequeId());
+				stmt.setInt(2, pd.getChequeId());
 			}
 			if(pd.getRtgsId() == 0) {
-				stmt.setNull (5, Types.NUMERIC);
+				stmt.setNull (3, Types.NUMERIC);
 			}else {
-				stmt.setInt(5, pd.getRtgsId());
+				stmt.setInt(3, pd.getRtgsId());
 			}
 			
 

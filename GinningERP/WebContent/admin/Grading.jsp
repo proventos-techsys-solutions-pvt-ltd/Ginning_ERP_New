@@ -110,6 +110,7 @@
 										<th width="7%">Moisture</th>
 										<th width="8%">Rate per Qtl</th>
 										<th width="5%" class="text-center">PDC</th>
+										<th width="8%">PDC Rate per Qtl</th>
 										<th width="5%" class="text-center"></th>
 									</tr>
 								</thead>
@@ -161,7 +162,7 @@
 							<label>PDP Date</label>
 							<input type="date" id="pdcDate" name="pdcDate" class="form-control form-control-sm" value="">
 						</div>
-						<div class="col-md-auto">
+						<div class="col-md-auto" hidden>
 							<label>PDP Bonus Rate</label>
 							<input type="text" id="pdcBonusRate" name="pdcBonusRate" class="form-control form-control-sm" value="0" readonly>
 						</div>
@@ -195,7 +196,6 @@
 								<button type="button" class="btn btn-success btn-sm change-button btn_width" id="submitGrades" >Approve</button>
 								<button type="button" class="btn btn-success btn-sm change-button btn_width ml-1" id="updateGrades"  disabled>Update</button>
 								<button type="button" class="btn btn-success btn-sm change-button btn_width ml-1" id="deleteGrades" disabled>Delete</button>
-								
 							</div>
 						</div>
 						</div>
@@ -384,6 +384,7 @@ function setDataForNewGrading(data){
 	var cell6 = row.insertCell(5);
 	var cell7 = row.insertCell(6);
 	var cell8 = row.insertCell(7);
+	var cell9 = row.insertCell(8);
 	
 	cell7.className = "text-center";
 	cell8.className = "text-center";
@@ -396,8 +397,9 @@ function setDataForNewGrading(data){
 						+	"</select>";
 	cell4.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='description1' name='description' readonly>";
 	cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture1' name='moisture' value='' required>";
-	cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate1' name='rate'>"
-	cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck1' name='pdcCheck' value='false'>"					
+	cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate1' name='rate'>";
+	cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck1' name='pdcCheck' value='false'>";		
+	cell9.innerHTML = "<input type='text' class='' id='form-control form-control-sm lbl-rm-all' id='pdcRateTbl1' name='pdcRateTbl' value='0' readonly>";	
 	
 	document.getElementById("tblQty1").value = totalQuantity;
 	calculateTotal();
@@ -444,6 +446,7 @@ document.addEventListener("change",function(e){
 				var cell6 = row.insertCell(5);
 				var cell7 = row.insertCell(6);
 				var cell8 = row.insertCell(7);
+				var cell9 = row.insertCell(8);
 				
 				cell7.className = "text-center";
 				cell8.className = "text-center";
@@ -458,7 +461,8 @@ document.addEventListener("change",function(e){
 				cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture"+(noOfRows+1)+"' name='moisture'>";
 				cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate"+(noOfRows+1)+"' name='rate' >"
 				cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck"+(noOfRows+1)+"' name='pdcCheck' value='false'>";
-				cell8.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow'>";
+				cell8.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='pdcRateTbl"+(noOfRows+1)+"' name='pdcRateTbl' readonly>"
+				cell9.innerHTML = "<img src='../property/img/delete.png' alt='delete' id='deleteRow'>";
 			
 			}
 			noOfRows = document.getElementsByName("dividedQuantity").length;
@@ -660,9 +664,10 @@ function setGradeUpdationData(data)
 		var cell7 = row.insertCell(6);
 		var cell8 = row.insertCell(7);
 		var cell9 = row.insertCell(8);
-		cell9.setAttribute('hidden',true);
+		var cell10 = row.insertCell(9);
+		cell10.setAttribute('hidden',true);
 		cell7.className = "text-center";
-		cell8.className = "text-center";
+		cell9.className = "text-center";
 	
 		cell1.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='srNo"+(i+1)+"' name='srNo' value="+(i+1)+">";
 		cell2.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='tblQty"+(i+1)+"' name='dividedQuantity' value="+data[i].quantity+">";
@@ -685,7 +690,7 @@ function setGradeUpdationData(data)
 		cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate"+(i+1)+"' name='rate' value="+data[i].rate+" >";
 							
 		if(i>0){
-			cell8.innerHTML = "<img src='../property/img/delete.png' class='delete-row' alt='delete' id='deleteRow"+(i+1)+"'>";
+			cell9.innerHTML = "<img src='../property/img/delete.png' class='delete-row' alt='delete' id='deleteRow"+(i+1)+"'>";
 		}
 		if(Number(data[i].pdcAmount)>0){
 			cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck"+(i+1)+"' name='pdcCheck' value='true'>";
@@ -699,13 +704,15 @@ function setGradeUpdationData(data)
 			document.getElementById("pdcRate").value = 	data[i].pdcAmount/noOfMonths;
 			document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) + Number(data[i].pdcAmount * Number(data[i].quantity)/100)
 			document.getElementById('pdcPaymentMode').value = data[i].pdcPaymentMode;
+			cell8.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='pdcRateTbl"+(i+1)+"' name='pdcRateTbl' value="+(Number(data[i].rate) + Number(data[i].pdcAmount/noOfMonths))+" readonly>";
 		}
 		else if(data[i].pdcAmount<=0)
 		{
 			cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck"+(i+1)+"' name='pdcCheck' value='false'>";
+			cell8.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='pdcRateTbl"+(i+1)+"' name='pdcRateTbl' value='0' readonly>";
 		}
 		
-		cell9.innerHTML = "<input type='hidden' id='gradeId"+(i+1)+"' name='gradeId' value='"+data[i].gradeId+"'>";
+		cell10.innerHTML = "<input type='hidden' id='gradeId"+(i+1)+"' name='gradeId' value='"+data[i].gradeId+"'>";
 		
 		totalQty = totalQty + Number(data[i].quantity);
 		
@@ -860,6 +867,7 @@ function setPdcInputBoxes(){
 	var table = document.getElementById('tableBody');
 	var noOfRows = table.rows.length;
 	var pdcChecks = document.getElementsByName('pdcCheck');
+
 	setPdcBonusRate();
 	for(i=0; i<noOfRows; i++){
 		if(pdcChecks[i].checked === true){
@@ -872,7 +880,7 @@ function setPdcInputBoxes(){
 			var pdcRatePerMonth = document.getElementById("pdcRate").value;
 			var pdcRate = Number(noOfMonths)*Number(pdcRatePerMonth);
 			var pdcBonusAmount = (Number(pdcRate)*Number(qtyInQtl)).toFixed(2);
-			var totalAmount = Number(Number(qtyInQtl) * Number(ratePerQtl))+Number(pdcBonusAmount);
+			var totalAmount = Number(Number(qtyInQtl) * Number(ratePerQtl))+Number(pdcBonusAmount);	
 			document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) + Number(pdcBonusAmount);
 			document.getElementById("pdcAmount").value = Number(pdcAmount)+ Number(totalAmount);
 		}
@@ -915,12 +923,16 @@ function setPdcBonusRate(){
 	var table = document.getElementById('tableBody');
 	var pdcChecks = document.getElementsByName('pdcCheck');
 	var rates = document.getElementsByName('rate');
+	var pdcRates = document.getElementsByName('pdcRateTbl');
 	for(i = 0; i< table.rows.length; i++){
 		if(pdcChecks[i].value === 'true'){
-			document.getElementById('pdcBonusRate').value = Number(rates[i].value) + Number(document.getElementById('pdcRate').value * document.getElementById('pdcMonths').value); 
-			break;
+			var rate = Number(rates[i].value) + Number(document.getElementById('pdcRate').value * document.getElementById('pdcMonths').value);
+			document.getElementById('pdcBonusRate').value =  rate;
+			pdcRates[i].value = rate;
+			//break;
 		}else{
 			document.getElementById('pdcBonusRate').value = 0;
+			pdcRates[i].value = 0;	
 		}
 	}
 }
