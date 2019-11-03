@@ -14,7 +14,8 @@
   <link href="https://fonts.googleapis.com/css?family=Vollkorn&display=swap" rel="stylesheet"> 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Bootstrap JS -->
-   	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!--  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>-->
   	<!-- script src="${pageContext.request.contextPath}/js/jquery-3.3.1.slim.min.js" ></script> -->
   	<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockWeigh.js" ></script>
   	<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
@@ -37,7 +38,7 @@
    	<div class="row mt-2 ">
     <div class="col-md-8">
     <div class="tile-background-row" id="getHeight">
-      	<form id="newRST" action="${pageContext.request.contextPath}/processing/addWeighmentEntry.jsp" target="_blank">
+      	<form id="newRST" action="${pageContext.request.contextPath}/processing/addWeighmentEntry.jsp" >
       	<div class="form-row form-row-ctm">
 	      	<input type="hidden" id="id" name="id" value="0" />
 	      	<input type="hidden" id="dailySetupId" name="dailySetupId" value="0" />
@@ -242,21 +243,9 @@
 
 <script src="${pageContext.request.contextPath}/js/commonjs.js"></script>
 <script src="${pageContext.request.contextPath}/js/validations/GenerateRST.js"></script>
+<script src="../js/Validation.js"></script>
 <script>
 
-/******
- * Multiple camera access code
- */
-navigator.mediaDevices.enumerateDevices()
-.then(function(devices) {
-  devices.forEach(function(device) {
-    console.log(device.kind + ":" + device.label +
-                " id = " + device.deviceId);
-  });
-})
-.catch(function(err) {
-  console.log(err.name + ": " + err.message);
-});
 /*************************
  Photo code
  ****************************/
@@ -592,7 +581,7 @@ function submitRSTEntry(){
 	if(uiController.validate()===true){
 		if(!document.getElementById('fetchGrossWeight').disabled){
 				document.getElementById("newRST").submit();	
-				resetFormData();
+				//resetFormData();
 		}else if(document.getElementById('fetchGrossWeight').disabled){
 			if(Number(document.getElementById('tare').value)>0){
 				document.getElementById("newRST").submit();	
@@ -870,6 +859,12 @@ function printReceipt(){
 	window.open('${pageContext.request.contextPath}/report/RSTPrintOnly.jsp?weighmentId='+weighmentId);
 }
 
+//Print RST Receipt from popup
+function printReceiptFromPopup(weighmentId){
+	//var weighmentId = document.getElementById('id').value;
+	window.open('${pageContext.request.contextPath}/report/RSTPrintOnly.jsp?weighmentId='+weighmentId);
+}
+
 document.addEventListener('click',function(e){
 	if(e.srcElement.tagName === 'TD' && e.srcElement.parentNode.parentNode.id === 'tableBody'){
 		var row = e.srcElement.parentNode;
@@ -885,7 +880,7 @@ document.addEventListener('click',function(e){
 Response window code
 **************************************/
 var sessionId = {
-		"getSessionId":<%=session.getAttribute("") %>,
+		"getSessionId":<%=session.getAttribute("weighmentId") %>,
 }
 
 $(document).ready(function(){
@@ -894,7 +889,8 @@ $(document).ready(function(){
 
 $(document).ready(function(){
 	$("#response-button").click(function(){
-		alert("Ameya put reload code and printing code here!!");
+		printReceiptFromPopup(sessionId.getSessionId);
+		location.reload();
 	})
 })
 
@@ -907,7 +903,7 @@ decideWeighment(0);
 checkDailySetup();
 
 <%
-session.removeAttribute("");
+session.removeAttribute("weighmentId");
 %>
 </script>
 </body>

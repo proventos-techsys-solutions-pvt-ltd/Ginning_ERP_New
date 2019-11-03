@@ -1,4 +1,5 @@
-
+<
+<!-- 
   <div class="select" >
     <label for="videoSource">Video source: </label><select id="videoSource"></select>
   </div>
@@ -21,6 +22,7 @@
      <button type="button" id='front'>Front</button>
      <button type="button" id='back'>back</button>
 <script>
+ -->
 
 var videoElement1 = document.querySelector('video#video1');
 var videoElement2 = document.querySelector('video#video2');

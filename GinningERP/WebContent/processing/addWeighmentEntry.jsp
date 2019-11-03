@@ -65,7 +65,8 @@
 			weighMastId = addWeigh.addWeighMast(w);
 			
 			session.setAttribute("weighmentId", Integer.toString(weighMastId));
-			response.sendRedirect("../report/RST.jsp");
+			//response.sendRedirect("../report/RST.jsp");
+			response.sendRedirect("../wb_operator/GenerateRST.jsp");
 
 	}
 	else{
@@ -90,7 +91,8 @@
 		int rstWeighMast = uw.secondWeighment(w);
 		
 		session.setAttribute("weighmentId", Integer.toString(weighmentId));
-		response.sendRedirect("../report/RST.jsp");
+		//response.sendRedirect("../report/RST.jsp");
+		response.sendRedirect("../wb_operator/GenerateRST.jsp");
 	}
 %>
 
