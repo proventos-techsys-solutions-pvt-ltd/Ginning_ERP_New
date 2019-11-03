@@ -705,11 +705,11 @@
 									$("#pdcRtgsDate").val("");
 									$("#pdcRtgsIfsc").val("");
 									if(($("#pdcChequeSection").is(":hidden"))){
-										$("#pdcRtgsAmount").val("");
-										$("#pdcRtgsBank").val("");
-										$("#pdcRtgsAccountNo").val("");
-										$("#pdcRtgsDate").val("");
-										$("#pdcRtgsIfsc").val("");
+										$("#pdcChequeAmount").val("");
+										$("#pdcBank").val("");
+										$("#pdcNo").val("");
+										$("#pdcDate").val("");
+										$("#pdcPayeeName").val("");
 										submitPayment();//calling submit function after reseting hidden fields values
 									}else{
 										if($.fn.validatePdcCheque()===true){
@@ -719,11 +719,11 @@
 								}else{
 									if($.fn.validatePdcRtgs()===true){
 										if(($("#pdcChequeSection").is(":hidden"))){
-											$("#pdcRtgsAmount").val("");
-											$("#pdcRtgsBank").val("");
-											$("#pdcRtgsAccountNo").val("");
-											$("#pdcRtgsDate").val("");
-											$("#pdcRtgsIfsc").val("");
+											$("#pdcChequeAmount").val("");
+											$("#pdcBank").val("");
+											$("#pdcNo").val("");
+											$("#pdcDate").val("");
+											$("#pdcPayeeName").val("");
 											submitPayment();//calling submit function after reseting hidden fields values
 										}else{
 											if($.fn.validatePdcCheque()===true){
@@ -746,11 +746,11 @@
 									$("#pdcRtgsDate").val("");
 									$("#pdcRtgsIfsc").val("");
 									if(($("#pdcChequeSection").is(":hidden"))){
-										$("#pdcRtgsAmount").val("");
-										$("#pdcRtgsBank").val("");
-										$("#pdcRtgsAccountNo").val("");
-										$("#pdcRtgsDate").val("");
-										$("#pdcRtgsIfsc").val("");
+										$("#pdcChequeAmount").val("");
+										$("#pdcBank").val("");
+										$("#pdcNo").val("");
+										$("#pdcDate").val("");
+										$("#pdcPayeeName").val("");
 										submitPayment();//calling submit function after reseting hidden fields values
 									}else{
 										if($.fn.validatePdcCheque()===true){
@@ -760,11 +760,11 @@
 								}else{
 									if($.fn.validatePdcRtgs()===true){
 										if(($("#pdcChequeSection").is(":hidden"))){
-											$("#pdcRtgsAmount").val("");
-											$("#pdcRtgsBank").val("");
-											$("#pdcRtgsAccountNo").val("");
-											$("#pdcRtgsDate").val("");
-											$("#pdcRtgsIfsc").val("");
+											$("#pdcChequeAmount").val("");
+											$("#pdcBank").val("");
+											$("#pdcNo").val("");
+											$("#pdcDate").val("");
+											$("#pdcPayeeName").val("");
 											submitPayment();//calling submit function after reseting hidden fields values
 										}else{
 											if($.fn.validatePdcCheque()===true){
@@ -792,11 +792,11 @@
 								$("#pdcRtgsDate").val("");
 								$("#pdcRtgsIfsc").val("");
 								if(($("#pdcChequeSection").is(":hidden"))){
-									$("#pdcRtgsAmount").val("");
-									$("#pdcRtgsBank").val("");
-									$("#pdcRtgsAccountNo").val("");
-									$("#pdcRtgsDate").val("");
-									$("#pdcRtgsIfsc").val("");
+									$("#pdcChequeAmount").val("");
+									$("#pdcBank").val("");
+									$("#pdcNo").val("");
+									$("#pdcDate").val("");
+									$("#pdcPayeeName").val("");
 									submitPayment();//calling submit function after reseting hidden fields values
 								}else{
 									if($.fn.validatePdcCheque()===true){
@@ -806,11 +806,11 @@
 							}else{
 								if($.fn.validatePdcRtgs()===true){
 									if(($("#pdcChequeSection").is(":hidden"))){
-										$("#pdcRtgsAmount").val("");
-										$("#pdcRtgsBank").val("");
-										$("#pdcRtgsAccountNo").val("");
-										$("#pdcRtgsDate").val("");
-										$("#pdcRtgsIfsc").val("");
+										$("#pdcChequeAmount").val("");
+										$("#pdcBank").val("");
+										$("#pdcNo").val("");
+										$("#pdcDate").val("");
+										$("#pdcPayeeName").val("");
 										submitPayment();//calling submit function after reseting hidden fields values
 									}else{
 										if($.fn.validatePdcCheque()===true){
