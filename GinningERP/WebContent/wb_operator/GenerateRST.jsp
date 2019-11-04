@@ -15,8 +15,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Bootstrap JS -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<!--  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>-->
-  	<!-- script src="${pageContext.request.contextPath}/js/jquery-3.3.1.slim.min.js" ></script> -->
   	<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockWeigh.js" ></script>
   	<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
 	<script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
@@ -38,7 +36,7 @@
    	<div class="row mt-2 ">
     <div class="col-md-8">
     <div class="tile-background-row" id="getHeight">
-      	<form id="newRST" action="${pageContext.request.contextPath}/processing/addWeighmentEntry.jsp" >
+      	<form id="newRST" action="${pageContext.request.contextPath}/processing/addWeighmentEntry.jsp" method="post">
       	<div class="form-row form-row-ctm">
 	      	<input type="hidden" id="id" name="id" value="0" />
 	      	<input type="hidden" id="dailySetupId" name="dailySetupId" value="0" />
@@ -62,10 +60,13 @@
         <div class="form-row form-row-ctm">
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Vehicle Type</label>
+	        	<div class="d-flex justify-content-start align-items-center">
 	        	 <select class="form-control " id="vehicleType" name="vehicleType" onchange="setWeighRate(this)">
 	        	    <option disabled selected>Select</option>
 	        	 	<c:VehicleCategoryTag />
 	        	 </select>
+	        	 <button type="button" class="btn btn-success" id="take-vehicle-pic">Photo</button>
+	        	 </div>
 	        </div>
 	        <div class="col-md-4">
 	        	<label class="lbl-rm-all">Customer</label>
@@ -153,6 +154,8 @@
   			</div>
   			</div>
         </div>
+        <input type="hidden" name="ImageData3" id="ImageData3" >
+        <input type="hidden" name="ImageData2" id="ImageData2" >
         </form>
         </div>
         </div>
@@ -219,6 +222,49 @@
 		    </div>
 		  </div>
 		</div>
+		
+		<!-- **********************Vehical photo pop-up -->
+		<div class="modal fade" id="vehicle-pop" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-lg modal-dialog-top" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Vehicle Photo</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      <div class="d-flex justify-content-center align-items-center">
+		        <div id="container">
+   				 <video autoplay id="WeighBridgeVideo1"  width='300px' height='300px' >
+   				 </video>
+				  </div>
+				 <div id="container2" class="ml-2">
+				    <video autoplay id="WeighBridgeVideo2"  width='300px' height='300px'>
+				    </video>
+ 				 </div>
+ 				 </div>
+ 				<div class="d-flex justify-content-center align-items-center">
+ 					<div>
+				        <canvas id="canvas1" width="300" height="300"  name="ImageFile2" ></canvas>
+				        <img id="canvasImg1" name="ImageFile2"><img>
+				        
+			       	</div>
+			       	<div class="ml-2">
+				        <canvas id="canvas2" width="300" height="300"  name="ImageFile3" ></canvas>
+				        <img id="canvasImg2" name="ImageFile3"><img>
+				       
+			       	</div>
+ 				</div>
+		      </div>
+		      <div class="modal-footer">
+		      <button type="button" class="btn btn-secondary" id="click-vehicle-photo">Take Photo</button>
+		       <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
   </div>
   	
 <!--Footer code starts here-->
@@ -901,6 +947,102 @@ setCurrentDate();
 fetchRSTSeriesFunc();
 decideWeighment(0);
 checkDailySetup();
+
+
+/*********************************************
+Weigh Bridge photo code
+*********************************************/
+$(document).ready(function(){
+	$("#take-vehicle-pic").click(function(){
+		$("#vehicle-pop").modal();
+		weighBridgePhoto();
+	})
+})
+
+  
+ var dataUrl1="";
+ var dataUrl2="";
+
+ var canvas1;
+ var canvas2;
+
+
+document.getElementById("click-customer-photo").addEventListener("click", function () {
+        context.drawImage(video, 0, 0, 213, 160);
+        document.getElementById('canvasImg').src = canvas.toDataURL("image/png");
+        dataUrl = canvas.toDataURL();
+        //document.getElementById('video').style.display = "none";  // hide the live image video portin after click on take picture
+    });
+    
+function weighBridgePhoto(){
+	var video = document.querySelector("#WeighBridgeVideo1");
+	  var firstWebcam;
+	  navigator.mediaDevices.enumerateDevices()
+	  .then(function(devices){
+			for(i=0;i<devices.length;i++){
+				var camera = devices[i];
+				if(camera.kind  == "videoinput" && camera.deviceId == "b0ce15c0c705f2ec644690487f819ff3a9a23f83a3508091e9607af147a111e3"){
+					var constraints = { deviceId: { exact: camera.deviceId } };
+					obj = navigator.mediaDevices.getUserMedia({ video: constraints });
+					break;
+				}
+			}
+			 return obj;
+	 	 }
+	 ) 
+	 .then(stream => video.srcObject = stream)
+	 .catch(e => alert('camera not connected.'));
+
+	  /***********************/
+	  var video2 = document.querySelector("#WeighBridgeVideo2");
+	  navigator.mediaDevices.enumerateDevices()
+	  .then(function(devices){
+			for(i=0;i<devices.length;i++){
+				var camera = devices[i];
+				if(camera.kind  == "videoinput" && camera.deviceId == "ce03194cf9b47af834779e4a366403a346d1c1f9254f52591029d9d87dd86b8b"){
+					var constraints = { deviceId: { exact: camera.deviceId } };
+					obj = navigator.mediaDevices.getUserMedia({ video: constraints });
+					break;
+				}
+			}
+			 return obj;
+	 	 }
+	 )  
+	 .then(stream => video2.srcObject = stream)
+	 .catch(e => alert('camera not connected.'));
+	  
+	  //*******************************
+	   canvas1 = document.getElementById("canvas1"),
+	   context1 = canvas1.getContext("2d"),
+	   video1 =document.getElementById("WeighBridgeVideo1"),
+	   videoObj1 = {"video": true},
+	   errBack = function (error) {
+	      console.log("Video capture error: ", error.code);
+	  };
+
+	  canvas2 = document.getElementById("canvas2"),
+	  context2 = canvas2.getContext("2d"),
+	  video2 =document.getElementById("WeighBridgeVideo2"),
+	  videoObj2 = {"video": true},
+	  errBack = function (error) {
+	  	console.log("Video capture error: ", error.code);
+	  };
+	  
+	  $(document).ready(function(){//taking pictureof vehicle
+			$("#click-vehicle-photo").click(function(){
+				context1.drawImage(video1, 0, 0, 213, 160);
+		        $('#canvasImg1').src = canvas1.toDataURL();
+		        document.getElementById('ImageData2').value = canvas1.toDataURL();
+		        
+		        context2.drawImage(video2, 0, 0, 213, 160);
+		        $('#canvasImg2').src = canvas2.toDataURL();
+		        document.getElementById('ImageData3').value = canvas2.toDataURL();
+			})
+		})
+} 
+
+
+
 
 <%
 session.removeAttribute("weighmentId");

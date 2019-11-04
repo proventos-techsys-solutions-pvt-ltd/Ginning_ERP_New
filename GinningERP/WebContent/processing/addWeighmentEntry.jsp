@@ -1,3 +1,10 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.io.ByteArrayInputStream"%>
+<%@page import="java.io.File"%>
+<%@page import="javax.imageio.ImageIO"%>
+<%@page import="java.awt.image.BufferedImage"%>
+<%@page import="javax.xml.bind.DatatypeConverter"%>
 <%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="org.json.JSONObject"%>
 <%@page import="com.prov.dbops.CheckRST"%>
@@ -33,6 +40,28 @@
 	 	double weighRate = Double.parseDouble(request.getParameter("weighRate"));
 	 	int dailySetupId = Integer.parseInt(request.getParameter("dailySetupId"));
 	 	String operator = request.getParameter("operator");
+	 	String frontImageData = request.getParameter("ImageData2");
+	 	String backImageData = request.getParameter("ImageData3");
+	 	
+	 	 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy_HHmmss");  
+	     Date todaysDate = new Date();  
+	 	
+	 	byte[] frontImagedata = DatatypeConverter.parseBase64Binary(frontImageData.substring(frontImageData.indexOf(",") + 1)); 
+    	BufferedImage bufferedImage = null; 
+    	String path = "E:/customerImages";
+    	
+    	bufferedImage = ImageIO.read(new ByteArrayInputStream(frontImagedata)); 
+    	String frontImageName = customer+"_"+todaysDate+"front.png"; 
+    	File file1= new File(path+frontImageName);	
+    	ImageIO.write(bufferedImage, "png",file1); 
+    	
+    	
+    	byte[] rearImagedata = DatatypeConverter.parseBase64Binary(frontImageData.substring(frontImageData.indexOf(",") + 1)); 
+    	bufferedImage = ImageIO.read(new ByteArrayInputStream(rearImagedata)); 
+    	String rearImageName = customer+"_"+todaysDate+"rear.png"; 
+    	File file2= new File(path+frontImageName);	
+    	ImageIO.write(bufferedImage, "png",file2); 
+    	
 	 		
 			CustomerVehicle cv = new CustomerVehicle();
 			Invoice inv = new Invoice();
