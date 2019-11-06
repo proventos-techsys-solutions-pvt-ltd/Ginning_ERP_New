@@ -3,7 +3,19 @@ package com.prov.bean;
 public class CustomerVehicle {
 	
 	private int id, cid, rst, vTypeId;
-	private String vehicleNo;
+	private String vehicleNo, frontImage, rearImage;
+	public String getFrontImage() {
+		return frontImage;
+	}
+	public void setFrontImage(String frontImage) {
+		this.frontImage = frontImage;
+	}
+	public String getRearImage() {
+		return rearImage;
+	}
+	public void setRearImage(String rearImage) {
+		this.rearImage = rearImage;
+	}
 	private Double weighRate;
 	public int getId() {
 		return id;

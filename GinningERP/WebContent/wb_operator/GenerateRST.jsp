@@ -1030,11 +1030,11 @@ function weighBridgePhoto(){
 	  
 	  $(document).ready(function(){//taking pictureof vehicle
 			$("#click-vehicle-photo").click(function(){
-				context1.drawImage(video1, 0, 0, 213, 160);
+				context1.drawImage(video1, 0, 0, 250, 250);
 		        $('#canvasImg1').src = canvas1.toDataURL();
 		        document.getElementById('ImageData2').value = canvas1.toDataURL();
 		        
-		        context2.drawImage(video2, 0, 0, 213, 160);
+		        context2.drawImage(video2, 0, 0, 250, 250);
 		        $('#canvasImg2').src = canvas2.toDataURL();
 		        document.getElementById('ImageData3').value = canvas2.toDataURL();
 			})

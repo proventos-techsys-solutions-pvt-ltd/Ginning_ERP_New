@@ -27,17 +27,20 @@ public class SerialReader
         try
         {
         	int i = 0;
-            while ( ( len = this.in.read(buffer)) > -1 )
+           parent: while ( ( len = this.in.read(buffer)) > -1 )
             {
             	String data = new String(buffer,0,len);
-            	if(data.matches("\\d")) {
-            		 //System.out.print(data);
-            		 //weight = weight+data;
-            		arr[i] = data;
-            		 i++;
-            		 if(i==6) {
-            			 break;
-            		 }
+            	if(data.matches("\\s")) {
+            		while((len = this.in.read(buffer)) > -1) {
+            			data = new String(buffer, 0, len);
+		            	if(data.matches("\\d")) {
+		            		 arr[i] = data;
+		            		 i++;
+		            		 if(i==6) {
+		            			 break parent;
+		            		 }
+		            	}
+            		}
             	}
             }
         }

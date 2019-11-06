@@ -19,7 +19,7 @@ public int addCustomerVehicle(CustomerVehicle cv) {
 			e.printStackTrace();
 		}
 
-		String addCustomerVehicle = "{ ? = call ADD_CUSTOMERVEHICLE(?,?,?,?,?) }";
+		String addCustomerVehicle = "{ ? = call ADD_CUSTOMERVEHICLE(?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 
@@ -32,6 +32,8 @@ public int addCustomerVehicle(CustomerVehicle cv) {
 			cs.setInt(4, cv.getRst());
 			cs.setInt(5, cv.getvTypeId());
 			cs.setDouble(6, cv.getWeighRate());
+			cs.setString(7, cv.getFrontImage());
+			cs.setString(8, cv.getRearImage());
 			
 			cs.executeUpdate();
 			

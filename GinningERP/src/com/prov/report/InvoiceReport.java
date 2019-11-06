@@ -425,7 +425,8 @@ public ArrayList<Invoice> getReport() {
 					"    CV.WEIGH_RATE,\r\n" + 
 					"    COMP.EMAIL COMP_EMAIL,\r\n" + 
 					"    PDC.PAY_DATE,\r\n" + 
-					"    PDC.MODE_OF_PAYMENT\r\n" + 
+					"    PDC.MODE_OF_PAYMENT\r\n," + 
+					"    IM.ADVANCE\r\n" + 
 					"FROM\r\n" + 
 					"    INVOICE_MAST IM\r\n" + 
 					"    left outer join \r\n" + 
@@ -493,6 +494,7 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("vendorMobile", rs.getString(27));
 			jsonObj.put("weighRate", rs.getLong(40));
 			jsonObj.put("companyEmail", rs.getString(41));
+			jsonObj.put("advance", rs.getString(44));
 			if(rs.getString(42) != null) {
 				jsonObj.put("pdcDate", rs.getString(42));
 			}else {
@@ -527,7 +529,6 @@ public ArrayList<Invoice> getReport() {
 				
 				double amount =  (rs.getLong(34)/100) * rs.getLong(36);
 				invoiceItems.put("amount", amount);
-				
 				jsonArr.put(invoiceItems);
 				
 			}
@@ -682,7 +683,8 @@ public ArrayList<Invoice> getReport() {
 					"							CV.WEIGH_RATE, \r\n" + 
 					"							COMP.EMAIL COMP_EMAIL,\r\n" + 
 					"                            CUST.BLACKLISTED,\r\n" + 
-					"                            CUST.MEMBERSHIP\r\n" + 
+					"                            CUST.MEMBERSHIP\r\n," + 
+					"                            IM.ADVANCE\r\n" + 
 					"					FROM\r\n" + 
 					"							INVOICE_MAST IM,\r\n" + 
 					"							COMPANY_MASTER COMP,\r\n" + 

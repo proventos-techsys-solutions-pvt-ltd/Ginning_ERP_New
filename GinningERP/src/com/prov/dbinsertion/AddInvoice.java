@@ -19,7 +19,7 @@ public int addInvoice(Invoice i) {
 			e.printStackTrace();
 		}
 
-		String addInvoice = "{ ? = call ADD_INVOICE(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
+		String addInvoice = "{ ? = call ADD_INVOICE(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -47,6 +47,7 @@ public int addInvoice(Invoice i) {
 			cs.setLong(18, i.getNetPayable());
 			cs.setLong(19, i.getPdcAmount());
 			cs.setInt(20, i.getVoucherNo());
+			cs.setLong(21, i.getAdvance());
 			
 			cs.executeUpdate();
 			

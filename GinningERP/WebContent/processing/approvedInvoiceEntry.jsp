@@ -95,6 +95,7 @@
 			invoice.setUnloadingCharges(Float.parseFloat((String)json.get("unloadingCharges")));
 			invoice.setBonusAmount(Float.parseFloat((String)json.get("totalBonus")));
 			invoice.setPdcAmount(Long.parseLong((String)json.get("pdcAmount")));
+			invoice.setAdvance(Long.parseLong((String)json.get("advance")));
 			if(paymentModes.containsKey("Cash")){
 				invoice.setCashAmount(Long.parseLong((String)paymentModes.get("Cash")));
 			}else{

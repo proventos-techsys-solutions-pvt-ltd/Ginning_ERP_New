@@ -204,8 +204,8 @@
 		                                    <input type="text" id="unloadingCharges" name="unloadingCharges" class="form-control form-control-sm" value="0" readonly="readonly">
 		                                    <label for="" class="lbl-rm-all">Less: Weighing Charges </label> 
 		                                    <input type="text" id="weighingCharges" name="weighingCharges" class="form-control form-control-sm" value="0" readonly="readonly">
-											<label for="" class="lbl-rm-all" hidden>Advance </label> 
-		                                    <input type="hidden" id="advance" name="advance" class="form-control form-control-sm" value="0">
+											<label for="" class="lbl-rm-all" >Advance </label> 
+		                                    <input type="text" id="advance" name="advance" class="form-control form-control-sm" value="0">
 		                                    <label for="" class="lbl-rm-all">Net Payable </label> 
 		                                    <input type="text" id="net" name="net" class="form-control form-control-sm" value="0" readonly>
 	                                   	</div>
@@ -1047,6 +1047,7 @@ function setCurrentDate(){
 			jsonObj['totalQuantity'] = (Math.round(totalQuantity.toString())).toString();
 			jsonObj['unloadingCharges'] = (Math.round(document.getElementById('unloadingCharges').value)).toString();
 			jsonObj['totalBonus'] = (Math.round(document.getElementById('totalBonus').value)).toString();
+			jsonObj['advance'] = (Math.round(document.getElementById('advance').value)).toString();
 			jsonObj['netPayable'] = (Math.round((Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value)).toString())).toString();
 			jsonObj['pdcAmount'] = (Math.round(document.getElementById('totalPdcAmount').value)).toString();
 			jsonObj['pdcDate'] = document.getElementById('pdcDate').value;
