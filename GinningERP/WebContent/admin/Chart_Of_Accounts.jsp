@@ -102,7 +102,7 @@
 		        	<div class="form-row">
 		        		<div class="col-md-4">
 		        			<label>Opening Balance</label>
-		        			<input class="form-control form-control-sm" type="text" id="openingBal" name="openingBal">
+		        			<input class="form-control form-control-sm" type="text" id="openingBal" name="openingBal" value="0.00">
 		        		</div>
 		        		<div class="col-md-2">
 		        			<label>Balance</label>
@@ -121,8 +121,8 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-		        <button type="button" class="btn btn-primary" id="saveButton" onclick="submitAccount()">Save and Close</button>
-		        <button type="button" class="btn btn-primary" id="updateButton" >Update</button>
+		        <button type="button" class="btn btn-success" id="saveButton">Save and Close</button>
+		        <button type="button" class="btn btn-success" id="updateButton" disabled >Update</button>
 		      </div>
 		    </div>
 		  </div>
@@ -165,7 +165,73 @@
       });
     });
 	
+	/**********************************
+	*Pop up valiations for submiting form
+	********************************/
+	$(document).ready(function(){
+		$("#saveButton").click(function(){
+			if($.fn.validateData($("#accountLedgerName").val(),/^[A-Za-z0-9 ]+$/)){
+				$("#accountLedgerName").css("border","1px solid green");
+				if($.fn.validateData($("#ledgerDesc").val(),/^[A-Za-z0-9 ]+$/)){
+					$("#ledgerDesc").css("border","1px solid green");
+					if($.fn.validateData($("#openingBal").val(),/^[0-9]+[.][0-9]{2}$/)){
+						$("#openingBal").css("border","1px solid green");
+						if($.fn.validateData($("#openingBalDate").val(),/^[0-9]{4}[-][0-9]{2}[-][0-9]{2}$/)){
+							$("#openingBalDate").css("border","1px solid green");
+								submitAccount();
+						}else{
+							$("#openingBalDate").css("border","1px solid red");
+							alert("Date cannot be left blank!");
+						}
+					}else{
+						$("#openingBal").css("border","1px solid red");
+						alert("If no opening balance please enter 00.00!");
+					}
+				}else{
+					$("#ledgerDesc").css("border","1px solid red");
+					alert("Description cannot be left blank!");
+				}
+			}else{
+				$("#accountLedgerName").css("border","1px solid red");
+				alert("Please enter correct account name!");
+			}
+		})
+	})
+	/**********************************
+	*Pop up valiations for updating  form
+	********************************/
+	$(document).ready(function(){
+		$("#updateButton").click(function(){
+			if($.fn.validateData($("#accountLedgerName").val(),/^[A-Za-z0-9 ]+$/)){
+				$("#accountLedgerName").css("border","1px solid green");
+				if($.fn.validateData($("#ledgerDesc").val(),/^[A-Za-z0-9 ]+$/)){
+					$("#ledgerDesc").css("border","1px solid green");
+					if($.fn.validateData($("#openingBal").val(),/^[0-9]+[.][0-9]{2}$/)){
+						$("#openingBal").css("border","1px solid green");
+						if($.fn.validateData($("#openingBalDate").val(),/^[0-9]{4}[-][0-9]{2}[-][0-9]{2}$/)){
+							$("#openingBalDate").css("border","1px solid green");
+								$("#charOfAccounts").action = "../processing/updateGLAccount.jsp";
+								$("#charOfAccounts").submit();	
+						}else{
+							$("#openingBalDate").css("border","1px solid red");
+							alert("Date cannot be left blank!");
+						}
+					}else{
+						$("#openingBal").css("border","1px solid red");
+						alert("If no opening balance please enter 00.00!");
+					}
+				}else{
+					$("#ledgerDesc").css("border","1px solid red");
+					alert("Description cannot be left blank!");
+				}
+			}else{
+				$("#accountLedgerName").css("border","1px solid red");
+				alert("Please enter correct account name!");
+			}
+		})
+	})
 	
+
 	
 	document.getElementById("callAddAccount").addEventListener("click",function(e){
 		var companyId = document.getElementById("company").value;
@@ -307,12 +373,10 @@
 
 			$("#addAccount").modal();
 		}
+		$("#saveButton").prop("disabled",true);
+		$("#updateButton").prop("disabled",false);
 	})
 	
-	document.getElementById("updateButton").addEventListener('click',function(e){
-		document.getElementById("charOfAccounts").action = "../processing/updateGLAccount.jsp";
-		document.getElementById("charOfAccounts").submit();	
-	})
 	
 	document.getElementById("company").addEventListener('change',function(e){
 		var companyId = e.srcElement.value;
