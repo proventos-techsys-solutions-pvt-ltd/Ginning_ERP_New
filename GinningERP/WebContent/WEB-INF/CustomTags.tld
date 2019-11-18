@@ -98,5 +98,11 @@
 	<tag-class>com.prov.tags.PurchaseAccountTag</tag-class>
 	<body-content>Empty</body-content>
    </tag>
+   
+   <tag>
+    <name>PaymentModeTag</name>
+	<tag-class>com.prov.tags.PaymentModes</tag-class>
+	<body-content>Empty</body-content>
+   </tag>
   
 </taglib>

@@ -242,33 +242,54 @@ public class RstReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT   \r\n" + 
-					"WM.RST,   \r\n" + 
-					"WM.MATERIAL,   \r\n" + 
-					"WM.GROSS,   \r\n" + 
-					"WM.GROSSWT_TIME,   \r\n" + 
-					"WM.TARE,   \r\n" + 
-					"WM.NET,   \r\n" + 
-					"WM.TAREWT_TIME,   \r\n" + 
-					"WM.WEIGHMENT_DATE,   \r\n" + 
-					"CVM.VEHICLE_NO,   \r\n" + 
-					"CVM.WEIGH_RATE,   \r\n" + 
-					"WRM.VEHICLE_NAME,   \r\n" + 
-					"CUST.NAME,   \r\n" + 
-					"CUST.ADDRESS,   \r\n" + 
-					"CUST.MOBILE,  \r\n" + 
-					"COMP.NAME COMP_NAME,   \r\n" + 
-					"COMP.ADDRESS COMP_NAME,   \r\n" + 
-					"COMP.MOBILE COMP_MOBILE,  \r\n" + 
-					"WM.WB_OPERATOR, \r\n" + 
-					"CUST.PHOTO\r\n" + 
-					"FROM WEIGH_MAST WM, CUSTOMER_VEHICLE_MAST CVM, WEIGH_RATE_MAST WRM, CUSTOMER_MAST CUST, COMPANY_MASTER COMP  \r\n" + 
-					"WHERE   \r\n" + 
-					"WM.VID = CVM.ID AND   \r\n" + 
-					"CVM.CID = CUST.ID AND   \r\n" + 
-					"CVM.V_TYPE_ID = WRM.ID AND   \r\n" + 
-					"COMP.ID = (SELECT COMPANY_ID FROM DAILY_SETUP WHERE SETUP_DATE = (SELECT MAX(SETUP_DATE) FROM DAILY_SETUP)) AND  \r\n" + 
-					"WM.ID = "+weighmentId;
+			String sql = "SELECT\r\n" + 
+					"    WM.RST,\r\n" + 
+					"    WM.MATERIAL,\r\n" + 
+					"    WM.GROSS,\r\n" + 
+					"    WM.GROSSWT_TIME,\r\n" + 
+					"    WM.TARE,\r\n" + 
+					"    WM.NET,\r\n" + 
+					"    WM.TAREWT_TIME,\r\n" + 
+					"    WM.WEIGHMENT_DATE,\r\n" + 
+					"    CVM.VEHICLE_NO,\r\n" + 
+					"    CVM.WEIGH_RATE,\r\n" + 
+					"    WRM.VEHICLE_NAME,\r\n" + 
+					"    CUST.NAME,\r\n" + 
+					"    CUST.ADDRESS,\r\n" + 
+					"    CUST.MOBILE,\r\n" + 
+					"    COMP.NAME      COMP_NAME,\r\n" + 
+					"    COMP.ADDRESS   COMP_NAME,\r\n" + 
+					"    COMP.MOBILE    COMP_MOBILE,\r\n" + 
+					"    WM.WB_OPERATOR,\r\n" + 
+					"    CUST.PHOTO,\r\n" + 
+					"    CVM.FRONT_IMG,\r\n" + 
+					"    CVM.REAR_IMG,\r\n" + 
+					"    CVM.FRONT_TARE_IMG,\r\n" + 
+					"    CVM.REAR_TARE_IMG\r\n" + 
+					"FROM\r\n" + 
+					"    WEIGH_MAST              WM,\r\n" + 
+					"    CUSTOMER_VEHICLE_MAST   CVM,\r\n" + 
+					"    WEIGH_RATE_MAST         WRM,\r\n" + 
+					"    CUSTOMER_MAST           CUST,\r\n" + 
+					"    COMPANY_MASTER          COMP\r\n" + 
+					"WHERE\r\n" + 
+					"    WM.VID = CVM.ID\r\n" + 
+					"    AND CVM.CID = CUST.ID\r\n" + 
+					"    AND CVM.V_TYPE_ID = WRM.ID\r\n" + 
+					"    AND COMP.ID = (\r\n" + 
+					"        SELECT\r\n" + 
+					"            COMPANY_ID\r\n" + 
+					"        FROM\r\n" + 
+					"            DAILY_SETUP\r\n" + 
+					"        WHERE\r\n" + 
+					"            SETUP_DATE = (\r\n" + 
+					"                SELECT\r\n" + 
+					"                    MAX(SETUP_DATE)\r\n" + 
+					"                FROM\r\n" + 
+					"                    DAILY_SETUP\r\n" + 
+					"            )\r\n" + 
+					"    )\r\n" + 
+					"    AND WM.ID = "+weighmentId;
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -295,6 +316,10 @@ public class RstReport {
 				jsonObj.put("companyMobileNo", rs.getString(17));
 				jsonObj.put("wbOperator", rs.getString(18));
 				jsonObj.put("photo", rs.getString(19));
+				jsonObj.put("frontPhoto", rs.getString(20));
+				jsonObj.put("rearPhoto", rs.getString(21));
+				jsonObj.put("frontTarePhoto", rs.getString(22));
+				jsonObj.put("rearTarePhoto", rs.getString(23));
 				
 			}
 			

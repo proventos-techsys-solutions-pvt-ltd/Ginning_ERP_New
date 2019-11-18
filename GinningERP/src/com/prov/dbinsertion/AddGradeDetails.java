@@ -44,7 +44,7 @@ public int addGradeDetails(GradeDetails gd) {
 				Date pdcDate = Date.valueOf(gd.getPdcDate());
 				cs.setDate(12, pdcDate);
 			}
-			cs.setString(13, gd.getModeOfPayment());
+			cs.setInt(13, gd.getModeOfPayment());
 			
 			cs.executeUpdate();
 			

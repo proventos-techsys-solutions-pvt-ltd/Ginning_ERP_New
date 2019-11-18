@@ -8,6 +8,11 @@
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" >
+   function preventBack(){window.history.forward();}
+    setTimeout("preventBack()", 0);
+    window.onunload=function(){null};
+</script>
 <title>WB Operator</title>
 </head>
 
@@ -98,6 +103,7 @@ function getData(){
 function setTableData(tableId,array){
 	
 	var table = document.getElementById(tableId);
+	table.innerHTML = "";
 	var noOfRows = array.length;
 	for(i=0; i<noOfRows; i++){
 		rowIndex = table.rows.length;

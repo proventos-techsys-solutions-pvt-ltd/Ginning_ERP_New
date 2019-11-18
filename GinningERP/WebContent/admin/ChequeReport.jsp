@@ -10,6 +10,11 @@
 	<link rel="stylesheet" href="../styles/admin/sidenav.css">
 	<link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script type="text/javascript" >
+	   function preventBack(){window.history.forward();}
+	   setTimeout("preventBack()", 0);
+	   window.onunload=function(){null};
+	</script>
 	<title>Cheque Report</title>
 </head>
 <body>
@@ -23,7 +28,6 @@
 			<div class="col-md-12">
 			<div class="d-flex justify-content-between align-content-center row-background">
 				<div class="d-flex justify-content-start align-content-center row-background">
-					<img src="../property/img/stock.png" alt="Stock">&nbsp; &nbsp;
 					<h4 class="lbl-rm-all">Cheque Report</h4>
 				</div>
 				<div class="d-flex justify-content-start align-content-center row-background">
@@ -32,18 +36,25 @@
 			</div>
 			</div>
 			</div>
-		<div class="row mt-2 row-background">
+			<div class="row row-background border-bottom">
+			<div class="col-md-4">
+				<label>Search</label>
+				<input type="text" class="form-control" name="" id="searchInput">
+ 			</div>
+		</div>
+		<div class="row  row-background">
 			<div class="col-md-12">
 				<table class="table table-bordered">
 					<thead>
 						<tr>
 							<th>Vendor Name</th>
+							<th>Invoice No</th>
 							<th>Amount</th>
 							<th>Bank Name</th>
 							<th>Cheque No</th>
 							<th>Cheque Date</th>
 							<th>Cheque Status</th>
-							<th>Payment Status</th>
+							<th hidden>Payment Status</th>
 							<th hidden>Cheque ID</th>
 							<th hidden>Invoice ID</th>
 							<th hidden>Customer ID</th>
@@ -63,6 +74,17 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script>
+	
+	 //*********************Search 
+    $(document).ready(function(){
+      $("#searchInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#tableBody tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+	
 	function getReport(){
 		var url="../processing/getChequeReport.jsp";
 		if(window.XMLHttpRequest){  
@@ -90,6 +112,7 @@
 	function setDataInTable(response){
 		var data = JSON.parse(response);
 		var table = document.getElementById("tableBody");
+		table.innerHTML = "";
 		for(i=0; i<data.length; i++){
 			var noOfRows = table.rows.length;
 			var row = table.insertRow(noOfRows);
@@ -104,33 +127,36 @@
 			var cell9 = row.insertCell(8);
 			var cell10 = row.insertCell(9);
 			var cell11 = row.insertCell(10);
+			var cell12 = row.insertCell(11);
 			
 			//cell6.hidden = true;
-			cell8.hidden = true;
 			cell9.hidden = true;
 			cell10.hidden = true;
-			cell11.align = "center";
+			cell11.hidden = true;
+			cell8.hidden = true;
+			cell12.align = "center";
 			
 			cell1.innerHTML = data[i].customerName;
-			cell2.innerHTML = data[i].chequeAmount;
-			cell3.innerHTML = data[i].bankName;
-			cell4.innerHTML = data[i].chequeNo;
-			cell5.innerHTML = data[i].chequeDate;
+			cell2.innerHTML = data[i].invoiceNo;
+			cell3.innerHTML = data[i].chequeAmount;
+			cell4.innerHTML = data[i].bankName;
+			cell5.innerHTML = data[i].chequeNo;
+			cell6.innerHTML = data[i].chequeDate;
 			
 			if(data[i].status === 0){
-				cell6.innerHTML = "Active";
+				cell7.innerHTML = "Active";
 			}else{
-				cell6.innerHTML = "Void";
+				cell7.innerHTML = "Void";
 			}
 			if(data[i].paymentStatus === 0){
-				cell7.innerHTML = "Unpaid";
+				cell8.innerHTML = "Unpaid";
 			}else{
-				cell7.innerHTML = "Paid";
+				cell8.innerHTML = "Paid";
 			}
-			cell8.innerHTML = data[i].id;
-			cell9.innerHTML = data[i].invoiceId;
-			cell10.innerHTML = data[i].customerId;
-			cell11.innerHTML = '<img src="../property/img/delete.png" alt="deleteRow" >';
+			cell9.innerHTML = data[i].id;
+			cell10.innerHTML = data[i].invoiceId;
+			cell11.innerHTML = data[i].customerId;
+			cell12.innerHTML = '<img src="../property/img/delete.png" alt="deleteRow" >';
 		}
 	}
 	
@@ -138,7 +164,7 @@
 		if(e.srcElement.alt === 'deleteRow'){
 			var table = document.getElementById('tableBody');
 			var rowIndex = e.srcElement.parentNode.parentNode.rowIndex-2;
-			var chequeId = table.rows[rowIndex].cells[7].innerHTML;
+			var chequeId = table.rows[rowIndex].cells[8].innerHTML;
 			deleteCheque(chequeId);
 		}
 	});
@@ -163,6 +189,7 @@
 		if(chequeDel.readyState == 4){
 			var response = this.response.trim();
 			console.log(response);
+			getReport();
 		}
 	}
 	

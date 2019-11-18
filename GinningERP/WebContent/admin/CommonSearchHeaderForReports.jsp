@@ -22,9 +22,7 @@
 				<button type="button" class="btn btn-success btn-sm lbl-rm-l">Search</button>
 				</div>
 			</div>
-			<div class="col-md-auto text-left">
-				<button type="button" class="btn btn-danger btn-sm" id="clearFilterBtn">Clear Filter</button>
-			</div>
+		
 			<div class="col-md-auto">
 				<img src="../property/img/exportpdf.png" alt="option" class="img-set" id="exportToPdf">
 				<img src="../property/img/exportexcel.png" alt="option" class="img-set" id="exportToExcel">

@@ -14,4 +14,7 @@
 		<li>All the fields of the form may not have filled correctly or left blank.</li>
 	</ul>
 </body>
+<script type="text/javascript">
+
+</script>
 </html>

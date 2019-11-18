@@ -10,6 +10,11 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	    <title>Purchase Invoices</title>
+	    <script type="text/javascript" >
+	   function preventBack(){window.history.forward();}
+	   setTimeout("preventBack()", 0);
+	   window.onunload=function(){null};
+</script>
     </head>
 <body>
 <%@include file="../admin/Top_Nav.jsp" %>

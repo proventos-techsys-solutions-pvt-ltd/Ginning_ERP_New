@@ -21,7 +21,7 @@ public int addCustomerVehicle(CustomerVehicle cv) {
 
 		String addCustomerVehicle = "{ ? = call ADD_CUSTOMERVEHICLE(?,?,?,?,?,?,?) }";
 		CallableStatement cs;
-		try {
+		try { 
 
 			cs = con.prepareCall(addCustomerVehicle);
 			
@@ -44,7 +44,7 @@ public int addCustomerVehicle(CustomerVehicle cv) {
 			cs.close();
 			con.close();
 			
-			System.out.println("Insertion Succesful"+id);
+			System.out.println("Insertion Succesful-"+id);
 			} catch (Exception e) {
 			e.printStackTrace();
 		}

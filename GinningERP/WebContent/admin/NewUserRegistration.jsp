@@ -8,6 +8,11 @@
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" >
+	   function preventBack(){window.history.forward();}
+	   setTimeout("preventBack()", 0);
+	   window.onunload=function(){null};
+</script>
 <title>New User Registration</title>
 </head>
 
@@ -96,6 +101,7 @@
 				</div>
 </div>
 <script>
+
 function submitForm(){
 	document.getElementById('registrationForm').submit();
 }

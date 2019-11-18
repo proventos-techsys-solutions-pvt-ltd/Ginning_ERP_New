@@ -58,7 +58,30 @@ public class GradeRateReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT * FROM GRADE_RATE_MASTER WHERE RATE_DATE = (select max(RATE_DATE) from GRADE_RATE_MASTER) and grade_id=1";
+			String sql = "SELECT\r\n" + 
+						"    *\r\n" + 
+						"FROM\r\n" + 
+						"    GRADE_RATE_MASTER\r\n" + 
+						"WHERE\r\n" + 
+						"    RATE_DATE = (\r\n" + 
+						"        SELECT\r\n" + 
+						"            MAX(RATE_DATE)\r\n" + 
+						"        FROM\r\n" + 
+						"            GRADE_RATE_MASTER\r\n" + 
+						"    )\r\n" + 
+						"    AND RATE = (\r\n" + 
+						"        SELECT\r\n" + 
+						"            MAX(RATE)\r\n" + 
+						"        FROM\r\n" + 
+						"            GRADE_RATE_MASTER\r\n" + 
+						"        WHERE\r\n" + 
+						"            RATE_DATE = (\r\n" + 
+						"                SELECT\r\n" + 
+						"                    MAX(RATE_DATE)\r\n" + 
+						"                FROM\r\n" + 
+						"                    GRADE_RATE_MASTER\r\n" + 
+						"            )\r\n" + 
+						"    )";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			

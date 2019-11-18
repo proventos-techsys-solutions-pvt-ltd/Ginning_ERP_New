@@ -11,6 +11,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
+<script type="text/javascript" >
+	   function preventBack(){window.history.forward();}
+	   setTimeout("preventBack()", 0);
+	   window.onunload=function(){null};
+</script>
 <title>Invoice</title>
 </head>
 
@@ -56,14 +61,14 @@
 					    				<button class="btn btn-success btn-sm btn-no-radius" type="button" onclick="fetchData(document.getElementById('rst').value)">Fetch</button>
                                 	</div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3" hidden>
                                 	<label for="" class="lbl-rm-all">Amanat RST No </label>
                                 	<div class="d-flex justify-content-start align-items-center">
 	                                    <input id="amanatRst" name="amanatRst" type="text" class="form-control form-control-sm" placeholder="Search RST">
 					    				<button class="btn btn-success btn-sm btn-no-radius" type="button" onclick="fetchAmanatData(document.getElementById('amanatRst').value)">Fetch</button>
                                 	</div>
                                 </div>
-                                <div class="col-md-4 offset-md-2">
+                                <div class="col-md-4 offset-md-5">
                                    <label class="lbl-rm-all">Customer Name & Address</label>
                                    <textarea id="customerData" name="customerData" class="form-control form-control-sm" rows="3" readonly></textarea>
                                 </div>
@@ -193,7 +198,9 @@
 											<label for="" class="lbl-rm-all">PDC Date</label> 
 											<input type="date" class="form-control form-control-sm" name="pdcDate" id="pdcDate" readonly/>
 											<label for="" class="lbl-rm-all">PDC Payment Mode</label> 
-											<input type="text" class="form-control form-control-sm" name="pdcPaymentMode" id="pdcPaymentMode" readonly/>
+											<select class="form-control form-control-sm" name="pdcPaymentMode" id="pdcPaymentMode" readonly>
+												<c:PaymentModeTag/>
+											</select>
 										</div>
 										</div>			
                                    
@@ -246,7 +253,7 @@
 					                               		</td>
 														<td><input type="text" class="form-control form-control-sm" id="payAmount1" name="payAmount"></td>
 														<td class="text-center"><img src="../property/img/add.png" alt="add" class="ctm-hover" ></td>
-														<td class="text-center"></td>
+														<td class="text-center"><img src="../property/img/delete.png" alt="delete" class="ctm-hover" id="deleteRow1" ></td>
 													</tr>
 												</tbody>
 											</table>
@@ -307,6 +314,7 @@
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/Validation.js"></script>
 <script>
+
 //***********************VALIDATIONS**********************************
 var appController = (function(){
 	var namesAndIds = {
@@ -811,7 +819,7 @@ function setCurrentDate(){
 		document.getElementById('unloadingCharges').value = (data.unloadingCharges).toFixed(0);
 		
 		document.getElementById('weighingCharges').value = data.weighRate;
-		
+		document.getElementById('advance').value = data.advance;		
 		var blacklisted;
 		var membership;
 		
@@ -977,8 +985,9 @@ function setCurrentDate(){
 			}
 		}
 		document.getElementById("totalAmount").value = total.toFixed(2);
+		var advance  = document.getElementById("advance").value;
 		var grossInvoiceAmount = total + Number(document.getElementById('pdcBonusAmount').value) + Number(document.getElementById('totalBonus').value); 
-		var netPayable = Number(grossInvoiceAmount) - (Number(document.getElementById('weighingCharges').value) + Number(document.getElementById('unloadingCharges').value) + Number(document.getElementById('totalPdcAmount').value));
+		var netPayable = Number(grossInvoiceAmount) - (Number(document.getElementById('weighingCharges').value) + Number(document.getElementById('unloadingCharges').value) + Number(document.getElementById('totalPdcAmount').value)) - Number(advance);
 		document.getElementById('grossInvoiceTotal').value = grossInvoiceAmount.toFixed(2);
 		document.getElementById("net").value = netPayable.toFixed(2);
 		//document.getElementById("cashAmount").value = netPayable.toFixed(2);
@@ -995,95 +1004,101 @@ function setCurrentDate(){
 	//Submit invoice form
 	function submitForm(){
 		
-		var netAmountPayable = document.getElementById('net').value;
-		var paymentAmounts = document.getElementsByName('payAmount');
-		var totalAmountPaymentMode = 0;
-		for(k=0; k<paymentAmounts.length; k++){
-			totalAmountPaymentMode = Number(totalAmountPaymentMode) + Number(paymentAmounts[k].value);
-		}
-		console.log('totalAmountPaymentMode---'+totalAmountPaymentMode);
-		console.log('netAmountPayable---'+netAmountPayable);
-		if(Number(totalAmountPaymentMode) < Number(netAmountPayable)){
-			alert('Total amount in payment mode table is less than net payable.');
-		}else if(Number(totalAmountPaymentMode) > Number(netAmountPayable)){
-			alert('Total amount in payment mode table is greater than net payable.');
-		}else if(Number(totalAmountPaymentMode) === Number(netAmountPayable)){
+		var netAmount = document.getElementById('net').value;
+		var payAmount = document.getElementById('payAmount1').value;
 		
-			var jsonObj = {};
-			
-			jsonObj['invoiceId'] = document.getElementById('invoiceId').value
-			jsonObj['accountPurchaseId'] = document.getElementById('accountId').value;
-			jsonObj['accountPayableId'] = document.getElementById('accPayableId').value;
-			jsonObj['voucherNo'] = document.getElementById('voucherNo').value;
-			jsonObj['authorizer'] = document.getElementById('authorizer').value;
-			jsonObj['invoiceNo'] = document.getElementById('invoiceNo').value;
-			jsonObj['customerId'] = document.getElementById('customerId').value;
-			var total = Number(document.getElementById('totalAmount').value);
-			jsonObj['total'] = (Math.round(total.toString())).toString();
-			jsonObj['amountPaid'] = (Math.round(document.getElementById('advance').value)).toString();
-			jsonObj['pending'] = (Math.round((Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value)).toString())).toString();
-			jsonObj['invoiceDate'] = document.getElementById('invoiceDate').value;
-			jsonObj['companyId'] = document.getElementById('companyId').value;
-			jsonObj['note'] = document.getElementById('note').value;
-			jsonObj['bankId'] = document.getElementById('bankId').value;
-			
-			var noOfRows = document.getElementById('tableBody').childElementCount;
-			console.log('no of Rows --- '+noOfRows);
-			
-			var itemList = [];
-			var totalQuantity=0;
-			for(i=0; i<noOfRows; i++){
-				item = {};
-				 
-					item['weighmentId'] = document.getElementById('weighmentId'+(i+1)).value;
-					item['gradeId'] = document.getElementById('gradeId'+(i+1)).value;
-					item['rst'] = document.getElementById('tableRst'+(i+1)).value;
-					item['amanat'] = document.getElementById('amanatCheck'+(i+1)).value;
-					itemList.push(item);
-					totalQuantity = totalQuantity+ Number(document.getElementById('quantity'+(i+1)).value);
+		if(netAmount < 0 || payAmount < 0){
+			alert("Please check the invoice data as net payable is less than zero.")
+		}
+		else{
+			var netAmountPayable = document.getElementById('net').value;
+			var paymentAmounts = document.getElementsByName('payAmount');
+			var totalAmountPaymentMode = 0;
+			for(k=0; k<paymentAmounts.length; k++){
+				totalAmountPaymentMode = Number(totalAmountPaymentMode) + Number(paymentAmounts[k].value);
 			}
+			if(Number(totalAmountPaymentMode) < Number(netAmountPayable)){
+				alert('Total amount in payment mode table is less than net payable.');
+			}else if(Number(totalAmountPaymentMode) > Number(netAmountPayable)){
+				alert('Total amount in payment mode table is greater than net payable.');
+			}else if(Number(totalAmountPaymentMode) === Number(netAmountPayable)){
 			
-			jsonObj['items'] = itemList;
-			jsonObj['totalQuantity'] = (Math.round(totalQuantity.toString())).toString();
-			jsonObj['unloadingCharges'] = (Math.round(document.getElementById('unloadingCharges').value)).toString();
-			jsonObj['totalBonus'] = (Math.round(document.getElementById('totalBonus').value)).toString();
-			jsonObj['advance'] = (Math.round(document.getElementById('advance').value)).toString();
-			jsonObj['netPayable'] = (Math.round((Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value)).toString())).toString();
-			jsonObj['pdcAmount'] = (Math.round(document.getElementById('totalPdcAmount').value)).toString();
-			jsonObj['pdcDate'] = document.getElementById('pdcDate').value;
-			jsonObj['pdcPaymentMode'] = document.getElementById('pdcPaymentMode').value;
-			/* 
-			if(document.getElementById('cashAmount').value === ""){
-				jsonObj['cashAmount'] = 0;
-			}else{
-				jsonObj['cashAmount'] = document.getElementById('cashAmount').value;
-			}
-			if(document.getElementById('chequeAmount').value === ""){
-				jsonObj['chequeAmount'] = 0;
-			}else{
-				jsonObj['chequeAmount'] = document.getElementById('chequeAmount').value;
-			}
-			if(document.getElementById('rtgsAmount').value === ""){
-				jsonObj['rtgsAmount'] = 0;
-			}else{
-				jsonObj['rtgsAmount'] = document.getElementById('rtgsAmount').value;
-			} */
-			payment = {};
-			var paymentModes = document.getElementsByName('paymentMode');
-			var paymentAmounts = document.getElementsByName('payAmount');	
-			for(j=0;j<paymentModes.length;j++){
+				var jsonObj = {};
 				
-				payment[paymentModes[j].value.trim()] = (Math.round(paymentAmounts[j].value)).toString();
+				jsonObj['invoiceId'] = document.getElementById('invoiceId').value
+				jsonObj['accountPurchaseId'] = document.getElementById('accountId').value;
+				jsonObj['accountPayableId'] = document.getElementById('accPayableId').value;
+				jsonObj['voucherNo'] = document.getElementById('voucherNo').value;
+				jsonObj['authorizer'] = document.getElementById('authorizer').value;
+				jsonObj['invoiceNo'] = document.getElementById('invoiceNo').value;
+				jsonObj['customerId'] = document.getElementById('customerId').value;
+				var total = Number(document.getElementById('totalAmount').value);
+				jsonObj['total'] = (Math.round(total.toString())).toString();
+				jsonObj['amountPaid'] = (Math.round(document.getElementById('advance').value)).toString();
+				jsonObj['pending'] = (Math.round((Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value)).toString())).toString();
+				jsonObj['invoiceDate'] = document.getElementById('invoiceDate').value;
+				jsonObj['companyId'] = document.getElementById('companyId').value;
+				jsonObj['note'] = document.getElementById('note').value;
+				jsonObj['bankId'] = document.getElementById('bankId').value;
+				
+				var noOfRows = document.getElementById('tableBody').childElementCount;
+				
+				var itemList = [];
+				var totalQuantity=0;
+				for(i=0; i<noOfRows; i++){
+					item = {};
+					 
+						item['weighmentId'] = document.getElementById('weighmentId'+(i+1)).value;
+						item['gradeId'] = document.getElementById('gradeId'+(i+1)).value;
+						item['rst'] = document.getElementById('tableRst'+(i+1)).value;
+						item['amanat'] = document.getElementById('amanatCheck'+(i+1)).value;
+						item['rate'] = document.getElementById('rate'+(i+1)).value;
+						itemList.push(item);
+						totalQuantity = totalQuantity+ Number(document.getElementById('quantity'+(i+1)).value);
+				}
+				
+				jsonObj['items'] = itemList;
+				jsonObj['totalQuantity'] = (Math.round(totalQuantity.toString())).toString();
+				jsonObj['unloadingCharges'] = (Math.round(document.getElementById('unloadingCharges').value)).toString();
+				jsonObj['totalBonus'] = (Math.round(document.getElementById('totalBonus').value)).toString();
+				jsonObj['advance'] = (Math.round(document.getElementById('advance').value)).toString();
+				jsonObj['netPayable'] = (Math.round((Number(document.getElementById('net').value)+ Number(document.getElementById('totalPdcAmount').value)).toString())).toString();
+				jsonObj['pdcAmount'] = (Math.round(document.getElementById('totalPdcAmount').value)).toString();
+				jsonObj['pdcDate'] = document.getElementById('pdcDate').value;
+				jsonObj['pdcPaymentMode'] = document.getElementById('pdcPaymentMode').value;
+				/* 
+				if(document.getElementById('cashAmount').value === ""){
+					jsonObj['cashAmount'] = 0;
+				}else{
+					jsonObj['cashAmount'] = document.getElementById('cashAmount').value;
+				}
+				if(document.getElementById('chequeAmount').value === ""){
+					jsonObj['chequeAmount'] = 0;
+				}else{
+					jsonObj['chequeAmount'] = document.getElementById('chequeAmount').value;
+				}
+				if(document.getElementById('rtgsAmount').value === ""){
+					jsonObj['rtgsAmount'] = 0;
+				}else{
+					jsonObj['rtgsAmount'] = document.getElementById('rtgsAmount').value;
+				} */
+				payment = {};
+				var paymentModes = document.getElementsByName('paymentMode');
+				var paymentAmounts = document.getElementsByName('payAmount');	
+				for(j=0;j<paymentModes.length;j++){
+					
+					payment[paymentModes[j].value.trim()] = (Math.round(paymentAmounts[j].value)).toString();
+				}
+				
+				jsonObj['paymentModes'] = payment;
+				
+				var jsonStr = JSON.stringify(jsonObj);
+				console.log(jsonStr);
+				
+				document.getElementById('output').value=jsonStr;
+				
+				document.getElementById('adminApprovalForm').submit();
 			}
-			
-			jsonObj['paymentModes'] = payment;
-			
-			var jsonStr = JSON.stringify(jsonObj);
-			console.log(jsonStr);
-			
-			document.getElementById('output').value=jsonStr;
-			
-			document.getElementById('adminApprovalForm').submit();
 		}
 	}
 	
@@ -1102,7 +1117,7 @@ function setCurrentDate(){
 	//Change Total Amount in Payment Mode amount Table
 	document.getElementById('net').addEventListener('change', function(e){
 		document.getElementById('payAmount1').value = e.srcElement.value; 
-	})
+	});
 	
 	
 	//Add new rows to Payment Mode table
@@ -1119,7 +1134,6 @@ function setCurrentDate(){
 				var amount = 0;
 				for(k=0;k<paymentTableBody.rows.length;k++){
 					amount = Number(amount) + Number(paymentTableBody.rows[k].cells[2].children[0].value);			
-	
 				}
 				var pendingAmount = Number(netAmount) - amount;
 					
@@ -1131,72 +1145,62 @@ function setCurrentDate(){
 					alert("Amount entered is greater than net payable.");
 				}
 				else if(pendingAmount < netAmount ){
+					
+					var rowCount = table.rows.length;
+					var row = table.insertRow(rowCount);
+					var colCount = table.rows[0].cells.length;
+
+					for(var i=0; i<colCount; i++) {
+						
+						var newcell	= row.insertCell(i);
+					
+						newcell.innerHTML = table.rows[0].cells[i].innerHTML;
+						if(i === 0){
+							newcell.innerHTML = rowCount+1	
+							newcell.align = "center";
+						}
+						else if(i === 1 || i === 2){
+							switch(newcell.childNodes[0].type) {
+								case "text":
+										newcell.childNodes[0].value = pendingAmount;
+										newcell.childNodes[0].name = "payAmount";
+										newcell.childNodes[0].id = "payAmount"+(rowCount+1);
+										break;
+								case "select-one":
+										newcell.childNodes[0].selectedIndex = row+1;
+										newcell.childNodes[0].name = "paymentMode";
+										newcell.childNodes[0].id = "paymentMode"+(rowCount+1);
+										break;
+							}
+						}else if(i === 3){
+							newcell.align = "center";
+						}else if(i === 4){
+							newcell.childNodes[0].id = "deleteRow"+(rowCount+1);
+							newcell.align = "center";
+						}
+					}
+				}
 				
-						var row = table.insertRow(noOfRows);
-						var cell1 = row.insertCell(0);
-						var cell2 = row.insertCell(1);
-						var cell3 = row.insertCell(2);
-						var cell4 = row.insertCell(3);
-						var cell5 = row.insertCell(4);
-						
-						cell4.className ="text-center";
-						cell5.className ="text-center";
-									
-						cell1.setAttribute("align","center");
-						cell1.innerHTML = (noOfRows+1);
-					if(noOfRows === 1){
-						if(document.getElementById("paymentMode1").options[document.getElementById("paymentMode1").selectedIndex].innerText ==="Cash"){
-							cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode">'+
-				   			'<option selected>Cheque</option>'+
-				   			'<option>RTGS/NEFT</option>'+
-						  '</select>';
-						}else if(document.getElementById("paymentMode1").options[document.getElementById("paymentMode1").selectedIndex].innerText ==="Cheque"){
-							cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode">'+
-				   			'<option>Cash</option>'+
-				   			'<option selected>RTGS/NEFT</option>'+
-						  '</select>';
-						}else if(document.getElementById("paymentMode1").options[document.getElementById("paymentMode1").selectedIndex].innerText ==="RTGS/NEFT"){
-							cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode">'+
-							'<option>Cash</option>'+
-				   			'<option>Cheque</option>'+
-						  '</select>'
-						}
-						
-					}
-					if(noOfRows === 2){
-						if(document.getElementById("paymentMode2").options[document.getElementById("paymentMode2").selectedIndex].innerText ==="Cash"
-							||
-							document.getElementById("paymentMode1").options[document.getElementById("paymentMode1").selectedIndex].innerText ==="Cash"
-						){
-							cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode">'+
-				   			'<option selected>Cheque</option>'+
-				   			'<option>RTGS/NEFT</option>'+
-						  '</select>';
-						}else if(document.getElementById("paymentMode2").options[document.getElementById("paymentMode2").selectedIndex].innerText ==="Cheque"
-							||		
-							document.getElementById("paymentMode1").options[document.getElementById("paymentMode1").selectedIndex].innerText ==="Cheque"
-						){
-							cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode">'+
-				   			'<option>Cash</option>'+
-				   			'<option selected>RTGS/NEFT</option>'+
-						  '</select>';
-						}else if(document.getElementById("paymentMode2").options[document.getElementById("paymentMode2").selectedIndex].innerText ==="RTGS/NEFT"
-						||
-						document.getElementById("paymentMode1").options[document.getElementById("paymentMode1").selectedIndex].innerText ==="RTGS/NEFT"
-						){
-							cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRows+1)+'" name="paymentMode">'+
-							'<option>Cash</option>'+
-				   			'<option>Cheque</option>'+
-						  '</select>'
+				var paymentModes =  document.getElementsByName("paymentMode");
+				var modesSelected = [];
+				for(k=0; k < paymentModes.length; k++){
+					if(k < paymentModes.length - 1){
+						modesSelected.push(paymentModes[k].options[paymentModes[k].selectedIndex].value);
+						paymentModes[k].disabled = true;
+					}else if(k === paymentModes.length - 1){
+						paymentModes[k].disabled = false;
+						for(r=0; r < paymentModes[k].options.length; r++){
+							if(modesSelected.includes(paymentModes[k].options[r].value)){
+								paymentModes[k].options[r].disabled = true;
+							}else{
+								paymentModes[k].options[r].selected = true;
+							}
 						}
 					}
-						cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="payAmount'+(noOfRows+1)+'" name="payAmount" value='+pendingAmount+'>';
-						cell4.innerHTML = '<img src="../property/img/add.png" alt="add" class="ctm-hover" >'
-						cell5.innerHTML = '<img src="../property/img/delete.png" alt="delete" class="ctm-hover" id="deleteRow'+(noOfRows+1)+'" >'
 				}
 			}
 		}
-	})
+	});
 	
 	document.addEventListener("keyup",function(e){
 		if(e.srcElement.name === "payAmount"){
@@ -1219,19 +1223,24 @@ function setCurrentDate(){
 				e.srcElement.value = netPayable - pending;
 			}
 		}
-	})
+	});
 	
 	//Delete row in Payment Mode table
 	function deletePaymentMode(index){
-		var element = document.getElementById('paymentTableBody');
+		if((index-1) != 0){
+			var element = document.getElementById('paymentTableBody');
+			
+			var qty1 = Number(element.rows[(index-2)].cells[2].children[0].value);
 		
-		var qty1 = Number(element.rows[(index-2)].cells[2].children[0].value);
-	
-		var qty2 = Number(element.rows[index-1].cells[2].children[0].value);
-		
-		element.rows[(index-2)].cells[2].children[0].value = (qty1+qty2);
-		
-		document.getElementById('paymentTableBody').deleteRow(index-1);
+			var qty2 = Number(element.rows[index-1].cells[2].children[0].value);
+			
+			element.rows[(index-2)].cells[2].children[0].value = (qty1+qty2);
+			element.rows[(index-2)].cells[1].children[0].disabled = false;
+			
+			document.getElementById('paymentTableBody').deleteRow(index-1);
+		}else{
+			alert("Cannot delete first row.");
+		}
 	}
 	
 	//Call delete row from payment mode function
@@ -1280,7 +1289,7 @@ function setCurrentDate(){
 	
 	document.getElementById('reset').addEventListener('click', function(e){
 		location.reload();
-	})
+	});
 	
 	function pendingInvoicingReports(){
 		var url="${pageContext.request.contextPath}/processing/pendingInvoicingReport.jsp";
@@ -1369,7 +1378,7 @@ function getVocuherNo(){
 					$(".row").css("margin-left","225px"); 
 				}
 		})
-	})
+	});
 /***********************
 Side bar 
 ************************/
@@ -1384,6 +1393,18 @@ $(document).ready(function () {
 	getVocuherNo();
 	setCurrentDate();
 	<% session.removeAttribute("invoiceId"); %>
+	
+	
+//Change fiels if advance payment is done
+document.getElementById('advance').addEventListener('keyup', function(e){
+	calculateTotal();
+	if(document.getElementById("net").value < 0 ){
+		alert('Net payable cannot be less than zero.');
+		document.getElementById("advance").value = 0;
+		calculateTotal();
+	}
+});
+
 	</script>
 </body>
 </html>

@@ -37,7 +37,7 @@ public class UpdatePDC {
 			cs.setInt(4, p.getInvoiceId());
 			cs.setDouble(5, p.getAmount());
 			cs.setDate(6, payDate);
-			cs.setString(7, p.getModeOfPayment());
+			cs.setInt(7, p.getModeOfPayment());
 			cs.setInt(8, p.getChequeId());
 			cs.setInt(9, p.getRtgsId());
 			cs.setInt(10, p.getVoucherNo());
@@ -73,8 +73,10 @@ public class UpdatePDC {
 		}
 
 		String updatePdc = "UPDATE PDC_MAST \r\n" + 
-								"SET CHEQUE_ID = ?\r\n" + 
+								"SET CHEQUE_ID = ?,"
+								+ " PAY_STATUS = 1\r\n" + 
 								"WHERE INVOICE_ID = ?";
+
 		PreparedStatement stmt;
 		try {
 			stmt = con.prepareStatement(updatePdc);
@@ -110,7 +112,8 @@ public class UpdatePDC {
 		}
 
 		String updatePdc = "UPDATE PDC_MAST \r\n" + 
-								"SET VOUCHER_NO = ?\r\n" + 
+								"SET VOUCHER_NO = ?,"
+								+ " PAY_STATUS = 1\r\n" + 
 								"WHERE INVOICE_ID = ?";
 		PreparedStatement stmt;
 		try {
@@ -146,8 +149,10 @@ public class UpdatePDC {
 		}
 
 		String updatePdc = "UPDATE PDC_MAST \r\n" + 
-								"SET RTGS_ID = ?\r\n" + 
+								"SET RTGS_ID = ?,"
+								+ "PAY_STATUS = 1\r\n" + 
 								"WHERE INVOICE_ID = ?";
+		
 		PreparedStatement stmt;
 		try {
 			stmt = con.prepareStatement(updatePdc);

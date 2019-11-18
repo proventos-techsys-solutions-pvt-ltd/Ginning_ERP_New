@@ -1,4 +1,5 @@
 <%-- <%@ page errorPage="../admin/Error.jsp" %>  --%>
+<%@page import="com.prov.report.GradeRateReport"%>
 <%@page import="com.prov.dbinsertion.AddTransactions"%>
 <%@page import="com.prov.bean.Transactions"%>
 <%@page import="com.prov.dbinsertion.AddPDC"%>
@@ -45,6 +46,10 @@
 	
 	JSONObject paymentModes = (JSONObject)json.get("paymentModes");
 	
+	GradeRateReport gr = new GradeRateReport();
+	
+	double superRate = gr.getTodaysSuperRate().getRate();
+	
 	Invoice invoice = new Invoice();
 	int invoiceId = 0;
 		
@@ -67,10 +72,11 @@
 				Amanat item = new Amanat();
 				
 				item.setCustomerId(Integer.parseInt((String)json.get("customerId")));
-				item.setGradeId(Integer.parseInt((String)obj.get("gradeId")));
 				item.setAmanatDate((String)json.get("invoiceDate"));
 				item.setGradeId(Integer.parseInt((String)obj.get("gradeId")));
 				item.setRst(Integer.parseInt((String)obj.get("rst")));
+				item.setDifference(superRate - Long.parseLong((String)obj.get("rate")));
+				
 				amanatItemList.add(item);
 			}
 			
@@ -139,7 +145,7 @@
 			pdc.setPayDate((String)json.get("pdcDate"));
 			pdc.setInvoiceId(invoiceId);
             pdc.setAmount(Long.parseLong((String)json.get("pdcAmount")));	
-            pdc.setModeOfPayment((String)json.get("pdcPaymentMode"));
+            pdc.setModeOfPayment(Integer.parseInt((String)json.get("pdcPaymentMode")));
             pdc.setChequeId(0);
             pdc.setRtgsId(0);
             pdc.setVoucherNo(0);

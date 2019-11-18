@@ -8,6 +8,11 @@
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" >
+	   function preventBack(){window.history.forward();}
+	   setTimeout("preventBack()", 0);
+	   window.onunload=function(){null};
+</script>
 <title>Setup Grade Levels</title>
 </head>
 
@@ -125,6 +130,7 @@
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/Validation.js"></script>
 <script>
+
 /***********************
  Form validation & Submission
  ***********************/

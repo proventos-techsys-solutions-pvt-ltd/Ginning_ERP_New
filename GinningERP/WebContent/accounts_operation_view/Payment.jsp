@@ -11,6 +11,11 @@
 	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	  	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	  	<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
+	  	<script type="text/javascript" >
+	   function preventBack(){window.history.forward();}
+	   setTimeout("preventBack()", 0);
+	   window.onunload=function(){null};
+</script>
      <title>Vendor Payment</title>
    </head>
 <body>
@@ -144,9 +149,7 @@
 							<div class="col-md-4">
 							<label class="lbl-rm-all">PDC Cash Account</label>
 								<select class="form-control" id="pdcCashAccountId" name="pdcCashAccountId">
-									<option>
 										<c:CashLedgerTag/>
-									</option>
 								</select>
 							</div>
 							</div>
@@ -258,8 +261,6 @@
 	<script src="../js/Validation.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script>
-	
-
 	//Get current date and time
 	function setCurrentDate(){
 		var today = new Date();
@@ -312,6 +313,7 @@
 	function setPendingTable(data){
 		
 		var table = document.getElementById("tableBody");
+		table.innerHTML = "";
 		for(i=0;i<data.length;i++){
 			var noOfRows = table.rows.length;
 			var row = table.insertRow(noOfRows);
@@ -508,6 +510,7 @@
 			document.getElementById('pdcPayeeName').value = "" ; */
 			
 			setCurrentDate();
+			getDailySetupData();
 			var invoiceJson = data.invoiceJson;
 			
 			document.getElementById('invoiceNo').value = invoiceJson.invoiceNo ;
@@ -517,7 +520,8 @@
 			document.getElementById('customerName').value = invoiceJson.customerName;
 			document.getElementById('invoiceDate').value = invoiceJson.invoiceDate ;
 			document.getElementById('totalAmount').value = invoiceJson.totalAmount ;
-			
+			document.getElementById('accountPayableId').value = invoiceJson.accountPayableId ;
+			document.getElementById('companyId').value = invoiceJson.companyId ;
 			
 			if(data.hasOwnProperty("cashJson")){
 				var cashJson = data.cashJson;
@@ -540,8 +544,8 @@
 				}else{
 					document.getElementById('chequeNo').value = "" ;
 					document.getElementById('nameOnCheque').value = invoiceJson.customerName ;
-					}
 				}
+			}
 			if(data.hasOwnProperty("rtgsJson")){
 				var rtgsJson = data.rtgsJson;
 				document.getElementById('rtgsAmount').value = rtgsJson.amount ;
@@ -584,7 +588,7 @@
 					if(Number(pdcJson.pdcPayStatus) === 1){
 						document.getElementById('pdcRtgsBank').value = pdcJson.bankName ;
 						document.getElementById('pdcRtgsAccountNo').value = pdcJson.accountNo ;
-						document.getElementById('pdcRtgsIfsc').value = pdc.ifscCode ;
+						document.getElementById('pdcRtgsIfsc').value = pdcJson.ifscCode ;
 						document.getElementById('pdcRtgsDate').value = invoiceJson.pdcPayDate;
 					}else{
 						document.getElementById('pdcRtgsBank').value = '' ;
@@ -713,7 +717,11 @@
 										submitPayment();//calling submit function after reseting hidden fields values
 									}else{
 										if($.fn.validatePdcCheque()===true){
-											submitPayment();
+											if(document.getElementById("cashAccountId").value!=""){
+												submitPayment();
+											}else{
+												alert("Please create cash account from chart of accounts.")
+											}
 										}
 									}
 								}else{
@@ -727,7 +735,11 @@
 											submitPayment();//calling submit function after reseting hidden fields values
 										}else{
 											if($.fn.validatePdcCheque()===true){
-												submitPayment();
+												if(document.getElementById("cashAccountId").value!=""){
+													submitPayment();
+												}else{
+													alert("Please create cash account from chart of accounts.")
+												}
 											}
 										}
 									}
@@ -754,7 +766,11 @@
 										submitPayment();//calling submit function after reseting hidden fields values
 									}else{
 										if($.fn.validatePdcCheque()===true){
-											submitPayment();
+											if(document.getElementById("cashAccountId").value!=""){
+												submitPayment();
+											}else{
+												alert("Please create cash account from chart of accounts.")
+											}
 										}
 									}
 								}else{
@@ -768,7 +784,11 @@
 											submitPayment();//calling submit function after reseting hidden fields values
 										}else{
 											if($.fn.validatePdcCheque()===true){
-												submitPayment();
+												if(document.getElementById("cashAccountId").value!=""){
+													submitPayment();
+												}else{
+													alert("Please create cash account from chart of accounts.")
+												}
 											}
 										}
 									}
@@ -800,7 +820,11 @@
 									submitPayment();//calling submit function after reseting hidden fields values
 								}else{
 									if($.fn.validatePdcCheque()===true){
-										submitPayment();
+										if(document.getElementById("cashAccountId").value!=""){
+											submitPayment();
+										}else{
+											alert("Please create cash account from chart of accounts.")
+										}
 									}
 								}
 							}else{
@@ -814,7 +838,11 @@
 										submitPayment();//calling submit function after reseting hidden fields values
 									}else{
 										if($.fn.validatePdcCheque()===true){
-											submitPayment();
+											if(document.getElementById("cashAccountId").value!=""){
+												submitPayment();
+											}else{
+												alert("Please create cash account from chart of accounts.")
+											}
 										}
 									}
 								}
@@ -1012,15 +1040,24 @@
 	
 	document.addEventListener('click',function(e){
 		if(e.srcElement.tagName === 'TR' && e.srcElement.parentNode.id === 'tableBody'){
+			resetInputFields();
 			var invoiceNo = e.srcElement.children[0].innerHTML.trim();
 			fetchInvoiceData(invoiceNo);
 		}
 		if(e.srcElement.tagName === 'TD' && e.srcElement.parentNode.parentNode.id === 'tableBody'){
+			resetInputFields();
 			var row = e.srcElement.parentNode;
 			var invoiceNo = row.children[0].innerHTML.trim();
 			fetchInvoiceData(invoiceNo);
 		}
 	})
+	
+	function resetInputFields(){
+		var inputs = document.getElementsByTagName("input");
+		for(i=0; i< inputs.length; i++){
+			inputs[i].value= "";
+		}
+	}
 	
 	function submitDataAjax(data){
 		console.log(data);

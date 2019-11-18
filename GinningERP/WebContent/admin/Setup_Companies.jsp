@@ -7,7 +7,17 @@
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" >
+   function preventBack(){window.history.forward();}
+    setTimeout("preventBack()", 0);
+    window.onunload=function(){null};
+</script>
 <title>Setup Companies</title>
+<script type="text/javascript" >
+	   function preventBack(){window.history.forward();}
+	   setTimeout("preventBack()", 0);
+	   window.onunload=function(){null};
+</script>
 </head>
 
 <body>
@@ -128,63 +138,67 @@
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/Validation.js"></script>
 <script>
+
 		window.onload = function() {
 			  getCompanyData();
 			};
 			
 			$(document).ready(function(){
 				$("#add-company").click(function(){
-					if(!$.fn.validateData($("#name").val(),/^\s*$/)){
-						if(!$.fn.validateData($("#address").val(),/^\s*$/)){
-							if(!$.fn.validateData($("#city").val(),/^\s*$/)){
-								if(!$.fn.validateData($("#state").val(),/^\s*$/)){
-									if(!$.fn.validateData($("#pan").val(),/^\s*$/)){
-										if(!$.fn.validateData($("#tan").val(),/^\s*$/)){
-											if(!$.fn.validateData($("#cin").val(),/^\s*$/)){
-												if(!$.fn.validateData($("#gst").val(),/^\s*$/)){
+					if($.fn.validateData($("#name").val(),/^[A-Z0-9. ]+$/)){
+						if($.fn.validateData($("#address").val(),/^[A-Z0-9., ]+$/)){
+							if($.fn.validateData($("#city").val(),/^[A-Z]+$/)){
+								if($.fn.validateData($("#state").val(),/[A-Z]+$/)){
+									//if($.fn.validateData($("#pan").val(),/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/)){
+									//	if($.fn.validateData($("#tan").val(),/^[A-Z]{4}[0-9]{5}[A-Z]{1}$/)){
+										//	if($.fn.validateData($("#cin").val(),/^[A-Z]{1}[0-9]{5}[A-Z]{2}[0-9]{4}[A-Z]{3}[0-9]{6}$/)){
+											//	if($.fn.validateData($("#gst").val(),/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z0-9]{3}$/)){
 													if(!$.fn.validateData($("#telephone").val(),/^\s*$/)){
 														if(!$.fn.validateData($("#mobile").val(),/^\s*$/)){
-															if(!$.fn.validateData($("#email").val(),/^\s*$/)){
-																if(!$.fn.validateData($("#invoiceSeries").val(),/^\s*$/)){
+															if($.fn.validateData($("#email").val(),/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/)){
+																if($.fn.validateData($("#invoiceSeries").val(),/^[A-Z]{2,3}$/)){
 																	submitForm()
 																}else{
-																	$.fn.checkStatus(1,"Blank data not acceptable!")
+																	$.fn.checkStatus(1,"Only three letters are allowed in invoice series and should not be blank!")
 																}
 															}else{
-																$.fn.checkStatus(1,"Blank data not acceptable!")
+																$.fn.checkStatus(1,"Invalid email id!")
 															}
 														}else{
-															$.fn.checkStatus(1,"Blank data not acceptable!")
+															$.fn.checkStatus(1,"Invalid Mobile number!")
 														}
 													}else{
-														$.fn.checkStatus(1,"Blank data not acceptable!")
+														$.fn.checkStatus(1,"Invalid Telephone number!")
 													}
-												}else{
-													$.fn.checkStatus(1,"Blank data not acceptable!")
+												}
+												/*else{
+													$.fn.checkStatus(1,"Invalid GST number!")
 												}
 											}else{
-												$.fn.checkStatus(1,"Blank data not acceptable!")
+												$.fn.checkStatus(1,"Invalid CIN number!")
 											}
 										}else{
-											$.fn.checkStatus(1,"Blank data not acceptable!")
+											$.fn.checkStatus(1,"Invalid Tan number!")
 										}
 									}else{
-										$.fn.checkStatus(1,"Blank data not acceptable!")
+										$.fn.checkStatus(1,"Invalid Pan number!")
 									}
-								}else{
-									$.fn.checkStatus(1,"Blank data not acceptable!")
+								}
+								*/else{
+									$.fn.checkStatus(1,"Invalid State!")
 								}
 							}else{
-								$.fn.checkStatus(1,"Blank data not acceptable!")
+								$.fn.checkStatus(1,"Invalid City!")
 							}
-						}else{
-							$.fn.checkStatus(1,"Blank data not acceptable!")
+							}
+						else{
+							$.fn.checkStatus(1,"Invalid Address!")
 						}
-					}else{
-						$.fn.checkStatus(1,"Blank data not acceptable!")
+						}
+					else{
+						$.fn.checkStatus(1,"Only [dot] is allowed in the company name!")
 					}
 				})
-			
 			})
 			
 			function submitForm(){
@@ -254,20 +268,6 @@
 				$.fn.checkStatus(sessionId.getSessionId,"Company has been saved successfully!")
 			})
 
-			function myFunction(x) {
-					x.classList.toggle("change");
-			}
-
-			$(document).ready(function(){
-				$(".c-nav-collapse").click(function(){
-						$(".sidebar").toggle(); 
-						if($(".sidebar").css("display")==="none"){
-							$(".row").css("margin-left","10px"); 
-						}else{
-							$(".row").css("margin-left","225px"); 
-						}
-				})
-			})
 			
 			/***********************
 			Side bar 

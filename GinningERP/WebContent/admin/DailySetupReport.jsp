@@ -8,6 +8,11 @@
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" >
+	   function preventBack(){window.history.forward();}
+	   setTimeout("preventBack()", 0);
+	   window.onunload=function(){null};
+</script>
 <title>Daily Setup  Report</title>
 </head>
 
@@ -101,6 +106,17 @@
     	<script>
     	setTitle("Daily Setup Report");//Setting Title of Page
 		setSearchPlaceholder("Search");//Setting Placeholder of Search Input
+		
+
+   	 //*********************Search 
+	        $(document).ready(function(){
+	          $("#searchInput").on("keyup", function() {
+	            var value = $(this).val().toLowerCase();
+	            $("#tableBody tr").filter(function() {
+	              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	            });
+	          });
+	        });
 		
 		function getCurrentDate(){
 			var today = new Date();

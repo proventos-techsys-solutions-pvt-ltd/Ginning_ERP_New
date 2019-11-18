@@ -9,6 +9,11 @@
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Chart Of Accounts</title>
+<script type="text/javascript" >
+	   function preventBack(){window.history.forward();}
+	   setTimeout("preventBack()", 0);
+	   window.onunload=function(){null};
+</script>
 </head>
 
 <body>
@@ -20,11 +25,6 @@
 	 	<div class="row  row-background">
 				<div class="col-md-12">
 				<div class="d-flex justify-content-start align-items-center">
-						<div class="c-nav-collapse" onclick="myFunction(this)">
-						  <div class="bar1"></div>
-						  <div class="bar2"></div>
-						  <div class="bar3"></div>
-						</div>&nbsp;&nbsp;
 						<h4>Expenses</h4>
 						</div>
 				</div>
@@ -112,6 +112,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="../js/Validation.js"></script>
 	<script>
+	
 	//-----------------------------------Validations
 	
 

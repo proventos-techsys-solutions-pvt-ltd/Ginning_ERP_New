@@ -27,7 +27,59 @@
  		    	out.print(0);
 	    		out.flush();
 	    	}else if(invoiceExistFlag>0){
-	    		PaymentReport paymentReport = new PaymentReport();
+	    		
+	    		InvoiceReport invoiceReportObj = new InvoiceReport();
+	    		PaymentReport paymentReportObj = new PaymentReport();
+	    		PDCReport pdcReportObj = new PDCReport();
+	    		
+	    		JSONObject invoiceJsonObj = invoiceReportObj.getInvoiceBasicDetails(invoiceNo);
+	    		JSONObject paymentDetailsJsonObj = paymentReportObj.getPaymentDetails(invoiceJsonObj.getInt("id"));
+	    		JSONObject pdcJsonObj = pdcReportObj.getPDCJsonData(invoiceJsonObj.getInt("id"));
+				
+	    		JSONObject mainJsonObj = new JSONObject();
+	    		mainJsonObj.put("invoiceBasic", invoiceJsonObj);
+	    		mainJsonObj.put("paymentDetails", paymentDetailsJsonObj);
+	    		mainJsonObj.put("pdcData", pdcJsonObj);
+	    		
+	    		out.print(mainJsonObj);
+	    		out.flush();
+	    		
+	    	}
+	    }
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	/*
+    	PaymentReport paymentReport = new PaymentReport();
 	    		JSONObject mainJsonObj = new JSONObject();
 	    		InvoiceReport invoiceReport = new InvoiceReport();
 	    		JSONObject invoiceJson = invoiceReport.getInvoiceForOperator(invoiceNo);
@@ -64,7 +116,6 @@
 	    		if(Long.parseLong(invoiceJson.getString("pdcAmount")) > 0){
 	    			PDCReport pdcReport = new PDCReport();
 	    			JSONObject pdcJson = pdcReport.getPDCJsonData(invoiceId);
-	    			//int paymentStatus = Integer.parseInt(pdcJson.getString("pdcPayStatus"));
 	    			String modeOfPayment = pdcJson.getString("modeOfPayment");
 	    			if(pdcJson.has("voucherNo") == true && modeOfPayment.equalsIgnoreCase("CASH")){
 	    				TransactionReport trReport = new TransactionReport();
@@ -87,6 +138,5 @@
 	    		}
     			out.print(mainJsonObj);
         		out.flush();
-	    	}
-	    }
+        		*/
     %>

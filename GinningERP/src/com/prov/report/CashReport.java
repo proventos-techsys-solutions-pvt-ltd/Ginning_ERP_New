@@ -102,4 +102,63 @@ public JSONArray getTransactions(String startDate, String endDate, int accId, in
 		return jsonArr;
 	}
 	
+
+public JSONArray getCashPayments() {
+	
+	ResultSet rs = null;
+	Connection con = null;
+	JSONArray jsonArr = new JSONArray();
+	
+	try {
+		con = OracleConnection.getConnection();
+		
+		String sql = "SELECT\r\n" + 
+				"    IM.ID,\r\n" + 
+				"    IM.INVOICE_NO,\r\n" + 
+				"    IM.INV_DATE,\r\n" + 
+				"    PD.AMOUNT,\r\n" + 
+				"    PD.CASH_VOUCH_NO,\r\n" + 
+				"    CM.NAME\r\n" + 
+				"FROM\r\n" + 
+				"    INVOICE_MAST      IM,\r\n" + 
+				"    PAYMENT_DETAILS   PD,\r\n" + 
+				"    CUSTOMER_MAST     CM\r\n" + 
+				"WHERE\r\n" + 
+				"    IM.ID = PD.INVOICE_ID\r\n" + 
+				"    AND IM.CUSTOMER_ID = CM.ID\r\n" + 
+				"    AND PD.CASH_VOUCH_NO IS NOT NULL";
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		
+		rs = stmt.executeQuery();
+		
+		while (rs.next()) {
+			
+			JSONObject obj = new JSONObject();
+
+			obj.put("invoiceId", rs.getString(1));
+			obj.put("invoiceNo", rs.getString(2));
+			
+			Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(3));
+			SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+			String properDate = format2.format(date1);
+			
+			obj.put("invoiceDate", properDate);
+			obj.put("amount", rs.getString(4));
+			obj.put("cashVoucherNo", rs.getString(5));
+			obj.put("vendorName", rs.getString(6));
+			
+			jsonArr.put(obj);
+		}
+		
+		rs.close();
+		stmt.close();
+		con.close();
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return jsonArr;
+}
+
+
 }

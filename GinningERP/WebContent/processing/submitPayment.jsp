@@ -177,8 +177,8 @@
 				rtgsTrDb.setDebit(rtgs.getRtgsAmount());
 				rtgsTrDb.setCredit(0);
 				rtgsTrDb.setTransactionDate(rtgs.getRtgsDate());
-				rtgsTrDb.setNarration("RAW COTTON PURCHASE");
-				rtgsTrDb.setVouchRef("RAW COTTON");
+				rtgsTrDb.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
+				rtgsTrDb.setVouchRef("RAW COTTON - "+invoiceNo);
 				rtgsTrDb.setVouchNo(voucherNo);
 				
 				Transactions rtgsTrCr = new Transactions();
@@ -306,11 +306,11 @@
 				
 				pdcChequeId = addCheque.addCheque(cheque);
 				
-				id[3] = chequeId;
+				id[3] = pdcChequeId;
 				
 				updateInvoice.updatePendingAmount(cheque.getChequeAmount(), invoiceId);
 				
-				updatePdc.addChequeId(chequeId, invoiceId);
+				updatePdc.addChequeId(pdcChequeId, invoiceId);
 				
 				
 				Transactions chequeTrDb = new Transactions();

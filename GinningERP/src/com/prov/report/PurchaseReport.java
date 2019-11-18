@@ -3,6 +3,9 @@ package com.prov.report;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import org.json.JSONObject;
+
 import com.prov.db.OracleConnection;
 
 public class PurchaseReport {
@@ -311,4 +314,78 @@ public class PurchaseReport {
 		return amount;
 	}
 
+	
+	public JSONObject getTodaysTotalPurchase() {
+		
+		ResultSet rs = null;
+		Connection con = null;
+		JSONObject json = new JSONObject();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT\r\n" + 
+					"    NVL(SUM(RTGS_AMOUNT), 0),\r\n" + 
+					"    NVL(SUM(CHEQUE_AMOUNT), 0),\r\n" + 
+					"    NVL(SUM(CASH_AMOUNT), 0)\r\n" + 
+					"FROM\r\n" + 
+					"    INVOICE_MAST\r\n" + 
+					"WHERE\r\n" + 
+					"    INV_DATE = TRUNC(SYSDATE)";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				json.put("rtgsAmount", rs.getDouble(1));
+				json.put("chequeAmount", rs.getDouble(2));
+				json.put("cashAmount", rs.getDouble(3));
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return json;
+	}
+	
+public long getTodaysPdpPurchase(String paymentMode) {
+		
+		ResultSet rs = null;
+		Connection con = null;
+		long amount = 0;
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT\r\n" + 
+					"    NVL(SUM(PM.AMOUNT),0)\r\n" + 
+					"FROM\r\n" + 
+					"    PDC_MAST       PM,\r\n" + 
+					"    INVOICE_MAST   IM\r\n" + 
+					"WHERE\r\n" + 
+					"    PM.MODE_OF_PAYMENT = ?\r\n" + 
+					"    AND PM.INVOICE_ID = IM.ID\r\n" + 
+					"    AND IM.INV_DATE = TRUNC(SYSDATE)";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setString(1, paymentMode);
+			
+			rs = stmt.executeQuery();
+		
+			while (rs.next()) {
+				amount = rs.getLong(1);
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return amount;
+	}
 }

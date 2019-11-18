@@ -8,6 +8,11 @@
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" >
+	   function preventBack(){window.history.forward();}
+	   setTimeout("preventBack()", 0);
+	   window.onunload=function(){null};
+</script>
 <title>Setup Vehicle Rates</title>
 </head>
 
@@ -75,7 +80,7 @@
 		</div>
 	</div>
 	<!-- ***********************************POP UP FOR GRADING OPTION UPDATE, EDIT AND DELETE********************** -->
-		<div class="modal fade" id="calledModal" tabindex="-1" role="dialog">
+		<div class="modal fade" id="calledModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -114,27 +119,89 @@
 		      </div>
 		    </div>
 		  </div>
-</div>
+			</div>
 		  </div>
 </div>
-<script src="../js/jquery-3.3.1.slim.min.js" ></script>
+
+<!-- Response modal pop up -->
+<div class="response-back-display"></div>
+<div class="response-body">
+	<div class="response-header">
+		<h5>Information</h5>
+	</div>
+	<div class="response-content">
+		<div class="d-flex justify-content-center align-items-center">
+		<h5 id="response-text" class="ml-4"></h5>
+		</div>
+	</div>
+	<div class="response-footer">
+		<button type="button" class="btn btn-success btn-response" id="response-button">Ok</button>
+	</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
+<script src="../js/Validation.js"></script>
 <script>
-	
+/*******************************
+ Validations for new submission
+ ********************************/
+ $(document).ready(function(){
+		$("#submitButton").click(function(){
+			if($.fn.validateData($("#vehicleName").val().trim(),/^[A-Za-z0-9,_ ]+$/)){
+				$("#vehicleName").css("border", "1px solid green");
+				if($.fn.validateData($("#description").val().trim(),/^[A-Za-z0-9,_\- ]+$/)){
+					$("#description").css("border", "1px solid green");
+					if($.fn.validateData($("#rate").val().trim(),/^[0-9.]+$/)){
+						$("#rate").css("border", "1px solid green");
+						submitDataNewEntry();
+					}else{
+						$("#rate").css("border", "1px solid red");
+						$.fn.checkStatus(1,"Invalid rate!");
+					}
+				}else{
+					$("#description").css("border", "1px solid red");
+					$.fn.checkStatus(1,"Invalid description!");
+				}
+			}else{
+				$.fn.checkStatus(1,"Invalid vehicle name!");
+				$("#vehicleName").css("border", "1px solid red");
+			}
+		})
+	})
+
+	/*******************************
+ Validations for upadate submission
+ ********************************/
+ $(document).ready(function(){
+		$("#submitUpdate").click(function(){
+			if($.fn.validateData($("#vehicleNameUpdate").val().trim(),/^[A-Za-z0-9,_ ]+$/)){
+				$("#vehicleNameUpdate").css("border", "1px solid green");
+				if($.fn.validateData($("#updateDescription").val().trim(),/^[A-Za-z0-9,_\- ]+$/)){
+					$("#updateDescription").css("border", "1px solid green");
+					if($.fn.validateData($("#updateRate").val().trim(),/^[0-9.]+$/)){
+						$("#updateRate").css("border", "1px solid green");
+						submitDataToUpdate();
+					}else{
+						$("#updateRate").css("border", "1px solid red");
+						$.fn.checkStatus(1,"Invalid rate!");
+					}
+				}else{
+					$("#updateDescription").css("border", "1px solid red");
+					$.fn.checkStatus(1,"Invalid description!");
+				}
+			}else{
+				$.fn.checkStatus(1,"Invalid vehicle name!");
+				$("#vehicleNameUpdate").css("border", "1px solid red");
+			}
+		})
+	})
 	window.onload = function() {
 		weighRateReport();
 	};
 		
 	
-	document.getElementById('submitButton').addEventListener('click',function(e){
-		submitDataNewEntry();
-	})
-	
-	document.getElementById('submitUpdate').addEventListener('click',function(e){
-		submitDataToUpdate();
-	})
-	
+		
 	function submitDataNewEntry(){
 		var json={};
 		

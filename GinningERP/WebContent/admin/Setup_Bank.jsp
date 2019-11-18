@@ -9,6 +9,11 @@
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Setup Bank</title>
+<script type="text/javascript" >
+	   function preventBack(){window.history.forward();}
+	   setTimeout("preventBack()", 0);
+	   window.onunload=function(){null};
+</script>
 </head>
 
 <body>
@@ -40,7 +45,7 @@
 					<div class="form-row">
 						<div class="form-group col-md-6">
 						<label>Bank Name</label>
-						<input type="text" class="form-control form-control-sm " name="bankName" id="bankName">
+						<input type="text" class="form-control form-control-sm" data-toggle="tooltip" data-placement="top" title="Enter bank name" name="bankName" id="bankName">
 						</div>
 						<div class="col-md-6">
 						<label>Account No</label>
@@ -69,7 +74,7 @@
 					</div>
 				</form>
 					<div class="d-flex justify-content-end align-items-center">
-						<button type="button" class="btn btn-success btn btn-mr-tp change-button" onclick="submitForm()">Save</button>
+						<button type="button" class="btn btn-success btn btn-mr-tp change-button" id="submit-bank-form" >Save</button>
 					</div>
 				</div>
        			</div>
@@ -116,8 +121,52 @@
 	<script src="../js/commonjs.js"></script>
 	<script src="../js/Validation.js"></script>
 <script>
-		
-		
+
+/***************************
+ validation
+ **********************/
+$(document).ready(function(){
+	$("#submit-bank-form").click(function(){
+		if($.fn.validateData($("#bankName").val().trim(),/^[A-Za-z ]+$/)){
+			$("#bankName").css("border", "1px solid green");
+			if($.fn.validateData($("#accountNo").val().trim(),/^[0-9]+$/)){
+					$("#accountNo").css("border", "1px solid green");
+					if($.fn.validateData($("#ifsc").val().trim(),/^[A-Za-z]{4}[0-9]{7}$/)){
+							$("#ifsc").css("border", "1px solid green");
+							if($.fn.validateData($("#micr").val().trim(),/[0-9]{9}/)){
+									$("#micr").css("border", "1px solid green");
+									if($.fn.validateData($("#date").val().trim(),/^[0-9]{4}[-][0-9]{2}[-][0-9]{2}$/)){
+											$("#date").css("border", "1px solid green");
+											if($.fn.validateData($("#openingBal").val().trim(),/^[0-9.]+$/)){
+													$("#openingBal").css("border", "1px solid green");
+													submitForm();
+												}else{
+													$("#openingBal").css("border", "1px solid red");
+													$.fn.checkStatus(1,"Opening balance should be zero or an amount!")
+												}
+										}else{
+											$("#date").css("border", "1px solid red");
+											$.fn.checkStatus(1,"Date cannot be blank or Invalid date!")
+										}
+								}else{
+									$("#micr").css("border", "1px solid red");
+									$.fn.checkStatus(1,"Inavalid MICR code!")
+								}
+						}else{
+							$("#ifsc").css("border", "1px solid red");
+							$.fn.checkStatus(1,"Invalid IFSC Code!")
+						}
+			}else{
+				$("#accountNo").css("border", "1px solid red");
+				$.fn.checkStatus(1,"Account number should not contain any character expect numbers!")
+			}
+		}else{
+			$("#bankName").css("border", "1px solid red");
+			$.fn.checkStatus(1,"Bank name not entered correctly!")
+		}
+	})
+})
+
 			function submitForm(){
 				document.getElementsByName("bankForm")[0].submit();
 			}
@@ -182,21 +231,7 @@
 				$.fn.checkStatus(sessionId.getSessionId,"Bank has been saved successfully!")
 			})
 
-			function myFunction(x) {
-					x.classList.toggle("change");
-			}
-
-			$(document).ready(function(){
-				$(".c-nav-collapse").click(function(){
-						$(".sidebar").toggle(); 
-						if($(".sidebar").css("display")==="none"){
-							$(".row").css("margin-left","10px"); 
-						}else{
-							$(".row").css("margin-left","225px"); 
-						}
-				})
-			})
-			
+		
 			/***********************
 			Side bar 
 			************************/

@@ -19,6 +19,11 @@
   	<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
 	<script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+	<script type="text/javascript" >
+	   function preventBack(){window.history.forward();}
+	   setTimeout("preventBack()", 0);
+	   window.onunload=function(){null};
+	</script>
 </head>
 <body>
   <%@include file="NavBar.jsp" %>
@@ -179,7 +184,7 @@
     </div>
     </div>
   	<!-- Modal -->
-		<div class="modal fade" id="newCustomerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal fade" id="newCustomerModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		  <div class="modal-dialog modal-dialog-top" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -777,31 +782,55 @@ function submitNewCustomer(){
 		document.getElementById("customer").value = "";
 		document.getElementById("mobile").value = "";
 	}
-	
-	
 }
 
 //Create AJAX Request for new customer form submission
 function saveCustomerRequest(newCustomerName, newCustomerMobile, newCustomerAddress, customerImage){
 	
+ 	var obj = new Object();
+ 	
+ 	obj.name =  document.getElementById("newCustomerName").value,
+ 	obj.address = document.getElementById("newCustomerAddress").value,
+ 	obj.mobile = document.getElementById("newCustomerMobile").value,
+    obj.customerImage = dataUrl
+	
 	$.ajax({
 		  type: "POST",
 		  url: "${pageContext.request.contextPath}/processing/addCustomer.jsp",
-		  data: { 
-		     name : newCustomerName,
-		     address : newCustomerAddress,
-		     mobile : newCustomerMobile,
-		     customerImage : customerImage
-		  }
+		  dataType : "json",
+		  data: JSON.stringify(obj),
 		}).done(function(o) {
-		 	console.log("repsonse---"+o.trim());
-		 	setNewCustomerData(o)
-		});
+			var d = JSON.stringify(o);
+		 	setNewCustomerData(d)
+		}); 
+}
+		
+		
+/* 	var url="${pageContext.request.contextPath}/processing/addCustomer.jsp?name="+newCustomerName+"&address="+newCustomerAddress+"&mobile="+newCustomerMobile;
+	if(window.XMLHttpRequest){  
+		req=new XMLHttpRequest();  
+	}  
+	else if(window.ActiveXObject){  
+		req=new ActiveXObject("Microsoft.XMLHTTP");  
+	}  
+	try{  
+		req.onreadystatechange=test;  
+		console.log("AJAX Req sent");
+		req.open("POST",url,true);  
+		req.send();  
+	}catch(e){alert("Unable to connect to server");}
 }
 
+function test(){
+	if(req.readyState == 4){
+		var response = this.response.trim();
+		setNewCustomerData(response)
+	}
+}
+*/
 //Set data in RST form fields of newly added customer
 function setNewCustomerData(data){
-		console.log("New Customer Added!!!");
+		console.log(data);
 		var blacklisted;
 		var membership;
 		
@@ -828,7 +857,6 @@ function setNewCustomerData(data){
 			document.getElementById("membership").value = membership;
 		}
 }
-
 //Sen AJAX request to get the tare weight pending RSTs
 function pendingTareWt(){
 var url="${pageContext.request.contextPath}/processing/pendingTareReport.jsp";
@@ -979,9 +1007,10 @@ function weighBridgePhoto(){
 	  var firstWebcam;
 	  navigator.mediaDevices.enumerateDevices()
 	  .then(function(devices){
+		  console.log(devices);
 			for(i=0;i<devices.length;i++){
 				var camera = devices[i];
-				if(camera.kind  == "videoinput" && camera.deviceId == "b0ce15c0c705f2ec644690487f819ff3a9a23f83a3508091e9607af147a111e3"){
+				if(camera.kind  == "videoinput" && camera.deviceId == "7a9af20910deb06be46e9e5d625cab2d83a094f671da1d5831421fe22527cbb1"){
 					var constraints = { deviceId: { exact: camera.deviceId } };
 					obj = navigator.mediaDevices.getUserMedia({ video: constraints });
 					break;
@@ -999,7 +1028,7 @@ function weighBridgePhoto(){
 	  .then(function(devices){
 			for(i=0;i<devices.length;i++){
 				var camera = devices[i];
-				if(camera.kind  == "videoinput" && camera.deviceId == "ce03194cf9b47af834779e4a366403a346d1c1f9254f52591029d9d87dd86b8b"){
+				if(camera.kind  == "videoinput" && camera.deviceId == "bb33fe18b1129c14bbd6373c8514610f7dc4bdca616f01ab8a38b4452086dc69"){
 					var constraints = { deviceId: { exact: camera.deviceId } };
 					obj = navigator.mediaDevices.getUserMedia({ video: constraints });
 					break;
@@ -1040,9 +1069,6 @@ function weighBridgePhoto(){
 			})
 		})
 } 
-
-
-
 
 <%
 session.removeAttribute("weighmentId");

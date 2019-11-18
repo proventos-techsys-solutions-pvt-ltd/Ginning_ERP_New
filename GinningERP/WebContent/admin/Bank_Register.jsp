@@ -8,6 +8,12 @@
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" >
+   function preventBack(){window.history.forward();}
+    setTimeout("preventBack()", 0);
+    window.onunload=function(){null};
+</script>
+
 <title>Bank Register</title>
 </head>
 
@@ -106,7 +112,6 @@
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		<script src="../js/export/export2excel.js"></script>
     	<script type="text/javascript">
-    	
     	function getCurrentDate(){
 			var today = new Date();
 			var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
@@ -223,6 +228,7 @@
 	                $('#sidebar').toggleClass('active');
 	            });
 	        });
+		
 		
 		</script>
 </body>

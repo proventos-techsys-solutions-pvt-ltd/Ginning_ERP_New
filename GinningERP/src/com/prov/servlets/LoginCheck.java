@@ -30,6 +30,7 @@ public class LoginCheck implements Filter {
 
 	        if (loggedIn || loginRequest) {
 	            chain.doFilter(request, response);
+	          
 	        }else {
 				response.sendRedirect(loginURI);
 	        }

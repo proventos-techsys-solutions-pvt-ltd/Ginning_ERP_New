@@ -80,9 +80,9 @@ public class UpdateWeighMast {
 		}
 	
 		String updateWeighMast = "UPDATE WEIGH_MAST SET TARE=?,"
-				+ "NET=?,"
-				+ "TAREWT_TIME=?"
-				+ "WHERE RST=?";
+								+ "NET=?,"
+								+ "TAREWT_TIME=?"
+								+ "WHERE RST=?";
 		PreparedStatement stmt;
 		try {
 			

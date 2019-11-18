@@ -34,7 +34,7 @@ public class AddPDC {
 			cs.setInt(3, p.getInvoiceId());
 			cs.setDouble(4, p.getAmount());
 			cs.setDate(5, payDate);
-			cs.setString(6, p.getModeOfPayment());
+			cs.setInt(6, p.getModeOfPayment());
 			if( p.getChequeId() == 0) {
 				cs.setNull(7, Types.NUMERIC);
 			}else if( p.getChequeId() > 0) {

@@ -6,6 +6,11 @@
 	  <!-- Bootstrap CSS -->
 	  <link rel="stylesheet" href="./styles/bootstrap.min.css">	
 	  <link rel="stylesheet" href="./styles/login.css">
+	  	<script type="text/javascript" >
+	   function preventBack(){window.history.forward();}
+	   setTimeout("preventBack()", 0);
+	   window.onunload=function(){null};
+	</script>
       <title>Login</title>
      </head>
 <body style="background:url(./property/img/background.jpeg);background-size:cover;">
@@ -40,6 +45,11 @@
 <script src="./js/popper.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 <script>
+history.pushState(null, document.title, location.href);
+window.addEventListener('popstate', function (event) 
+{
+	history.pushState(null, document.title, location.href);
+});
 	var form = document.getElementById("loginForm");
 	var module = document.getElementById("moduleId");
 	var role = document.getElementById("role");
@@ -55,7 +65,9 @@
 			if(key.keyCode===13){
 				document.getElementById("loginForm").submit();
 			}
-		})
+		});
+		
+	
 </script>
 </body>
 </html>

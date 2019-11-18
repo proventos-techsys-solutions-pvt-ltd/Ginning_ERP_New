@@ -14,6 +14,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
+<script type="text/javascript" >
+	   function preventBack(){window.history.forward();}
+	   setTimeout("preventBack()", 0);
+	   window.onunload=function(){null};
+</script>
 </head>
 
 <body>
@@ -177,9 +182,7 @@
 						<div class="col-md-1">
 							<label>Mode</label>
 							<select class="form-control form-control-sm" id="pdcPaymentMode" name="pdcPaymentMode">
-								<option value="CHEQUE">Cheque</option>
-								<option value="RTGS">RTGS</option>
-								<option value="CASH">Cash</option>
+								<c:PaymentModeTag/>
 							</select>
 						</div>
 					</div>
@@ -241,11 +244,11 @@
 <!-- <script src="../js/jquery-3.3.1.slim.min.js" ></script> -->
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
-
 <script src="../js/Validation.js"></script>
 <script src="../js/validations/CommonValidations.js"></script>
 
 <script>
+
 //***********************VALIDATIONS**********************************
 var appController = (function(){
 	var namesAndIds = {
@@ -399,7 +402,7 @@ function setDataForNewGrading(data){
 	cell5.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='moisture1' name='moisture' value='' required>";
 	cell6.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='rate1' name='rate'>";
 	cell7.innerHTML = "<input type='checkbox' class='' id='pdcCheck1' name='pdcCheck' value='false'>";		
-	cell9.innerHTML = "<input type='text' class='' id='form-control form-control-sm lbl-rm-all' id='pdcRateTbl1' name='pdcRateTbl' value='0' readonly>";	
+	cell8.innerHTML = "<input type='text' class='form-control form-control-sm lbl-rm-all' id='pdcRateTbl1' name='pdcRateTbl' value='0' readonly>";	
 	
 	document.getElementById("tblQty1").value = totalQuantity;
 	calculateTotal();
@@ -805,8 +808,12 @@ document.addEventListener('change', function(e){
 
 document.getElementById("submitGrades").addEventListener('click',function(e){
 	if(gradingValidations()===true){
-		document.getElementById("gradeForm").action = "../processing/setGrade.jsp";
-		submitGradingData();
+		if($.fn.gradingValidationsJ()===true){
+			document.getElementById("gradeForm").action = "../processing/setGrade.jsp";
+			submitGradingData();
+		}else{
+			$.fn.checkStatus(1,"Description of grade is empty!");
+		}
 	}else{
 		$.fn.checkStatus(1,"Moisture box elements cannot be empty!");
 	}
@@ -1042,6 +1049,8 @@ $(document).ready(function () {
         $('#sidebar').toggleClass('active');
     });
 });
+
+
 </script>
 <%
 session.removeAttribute("gradeSubmitFlag");

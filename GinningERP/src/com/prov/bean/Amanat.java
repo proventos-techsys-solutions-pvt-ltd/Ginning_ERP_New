@@ -14,7 +14,15 @@ public class Amanat {
 
 	private String amanatDate;
 	
-	private double finalRate;
+	private double finalRate, difference;
+
+	public double getDifference() {
+		return difference;
+	}
+
+	public void setDifference(double difference) {
+		this.difference = difference;
+	}
 
 	public int getId() {
 		return id;

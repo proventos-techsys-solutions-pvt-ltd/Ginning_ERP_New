@@ -8,6 +8,11 @@
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" >
+	   function preventBack(){window.history.forward();}
+	   setTimeout("preventBack()", 0);
+	   window.onunload=function(){null};
+</script>
 <title>Daily Setup</title>
 </head>
 <body>
@@ -374,6 +379,7 @@
 	<script src="../js/dailysetup.js"></script>
 
 	<script>
+	
 	function fetchVoucherNoSeries(){
 		var url="../processing/getVoucherNoSeries.jsp";
 		if(window.XMLHttpRequest){  
@@ -616,7 +622,20 @@
 		if(e.srcElement.name === "setup"){
 			var rowIndex = e.srcElement.parentElement.parentElement.rowIndex-2;
 			if(appController.validateCompanyAndGradeData(rowIndex) === true){
-				submitDailySetup(rowIndex);
+				if(!$.fn.validateData($("[name='companyNameTable']").eq([rowIndex]).val().trim(),/^[S][e][l][e][c][t]$/)){
+					if(!$.fn.validateData($("[name='heapTable']").eq([rowIndex]).val().trim(),/^[S][e][l][e][c][t]$/)){
+						if(!$.fn.validateData($("[name='bankTable']").eq([rowIndex]).val().trim(),/^[S][e][l][e][c][t]$/)){
+							submitDailySetup(rowIndex);
+						}else{
+							$.fn.checkStatus(1,"Invalid Bank") 
+						}
+					}else{
+						$.fn.checkStatus(1,"Invalid Heap") 
+					}
+				}else{
+					$.fn.checkStatus(1,"Invalid Company Name") 
+				}
+				
 			}
 		}
 	})

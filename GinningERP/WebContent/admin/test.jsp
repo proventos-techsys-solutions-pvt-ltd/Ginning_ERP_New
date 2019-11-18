@@ -1,97 +1,72 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
+<!doctype html>
 <html>
-
 <head>
-  <meta charset="utf-8">
-  <meta content="stuff, to, help, search, engines, not" name="keywords">
-  <meta content="What this page is about." name="description">
-  <meta content="Display Webcam Stream" name="title">
-  <title>Display Webcam Stream</title>
-  
-  <style>
-    #container {
-      margin: 0px auto;
-      width: 500px;
-      height: 375px;
-      border: 10px #333 solid;
-    }
-    #videoElement {
-      width: 500px;
-      height: 375px;
-      background-color: #666;
-    }
-    #container2 {
-      margin: 0px auto;
-      width: 500px;
-      height: 375px;
-      border: 10px #333 solid;
-    }
-    #videoElement2 {
-      width: 500px;
-      height: 375px;
-      background-color: #666;
-    }
-  </style>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../styles/bootstrap.min.css">
+<title>Test page</title>
+<style>
+.chart-container-purchase{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	border:2px solid green; 
+}
+ul{
+	list-style:none;
+	line-height: 8;
+}
+	.parent-li{
+		position:relative;
+		left:50%;
+		display:inline;
+		border:2px solid red;
+		padding:20px;
+		width:auto;
+ 		margin-left:-393.10px;
+		
+	}
+	.child-li{
+		border:2px solid green;
+		display:inline;
+		margin:5px;
+		padding:20px;
+	}
+	.parent-child{
+		margin-left:250px;
+	}
+	.child-child-li{
+		position:relative;
+		display:inline;
+		margin:5px;
+		padding:20px;
+		border:2px solid green;
+	}
+	
+</style>
+
 </head>
-
-<body style="">
-  <div id="container">
-    
-    <video autoplay id="videoElement">
-      
-    </video>
-  </div>
-
- <div id="container2">
-    
-    <video autoplay id="videoElement2">
-      
-    </video>
-  </div>
-
-  <script>
-  
-  var video = document.querySelector("#videoElement");
-  var firstWebcam;
-  navigator.mediaDevices.enumerateDevices()
-  .then(function(devices){
-		for(i=0;i<devices.length;i++){
-			var camera = devices[i];
-			if(camera.kind  == "videoinput" && camera.deviceId == "b0ce15c0c705f2ec644690487f819ff3a9a23f83a3508091e9607af147a111e3"){
-				firstWebcam = camera.deviceId;
-				console.log("inside if");
-				var constraints = { deviceId: { exact: camera.deviceId } };
-				obj = navigator.mediaDevices.getUserMedia({ video: constraints });
-				break;
-			}
-		}
-		 return obj;
- 	 }
- ) 
- .then(stream => video.srcObject = stream)
- .catch(e => console.error(e))
-
-  
-  var video2 = document.querySelector("#videoElement2");
-  navigator.mediaDevices.enumerateDevices()
-  .then(function(devices){
-		for(i=0;i<devices.length;i++){
-			var camera = devices[i];
-			if(camera.kind  == "videoinput" && camera.deviceId == "ce03194cf9b47af834779e4a366403a346d1c1f9254f52591029d9d87dd86b8b"){
-				console.log(camera);
-				var constraints = { deviceId: { exact: camera.deviceId } };
-				obj = navigator.mediaDevices.getUserMedia({ video: constraints });
-				break;
-			}
-		}
-		 return obj;
- 	 }
- )  
- .then(stream => video2.srcObject = stream)
- .catch(e => console.error(e))
-
-  
-  </script>
+<body>
+	<div class="container-fluid">
+		<div class="chart-container-purchase">
+		<ul>
+			<li ><span class="parent-li">Total purchases payment summary during day</span>
+			<div>
+				<div class="child-li">Cash payment</div>
+				<div class="child-li">Cheque payment</div>
+				<div class="child-li">RTGS/NEFT payment</div>
+				<div class="child-li">Post dated payments</div>
+						<div class="parent-child">
+							<div class="child-child-li">Cash payment</div>
+							<div class="child-child-li">Cheque payment</div>
+							<div class="child-child-li">RTGS/NEFT  payment</div>
+						</div>
+			</div>
+			</li>
+		</ul>
+		</div>
+		</div>
 </body>
-
 </html>

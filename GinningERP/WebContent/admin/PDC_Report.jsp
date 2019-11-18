@@ -8,6 +8,11 @@
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
 <link rel="stylesheet" href="../styles/admin/sidenav.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" >
+	   function preventBack(){window.history.forward();}
+	   setTimeout("preventBack()", 0);
+	   window.onunload=function(){null};
+</script>
 <title>Post Dated Cheque's Report</title>
 </head>
 
@@ -98,8 +103,21 @@
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		<script src="../js/export/export2excel.js"></script>
     	<script>
+    	
     	setTitle("Post Payments Register");//Setting Title of Page
 		setSearchPlaceholder("Search");//Setting Placeholder of Search Input
+		
+
+   	 //*********************Search 
+	        $(document).ready(function(){
+	          $("#searchInput").on("keyup", function() {
+	            var value = $(this).val().toLowerCase();
+	            $("#tableBody tr").filter(function() {
+	              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	            });
+	          });
+	        });
+		
 		
 		function getCurrentDate(){
 			var today = new Date();
@@ -150,7 +168,7 @@
 		function setData(data){
 			
 			var table = document.getElementById("tableBody");
-			
+			table.innerHTML = "";
 			for(i=0; i<data.length;i++){
 
 				var rowIndex = table.rows.length;

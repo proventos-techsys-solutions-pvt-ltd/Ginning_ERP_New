@@ -2,6 +2,7 @@ package com.prov.dbupdation;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.Types;
 
 import com.prov.bean.CustomerVehicle;
@@ -51,6 +52,52 @@ public class UpdateCustomerVehicle {
 		}
 		
 		return id;
+	}
+	
+	public int updateCustomerVehicle(String frontImage, String rearImage, int weighmentId)
+	{
+		Connection con = null;
+		int rowCount = 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		String updateCustomerVehicle = "UPDATE CUSTOMER_VEHILCE_MAST\r\n" + 
+										"SET\r\n" + 
+										"    FRONT_TARE_IMG = ?,\r\n" + 
+										"    REAR_TARE_IMG = ?\r\n" + 
+										"WHERE\r\n" + 
+										"    ID = (\r\n" + 
+										"        SELECT\r\n" + 
+										"            VID\r\n" + 
+										"        FROM\r\n" + 
+										"            WEIGH_MAST\r\n" + 
+										"        WHERE\r\n" + 
+										"            ID = ?\r\n" + 
+										"    )";
+		PreparedStatement stmt;
+		try {
+
+			stmt = con.prepareStatement(updateCustomerVehicle);
+			
+			stmt.setString(2, frontImage );
+			stmt.setString(3, rearImage );
+			stmt.setInt(4,weighmentId );
+			
+			
+			rowCount = stmt.executeUpdate();
+			
+			stmt.close();
+			con.close();
+			
+			System.out.println("Updation Succesful-"+rowCount);
+			} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return rowCount;
 	}
 
 }

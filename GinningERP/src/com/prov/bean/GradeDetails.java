@@ -2,7 +2,7 @@ package com.prov.bean;
 
 public class GradeDetails {
 	
-	private int id, weighmentId, rst;
+	private int id, weighmentId, rst, modeOfPayment;
 	double pdcBonusAmount;
 	
 	String pdcDate;
@@ -24,13 +24,13 @@ public class GradeDetails {
 		this.pdcDate = pdcDate;
 	}
 
-	private String material, grade, authorizedBy, modeOfPayment;
+	private String material, grade, authorizedBy;
 
-	public String getModeOfPayment() {
+	public int getModeOfPayment() {
 		return modeOfPayment;
 	}
 
-	public void setModeOfPayment(String modeOfPayment) {
+	public void setModeOfPayment(int modeOfPayment) {
 		this.modeOfPayment = modeOfPayment;
 	}
 

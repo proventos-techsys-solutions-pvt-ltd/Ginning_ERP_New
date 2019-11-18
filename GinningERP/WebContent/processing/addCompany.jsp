@@ -120,7 +120,7 @@
     	
     	addStockMast.addStockMast(sm);
     	
-    	String companyAccountLedgerName = c.getName() + " PURCHASE ACCOUNT";
+    	String companyAccountLedgerName = c.getName() + " - PURCHASE ACCOUNT";
     	String companyAccountLedgerDesc = c.getName() + " RAW COTTON PURCHASE ACCOUNT";
     	
     	GeneralLedger glPurchaseAccount = new GeneralLedger();

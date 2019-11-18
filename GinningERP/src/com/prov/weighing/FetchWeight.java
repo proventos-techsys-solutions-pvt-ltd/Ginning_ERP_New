@@ -6,12 +6,12 @@ public class FetchWeight {
 		String weightStr ="";
 		try
 	    {
-			weightStr = (new TwoWaySerialComm()).connect("COM1");
+			weightStr = (new TwoWaySerialComm()).connect("COM4");
 	    }
 	    catch ( Exception e )
 	    {
 	    	try {
-	    		weightStr = (new TwoWaySerialComm()).connect("COM1");
+	    		weightStr = (new TwoWaySerialComm()).connect("COM4");
 	    	}catch (Exception e1) {
 	    		e1.printStackTrace();
 			}

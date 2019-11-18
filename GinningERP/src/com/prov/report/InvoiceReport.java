@@ -290,35 +290,39 @@ public ArrayList<Invoice> getReport() {
 			con = OracleConnection.getConnection();
 			
 			String invSql = "SELECT\r\n" + 
-							"    IM.ID,\r\n" + 
-							"    IM.INVOICE_NO,\r\n" + 
-							"    IM.NET_AMOUNT,\r\n" + 
-							"    IM.AMOUNTPAID,\r\n" + 
-							"    IM.PENDING,\r\n" + 
-							"    IM.INV_DATE,\r\n" + 
-							"    IM.COMPANY_ID,\r\n" + 
-							"    IM.CUSTOMER_ID,\r\n" + 
-							"    IM.AUTHORIZER,\r\n" + 
-							"    IM.NOTE,\r\n" + 
-							"    IM.TOTAL_QUANTITY,\r\n" + 
-							"    IM.CASH_AMOUNT,\r\n" + 
-							"    IM.CHEQUE_AMOUNT,\r\n" + 
-							"    IM.RTGS_AMOUNT,\r\n" + 
-							"    IM.PDC_AMOUNT,\r\n" + 
-							"    IM.PAID_BY_OP,\r\n" + 
-							"    CM.NAME,\r\n" + 
-							"    CM.ADDRESS,\r\n" + 
-							"    CM.MOBILE,\r\n" + 
-							"    PDC.ID       PDC_ID,\r\n" + 
-							"    PDC.PAY_DATE,\r\n" + 
-							"    PDC.AMOUNT   PDC_AMT,\r\n" + 
-							"    PDC.MODE_OF_PAYMENT\r\n" + 
-							"FROM\r\n" + 
-							"    INVOICE_MAST    IM\r\n" + 
-							"    INNER JOIN CUSTOMER_MAST   CM ON IM.CUSTOMER_ID = CM.ID\r\n" + 
-							"    LEFT JOIN PDC_MAST        PDC ON PDC.INVOICE_ID = IM.ID\r\n" + 
-							"WHERE\r\n" + 
-							"    IM.INVOICE_NO = ?"; 
+						"    IM.ID,\r\n" + 
+						"    IM.INVOICE_NO,\r\n" + 
+						"    IM.NET_AMOUNT,\r\n" + 
+						"    IM.AMOUNTPAID,\r\n" + 
+						"    IM.PENDING,\r\n" + 
+						"    IM.INV_DATE,\r\n" + 
+						"    IM.COMPANY_ID,\r\n" + 
+						"    IM.CUSTOMER_ID,\r\n" + 
+						"    IM.AUTHORIZER,\r\n" + 
+						"    IM.NOTE,\r\n" + 
+						"    IM.TOTAL_QUANTITY,\r\n" + 
+						"    IM.CASH_AMOUNT,\r\n" + 
+						"    IM.CHEQUE_AMOUNT,\r\n" + 
+						"    IM.RTGS_AMOUNT,\r\n" + 
+						"    IM.PDC_AMOUNT,\r\n" + 
+						"    IM.PAID_BY_OP,\r\n" + 
+						"    CM.NAME,\r\n" + 
+						"    CM.ADDRESS,\r\n" + 
+						"    CM.MOBILE,\r\n" + 
+						"    PDC.ID       PDC_ID,\r\n" + 
+						"    PDC.PAY_DATE,\r\n" + 
+						"    PDC.AMOUNT   PDC_AMT,\r\n" + 
+						"    PDC.MODE_OF_PAYMENT,\r\n" + 
+						"    AN.ACCOUNT_ID\r\n" + 
+						"FROM\r\n" + 
+						"    INVOICE_MAST    IM\r\n" + 
+						"    INNER JOIN CUSTOMER_MAST   CM ON IM.CUSTOMER_ID = CM.ID\r\n" + 
+						"    LEFT JOIN PDC_MAST        PDC ON PDC.INVOICE_ID = IM.ID,\r\n" + 
+						"    ACCOUNT_NAME AN\r\n" + 
+						"WHERE\r\n" + 
+						"    IM.INVOICE_NO = ?\r\n" + 
+						"AND AN.COMPANY_ID = IM.COMPANY_ID \r\n" + 
+						"AND AN.ACC_CATEGORY_ID = 6"; 
 				
 			PreparedStatement stmt = con.prepareStatement(invSql);
 			
@@ -354,6 +358,7 @@ public ArrayList<Invoice> getReport() {
 				jsonObj.put("customerMobile", rs.getString(19));
 				jsonObj.put("pdcId", rs.getString(20));
 				String pdcDate = rs.getString(21);
+				jsonObj.put("accountPayableId", rs.getString("ACCOUNT_ID"));
 				if(pdcDate!=null) {
 					Date date2=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(pdcDate);
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -751,6 +756,7 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("companyEmail", rs.getString(44));
 			jsonObj.put("vendorBlacklisted", rs.getString(45));
 			jsonObj.put("vendorMembership", rs.getString(46));
+			jsonObj.put("advance", rs.getString(47));
 			JSONArray jsonArr = new JSONArray();
 			
 			rs.previous();
@@ -947,5 +953,65 @@ public ArrayList<Invoice> getReport() {
 		return obj;
 	}
 	
+	public JSONObject getInvoiceBasicDetails(String invoiceNo) {
+		ResultSet rs = null;
+		Connection con = null;
+		JSONObject obj = new JSONObject();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT\r\n" + 
+					"    IM.ID,\r\n" + 
+					"    IM.INVOICE_NO,\r\n" + 
+					"    IM.INV_DATE,\r\n" + 
+					"    IM.COMPANY_ID,\r\n" + 
+					"    IM.CUSTOMER_ID,\r\n" + 
+					"    IM.AUTHORIZER,\r\n" +
+					"    IM.NOTE,\r\n" + 
+					"    IM.TOTAL_QUANTITY,\r\n" + 
+					"    CM.NAME,\r\n" + 
+					"    CM.ADDRESS,\r\n" + 
+					"    CM.MOBILE,\r\n" + 
+					"    AN.ACCOUNT_ID\r\n" + 
+					"FROM\r\n" + 
+					"    INVOICE_MAST    IM,\r\n" + 
+					"    CUSTOMER_MAST   CM,\r\n" + 
+					"    ACCOUNT_NAME    AN\r\n" + 
+					"WHERE\r\n" + 
+					"    IM.INVOICE_NO = ?\r\n" + 
+					"    AND IM.CUSTOMER_ID = CM.ID\r\n" + 
+					"    AND AN.COMPANY_ID = IM.COMPANY_ID\r\n" + 
+					"    AND AN.ACC_CATEGORY_ID = 6";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setString(1, invoiceNo);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				obj.put("id", rs.getString(1));
+				obj.put("invoiceNo", rs.getString(2));
+				obj.put("invoiceDate", rs.getString(3));
+				obj.put("companyId", rs.getString(4));
+				obj.put("customerId", rs.getString(5));
+				obj.put("authorizer", rs.getString(6));
+				obj.put("note", rs.getString(7));
+				obj.put("totalQuantity", rs.getString(8));
+				obj.put("customerName", rs.getString(9));
+				obj.put("customerAddress", rs.getString(10));
+				obj.put("customerMobile", rs.getString(11));
+				obj.put("accountPayableId", rs.getString(12));
+				
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return obj;
+	}
 	
 }

@@ -22,7 +22,7 @@ public int updateAmanat(Amanat a) {
 			e.printStackTrace();
 		}
 
-		String updateInvoice = "{ ? = call UPDATE_AMANAT(?,?,?,?,?,?) }";
+		String updateInvoice = "{ ? = call UPDATE_AMANAT(?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -40,6 +40,7 @@ public int updateAmanat(Amanat a) {
 			cs.setDate(5, invSqlDate);
 			cs.setDouble(6, a.getFinalRate());	
 			cs.setInt(7, a.getRst());	
+			cs.setDouble(8, a.getDifference());
 			
 			cs.executeUpdate();
 			
