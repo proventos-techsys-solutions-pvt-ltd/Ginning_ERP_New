@@ -40,7 +40,7 @@ public class AddCheque {
 			cs.setLong(9, c.getChequeAmount());
 			cs.setDate(10, date);
 			cs.setInt(11, c.getStatus());
-			cs.setInt(12, c.getPaymentStatus());
+			cs.setInt(12, c.getChequePaymentStatus());
 			cs.setInt(13, c.getVoucherNo());
 			
 			cs.executeUpdate();

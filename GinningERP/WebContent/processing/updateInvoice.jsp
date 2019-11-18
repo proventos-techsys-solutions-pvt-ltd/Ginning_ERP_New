@@ -132,7 +132,7 @@
 				pdc.setPayDate((String)json.get("pdcDate"));
 				pdc.setInvoiceId(invoiceId);
 	            pdc.setAmount(Long.parseLong((String)json.get("pdcAmount")));	
-	            pdc.setModeOfPayment((String)json.get("pdcPaymentMode"));
+	            pdc.setModeOfPayment(Integer.parseInt((String)json.get("pdcPaymentMode")));
 	            pdc.setChequeId(0);
 	            pdc.setRtgsId(0);
 	            pdc.setVoucherNo(0);

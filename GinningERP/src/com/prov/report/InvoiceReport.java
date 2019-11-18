@@ -967,13 +967,14 @@ public ArrayList<Invoice> getReport() {
 					"    IM.INV_DATE,\r\n" + 
 					"    IM.COMPANY_ID,\r\n" + 
 					"    IM.CUSTOMER_ID,\r\n" + 
-					"    IM.AUTHORIZER,\r\n" +
+					"    IM.AUTHORIZER,\r\n" + 
 					"    IM.NOTE,\r\n" + 
 					"    IM.TOTAL_QUANTITY,\r\n" + 
 					"    CM.NAME,\r\n" + 
 					"    CM.ADDRESS,\r\n" + 
 					"    CM.MOBILE,\r\n" + 
-					"    AN.ACCOUNT_ID\r\n" + 
+					"    AN.ACCOUNT_ID,\r\n" + 
+					"    IM.NET_AMOUNT\r\n" + 
 					"FROM\r\n" + 
 					"    INVOICE_MAST    IM,\r\n" + 
 					"    CUSTOMER_MAST   CM,\r\n" + 
@@ -993,7 +994,13 @@ public ArrayList<Invoice> getReport() {
 			while (rs.next()) {
 				obj.put("id", rs.getString(1));
 				obj.put("invoiceNo", rs.getString(2));
-				obj.put("invoiceDate", rs.getString(3));
+				
+				String date = rs.getString(3);
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
+				SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+				String properDate = format2.format(date1);
+				
+				obj.put("invoiceDate", properDate);
 				obj.put("companyId", rs.getString(4));
 				obj.put("customerId", rs.getString(5));
 				obj.put("authorizer", rs.getString(6));
@@ -1003,6 +1010,7 @@ public ArrayList<Invoice> getReport() {
 				obj.put("customerAddress", rs.getString(10));
 				obj.put("customerMobile", rs.getString(11));
 				obj.put("accountPayableId", rs.getString(12));
+				obj.put("totalAmount", rs.getString(13));
 				
 			}
 			rs.close();
@@ -1012,6 +1020,100 @@ public ArrayList<Invoice> getReport() {
 			e.printStackTrace();
 		}
 		return obj;
+	}
+	
+	public JSONArray pendingInvoiceReport() {
+		ResultSet rs = null;
+		Connection con = null;
+		
+		JSONArray report = new JSONArray();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String invSql = "SELECT\r\n" + 
+						"    IM.ID,\r\n" + 
+						"    IM.INVOICE_NO,\r\n" + 
+						"    IM.INV_DATE,\r\n" + 
+						"    CM.NAME,\r\n" + 
+						"    II.RST,\r\n" + 
+						"    NVL(SUM(AMT.AMOUNT), 0) PENDING_AMOUNT\r\n" + 
+						"FROM\r\n" + 
+						"    (\r\n" + 
+						"        SELECT\r\n" + 
+						"            PD.AMOUNT,\r\n" + 
+						"            PD.INVOICE_ID\r\n" + 
+						"        FROM\r\n" + 
+						"            PAYMENT_DETAILS PD\r\n" + 
+						"        WHERE\r\n" + 
+						"            PD.PAY_STATUS = 0\r\n" + 
+						"        UNION\r\n" + 
+						"        SELECT\r\n" + 
+						"            PDC.AMOUNT AS AMOUNT,\r\n" + 
+						"            PDC.INVOICE_ID\r\n" + 
+						"        FROM\r\n" + 
+						"            PDC_MAST PDC\r\n" + 
+						"        WHERE\r\n" + 
+						"            PDC.PAY_STATUS = 0\r\n" + 
+						"    ) AMT,\r\n" + 
+						"    INVOICE_MAST    IM,\r\n" + 
+						"    CUSTOMER_MAST   CM,\r\n" + 
+						"    INVOICE_ITEMS   II\r\n" + 
+						"WHERE\r\n" + 
+						"    AMT.INVOICE_ID = IM.ID\r\n" + 
+						"    AND CM.ID = IM.CUSTOMER_ID\r\n" + 
+						"    AND II.INVOICE_ID = IM.ID\r\n" + 
+						"GROUP BY\r\n" + 
+						"    IM.ID,\r\n" + 
+						"    IM.INVOICE_NO,\r\n" + 
+						"    IM.INV_DATE,\r\n" + 
+						"    CM.NAME,\r\n" + 
+						"    II.RST";
+			
+			PreparedStatement stmt = con.prepareStatement(invSql);
+			
+			rs = stmt.executeQuery();
+			int i = 0;
+			
+			while (rs.next()) {
+				
+				JSONObject jsonObj = new JSONObject();
+				
+				jsonObj.put("invoiceId", rs.getString(1));
+				jsonObj.put("invoiceNo", rs.getString(2));
+				
+				String date = rs.getString(3);
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+				String properDate = format2.format(date1);
+				
+				jsonObj.put("invoiceDate", properDate);
+				jsonObj.put("customerName", rs.getString(4));
+				jsonObj.put("pendingAmount", rs.getLong(6));				
+				jsonObj.put("rst", rs.getString(5));
+				if(report.length() != 0) {
+					if(report.getJSONObject(i).getString("invoiceNo").equals(jsonObj.getString("invoiceNo"))){
+						String previousRst = report.getJSONObject(i).getString("rst");
+						report.getJSONObject(i).remove("rst");
+						report.getJSONObject(i).put("rst", previousRst+", "+jsonObj.getString("rst"));
+						continue;
+					}else if(!report.getJSONObject(i).getString("invoiceNo").equals(jsonObj.getString("invoiceNo")))
+					{
+						report.put(jsonObj);
+						i++;
+					}
+				}else {
+					report.put(jsonObj);
+				}
+			}
+			
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return report;
 	}
 	
 }

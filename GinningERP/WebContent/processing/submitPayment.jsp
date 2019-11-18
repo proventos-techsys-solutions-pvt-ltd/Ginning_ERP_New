@@ -33,11 +33,8 @@
 	InvoiceReport invReport = new InvoiceReport();
 	UpdatePaymentDetails updatePayment = new UpdatePaymentDetails();
 	
-	int invStatus = invReport.getInvoicePaymentStatus(paymentInvoiceId);
 	int chequeId = 0;
 	int pdcChequeId = 0;
-	
-	if(invStatus == 0){
 	
 		UpdateInvoice updateInvoice = new UpdateInvoice();
 		UpdatePDC updatePdc = new UpdatePDC();
@@ -68,7 +65,7 @@
 				cheque.setInvoiceNo(((String)chequeJson.get("invoiceNo")).toUpperCase());
 				cheque.setInvoiceId(Integer.parseInt((String)chequeJson.get("invoiceId")));
 				cheque.setStatus(0);
-				cheque.setPaymentStatus(1);
+				cheque.setChequePaymentStatus(1);
 				cheque.setVoucherNo(voucherNo);
 				
 				AddCheque addCheque = new AddCheque();
@@ -301,7 +298,7 @@
 				cheque.setInvoiceId(invoiceId);
 				cheque.setInvoiceNo((String)pdcChequeJson.get("invoiceNo"));
 				cheque.setStatus(0);
-				cheque.setPaymentStatus(0);
+				cheque.setChequePaymentStatus(0);
 				cheque.setVoucherNo(voucherNo);
 				
 				pdcChequeId = addCheque.addCheque(cheque);
@@ -485,9 +482,7 @@
 			out.print("1,"+chequeId+","+pdcChequeId);
 			out.flush();
 		}
-	}else{
-		out.print(2);
-		out.flush();
-	}
+
+	
 	
 %>

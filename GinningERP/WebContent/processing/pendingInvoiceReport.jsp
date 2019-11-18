@@ -13,7 +13,7 @@
     	
    		InvoiceReport ir = new InvoiceReport();
     
-    	JSONArray invoiceReport = ir.getInvoiceReport(); 
+    	JSONArray invoiceReport = ir.pendingInvoiceReport(); 
     
     	out.println(invoiceReport);
     	out.flush();

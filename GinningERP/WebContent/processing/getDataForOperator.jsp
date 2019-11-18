@@ -31,10 +31,62 @@
 	    		InvoiceReport invoiceReportObj = new InvoiceReport();
 	    		PaymentReport paymentReportObj = new PaymentReport();
 	    		PDCReport pdcReportObj = new PDCReport();
+	    		MergeJSON mergeJson = new MergeJSON();
 	    		
 	    		JSONObject invoiceJsonObj = invoiceReportObj.getInvoiceBasicDetails(invoiceNo);
 	    		JSONObject paymentDetailsJsonObj = paymentReportObj.getPaymentDetails(invoiceJsonObj.getInt("id"));
+	    		
+	    		if(paymentDetailsJsonObj.has("cashJson")){
+	    			JSONObject cashJson = paymentDetailsJsonObj.getJSONObject("cashJson");
+	    			if(cashJson.getInt("paymentStatus") == 1){
+	    				TransactionReport trReport = new TransactionReport();
+	    				int accountId = trReport.getAccountId(Integer.parseInt(cashJson.getString("voucherNo")));
+	    				cashJson.put("accountId", accountId);
+	    				paymentDetailsJsonObj.put("cashJson", cashJson);
+	    			}
+	    		}
+	    		if(paymentDetailsJsonObj.has("chequeJson")){
+	    			JSONObject chequeJson = paymentDetailsJsonObj.getJSONObject("chequeJson");
+	    			if(chequeJson.getInt("paymentStatus") == 1){
+	    				paymentDetailsJsonObj.remove("chequeJson");
+	    				ChequeReport chequeReport = new ChequeReport();
+	    				JSONObject cheqeuDataJson = new JSONObject(chequeReport.getChequeReport(Integer.parseInt(chequeJson.getString("chequeId"))));
+	    				JSONObject merged =  mergeJson.mergeJSONObjects(chequeJson, cheqeuDataJson);
+	    				paymentDetailsJsonObj.put("chequeJson", merged);
+	    			}
+	    		}
+	    		if(paymentDetailsJsonObj.has("rtgsJson")){
+	    			JSONObject rtgsJson = paymentDetailsJsonObj.getJSONObject("rtgsJson");
+	    			if(rtgsJson.getInt("paymentStatus") == 1){
+	    				paymentDetailsJsonObj.remove("rtgsJson");
+	    				RtgsReport rtgsReport = new RtgsReport();
+	    				JSONObject rtgsDataJson = rtgsReport.rtgsReport(Integer.parseInt(rtgsJson.getString("rtgsId")));
+	    				JSONObject mergedJson = mergeJson.mergeJSONObjects(rtgsJson, rtgsDataJson);
+	    				paymentDetailsJsonObj.put("rtgsJson", mergedJson);
+	    			}
+	    		}
+	    		
 	    		JSONObject pdcJsonObj = pdcReportObj.getPDCJsonData(invoiceJsonObj.getInt("id"));
+	    		
+	    		if(pdcJsonObj.length() != 0){
+	    			if(pdcJsonObj.getInt("pdcPayStatus") == 1){
+	    				if(pdcJsonObj.getInt("modeOfPayment") == 1){
+		    				TransactionReport trReport = new TransactionReport();
+		    				int accountId = trReport.getAccountId(Integer.parseInt(pdcJsonObj.getString("voucherNo")));
+		    				pdcJsonObj.put("accountId", accountId);
+		    			}
+		    			if(pdcJsonObj.getInt("modeOfPayment") == 2){
+		    				ChequeReport chequeReport = new ChequeReport();
+		    				JSONObject cheqeuDataJson = new JSONObject(chequeReport.getChequeReport(Integer.parseInt(pdcJsonObj.getString("chequeId"))));
+		    				pdcJsonObj =  mergeJson.mergeJSONObjects(cheqeuDataJson, pdcJsonObj);
+		    			}
+		    			if(pdcJsonObj.getInt("modeOfPayment") == 3){
+		    				RtgsReport rtgsReport = new RtgsReport();
+		    				JSONObject cheqeuDataJson = rtgsReport.rtgsReport(Integer.parseInt(pdcJsonObj.getString("rtgsId")));
+		    				pdcJsonObj =  mergeJson.mergeJSONObjects(cheqeuDataJson, pdcJsonObj);
+		    			}
+	    			}
+	    		}
 				
 	    		JSONObject mainJsonObj = new JSONObject();
 	    		mainJsonObj.put("invoiceBasic", invoiceJsonObj);

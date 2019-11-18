@@ -49,7 +49,7 @@ public class ChequeReport {
 				
 				c.setChequeDate(dateStr);
 				c.setStatus(rs.getInt(11));
-				c.setPaymentStatus(rs.getInt(12));
+				c.setChequePaymentStatus(rs.getInt(12));
 				c.setVoucherNo(rs.getInt(13));
 			
 			}
@@ -101,7 +101,7 @@ public class ChequeReport {
 				
 				c.setChequeDate(formattedDate);
 				c.setStatus(rs.getInt(11));
-				c.setPaymentStatus(rs.getInt(12));
+				c.setChequePaymentStatus(rs.getInt(12));
 				c.setVoucherNo(rs.getInt(13));
 				
 				chequeList.add(c);

@@ -74,7 +74,7 @@ public class RtgsReport {
 				obj.put("ifscCode",rs.getString(6));
 				obj.put("rtgsAmount",rs.getLong(7));
 				obj.put("rtgsDate",rs.getString(8));
-				obj.put("cuatomerName",rs.getString(9));
+				obj.put("customerName",rs.getString(9));
 				obj.put("invoiceNo",rs.getString(10));
 				obj.put("rtgsVoucherNo",rs.getString(11));
 				

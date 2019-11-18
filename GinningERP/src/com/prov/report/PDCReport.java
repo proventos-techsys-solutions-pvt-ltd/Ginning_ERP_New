@@ -138,9 +138,9 @@ public class PDCReport {
 			con = OracleConnection.getConnection();
 			
 			String sql = "SELECT *\r\n" + 
-					"FROM PDC_MAST\r\n" + 
-					"WHERE \r\n" + 
-					"PDC_MAST.invoice_id =? \r\n";
+							"FROM PDC_MAST\r\n" + 
+							"WHERE \r\n" + 
+							"PDC_MAST.invoice_id =? \r\n";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -154,7 +154,15 @@ public class PDCReport {
 				obj.put("customerId", rs.getString(2));
 				obj.put("invoiceId", rs.getString(3));
 				obj.put("pdcAmount", rs.getString(4));
-				obj.put("payDate", rs.getString(5));
+				
+				String date = rs.getString(5);
+				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+				
+				Date dateObj = sdf1.parse(date);
+				String dateFormatted = sdf2.format(dateObj);
+				
+				obj.put("payDate", dateFormatted);
 				obj.put("modeOfPayment", rs.getString(6));
 				obj.put("chequeId", rs.getString("CHEQUE_ID"));
 				obj.put("rtgsId", rs.getString("RTGS_ID"));
