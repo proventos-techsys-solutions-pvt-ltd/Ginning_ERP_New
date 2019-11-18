@@ -206,3 +206,107 @@ var appController = (function(){
 	}
 	
 })();
+
+/***************************************************************************
+ * 												Validations on pop up form for cash
+ */
+$(document).ready(function(){
+	$("#addCashButton").click(function(){
+		if($.fn.validateData($("#addCashDate").val(),/^[0-9]{4}[-][0-9]{2}[-][0-9]{2}$/)){
+			$("#addCashDate").css("border","1px solid green");
+			if($.fn.validateData($("#addCashReference").val(),/^[A-Za-z0-9 ]+$/)){
+				$("#addCashReference").css("border","1px solid green");
+				if($.fn.validateData($("#addCashVoucher").val(),/^[0-9 ]+$/)){
+					$("#addCashVoucher").css("border","1px solid green");
+					if(!$.fn.validateData($("#addCashAccount").val(),/^\s$/)){
+						$("#addCashAccount").css("border","1px solid green");
+						if($("#addCashDescription").val()!=""){
+							$("#addCashDescription").css("border","1px solid green");
+							if($.fn.validateData($("#addCashAmount").val(),/^[0-9]+[.][0-9]{2}$/)){
+								$("#addCashAmount").css("border","1px solid green");
+								if(!$.fn.validateData($("#addCashMode").val(),/^\s/)){
+									$("#addCashForm").submit(); // Submitting form from here
+								}else{
+									alert("Please add the bank from setup bank.")
+									$("#addCashAmount").css("border","1px solid red");
+								}
+							}else{
+								alert("Please check the amount entered.")
+								$("#addCashAmount").css("border","1px solid red");
+							}
+						}else{
+							alert("Description cannot be left blank .")
+							$("#addCashDescription").css("border","1px solid red");
+						}
+					}else{
+						alert("Please add cash account using chart of accounts .")
+						$("#addCashAccount").css("border","1px solid red");
+					}
+				}else{
+					alert("Voucher number not present, contact administrator.")
+					$("#addCashVoucher").css("border","1px solid red");
+				}
+			}else{
+				alert("Check the reference.")
+				$("#addCashReference").css("border","1px solid red");
+			}
+		}else{
+			alert("Invalid date entered.")
+			$("#addCashDate").css("border","1px solid red");
+		}
+	})
+})
+
+
+/***************************************************************************
+ * 												Validations on pop up form for bank
+ */
+$(document).ready(function(){
+	$("#submitBankAddition").click(function(){
+		if($.fn.validateData($("#addBankDate").val(),/^[0-9]{4}[-][0-9]{2}[-][0-9]{2}$/)){
+			$("#addBankDate").css("border","1px solid green");
+			if($.fn.validateData($("#addBankReference").val(),/^[A-Za-z0-9 ]+$/)){
+				$("#addBankReference").css("border","1px solid green");
+				if($.fn.validateData($("#addBankVoucher").val(),/^[0-9 ]+$/)){
+					$("#addBankVoucher").css("border","1px solid green");
+					if(!$.fn.validateData($("#addBankAccountId").val(),/^\s$/)){
+						$("#addBankAccountId").css("border","1px solid green");
+						if($("#addBankDesc").val()!=""){
+							$("#addBankDesc").css("border","1px solid green");
+							if($.fn.validateData($("#addBankAmount").val(),/^[0-9]+[.][0-9]{2}$/)){
+								$("#addBankAmount").css("border","1px solid green");
+								if(!$.fn.validateData($("#addBankMode").val(),/^\s/)){
+									$("#addBankForm").submit(); // Submitting form from here
+								}else{
+									alert("Please add the cash accounts from chart of accounts.")
+									$("#addBankMode").css("border","1px solid red");
+								}
+							}else{
+								alert("Please check the amount entered.")
+								$("#addBankAmount").css("border","1px solid red");
+							}
+						}else{
+							alert("Description cannot be left blank .")
+							$("#addBankDesc").css("border","1px solid red");
+						}
+					}else{
+						alert("Please bank accounts using bank setup .")
+						$("#addBankAccountId").css("border","1px solid red");
+					}
+				}else{
+					alert("Voucher number not present, contact administrator.")
+					$("#addBankVoucher").css("border","1px solid red");
+				}
+			}else{
+				alert("Check the reference.")
+				$("#addBankReference").css("border","1px solid red");
+			}
+		}else{
+			alert("Invalid date entered.")
+			$("#addBankDate").css("border","1px solid red");
+		}
+	})
+})
+
+
+

@@ -588,41 +588,11 @@ table tbody tr:hover{
 }
 
 /************************************************************
-	Flow chart on dashboard
+hover classes
 ************************************************************/
-.chart-container-purchase{
-	display:flex;
-	justify-content:center;
-	align-items:center;
+img.ctm-hover:hover{
+	cursor:pointer;
 }
-.custom-ul{
-	list-style:none;
-	line-height: 8;
-}
-	.parent-li{
-		position:relative;
-		left:200px;
-		display:inline;
-		border:2px solid red;
-		padding:20px;
-		width:auto;
-	}
-	.child-li{
-		border:2px solid green;
-		display:inline;
-		margin:5px;
-		padding:20px;
-	}
-	.parent-child{
-		margin-left:250px;
-	}
-	.child-child-li{
-		position:relative;
-		display:inline;
-		margin:5px;
-		padding:20px;
-		border:2px solid green;
-	}
 /*******************************MEDIA ************************/
 @media only screen and (max-width: 768px){
 	.sidebar{

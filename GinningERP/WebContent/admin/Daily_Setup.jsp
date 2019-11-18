@@ -202,7 +202,7 @@
 						<div class="d-flex justify-content-start align-items-center">
 						<input type="text" class="form-control form-control-sm" name="cashAddition" id="cashAddition" readonly>
 						&nbsp;&nbsp;
-						<img src="../property/img/add.png" alt="add" class="ctm-hover" id="callCashModal">
+						<img src="../property/img/add.png" alt="add" class="ctm-hover mr-1" id="callCashModal">
 						</div>
 					</div>
 					</div>
@@ -716,13 +716,6 @@
 		document.getElementById('todaysDate').innerHTML = date1;
 	}
 	
-	document.getElementById("addCashButton").addEventListener("click",function(e){
-		document.getElementById("addCashForm").submit();
-	})
-	
-	document.getElementById("submitBankAddition").addEventListener('click',function(e){
-		document.getElementById("addBankForm").submit();
-	})
 	
 	document.getElementById("companyId").addEventListener("change",function(e){
 			var bankOptions = document.getElementById("chequeBankId").options;
