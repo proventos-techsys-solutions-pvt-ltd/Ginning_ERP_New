@@ -9,11 +9,7 @@
 		<!-- Bootstrap CSS -->
 	  	<link rel="stylesheet" href="../styles/bootstrap.min.css">	
 	  	<link rel="stylesheet" href="../styles/WBStyle.css">
-	  	<script type="text/javascript" >
-	   function preventBack(){window.history.forward();}
-	   setTimeout("preventBack()", 0);
-	   window.onunload=function(){null};
-</script>
+	  
      <title>RTGS NEFT</title>
    </head>
 <body>

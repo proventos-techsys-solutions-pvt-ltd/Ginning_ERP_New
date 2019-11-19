@@ -7,9 +7,10 @@
 	  <link rel="stylesheet" href="./styles/bootstrap.min.css">	
 	  <link rel="stylesheet" href="./styles/login.css">
 	  	<script type="text/javascript" >
-	   function preventBack(){window.history.forward();}
-	   setTimeout("preventBack()", 0);
-	   window.onunload=function(){null};
+	  	history.pushState(null, null, location.href);
+	    window.onpopstate = function () {
+	        history.go(1);
+	    };
 	</script>
       <title>Login</title>
      </head>

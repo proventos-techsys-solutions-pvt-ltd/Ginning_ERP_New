@@ -19,11 +19,6 @@
   	<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
 	<script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-	<script type="text/javascript" >
-	   function preventBack(){window.history.forward();}
-	   setTimeout("preventBack()", 0);
-	   window.onunload=function(){null};
-	</script>
 </head>
 <body>
   <%@include file="NavBar.jsp" %>

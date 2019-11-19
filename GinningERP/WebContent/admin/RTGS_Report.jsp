@@ -11,11 +11,6 @@
 	<link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<title>RTGS NEFT</title>
-	<script type="text/javascript" >
-	   function preventBack(){window.history.forward();}
-	   setTimeout("preventBack()", 0);
-	   window.onunload=function(){null};
-</script>
 </head>
 <body>
 

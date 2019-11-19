@@ -619,22 +619,6 @@
 				<textFieldExpression><![CDATA[$F{unloadingCharges}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="245" y="204" width="84" height="15" uuid="57feb78a-7b10-4649-8c85-fc895121e021">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Bonus Amount:(+)]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="329" y="204" width="68" height="15" uuid="b9fb74ed-de9f-4366-9cae-2dee5473b136"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{bonusAmount}]]></textFieldExpression>
-			</textField>
-			<staticText>
 				<reportElement x="245" y="189" width="84" height="15" uuid="d50102c8-702a-4251-a1e7-febb6bcc4218">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -871,21 +855,12 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{unloadingCharges}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="646" y="204" width="84" height="15" uuid="5264645d-d359-4c19-a4cb-a96a56a8640d">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Bonus Amount:(+)]]></text>
-			</staticText>
 			<textField>
 				<reportElement x="730" y="204" width="68" height="15" uuid="ea6a941a-be23-409a-a2d4-d69e901c09e6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{bonusAmount}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{bonusAmount} == 0 ?"":$F{bonusAmount} ]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="646" y="189" width="84" height="15" uuid="d326530d-b495-4748-84ff-80c8ca9bb919">
@@ -950,6 +925,27 @@
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pdcMode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="662" y="204" width="68" height="15" uuid="baea836a-41cb-4422-bb9d-e03446aa46e7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bonusAmount} == 0 ?"":"Bonus Amount(+)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="261" y="204" width="68" height="15" uuid="2656cc9b-b951-43b5-9ac7-2180454493ce"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bonusAmount} == 0 ?"":"Bonus Amount(+)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="329" y="204" width="68" height="15" uuid="81dabdf9-b3d6-46d0-a0f9-c9c30a99f19c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bonusAmount} == 0 ?"":$F{bonusAmount} ]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -1204,6 +1200,20 @@
 				<reportElement x="110" y="100" width="210" height="17" uuid="2d9d506c-6186-418e-9980-a14ce2efd1df"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Under Katol Jurisdiction.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="85" width="76" height="15" uuid="fbf56496-4568-4b05-80bc-87fd9a5a0245"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Farmer's Signature]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="630" y="85" width="76" height="15" uuid="beb9af99-5c55-4d69-adc1-a7a87f17195f"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Farmer's Signature]]></text>
 			</staticText>
 		</band>
 	</pageFooter>

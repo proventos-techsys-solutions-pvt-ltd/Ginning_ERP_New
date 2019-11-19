@@ -11,11 +11,6 @@
 <link id="load-css-0" rel="stylesheet" type="text/css" href="../js/Gcharts/ToolTip.css">
 <link id="load-css-1" rel="stylesheet" type="text/css" href="../js/Gcharts/Util.css">
 <link id="load-css-2" rel="stylesheet" type="text/css" href="../js/Gcharts/OrgChart.css">
-<script type="text/javascript" >
-	   function preventBack(){window.history.forward();}
-	   setTimeout("preventBack()", 0);
-	   window.onunload=function(){null};
-</script>
 <title>Dashboard</title>
 </head>
 <body>

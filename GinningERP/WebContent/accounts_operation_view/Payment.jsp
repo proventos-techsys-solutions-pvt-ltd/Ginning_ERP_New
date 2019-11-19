@@ -3,265 +3,567 @@
 <%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <html lang="en">
    <head>
-     	<meta charset="utf-8">
-  		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<!-- Bootstrap CSS -->
-	  	<link rel="stylesheet" href="../styles/bootstrap.min.css">	
-	  	<link rel="stylesheet" href="../styles/WBStyle.css">
-	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	  	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	  	<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
-	  	<script type="text/javascript" >
-	   function preventBack(){window.history.forward();}
-	   setTimeout("preventBack()", 0);
-	   window.onunload=function(){null};
-</script>
-     <title>Vendor Payment</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="../styles/bootstrap.min.css">
+      <link rel="stylesheet" href="../styles/WBStyle.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      <script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
+      <title>Vendor Payment</title>
    </head>
-<body>
-	<%@include file="../accounts_operation_view/NavBar.jsp" %>
-	<div class="container-fluid">
-		<div class="row mt-2 tile-background-row border-bottom">
-				<div class="col-md-5">
-					<label class="lbl-rm-all">Search</label>
-					<div class="d-flex justify-content-start align-items-center">
-						<input type="text" class="form-control" id="searchInvoiceNo" name="searchInvoiceNo" placeholder="Invoice No">
-						<button type="button" class="btn btn-success btn-no-radius" onclick="fetchInvoiceData(document.getElementById('searchInvoiceNo').value)">Fetch</button>
-						<button type="button" class="btn btn-success btn-no-radius lbl-rm-l btn_width-for-justify ml-1" onclick="openInNewTab(document.getElementById('invoiceId').value)">Print Invoice</button>
-					</div>
-				</div>
-				<div class="col-md-4 offset-md-3">
-					<div class="d-flex justify-content-end align-items-center">
-					<!--<div class="log">
-							<div class="heading">Balance Cash</div>
-							<div class="amt">100000</div>
-						</div>  -->	
-						<div class="log">
-							<div class="heading">Cheque Leaf</div>
-							<div class="amt" id="chequeLeaves">0</div>
-						</div>
-						<div class="log">
-							<div class="heading">Total RTGS/NEFT</div>
-							<div class="amt" id="rtgsCount">11</div>
-						</div>
-					</div>
-				</div>
-		</div>
-		<div class="row tile-background-row">
-			<div class="col-md-8">
-				<div class="">
-					<input type="hidden" id="invoiceId" name="invoiceId" />
-					<input type="hidden" id="customerId" name="customerId" />
-					<input type="hidden" id="customerName" name="customerName" />
-					<input type="hidden" id="companyId" name="companyId" />
-					<input type="hidden" id="accountPayableId" name="accountPayableId" />
-					<input type="hidden" id="dsBankId" name="dsBankId" />
-					<div class="form-row">
-						<div class="col-md-3">
-							<label class="lbl-rm-all">Customer Information</label>
-							<textarea id="customerInfo" name="customerInfo" class="form-control " rows="4" readonly></textarea>
-						</div>
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">Invoice No</label>
-							<input type="text" class="form-control " id="invoiceNo" name="invoiceNo" readonly>
-							<label class="lbl-rm-all">Date</label>
-							<input type="text" class="form-control " id="invoiceDate" name="invoiceDate" readonly>
-						</div>
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">Total Amount to Pay</label>
-							<input type="text" class="form-control " id="totalAmount" name="totalAmount" readonly>
-							<label class="lbl-rm-all">Status</label>
-							<input type="text" class="form-control " id="invoiceStatus" name="invoiceStatus" value="Paid" readonly>
-						</div>
-					</div>
-					<div class="form-row border-top">
-					<div class="col-md-3">
-						<input type="hidden" id="cashPaymentStatus" value="0" />
-							<label class="lbl-rm-all">Cash Account</label>
-							<div class="d-flex justify-content-start align-items-center">
-								<select class="form-control" id="cashAccountId" name="cashAccountId">
+   <body>
+      <%@include file="../accounts_operation_view/NavBar.jsp" %>
+      <div class="container-fluid">
+         <div class="row mt-2 tile-background-row border-bottom">
+            <div class="col-md-5">
+               <label class="lbl-rm-all">Search</label>
+               <div class="d-flex justify-content-start align-items-center">
+                  <input type="text" class="form-control" id="searchInvoiceNo" name="searchInvoiceNo" placeholder="Invoice No">
+                  <button type="button" class="btn btn-success btn-no-radius" onclick="fetchInvoiceData(document.getElementById('searchInvoiceNo').value)">Fetch</button>
+                  <button type="button" class="btn btn-success btn-no-radius lbl-rm-l btn_width-for-justify ml-1" onclick="openInNewTab(document.getElementById('invoiceId').value)">Print Invoice</button>
+               </div>
+            </div>
+            <div class="col-md-4 offset-md-3">
+               <div class="d-flex justify-content-end align-items-center">
+                  <!--<div class="log">
+                     <div class="heading">Balance Cash</div>
+                     <div class="amt">100000</div>
+                     </div>  -->	
+                  <div class="log">
+                     <div class="heading">Cheque Leaf</div>
+                     <div class="amt" id="chequeLeaves">0</div>
+                  </div>
+                  <div class="log">
+                     <div class="heading">Total RTGS/NEFT</div>
+                     <div class="amt" id="rtgsCount">11</div>
+                  </div>
+               </div>
+            </div>
+         </div>
+        
+        
+        <div class="row mt-2 tile-background-row border-bottom">
+	      	<div class="col-md-8">
+ 	 			<input type="hidden" id="invoiceId" name="invoiceId" />
+                <input type="hidden" id="customerId" name="customerId" />
+                <input type="hidden" id="customerName" name="customerName" />
+                <input type="hidden" id="companyId" name="companyId" />
+                <input type="hidden" id="accountPayableId" name="accountPayableId" />
+                <input type="hidden" id="dsBankId" name="dsBankId" />
+                <input type="hidden" id="pdcId" name="pdcId" />
+                <input type="hidden" id="chequePaymentStatus" value="0" />
+                <input type="hidden" id="rtgsPaymentStatus" value="0" />
+                <input type="hidden" id="cashPaymentStatus" value="0" />
+                <input type="hidden" id="pdcChequePaymentStatus" value="0" />
+                <input type="hidden" id="pdcRtgsPaymentStatus" value="0" />
+                <input type="hidden" id="pdcCashPaymentStatus" value="0" />
+	      		
+	      		 <div class="form-row">
+                     <div class="col-md-3">
+                        <label class="lbl-rm-all">Customer Information</label>
+                        <textarea id="customerInfo" name="customerInfo" class="form-control " rows="4" readonly></textarea>
+                     </div>
+                     <div class="col-md-auto">
+                        <label class="lbl-rm-all">Invoice No</label>
+                        <input type="text" class="form-control " id="invoiceNo" name="invoiceNo" readonly>
+                        <label class="lbl-rm-all">Date</label>
+                        <input type="text" class="form-control " id="invoiceDate" name="invoiceDate" readonly>
+                     </div>
+                     <div class="col-md-auto">
+                        <label class="lbl-rm-all">Total Amount to Pay</label>
+                        <input type="text" class="form-control " id="totalAmount" name="totalAmount" readonly>
+                        <label class="lbl-rm-all">Status</label>
+                        <input type="text" class="form-control " id="invoiceStatus" name="invoiceStatus" value="Paid" readonly>
+                     </div>
+                  </div>
+        	</div>
+        	
+        	    <div class="col-md-4 border-left">
+	               <div class="tile-background-row">
+	                  <table class="table table-bordered">
+	                     <thead class="table-back">
+	                        <tr>
+	                           <th>Invoice No</th>
+	                           <th>Customer Name</th>
+	                           <th>RST</th>
+	                           <th>Amount</th>
+	                        </tr>
+	                     </thead>
+	                     <tbody id="tableBody">
+	                     </tbody>
+	                  </table>
+	               </div>
+	            </div>
+            
+        </div>
+          <div class="row mt-2 tile-background-row border-bottom">
+	      	 <div class="col-md-12">
+	      	 	<table class="table table-sm table-bordered">
+	      	 		<thead>
+	      	 			<tr style="background:#212529;color:#fff;">
+	      	 				<th>Sr No</th>
+	      	 				<th>Mode</th>
+	      	 				<th>Account Type</th>
+	      	 				<th>Amount</th>
+	      	 				<th>Bank</th>
+	      	 				<th>Account No/Cheque No</th>
+	      	 				<th>IFSC</th>
+	      	 				<th>Date</th>
+	      	 				<th>Name</th>
+	      	 				<th>Print</th>
+	      	 			</tr>
+	      	 		</thead>
+	      	 		<tbody>
+	      	 			<tr>
+	      	 				<td>1</td>
+	      	 				<td>Cash</td>
+	      	 				<td>
+	      	 					<select class="form-control" id="cashAccountId" name="cashAccountId">
 									<c:CashLedgerTag/>
 								</select>
-							</div>
-						</div>
-					<div class="col-md-auto">
-							<label class="lbl-rm-all">Cash</label>
-							<div class="d-flex justify-content-start align-items-center">
-								<input type="text" class="form-control input-cash" id="cashAmount" name="cashAmount" readonly>
-							</div>
-					</div>
-					<div class="form-row border-top">
-					<input type="hidden" id="chequeId" value="0" />
-					<input type="hidden" id="chequePaymentStatus" value="0" />
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">Cheque</label>
-							<input type="text" class="form-control input-cash" id="chequeAmount" value="0" name="" readonly>
-						</div>
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">Bank</label>
-							<select type="text" class="form-control" id="chequeBank" name="chequeBank">
-								<c:Bank />
-							</select>
-						</div>
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">Cheque No</label>
-							<input type="text" class="form-control" id="chequeNo" name="chequeNo" placeholder="Cheque No.">
-						</div>
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">Date</label>
-							<input type="date" class="form-control" id="chequeDate" name="chequeDate" value="">
-						</div>
-						<div class="col-md-4">
-							<label class="lbl-rm-all">Name</label>
-							<div class="d-flex justify-content-start align-items-center">
-							<input type="text" class="form-control" id="nameOnCheque" name="nameOnCheque" placeholder="Name on Cheque">
-							<button type="button" class="btn btn-success btn-no-radius" onclick="PrintChequeData(document.getElementById('chequeId').value)" id="payCheque">Print</button>&nbsp;
-							</div>
-						</div>
-					</div>
-					<div class="form-row border-top">
-						<input type="hidden" id="rtgsPaymentStatus" value="0" />
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">RTGS/NEFT</label>
-							<input type="text" class="form-control input-cash" id="rtgsAmount" name="rtgsAmount" value="0" readonly>
-						</div>
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">Bank Name</label>
-							<input type="text" class="form-control" id="rtgsBank" name="rtgsBank" placeholder="RTGS Bank Name">
-						</div>
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">Account No</label>
-							<input type="text" class="form-control" id="rtgsAccountNo" name="rtgsAccountNo" placeholder="Account No.">
-						</div>
-						<div class="col-md-3">
-							<label class="lbl-rm-all">IFSC Code</label>
-							<div class="d-flex justify-content-start align-items-center">
-							<input type="text" class="form-control" id="rtgsIfsc" name="rtgsIfsc" placeholder="IFSC Code">
-							</div>
-						</div>
-					</div>
-					<div class="form-row border-top" id="pdcCashSection" style="width:100%;" hidden>
-						<input type="hidden" id="pdcCashPaymentStatus" value="0" />
-						<div class="col-md-4">
-							<label class="lbl-rm-all">PDC Cash Amount</label>
-							<input type="text" class="form-control input-cash" id="pdcCashAmount" name="pdcCashAmount" value="0" readonly>
-						</div>
-							<div class="col-md-4">
-							<label class="lbl-rm-all">PDC Cash Account</label>
-								<select class="form-control" id="pdcCashAccountId" name="pdcCashAccountId">
-										<c:CashLedgerTag/>
+	      	 				</td>
+	      	 				<td>
+	      	 					<input type="text" class="form-control input-cash" id="cashAmount" name="cashAmount" readonly>
+	      	 				</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 			</tr>
+	      	 			
+	      	 			<tr>
+	      	 				<td>2</td>
+	      	 				<td>Cheque <input type="hidden" id="chequeId" name="chequeId" value="0" /></td>
+	      	 				<td style="background:#bebebe; color:#fff;">
+	      	 					Not Applicable
+	      	 				</td>
+	      	 				<td>
+	      	 					<input type="text" class="form-control input-cash" id="chequeAmount" value="0" name="" readonly>
+	      	 				</td>
+	      	 				<td>
+	      	 					<select type="text" class="form-control" id="chequeBank" name="chequeBank">
+									<c:Bank />
 								</select>
-							</div>
-							</div>
-					<div class="form-row border-top" id="pdcRtgsSection" hidden>
-						<input type="hidden" id="pdcRtgsPaymentStatus" value="0" />
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">PDC RTGS/NEFT</label>
-							<input type="text" class="form-control input-cash" id="pdcRtgsAmount" name="pdcRtgsAmount" value="0" readonly>
-						</div>
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">Bank Name</label>
-							<input type="text" class="form-control" id="pdcRtgsBank" name="pdcRtgsBank" placeholder="RTGS Bank Name">
-						</div>
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">Account No</label>
-							<input type="text" class="form-control" id="pdcRtgsAccountNo" name="pdcRtgsAccountNo" placeholder="Account No.">
-						</div>
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">RTGS Date</label>
-							<input type="date" class="form-control" id="pdcRtgsDate" name="pdcRtgsDate" readonly>
-						</div>
-						<div class="col-md-3">
-							<label class="lbl-rm-all">IFSC Code</label>
-							<div class="d-flex justify-content-start align-items-center">
-							<input type="text" class="form-control" id="pdcRtgsIfsc" name="pdcRtgsIfsc" placeholder="IFSC Code">
-							</div>
-						</div>
-					</div>
-					<div class="form-row border-top" id="pdcChequeSection" hidden>
-						<input type="hidden" id="pdcChequeId" value="0"/>
-						<input type="hidden" id="pdcChequePaymentStatus" value="0" />
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">PDC</label>
-							<input type="text" class="form-control input-cash" id="pdcChequeAmount" name="pdcChequeAmount" value="0" readonly>
-							<input type="hidden" id="pdcId" name="pdcId" />
-						</div>
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">Bank</label>
-							<select class="form-control" id="pdcBank" name="pdcBank">
-								<c:Bank />
-							</select>
-						</div>
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">PDC No</label>
-							<input type="text" class="form-control" id="pdcNo" name="pdcNo" placeholder="Cheque No.">
-						</div>
-						<div class="col-md-auto">
-							<label class="lbl-rm-all">PDC Date</label>
-							<input type=date class="form-control" id="pdcDate" name="pdcDate" value="" readonly>
-						</div>
-						<div class="col-md-4">
-							<label class="lbl-rm-all">Payee Name</label>
-							<div class="d-flex justify-content-start align-items-center">
-							<input type="text" class="form-control" id="pdcPayeeName" name="pdcPayeeName" placeholder="Name on Cheque">
-							<button type="button" class="btn btn-success  btn-no-radius" id="payPdc" onclick="PrintChequeData(document.getElementById('pdcChequeId').value)">Print</button>&nbsp;
-							</div>
-						</div>
-					</div>
-					<div class="form-row border-top" style="width:100%;" >
+	      	 				</td>
+	      	 				
+	      	 				<td>
+	      	 					<input type="text" class="form-control" id="chequeNo" name="chequeNo" placeholder="Cheque No.">
+	      	 				</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 				<td>
+	      	 					<input type="date" class="form-control" id="chequeDate" name="chequeDate" value="">
+	      	 				</td>
+	      	 				
+	      	 				<td>
+	      	 					<input type="text" class="form-control" id="nameOnCheque" name="nameOnCheque" placeholder="Name on Cheque">
+	      	 				</td>
+	      	 				<td>
+	      	 					<button type="button" class="btn btn-success btn-no-radius" onclick="PrintChequeData(document.getElementById('chequeId').value)" id="payCheque">Print</button>
+	      	 				</td>
+	      	 			</tr>
+	      	 			
+	      	 				<tr>
+	      	 				<td>3</td>
+	      	 				<td>RTGS/NEFT</td>
+	      	 				<td style="background:#bebebe; color:#fff;">
+	      	 					Not Applicable
+	      	 				</td>
+	      	 				<td>
+	      	 					<input type="text" class="form-control input-cash" id="rtgsAmount" name="rtgsAmount" value="0" readonly>
+	      	 				</td>
+	      	 				<td>
+	      	 					<input type="text" class="form-control" id="rtgsBank" name="rtgsBank" placeholder="RTGS Bank Name">
+	      	 				</td>
+	      	 				
+	      	 				<td>
+	      	 					<input type="text" class="form-control" id="rtgsAccountNo" name="rtgsAccountNo" placeholder="Account No.">
+	      	 				</td>
+	      	 				<td>
+	      	 					<input type="text" class="form-control" id="rtgsIfsc" name="rtgsIfsc" placeholder="IFSC Code">
+	      	 				</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 			</tr>
+	      	 			
+	      	 				<tr>
+	      	 				<td>4</td>
+	      	 				<td>PDP Cash <input type="hidden" id="pdcChequeId" name="pdcChequeId" value="0" /></td>
+	      	 				<td>
+	      	 					<select class="form-control" id="pdcCashAccountId" name="pdcCashAccountId">
+									<c:CashLedgerTag/>
+								</select>
+	      	 				</td>
+	      	 				<td>
+	      	 					<input type="text" class="form-control input-cash" id="pdcCashAmount" name="pdcCashAmount" readonly>
+	      	 				</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 			</tr>
+	      	 			
+	      	 			<tr>
+	      	 				<td>5</td>
+	      	 				<td>PDP Cheque</td>
+	      	 				<td style="background:#bebebe; color:#fff;">
+	      	 					Not Applicable
+	      	 				</td>
+	      	 				<td>
+	      	 					<input type="text" class="form-control input-cash" id="pdcChequeAmount" value="0" name="" readonly>
+	      	 				</td>
+	      	 				<td>
+	      	 					<select class="form-control" id="pdcChequeBank" name="pdcChequeBank">
+									<c:Bank />
+								</select>
+	      	 				</td>
+	      	 				<td>
+	      	 					<input type="text" class="form-control" id="pdcChequeNo" name="pdcChequeNo" placeholder="Cheque No.">
+	      	 				</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 				<td>
+	      	 					<input type="date" class="form-control" id="pdcChequeDate" name="pdcChequeDate" value="">
+	      	 				</td>
+	      	 				
+	      	 				<td>
+	      	 					<input type="text" class="form-control" id="pdcNameOnCheque" name="pdcNameOnCheque" placeholder="Name on Cheque">
+	      	 				</td>
+	      	 				<td>
+	      	 					<button type="button" class="btn btn-success btn-no-radius" onclick="PrintChequeData(document.getElementById('pdcChequeId').value)" id="payCheque">Print</button>
+	      	 				</td>
+	      	 			</tr>
+	      	 			
+	      	 				<tr>
+	      	 				<td>6</td>
+	      	 				<td>PDP RTGS/NEFT</td>
+	      	 				<td style="background:#bebebe; color:#fff;">
+	      	 					Not Applicable
+	      	 				</td>
+	      	 				<td>
+	      	 					<input type="text" class="form-control input-cash" id="pdcRtgsAmount" name="pdcRtgsAmount" value="0" readonly>
+	      	 				</td>
+	      	 				<td>
+	      	 					<input type="text" class="form-control" id="pdcRtgsBank" name="pdcRtgsBank" placeholder="RTGS Bank Name">
+	      	 				</td>
+	      	 				
+	      	 				<td>
+	      	 					<input type="text" class="form-control" id="pdcRtgsAccountNo" name="pdcRtgsAccountNo" placeholder="Account No.">
+	      	 				</td>
+	      	 				<td>
+	      	 					<input type="text" class="form-control" id="pdcRtgsIfsc" name="pdcRtgsIfsc" placeholder="IFSC Code">
+	      	 				</td>
+	      	 				<td>
+	      	 					<input type="date" class="form-control" id="pdcRtgsDate" name="pdcRtgsDate">
+	      	 				</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 				<td style="background:#bebebe; color:#fff;">Not Applicable</td>
+	      	 			</tr>
+	      	 		</tbody>
+	      	 	</table>
+	      	 		<div class="form-row border-top" style="width:100%;" >
 					<div class="col-md-12">
 						<div class="d-flex justify-content-end align-items-center">
-							<button type="button" class="btn btn-success  btn-no-radius" id="submitButton" >Submit Payment</button>
+							<button type="button" class="btn btn-success  btn-no-radius" id="submitButton" disabled>Submit Payment</button>
 							<button type="button" class="btn btn-success  btn-no-radius ml-1" id="" onclick="location.reload()">Reset</button>
 						</div>
 					</div>
 					</div>
-				<form id='paymentForm' action="../processing/submitPayment.jsp" target="_blank">
-					<input type="hidden" id="data" name="data" />	
-				</form>
-				</div>
-			</div>
-			</div>
-			<div class="col-md-4 border-left">
-				<div class="tile-background-row">
-				<table class="table table-bordered">
-					<thead class="table-back">
-						<tr>
-							<th>Invoice No</th>
-							<th>Customer Name</th>
-							<th>RST</th>
-							<th>Amount to Pay</th>
-						</tr>
-					</thead>
-					<tbody id="tableBody">
-					</tbody>
-				</table>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<!-- Response modal pop up -->
-<div class="response-back-display"></div>
-<div class="response-body">
-	<div class="response-header">
-		<h5>Information</h5>
-	</div>
-	<div class="response-content">
-		<div class="d-flex justify-content-center align-items-center">
-		<h5 id="response-text" class="ml-4"></h5>
-		</div>
-	</div>
-	<div class="response-footer">
-		<button type="button" class="btn btn-success btn-response" id="response-button">Ok</button>
-	</div>
-</div>
-	<script src="../js/popper.min.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
-	<script src="../js/Validation.js"></script>
-	<script src="../js/commonjs.js"></script>
-	<script>
-	//Get current date and time
+	      	 </div>
+      	</div>
+        
+        
+         </div>
+      <!-- Response modal pop up -->
+      <div class="response-back-display"></div>
+      <div class="response-body">
+         <div class="response-header">
+            <h5>Information</h5>
+         </div>
+         <div class="response-content">
+            <div class="d-flex justify-content-center align-items-center">
+               <h5 id="response-text" class="ml-4"></h5>
+            </div>
+         </div>
+         <div class="response-footer">
+            <button type="button" class="btn btn-success btn-response" id="response-button">Ok</button>
+         </div>
+      </div>
+      <script src="../js/popper.min.js"></script>
+      <script src="../js/bootstrap.min.js"></script>
+      <script src="../js/Validation.js"></script>
+      <script src="../js/commonjs.js"></script>
+      <script>
+      		/**************************************
+      		*Validation
+      		***************************************/
+      		var cashStatus = false;
+      		var chequeStatus = false;
+      		var rtgsNeftStatus = false;
+      		var pdpCashStatus = false;
+      		var pdpChequeStatus = false;
+      		var pdpRtgsNeftStatus = false;
+      		
+      		var paymentData = {
+      				"cashData":[],
+      				"chequeData":[],
+      				"rtgsNeftData":[],
+      				"pdcCashData":[],
+      				"pdcChequeData":[],
+      				"pdcRtgsNeftData":[]
+      				
+      		}
+      		
+      		
+      		$.fn.validateCash = function(){//validating cash data
+      			if($("#cashAccountId").val()!=""){
+      				paymentData.cashData.push($("#cashAccountId").val());
+      				if($("#cashAmount").val()!=""){
+      					paymentData.cashData.push($("#cashAmount").val());
+      					paymentData.cashData.push($("#customerId").val());
+      					return true;
+      				}else{
+      					$.fn.checkStatus(1,"Please check amount");
+          				$("#cashAmount").css("border","1px solid red");
+          				return false;
+      				}
+      			}else{
+      				$.fn.checkStatus(1,"Please setup cash account");
+      				$("#cashAccountId").css("border","1px solid red");
+      				return false;
+      			}
+      		}
+      		
+      		
+      		$.fn.validateCheque = function(){
+      			if($("#chequeAmount").val()!=""){
+      				paymentData.chequeData.push($("#chequeAmount").val());
+      				if($("#chequeBank").val()!=""){
+      					paymentData.chequeData.push($("#chequeBank").val());
+      					if($("#chequeNo").val()!=""){
+      						paymentData.chequeData.push($("#chequeNo").val());
+      						if($("#chequeDate").val()!=""){
+      							paymentData.chequeData.push($("#chequeDate").val());
+      							if($("#nameOnCheque").val()!=""){
+      								paymentData.chequeData.push($("#nameOnCheque").val());
+      								return true;
+      							}else{
+      								$.fn.checkStatus(1,"Please enter name.");
+                      				$("#nameOnCheque").css("border","1px solid red");
+                      				return false;
+      							}
+      						}else{
+      							$.fn.checkStatus(1,"Please enter date.");
+                  				$("#chequeDate").css("border","1px solid red");
+                  				return false;
+      						}
+      					}else{
+      						$.fn.checkStatus(1,"Please enter cheque number.");
+              				$("#chequeNo").css("border","1px solid red");
+              				return false;
+      					}
+      				}else{
+      					$.fn.checkStatus(1,"Please enter bank name.");
+          				$("#chequeAmount").css("border","1px solid red");
+          				return false;
+      				}
+      			}else{
+      				$.fn.checkStatus(1,"Please check amount.");
+      				$("#chequeAmount").css("border","1px solid red");
+      				return false;
+      			}
+      		}
+      		
+			$.fn.validateRtgsNeft = function(){
+				if($("#rtgsAmount").val()!=""){
+					paymentData.rtgsNeftData.push($("#rtgsAmount").val());
+					if($("#rtgsBank").val()!=""){
+						paymentData.rtgsNeftData.push($("#rtgsBank").val());
+						if($("#rtgsAccountNo").val()!=""){
+							paymentData.rtgsNeftData.push($("#rtgsAccountNo").val());
+							if($("#rtgsIfsc").val()!=""){
+								paymentData.rtgsNeftData.push($("#rtgsIfsc").val());
+								return true;
+							}else{
+								$.fn.checkStatus(1,"Please check Ifsc.");
+			      				$("#rtgsIfsc").css("border","1px solid red");
+			      				return false;
+							}
+						}else{
+							$.fn.checkStatus(1,"Please check account number.");
+		      				$("#rtgsAccountNo").css("border","1px solid red");
+		      				return false;
+						}
+					}else{
+						$.fn.checkStatus(1,"Please check bank name.");
+	      				$("#rtgsBank").css("border","1px solid red");
+	      				return false;
+					}
+				}else{
+					$.fn.checkStatus(1,"Please check amount.");
+      				$("#rtgsAmount").css("border","1px solid red");
+      				return false;
+				}	
+			}
+      		
+			$.fn.validatePdcCash = function(){
+				if($("#pdcCashAccountId").val()!=""){
+      				paymentData.pdcCashData.push($("#pdcCashAccountId").val());
+      				if($("#pdcCashAmount").val()!=""){
+      					paymentData.pdcCashData.push($("#pdcCashAmount").val());
+      					return true;
+      				}else{
+      					$.fn.checkStatus(1,"Please check amount");
+          				$("#pdcCashAmount").css("border","1px solid red");
+          				return false;
+      				}
+      			}else{
+      				$.fn.checkStatus(1,"Please setup cash account");
+      				$("#pdcCashAccountId").css("border","1px solid red");
+      				return false;
+      			}
+			}
+			
+			$.fn.validatePdcCheque = function(){
+				if($("#pdcChequeAmount").val()!=""){
+      				paymentData.pdcChequeData.push($("#pdcChequeAmount").val());
+      				if($("#pdcChequeBank").val()!=""){
+      					paymentData.pdcChequeData.push($("#pdcChequeBank").val());
+      					if($("#pdcChequeNo").val()!=""){
+      						paymentData.pdcChequeData.push($("#pdcChequeNo").val());
+      						if($("#pdcChequeDate").val()!=""){
+      							paymentData.pdcChequeData.push($("#pdcChequeDate").val());
+      							if($("#pdcNameOnCheque").val()!=""){
+      								paymentData.pdcChequeData.push($("#pdcNameOnCheque").val());
+      								return true;
+      							}else{
+      								$.fn.checkStatus(1,"Please enter name.");
+                      				$("#pdcNameOnCheque").css("border","1px solid red");
+                      				return false;
+      							}
+      						}else{
+      							$.fn.checkStatus(1,"Please enter date.");
+                  				$("#pdcChequeDate").css("border","1px solid red");
+                  				return false;
+      						}
+      					}else{
+      						$.fn.checkStatus(1,"Please enter cheque number.");
+              				$("#pdcChequeNo").css("border","1px solid red");
+              				return false;
+      					}
+      				}else{
+      					$.fn.checkStatus(1,"Please enter bank name.");
+          				$("#pdcChequeBank").css("border","1px solid red");
+          				return false;
+      				}
+      			}else{
+      				$.fn.checkStatus(1,"Please check amount.");
+      				$("#pdcChequeAmount").css("border","1px solid red");
+      				return false;
+      			}
+			}
+			
+			$.fn.validatePdcRtgsNeft = function(){
+				if($("#pdcRtgsAmount").val()!=""){
+					paymentData.pdcRtgsNeftData.push($("#pdcRtgsAmount").val());
+					if($("#pdcRtgsBank").val()!=""){
+						paymentData.pdcRtgsNeftData.push($("#pdcRtgsBank").val());
+						if($("#pdcRtgsAccountNo").val()!=""){
+							paymentData.pdcRtgsNeftData.push($("#pdcRtgsAccountNo").val());
+							if($("#pdcRtgsIfsc").val()!=""){
+								paymentData.pdcRtgsNeftData.push($("#pdcRtgsIfsc").val());
+								if($("#pdcRtgsDate").val()!=""){
+									paymentData.pdcRtgsNeftData.push($("#pdcRtgsDate").val());
+									return true;
+								}else{
+									$.fn.checkStatus(1,"Please check date.");
+				      				$("#pdcRtgsDate").css("border","1px solid red");
+				      				return false;
+								}
+							}else{
+								$.fn.checkStatus(1,"Please check Ifsc.");
+			      				$("#pdcRtgsIfsc").css("border","1px solid red");
+			      				return false;
+							}
+						}else{
+							$.fn.checkStatus(1,"Please check account number.");
+		      				$("#pdcRtgsAccountNo").css("border","1px solid red");
+		      				return false;
+						}
+					}else{
+						$.fn.checkStatus(1,"Please check bank name.");
+	      				$("#pdcRtgsBank").css("border","1px solid red");
+	      				return false;
+					}
+				}else{
+					$.fn.checkStatus(1,"Please check amount.");
+      				$("#pdcRtgsAmount").css("border","1px solid red");
+      				return false;
+				}	
+			}
+      		
+			
+			
+      		$(document).ready(function(){
+      			$("#submitButton").click(function(){
+      				var globalStatus = []
+      				
+      				if(cashStatus===true){
+      					globalStatus.push($.fn.validateCash());
+      				}
+      				
+      				if(chequeStatus===true){
+      					globalStatus.push($.fn.validateCheque());
+      				}
+      				
+      				if(rtgsNeftStatus===true){
+      					globalStatus.push($.fn.validateRtgsNeft());
+      				}
+      				
+      				if(pdpCashStatus===true){
+      					globalStatus.push($.fn.validatePdcCash());
+      				}
+      				
+      				
+      				if(pdpChequeStatus===true){
+      					globalStatus.push($.fn.validatePdcCheque());
+      				}
+      				
+      				
+      				if(pdpRtgsNeftStatus===true){
+      					globalStatus.push($.fn.validatePdcRtgsNeft());
+      				}
+      				
+      				
+      				//Cheking values in global status
+      				$.fn.checkGlobalStatus = function(validity){
+      					if(validity===true){
+      						return true
+      					}else{
+      						return false
+      					}
+      				}
+      				var globalStatusLength = globalStatus.length;
+      			
+      				if(globalStatus.every($.fn.checkGlobalStatus)===true){
+      				//Sendig data from here for JSP
+      					//console.log(paymentData);
+      					submitPayment();
+      				}else{
+      					$.fn.checkStatus(1,"Details are empty");
+      					console.log(globalStatus);
+      				}
+      			})
+      		});
+      		
+      		
+ /********************************************************************/
+ //Set Current Date & Time in todays cheque date
 	function setCurrentDate(){
 		var today = new Date();
 		 var dd = today.getDate();
@@ -281,10 +583,13 @@
 		var dateTime = formattedDate+' '+time;
 		
 		document.getElementById("chequeDate").value = todayDate;
+		
 	}
-	
-	
-	function getPendingInvReport(){
+ 
+ 
+/********************************************************************/
+//Get Pending Invoice Report
+ function getPendingInvReport(){
 		var url="${pageContext.request.contextPath}/processing/pendingInvoiceReport.jsp";
 		if(window.XMLHttpRequest){  
 			invReport=new XMLHttpRequest();  
@@ -300,18 +605,18 @@
 		}catch(e){alert("Unable to connect to server");}
 	}
 
-	//Get response of Daily Setup Check performed by AJAX
+
+	//Get response of Pending Invoices requested by AJAX
 	function getInvReport(){
 		if(invReport.readyState == 4){
 			var response = this.response.trim();
 			var data = JSON.parse(response);
-			console.log(data);
 			setPendingTable(data);
 		} 
 	}
 	
+	//Set pending Invoice Report data in table
 	function setPendingTable(data){
-		
 		var table = document.getElementById("tableBody");
 		table.innerHTML = "";
 		for(i=0;i<data.length;i++){
@@ -330,44 +635,9 @@
 		}
 	}
 	
-	
-	//Send AJAX req to chech Daily setup
-	function checkDailySetup(){
-		var url="${pageContext.request.contextPath}/processing/checkDailySetup.jsp";
-		if(window.XMLHttpRequest){  
-			dailySetup=new XMLHttpRequest();  
-		}  
-		else if(window.ActiveXObject){  
-			dailySetup=new ActiveXObject("Microsoft.XMLHTTP");  
-		}  
-		try{  
-			dailySetup.onreadystatechange=getDailySetupRecords;  
-			console.log("AJAX Req sent");
-			dailySetup.open("GET",url,true);  
-			dailySetup.send();  
-		}catch(e){alert("Unable to connect to server");}
-	}
-
-	//Get response of Daily Setup Check performed by AJAX
-	function getDailySetupRecords(){
-		if(dailySetup.readyState == 4){
-			var response = this.response.trim();
-			console.log("daily Setup---"+response);
-			if(Number(response) > 0){
-				$.unblockUI();
-			}
-			else if(Number(response) <= 0){
-				$.blockUI();
-			}
-		} 
-	}
-	
-	window.onload = function(){
-		getDailySetupData();
-		getPendingInvReport();
-	};
-	
-	function getDailySetupData(){
+/********************************************************************/
+//Send AJAX request to get Daily Setup data
+function getDailySetupData(){
 		url = "../processing/setDailyInvSetup.jsp";
 		if(window.XMLHttpRequest){  
 			fetchDailySetupRequest=new XMLHttpRequest();  
@@ -383,27 +653,31 @@
 		}catch(e){alert("Unable to connect to server");}
 	}
 	
+	//Get response of Daily setup request 
 	function  fetchDailySetupData(){
 		if(fetchDailySetupRequest.readyState == 4){
 			var response = this.response.trim();
 			var data = JSON.parse(response);
+			console.log(data);
 			setDailySetupData(data);
 		}
 	}
 	
+	//Set Daily Setup data in Input Fields
 	function setDailySetupData(data){
 			var chequeBank =  document.getElementById('chequeBank');
-			for(i=0;i<chequeBank.options.length;i++){
-				if(chequeBank.bankId != Number(chequeBank.options[i].value)){
+			for(i=0; i<chequeBank.options.length; i++){
+				if(data.bankId != Number(chequeBank.options[i].value)){
 					chequeBank.options[i].disabled = true;
 				}
-				else if(chequeBank.bankId === Number(chequeBank.options[i].value)){
+				else if(data.bankId === Number(chequeBank.options[i].value)){
 					chequeBank.options[i].selected = true;
+				}
 			}
 			
-			var pdcBank =  document.getElementById('pdcBank');
-			for(i=0;i<pdcBank.options.length;i++){
-				if(pdcBank.bankId != Number(pdcBank.options[i].value)){
+			var pdcBank =  document.getElementById('pdcChequeBank');
+			for(i=0; i<pdcBank.options.length; i++){
+				if(data.bankId != Number(pdcBank.options[i].value)){
 					pdcBank.options[i].disabled = true;
 				}
 				else if(data.bankId === Number(pdcBank.options[i].value)){
@@ -437,10 +711,12 @@
 			document.getElementById('dsBankId').value = data.bankId;
 			getRtgsCount(document.getElementById('companyId').value);
 		}
-	}
 	
+
 	
-	function getRtgsCount(companyId){
+/****************************************************************************/
+//Send AJAX request to get RTGS transaction count for today 
+function getRtgsCount(companyId){
 		console.log(companyId);
 		url = "../processing/getTodaysRtgsCount.jsp?companyId="+companyId;
 		if(window.XMLHttpRequest){  
@@ -457,6 +733,7 @@
 		}catch(e){alert("Unable to connect to server");}
 	}
 	
+//Get response of RTGS count from AJAX request
 	function fetchRtgsCountData(){
 		if(fetchRtgsCount.readyState == 4){
 			var response = this.response.trim();
@@ -464,7 +741,10 @@
 		}
 	}
 	
-	function fetchInvoiceData(invoiceNo){
+
+/****************************************************************************/
+//Send AJAX Request to fetch invoice data
+function fetchInvoiceData(invoiceNo){
 			url = "../processing/getDataForOperator.jsp?invoiceNo="+invoiceNo;
 			if(window.XMLHttpRequest){  
 				fetchInvoiceReq=new XMLHttpRequest();  
@@ -485,54 +765,55 @@
 		function getInvoiceData(){
 			if(fetchInvoiceReq.readyState == 4){
 				var response = this.response.trim();
-				console.log(response);
 				if(Number(response) === 0){
 					window.alert('Invalid Invoice Number entered. Please check the Invoice No. and search again.');
 				}else{
 					var data = JSON.parse(response);
+					console.log(data);
 					setData(data);
-					//console.log(data);
 				}
 			}
 		}
 		
+		var cashPayStatus = 1;
+		var chequePayStatus = 1;
+		var rtgsPayStatus = 1;
+		var pdcPayStatus = 1;
+		
+		
 		function setData(data){
-			console.log(data);
-			/* document.getElementById('pdcAmount').disabled = false ;
-			document.getElementById('pdcNo').disabled = false ;
-			document.getElementById('pdcDate').disabled = false ;
-			document.getElementById('pdcPayeeName').disabled = false ;
-			document.getElementById('pdcBank').disabled = false ;
-			document.getElementById('pdcSubmit').disabled = false ;
-			document.getElementById('pdcAmount').value = "" ;
-			document.getElementById('pdcNo').value = "" ;
-			document.getElementById('pdcDate').value = "" ;
-			document.getElementById('pdcPayeeName').value = "" ; */
-			
 			setCurrentDate();
 			getDailySetupData();
-			var invoiceJson = data.invoiceJson;
+			var invoiceBasicJson = data.invoiceBasic;
 			
-			document.getElementById('invoiceNo').value = invoiceJson.invoiceNo ;
-			document.getElementById('invoiceId').value = invoiceJson.invoiceId;
-			document.getElementById('customerId').value = invoiceJson.customerId;
-			document.getElementById('customerInfo').value = invoiceJson.customerName +'\n' + invoiceJson.customerAddress + '\n' + invoiceJson.customerMobile  ;
-			document.getElementById('customerName').value = invoiceJson.customerName;
-			document.getElementById('invoiceDate').value = invoiceJson.invoiceDate ;
-			document.getElementById('totalAmount').value = invoiceJson.totalAmount ;
-			document.getElementById('accountPayableId').value = invoiceJson.accountPayableId ;
-			document.getElementById('companyId').value = invoiceJson.companyId ;
+			document.getElementById('invoiceNo').value = invoiceBasicJson.invoiceNo ;
+			document.getElementById('invoiceId').value = invoiceBasicJson.id;
+			document.getElementById('customerId').value = invoiceBasicJson.customerId;
+			document.getElementById('customerInfo').value = invoiceBasicJson.customerName +'\n' + invoiceBasicJson.customerAddress + '\n' + invoiceBasicJson.customerMobile  ;
+			document.getElementById('customerName').value = invoiceBasicJson.customerName;
+			document.getElementById('invoiceDate').value = invoiceBasicJson.invoiceDate ;
+			document.getElementById('totalAmount').value = invoiceBasicJson.totalAmount ;
+			document.getElementById('accountPayableId').value = invoiceBasicJson.accountPayableId ;
+			document.getElementById('companyId').value = invoiceBasicJson.companyId ;
 			
-			if(data.hasOwnProperty("cashJson")){
-				var cashJson = data.cashJson;
+			
+			var paymentDetails = data.paymentDetails;
+			
+			if(paymentDetails.hasOwnProperty("cashJson")){
+				var cashJson = paymentDetails.cashJson;
 				document.getElementById('cashAmount').value = cashJson.amount ;
-				document.getElementById('cashPaymentStatus').value = cashJson.paymentStatus;
+				document.getElementById('cashPaymentStatus').value = cashJson.paymentStatus ;
 				if(Number(cashJson.paymentStatus) === 1){
 					document.getElementById("cashAccountId").value = cashJson.accountId;
+					cashPayStatus = 1;
+					cashStatus = false;
+				}else{
+					cashPayStatus = 0;
+					cashStatus = true;
 				}
 			}
-			if(data.hasOwnProperty("chequeJson")){
-				var chequeJson = data.chequeJson;
+			if(paymentDetails.hasOwnProperty("chequeJson")){
+				var chequeJson = paymentDetails.chequeJson;
 				document.getElementById('chequeAmount').value = chequeJson.amount ;
 				document.getElementById('chequePaymentStatus').value = chequeJson.paymentStatus ;
 				if(Number(chequeJson.paymentStatus) === 1){
@@ -541,352 +822,170 @@
 					document.getElementById('chequeDate').value = chequeJson.chequeDate ;
 					document.getElementById('nameOnCheque').value = chequeJson.customerName ;
 					document.getElementById('chequeId').value = chequeJson.id ;
+					chequePayStatus = 1;
+					chequeStatus = false;
 				}else{
 					document.getElementById('chequeNo').value = "" ;
-					document.getElementById('nameOnCheque').value = invoiceJson.customerName ;
+					document.getElementById('nameOnCheque').value = invoiceBasicJson.customerName;
+					chequePayStatus = 0;
+					chequeStatus = true;
 				}
 			}
-			if(data.hasOwnProperty("rtgsJson")){
-				var rtgsJson = data.rtgsJson;
+			if(paymentDetails.hasOwnProperty("rtgsJson")){
+				var rtgsJson = paymentDetails.rtgsJson;
 				document.getElementById('rtgsAmount').value = rtgsJson.amount ;
 				document.getElementById('rtgsPaymentStatus').value = rtgsJson.paymentStatus ;
 				if(Number(rtgsJson.paymentStatus) === 1){
 					document.getElementById('rtgsBank').value = rtgsJson.bankName ;
-					document.getElementById('rtgsBank').value = rtgsJson.bankName ;
 					document.getElementById('rtgsAccountNo').value = rtgsJson.accountNo ;
 					document.getElementById('rtgsIfsc').value = rtgsJson.ifscCode ;
+					rtgsPayStatus = 1;
+					rtgsNeftStatus = false;
 				}else{
 					document.getElementById('rtgsBank').value = "" ;
 					document.getElementById('rtgsAccountNo').value = "" ;
 					document.getElementById('rtgsIfsc').value = "" ;
+					rtgsPayStatus = 0;
+					rtgsNeftStatus = true;
 				}
 			}
-			if(data.hasOwnProperty('pdcJson')){
-				var pdcJson = data.pdcJson;
-				if(invoiceJson.pdcPaymentMode === 'CHEQUE'){
-					document.getElementById('pdcId').value = invoiceJson.pdcId ;
-					document.getElementById('pdcChequeAmount').value = invoiceJson.pdcAmount ;
-					document.getElementById('pdcChequeSection').hidden=false;
-					document.getElementById('pdcCashSection').hidden=true;
-					document.getElementById('pdcRtgsSection').hidden=true;
+			
+			if(Object.entries(data.pdcData).length != 0){
+				var pdcJson = data.pdcData;
+				if(Number(pdcJson.modeOfPayment) === 2){
+					document.getElementById('pdcChequeAmount').value = pdcJson.pdcAmount ;
 					document.getElementById('pdcChequePaymentStatus').value = pdcJson.pdcPayStatus ;
+					document.getElementById('pdcId').value = pdcJson.pdcId ;
 					if(Number(pdcJson.pdcPayStatus) === 1){
 						document.getElementById('pdcChequeId').value = pdcJson.chequeId;
-						document.getElementById('pdcDate').value = pdcJson.chequeDate;
-						document.getElementById('pdcPayeeName').value = pdcJson.customerName;
-						document.getElementById('pdcNo').value = pdcJson.chequeNo ;
+						document.getElementById('pdcChequeDate').value = pdcJson.payDate;
+						document.getElementById('pdcNameOnCheque').value = pdcJson.customerName;
+						document.getElementById('pdcChequeNo').value = pdcJson.chequeNo ;
+						pdcPayStatus = 1;
+						pdpChequeStatus  = false;
 					}else{
 						document.getElementById('pdcChequeId').value = "";
-						document.getElementById('pdcDate').value = invoiceJson.pdcPayDate ;
-						document.getElementById('pdcPayeeName').value = invoiceJson.customerName;
-						document.getElementById('pdcNo').value = "";
+						document.getElementById('pdcChequeDate').value = pdcJson.payDate ;
+						document.getElementById('pdcNameOnCheque').value = pdcJson.customerName;
+						document.getElementById('pdcChequeNo').value = "";
+						pdcPayStatus = 0;
+						pdpChequeStatus  = true;
 					}
-				}else if(invoiceJson.pdcPaymentMode === 'RTGS'){
-					document.getElementById('pdcId').value = invoiceJson.pdcId ;
-					document.getElementById('pdcRtgsAmount').value = invoiceJson.pdcAmount;
+				}else if(Number(pdcJson.modeOfPayment) === 3){
+					document.getElementById('pdcId').value = pdcJson.pdcId ;
+					document.getElementById('pdcRtgsAmount').value = pdcJson.pdcAmount;
 					document.getElementById('pdcRtgsPaymentStatus').value = pdcJson.pdcPayStatus;
 					if(Number(pdcJson.pdcPayStatus) === 1){
 						document.getElementById('pdcRtgsBank').value = pdcJson.bankName ;
 						document.getElementById('pdcRtgsAccountNo').value = pdcJson.accountNo ;
 						document.getElementById('pdcRtgsIfsc').value = pdcJson.ifscCode ;
-						document.getElementById('pdcRtgsDate').value = invoiceJson.pdcPayDate;
+						document.getElementById('pdcRtgsDate').value = pdcJson.payDate ;
+						pdcPayStatus = 1;
+						pdpRtgsNeftStatus = false;
 					}else{
 						document.getElementById('pdcRtgsBank').value = '' ;
 						document.getElementById('pdcRtgsAccountNo').value = '' ;
 						document.getElementById('pdcRtgsIfsc').value = '' ;
-						document.getElementById('pdcRtgsDate').value = invoiceJson.pdcPayDate;
+						document.getElementById('pdcRtgsDate').value = pdcJson.payDate ;
+						pdcPayStatus = 0;
+						pdpRtgsNeftStatus = true;
 					}
-					document.getElementById('pdcRtgsSection').hidden=false;
-					document.getElementById('pdcChequeSection').hidden=true;
-					document.getElementById('pdcCashSection').hidden=true;
-					document.getElementById('pdcCashSection').hidden=true;
-				}else if(invoiceJson.pdcPaymentMode === 'CASH'){
-					document.getElementById('pdcId').value = invoiceJson.pdcId ;
-					document.getElementById('pdcCashAmount').value = invoiceJson.pdcAmount;
+				}else if(Number(pdcJson.modeOfPayment) === 1){
+					document.getElementById('pdcId').value = pdcJson.pdcId ;
+					document.getElementById('pdcCashAmount').value = pdcJson.pdcAmount;
 					document.getElementById('pdcCashPaymentStatus').value = pdcJson.pdcPayStatus;
 					if(Number(pdcJson.pdcPayStatus) === 1){
 						document.getElementById('pdcCashAccountId').value = pdcJson.accountId  ;
+						pdcPayStatus = 1;
+						pdpCashStatus = false;
+					}else{
+						pdcPayStatus = 0;
+						pdpCashStatus  = true;
 					}
-					document.getElementById('pdcCashSection').hidden=false;
-					document.getElementById('pdcRtgsSection').hidden=true;
-					document.getElementById('pdcChequeSection').hidden=true;
 				}
-			}else if(!data.hasOwnProperty('pdcJson')){
-				document.getElementById('pdcCashSection').hidden=true;
-				document.getElementById('pdcRtgsSection').hidden=true;
-				document.getElementById('pdcChequeSection').hidden=true;
+			}else if(Object.entries(data.pdcData).length === 0){
 			}
-			if(Number(invoiceJson.paidByOperator) === 1){
+			if(pdcPayStatus === 1 && rtgsPayStatus === 1 && chequePayStatus === 1 && cashPayStatus ===1){
 				document.getElementById('invoiceStatus').value = "Paid by Operator";
-				var inputElements = document.getElementsByTagName('input');
-				var selectElements = document.getElementsByTagName('select');
 				var submitButton = document.getElementById('submitButton');
 				
-				for(i=0; i<inputElements.length; i++){
-					inputElements[i].disabled = true;
-				}
-				for(j=0; j<selectElements.length; j++){
-					selectElements[j].disabled = true;
-				}
 				submitButton.disabled = true;
 			}else{
 				document.getElementById('invoiceStatus').value = "Payment Pending";
-			}
+			} 
+			$("#submitButton").prop('disabled',false);
 		}
-		/******************************************************
-						VALIDATING DATA
-		*******************************************************/
 		
-		$.fn.validateCheque = (function(){//validating cheque function
-			if($.fn.validateData($("#chequeNo").val(),/^[0-9]{6}$/)){
-				if(!$.fn.validateData($("#nameOnCheque").val(),/^\s*$/)){
-					return true;
-				}else{
-					$.fn.checkStatus(1,"Invalid name on cheque!.");
-					return false;
-				}
-			}else{
-				$.fn.checkStatus(1,"Invalid cheque number!.");
-				return false;
+
+/***************************************************************************/
+//Print Invoice
+function openInNewTab(invoiceId) {
+		if(Number(invoiceId) === 0 || invoiceId===""){
+			alert("Invalid Invoice No.");
+		}
+		else{
+		  var win = window.open("../report/InvoicePDFPrintOnly.jsp?invoiceId="+invoiceId, '_blank');
+		  win.focus();
 			}
-		});
+	}
+	
+	
+	
+/******************************************************************************/
+//Click on table to fetch data
+	document.addEventListener('click',function(e){
+		if(e.srcElement.tagName === 'TR' && e.srcElement.parentNode.id === 'tableBody'){
+			resetInputFields();
+			var invoiceNo = e.srcElement.children[0].innerHTML.trim();
+			fetchInvoiceData(invoiceNo);
+		}
+		if(e.srcElement.tagName === 'TD' && e.srcElement.parentNode.parentNode.id === 'tableBody'){
+			resetInputFields();
+			var row = e.srcElement.parentNode;
+			var invoiceNo = row.children[0].innerHTML.trim();
+			fetchInvoiceData(invoiceNo);
+		}
+	})		
 		
-		$.fn.validateRtgs = (function(){//validating rtgs
-			if(!$.fn.validateData($("#rtgsBank").val(),/^\s*$/)){
-				if(!$.fn.validateData($("#rtgsAccountNo").val(),/^\s*$/)){
-					if(!$.fn.validateData($("#rtgsIfsc").val(),/^\s*$/)){
-						return true;
-					}else{
-						$.fn.checkStatus(1,"Invalid IFSC Code number!.");
-				}
-				}else{
-					$.fn.checkStatus(1,"Invalid account number!.");
-				}			
-			}else{
-				$.fn.checkStatus(1,"Invalid bank name!.");
-			}
-		});
-		
-		$.fn.validatePdcRtgs = (function(){//validating pdc rtgs
-			if(!$.fn.validateData($("#pdcRtgsBank").val(),/^\s*$/)){
-				if(!$.fn.validateData($("#pdcRtgsAccountNo").val(),/^\s*$/)){
-					if(!$.fn.validateData($("#pdcRtgsIfsc").val(),/^\s*$/)){
-						return true;
-					}else{
-						$.fn.checkStatus(1,"Invalid PDC IFSC Code number!.");
-				}
-				}else{
-					$.fn.checkStatus(1,"Invalid PDC account number!.");
-				}			
-			}else{
-				$.fn.checkStatus(1,"Invalid PDC bank name!.");
-			}
-		});
-		
-		$.fn.validatePdcCheque = (function(){//validating pdc cheque function
-			if($.fn.validateData($("#pdcNo").val(),/^[0-9]{6}$/)){
-				if(!$.fn.validateData($("#pdcPayeeName").val(),/^\s*$/)){
-					return true;
-				}else{
-					$.fn.checkStatus(1,"Invalid name on Pdc cheque!.");
-				}
-			}else{
-				$.fn.checkStatus(1,"Invalid cheque Pdc number!.");
-			}
-		});
-		
-		//validating data on form submission
-		$(document).ready(function(){
-			$("#submitButton").click(function(){
-				if($("#chequeAmount").val()!=0){
-					if($.fn.validateCheque()=== true){
-						if($("#rtgsAmount").val()!=0){
-							if($.fn.validateRtgs()===true){
-								if($("#pdcRtgsSection").is(":hidden")){
-									$("#pdcRtgsAmount").val("");
-									$("#pdcRtgsBank").val("");
-									$("#pdcRtgsAccountNo").val("");
-									$("#pdcRtgsDate").val("");
-									$("#pdcRtgsIfsc").val("");
-									if(($("#pdcChequeSection").is(":hidden"))){
-										$("#pdcChequeAmount").val("");
-										$("#pdcBank").val("");
-										$("#pdcNo").val("");
-										$("#pdcDate").val("");
-										$("#pdcPayeeName").val("");
-										submitPayment();//calling submit function after reseting hidden fields values
-									}else{
-										if($.fn.validatePdcCheque()===true){
-											if(document.getElementById("cashAccountId").value!=""){
-												submitPayment();
-											}else{
-												alert("Please create cash account from chart of accounts.")
-											}
-										}
-									}
-								}else{
-									if($.fn.validatePdcRtgs()===true){
-										if(($("#pdcChequeSection").is(":hidden"))){
-											$("#pdcChequeAmount").val("");
-											$("#pdcBank").val("");
-											$("#pdcNo").val("");
-											$("#pdcDate").val("");
-											$("#pdcPayeeName").val("");
-											submitPayment();//calling submit function after reseting hidden fields values
-										}else{
-											if($.fn.validatePdcCheque()===true){
-												if(document.getElementById("cashAccountId").value!=""){
-													submitPayment();
-												}else{
-													alert("Please create cash account from chart of accounts.")
-												}
-											}
-										}
-									}
-								}
-							}else{
-								//if rtgs amount is zero
-								$("#rtgsAmount").val("");
-								$("#rtgsBank").val("");
-								$("#rtgsAccountNo").val("");
-								$("#rtgsDate").val("");
-								$("#rtgsIfsc").val("");
-								if($("#pdcRtgsSection").is(":hidden")){
-									$("#pdcRtgsAmount").val("");
-									$("#pdcRtgsBank").val("");
-									$("#pdcRtgsAccountNo").val("");
-									$("#pdcRtgsDate").val("");
-									$("#pdcRtgsIfsc").val("");
-									if(($("#pdcChequeSection").is(":hidden"))){
-										$("#pdcChequeAmount").val("");
-										$("#pdcBank").val("");
-										$("#pdcNo").val("");
-										$("#pdcDate").val("");
-										$("#pdcPayeeName").val("");
-										submitPayment();//calling submit function after reseting hidden fields values
-									}else{
-										if($.fn.validatePdcCheque()===true){
-											if(document.getElementById("cashAccountId").value!=""){
-												submitPayment();
-											}else{
-												alert("Please create cash account from chart of accounts.")
-											}
-										}
-									}
-								}else{
-									if($.fn.validatePdcRtgs()===true){
-										if(($("#pdcChequeSection").is(":hidden"))){
-											$("#pdcChequeAmount").val("");
-											$("#pdcBank").val("");
-											$("#pdcNo").val("");
-											$("#pdcDate").val("");
-											$("#pdcPayeeName").val("");
-											submitPayment();//calling submit function after reseting hidden fields values
-										}else{
-											if($.fn.validatePdcCheque()===true){
-												if(document.getElementById("cashAccountId").value!=""){
-													submitPayment();
-												}else{
-													alert("Please create cash account from chart of accounts.")
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}else{
-					//if check amoount is not zero
-					$("#chequeAmount").val("");
-					$("#chequeBank").val("");
-					$("#chequeNo").val("");
-					$("#chequeDate").val("");
-					$("#nameOnCheque").val("");
-					if($("#rtgsAmount").val()!=0){//checking rtgs data when cheque data is zero
-						if($.fn.validateRtgs()===true){
-							if($("#pdcRtgsSection").is(":hidden")){
-								$("#pdcRtgsAmount").val("");
-								$("#pdcRtgsBank").val("");
-								$("#pdcRtgsAccountNo").val("");
-								$("#pdcRtgsDate").val("");
-								$("#pdcRtgsIfsc").val("");
-								if(($("#pdcChequeSection").is(":hidden"))){
-									$("#pdcChequeAmount").val("");
-									$("#pdcBank").val("");
-									$("#pdcNo").val("");
-									$("#pdcDate").val("");
-									$("#pdcPayeeName").val("");
-									submitPayment();//calling submit function after reseting hidden fields values
-								}else{
-									if($.fn.validatePdcCheque()===true){
-										if(document.getElementById("cashAccountId").value!=""){
-											submitPayment();
-										}else{
-											alert("Please create cash account from chart of accounts.")
-										}
-									}
-								}
-							}else{
-								if($.fn.validatePdcRtgs()===true){
-									if(($("#pdcChequeSection").is(":hidden"))){
-										$("#pdcChequeAmount").val("");
-										$("#pdcBank").val("");
-										$("#pdcNo").val("");
-										$("#pdcDate").val("");
-										$("#pdcPayeeName").val("");
-										submitPayment();//calling submit function after reseting hidden fields values
-									}else{
-										if($.fn.validatePdcCheque()===true){
-											if(document.getElementById("cashAccountId").value!=""){
-												submitPayment();
-											}else{
-												alert("Please create cash account from chart of accounts.")
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			});
-		});
-		
-		
-		
-		function submitPayment(){//submit form data
-			var cashAmount = document.getElementById('cashAmount').value;
-			var chequeAmount = document.getElementById('chequeAmount').value;
-			var rtgsAmount = document.getElementById('rtgsAmount').value;
-			var pdcCashFlag = document.getElementById('pdcCashSection').hasAttribute('hidden');
-			var pdcChequeFlag = document.getElementById('pdcChequeSection').hasAttribute('hidden');
-			var pdcRtgsFlag = document.getElementById('pdcRtgsSection').hasAttribute('hidden');
-			
+
+/**************************************************************************/
+//Reset input fields
+function resetInputFields(){
+		var inputs = document.getElementsByTagName("input");
+		for(i=0; i< inputs.length; i++){
+			inputs[i].value= "";
+		}
+	}
+
+
+
+/***************************************************************************/
+//Submit form data
+function submitPayment(){//submit form data
 			var parentJson = {};
 			parentJson['invoiceId'] = document.getElementById('invoiceId').value;
 			
-			if(Number(cashAmount) > 0){
+			if(cashStatus === true){
 				var cashJson = submitCash();
 				parentJson['cashJson'] = cashJson;
 			}
-			if(Number(chequeAmount) > 0){
+			if(chequeStatus === true){
 				var chequeJson = submitChequeData();
 				parentJson['chequeJson'] = chequeJson;
 			}
-			if(Number(rtgsAmount) > 0){
+			if(rtgsNeftStatus === true){
 				var rtgsJson = submitRtgsData();
 				parentJson['rtgsJson'] = rtgsJson;
 			}
-			if(pdcCashFlag === false){
+			if(pdpCashStatus === true){
 				var pdcCashJson = submitPdcCash();
 				parentJson['pdcCashJson'] = pdcCashJson;
 			}
-			if(pdcChequeFlag === false){
+			if(pdpChequeStatus === true){
 				var pdcChequeJson = submitPdc();
 				parentJson['pdcChequeJson'] = pdcChequeJson;
 			}
-			if(pdcRtgsFlag === false){
+			if(pdpRtgsNeftStatus === true){
 				var pdcRtgsJson = submitPdcRtgs();
 				parentJson['pdcRtgsJson'] = pdcRtgsJson;
 			}
@@ -967,10 +1066,10 @@
 	   pdcJson['pdcId'] =  document.getElementById('pdcId').value;
 	   pdcJson['invoiceId'] = document.getElementById('invoiceId').value;
 	   pdcJson['pdcAmount'] =  document.getElementById('pdcChequeAmount').value;
-	   pdcJson['pdcNo'] = document.getElementById('pdcNo').value;
-	   pdcJson['pdcDate'] = document.getElementById('pdcDate').value;
-	   pdcJson['pdcPayeeName'] = document.getElementById('pdcPayeeName').value;
-	   pdcJson['pdcBank'] = document.getElementById('pdcBank').value;
+	   pdcJson['pdcNo'] = document.getElementById('pdcChequeNo').value;
+	   pdcJson['pdcDate'] = document.getElementById('pdcChequeDate').value;
+	   pdcJson['pdcPayeeName'] = document.getElementById('pdcNameOnCheque').value;
+	   pdcJson['pdcBank'] = document.getElementById('pdcChequeBank').value;
 	   var bank = document.getElementById('pdcBank');
 	   pdcJson['pdcBankName'] = bank.options[bank.selectedIndex].text.split('-')[0].trim();
 	   pdcJson['customerId'] = document.getElementById('customerId').value;
@@ -1025,39 +1124,6 @@
 		return pdcCashJson;
    }
 		
-	checkDailySetup();
-	setCurrentDate();
-	
-	function openInNewTab(invoiceId) {
-		if(Number(invoiceId) === 0 || invoiceId===""){
-			alert("Invalid Invoice No.");
-		}
-		else{
-		  var win = window.open("../report/InvoicePDFPrintOnly.jsp?invoiceId="+invoiceId, '_blank');
-		  win.focus();
-			}
-	}
-	
-	document.addEventListener('click',function(e){
-		if(e.srcElement.tagName === 'TR' && e.srcElement.parentNode.id === 'tableBody'){
-			resetInputFields();
-			var invoiceNo = e.srcElement.children[0].innerHTML.trim();
-			fetchInvoiceData(invoiceNo);
-		}
-		if(e.srcElement.tagName === 'TD' && e.srcElement.parentNode.parentNode.id === 'tableBody'){
-			resetInputFields();
-			var row = e.srcElement.parentNode;
-			var invoiceNo = row.children[0].innerHTML.trim();
-			fetchInvoiceData(invoiceNo);
-		}
-	})
-	
-	function resetInputFields(){
-		var inputs = document.getElementsByTagName("input");
-		for(i=0; i< inputs.length; i++){
-			inputs[i].value= "";
-		}
-	}
 	
 	function submitDataAjax(data){
 		console.log(data);
@@ -1087,56 +1153,34 @@
 			$.fn.checkStatus(ids[0],"Payment Information has been saved successfully!")
 		}
 	}
-	
-	function voidCheque(chequeId){
-		console.log(data);
-		if(Number(chequeId)>0){
 		
-			url = "../processing/voidCheque.jsp?chequeId="+chequeId;
-			if(window.XMLHttpRequest){  
-				chqVoid=new XMLHttpRequest();  
-			}  
-			else if(window.ActiveXObject){  
-				chqVoid=new ActiveXObject("Microsoft.XMLHTTP");  
-			}  
-			try{  
-				chqVoid.onreadystatechange=getDelChqId;  
-				console.log("AJAX Req sent");
-				chqVoid.open("GET",url,true);  
-				chqVoid.send();  
-			}catch(e){alert("Unable to connect to server");}
-		}else if (Number(chequeId) === 0) {
-			alert("Invalid cheque");
-		}
+/****************************************************************************/
+//Print cheque details
+function PrintChequeData(chequeId){
+	if(Number(chequeId) === 0){
+		alert('Enter correct cheque details and submit the payment first.');
+	}else{
+	 var win = window.open("../report/Cheque.jsp?chequeId="+chequeId, '_blank');
+	  win.focus();
 	}
-	
-	
-	function getDelChqId(){
-		if(chqVoid.readyState == 4){
-			var response = this.response.trim();
-			console.log(response);
-			$.fn.checkStatus(response,"Cheque is void.")
-		}
-	}
-	
-	function PrintChequeData(chequeId){
-		 var win = window.open("../report/Cheque.jsp?chequeId="+chequeId, '_blank');
-		  win.focus();	
-	}
-	
-	
-	
-	/**************************************
-	Response window code
-	**************************************/
-	<%-- var sessionId = {
-			"getSessionId":<%=session.getAttribute("gradeSubmitFlag") %>,
-	}
+}
 
-	$(document).ready(function(){
-		$.fn.checkStatus(sessionId.getSessionId,"Grading information has been saved successfully!")
-	}) --%>
+ 
 	
-	</script>
+	
+/***************************************************************************/
+//Function calls on page load
+
+ getDailySetupData();
+ getPendingInvReport();
+ setCurrentDate();
+
+ 
+</script>
 </body>
-</html>	
+</html>
+      
+      
+      
+      
+      
