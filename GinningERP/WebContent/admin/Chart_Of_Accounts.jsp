@@ -118,7 +118,7 @@
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 		        <button type="button" class="btn btn-success" id="saveButton">Save and Close</button>
-		        <button type="button" class="btn btn-success" id="updateButton" disabled >Update</button>
+		        <button type="button" class="btn btn-success" id="updateButton" >Update</button>
 		      </div>
 		    </div>
 		  </div>
@@ -239,6 +239,8 @@
 			document.getElementById("ledgerDesc").value = "";
 			document.getElementById("openingBalDate").value = "";
 			$("#addAccount").modal();
+			$("#updateButton").prop("disabled","true");
+			
 		}else{
 			$.fn.checkStatus(1,"Please Select a company from dropdown.!")
 		}
@@ -339,7 +341,6 @@
 			document.getElementById("ledgerDesc").value = table.rows[rowIndex].cells[4].innerHTML;
 			document.getElementById("openingBal").value = table.rows[rowIndex].cells[8].innerHTML;
 			document.getElementById("openingBalDate").value = table.rows[rowIndex].cells[7].innerHTML;
-			
 			$("#addAccount").modal();
 		}
 		else if(e.srcElement.tagName === "TD"){
@@ -366,11 +367,8 @@
 				document.getElementById("ledgerDesc").value = table.rows[rowIndex].cells[4].innerHTML;
 				document.getElementById("openingBal").value = table.rows[rowIndex].cells[8].innerHTML;
 				document.getElementById("openingBalDate").value = table.rows[rowIndex].cells[7].innerHTML;
-
 			$("#addAccount").modal();
 		}
-		$("#saveButton").prop("disabled",true);
-		$("#updateButton").prop("disabled",false);
 	})
 	
 	

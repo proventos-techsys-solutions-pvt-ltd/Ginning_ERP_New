@@ -23,6 +23,9 @@
                                 <a class="nav-link c-nav-link2" href="Invoice.jsp">Invoicing</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link c-nav-link2" href="Invoice_Amanat.jsp">Amanat Invoicing</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link c-nav-link3"  href="#" >User :  &nbsp;<%= currentUser.getName()%></a> 
                             </li>
                         </ul>

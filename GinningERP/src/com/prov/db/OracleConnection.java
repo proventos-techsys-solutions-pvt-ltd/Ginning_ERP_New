@@ -12,7 +12,7 @@ public class OracleConnection {
 			//if(connection == null) {
 				Class.forName("oracle.jdbc.driver.OracleDriver");
 				
-				String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+				String url = "jdbc:oracle:thin:@192.168.1.8:1521:orcl";
 				
 				connection = null;
 				

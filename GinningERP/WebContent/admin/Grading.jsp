@@ -136,11 +136,11 @@
 					</div>
 					</div>
 					<div class="row row-background">
-						<div class="col-md-2">
+						<div class="col-md-3">
 							<label>PDP Bonus per qtl. per month</label>
 							<input type="text" id="pdcRate" name="pdcRate" class="form-control form-control-sm" value="50">
 						</div>
-						<div class="col-md-1">
+						<div class="col-md-2">
 							<label>PDP Months</label>
 							<select  id="pdcMonths" name="pdcMonths" class="form-control form-control-sm" >
 								<option>0</option>
@@ -158,7 +158,7 @@
 								<option>12</option>
 							</select>
 						</div>
-						<div class="col-md-auto">
+						<div class="col-md-2">
 							<label>PDP Date</label>
 							<input type="date" id="pdcDate" name="pdcDate" class="form-control form-control-sm" value="">
 						</div>
@@ -170,7 +170,7 @@
 							<label>Total PDP Bonus</label>
 							<input type="text" id="pdcBonusAmount" name="pdcBonusAmount" class="form-control form-control-sm" value="0" readonly>
 						</div>
-						<div class="col-md-auto">
+						<div class="col-md-2">
 							<label>Total PDP Amount</label>
 							<input type="text" id="pdcAmount" name="pdcAmount" class="form-control form-control-sm" value="0" readonly>
 						</div>

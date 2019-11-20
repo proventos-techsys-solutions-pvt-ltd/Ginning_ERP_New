@@ -20,9 +20,9 @@
   <div id="content">
 	<div class="container-fluid ">
 	 <%@include file="../admin/CommonSearchHeaderForReports.jsp" %>
-		<div class="row row-background border-top">
+		<div class="row row-background border-top" >
 			<div class="col-md-12 mt-4">
-				<table id="tblCustomer" class="table table-bordered">
+				<table id="tblCustomer" class="table table-bordered table-sm">
 					<thead>
 						<tr>
 							<th>Name</th>
@@ -34,7 +34,7 @@
 							<th width="5%" class="text-center">Delete</th>
 						</tr>
 					</thead>
-					<tbody id="tableBody">
+					<tbody id="tableBody"  style="height:800px; overflow:auto;">
 					</tbody>
 				</table>
 			</div>
