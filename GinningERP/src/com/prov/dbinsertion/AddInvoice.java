@@ -19,7 +19,7 @@ public int addInvoice(Invoice i) {
 			e.printStackTrace();
 		}
 
-		String addInvoice = "{ ? = call ADD_INVOICE(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
+		String addInvoice = "{ ? = call ADD_INVOICE(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -48,6 +48,24 @@ public int addInvoice(Invoice i) {
 			cs.setLong(19, i.getPdcAmount());
 			cs.setInt(20, i.getVoucherNo());
 			cs.setLong(21, i.getAdvance());
+			if(i.getCashDate() != null) {
+				Date cashDate = Date.valueOf(i.getCashDate());
+				cs.setDate(22, cashDate);
+			}else {
+				cs.setNull(22, Types.DATE);
+			}
+			if(i.getChequeDate() != null) {
+				Date chequeDate = Date.valueOf(i.getChequeDate());
+				cs.setDate(23, chequeDate);
+			}else {
+				cs.setNull(23, Types.DATE);
+			}
+			if(i.getRtgsDate() != null) {
+				Date rtgsDate = Date.valueOf(i.getRtgsDate());
+				cs.setDate(24, rtgsDate);
+			}else {
+				cs.setNull(24, Types.DATE);
+			}
 			
 			cs.executeUpdate();
 			

@@ -232,6 +232,7 @@
 														<th width="5%" >Sr No</th>
 														<th width="20%">Mode Of Payment</th>
 														<th width="20%">Amount</th>
+														<th width="20%">Date</th>
 														<th width="5%"></th>
 														<th width="5%"></th>
 													</tr>
@@ -247,6 +248,7 @@
 					                               			</select>
 					                               		</td>
 														<td><input type="text" class="form-control form-control-sm" id="payAmount1" name="payAmount"></td>
+														<td><input type="date" class="form-control form-control-sm" id="payDate1" name="payDate" value=""></td>
 														<td class="text-center"><img src="../property/img/add.png" alt="add" class="ctm-hover" ></td>
 														<td class="text-center"><img src="../property/img/delete.png" alt="delete" class="ctm-hover" id="deleteRow1" ></td>
 													</tr>
@@ -327,6 +329,27 @@ var appController = (function(){
 
 //***********************VALIDATIONS ENDED****************************
 
+function getTodaysDate(){
+	var today = new Date();
+	 	var dd = today.getDate();
+	    var mm = today.getMonth()+1; //January is 0!
+	    var yyyy = today.getFullYear();
+
+	    if(dd<10){
+	        dd='0'+dd;
+	    } 
+	    if(mm<10){
+	        mm='0'+mm;
+	    } 
+
+	    todayDate = yyyy+'-'+mm+'-'+dd; 
+	    formattedDate = dd+'-'+mm+'-'+yyyy;
+	var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+	var dateTime = formattedDate+' '+time;
+	return todayDate;
+	
+}
+
 //Get current date and time
 function setCurrentDate(){
 	var today = new Date();
@@ -346,7 +369,9 @@ function setCurrentDate(){
 	var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 	var dateTime = formattedDate+' '+time;
 	
+	
 	document.getElementById("invoiceDate").value = todayDate;
+	document.getElementById('payDate1').value = todayDate;
 }
 
 
@@ -906,6 +931,7 @@ function setCurrentDate(){
 			var cell3 = row.insertCell(2);
 			var cell4 = row.insertCell(3);
 			var cell5 = row.insertCell(4);
+			var cell6 = row.insertCell(5);
 			
 			cell4.className ="text-center";
 			cell5.className ="text-center";
@@ -919,6 +945,7 @@ function setCurrentDate(){
 					   			'<option>RTGS/NEFT</option>'+
 							  '</select>';
 			cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="payAmount'+(noOfRowsPayment+1)+'" name="payAmount" value='+chequeAmount+'>';
+			cell4.innerHTML = '<input type="date" class="form-control form-control-sm" id="payDate2" name="payDate" value="">'
 		}
 		if(noOfRowsPayment === 2){
 			cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRowsPayment+1)+'" name="paymentMode">'+
@@ -927,10 +954,11 @@ function setCurrentDate(){
 					   			'<option selected>RTGS/NEFT</option>'+
 							  '</select>';
 			cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="payAmount'+(noOfRowsPayment+1)+'" name="payAmount" value='+rtgsAmount+'>';
+			cell4.innerHTML = '<input type="date" class="form-control form-control-sm" id="payDate3" name="payDate" value="">';
 		}
 			
-			cell4.innerHTML = '<img src="../property/img/add.png" alt="add" class="ctm-hover" >'
-			cell5.innerHTML = '<img src="../property/img/delete.png" alt="delete" class="ctm-hover" id="deleteRow'+(noOfRowsPayment+1)+'" >'
+			cell5.innerHTML = '<img src="../property/img/add.png" alt="add" class="ctm-hover" >'
+			cell6.innerHTML = '<img src="../property/img/delete.png" alt="delete" class="ctm-hover" id="deleteRow'+(noOfRowsPayment+1)+'" >'
 		}
 		
 		document.getElementById('updateButton').disabled = false;
@@ -1080,19 +1108,21 @@ function setCurrentDate(){
 				payment = {};
 				var paymentModes = document.getElementsByName('paymentMode');
 				var paymentAmounts = document.getElementsByName('payAmount');	
+				var paymentDates = document.getElementsByName('payDate');
 				for(j=0;j<paymentModes.length;j++){
 					
 					payment[paymentModes[j].value.trim()] = (Math.round(paymentAmounts[j].value)).toString();
+					payment[paymentModes[j].value.trim() + '-date'] = paymentDates[j].value;
 				}
 				
 				jsonObj['paymentModes'] = payment;
-				
+				console.log(jsonObj);
 				var jsonStr = JSON.stringify(jsonObj);
-				console.log(jsonStr);
+				//console.log(jsonStr);
 				
 				document.getElementById('output').value=jsonStr;
 				
-				document.getElementById('adminApprovalForm').submit();
+				//document.getElementById('adminApprovalForm').submit();
 			}
 		}
 	}
@@ -1118,7 +1148,6 @@ function setCurrentDate(){
 	//Add new rows to Payment Mode table
 	document.addEventListener('click',function(e){
 		if(e.srcElement.alt === 'add'){
-			
 			var netAmount = document.getElementById('net').value;
 			
 			var table = document.getElementById('paymentTableBody');
@@ -1154,7 +1183,7 @@ function setCurrentDate(){
 							newcell.innerHTML = rowCount+1	
 							newcell.align = "center";
 						}
-						else if(i === 1 || i === 2){
+						else if(i === 1 || i === 2 || i === 3){
 							switch(newcell.childNodes[0].type) {
 								case "text":
 										newcell.childNodes[0].value = pendingAmount;
@@ -1166,10 +1195,16 @@ function setCurrentDate(){
 										newcell.childNodes[0].name = "paymentMode";
 										newcell.childNodes[0].id = "paymentMode"+(rowCount+1);
 										break;
+								case "date":
+									var date = getTodaysDate()
+									newcell.childNodes[0].value = date;
+									newcell.childNodes[0].name = "payDate";
+									newcell.childNodes[0].id = "payDate"+(rowCount+1);
+									break;
 							}
-						}else if(i === 3){
-							newcell.align = "center";
 						}else if(i === 4){
+							newcell.align = "center";
+						}else if(i === 5){
 							newcell.childNodes[0].id = "deleteRow"+(rowCount+1);
 							newcell.align = "center";
 						}

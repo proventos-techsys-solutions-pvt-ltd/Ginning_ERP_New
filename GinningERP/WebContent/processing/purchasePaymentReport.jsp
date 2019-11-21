@@ -7,9 +7,9 @@
 	PurchaseReport pr = new PurchaseReport();
 
 	JSONObject json = pr.getTodaysTotalPurchase();
-	json.put("rtgsPdp", pr.getTodaysPdpPurchase("RTGS"));
-	json.put("cashPdp", pr.getTodaysPdpPurchase("CASH"));
-	json.put("chequePdp", pr.getTodaysPdpPurchase("CHEQUE"));
+	json.put("rtgsPdp", pr.getTodaysPdpPurchase("3"));
+	json.put("cashPdp", pr.getTodaysPdpPurchase("1"));
+	json.put("chequePdp", pr.getTodaysPdpPurchase("2"));
 	
 	long totalPurchase = json.getLong("chequeAmount") + json.getLong("cashAmount") + json.getLong("rtgsAmount");
 	

@@ -2,8 +2,33 @@ package com.prov.bean;
 
 public class PaymentDetails {
 
-	private int id, invoiceId, rtgsId, chequeId, modeId, cashVouhNo, paymentStatus; 
+	private int id, invoiceId, rtgsId, chequeId, modeId, cashVouhNo, paymentStatus;
+	private String rtgsDate, chequeDate, cashDate;
 	
+	public String getRtgsDate() {
+		return rtgsDate;
+	}
+
+	public void setRtgsDate(String rtgsDate) {
+		this.rtgsDate = rtgsDate;
+	}
+
+	public String getChequeDate() {
+		return chequeDate;
+	}
+
+	public void setChequeDate(String chequeDate) {
+		this.chequeDate = chequeDate;
+	}
+
+	public String getCashDate() {
+		return cashDate;
+	}
+
+	public void setCashDate(String cashDate) {
+		this.cashDate = cashDate;
+	}
+
 	private long amount;
 
 	public int getId() {

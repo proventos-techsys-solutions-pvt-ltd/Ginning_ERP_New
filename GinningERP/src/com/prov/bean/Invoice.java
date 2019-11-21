@@ -5,6 +5,27 @@ public class Invoice {
 	private float bonusAmount;
 	
 	private int id, customerId, companyId, paidByoperator, voucherNo ;
+	
+	private String rtgsDate, chequeDate, cashDate;
+	
+	public String getRtgsDate() {
+		return rtgsDate;
+	}
+	public void setRtgsDate(String rtgsDate) {
+		this.rtgsDate = rtgsDate;
+	}
+	public String getChequeDate() {
+		return chequeDate;
+	}
+	public void setChequeDate(String chequeDate) {
+		this.chequeDate = chequeDate;
+	}
+	public String getCashDate() {
+		return cashDate;
+	}
+	public void setCashDate(String cashDate) {
+		this.cashDate = cashDate;
+	}
 	public int getVoucherNo() {
 		return voucherNo;
 	}
