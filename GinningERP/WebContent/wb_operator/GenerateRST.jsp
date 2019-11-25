@@ -760,8 +760,7 @@ function addNewCustomer(){
 	
 }
 
-//Submit New Customer For
-
+//Submit New Customer Form
 function submitNewCustomer(){
 	if(uiController.validateNewForm()!=false){
 		var newCustomerName = document.getElementById("newCustomerName").value;
@@ -823,6 +822,7 @@ function test(){
 	}
 }
 */
+
 //Set data in RST form fields of newly added customer
 function setNewCustomerData(data){
 		console.log(data);
@@ -852,7 +852,8 @@ function setNewCustomerData(data){
 			document.getElementById("membership").value = membership;
 		}
 }
-//Sen AJAX request to get the tare weight pending RSTs
+
+//Send AJAX request to get the tare weight pending RSTs
 function pendingTareWt(){
 var url="${pageContext.request.contextPath}/processing/pendingTareReport.jsp";
 	if(window.XMLHttpRequest){  

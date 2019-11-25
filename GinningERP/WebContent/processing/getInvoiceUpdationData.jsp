@@ -1,3 +1,4 @@
+<%@page import="com.prov.report.PaymentReport"%>
 <%@page import="com.prov.dbops.CheckInvoiceExists"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="com.prov.report.InvoiceReport"%>
@@ -18,7 +19,9 @@
 	if(invoiceFlag > 0){
 
 		InvoiceReport report = new InvoiceReport();
+		PaymentReport payReport = new PaymentReport();
 		obj = report.getInvoiceDataForUpdation(invoiceNo);
+		obj.put("paymentDetails",payReport.getPaymentReport(obj.getInt("invoiceId")));
 		out.println(obj);
 		out.flush();
 		

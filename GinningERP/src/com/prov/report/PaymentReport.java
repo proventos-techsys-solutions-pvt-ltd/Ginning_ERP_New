@@ -3,6 +3,8 @@ package com.prov.report;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,6 +26,8 @@ public class PaymentReport {
 				
 				PreparedStatement stmt = con.prepareStatement(sql);
 				
+				stmt.setInt(1, invoiceId);
+				
 				rs = stmt.executeQuery();
 				
 				while (rs.next()) {
@@ -38,6 +42,14 @@ public class PaymentReport {
 					obj.put("chequeId", rs.getString("CHEQUE_ID"));
 					obj.put("rtgsId", rs.getString("RTGS_ID"));
 					obj.put("voucherNo", rs.getString("CASH_VOUCH_NO"));
+					if(rs.getString("PAY_DATE") != null) {
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+						String date = rs.getString("PAY_DATE");
+						Date dateFormat = sdf.parse(date);
+						String dateStr = sdf.format(dateFormat);
+						obj.put("date",dateStr);
+					}
+					
 					
 					jsonArray.put(obj);
 				}
@@ -81,6 +93,14 @@ public class PaymentReport {
 					obj.put("chequeId", rs.getString("CHEQUE_ID"));
 					obj.put("rtgsId", rs.getString("RTGS_ID"));
 					obj.put("voucherNo", rs.getString("CASH_VOUCH_NO"));
+					if(rs.getString("PAY_DATE") != null) {
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+						String date = rs.getString("PAY_DATE");
+						Date dateFormat = sdf.parse(date);
+						String dateStr = sdf.format(dateFormat);
+						obj.put("date",dateStr);
+					}
+					
 					
 					if(obj.getInt("modeId") == 1) {
 						parentObj.put("cashJson", obj);
@@ -125,7 +145,13 @@ public class PaymentReport {
 					obj.put("amount", rs.getString(4));
 					obj.put("paymentStatus", rs.getString(5));
 					obj.put("voucherNo", rs.getString("CASH_VOUCH_NO"));
-					
+					if(rs.getString("PAY_DATE") != null) {
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+						String date = rs.getString("PAY_DATE");
+						Date dateFormat = sdf.parse(date);
+						String dateStr = sdf.format(dateFormat);
+						obj.put("date",dateStr);
+					}
 				}
 				
 				rs.close();
@@ -159,7 +185,13 @@ public class PaymentReport {
 						obj.put("amount", rs.getString(4));
 						obj.put("paymentStatus", rs.getString(5));
 						obj.put("chequeId", rs.getString("CHEQUE_ID"));
-						
+						if(rs.getString("PAY_DATE") != null) {
+							SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+							String date = rs.getString("PAY_DATE");
+							Date dateFormat = sdf.parse(date);
+							String dateStr = sdf.format(dateFormat);
+							obj.put("date",dateStr);
+						}
 					}
 					
 					rs.close();
@@ -194,6 +226,13 @@ public class PaymentReport {
 					obj.put("amount", rs.getString(4));
 					obj.put("paymentStatus", rs.getString(5));
 					obj.put("rtgsId", rs.getString("RTGS_ID"));
+					if(rs.getString("PAY_DATE") != null) {
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+						String date = rs.getString("PAY_DATE");
+						Date dateFormat = sdf.parse(date);
+						String dateStr = sdf.format(dateFormat);
+						obj.put("date",dateStr);
+					}
 				}
 				
 				rs.close();

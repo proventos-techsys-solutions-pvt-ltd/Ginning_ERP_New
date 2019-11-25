@@ -33,7 +33,7 @@
 	
 		int cid = Integer.parseInt(request.getParameter("id"));
 	 	String date = request.getParameter("date");
-	 	String vehicleNo = request.getParameter("vehicleNo").toUpperCase();
+	 	String vehicleNo = request.getParameter("vehicleNo");
 	 	int vehicleTypeId = Integer.parseInt(request.getParameter("vehicleType"));
 	 	String customer = request.getParameter("customer").toUpperCase();
 	 	String address = request.getParameter("address").toUpperCase();

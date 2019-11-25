@@ -167,7 +167,7 @@
 		
 				updateInvoice.updatePendingAmount(rtgs.getRtgsAmount(), rtgs.getInvoiceId());
 				
-				Transactions rtgsTrDb = new Transactions();
+				/*Transactions rtgsTrDb = new Transactions();
 				
 				rtgsTrDb.setAccountId(Integer.parseInt((String)rtgsJson.get("accountPayableId")));
 				rtgsTrDb.setContactId((String)rtgsJson.get("customerId"));
@@ -196,7 +196,7 @@
 				AddTransactions addTr = new AddTransactions();
 				
 				addTr.addTransactions(rtgsTrDb);
-				addTr.addTransactions(rtgsTrCr);
+				addTr.addTransactions(rtgsTrCr);*/
 				
 				//session.setAttribute("id", Integer.toString(id));
 				//response.sendRedirect("../accounts_operation_view/Payment.jsp");
@@ -376,7 +376,7 @@
 				updatePdc.addRtgsIdId(rtgsId, rtgs.getInvoiceId());
 				
 				
-				Transactions rtgsPdcTrDb = new Transactions();
+				/*Transactions rtgsPdcTrDb = new Transactions();
 				
 				rtgsPdcTrDb.setAccountId(Integer.parseInt((String)pdcRtgsJson.get("accountPayableId")));
 				rtgsPdcTrDb.setContactId((String)pdcRtgsJson.get("customerId"));
@@ -405,7 +405,7 @@
 				AddTransactions addTr = new AddTransactions();
 				
 				addTr.addTransactions(rtgsPdcTrDb);
-				addTr.addTransactions(rtgsPdcTrCr);
+				addTr.addTransactions(rtgsPdcTrCr);*/
 				
 				//session.setAttribute("id", Integer.toString(id));
 				//response.sendRedirect("../accounts_operation_view/Payment.jsp");

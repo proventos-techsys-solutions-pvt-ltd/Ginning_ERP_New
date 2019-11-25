@@ -140,7 +140,7 @@
                            <input type="text" class="form-control" id="" name="" value="Not Applicable" readonly>
                         </td>
                         <td>
-                           <button type="button" class="btn btn-success" style="width:100%;">Pay</button>
+                           <button type="button" class="btn btn-success" style="width:100%;" id="payCash">Pay</button>
                         </td>
                      </tr>
                      <tr>
@@ -192,7 +192,7 @@
                            <input type="text" class="form-control" id="rtgsIfsc" name="rtgsIfsc" placeholder="IFSC Code">
                         </td>
                         <td >
-                           <input type="date" class="form-control " id="rtgsAmountDate" name="cashAmountDate" >
+                           <input type="date" class="form-control " id="rtgsAmountDate" name="rtgsAmountDate" >
                         </td>
                         <td>
                            <input type="text" class="form-control" id="" name="" value="Not Applicable" readonly>
@@ -228,7 +228,7 @@
                            <input type="text" class="form-control" id="" name="" value="Not Applicable" readonly>
                         </td>
                         <td>
-                           <button type="button" class="btn btn-success" style="width:100%;" >Pay</button>
+                           <button type="button" class="btn btn-success" style="width:100%;" id="payPdcCash">Pay</button>
                         </td>
                      </tr>
                      <tr>
@@ -678,61 +678,61 @@
          
          //Get response of Daily setup request 
          function  fetchDailySetupData(){
-         if(fetchDailySetupRequest.readyState == 4){
-         var response = this.response.trim();
-         var data = JSON.parse(response);
-         console.log(data);
-         setDailySetupData(data);
-         }
+         	if(fetchDailySetupRequest.readyState == 4){
+         		var response = this.response.trim();
+         		var data = JSON.parse(response);
+        	 	console.log(data);
+         		setDailySetupData(data);
+        	 }
          }
          
          //Set Daily Setup data in Input Fields
          function setDailySetupData(data){
-         var chequeBank =  document.getElementById('chequeBank');
-         for(i=0; i<chequeBank.options.length; i++){
-         if(data.bankId != Number(chequeBank.options[i].value)){
-         chequeBank.options[i].disabled = true;
-         }
-         else if(data.bankId === Number(chequeBank.options[i].value)){
-         chequeBank.options[i].selected = true;
-         }
-         }
-         
-         var pdcBank =  document.getElementById('pdcChequeBank');
-         for(i=0; i<pdcBank.options.length; i++){
-         if(data.bankId != Number(pdcBank.options[i].value)){
-         pdcBank.options[i].disabled = true;
-         }
-         else if(data.bankId === Number(pdcBank.options[i].value)){
-         pdcBank.options[i].selected = true;
-         }
-         }
-         
-         var cashAccounts = document.getElementById('cashAccountId');
-         for(i=0;i<cashAccounts.options.length;i++){
-         if(data.companyId != Number(cashAccounts.options[i].getAttribute('data-company-id'))){
-         cashAccounts.options[i].disabled = true;
-         }
-         else if(data.companyId === Number(cashAccounts.options[i].getAttribute('data-company-id'))){
-         cashAccounts.options[i].selected = true;
-         }
-         }
-         
-         var pdcCashAccounts = document.getElementById('pdcCashAccountId');
-         for(i=0;i<pdcCashAccounts.options.length;i++){
-         if(data.companyId != Number(pdcCashAccounts.options[i].getAttribute('data-company-id'))){
-         pdcCashAccounts.options[i].disabled = true;
-         }
-         else if(data.companyId === Number(pdcCashAccounts.options[i].getAttribute('data-company-id'))){
-         pdcCashAccounts.options[i].selected = true;
-         }
-         }
-         
-         document.getElementById('companyId').value = data.companyId;
-         document.getElementById('chequeLeaves').innerHTML = data.totalCheques;
-         document.getElementById('accountPayableId').value = data.accPayableId;
-         document.getElementById('dsBankId').value = data.bankId;
-         getRtgsCount(document.getElementById('companyId').value);
+	         var chequeBank =  document.getElementById('chequeBank');
+	         for(i=0; i<chequeBank.options.length; i++){
+		         if(data.bankId != Number(chequeBank.options[i].value)){
+		         	chequeBank.options[i].disabled = true;
+		         }
+		         else if(data.bankId === Number(chequeBank.options[i].value)){
+		         	chequeBank.options[i].selected = true;
+		         }
+		       }
+		         
+	         var pdcBank =  document.getElementById('pdcChequeBank');
+	         for(i=0; i<pdcBank.options.length; i++){
+		         if(data.bankId != Number(pdcBank.options[i].value)){
+		         pdcBank.options[i].disabled = true;
+		         }
+		         else if(data.bankId === Number(pdcBank.options[i].value)){
+		         pdcBank.options[i].selected = true;
+		         }
+		      }
+		         
+	         var cashAccounts = document.getElementById('cashAccountId');
+	         for(i=0;i<cashAccounts.options.length;i++){
+		         if(data.companyId != Number(cashAccounts.options[i].getAttribute('data-company-id'))){
+		         	cashAccounts.options[i].disabled = true;
+		         }
+		         else if(data.companyId === Number(cashAccounts.options[i].getAttribute('data-company-id'))){
+		         	cashAccounts.options[i].selected = true;
+		         }
+	         }
+	         
+	         var pdcCashAccounts = document.getElementById('pdcCashAccountId');
+	         for(i=0;i<pdcCashAccounts.options.length;i++){
+	         	if(data.companyId != Number(pdcCashAccounts.options[i].getAttribute('data-company-id'))){
+	         	pdcCashAccounts.options[i].disabled = true;
+	         	}
+	         	else if(data.companyId === Number(pdcCashAccounts.options[i].getAttribute('data-company-id'))){
+	         		pdcCashAccounts.options[i].selected = true;
+	        	 }
+	         }
+	         
+	         document.getElementById('companyId').value = data.companyId;
+	         document.getElementById('chequeLeaves').innerHTML = data.totalCheques;
+	         document.getElementById('accountPayableId').value = data.accPayableId;
+	         document.getElementById('dsBankId').value = data.bankId;
+	         getRtgsCount(document.getElementById('companyId').value);
          }
          
          
@@ -740,62 +740,62 @@
          /****************************************************************************/
          //Send AJAX request to get RTGS transaction count for today 
          function getRtgsCount(companyId){
-         console.log(companyId);
-         url = "../processing/getTodaysRtgsCount.jsp?companyId="+companyId;
-         if(window.XMLHttpRequest){  
-         fetchRtgsCount=new XMLHttpRequest();  
-         }  
-         else if(window.ActiveXObject){  
-         fetchDailySetupRequest=new ActiveXObject("Microsoft.XMLHTTP");  
-         }  
-         try{  
-         fetchRtgsCount.onreadystatechange=fetchRtgsCountData;  
-         console.log("AJAX Req sent");
-         fetchRtgsCount.open("GET",url,true);  
-         fetchRtgsCount.send();  
-         }catch(e){alert("Unable to connect to server");}
+	         console.log(companyId);
+	         url = "../processing/getTodaysRtgsCount.jsp?companyId="+companyId;
+	         if(window.XMLHttpRequest){  
+	         	fetchRtgsCount=new XMLHttpRequest();  
+	         }  
+	         else if(window.ActiveXObject){  
+	         	fetchDailySetupRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+	         }  
+	         try{  
+	         	fetchRtgsCount.onreadystatechange=fetchRtgsCountData;  
+	         	console.log("AJAX Req sent");
+	         	fetchRtgsCount.open("GET",url,true);  
+	         	fetchRtgsCount.send();  
+	         	}catch(e){alert("Unable to connect to server");}
          }
          
          //Get response of RTGS count from AJAX request
          function fetchRtgsCountData(){
-         if(fetchRtgsCount.readyState == 4){
-         var response = this.response.trim();
-         document.getElementById('rtgsCount').innerHTML = response;	
-         }
+       		if(fetchRtgsCount.readyState == 4){
+         		var response = this.response.trim();
+        		document.getElementById('rtgsCount').innerHTML = response;	
+        	 }
          }
          
          
          /****************************************************************************/
          //Send AJAX Request to fetch invoice data
          function fetchInvoiceData(invoiceNo){
-         url = "../processing/getDataForOperator.jsp?invoiceNo="+invoiceNo;
-         if(window.XMLHttpRequest){  
-         fetchInvoiceReq=new XMLHttpRequest();  
-         }  
-         else if(window.ActiveXObject){  
-         fetchInvoiceReq=new ActiveXObject("Microsoft.XMLHTTP");  
-         }  
-         try{  
-         fetchInvoiceReq.onreadystatechange=getInvoiceData;  
-         console.log("AJAX Req sent");
-         fetchInvoiceReq.open("GET",url,true);  
-         fetchInvoiceReq.send();  
-         }catch(e){alert("Unable to connect to server");}
+	         url = "../processing/getDataForOperator.jsp?invoiceNo="+invoiceNo;
+	         if(window.XMLHttpRequest){  
+	         	fetchInvoiceReq=new XMLHttpRequest();  
+	         }  
+	         else if(window.ActiveXObject){  
+	         	fetchInvoiceReq=new ActiveXObject("Microsoft.XMLHTTP");  
+	         }  
+	         try{  
+		         fetchInvoiceReq.onreadystatechange=getInvoiceData;  
+		         console.log("AJAX Req sent");
+		         fetchInvoiceReq.open("GET",url,true);  
+		         fetchInvoiceReq.send();  
+	         }catch(e){alert("Unable to connect to server");}
          }
          
          
          //Get data from AJAX request
          function getInvoiceData(){
-         if(fetchInvoiceReq.readyState == 4){
-         var response = this.response.trim();
-         if(Number(response) === 0){
-         window.alert('Invalid Invoice Number entered. Please check the Invoice No. and search again.');
-         }else{
-         var data = JSON.parse(response);
-         console.log(data);
-         setData(data);
-         }
-         }
+	         if(fetchInvoiceReq.readyState == 4){
+		         var response = this.response.trim();
+		         if(Number(response) === 0){
+		        	 window.alert('Invalid Invoice Number entered. Please check the Invoice No. and search again.');
+		         }else{
+			         var data = JSON.parse(response);
+			         console.log(data);
+			         setData(data);
+		         }
+	         }
          }
          
          var cashPayStatus = 1;
@@ -805,151 +805,159 @@
          
          
          function setData(data){
-         setCurrentDate();
-         getDailySetupData();
-         var invoiceBasicJson = data.invoiceBasic;
-         
-         document.getElementById('invoiceNo').value = invoiceBasicJson.invoiceNo ;
-         document.getElementById('invoiceId').value = invoiceBasicJson.id;
-         document.getElementById('customerId').value = invoiceBasicJson.customerId;
-         document.getElementById('customerInfo').value = invoiceBasicJson.customerName +'\n' + invoiceBasicJson.customerAddress + '\n' + invoiceBasicJson.customerMobile  ;
-         document.getElementById('customerName').value = invoiceBasicJson.customerName;
-         document.getElementById('invoiceDate').value = invoiceBasicJson.invoiceDate ;
-         document.getElementById('totalAmount').value = invoiceBasicJson.totalAmount ;
-         document.getElementById('accountPayableId').value = invoiceBasicJson.accountPayableId ;
-         document.getElementById('companyId').value = invoiceBasicJson.companyId ;
-         
-         
-         var paymentDetails = data.paymentDetails;
-         
-         if(paymentDetails.hasOwnProperty("cashJson")){
-         var cashJson = paymentDetails.cashJson;
-         document.getElementById('cashAmount').value = cashJson.amount ;
-         document.getElementById('cashPaymentStatus').value = cashJson.paymentStatus ;
-         if(Number(cashJson.paymentStatus) === 1){
-         document.getElementById("cashAccountId").value = cashJson.accountId;
-         cashPayStatus = 1;
-         cashStatus = false;
-         }else{
-         cashPayStatus = 0;
-         cashStatus = true;
-         }
-         }
-         if(paymentDetails.hasOwnProperty("chequeJson")){
-         var chequeJson = paymentDetails.chequeJson;
-         document.getElementById('chequeAmount').value = chequeJson.amount ;
-         document.getElementById('chequePaymentStatus').value = chequeJson.paymentStatus ;
-         if(Number(chequeJson.paymentStatus) === 1){
-         document.getElementById('chequeBank').value = chequeJson.bankId;
-         document.getElementById('chequeNo').value = chequeJson.chequeNo ;
-         document.getElementById('chequeDate').value = chequeJson.chequeDate ;
-         document.getElementById('nameOnCheque').value = chequeJson.customerName ;
-         document.getElementById('chequeId').value = chequeJson.id ;
-         chequePayStatus = 1;
-         chequeStatus = false;
-         }else{
-         document.getElementById('chequeNo').value = "" ;
-         document.getElementById('nameOnCheque').value = invoiceBasicJson.customerName;
-         chequePayStatus = 0;
-         chequeStatus = true;
-         }
-         }
-         if(paymentDetails.hasOwnProperty("rtgsJson")){
-         var rtgsJson = paymentDetails.rtgsJson;
-         document.getElementById('rtgsAmount').value = rtgsJson.amount ;
-         document.getElementById('rtgsPaymentStatus').value = rtgsJson.paymentStatus ;
-         if(Number(rtgsJson.paymentStatus) === 1){
-         document.getElementById('rtgsBank').value = rtgsJson.bankName ;
-         document.getElementById('rtgsAccountNo').value = rtgsJson.accountNo ;
-         document.getElementById('rtgsIfsc').value = rtgsJson.ifscCode ;
-         rtgsPayStatus = 1;
-         rtgsNeftStatus = false;
-         }else{
-         document.getElementById('rtgsBank').value = "" ;
-         document.getElementById('rtgsAccountNo').value = "" ;
-         document.getElementById('rtgsIfsc').value = "" ;
-         rtgsPayStatus = 0;
-         rtgsNeftStatus = true;
-         }
-         }
-         
-         if(Object.entries(data.pdcData).length != 0){
-         var pdcJson = data.pdcData;
-         if(Number(pdcJson.modeOfPayment) === 2){
-         document.getElementById('pdcChequeAmount').value = pdcJson.pdcAmount ;
-         document.getElementById('pdcChequePaymentStatus').value = pdcJson.pdcPayStatus ;
-         document.getElementById('pdcId').value = pdcJson.pdcId ;
-         if(Number(pdcJson.pdcPayStatus) === 1){
-         document.getElementById('pdcChequeId').value = pdcJson.chequeId;
-         document.getElementById('pdcChequeDate').value = pdcJson.payDate;
-         document.getElementById('pdcNameOnCheque').value = pdcJson.customerName;
-         document.getElementById('pdcChequeNo').value = pdcJson.chequeNo ;
-         pdcPayStatus = 1;
-         pdpChequeStatus  = false;
-         }else{
-         document.getElementById('pdcChequeId').value = "";
-         document.getElementById('pdcChequeDate').value = pdcJson.payDate ;
-         document.getElementById('pdcNameOnCheque').value = pdcJson.customerName;
-         document.getElementById('pdcChequeNo').value = "";
-         pdcPayStatus = 0;
-         pdpChequeStatus  = true;
-         }
-         }else if(Number(pdcJson.modeOfPayment) === 3){
-         document.getElementById('pdcId').value = pdcJson.pdcId ;
-         document.getElementById('pdcRtgsAmount').value = pdcJson.pdcAmount;
-         document.getElementById('pdcRtgsPaymentStatus').value = pdcJson.pdcPayStatus;
-         if(Number(pdcJson.pdcPayStatus) === 1){
-         document.getElementById('pdcRtgsBank').value = pdcJson.bankName ;
-         document.getElementById('pdcRtgsAccountNo').value = pdcJson.accountNo ;
-         document.getElementById('pdcRtgsIfsc').value = pdcJson.ifscCode ;
-         document.getElementById('pdcRtgsDate').value = pdcJson.payDate ;
-         pdcPayStatus = 1;
-         pdpRtgsNeftStatus = false;
-         }else{
-         document.getElementById('pdcRtgsBank').value = '' ;
-         document.getElementById('pdcRtgsAccountNo').value = '' ;
-         document.getElementById('pdcRtgsIfsc').value = '' ;
-         document.getElementById('pdcRtgsDate').value = pdcJson.payDate ;
-         pdcPayStatus = 0;
-         pdpRtgsNeftStatus = true;
-         }
-         }else if(Number(pdcJson.modeOfPayment) === 1){
-         document.getElementById('pdcId').value = pdcJson.pdcId ;
-         document.getElementById('pdcCashAmount').value = pdcJson.pdcAmount;
-         document.getElementById('pdcCashPaymentStatus').value = pdcJson.pdcPayStatus;
-         if(Number(pdcJson.pdcPayStatus) === 1){
-         document.getElementById('pdcCashAccountId').value = pdcJson.accountId  ;
-         pdcPayStatus = 1;
-         pdpCashStatus = false;
-         }else{
-         pdcPayStatus = 0;
-         pdpCashStatus  = true;
-         }
-         }
-         }else if(Object.entries(data.pdcData).length === 0){
-         }
-         if(pdcPayStatus === 1 && rtgsPayStatus === 1 && chequePayStatus === 1 && cashPayStatus ===1){
-         document.getElementById('invoiceStatus').value = "Paid by Operator";
-         var submitButton = document.getElementById('submitButton');
-         
-         submitButton.disabled = true;
-         }else{
-         document.getElementById('invoiceStatus').value = "Payment Pending";
-         } 
-         $("#submitButton").prop('disabled',false);
+	         setCurrentDate();
+	         getDailySetupData();
+	         var invoiceBasicJson = data.invoiceBasic;
+	         
+	         document.getElementById('invoiceNo').value = invoiceBasicJson.invoiceNo ;
+	         document.getElementById('invoiceId').value = invoiceBasicJson.id;
+	         document.getElementById('customerId').value = invoiceBasicJson.customerId;
+	         document.getElementById('customerInfo').value = invoiceBasicJson.customerName +'\n' + invoiceBasicJson.customerAddress + '\n' + invoiceBasicJson.customerMobile  ;
+	         document.getElementById('customerName').value = invoiceBasicJson.customerName;
+	         document.getElementById('invoiceDate').value = invoiceBasicJson.invoiceDate ;
+	         document.getElementById('totalAmount').value = invoiceBasicJson.totalAmount ;
+	         document.getElementById('accountPayableId').value = invoiceBasicJson.accountPayableId ;
+	         document.getElementById('companyId').value = invoiceBasicJson.companyId ;
+	         
+	         
+	         var paymentDetails = data.paymentDetails;
+	         
+	         if(paymentDetails.hasOwnProperty("cashJson")){
+		         var cashJson = paymentDetails.cashJson;
+		         document.getElementById('cashAmount').value = cashJson.amount ;
+		         document.getElementById('cashPaymentStatus').value = cashJson.paymentStatus ;
+		         document.getElementById('cashDate').value = cashJson.date;
+		         if(Number(cashJson.paymentStatus) === 1){
+			         document.getElementById("cashAccountId").value = cashJson.accountId;
+			         document.getElementById('cashDate').value = cashJson.date;
+			         document.getElementById('payCash').disabled = true;
+			         cashPayStatus = 1;
+			         cashStatus = false;
+		         }else{
+			         cashPayStatus = 0;
+			         cashStatus = true;
+		         }
+	         }
+	         if(paymentDetails.hasOwnProperty("chequeJson")){
+		         var chequeJson = paymentDetails.chequeJson;
+		         document.getElementById('chequeAmount').value = chequeJson.amount ;
+		         document.getElementById('chequePaymentStatus').value = chequeJson.paymentStatus ;
+		         document.getElementById('chequeDate').value = chequeJson.date ;
+		         
+		         if(Number(chequeJson.paymentStatus) === 1){
+			         document.getElementById('chequeBank').value = chequeJson.bankId;
+			         document.getElementById('chequeNo').value = chequeJson.chequeNo ;
+			         document.getElementById('chequeDate').value = chequeJson.chequeDate ;
+			         document.getElementById('nameOnCheque').value = chequeJson.customerName ;
+			         document.getElementById('chequeId').value = chequeJson.id ;
+			         document.getElementById('chequeDate').value = chequeJson.date ;
+			         chequePayStatus = 1;
+			         chequeStatus = false;
+		         }else{
+			         document.getElementById('chequeNo').value = "" ;
+			         document.getElementById('nameOnCheque').value = invoiceBasicJson.customerName;
+			         chequePayStatus = 0;
+			         chequeStatus = true;
+		         }
+	         }
+	         if(paymentDetails.hasOwnProperty("rtgsJson")){
+		         var rtgsJson = paymentDetails.rtgsJson;
+		         document.getElementById('rtgsAmount').value = rtgsJson.amount ;
+		         document.getElementById('rtgsPaymentStatus').value = rtgsJson.paymentStatus ;
+		         document.getElementById('rtgsAmountDate').value = rtgsJson.date ;
+		         if(Number(rtgsJson.paymentStatus) === 1){
+			         document.getElementById('rtgsBank').value = rtgsJson.bankName ;
+			         document.getElementById('rtgsAccountNo').value = rtgsJson.accountNo ;
+			         document.getElementById('rtgsIfsc').value = rtgsJson.ifscCode ;
+			         document.getElementById('rtgsAmountDate').value = rtgsJson.date ;
+			         rtgsPayStatus = 1;
+			         rtgsNeftStatus = false;
+		         }else{
+			         document.getElementById('rtgsBank').value = "" ;
+			         document.getElementById('rtgsAccountNo').value = "" ;
+			         document.getElementById('rtgsIfsc').value = "" ;
+			         rtgsPayStatus = 0;
+			         rtgsNeftStatus = true;
+		         }
+	         }
+	         
+	         if(Object.entries(data.pdcData).length != 0){
+	         	var pdcJson = data.pdcData;
+		         if(Number(pdcJson.modeOfPayment) === 2){
+			         document.getElementById('pdcChequeAmount').value = pdcJson.pdcAmount ;
+			         document.getElementById('pdcChequePaymentStatus').value = pdcJson.pdcPayStatus ;
+			         document.getElementById('pdcId').value = pdcJson.pdcId ;
+			         if(Number(pdcJson.pdcPayStatus) === 1){
+				         document.getElementById('pdcChequeId').value = pdcJson.chequeId;
+				         document.getElementById('pdcChequeDate').value = pdcJson.payDate;
+				         document.getElementById('pdcNameOnCheque').value = pdcJson.customerName;
+				         document.getElementById('pdcChequeNo').value = pdcJson.chequeNo ;
+				         pdcPayStatus = 1;
+				         pdpChequeStatus  = false;
+			         }else{
+				         document.getElementById('pdcChequeId').value = "";
+				         document.getElementById('pdcChequeDate').value = pdcJson.payDate ;
+				         document.getElementById('pdcNameOnCheque').value = invoiceBasicJson.customerName;
+				         document.getElementById('pdcChequeNo').value = "";
+				         pdcPayStatus = 0;
+				         pdpChequeStatus  = true;
+			         }
+		         }else if(Number(pdcJson.modeOfPayment) === 3){
+			         document.getElementById('pdcId').value = pdcJson.pdcId ;
+			         document.getElementById('pdcRtgsAmount').value = pdcJson.pdcAmount;
+			         document.getElementById('pdcRtgsPaymentStatus').value = pdcJson.pdcPayStatus;
+			         if(Number(pdcJson.pdcPayStatus) === 1){
+				         document.getElementById('pdcRtgsBank').value = pdcJson.bankName ;
+				         document.getElementById('pdcRtgsAccountNo').value = pdcJson.accountNo ;
+				         document.getElementById('pdcRtgsIfsc').value = pdcJson.ifscCode ;
+				         document.getElementById('pdcRtgsDate').value = pdcJson.payDate ;
+				         pdcPayStatus = 1;
+				         pdpRtgsNeftStatus = false;
+			         }else{
+				         document.getElementById('pdcRtgsBank').value = '' ;
+				         document.getElementById('pdcRtgsAccountNo').value = '' ;
+				         document.getElementById('pdcRtgsIfsc').value = '' ;
+				         document.getElementById('pdcRtgsDate').value = pdcJson.payDate ;
+				         pdcPayStatus = 0;
+				         pdpRtgsNeftStatus = true;
+			         }
+		         }else if(Number(pdcJson.modeOfPayment) === 1){
+			         document.getElementById('pdcId').value = pdcJson.pdcId ;
+			         document.getElementById('pdcCashAmount').value = pdcJson.pdcAmount;
+			         document.getElementById('pdcCashPaymentStatus').value = pdcJson.pdcPayStatus;
+			         if(Number(pdcJson.pdcPayStatus) === 1){
+				         document.getElementById('pdcCashAccountId').value = pdcJson.accountId  ;
+				         document.getElementById('payPdcCash').disabled = true;
+				         pdcPayStatus = 1;
+				         pdpCashStatus = false;
+			         }else{
+				         pdcPayStatus = 0;
+				         pdpCashStatus  = true;
+			         }
+		         }
+	         }else if(Object.entries(data.pdcData).length === 0){
+	         }
+	         if(pdcPayStatus === 1 && rtgsPayStatus === 1 && chequePayStatus === 1 && cashPayStatus ===1){
+	         	document.getElementById('invoiceStatus').value = "Paid by Operator";
+	         	var submitButton = document.getElementById('submitButton');
+	         	submitButton.disabled = true;
+	         }else{
+	         	document.getElementById('invoiceStatus').value = "Payment Pending";
+	         } 
+	        	 $("#submitButton").prop('disabled',false);
          }
          
          
          /***************************************************************************/
          //Print Invoice
          function openInNewTab(invoiceId) {
-         if(Number(invoiceId) === 0 || invoiceId===""){
-         alert("Invalid Invoice No.");
-         }
-         else{
-         var win = window.open("../report/InvoicePDFPrintOnly.jsp?invoiceId="+invoiceId, '_blank');
-         win.focus();
-         }
+	         if(Number(invoiceId) === 0 || invoiceId===""){
+	      	   alert("Invalid Invoice No.");
+	         }
+	         else{
+	       	  var win = window.open("../report/InvoicePDFPrintOnly.jsp?invoiceId="+invoiceId, '_blank');
+	        	 win.focus();
+	         }
          }
          
          
@@ -957,27 +965,27 @@
          /******************************************************************************/
          //Click on table to fetch data
          document.addEventListener('click',function(e){
-         if(e.srcElement.tagName === 'TR' && e.srcElement.parentNode.id === 'tableBody'){
-         resetInputFields();
-         var invoiceNo = e.srcElement.children[0].innerHTML.trim();
-         fetchInvoiceData(invoiceNo);
-         }
-         if(e.srcElement.tagName === 'TD' && e.srcElement.parentNode.parentNode.id === 'tableBody'){
-         resetInputFields();
-         var row = e.srcElement.parentNode;
-         var invoiceNo = row.children[0].innerHTML.trim();
-         fetchInvoiceData(invoiceNo);
-         }
+         	if(e.srcElement.tagName === 'TR' && e.srcElement.parentNode.id === 'tableBody'){
+         		resetInputFields();
+         		var invoiceNo = e.srcElement.children[0].innerHTML.trim();
+         		fetchInvoiceData(invoiceNo);
+         	}
+         	if(e.srcElement.tagName === 'TD' && e.srcElement.parentNode.parentNode.id === 'tableBody'){
+        		resetInputFields();
+         		var row = e.srcElement.parentNode;
+         		var invoiceNo = row.children[0].innerHTML.trim();
+         		fetchInvoiceData(invoiceNo);
+         	}
          })		
          
          
          /**************************************************************************/
          //Reset input fields
          function resetInputFields(){
-         var inputs = document.getElementsByTagName("input");
-         for(i=0; i< inputs.length; i++){
-         inputs[i].value= "";
-         }
+	        var inputs = document.getElementsByTagName("input");
+	        for(i=0; i< inputs.length; i++){
+	        	 inputs[i].value= "";
+	         }
          }
          
          
@@ -985,210 +993,261 @@
          /***************************************************************************/
          //Submit form data
          function submitPayment(){//submit form data
-         var parentJson = {};
-         parentJson['invoiceId'] = document.getElementById('invoiceId').value;
-         
-         if(cashStatus === true){
-         var cashJson = submitCash();
-         parentJson['cashJson'] = cashJson;
-         }
-         if(chequeStatus === true){
-         var chequeJson = submitChequeData();
-         parentJson['chequeJson'] = chequeJson;
-         }
-         if(rtgsNeftStatus === true){
-         var rtgsJson = submitRtgsData();
-         parentJson['rtgsJson'] = rtgsJson;
-         }
-         if(pdpCashStatus === true){
-         var pdcCashJson = submitPdcCash();
-         parentJson['pdcCashJson'] = pdcCashJson;
-         }
-         if(pdpChequeStatus === true){
-         var pdcChequeJson = submitPdc();
-         parentJson['pdcChequeJson'] = pdcChequeJson;
-         }
-         if(pdpRtgsNeftStatus === true){
-         var pdcRtgsJson = submitPdcRtgs();
-         parentJson['pdcRtgsJson'] = pdcRtgsJson;
-         }
-         
-         console.log(parentJson);
-         var jsonData = JSON.stringify(parentJson);
-         
-         document.getElementById("submitButton").disabled = true;
-         
-         submitDataAjax(jsonData);
+	         var parentJson = {};
+	         parentJson['invoiceId'] = document.getElementById('invoiceId').value;
+	         
+	         /*if(cashStatus === true){
+		         var cashJson = submitCash();
+		         parentJson['cashJson'] = cashJson;
+	         }*/
+	         if(chequeStatus === true){
+		         var chequeJson = submitChequeData();
+		         parentJson['chequeJson'] = chequeJson;
+	         }
+	         if(rtgsNeftStatus === true){
+		         var rtgsJson = submitRtgsData();
+		         parentJson['rtgsJson'] = rtgsJson;
+	         }
+	         /*if(pdpCashStatus === true){
+		         var pdcCashJson = submitPdcCash();
+		         parentJson['pdcCashJson'] = pdcCashJson;
+	         }*/
+	         if(pdpChequeStatus === true){
+		         var pdcChequeJson = submitPdc();
+		         parentJson['pdcChequeJson'] = pdcChequeJson;
+	         }
+	         if(pdpRtgsNeftStatus === true){
+		         var pdcRtgsJson = submitPdcRtgs();
+		         parentJson['pdcRtgsJson'] = pdcRtgsJson;
+         	}
+        	 
+	         console.log(parentJson);
+	         var jsonData = JSON.stringify(parentJson);
+	         
+	         document.getElementById("submitButton").disabled = true;
+	         
+	         submitDataAjax(jsonData);
          }
          
          
          function submitChequeData(){
          
-         var chequeJson = {};
-         chequeJson['dataType'] = 'cheque';
-         chequeJson['chequeAmount']= document.getElementById('chequeAmount').value;
-         var bank = document.getElementById('chequeBank');
-         chequeJson['chequeBankId'] = bank.value;
-         chequeJson['chequeBankName'] = bank.options[bank.selectedIndex].text.split('-')[0].trim();
-         chequeJson['chequeNo'] = document.getElementById('chequeNo').value;
-         chequeJson['chequeDate'] = document.getElementById('chequeDate').value;
-         chequeJson['chequeName'] = document.getElementById('nameOnCheque').value;
-         chequeJson['invoiceId'] = document.getElementById('invoiceId').value;
-         chequeJson['invoiceNo'] = document.getElementById('invoiceNo').value;
-         chequeJson['customerId'] = document.getElementById('customerId').value;
-         chequeJson['customerName'] = document.getElementById('customerName').value;
-         chequeJson['bankAccountId'] = bank.options[bank.selectedIndex].getAttribute('data-account-id');
-         chequeJson['accountPayableId'] = document.getElementById('accountPayableId').value;
-         chequeJson['paymentStatus'] = document.getElementById('chequePaymentStatus').value;
-         
-         return chequeJson;
+	         var chequeJson = {};
+	         chequeJson['dataType'] = 'cheque';
+	         chequeJson['chequeAmount']= document.getElementById('chequeAmount').value;
+	         var bank = document.getElementById('chequeBank');
+	         chequeJson['chequeBankId'] = bank.value;
+	         chequeJson['chequeBankName'] = bank.options[bank.selectedIndex].text.split('-')[0].trim();
+	         chequeJson['chequeNo'] = document.getElementById('chequeNo').value;
+	         chequeJson['chequeDate'] = document.getElementById('chequeDate').value;
+	         chequeJson['chequeName'] = document.getElementById('nameOnCheque').value;
+	         chequeJson['invoiceId'] = document.getElementById('invoiceId').value;
+	         chequeJson['invoiceNo'] = document.getElementById('invoiceNo').value;
+	         chequeJson['customerId'] = document.getElementById('customerId').value;
+	         chequeJson['customerName'] = document.getElementById('customerName').value;
+	         chequeJson['bankAccountId'] = bank.options[bank.selectedIndex].getAttribute('data-account-id');
+	         chequeJson['accountPayableId'] = document.getElementById('accountPayableId').value;
+	         chequeJson['paymentStatus'] = document.getElementById('chequePaymentStatus').value;
+	         
+	         return chequeJson;
          }
          
          function submitRtgsData(){
-         
-         var rtgsJson = {};
-         rtgsJson['dataType'] = 'rtgs';
-         rtgsJson['rtgsAmount']= document.getElementById('rtgsAmount').value;
-         rtgsJson['rtgsBank'] = document.getElementById('rtgsBank').value;
-         rtgsJson['rtgsAccountNo'] = document.getElementById('rtgsAccountNo').value;
-         rtgsJson['rtgsIfsc'] = document.getElementById('rtgsIfsc').value;
-         rtgsJson['rtgsDate'] = document.getElementById('invoiceDate').value;
-         rtgsJson['invoiceId'] = document.getElementById('invoiceId').value;
-         rtgsJson['invoiceNo'] = document.getElementById('invoiceNo').value;
-         rtgsJson['customerId'] = document.getElementById('customerId').value;
-         rtgsJson['customerName'] = document.getElementById('customerName').value;
-         rtgsJson['dsBankId'] = document.getElementById('dsBankId').value;
-         rtgsJson['accountPayableId'] = document.getElementById('accountPayableId').value;
-         rtgsJson['companyId'] = document.getElementById('companyId').value;
-         rtgsJson['paymentStatus'] = document.getElementById('rtgsPaymentStatus').value;
-         
-         return rtgsJson;
+	         
+	         var rtgsJson = {};
+	         rtgsJson['dataType'] = 'rtgs';
+	         rtgsJson['rtgsAmount']= document.getElementById('rtgsAmount').value;
+	         rtgsJson['rtgsBank'] = document.getElementById('rtgsBank').value;
+	         rtgsJson['rtgsAccountNo'] = document.getElementById('rtgsAccountNo').value;
+	         rtgsJson['rtgsIfsc'] = document.getElementById('rtgsIfsc').value;
+	         rtgsJson['rtgsDate'] = document.getElementById('invoiceDate').value;
+	         rtgsJson['invoiceId'] = document.getElementById('invoiceId').value;
+	         rtgsJson['invoiceNo'] = document.getElementById('invoiceNo').value;
+	         rtgsJson['customerId'] = document.getElementById('customerId').value;
+	         rtgsJson['customerName'] = document.getElementById('customerName').value;
+	         rtgsJson['dsBankId'] = document.getElementById('dsBankId').value;
+	         rtgsJson['accountPayableId'] = document.getElementById('accountPayableId').value;
+	         rtgsJson['companyId'] = document.getElementById('companyId').value;
+	         rtgsJson['paymentStatus'] = document.getElementById('rtgsPaymentStatus').value;
+	         
+	         return rtgsJson;
          }
          
          function submitCash(){
-         var cashJson = {};
-         
-         cashJson['dataType'] = 'cash';	
-         cashJson['cashAmount'] = document.getElementById('cashAmount').value;
-         cashJson['invoiceId'] = document.getElementById('invoiceId').value;
-         cashJson['customerName'] = document.getElementById('customerName').value;
-         cashJson['customerId'] = document.getElementById('customerId').value;
-         cashJson['invoiceNo'] = document.getElementById('invoiceNo').value;
-         cashJson['accountPayableId'] = document.getElementById('accountPayableId').value;
-         cashJson['cashAccountId'] = document.getElementById('cashAccountId').value;
-         cashJson['paymentStatus'] = document.getElementById('cashPaymentStatus').value;
-         
-         return cashJson;
+	         var cashJson = {};
+	         
+	         cashJson['dataType'] = 'cash';	
+	         cashJson['cashAmount'] = document.getElementById('cashAmount').value;
+	         cashJson['invoiceId'] = document.getElementById('invoiceId').value;
+	         cashJson['customerName'] = document.getElementById('customerName').value;
+	         cashJson['customerId'] = document.getElementById('customerId').value;
+	         cashJson['invoiceNo'] = document.getElementById('invoiceNo').value;
+	         cashJson['accountPayableId'] = document.getElementById('accountPayableId').value;
+	         cashJson['cashAccountId'] = document.getElementById('cashAccountId').value;
+	         cashJson['paymentStatus'] = document.getElementById('cashPaymentStatus').value;
+	         cashJson['cashDate'] = document.getElementById('cashDate').value;
+	         
+	         return cashJson;
          }
          
          function submitPdc(){
-         
-         var pdcJson = {};
-         
-         pdcJson['dataType'] = 'pdc';
-         pdcJson['pdcId'] =  document.getElementById('pdcId').value;
-         pdcJson['invoiceId'] = document.getElementById('invoiceId').value;
-         pdcJson['pdcAmount'] =  document.getElementById('pdcChequeAmount').value;
-         pdcJson['pdcNo'] = document.getElementById('pdcChequeNo').value;
-         pdcJson['pdcDate'] = document.getElementById('pdcChequeDate').value;
-         pdcJson['pdcPayeeName'] = document.getElementById('pdcNameOnCheque').value;
-         pdcJson['pdcBank'] = document.getElementById('pdcChequeBank').value;
-         var bank = document.getElementById('pdcBank');
-         pdcJson['pdcBankName'] = bank.options[bank.selectedIndex].text.split('-')[0].trim();
-         pdcJson['customerId'] = document.getElementById('customerId').value;
-         pdcJson['invoiceNo'] = document.getElementById('invoiceNo').value;
-         pdcJson['bankAccountId'] = bank.options[bank.selectedIndex].getAttribute('data-account-id');
-         pdcJson['accountPayableId'] = document.getElementById('accountPayableId').value;
-         pdcJson['bankAccountId'] = bank.options[bank.selectedIndex].getAttribute('data-account-id');
-         pdcJson['accountPayableId'] = document.getElementById('accountPayableId').value;
-         pdcJson['paymentStatus'] = document.getElementById('pdcChequePaymentStatus').value;
-         
-         return pdcJson;
+	         
+	         var pdcJson = {};
+	         
+	         pdcJson['dataType'] = 'pdc';
+	         pdcJson['pdcId'] =  document.getElementById('pdcId').value;
+	         pdcJson['invoiceId'] = document.getElementById('invoiceId').value;
+	         pdcJson['pdcAmount'] =  document.getElementById('pdcChequeAmount').value;
+	         pdcJson['pdcNo'] = document.getElementById('pdcChequeNo').value;
+	         pdcJson['pdcDate'] = document.getElementById('pdcChequeDate').value;
+	         pdcJson['pdcPayeeName'] = document.getElementById('pdcNameOnCheque').value;
+	         pdcJson['pdcBank'] = document.getElementById('pdcChequeBank').value;
+	         var bank = document.getElementById('pdcBank');
+	         pdcJson['pdcBankName'] = bank.options[bank.selectedIndex].text.split('-')[0].trim();
+	         pdcJson['customerId'] = document.getElementById('customerId').value;
+	         pdcJson['invoiceNo'] = document.getElementById('invoiceNo').value;
+	         pdcJson['bankAccountId'] = bank.options[bank.selectedIndex].getAttribute('data-account-id');
+	         pdcJson['accountPayableId'] = document.getElementById('accountPayableId').value;
+	         pdcJson['bankAccountId'] = bank.options[bank.selectedIndex].getAttribute('data-account-id');
+	         pdcJson['accountPayableId'] = document.getElementById('accountPayableId').value;
+	         pdcJson['paymentStatus'] = document.getElementById('pdcChequePaymentStatus').value;
+	         
+	         return pdcJson;
          
          }
          
          function submitPdcRtgs(){
-         
-         var pdcRtgsJson = {};
-         
-         pdcRtgsJson['dataType'] = 'pdcRtgs';
-         pdcRtgsJson['pdcId'] = document.getElementById('pdcId').value;
-         pdcRtgsJson['invoiceId'] = document.getElementById('invoiceId').value;
-         pdcRtgsJson['pdcRtgsAmount'] =  document.getElementById('pdcRtgsAmount').value;
-         pdcRtgsJson['pdcRtgsBank'] = document.getElementById('pdcRtgsBank').value;
-         pdcRtgsJson['pdcRtgsAccountNo'] = document.getElementById('pdcRtgsAccountNo').value;
-         pdcRtgsJson['pdcRtgsIfsc'] = document.getElementById('pdcRtgsIfsc').value;
-         pdcRtgsJson['pdcRtgsDate'] = document.getElementById('pdcRtgsDate').value;
-         pdcRtgsJson['invoiceNo'] = document.getElementById('invoiceNo').value;
-         pdcRtgsJson['customerId'] = document.getElementById('customerId').value;
-         pdcRtgsJson['customerName'] = document.getElementById('customerName').value;
-         pdcRtgsJson['dsBankId'] = document.getElementById('dsBankId').value;
-         pdcRtgsJson['accountPayableId'] = document.getElementById('accountPayableId').value;
-         pdcRtgsJson['companyId'] = document.getElementById('companyId').value;
-         pdcRtgsJson['paymentStatus'] = document.getElementById('pdcRtgsPaymentStatus').value;
-         
-         return pdcRtgsJson;
+	         
+	         var pdcRtgsJson = {};
+	         
+	         pdcRtgsJson['dataType'] = 'pdcRtgs';
+	         pdcRtgsJson['pdcId'] = document.getElementById('pdcId').value;
+	         pdcRtgsJson['invoiceId'] = document.getElementById('invoiceId').value;
+	         pdcRtgsJson['pdcRtgsAmount'] =  document.getElementById('pdcRtgsAmount').value;
+	         pdcRtgsJson['pdcRtgsBank'] = document.getElementById('pdcRtgsBank').value;
+	         pdcRtgsJson['pdcRtgsAccountNo'] = document.getElementById('pdcRtgsAccountNo').value;
+	         pdcRtgsJson['pdcRtgsIfsc'] = document.getElementById('pdcRtgsIfsc').value;
+	         pdcRtgsJson['pdcRtgsDate'] = document.getElementById('pdcRtgsDate').value;
+	         pdcRtgsJson['invoiceNo'] = document.getElementById('invoiceNo').value;
+	         pdcRtgsJson['customerId'] = document.getElementById('customerId').value;
+	         pdcRtgsJson['customerName'] = document.getElementById('customerName').value;
+	         pdcRtgsJson['dsBankId'] = document.getElementById('dsBankId').value;
+	         pdcRtgsJson['accountPayableId'] = document.getElementById('accountPayableId').value;
+	         pdcRtgsJson['companyId'] = document.getElementById('companyId').value;
+	         pdcRtgsJson['paymentStatus'] = document.getElementById('pdcRtgsPaymentStatus').value;
+	         
+	         return pdcRtgsJson;
          
          }
          
          function submitPdcCash(){
-         var pdcCashJson = {};
-         
-         pdcCashJson['dataType'] = 'cash';	
-         pdcCashJson['pdcCashAmount'] = document.getElementById('pdcCashAmount').value;
-         pdcCashJson['invoiceId'] = document.getElementById('invoiceId').value;
-         pdcCashJson['customerName'] = document.getElementById('customerName').value;
-         pdcCashJson['customerId'] = document.getElementById('customerId').value;
-         pdcCashJson['invoiceNo'] = document.getElementById('invoiceNo').value;
-         pdcCashJson['accountPayableId'] = document.getElementById('accountPayableId').value;
-         pdcCashJson['cashAccountId'] = document.getElementById('pdcCashAccountId').value;
-         pdcCashJson['paymentStatus'] = document.getElementById('pdcCashPaymentStatus').value;
-         
-         return pdcCashJson;
+	         var pdcCashJson = {};
+	         
+	         pdcCashJson['dataType'] = 'cash';	
+	         pdcCashJson['pdcCashAmount'] = document.getElementById('pdcCashAmount').value;
+	         pdcCashJson['invoiceId'] = document.getElementById('invoiceId').value;
+	         pdcCashJson['customerName'] = document.getElementById('customerName').value;
+	         pdcCashJson['customerId'] = document.getElementById('customerId').value;
+	         pdcCashJson['invoiceNo'] = document.getElementById('invoiceNo').value;
+	         pdcCashJson['accountPayableId'] = document.getElementById('accountPayableId').value;
+	         pdcCashJson['cashAccountId'] = document.getElementById('pdcCashAccountId').value;
+	         pdcCashJson['paymentStatus'] = document.getElementById('pdcCashPaymentStatus').value;
+	         pdcCashJson['pdcCashDate'] = document.getElementById('pdcCashAmountDate').value;
+	         
+	         return pdcCashJson;
          }
          
          
          function submitDataAjax(data){
-         console.log(data);
-         url = "../processing/submitPayment.jsp?data="+data;
-         if(window.XMLHttpRequest){  
-         submitData=new XMLHttpRequest();  
-         }  
-         else if(window.ActiveXObject){  
-         submitData=new ActiveXObject("Microsoft.XMLHTTP");  
-         }  
-         try{  
-         submitData.onreadystatechange=getResponse;  
-         console.log("AJAX Req sent");
-         submitData.open("GET",url,true);  
-         submitData.send();  
-         }catch(e){alert("Unable to connect to server");}
-         }
-         
-         function getResponse(){
-         if(submitData.readyState == 4){
-         var response = this.response.trim();
-         var ids = response.split(',');
-         document.getElementById("chequeId").value = ids[1];
-         document.getElementById("pdcChequeId").value = ids[2];
-         console.log(response);
-         getPendingInvReport();
-         $.fn.checkStatus(ids[0],"Payment Information has been saved successfully!")
-         }
+	         console.log(data);
+	         url = "../processing/submitPayment.jsp?data="+data;
+	         if(window.XMLHttpRequest){  
+	         	submitData=new XMLHttpRequest();  
+	         }  
+	         else if(window.ActiveXObject){  
+	        	 submitData=new ActiveXObject("Microsoft.XMLHTTP");  
+	         }  
+	         try{  
+		         submitData.onreadystatechange=getResponse;  
+		         console.log("AJAX Req sent");
+		         submitData.open("GET",url,true);  
+		         submitData.send();  
+	         	}catch(e){alert("Unable to connect to server");}
+	      }
+	         
+	      function getResponse(){
+		    if(submitData.readyState == 4){
+		         var response = this.response.trim();
+		         var ids = response.split(',');
+		         document.getElementById("chequeId").value = ids[1];
+		         document.getElementById("pdcChequeId").value = ids[2];
+		         console.log(response);
+		         getPendingInvReport();
+		         $.fn.checkStatus(ids[0],"Payment Information has been saved successfully!")
+	         }
          }
          
          /****************************************************************************/
          //Print cheque details
          function PrintChequeData(chequeId){
-         if(Number(chequeId) === 0){
-         alert('Enter correct cheque details and submit the payment first.');
-         }else{
-         var win = window.open("../report/Cheque.jsp?chequeId="+chequeId, '_blank');
-         win.focus();
-         }
+	         if(Number(chequeId) === 0){
+	         	alert('Enter correct cheque details and submit the payment first.');
+	         }else{
+	       	 	var win = window.open("../report/Cheque.jsp?chequeId="+chequeId, '_blank');
+	         	win.focus();
+	         }
          }
          
          
+         /**************************************************************************/
+         function submitCashPayment(){//submit form data
+	         var parentJson = {};
+	         parentJson['invoiceId'] = document.getElementById('invoiceId').value;
+	         
+	         if(cashStatus === true){
+		         var cashJson = submitCash();
+		         parentJson['cashJson'] = cashJson;
+	         }
+	         	 
+	         console.log(parentJson);
+	         var jsonData = JSON.stringify(parentJson);
+	         
+	         document.getElementById("payCash").disabled = true;
+	         
+	         submitDataAjax(jsonData);
+         }
+         
+         
+         /*************************************************************************/
+         function submitPdpCashPayment(){//submit form data
+	         var parentJson = {};
+	         parentJson['invoiceId'] = document.getElementById('invoiceId').value;
+	         
+	         if(pdpCashStatus === true){
+		         var pdcCashJson = submitPdcCash();
+		         parentJson['pdcCashJson'] = pdcCashJson;
+         	 }
+	         	 
+	         console.log(parentJson);
+	         var jsonData = JSON.stringify(parentJson);
+	         
+	         document.getElementById("payPdpCash").disabled = true;
+	         
+	         submitDataAjax(jsonData);
+         }
+         
+         
+         
+         /**************************************************************************/
+         document.getElementById('payCash')addEventListener('click', function(e){
+        	 submitCashPayment();
+         });
+         
+         
+         /**************************************************************************/
+         document.getElementById('payPdpCash')addEventListener('click', function(e){
+        	 submitPdpCashPayment();
+         });
          
          
          /***************************************************************************/

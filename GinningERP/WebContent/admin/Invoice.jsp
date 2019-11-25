@@ -915,15 +915,12 @@ function setCurrentDate(){
 			cell12.innerHTML = '<input type="hidden" id="gradeDesc'+(rowNo+1)+'" class="lbl-rm-all" name="gradeDesc" value="'+itemData[i].gradeDescription+'" >';
 
 		}
-		calculateTotal();
+		calculateTotal();	
+		var paymentTable = document.getElementById('paymentTableBody');
+		var paymentDetails = data.paymentDetails;
+		console.log(paymentDetails);
 		
-		var paymentTable =  document.getElementById('paymentTableBody');
-		
-		var cashAmount = data.cashAmount;
-		document.getElementById('payAmount1').value = cashAmount;
-		var chequeAmount = data.chequeAmount;
-		var rtgsAmount = data.rtgsAmount;
-		for(j=1;j<3;j++){
+		for(j=1; j<paymentDetails.length; j++){
 			var noOfRowsPayment = paymentTable.rows.length;
 			var row = paymentTable.insertRow(noOfRowsPayment);
 			var cell1 = row.insertCell(0);
@@ -938,27 +935,35 @@ function setCurrentDate(){
 						
 			cell1.setAttribute("align","center");
 			cell1.innerHTML = (noOfRowsPayment+1);
-		if(noOfRowsPayment === 1){
 			cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRowsPayment+1)+'" name="paymentMode">'+
 					   			'<option>Cash</option>'+
-					   			'<option selected>Cheque</option>'+
+					   			'<option >Cheque</option>'+
 					   			'<option>RTGS/NEFT</option>'+
 							  '</select>';
-			cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="payAmount'+(noOfRowsPayment+1)+'" name="payAmount" value='+chequeAmount+'>';
+			cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="payAmount'+(noOfRowsPayment+1)+'" name="payAmount" value="">';
 			cell4.innerHTML = '<input type="date" class="form-control form-control-sm" id="payDate2" name="payDate" value="">'
-		}
-		if(noOfRowsPayment === 2){
-			cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRowsPayment+1)+'" name="paymentMode">'+
-					   			'<option>Cash</option>'+
-					   			'<option>Cheque</option>'+
-					   			'<option selected>RTGS/NEFT</option>'+
-							  '</select>';
-			cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="payAmount'+(noOfRowsPayment+1)+'" name="payAmount" value='+rtgsAmount+'>';
-			cell4.innerHTML = '<input type="date" class="form-control form-control-sm" id="payDate3" name="payDate" value="">';
-		}
-			
 			cell5.innerHTML = '<img src="../property/img/add.png" alt="add" class="ctm-hover" >'
 			cell6.innerHTML = '<img src="../property/img/delete.png" alt="delete" class="ctm-hover" id="deleteRow'+(noOfRowsPayment+1)+'" >'
+		
+		}
+		
+		for(k=0; k<paymentDetails.length; k++){
+			if(Number(paymentDetails[k].modeId) === 1){
+				document.getElementsByName('paymentMode')[k].value = 'Cash';
+				document.getElementsByName('payAmount')[k].value = paymentDetails[k].amount;
+				document.getElementsByName('payDate')[k].value = paymentDetails[k].date ;
+			}
+			if(Number(paymentDetails[k].modeId) === 3){
+				document.getElementsByName('paymentMode')[k].value = 'RTGS/NEFT';
+				document.getElementsByName('payAmount')[k].value = paymentDetails[k].amount;
+				document.getElementsByName('payDate')[k].value = paymentDetails[k].date ;
+			}
+			if(Number(paymentDetails[k].modeId) === 2){
+				document.getElementsByName('paymentMode')[k].value = 'Cheque';
+				document.getElementsByName('payAmount')[k].value = paymentDetails[k].amount;
+				document.getElementsByName('payDate')[k].value = paymentDetails[k].date ;
+			}
+			
 		}
 		
 		document.getElementById('updateButton').disabled = false;
