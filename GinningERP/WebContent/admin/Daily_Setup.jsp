@@ -367,7 +367,7 @@
 	
 	
 <!--  	-->	
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="../js/3.4.1-jq.js"></script>
 	<script src="../js/Validation.js"></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>

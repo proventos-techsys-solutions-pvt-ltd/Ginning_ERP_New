@@ -105,8 +105,8 @@
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 		<script src="../js/commonjs.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script src="../js/3.4.1-jq.js"></script>
+		<script type="text/javascript" src="../js/1.8.3-jq.js"></script>
 		<script src="../js/export/export2excel.js"></script>
 		<script src="../js/Validation.js"></script>
     	<script>

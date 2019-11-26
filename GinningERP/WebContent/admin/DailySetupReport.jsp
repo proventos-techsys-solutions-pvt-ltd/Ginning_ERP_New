@@ -96,7 +96,7 @@
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 		<script src="../js/commonjs.js"></script>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script type="../js/1.8.3-jq.js"></script>
 		<script src="../js/export/export2excel.js"></script>
     	<script>
     	setTitle("Daily Setup Report");//Setting Title of Page

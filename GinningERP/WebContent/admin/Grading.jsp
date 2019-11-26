@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
 <title>Goods Grading Note</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="../js/3.4.1-jq.js"></script>
+<script src="../js/3.2.1-jq.js"></script>
 <script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
 </head>
 

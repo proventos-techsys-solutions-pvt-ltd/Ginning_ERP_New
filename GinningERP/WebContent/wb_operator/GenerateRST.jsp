@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css?family=Vollkorn&display=swap" rel="stylesheet"> 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Bootstrap JS -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/3.4.1-jq.js"></script>
   	<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockWeigh.js" ></script>
   	<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
 	<script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
