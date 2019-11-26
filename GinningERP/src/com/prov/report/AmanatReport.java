@@ -112,7 +112,7 @@ public JSONArray getAmanatDataInvoicing(int rst) {
 		con = OracleConnection.getConnection();
 		
 		String invSql = "SELECT GD.ID, GD.WEIGHMENT_ID, GD.MATERIAL, GD.QUANTITY, GD.GRADE, GD.RATE, GD.AUTHORIZED_BY, GD.MOISTURE, GD.BONUS_PER_QTL,\r\n" + 
-						"AM.ID AMANAT_ID, AM.AMANAT_DATE, AM.CUSTOMER_ID, AM.FINAL_RATE,\r\n" + 
+						"AM.ID AMANAT_ID, AM.AMANAT_DATE, AM.CUSTOMER_ID, AM.FINAL_RATE, AM.DIFF_FROM_SUPER,\r\n" + 
 						"WM.VID, WM.RST, WM.NET, WM.WEIGHMENT_DATE,  \r\n" + 
 						"CVM.WEIGH_RATE,  \r\n" + 
 						"CM.NAME, CM.ADDRESS, CM.MOBILE, CM.BLACKLISTED, CM.MEMBERSHIP,  \r\n" + 
@@ -151,21 +151,22 @@ public JSONArray getAmanatDataInvoicing(int rst) {
 			obj.put("amanatDate",properDate);
 			obj.put("customerId", rs.getString(12));
 			obj.put("finalRate", rs.getString(13));
-			obj.put("vehicleId", rs.getString(14));
-			obj.put("rst", rs.getString(15));
-			obj.put("net", rs.getString(16));
+			obj.put("differenceFromSuper", rs.getString(14));
+			obj.put("vehicleId", rs.getString(15));
+			obj.put("rst", rs.getString(16));
+			obj.put("net", rs.getString(17));
 			
-			Date date2=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(17));
+			Date date2=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(18));
 			String properDate1 = format2.format(date2);
 			
 			obj.put("weighmentDate", properDate1);
-			obj.put("weighRate", rs.getString(18));
-			obj.put("customerName", rs.getString(19));
-			obj.put("customerAddress", rs.getString(20));
-			obj.put("customerMobile", rs.getString(21));
-			obj.put("customerBlacklisted", rs.getInt(22));
-			obj.put("customerMembership", rs.getInt(23));
-			obj.put("gradeDesc", rs.getString(24));
+			obj.put("weighRate", rs.getString(19));
+			obj.put("customerName", rs.getString(20));
+			obj.put("customerAddress", rs.getString(21));
+			obj.put("customerMobile", rs.getString(22));
+			obj.put("customerBlacklisted", rs.getInt(23));
+			obj.put("customerMembership", rs.getInt(24));
+			obj.put("gradeDesc", rs.getString(25));
 			
 			jsonArray.put(obj);
 		}

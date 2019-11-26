@@ -518,7 +518,7 @@ function setCurrentDate(){
 		
 		if(fetchAmanatRequest.readyState == 4){
 			var response = this.response.trim();
-			console.log(response);
+		
 			if(Number(response) === 0 ){
 				window.alert("RST entered is either blank or 0.")
 			}
@@ -538,12 +538,13 @@ function setCurrentDate(){
 	
 	
 	function setAmanatData(data){
-		
+		console.log(data);
 		document.getElementById('rst').disabled = true;
 		//document.getElementById('amanatRst').disabled = true;
 		document.getElementById('UpdateInvoiceNo').disabled = true;
 		
 		var noOfRows = data.length;
+		var superRate = data[noOfRows-1].superRate;
 		var table = document.getElementById("tableBody");
 		
 		table.innerHTML = '';
@@ -585,7 +586,7 @@ function setCurrentDate(){
 		document.getElementById("bonusPerQtl").value = data[0].bonusPerQtl;
 
 		
-		for(i=0; i<noOfRows; i++ ){
+		for(i=0; i<noOfRows-1; i++ ){
 		
 			var rowNo = tableBody.children.length;
 			
@@ -613,7 +614,7 @@ function setCurrentDate(){
 			cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+data[i].quantity+'" readonly>';
 			cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+data[i].grade+'" readonly>';
 			cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+data[i].moisture+'" readonly>';
-			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+data[i].rate+'">';
+			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+ (Number(superRate)-Number(data[i].differenceFromSuper))+'">';
 			var amount = (data[i].rate * (data[i].quantity/100));
 			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+amount+'" readonly>';
 			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" disabled>';

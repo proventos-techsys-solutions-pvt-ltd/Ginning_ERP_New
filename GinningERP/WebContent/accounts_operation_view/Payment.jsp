@@ -1239,14 +1239,16 @@
          
          
          /**************************************************************************/
-         document.getElementById('payCash')addEventListener('click', function(e){
+         document.getElementById('payCash').addEventListener('click', function(e){
         	 submitCashPayment();
+        	 document.getElementById('payCash').disabled = true;
          });
          
          
          /**************************************************************************/
-         document.getElementById('payPdpCash')addEventListener('click', function(e){
+         document.getElementById('payPdcCash').addEventListener('click', function(e){
         	 submitPdpCashPayment();
+        	 document.getElementById('payPdcCash').disabled = true;
          });
          
          

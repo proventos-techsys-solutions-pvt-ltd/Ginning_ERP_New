@@ -1,3 +1,5 @@
+<%@page import="org.json.JSONObject"%>
+<%@page import="com.prov.report.GradeRateReport"%>
 <%@page import="com.prov.dbops.CheckAmanatRstExists"%>
 <%@page import="com.prov.dbops.CheckAlreadyGraded"%>
 <%@page import="com.prov.dbops.CheckRST"%>
@@ -53,7 +55,11 @@
 	    			AmanatReport rep = new AmanatReport();
 	    	    	
 	    	    	JSONArray json = rep.getAmanatDataInvoicing(rst);
-	
+	    	    	
+	    	    	double superRate = new GradeRateReport().getTodaysSuperRate().getRate();
+	    	    	JSONObject obj = new JSONObject();
+	    	    	obj.put("superRate", superRate);
+					json.put(obj);
 	    	    	out.print(json);
 	    	    	out.flush();
     			}else if(AmanatRstFlag == 0){
