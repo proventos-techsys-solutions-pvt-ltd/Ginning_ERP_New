@@ -3,7 +3,7 @@ var uiController = (function(){
 		var elementIds={
 				rst : document.getElementById("rst"),
 				date : document.getElementById("date"),
-				vehicleNo : document.getElementById("vehicleNo"),
+				vehicleNo : document.getElementById("vehicleNo"),// if cart then no validation and should accept null values
 				vehicleType : document.getElementById("vehicleType"),
 				customerName : document.getElementById("customer"),
 				mobileNo : document.getElementById("mobile"),
@@ -12,7 +12,8 @@ var uiController = (function(){
 				grossWeight : document.getElementById("gross"),
 				newCustomerName : document.getElementById("newCustomerName"),
 				newMobileNo : document.getElementById("newCustomerMobile"),
-				newAddress : document.getElementById("newCustomerAddress")
+				newAddress : document.getElementById("newCustomerAddress"),
+				noCart : document.getElementById("cartCheck")
 		}
 		
 		var expressions={
@@ -34,10 +35,70 @@ var uiController = (function(){
 					if(elementIds.date.value!==""){
 						elementIds.date.style.borderColor ="#ced4da";
 						elementIds.date.title ="Date cannot be blank";
-						//validation on vehicle no
-						if(expressions.vehicleNo.test(elementIds.vehicleNo.value.trim())){
-							elementIds.vehicleNo.style.borderColor ="#ced4da";
-							elementIds.vehicleNo.title ="";
+						if(($("input[type=checkbox]").is(":checked"))){//checking if the vehicle is not a  cart
+							//validation on vehicle no
+							if(expressions.vehicleNo.test(elementIds.vehicleNo.value.trim())){//vehicle number validation starts here
+								elementIds.vehicleNo.style.borderColor ="#ced4da";
+								elementIds.vehicleNo.title ="";
+								//validation on Vehicle Type
+								if(elementIds.vehicleType.value.trim() !=="Select"){
+									elementIds.vehicleType.style.borderColor ="#ced4da";
+									elementIds.vehicleType.title ="";
+									//Validating customer name
+									if(expressions.customerName.test(elementIds.customerName.value.trim())){
+										elementIds.customerName.style.borderColor ="#ced4da";
+										elementIds.customerName.title ="";
+										//validating mobile number
+										if(expressions.mobileNo.test(elementIds.mobileNo.value.trim())){
+											elementIds.mobileNo.style.borderColor ="#ced4da";
+											elementIds.mobileNo.title ="";
+											//validating address
+											if(elementIds.address.value.trim() !==""){
+												elementIds.address.style.borderColor ="#ced4da";
+												elementIds.address.title ="";
+												//validating material
+												if(elementIds.material.value.trim()!==""){
+													elementIds.material.style.borderColor ="#ced4da";
+													elementIds.material.title ="";
+													//validate gross weight
+													if(Number(elementIds.grossWeight.value.trim())>0){
+														return true
+													}else{
+														alert("Gross weight should be more than Zero");
+													}
+												}else{
+													elementIds.material.style.border ="1px red solid";
+													elementIds.material.title ="Should not be blank";
+													return false;
+												}
+											}else{
+												elementIds.address.style.border ="1px red solid";
+												elementIds.address.title ="Should not be blank";
+												return false;
+											}
+										}else{
+											elementIds.mobileNo.style.border ="1px red solid";
+											elementIds.mobileNo.title ="Should be number only and must be 10";
+											return false;
+										}
+									}else{
+										elementIds.customerName.style.border ="1px red solid";
+										elementIds.customerName.title ="Cannot be blank and should be in capital letters only";
+										return false;
+									}
+									
+								}else{
+									elementIds.vehicleType.style.border ="1px red solid";
+									elementIds.vehicleType.title ="Vehicle Type cannot be blank";
+									return false;
+								}
+							}else{
+								elementIds.vehicleNo.style.border ="1px red solid";
+								elementIds.vehicleNo.title ="Vehicle number format 'AA 31 MA 4444'";
+								return false;
+							}//vehicle number validation ends here
+						}else{
+							elementIds.vehicleNo.value = null;
 							//validation on Vehicle Type
 							if(elementIds.vehicleType.value.trim() !=="Select"){
 								elementIds.vehicleType.style.borderColor ="#ced4da";
@@ -90,11 +151,9 @@ var uiController = (function(){
 								elementIds.vehicleType.title ="Vehicle Type cannot be blank";
 								return false;
 							}
-						}else{
-							elementIds.vehicleNo.style.border ="1px red solid";
-							elementIds.vehicleNo.title ="Vehicle number format 'AA 31 MA 4444'";
-							return false;
-						}
+							
+						}// cart checking ends here
+					
 					}else{
 						elementIds.date.style.border ="1px red solid";
 						elementIds.date.title ="Date cannot be blank";

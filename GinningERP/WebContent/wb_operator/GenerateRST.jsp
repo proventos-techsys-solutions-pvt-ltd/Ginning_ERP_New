@@ -19,6 +19,15 @@
   	<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
 	<script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+	<style>
+		.input-group-text{
+			border-radius: 0rem;
+			margin-top: .5rem;
+		}
+		.remove-margin-input{
+		margin-bottom: 0rem;
+		}
+	</style>
 </head>
 <body>
   <%@include file="NavBar.jsp" %>
@@ -53,8 +62,15 @@
 	        </div>
 	
 	        <div class="col-md-4">
-	        	<label class="lbl-rm-all">Vehicle No</label>
-	        	<input type="text" class="form-control " id="vehicleNo" name="vehicleNo" placeholder="Vh No">
+	          <label for="" class="lbl-rm-all">Vehicle No </label>
+                                    <div class="input-group input-group ">
+									  <div class="input-group-prepend">
+									    <div class="input-group-text">
+									      <input type="checkbox" class="remove-margin-input"  id="cartCheck" name="cartCheck" value="on">
+									    </div>
+									  </div>
+									 <input type="text" class="form-control " id="vehicleNo" name="vehicleNo" placeholder="Vh No">
+									</div>
 	        </div>
         </div>
         <div class="form-row form-row-ctm">
@@ -291,7 +307,9 @@
 <script src="${pageContext.request.contextPath}/js/validations/GenerateRST.js"></script>
 <script src="../js/Validation.js"></script>
 <script>
-
+$(document).ready(function() {
+    $("input[name='cartCheck']").attr('checked', 'checked');
+});
 /*************************
  Photo code
  ****************************/
