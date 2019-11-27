@@ -8,7 +8,6 @@
   		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- Bootstrap CSS -->
 	  	<link rel="stylesheet" href="../styles/bootstrap.min.css">	
-	  	<link rel="stylesheet" href="../styles/WBStyle.css">
 	  
      <title>RTGS NEFT</title>
    </head>
