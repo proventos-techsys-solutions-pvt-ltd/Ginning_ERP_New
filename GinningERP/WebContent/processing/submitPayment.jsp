@@ -145,7 +145,7 @@
 				rtgs.setCustomerName(((String)rtgsJson.get("customerName")).toUpperCase());
 				rtgs.setInvoiceNo(((String)rtgsJson.get("invoiceNo")).toUpperCase());
 				rtgs.setInvoiceId(Integer.parseInt((String)rtgsJson.get("invoiceId")));
-				rtgs.setVoucherNo(voucherNo);
+				rtgs.setVoucherNo(0);
 				
 				AddRtgs addRtgs = new AddRtgs();
 				

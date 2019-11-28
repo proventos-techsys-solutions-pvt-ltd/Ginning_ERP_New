@@ -9,11 +9,9 @@
 <% 
 	RtgsReport report = new RtgsReport();
 
-	ArrayList<Rtgs> rtgsReport = report.rtgsReport();
+	JSONArray rtgsReport = report.getRtgsReportforPayment();
 	
-	JSONArray rtgsReportJson = new JSONArray(rtgsReport);
-	
-	out.print(rtgsReportJson);
+	out.print(rtgsReport);
 	out.flush();
 	
 %>

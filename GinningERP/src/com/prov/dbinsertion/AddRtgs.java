@@ -48,8 +48,11 @@ public class AddRtgs {
 			cs.setDate(8, sqlDate);
 			cs.setString(9, r.getCustomerName());
 			cs.setString(10, r.getInvoiceNo());
-			cs.setInt(11, r.getVoucherNo());
-			
+			if( r.getVoucherNo() == 0) {
+				cs.setNull(11, Types.NUMERIC);
+			}else {
+				cs.setInt(11, r.getVoucherNo());
+			}
 			cs.executeUpdate();
 			
 			id = cs.getInt(1);

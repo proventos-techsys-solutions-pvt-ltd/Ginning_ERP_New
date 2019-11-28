@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.prov.bean.Rtgs;
@@ -117,6 +118,75 @@ public class RtgsReport {
 			e.printStackTrace();
 		}
 		return count;
+	}
+	
+	public JSONArray getRtgsReportforPayment() {
+		ResultSet rs = null;
+		Connection con = null;
+		JSONArray arr = new JSONArray();
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT DISTINCT\r\n" + 
+					"    II.WEIGHMENT_ID,\r\n" + 
+					"    RT.ID,\r\n" + 
+					"    RT.INVOICE_ID,\r\n" + 
+					"    RT.CUSTOMER_ID,\r\n" + 
+					"    RT.ACC_NO,\r\n" + 
+					"    RT.BANK_NAME,\r\n" + 
+					"    RT.IFSC_CODE,\r\n" + 
+					"    RT.AMOUNT,\r\n" + 
+					"    RT.RTGS_DATE,\r\n" + 
+					"    RT.CUSTOMER_NAME,\r\n" + 
+					"    RT.INVOICE_NO,\r\n" + 
+					"    RT.VOUCHER_NO,\r\n" + 
+					"    IM.COMPANY_ID,\r\n" + 
+					"    WM.DS_ID,\r\n" + 
+					"    DS.BANK_ID \r\n" + 
+					"FROM\r\n" + 
+					"    INVOICE_ITEMS   II,\r\n" + 
+					"    RTGS_MASTER     RT,\r\n" + 
+					"    INVOICE_MAST    IM,\r\n" + 
+					"    WEIGH_MAST      WM,\r\n" + 
+					"    DAILY_SETUP DS\r\n" + 
+					"WHERE\r\n" + 
+					"    RT.INVOICE_ID = IM.ID\r\n" + 
+					"    AND II.INVOICE_ID = IM.ID\r\n" + 
+					"    AND WM.ID = II.WEIGHMENT_ID\r\n" + 
+					"    AND DS.ID = WM.DS_ID\r\n" + 
+					"    AND RT.VOUCHER_NO IS NULL";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				JSONObject obj = new JSONObject();
+				obj.put("weighmentId",rs.getInt(1));
+				obj.put("id",rs.getInt(2));
+				obj.put("invoiceId",rs.getInt(3));
+				obj.put("customerId",rs.getInt(4));
+				obj.put("accountNo",rs.getString(5));
+				obj.put("bankName",rs.getString(6));
+				obj.put("ifscCode",rs.getString(7));
+				obj.put("rtgsAmount",rs.getLong(8));
+				obj.put("rtgsDate",rs.getString(9));
+				obj.put("customerName",rs.getString(10));
+				obj.put("invoiceNo",rs.getString(11));
+				obj.put("rtgsVoucherNo",rs.getString(12));
+				obj.put("companyId",rs.getString(13));
+				obj.put("dailySetupId",rs.getString(14));
+				obj.put("bankId",rs.getString(15));
+				
+				arr.put(obj);
+				
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return arr;
 	}
 
 }

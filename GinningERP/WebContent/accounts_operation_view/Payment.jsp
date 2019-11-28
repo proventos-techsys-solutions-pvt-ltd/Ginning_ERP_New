@@ -1100,7 +1100,7 @@
 	         pdcJson['pdcDate'] = document.getElementById('pdcChequeDate').value;
 	         pdcJson['pdcPayeeName'] = document.getElementById('pdcNameOnCheque').value;
 	         pdcJson['pdcBank'] = document.getElementById('pdcChequeBank').value;
-	         var bank = document.getElementById('pdcBank');
+	         var bank = document.getElementById('pdcChequeBank');
 	         pdcJson['pdcBankName'] = bank.options[bank.selectedIndex].text.split('-')[0].trim();
 	         pdcJson['customerId'] = document.getElementById('customerId').value;
 	         pdcJson['invoiceNo'] = document.getElementById('invoiceNo').value;
