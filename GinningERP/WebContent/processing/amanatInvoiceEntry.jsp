@@ -67,20 +67,17 @@
 				item.setGradeId(Integer.parseInt((String)obj.get("gradeId")));
 				item.setRst(Integer.parseInt((String)obj.get("rst")));
 				invoiceItemList.add(item);
-			}
-			else if(((String)obj.get("amanat")).equals("true")){
-				Amanat item = new Amanat();
-				
-				item.setCustomerId(Integer.parseInt((String)json.get("customerId")));
-				item.setAmanatDate((String)json.get("invoiceDate"));
-				item.setGradeId(Integer.parseInt((String)obj.get("gradeId")));
-				item.setRst(Integer.parseInt((String)obj.get("rst")));
-				item.setDifference(superRate - Long.parseLong((String)obj.get("rate")));
-				item.setInvoicedQty(0);
-				
-				amanatItemList.add(item);
-			}
 			
+				Amanat amItem = new Amanat();
+				
+				amItem.setCustomerId(Integer.parseInt((String)json.get("customerId")));
+				amItem.setAmanatDate((String)json.get("invoiceDate"));
+				amItem.setGradeId(Integer.parseInt((String)obj.get("gradeId")));
+				amItem.setRst(Integer.parseInt((String)obj.get("rst")));
+				amItem.setFinalRate(Long.parseLong((String)obj.get("rate")));
+				amItem.setInvoicedQty(Long.parseLong((String)obj.get("quantity")));
+				amanatItemList.add(amItem);
+			}
 		}
 		
 		int companyId = Integer.parseInt((String)json.get("companyId"));
@@ -137,66 +134,12 @@
 			}
 		}
 		
-		if(amanatItemList.size()>0){
-			AddAmanatEntry addAmanat = new AddAmanatEntry();
-			
-			for(int i=0; i<amanatItemList.size(); i++){
-				addAmanat.addAmanat(amanatItemList.get(i));
-			}
+		
+		UpdateAmanat updateAmanat = new UpdateAmanat();
+		
+		for(int i=0; i<amanatItemList.size(); i++){
+			updateAmanat.setFinalRate(amanatItemList.get(i));
 		}
-		
-		if(Long.parseLong((String)json.get("pdcAmount")) > 0){
-			PDC pdc = new PDC();
-			
-			pdc.setCustomerId(Integer.parseInt((String)json.get("customerId")));
-			pdc.setPayDate((String)json.get("pdcDate"));
-			pdc.setInvoiceId(invoiceId);
-            pdc.setAmount(Long.parseLong((String)json.get("pdcAmount")));	
-            pdc.setModeOfPayment(Integer.parseInt((String)json.get("pdcPaymentMode")));
-            pdc.setChequeId(0);
-            pdc.setRtgsId(0);
-            pdc.setVoucherNo(0);
-            pdc.setPayStatus(0);
-            
-            AddPDC add = new AddPDC();
-            
-            int pdcId = add.addPDC(pdc);
-		}
-		
-		StockMasterReport stockMast = new StockMasterReport();
-		
-		int stockMastId = stockMast.getTodaysStockId((String)json.get("invoiceDate"), companyId);
-		
-		System.out.println("Stock ID ---- "+stockMastId);
-		
-		if(invoiceId>0){
-			StockDetails stock = new StockDetails();
-			double totalQuantity = Long.parseLong((String)json.get("totalQuantity"));
-			double totalAmount = Long.parseLong((String)json.get("total"));
-			double averageRate = totalAmount/(totalQuantity/100);
-			stock.setInvId(invoiceId);
-			stock.setTotalQuantity(totalQuantity);
-			stock.setAverageRate(averageRate);
-			stock.setStockMastId(stockMastId);
-			stock.setCompanyId(Integer.parseInt((String)json.get("companyId")));
-			
-			AddStockDetails addStock = new AddStockDetails();
-			
-			addStock.addStockDetails(stock);
-			
-			StockMast sm = new StockMast();
-			
-			sm.setId(stockMastId);
-			sm.setRawCotton(totalQuantity);
-			sm.setCompanyId(companyId);
-			sm.setStockDate((String)json.get("invoiceDate"));
-			sm.setAvgRate(averageRate);
-			
-			UpdateStockMast us = new UpdateStockMast();
-			
-			us.updateStockOnEntry(sm);
-		}
-		
 		
 		Transactions trCredit = new Transactions();
 		
@@ -227,5 +170,5 @@
 		
 		
 		session.setAttribute("invoiceId", Integer.toString(invoiceId));
-	    response.sendRedirect("../admin/Invoice.jsp");
+	    response.sendRedirect("../admin/Invoice_Amanat.jsp");
 %>

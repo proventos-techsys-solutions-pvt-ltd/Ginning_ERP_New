@@ -68,6 +68,7 @@
                                    <textarea id="customerData" name="customerData" class="form-control form-control-sm" rows="3" readonly></textarea>
                                 </div>
                                </div>
+                               <!-- 
                                <div class="row row-background">
                                		<div class="col-md-3 col-md-3-margin">
                                			<label for="" class="lbl-rm-all">Update Invoice</label>
@@ -77,6 +78,7 @@
                                 	</div>
                                		</div>
                                </div>
+                                -->
                              <div class="row row-background">
                              	<div class="col-md-2">
                                     <label for="" class="lbl-rm-all">Last Authorizer</label>
@@ -260,7 +262,7 @@
                                 <div class="col-md-12 mt-3 mb-5"  >
                                     <div class="d-flex justify-content-end">
                                         <button type="button" class="btn btn-success btn_width" id='submitButton'>Approve</button>
-                                        <button type="button" class="btn btn-success btn_width ml-1" id='updateButton' disabled>Update</button>
+                                        <!--  <button type="button" class="btn btn-success btn_width ml-1" id='updateButton' disabled>Update</button>-->
                                         <button type="button" class="btn btn-success btn_width ml-1" id='reset' >Reset</button>
                                         <button type="button" class="btn btn-success btn_width ml-1" disabled>Delete</button>
                                     </div>
@@ -309,7 +311,7 @@
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/Validation.js"></script>
 <script>
-
+var totalQty = 0;
 //***********************VALIDATIONS**********************************
 var appController = (function(){
 	var namesAndIds = {
@@ -541,7 +543,7 @@ function setCurrentDate(){
 		console.log(data);
 		document.getElementById('rst').disabled = true;
 		//document.getElementById('amanatRst').disabled = true;
-		document.getElementById('UpdateInvoiceNo').disabled = true;
+		//document.getElementById('UpdateInvoiceNo').disabled = true;
 		
 		var noOfRows = data.length;
 		var superRate = data[noOfRows-1].superRate;
@@ -555,7 +557,7 @@ function setCurrentDate(){
 		document.getElementById("lastAuthorizer").value = data[0].authorizer;
 		document.getElementById("customerData").value = data[0].customerName + "\n" + data[0].customerAddress + "\n" + data[0].customerMobile;
 		document.getElementById("customerId").value = data[0].customerId;
-		document.getElementById("totalQty").value = Number(document.getElementById("totalQty").value) + Number(data[0].quantity);
+		
 		
 		
 		//document.getElementById('unloadingCharges').value = ((Number(document.getElementById("totalQty").value)/100) * 20).toFixed(2);
@@ -565,7 +567,6 @@ function setCurrentDate(){
 		document.getElementById('unloadingCharges').value = 0;
 		
 		document.getElementById('weighingCharges').value = 0;
-
 		
 		var blacklisted;
 		var membership;
@@ -587,56 +588,60 @@ function setCurrentDate(){
 
 		
 		for(i=0; i<noOfRows-1; i++ ){
-		
-			var rowNo = tableBody.children.length;
 			
-			var row = table.insertRow(rowNo);
-			var cell1 = row.insertCell(0);
-			var cell2 = row.insertCell(1);
-			var cell3 = row.insertCell(2);
-			var cell4 = row.insertCell(3);
-			var cell5 = row.insertCell(4);
-			var cell6 = row.insertCell(5);
-			var cell7 = row.insertCell(6);
-			var cell8 = row.insertCell(7);
-			var cell9 = row.insertCell(8);
-			var cell10 = row.insertCell(9);
-			var cell11 = row.insertCell(10);
-			var cell12 = row.insertCell(11);
-			cell8.className ="text-center";
-			cell9.className = "text-center";
-			cell10.setAttribute('hidden','hidden');
-			cell11.setAttribute('hidden','hidden');
-			cell12.setAttribute('hidden','hidden');
-			
-			cell1.innerHTML = '<input type="text" id="tableRst'+(rowNo+1)+'" class="form-control form-control-sm" name="tableRst" value="'+data[i].rst+'" readonly>';
-			cell2.innerHTML = '<input type="text" id="material'+(rowNo+1)+'" class="form-control form-control-sm" name="material" value="'+data[i].material+'" readonly>';
-			cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+data[i].quantity+'" readonly>';
-			cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+data[i].grade+'" readonly>';
-			cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+data[i].moisture+'" readonly>';
-			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+ (Number(superRate)-Number(data[i].differenceFromSuper))+'">';
-			var amount = (data[i].rate * (data[i].quantity/100));
-			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+amount+'" readonly>';
-			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" disabled>';
-			if(data[i].pdcAmount>0){
-				var pdcBonusAmount = Number(data[i].pdcAmount) * (Number(data[i].quantity)/100);
-				cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="'+pdcBonusAmount+'" readonly>';
-				document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) + Number(pdcBonusAmount);
-				document.getElementById('totalPdcAmount').value = Number(document.getElementById('totalPdcAmount').value) + Number(pdcBonusAmount) + Number(amount);
-				document.getElementById('pdcDate').value = data[i].pdcDate;
+			if(Number(data[i].quantity) - Number(data[i].invoicedQty) > 0){	
+				document.getElementById("totalQty").value = Number(document.getElementById("totalQty").value) + Number(Number(data[i].quantity) - Number(data[i].invoicedQty));
+				var rowNo = tableBody.children.length;
+				
+				var row = table.insertRow(rowNo);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+				var cell3 = row.insertCell(2);
+				var cell4 = row.insertCell(3);
+				var cell5 = row.insertCell(4);
+				var cell6 = row.insertCell(5);
+				var cell7 = row.insertCell(6);
+				var cell8 = row.insertCell(7);
+				var cell9 = row.insertCell(8);
+				var cell10 = row.insertCell(9);
+				var cell11 = row.insertCell(10);
+				var cell12 = row.insertCell(11);
+				cell8.className ="text-center";
+				cell9.className = "text-center";
+				cell10.setAttribute('hidden','hidden');
+				cell11.setAttribute('hidden','hidden');
+				cell12.setAttribute('hidden','hidden');
+				
+				cell1.innerHTML = '<input type="text" id="tableRst'+(rowNo+1)+'" class="form-control form-control-sm" name="tableRst" value="'+data[i].rst+'" readonly>';
+				cell2.innerHTML = '<input type="text" id="material'+(rowNo+1)+'" class="form-control form-control-sm" name="material" value="'+data[i].material+'" readonly>';
+				cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+(Number(data[i].quantity) - Number(data[i].invoicedQty))+'">';
+				cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+data[i].grade+'" readonly>';
+				cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+data[i].moisture+'" readonly>';
+				cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+ (Number(superRate)-Number(data[i].differenceFromSuper))+'"  readonly>';
+				var amount = (data[i].rate * (Number(Number(data[i].quantity) - Number(data[i].invoicedQty))/100));
+				cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+amount+'" readonly>';
+				cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" disabled>';
+				if(data[i].pdcAmount>0){
+					var pdcBonusAmount = Number(data[i].pdcAmount) * (Number(data[i].quantity)/100);
+					cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="'+pdcBonusAmount+'" readonly>';
+					document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) + Number(pdcBonusAmount);
+					document.getElementById('totalPdcAmount').value = Number(document.getElementById('totalPdcAmount').value) + Number(pdcBonusAmount) + Number(amount);
+					document.getElementById('pdcDate').value = data[i].pdcDate;
+				}else{
+					cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="0" readonly>';
+				}
+				cell10.innerHTML = '<input type="hidden" id="gradeId'+(rowNo+1)+'" class="lbl-rm-all" name="gradeId" value="'+data[i].gradeId+'" >';
+				cell11.innerHTML = '<input type="hidden" id="weighmentId'+(rowNo+1)+'" class="lbl-rm-all" name="weighmentId" value="'+data[i].weighmentId+'" >';
+				cell12.innerHTML = '<input type="hidden" id="gradeDesc'+(rowNo+1)+'" class="lbl-rm-all" name="gradeDesc" value="'+data[i].gradeDesc+'" >';
+				//document.getElementById('updateButton').disabled = true;
+				setGradeNote();
+				totalQty = document.getElementById('totalQty').value;
 			}else{
-				cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="0" readonly>';
+				continue;
 			}
-			cell10.innerHTML = '<input type="hidden" id="gradeId'+(rowNo+1)+'" class="lbl-rm-all" name="gradeId" value="'+data[i].gradeId+'" >';
-			cell11.innerHTML = '<input type="hidden" id="weighmentId'+(rowNo+1)+'" class="lbl-rm-all" name="weighmentId" value="'+data[i].weighmentId+'" >';
-			cell12.innerHTML = '<input type="hidden" id="gradeDesc'+(rowNo+1)+'" class="lbl-rm-all" name="gradeDesc" value="'+data[i].gradeDesc+'" >';
-
 		}
-		document.getElementById('updateButton').disabled = true;
-		document.getElementById('submitButton').disabled = false;
-		
 		calculateTotal();
-		setGradeNote();
+		document.getElementById('submitButton').disabled = false;
 	}
 	
 	document.addEventListener('change',function(e){
@@ -651,100 +656,6 @@ function setCurrentDate(){
 	});
 	
 	
-	//Set data in the table
-	function setData(data)
-	{
-		
-		//document.getElementById('rst').disabled = true;
-		document.getElementById('amanatRst').disabled = true;
-		document.getElementById('UpdateInvoiceNo').disabled = true;
-		
-		var noOfRows = data.length;
-		var table = document.getElementById("tableBody");
-		document.getElementById("rst").value = data[0].rst;
-		document.getElementById("customerData").value = data[0].customerName + "\n" + data[0].customerAddress + "\n" + data[0].customerMobile;
-		document.getElementById("customerId").value = data[0].customerId;
-		document.getElementById("totalQty").value = Number(document.getElementById("totalQty").value) + Number(data[0].netQuantity);
-		
-		document.getElementById('unloadingCharges').value = ((Number(document.getElementById("totalQty").value)/100) * 20).toFixed(2);
-		
-		document.getElementById('weighingCharges').value = Number(document.getElementById('weighingCharges').value) + Number(data[0].weighRate);
-		
-		var blacklisted;
-		var membership;
-		
-		if(Number(data[0].customerBlacklisted) === 1){
-			blacklisted = 'YES';
-		}else if(Number(data[0].customerBlacklisted) === 0){
-			blacklisted = 'NO'
-		}
-		if(Number(data[0].customerMembership) === 1){
-			membership = 'YES';
-		}else if(Number(data[0].customerMembership) === 0){
-			membership = 'NO';
-		}
-		
-		document.getElementById("customerBlacklisted").value = blacklisted;
-		document.getElementById("customerMembership").value = membership;
-		document.getElementById("bonusPerQtl").value = data[0].bonusPerQtl;
-
-		
-		for(i=0; i<noOfRows; i++ ){
-		
-			var rowNo = tableBody.children.length;
-			
-			var row = table.insertRow(rowNo);
-			var cell1 = row.insertCell(0);
-			var cell2 = row.insertCell(1);
-			var cell3 = row.insertCell(2);
-			var cell4 = row.insertCell(3);
-			var cell5 = row.insertCell(4);
-			var cell6 = row.insertCell(5);
-			var cell7 = row.insertCell(6);
-			var cell8 = row.insertCell(7);
-			var cell9 = row.insertCell(8);
-			var cell10 = row.insertCell(9);
-			var cell11 = row.insertCell(10);
-			var cell12 = row.insertCell(11);
-			cell8.className ="text-center";
-			cell9.className = "text-center";
-			cell10.setAttribute('hidden','hidden');
-			cell11.setAttribute('hidden','hidden');
-			cell12.setAttribute('hidden','hidden');
-			
-			cell1.innerHTML = '<input type="text" id="tableRst'+(rowNo+1)+'" class="form-control form-control-sm" name="tableRst" value="'+data[i].rst+'" readonly>';
-			cell2.innerHTML = '<input type="text" id="material'+(rowNo+1)+'" class="form-control form-control-sm" name="material" value="'+data[i].material+'" readonly>';
-			cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+data[i].quantity+'" readonly>';
-			cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+data[i].grade+'" readonly>';
-			cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+data[i].moisture+'" readonly>';
-			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+data[i].rate+'" readonly>';
-			var amount = (data[i].rate * (data[i].quantity/100));
-			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+amount+'" readonly>';
-			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" >';
-			if(data[i].pdcAmount>0){
-				document.getElementById('amanatCheck'+(rowNo+1)).disabled=true;
-				var pdcBonusAmount = Number(data[i].pdcAmount) * (Number(data[i].quantity)/100);
-				cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="'+pdcBonusAmount+'" readonly>';
-				document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) + Number(pdcBonusAmount);
-				document.getElementById('totalPdcAmount').value = Number(document.getElementById('totalPdcAmount').value) + Number(pdcBonusAmount) + Number(amount);
-				document.getElementById('pdcDate').value = data[i].pdcDate;
-				document.getElementById('pdcPaymentMode').value = data[i].pdcPaymentMode;
-				document.getElementById("pdcData").hidden = false;
-			}else if(data[i].pdcAmount<=0){
-				cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="0" readonly>';
-			}
-			cell10.innerHTML = '<input type="hidden" id="gradeId'+(rowNo+1)+'" class="lbl-rm-all" name="gradeId" value="'+data[i].gradeId+'" >';
-			cell11.innerHTML = '<input type="hidden" id="weighmentId'+(rowNo+1)+'" class="lbl-rm-all" name="weighmentId" value="'+data[i].weighmentId+'" >';
-			cell12.innerHTML = '<input type="hidden" id="gradeDesc'+(rowNo+1)+'" class="lbl-rm-all" name="gradeDesc" value="'+data[i].gradeDesc+'" >';
-
-		}
-		
-		document.getElementById('updateButton').disabled = true;
-		document.getElementById('submitButton').disabled = false;
-		calculateTotal();
-		setGradeNote();
-	}
-	
 	//Set Grade Description in Grading Note
 	function setGradeNote(){
 		var noOfGrades = document.getElementsByName('grade').length;
@@ -757,230 +668,23 @@ function setCurrentDate(){
 				document.getElementById('gradeInfo').innerHTML = document.getElementById('gradeInfo').innerHTML + '<br>' + gradeData;
 			}
 		}
-	}
-	
-	
-	//Send the AJAX Request to fetch data
-	function fetchInvoiceUpdateData(invoiceNo){
-		if(!checkRstInTable(rst)){
-			url = "../processing/getInvoiceUpdationData.jsp?invoiceNo="+invoiceNo;
-			if(window.XMLHttpRequest){  
-				fetchInvReq=new XMLHttpRequest();  
-			}  
-			else if(window.ActiveXObject){  
-				fetchInvReq=new ActiveXObject("Microsoft.XMLHTTP");  
-			}  
-			try{  
-				fetchInvReq.onreadystatechange=getInvData;  
-				console.log("AJAX Req sent");
-				fetchInvReq.open("GET",url,true);  
-				fetchInvReq.send();  
-			}catch(e){alert("Unable to connect to server");}
-		}
-	}
-	
-	function getInvData(){
-		if(fetchInvReq.readyState == 4){
-			var response = this.response.trim();
-			console.log('response--'+response);
-			if(Number(response) === 0){
-				alert('Invalid Invoie No.')
-			}else{
-				var data = JSON.parse(response);
-				setDataForInvoiceUpdation(data);
-			}
-		}
-	}
-	
-	
-	function setDataForInvoiceUpdation(data){
-		console.log(data);
-		
-		var table = document.getElementById("tableBody");
-		table.innerHTML = '';
-		
-		document.getElementById('rst').disabled = true;
-		document.getElementById('amanatRst').disabled = true;
-		document.getElementById('UpdateInvoiceNo').disabled = true;
-		
-		document.getElementById('gradeInfo').innerHTML = '';
-		
-		//document.getElementById("rst").value = data[0].rst;
-		document.getElementById("invoiceId").value = data.invoiceId;
-		document.getElementById("invoiceNo").value = data.invoiceNo;
-		document.getElementById("customerData").value = data.vendorName + "\n" + data.vendorAddress + "\n" + data.vendorMobile;
-		document.getElementById("customerId").value = data.customerId;
-		document.getElementById("totalQty").value = data.totalQuantity;
-		
-		document.getElementById('unloadingCharges').value = (data.unloadingCharges).toFixed(0);
-		
-		document.getElementById('weighingCharges').value = data.weighRate;
-		document.getElementById('advance').value = data.advance;		
-		var blacklisted;
-		var membership;
-		
-		if(Number(data.vendorBlacklisted) === 1){
-			blacklisted = 'YES';
-		}else if(Number(data.vendorBlacklisted) === 0){
-			blacklisted = 'NO'
-		}
-		if(Number(data.vendorMembership) === 1){
-			membership = 'YES';
-		}else if(Number(data.vendorMembership) === 0){
-			membership = 'NO';
-		}
-		
-		document.getElementById("customerBlacklisted").value = blacklisted;
-		document.getElementById("customerMembership").value = membership;
-		if(data.bonusAmount != 0){
-			document.getElementById('bonusPerQtl').value = ((Number(data.bonusAmount) / Number(data.totalQuantity)) * 100).toFixed(0);
-			document.getElementById('bonusCheck').checked = true;
-		}else{
-			document.getElementById('bonusCheck').checked = false;
-		}
-
-		itemData = data.invoiceItems;
-		var noOfRows = itemData.length;
-		
-		for(i=0; i<noOfRows; i++ ){
-		
-			var rowNo = tableBody.children.length;
-			
-			var row = table.insertRow(rowNo);
-			var cell1 = row.insertCell(0);
-			var cell2 = row.insertCell(1);
-			var cell3 = row.insertCell(2);
-			var cell4 = row.insertCell(3);
-			var cell5 = row.insertCell(4);
-			var cell6 = row.insertCell(5);
-			var cell7 = row.insertCell(6);
-			var cell8 = row.insertCell(7);
-			var cell9 = row.insertCell(8);
-			var cell10 = row.insertCell(9);
-			var cell11 = row.insertCell(10);
-			var cell12 = row.insertCell(11);
-			cell8.className ="text-center";
-			cell9.className = "text-center";
-			cell10.setAttribute('hidden','hidden');
-			cell11.setAttribute('hidden','hidden');
-			cell12.setAttribute('hidden','hidden');
-			
-			cell1.innerHTML = '<input type="text" id="tableRst'+(rowNo+1)+'" class="form-control form-control-sm" name="tableRst" value="'+itemData[i].rst+'" readonly>';
-			cell2.innerHTML = '<input type="text" id="material'+(rowNo+1)+'" class="form-control form-control-sm" name="material" value="'+itemData[i].material+'" readonly>';
-			cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+itemData[i].quantity+'" readonly>';
-			cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+itemData[i].grade+'" readonly>';
-			cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+itemData[i].moisture+'" readonly>';
-			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+itemData[i].rate+'" readonly>';
-			var amount = (itemData[i].rate * (itemData[i].quantity/100));
-			cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+amount+'" readonly>';
-			cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" >';
-			if(itemData[i].pdcAmountPerGrade>0){
-				document.getElementById('amanatCheck'+(rowNo+1)).disabled=true;
-				var pdcBonusAmount = Number(itemData[i].pdcAmountPerGrade) * (Number(itemData[i].quantity)/100);
-				cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="'+pdcBonusAmount+'" readonly>';
-				document.getElementById('pdcBonusAmount').value = Number(document.getElementById('pdcBonusAmount').value) + Number(pdcBonusAmount);
-				document.getElementById('totalPdcAmount').value = Number(document.getElementById('totalPdcAmount').value) + Number(pdcBonusAmount) + Number(amount);
-				document.getElementById('pdcDate').value = itemData[i].pdcDate;
-				document.getElementById('pdcPaymentMode').value = itemData[i].PdcPaymentMode;
-				document.getElementById("pdcData").hidden = false;
-			}else if(itemData[i].pdcAmount<=0){
-				cell9.innerHTML = '<input type="text" id="pdcAmount'+(rowNo+1)+'" class="form-control form-control-sm" name="pdcAmount" value="0" readonly>';
-			}
-			cell10.innerHTML = '<input type="hidden" id="gradeId'+(rowNo+1)+'" class="lbl-rm-all" name="gradeId" value="'+itemData[i].gradeId+'" >';
-			cell11.innerHTML = '<input type="hidden" id="weighmentId'+(rowNo+1)+'" class="lbl-rm-all" name="weighmentId" value="'+itemData[i].weighmentId+'" >';
-			cell12.innerHTML = '<input type="hidden" id="gradeDesc'+(rowNo+1)+'" class="lbl-rm-all" name="gradeDesc" value="'+itemData[i].gradeDescription+'" >';
-
-		}
-		calculateTotal();
-		
-		var paymentTable =  document.getElementById('paymentTableBody');
-		
-		var cashAmount = data.cashAmount;
-		document.getElementById('payAmount1').value = cashAmount;
-		var chequeAmount = data.chequeAmount;
-		var rtgsAmount = data.rtgsAmount;
-		for(j=1;j<3;j++){
-			var noOfRowsPayment = paymentTable.rows.length;
-			var row = paymentTable.insertRow(noOfRowsPayment);
-			var cell1 = row.insertCell(0);
-			var cell2 = row.insertCell(1);
-			var cell3 = row.insertCell(2);
-			var cell4 = row.insertCell(3);
-			var cell5 = row.insertCell(4);
-			
-			cell4.className ="text-center";
-			cell5.className ="text-center";
-						
-			cell1.setAttribute("align","center");
-			cell1.innerHTML = (noOfRowsPayment+1);
-		if(noOfRowsPayment === 1){
-			cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRowsPayment+1)+'" name="paymentMode">'+
-					   			'<option>Cash</option>'+
-					   			'<option selected>Cheque</option>'+
-					   			'<option>RTGS/NEFT</option>'+
-							  '</select>';
-			cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="payAmount'+(noOfRowsPayment+1)+'" name="payAmount" value='+chequeAmount+'>';
-		}
-		if(noOfRowsPayment === 2){
-			cell2.innerHTML = '<select class="form-control form-control-sm" id="paymentMode'+(noOfRowsPayment+1)+'" name="paymentMode">'+
-					   			'<option>Cash</option>'+
-					   			'<option>Cheque</option>'+
-					   			'<option selected>RTGS/NEFT</option>'+
-							  '</select>';
-			cell3.innerHTML = '<input type="text" class="form-control form-control-sm" id="payAmount'+(noOfRowsPayment+1)+'" name="payAmount" value='+rtgsAmount+'>';
-		}
-			
-			cell4.innerHTML = '<img src="../property/img/add.png" alt="add" class="ctm-hover" >'
-			cell5.innerHTML = '<img src="../property/img/delete.png" alt="delete" class="ctm-hover" id="deleteRow'+(noOfRowsPayment+1)+'" >'
-		}
-		
-		document.getElementById('updateButton').disabled = false;
-		document.getElementById('submitButton').disabled = true;
-		setGradeNote();
-	}
-	
-	
-	//Set Amanat checkbox value
-	document.addEventListener('change', function(e){
-		if(e.srcElement.id.includes('amanatCheck')){
-			
-			var table = document.getElementById("tableBody");
-			
-			if(e.srcElement.value === 'false'){
-				e.srcElement.value = 'true';
-				
-				var rowIndex = (e.srcElement.parentNode.parentNode.rowIndex)-1;
-				console.log(rowIndex);
-				var amanatQuantity = table.rows[rowIndex].cells[2].children[0].value;
-				console.log(amanatQuantity);
-				var amanatAmount = table.rows[rowIndex].cells[6].children[0].value;
-				
-				//document.getElementById('totalQty').value = (Number(document.getElementById('totalQty').value) - Number(amanatQuantity)).toFixed(2);
-				//document.getElementById('totalAmount').value = (Number(document.getElementById('totalAmount').value) - Number(amanatAmount)).toFixed(2);
-				calculateTotal();
-				
-			}
-			else if(e.srcElement.value === 'true'){
-				e.srcElement.value = 'false';
-	
-				calculateTotal();
-			
-			}
-		}
-	})
-		
+	}	
 	
 	//Calculate total amount to be paid
 	function calculateTotal(){
 		var rates = document.getElementsByName('amount');
 		var amanatCheck = document.getElementsByName('amanatCheck');
+		var quantities = document.getElementsByName('quantity');
 		var total = 0;
+		var quantity = 0;
 		for(i=0; i<rates.length; i++){
 			if(amanatCheck[i].value === "false"){
 				total = total + Number(rates[i].value);
+				quantity = quantity + Number(quantities[i].value)
 			}
 		}
 		document.getElementById("totalAmount").value = total.toFixed(2);
+		document.getElementById('totalQty').value = quantity;
 		var advance  = document.getElementById("advance").value;
 		var grossInvoiceAmount = total + Number(document.getElementById('pdcBonusAmount').value) + Number(document.getElementById('totalBonus').value); 
 		var netPayable = Number(grossInvoiceAmount) - (Number(document.getElementById('weighingCharges').value) + Number(document.getElementById('unloadingCharges').value) + Number(document.getElementById('totalPdcAmount').value)) - Number(advance);
@@ -1049,6 +753,7 @@ function setCurrentDate(){
 						item['rst'] = document.getElementById('tableRst'+(i+1)).value;
 						item['amanat'] = document.getElementById('amanatCheck'+(i+1)).value;
 						item['rate'] = document.getElementById('rate'+(i+1)).value;
+						item['quantity'] = document.getElementById('quantity'+(i+1)).value;
 						itemList.push(item);
 						totalQuantity = totalQuantity+ Number(document.getElementById('quantity'+(i+1)).value);
 				}
@@ -1101,13 +806,13 @@ function setCurrentDate(){
 	
 	document.addEventListener('click',function(e){
 		if(e.srcElement.id === 'submitButton'){
-			document.getElementById('adminApprovalForm').action = "../processing/approvedInvoiceEntry.jsp";
-			submitForm();
-		}else if(e.srcElement.id === 'updateButton'){
-			document.getElementById('adminApprovalForm').action = "../processing/updateInvoice.jsp";
+			document.getElementById('adminApprovalForm').action = "../processing/amanatInvoiceEntry.jsp";
 			submitForm();
 		}
-		
+		/*else if(e.srcElement.id === 'updateButton'){
+			document.getElementById('adminApprovalForm').action = "../processing/updateInvoice.jsp";
+			submitForm();
+		}*/
 	})
 	
 	//Change Total Amount in Payment Mode amount Table
@@ -1119,14 +824,10 @@ function setCurrentDate(){
 	//Add new rows to Payment Mode table
 	document.addEventListener('click',function(e){
 		if(e.srcElement.alt === 'add'){
-			
 			var netAmount = document.getElementById('net').value;
-			
 			var table = document.getElementById('paymentTableBody');
 			noOfRows = table.rows.length;
-			
 			if(noOfRows<3){
-				
 				var amount = 0;
 				for(k=0;k<paymentTableBody.rows.length;k++){
 					amount = Number(amount) + Number(paymentTableBody.rows[k].cells[2].children[0].value);			
@@ -1288,7 +989,7 @@ function setCurrentDate(){
 	});
 	
 	function pendingInvoicingReports(){
-		var url="${pageContext.request.contextPath}/processing/pendingInvoicingReport.jsp";
+		var url="${pageContext.request.contextPath}/processing/pendingAmanatForInvoicing.jsp";
 		if(window.XMLHttpRequest){  
 			fetchPendingInvoicing=new XMLHttpRequest();  
 		}  
@@ -1303,13 +1004,13 @@ function setCurrentDate(){
 		}catch(e){alert("Unable to connect to server");}
 	}
 
-function getPendingInvoicingData(){
-	if(fetchPendingInvoicing.readyState == 4){
-		var response = this.response.trim();
-		var data = JSON.parse(response);
-		setPendingInvoicingData(data);
+	function getPendingInvoicingData(){
+		if(fetchPendingInvoicing.readyState == 4){
+			var response = this.response.trim();
+			var data = JSON.parse(response);
+			setPendingInvoicingData(data);
+		}
 	}
-}
 
 function setPendingInvoicingData(data){
 	var table = document.getElementById('pendingInvoicingTable');
@@ -1325,10 +1026,34 @@ function setPendingInvoicingData(data){
 		var cell3 = row.insertCell(2);
 		
 		cell1.innerHTML = data[i].rst;
-		cell2.innerHTML = data[i].vendorName;
-		cell3.innerHTML = data[i].netWeight;
+		cell2.innerHTML = data[i].name;
+		cell3.innerHTML = data[i].quantity;
 	}
 }
+
+document.addEventListener('change',function(e){
+	if(e.srcElement.name === 'quantity'){
+		
+		
+		var quantities = document.getElementsByName('quantity');
+		var actQty = 0;
+		for(i=0; i<quantities.length; i++){
+			actQty = actQty + Number(quantities[i].value);
+		}
+		var rowIndex = e.srcElement.parentNode.parentNode.rowIndex - 1; 
+		var table = document.getElementById('tableBody');
+		var rate = table.rows[rowIndex].cells[5].children[0].value;
+		if(Number(totalQty) >= actQty){
+			table.rows[rowIndex].cells[6].children[0].value = (e.srcElement.value/100) * rate ;
+			calculateTotal();
+		}else if(Number(totalQty) < actQty){
+			e.srcElement.value =  e.srcElement.value - (actQty - totalQty);
+			table.rows[rowIndex].cells[6].children[0].value = (e.srcElement.value/100) * rate ;
+			calculateTotal();
+			alert('Value entered makes the Total quantity greater than expected.');
+		}
+	}
+});
 
 function getVocuherNo(){
 		var url="${pageContext.request.contextPath}/processing/getVoucherNoSeries.jsp";

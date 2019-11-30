@@ -62,31 +62,39 @@ public int updateAmanat(Amanat a) {
 
 
 public int setFinalRate(Amanat a) {
-	
+	int rows = 0;
 	Connection con = null;
 	try {
 		con = OracleConnection.getConnection();
 	} catch (ClassNotFoundException e) {
 		e.printStackTrace();
 	}
+	
+	System.out.println(a.toString());
 
-	String updateInvoice = "UPDATE AMANAT_MAST SET FINAL_RATE = ?"
-							+ "WHERE GRADE_ID=?";
+	String updateInvoice = "UPDATE AMANAT_MAST\r\n" + 
+							"SET\r\n" + 
+							"    FINAL_RATE = ?,\r\n" + 
+							"    INVOICED_QTY = ?\r\n" + 
+							"WHERE\r\n" + 
+							"    GRADE_ID = ?";
 	PreparedStatement stmt;
 	try {
 		
-		stmt = con.prepareCall(updateInvoice);
+		stmt = con.prepareStatement(updateInvoice);
 		
 		stmt.setDouble(1, a.getFinalRate());
-		stmt.setInt(2, a.getId());
+		stmt.setLong(2, a.getInvoicedQty());
+		stmt.setInt(3, a.getGradeId());
 		
-		stmt.executeUpdate();
+		
+		rows = stmt.executeUpdate();
 		
 		
 		stmt.close();
 		con.close();
 		
-		System.out.println("Updation Succesful-"+a.getId());
+		System.out.println("Updation Succesful-"+rows);
 		} catch (Exception e) {
 		e.printStackTrace();
 	}

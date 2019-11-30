@@ -2,8 +2,25 @@ package com.prov.bean;
 
 public class Amanat {
 	
+	@Override
+	public String toString() {
+		return "Amanat [id=" + id + ", gradeId=" + gradeId + ", customerId=" + customerId + ", rst=" + rst
+				+ ", invoicedQty=" + invoicedQty + ", amanatDate=" + amanatDate + ", finalRate=" + finalRate
+				+ ", difference=" + difference + "]";
+	}
+
 	private int id, gradeId, customerId, rst;
+	
+	private long invoicedQty;
 		
+	public long getInvoicedQty() {
+		return invoicedQty;
+	}
+
+	public void setInvoicedQty(long invoicedQty) {
+		this.invoicedQty = invoicedQty;
+	}
+
 	public int getRst() {
 		return rst;
 	}

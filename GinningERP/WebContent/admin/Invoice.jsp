@@ -1127,7 +1127,7 @@ function setCurrentDate(){
 				
 				document.getElementById('output').value=jsonStr;
 				
-				//document.getElementById('adminApprovalForm').submit();
+				document.getElementById('adminApprovalForm').submit();
 			}
 		}
 	}
