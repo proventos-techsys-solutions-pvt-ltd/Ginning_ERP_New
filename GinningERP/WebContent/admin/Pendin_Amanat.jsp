@@ -23,13 +23,12 @@
 				<thead>
 					<tr>
 						<th>Sr. No.</th>
-						<th>RST</th>
 						<th>Date</th>
-						<th>Vendor Name & Address</th>
-						<th>Grade</th>
+						<th>RST</th>
+						<th>Vendor Name</th>
+						<th>Difference from Super</th>
 						<th>Quantity</th>
-						<th>Contract Rate</th>
-						<th>Amount Due</th>
+						<th>Print</th>
 					</tr>
 				</thead>
 				<tbody id="tableBody">
@@ -108,24 +107,27 @@
 			
 			function setData(data){
 				
-				console.log(data);
-				console.log(data.length);
-				
-				var element = document.getElementById("tableBody");
+				var table = document.getElementById("tableBody");
 				
 				for(i=0;i<data.length;i++){
+					var noOfRows = table.rows.length;
+					var row = table.insertRow(noOfRows);
 					
-					 element.insertAdjacentHTML('beforeend','<tr>'+
-							'<td>'+(i+1)+'</td>'+
-							'<td>'+data[i].rst+'</td>'+
-							'<td>'+data[i].amanatDate+'</td>'+
-							'<td hidden>'+data[i].amanatId+'</td>'+
-							'<td>'+data[i].customerName+', '+data[i].customerAddress+'</td>'+
-							'<td>'+data[i].grade+'</td>'+
-							'<td>'+data[i].quantity+'</td>'+
-							'<td>'+data[i].contractRate+'</td>'+
-							'<td>'+((data[i].quantity/100) * data[i].contractRate)+'</td>'+
-						'</tr>');
+					var cell1 = row.insertCell(0);
+					var cell2 = row.insertCell(1);
+					var cell3 = row.insertCell(2);
+					var cell4 = row.insertCell(3);
+					var cell5 = row.insertCell(4);
+					var cell6 = row.insertCell(5);
+					var cell7 = row.insertCell(6);
+				
+					cell1.innerHTML = noOfRows+1;
+					cell2.innerHTML = data[i].amanatDate;
+					cell3.innerHTML = data[i].rst;
+					cell4.innerHTML = data[i].name;
+					cell5.innerHTML = data[i].differenceFromSuper;
+					cell6.innerHTML = data[i].quantity;
+					cell7.innerHTML = "<a href='../report/AmanatReceipt.html?rstNo="+data[i].rst+"' target='_blank' >Print</a>"
 				 
 				}
 			}

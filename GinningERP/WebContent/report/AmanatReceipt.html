@@ -50,7 +50,7 @@ h4,h5,h6{
 			<label>अनु क्रं</label>
 			<div>
 				<label>दिनांक</label>
-				<span>dd/mm/yyyy</span>
+				<span id='amanatDate'>dd/mm/yyyy</span>
 			</div>
 		</div>
 		<div class="col-md-6 text-right">
@@ -71,21 +71,21 @@ h4,h5,h6{
 	<div class="row remove-row-margin row-background">
 		<div class="col-md-12 d-flex justify-content-start align-items-center">
 			<label><b>शेतकऱ्यांचे नाव:	 </b></label>
-			<label class="ml-2"><span>पूत योर नाम हेरे</span></label>
+			<label class="ml-2"><span id='vendorName'>पूत योर नाम हेरे</span></label>
 		</div>
 	</div>
 	<div class="row remove-row-margin row-background">
 		<div class="col-md-4 d-flex justify-content-start align-items-center">
 			<label><b>पत्ता :	 </b></label>
-			<label class="ml-2"><span>पत्ता </span></label>
+			<label class="ml-2"><span id="vendorAddress">पत्ता </span></label>
 		</div>
 		<div class="col-md-4 d-flex justify-content-start align-items-center">
 			<label><b>मोबाइल:	</b> </label>
-			<label class="ml-2"><span>मोबाइल</span></label>
+			<label class="ml-2"><span id="vendorMobile">मोबाइल</span></label>
 		</div>
 		<div class="col-md-4 d-flex justify-content-start align-items-center">
 			<label><b>आर. एस. टी. क्र:	</b> </label>
-			<label class="ml-2"><span>आर. एस. टी. क्र:</span></label>
+			<label class="ml-2"><span id="rstNo">आर. एस. टी. क्र:</span></label>
 		</div>
 	</div>
 	
@@ -101,52 +101,19 @@ h4,h5,h6{
 						<th>एकूण किम्मत </th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
-						<td>Test</td>
-						<td>test</td>
-						<td>test</td>
-						<td>test</td>
-						<td>test</td>
-					</tr>
-					<tr>
-						<td>Test</td>
-						<td>test</td>
-						<td>test</td>
-						<td>test</td>
-						<td>test</td>
-					</tr>
-					<tr>
-						<td>Test</td>
-						<td>test</td>
-						<td>test</td>
-						<td>test</td>
-						<td>test</td>
-					</tr>
+				<tbody id="tableBody">
 				</tbody>
 				<tfoot>
 					<tr>
 						<td colspan="3"></td>
 						<td>एकूण रक्कम </td>
-						<td></td>
+						<td id="totalAmount"></td>
 					</tr>
 				</tfoot>
 			</table>
 		</div>
 	</div>
 	
-	<div class="row remove-row-margin row-background">
-		<div class="col-md-12">
-			<label><b>शेतकऱ्यांना दिल्या गेलेली रक्कम </b></label>
-			<ul>
-				<li>एकूण रक्कम : <span>test</span></li>
-				<li>नगद  : <span>test</span></li>
-				<li>चेक क्रमांक  : <span>test</span></li>
-				<li>चेक दिनांक : <span>test</span></li>
-				<li>बैंक  : <span>test</span></li>
-			</ul>
-		</div>
-	</div>
 	
 	<div class="row remove-row-margin row-background">
 		<div class="col-md-12">
@@ -185,11 +152,93 @@ h4,h5,h6{
 	
 	</div>
 </div>
-
-
-
-	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
+	<script src="../js/3.4.1-jq.js"></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/plugins/jquery.blockUI.js" ></script>
+<script>	
+	window.onload = function(){
+		var params = parseURLParams(window.location.href);
+		sendReqToGetData(params.rstNo[0]);
+	}
+	
+	function parseURLParams(url) {
+	    var queryStart = url.indexOf("?") + 1,
+	        queryEnd   = url.indexOf("#") + 1 || url.length + 1,
+	        query = url.slice(queryStart, queryEnd - 1),
+	        pairs = query.replace(/\+/g, " ").split("&"),
+	        parms = {}, i, n, v, nv;
+	
+	    if (query === url || query === "") return;
+	
+	    for (i = 0; i < pairs.length; i++) {
+	        nv = pairs[i].split("=", 2);
+	        n = decodeURIComponent(nv[0]);
+	        v = decodeURIComponent(nv[1]);
+	
+	        if (!parms.hasOwnProperty(n)) parms[n] = [];
+	        parms[n].push(nv.length === 2 ? v : null);
+	    }
+	    return parms;
+	}
+	
+	function sendReqToGetData(rstNo){
+		$.blockUI();
+		var url = "../processing/getAmanatDataForPrinting.jsp?rstNo="+rstNo;
+		if(window.XMLHttpRequest){  
+			fetchReq=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchReq=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+		try{  
+			fetchReq.onreadystatechange=getAmanatData;  
+			console.log("AJAX Req sent");
+			fetchReq.open("GET",url,true);  
+			fetchReq.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	function getAmanatData(){
+		if(fetchReq.readyState == 4){
+			$.unblockUI();
+			var response = this.response.trim();
+			setData(response);
+		}
+	}
+	
+	function setData(data){
+		var jsonArr = JSON.parse(data);
+		
+		document.getElementById('amanatDate').innerHTML = jsonArr[0].amanatDate;
+		document.getElementById('vendorName').innerHTML = jsonArr[0].name;
+		document.getElementById('vendorAddress').innerHTML = jsonArr[0].address;
+		document.getElementById('vendorMobile').innerHTML = jsonArr[0].mobile;
+		document.getElementById('rstNo').innerHTML = jsonArr[0].rst;
+		
+		var table = document.getElementById('tableBody');
+		var totalAmount = 0;
+		for(i = 0; i<jsonArr.length; i++){
+			noOfRows = table.rows.length;
+			var row = table.insertRow(noOfRows);
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
+			
+			cell1.innerHTML = jsonArr[i].quantity;
+			cell2.innerHTML = jsonArr[i].superRate;
+			cell3.innerHTML = jsonArr[i].differenceFromSuper;
+			cell4.innerHTML = jsonArr[i].superRate - jsonArr[i].differenceFromSuper;
+			cell5.innerHTML = (jsonArr[i].quantity/100) * (jsonArr[i].superRate - jsonArr[i].differenceFromSuper);
+			
+			totalAmount = totalAmount + Number((jsonArr[i].quantity/100) * (jsonArr[i].superRate - jsonArr[i].differenceFromSuper))
+
+		}
+		document.getElementById('totalAmount').innerHTML = totalAmount;
+	}
+	
+</script>	
 </body>
 </html>

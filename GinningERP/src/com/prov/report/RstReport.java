@@ -79,19 +79,51 @@ public class RstReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT \r\n" + 
-					"GD.ID, GD.WEIGHMENT_ID, GD.MATERIAL, GD.QUANTITY, GD.GRADE, GD.RATE, GD.AUTHORIZED_BY, GD.MOISTURE, GD.BONUS_PER_QTL, GD.PDC_AMOUNT,GD.PDC_DATE, GD.PDC_PAY_MODE,\r\n" + 
-					"WM.VID, WM.RST, WM.NET, WM.WEIGHMENT_DATE, \r\n" + 
-					"CVM.CID, CVM.WEIGH_RATE, \r\n" + 
-					"CM.NAME, CM.ADDRESS, CM.MOBILE, CM.BLACKLISTED, CM.MEMBERSHIP, \r\n" + 
-					"GM.DESCRIPTION GRADE_DESC\r\n" + 
-					"FROM GRADE_DETAILS GD, WEIGH_MAST WM, CUSTOMER_VEHICLE_MAST CVM, CUSTOMER_MAST CM, GRADE_MASTER GM\r\n" + 
+			String sql = "SELECT\r\n" + 
+					"    GD.ID,\r\n" + 
+					"    GD.WEIGHMENT_ID,\r\n" + 
+					"    GD.MATERIAL,\r\n" + 
+					"    GD.QUANTITY,\r\n" + 
+					"    GD.GRADE,\r\n" + 
+					"    GD.RATE,\r\n" + 
+					"    GD.AUTHORIZED_BY,\r\n" + 
+					"    GD.MOISTURE,\r\n" + 
+					"    GD.BONUS_PER_QTL,\r\n" + 
+					"    GD.PDC_AMOUNT,\r\n" + 
+					"    GD.PDC_DATE,\r\n" + 
+					"    GD.PDC_PAY_MODE,\r\n" + 
+					"    WM.VID,\r\n" + 
+					"    WM.RST,\r\n" + 
+					"    WM.NET,\r\n" + 
+					"    WM.WEIGHMENT_DATE,\r\n" + 
+					"    CVM.CID,\r\n" + 
+					"    CVM.WEIGH_RATE,\r\n" + 
+					"    CM.NAME,\r\n" + 
+					"    CM.ADDRESS,\r\n" + 
+					"    CM.MOBILE,\r\n" + 
+					"    CM.BLACKLISTED,\r\n" + 
+					"    CM.MEMBERSHIP,\r\n" + 
+					"    GM.DESCRIPTION GRADE_DESC\r\n" + 
+					"FROM\r\n" + 
+					"    GRADE_DETAILS           GD,\r\n" + 
+					"    WEIGH_MAST              WM,\r\n" + 
+					"    CUSTOMER_VEHICLE_MAST   CVM,\r\n" + 
+					"    CUSTOMER_MAST           CM,\r\n" + 
+					"    GRADE_MASTER            GM\r\n" + 
 					"WHERE\r\n" + 
-					"GD.GRADE = GM.GRADE AND\r\n" + 
-					"GD.WEIGHMENT_ID = WM.ID AND\r\n" + 
-					"WM.VID = CVM.ID AND \r\n" + 
-					"CVM.CID = CM.ID AND\r\n" + 
-					"GD.RST="+rst;
+					"    GD.ID NOT IN (\r\n" + 
+					"        SELECT\r\n" + 
+					"            GRADE_ID\r\n" + 
+					"        FROM\r\n" + 
+					"            AMANAT_MAST\r\n" + 
+					"        WHERE\r\n" + 
+					"            RST = GD.RST\r\n" + 
+					"    )\r\n" + 
+					"    AND GD.GRADE = GM.GRADE\r\n" + 
+					"    AND GD.WEIGHMENT_ID = WM.ID\r\n" + 
+					"    AND WM.VID = CVM.ID\r\n" + 
+					"    AND CVM.CID = CM.ID\r\n" + 
+					"    AND GD.RST = "+rst;
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			

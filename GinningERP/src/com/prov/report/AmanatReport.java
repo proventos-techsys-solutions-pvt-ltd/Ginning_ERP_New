@@ -265,4 +265,147 @@ public JSONArray getAmanatPendingForInvoicing() {
 	return jsonArray;
 	}
 
+
+public JSONArray getAmanatReport() {
+	
+	ResultSet rs = null;
+	Connection con = null;
+	JSONArray jsonArray = new JSONArray();
+	SimpleDateFormat format2 = new SimpleDateFormat("MM-dd-yyyy");
+	
+	try {
+		con = OracleConnection.getConnection();
+		
+		String invSql = "SELECT DISTINCT\r\n" + 
+				"    SUM(GD.QUANTITY) - AM.INVOICED_QTY,\r\n" + 
+				"    GD.RST,\r\n" + 
+				"    CM.NAME,\r\n" + 
+				"    AM.DIFF_FROM_SUPER,\r\n" + 
+				"    AM.AMANAT_DATE\r\n" + 
+				"FROM\r\n" + 
+				"    GRADE_DETAILS           GD,\r\n" + 
+				"    CUSTOMER_MAST           CM,\r\n" + 
+				"    CUSTOMER_VEHICLE_MAST   CVM,\r\n" + 
+				"    WEIGH_MAST              WM,\r\n" + 
+				"    AMANAT_MAST             AM\r\n" + 
+				"WHERE\r\n" + 
+				"    AM.GRADE_ID = GD.ID\r\n" + 
+				"    AND WM.ID = GD.WEIGHMENT_ID\r\n" + 
+				"    AND WM.VID = CVM.ID\r\n" + 
+				"    AND CVM.CID = CM.ID\r\n" + 
+				"    AND WM.NET > 0\r\n" + 
+				"GROUP BY\r\n" + 
+				"    GD.RST,\r\n" + 
+				"    CM.NAME,\r\n" + 
+				"    AM.INVOICED_QTY,\r\n" + 
+				"    AM.DIFF_FROM_SUPER,\r\n" + 
+				"    AM.AMANAT_DATE\r\n" + 
+				"ORDER BY\r\n" + 
+				"    RST";
+		
+		PreparedStatement stmt = con.prepareStatement(invSql);
+		
+		rs = stmt.executeQuery();
+		
+		while (rs.next()) {
+			JSONObject obj = new JSONObject();
+			
+			obj.put("quantity", rs.getString(1));
+			obj.put("rst", rs.getString(2));
+			obj.put("name", rs.getString(3));
+			obj.put("differenceFromSuper", rs.getString(4));
+			
+			Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse((rs.getString(5)));
+			String properDate = format2.format(date1);
+			
+			obj.put("amanatDate", properDate);
+			
+			
+			jsonArray.put(obj);
+		}
+		
+		stmt.close();
+		con.close();
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	
+	return jsonArray;
+	}
+
+public JSONArray getAmanatDataForSlip(int rstNo) {
+	
+	ResultSet rs = null;
+	Connection con = null;
+	JSONArray jsonArray = new JSONArray();
+	SimpleDateFormat format2 = new SimpleDateFormat("MM-dd-yyyy");
+	
+	try {
+		con = OracleConnection.getConnection();
+		
+		String invSql = "SELECT\r\n" + 
+				"    GD.QUANTITY - AM.INVOICED_QTY,\r\n" + 
+				"    GD.RST,\r\n" + 
+				"    CM.NAME,\r\n" + 
+				"    CM.ADDRESS,\r\n" + 
+				"    CM.MOBILE,\r\n" + 
+				"    GRM.RATE,\r\n" + 
+				"    AM.AMANAT_DATE,\r\n" + 
+				"    AM.DIFF_FROM_SUPER\r\n" + 
+				"FROM\r\n" + 
+				"    GRADE_DETAILS           GD,\r\n" + 
+				"    CUSTOMER_MAST           CM,\r\n" + 
+				"    CUSTOMER_VEHICLE_MAST   CVM,\r\n" + 
+				"    WEIGH_MAST              WM,\r\n" + 
+				"    AMANAT_MAST             AM,\r\n" + 
+				"    GRADE_RATE_MASTER       GRM\r\n" + 
+				"WHERE\r\n" + 
+				"    AM.GRADE_ID = GD.ID\r\n" + 
+				"    AND AM.INVOICED_QTY <> GD.QUANTITY\r\n" + 
+				"    AND WM.ID = GD.WEIGHMENT_ID\r\n" + 
+				"    AND WM.VID = CVM.ID\r\n" + 
+				"    AND CVM.CID = CM.ID\r\n" + 
+				"    AND WM.NET > 0\r\n" + 
+				"    AND TRUNC(CAST(GRM.RATE_DATE AS DATE)) = AM.AMANAT_DATE\r\n" + 
+				"    AND GRM.GRADE_ID = 1\r\n" + 
+				"    AND AM.RST = ?\r\n" + 
+				"ORDER BY\r\n" + 
+				"    RST";
+		
+		PreparedStatement stmt = con.prepareStatement(invSql);
+		
+		stmt.setInt(1, rstNo);
+		
+		rs = stmt.executeQuery();
+		
+		while (rs.next()) {
+			JSONObject obj = new JSONObject();
+			
+			obj.put("quantity", rs.getString(1));
+			obj.put("rst", rs.getString(2));
+			obj.put("name", rs.getString(3));
+			obj.put("address", rs.getString(4));
+			obj.put("mobile", rs.getString(5));
+			obj.put("superRate", rs.getString(6));
+			obj.put("differenceFromSuper", rs.getString(8));
+			
+			
+			Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse((rs.getString(7)));
+			String properDate = format2.format(date1);
+			
+			obj.put("amanatDate", properDate);
+			
+			
+			jsonArray.put(obj);
+		}
+		
+		stmt.close();
+		con.close();
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	
+	return jsonArray;
+	}
+
 }

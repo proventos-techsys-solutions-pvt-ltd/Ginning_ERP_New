@@ -397,7 +397,7 @@ function setCurrentDate(){
 		if(dailySetup.readyState == 4){
 			var response = this.response.trim();
 			if(Number(response) > 0){
-				$.unblockUI
+				$.unblockUI();
 			}
 			else if(Number(response) <= 0){
 				$.blockUI();
@@ -772,9 +772,9 @@ function setCurrentDate(){
 	//Set Grade Description in Grading Note
 	function setGradeNote(){
 		var noOfGrades = document.getElementsByName('grade').length;
-		for(i=0;i<noOfGrades; i++){
-			var grade = document.getElementsByName('grade')[i].value;
-			var gradeDesc = document.getElementsByName('gradeDesc')[i].value;
+		for(y=0;y<noOfGrades; y++){
+			var grade = document.getElementsByName('grade')[y].value;
+			var gradeDesc = document.getElementsByName('gradeDesc')[y].value;
 			var gradeData = grade + " : " + gradeDesc;
 			
 			if(! document.getElementById('gradeInfo').innerHTML.includes(gradeData)){

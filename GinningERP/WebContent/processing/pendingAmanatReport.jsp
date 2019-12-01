@@ -12,7 +12,7 @@
     	AmanatReport ar = new AmanatReport();
     
     	
-    	JSONArray jsonArray = ar.getPendingAmanatData();
+    	JSONArray jsonArray = ar.getAmanatReport();
     	
     	out.print(jsonArray);
     	out.flush();

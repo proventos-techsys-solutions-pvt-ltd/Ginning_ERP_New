@@ -659,9 +659,9 @@ function setCurrentDate(){
 	//Set Grade Description in Grading Note
 	function setGradeNote(){
 		var noOfGrades = document.getElementsByName('grade').length;
-		for(i=0;i<noOfGrades; i++){
-			var grade = document.getElementsByName('grade')[i].value;
-			var gradeDesc = document.getElementsByName('gradeDesc')[i].value;
+		for(k=0;k<noOfGrades; k++){
+			var grade = document.getElementsByName('grade')[k].value;
+			var gradeDesc = document.getElementsByName('gradeDesc')[k].value;
 			var gradeData = grade + " : " + gradeDesc;
 			
 			if(! document.getElementById('gradeInfo').innerHTML.includes(gradeData)){
@@ -677,10 +677,10 @@ function setCurrentDate(){
 		var quantities = document.getElementsByName('quantity');
 		var total = 0;
 		var quantity = 0;
-		for(i=0; i<rates.length; i++){
+		for(z=0; z<rates.length; z++){
 			if(amanatCheck[i].value === "false"){
-				total = total + Number(rates[i].value);
-				quantity = quantity + Number(quantities[i].value)
+				total = total + Number(rates[z].value);
+				quantity = quantity + Number(quantities[z].value)
 			}
 		}
 		document.getElementById("totalAmount").value = total.toFixed(2);
