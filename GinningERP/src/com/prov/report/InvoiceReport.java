@@ -1032,43 +1032,53 @@ public ArrayList<Invoice> getReport() {
 			con = OracleConnection.getConnection();
 			
 			String invSql = "SELECT\r\n" + 
-						"    IM.ID,\r\n" + 
-						"    IM.INVOICE_NO,\r\n" + 
-						"    IM.INV_DATE,\r\n" + 
-						"    CM.NAME,\r\n" + 
-						"    II.RST,\r\n" + 
-						"    NVL(SUM(AMT.AMOUNT), 0) PENDING_AMOUNT\r\n" + 
-						"FROM\r\n" + 
-						"    (\r\n" + 
-						"        SELECT\r\n" + 
-						"            PD.AMOUNT,\r\n" + 
-						"            PD.INVOICE_ID\r\n" + 
-						"        FROM\r\n" + 
-						"            PAYMENT_DETAILS PD\r\n" + 
-						"        WHERE\r\n" + 
-						"            PD.PAY_STATUS = 0\r\n" + 
-						"        UNION\r\n" + 
-						"        SELECT\r\n" + 
-						"            PDC.AMOUNT AS AMOUNT,\r\n" + 
-						"            PDC.INVOICE_ID\r\n" + 
-						"        FROM\r\n" + 
-						"            PDC_MAST PDC\r\n" + 
-						"        WHERE\r\n" + 
-						"            PDC.PAY_STATUS = 0\r\n" + 
-						"    ) AMT,\r\n" + 
-						"    INVOICE_MAST    IM,\r\n" + 
-						"    CUSTOMER_MAST   CM,\r\n" + 
-						"    INVOICE_ITEMS   II\r\n" + 
-						"WHERE\r\n" + 
-						"    AMT.INVOICE_ID = IM.ID\r\n" + 
-						"    AND CM.ID = IM.CUSTOMER_ID\r\n" + 
-						"    AND II.INVOICE_ID = IM.ID\r\n" + 
-						"GROUP BY\r\n" + 
-						"    IM.ID,\r\n" + 
-						"    IM.INVOICE_NO,\r\n" + 
-						"    IM.INV_DATE,\r\n" + 
-						"    CM.NAME,\r\n" + 
-						"    II.RST";
+					"    IM.ID,\r\n" + 
+					"    IM.INVOICE_NO,\r\n" + 
+					"    IM.INV_DATE,\r\n" + 
+					"    CM.NAME,\r\n" + 
+					"    II.RST,\r\n" + 
+					"    NVL(SUM(AMT.AMOUNT), 0) PENDING_AMOUNT\r\n" + 
+					"FROM\r\n" + 
+					"    (\r\n" + 
+					"        SELECT\r\n" + 
+					"            PD.AMOUNT,\r\n" + 
+					"            PD.INVOICE_ID\r\n" + 
+					"        FROM\r\n" + 
+					"            PAYMENT_DETAILS PD\r\n" + 
+					"        WHERE\r\n" + 
+					"            PD.PAY_STATUS = 0\r\n" + 
+					"        UNION\r\n" + 
+					"        SELECT\r\n" + 
+					"            PDC.AMOUNT AS AMOUNT,\r\n" + 
+					"            PDC.INVOICE_ID\r\n" + 
+					"        FROM\r\n" + 
+					"            PDC_MAST PDC\r\n" + 
+					"        WHERE\r\n" + 
+					"            PDC.PAY_STATUS = 0\r\n" + 
+					"    ) AMT,\r\n" + 
+					"    INVOICE_MAST    IM,\r\n" + 
+					"    CUSTOMER_MAST   CM,\r\n" + 
+					"    (\r\n" + 
+					"        SELECT\r\n" + 
+					"            IT.RST,\r\n" + 
+					"            COUNT(*)\r\n" + 
+					"        FROM\r\n" + 
+					"            INVOICE_ITEMS IT\r\n" + 
+					"        GROUP BY\r\n" + 
+					"            IT.RST\r\n" + 
+					"    ) II\r\n" + 
+					"WHERE\r\n" + 
+					"    AMT.INVOICE_ID = IM.ID\r\n" + 
+					"    AND CM.ID = IM.CUSTOMER_ID\r\n" + 
+					"    AND II.RST = AMT.INVOICE_ID\r\n" + 
+					"GROUP BY\r\n" + 
+					"    IM.ID,\r\n" + 
+					"    IM.INVOICE_NO,\r\n" + 
+					"    IM.INV_DATE,\r\n" + 
+					"    CM.NAME,\r\n" + 
+					"    II.RST\r\n" + 
+					"ORDER BY\r\n" + 
+					"    IM.ID DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(invSql);
 			

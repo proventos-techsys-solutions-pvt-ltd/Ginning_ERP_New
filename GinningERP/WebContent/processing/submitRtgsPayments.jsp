@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.prov.dbupdation.UpdateRtgs"%>
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="com.prov.dbops.VoucherSeries"%>
@@ -21,6 +23,10 @@
 	VoucherSeries vs = new VoucherSeries();
 	int debitId = 0;
 	int creditId = 0;
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	Date todaysDate = new Date();
+	String dateStr = sdf.format(todaysDate);
+	
 	for(int i=0; i<jsonArr.size(); i++){
 		JSONObject obj = (JSONObject)jsonArr.get(i);
 		
@@ -34,7 +40,7 @@
 		rtgsTrDb.setContactId((String)obj.get("customerId"));
 		rtgsTrDb.setDebit(Long.parseLong((String)obj.get("rtgsAmount")));
 		rtgsTrDb.setCredit(0);
-		rtgsTrDb.setTransactionDate((String)obj.get("rtgsDate"));
+		rtgsTrDb.setTransactionDate(dateStr);
 		rtgsTrDb.setNarration("RAW COTTON PURCHASE - "+(String)obj.get("invoiceNo"));
 		rtgsTrDb.setVouchRef("RAW COTTON - "+(String)obj.get("invoiceNo"));
 		rtgsTrDb.setVouchNo(voucherNo);
@@ -44,7 +50,7 @@
 		rtgsTrCr.setContactId((String)obj.get("customerId"));
 		rtgsTrCr.setDebit(0);
 		rtgsTrCr.setCredit(Long.parseLong((String)obj.get("rtgsAmount")));
-		rtgsTrCr.setTransactionDate((String)obj.get("rtgsDate"));
+		rtgsTrCr.setTransactionDate(dateStr);
 		rtgsTrCr.setNarration("RAW COTTON PURCHASE - "+(String)obj.get("invoiceNo"));
 		rtgsTrCr.setVouchRef("RAW COTTON - "+(String)obj.get("invoiceNo"));
 		rtgsTrCr.setVouchNo(voucherNo);

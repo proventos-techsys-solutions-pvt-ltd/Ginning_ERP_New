@@ -678,10 +678,10 @@ function setCurrentDate(){
 		var total = 0;
 		var quantity = 0;
 		for(z=0; z<rates.length; z++){
-			if(amanatCheck[i].value === "false"){
+			//if(amanatCheck[i].value === "false"){
 				total = total + Number(rates[z].value);
 				quantity = quantity + Number(quantities[z].value)
-			}
+			//}
 		}
 		document.getElementById("totalAmount").value = total.toFixed(2);
 		document.getElementById('totalQty').value = quantity;

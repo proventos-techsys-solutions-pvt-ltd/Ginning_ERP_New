@@ -70,8 +70,8 @@
 		<script type="text/javascript" src="../js/1.8.3-jq.js"></script>
 		<script src="../js/export/export2excel.js"></script>
     	<script>
-    	function getReport(){
-    		var url="../processing/getRtgsReport.jsp";
+    	function getReport(date){
+    		var url="../processing/getRtgsReport.jsp?rtgsDate="+date;
     		if(window.XMLHttpRequest){  
     			fetchReport=new XMLHttpRequest();  
     		}  
@@ -140,6 +140,14 @@
     	
     	
     	/***********************************************************/
+    	//Get data for report on date change
+    	document.getElementById('rtgsDate').addEventListener('change', function(e){
+    		document.getElementById('tableBody').innerHTML = '';
+    		getReport(e.srcElement.value);
+    	})
+    	
+    	
+    	/***********************************************************/
     	//get data from table
     	function createJsonObjects(){
     		var table = document.getElementById('tableBody');
@@ -182,7 +190,7 @@
 		    });
 		});
 		
-		getReport();
+		
     	</script>
 </body>
 </html>

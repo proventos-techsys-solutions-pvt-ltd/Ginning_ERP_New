@@ -39,7 +39,9 @@
 		UpdateInvoice updateInvoice = new UpdateInvoice();
 		UpdatePDC updatePdc = new UpdatePDC();
 		
-	
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	Date date = new Date();
+	String dateStr = sdf.format(date);
 		
 		int[] id = new int[6];
 		
@@ -92,7 +94,7 @@
 				chequeTrDb.setContactId((String)chequeJson.get("customerId"));
 				chequeTrDb.setDebit(cheque.getChequeAmount());
 				chequeTrDb.setCredit(0);
-				chequeTrDb.setTransactionDate(cheque.getChequeDate());
+				chequeTrDb.setTransactionDate(dateStr);
 				chequeTrDb.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
 				chequeTrDb.setVouchRef("RAW COTTON - "+invoiceNo);
 				chequeTrDb.setVouchNo(voucherNo);
@@ -103,7 +105,7 @@
 				chequeTrCr.setContactId((String)chequeJson.get("customerId"));
 				chequeTrCr.setDebit(0);
 				chequeTrCr.setCredit(cheque.getChequeAmount());
-				chequeTrCr.setTransactionDate(cheque.getChequeDate());
+				chequeTrCr.setTransactionDate(dateStr);
 				chequeTrCr.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
 				chequeTrCr.setVouchRef("RAW COTTON - "+invoiceNo);
 				chequeTrCr.setVouchNo(voucherNo);
@@ -230,17 +232,13 @@
 					updatePayment.updatePaymentStatus(cashPayment);
 				}
 				
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-				Date date = new Date(); 
-				String todaysDate = formatter.format(date);
-				
 				Transactions cashTrDb = new Transactions();
 				
 				cashTrDb.setAccountId(Integer.parseInt((String)cashJson.get("accountPayableId")));
 				cashTrDb.setContactId((String)cashJson.get("customerId"));
 				cashTrDb.setDebit(Long.parseLong((String)cashJson.get("cashAmount")));
 				cashTrDb.setCredit(0);
-				cashTrDb.setTransactionDate(todaysDate);
+				cashTrDb.setTransactionDate(dateStr);
 				cashTrDb.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
 				cashTrDb.setVouchRef("RAW COTTON - "+invoiceNo);
 				cashTrDb.setVouchNo(voucherNo);
@@ -253,7 +251,7 @@
 				cashTrCr.setContactId((String)cashJson.get("customerId"));
 				cashTrCr.setDebit(0);
 				cashTrCr.setCredit(Long.parseLong((String)cashJson.get("cashAmount")));
-				cashTrCr.setTransactionDate(todaysDate);
+				cashTrCr.setTransactionDate(dateStr);
 				cashTrCr.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
 				cashTrCr.setVouchRef("RAW COTTON - "+invoiceNo);
 				cashTrCr.setVouchNo(voucherNo);
@@ -316,7 +314,7 @@
 				chequeTrDb.setContactId((String)pdcChequeJson.get("customerId"));
 				chequeTrDb.setDebit(cheque.getChequeAmount());
 				chequeTrDb.setCredit(0);
-				chequeTrDb.setTransactionDate(cheque.getChequeDate());
+				chequeTrDb.setTransactionDate(dateStr);
 				chequeTrDb.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
 				chequeTrDb.setVouchRef("RAW COTTON - "+invoiceNo);
 				chequeTrDb.setVouchNo(voucherNo);
@@ -327,7 +325,7 @@
 				chequeTrCr.setContactId((String)pdcChequeJson.get("customerId"));
 				chequeTrCr.setDebit(0);
 				chequeTrCr.setCredit(cheque.getChequeAmount());
-				chequeTrCr.setTransactionDate(cheque.getChequeDate());
+				chequeTrCr.setTransactionDate(dateStr);
 				chequeTrCr.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
 				chequeTrCr.setVouchRef("RAW COTTON - "+invoiceNo);
 				chequeTrCr.setVouchNo(voucherNo);
@@ -430,17 +428,13 @@
 				
 				updatePdc.addGlId(voucherNo, invoiceId);
 				
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-				Date date = new Date(); 
-				String todaysDate = formatter.format(date);
-				
 				Transactions cashTrDb = new Transactions();
 				
 				cashTrDb.setAccountId(Integer.parseInt((String)pdcCashJson.get("accountPayableId")));
 				cashTrDb.setContactId((String)pdcCashJson.get("customerId"));
 				cashTrDb.setDebit(Long.parseLong((String)pdcCashJson.get("pdcCashAmount")));
 				cashTrDb.setCredit(0);
-				cashTrDb.setTransactionDate(todaysDate);
+				cashTrDb.setTransactionDate(dateStr);
 				cashTrDb.setNarration("RAW COTTON PURCHASE - "+invoiceNo);
 				cashTrDb.setVouchRef("RAW COTTON - "+invoiceNo);
 				cashTrDb.setVouchNo(voucherNo);
@@ -453,7 +447,7 @@
 				cashTrCr.setContactId((String)pdcCashJson.get("customerId"));
 				cashTrCr.setDebit(0);
 				cashTrCr.setCredit(Long.parseLong((String)pdcCashJson.get("pdcCashAmount")));
-				cashTrCr.setTransactionDate(todaysDate);
+				cashTrCr.setTransactionDate(dateStr);
 				cashTrCr.setNarration("RAW COTTON PURCHASE");
 				cashTrCr.setVouchRef("RAW COTTON");
 				cashTrCr.setVouchNo(voucherNo);

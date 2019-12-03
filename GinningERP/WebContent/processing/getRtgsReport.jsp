@@ -7,9 +7,11 @@
     pageEncoding="ISO-8859-1"%>
 
 <% 
+
+	String rtgsDate = request.getParameter("rtgsDate");
 	RtgsReport report = new RtgsReport();
 
-	JSONArray rtgsReport = report.getRtgsReportforPayment();
+	JSONArray rtgsReport = report.getRtgsReportforPayment(rtgsDate);
 	
 	out.print(rtgsReport);
 	out.flush();

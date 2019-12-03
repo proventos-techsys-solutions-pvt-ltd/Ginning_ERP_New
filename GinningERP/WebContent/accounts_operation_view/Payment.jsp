@@ -638,6 +638,7 @@
          
          //Set pending Invoice Report data in table
          function setPendingTable(data){
+        	console.log(data);
          var table = document.getElementById("tableBody");
          table.innerHTML = "";
          for(i=0;i<data.length;i++){

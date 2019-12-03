@@ -1,6 +1,7 @@
 package com.prov.report;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -120,43 +121,47 @@ public class RtgsReport {
 		return count;
 	}
 	
-	public JSONArray getRtgsReportforPayment() {
+	public JSONArray getRtgsReportforPayment(String rtgsDate) {
 		ResultSet rs = null;
 		Connection con = null;
 		JSONArray arr = new JSONArray();
 		try {
 			con = OracleConnection.getConnection();
 			
+			Date date = Date.valueOf(rtgsDate);
+			
 			String sql = "SELECT DISTINCT\r\n" + 
-					"    II.WEIGHMENT_ID,\r\n" + 
-					"    RT.ID,\r\n" + 
-					"    RT.INVOICE_ID,\r\n" + 
-					"    RT.CUSTOMER_ID,\r\n" + 
-					"    RT.ACC_NO,\r\n" + 
-					"    RT.BANK_NAME,\r\n" + 
-					"    RT.IFSC_CODE,\r\n" + 
-					"    RT.AMOUNT,\r\n" + 
-					"    RT.RTGS_DATE,\r\n" + 
-					"    RT.CUSTOMER_NAME,\r\n" + 
-					"    RT.INVOICE_NO,\r\n" + 
-					"    RT.VOUCHER_NO,\r\n" + 
-					"    IM.COMPANY_ID,\r\n" + 
-					"    WM.DS_ID,\r\n" + 
-					"    DS.BANK_ID \r\n" + 
+					"   II.WEIGHMENT_ID,\r\n" + 
+					"   RT.ID,\r\n" + 
+					"   RT.INVOICE_ID,\r\n" + 
+					"   RT.CUSTOMER_ID,\r\n" + 
+					"   RT.ACC_NO,\r\n" + 
+					"   RT.BANK_NAME,\r\n" + 
+					"   RT.IFSC_CODE,\r\n" + 
+					"   RT.AMOUNT,\r\n" + 
+					"   RT.RTGS_DATE,\r\n" + 
+					"   RT.CUSTOMER_NAME,\r\n" + 
+					"   RT.INVOICE_NO,\r\n" + 
+					"   RT.VOUCHER_NO,\r\n" + 
+					"   IM.COMPANY_ID,\r\n" + 
+					"   WM.DS_ID,\r\n" + 
+					"   DS.BANK_ID \r\n" + 
 					"FROM\r\n" + 
-					"    INVOICE_ITEMS   II,\r\n" + 
-					"    RTGS_MASTER     RT,\r\n" + 
-					"    INVOICE_MAST    IM,\r\n" + 
-					"    WEIGH_MAST      WM,\r\n" + 
-					"    DAILY_SETUP DS\r\n" + 
+					"   INVOICE_ITEMS   II,\r\n" + 
+					"   RTGS_MASTER     RT,\r\n" + 
+					"   INVOICE_MAST    IM,\r\n" + 
+					"   WEIGH_MAST      WM,\r\n" + 
+					"   DAILY_SETUP DS\r\n" + 
 					"WHERE\r\n" + 
-					"    RT.INVOICE_ID = IM.ID\r\n" + 
-					"    AND II.INVOICE_ID = IM.ID\r\n" + 
-					"    AND WM.ID = II.WEIGHMENT_ID\r\n" + 
-					"    AND DS.ID = WM.DS_ID\r\n" + 
-					"    AND RT.VOUCHER_NO IS NULL";
+					"   RT.INVOICE_ID = IM.ID\r\n" + 
+					"   AND II.INVOICE_ID = IM.ID\r\n" + 
+					"   AND WM.ID = II.WEIGHMENT_ID\r\n" + 
+					"   AND DS.ID = WM.DS_ID\r\n" + 
+					"   AND RT.VOUCHER_NO IS NULL\r\n" + 
+					"   AND RT.RTGS_DATE = ?";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setDate(1, date);
 			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
