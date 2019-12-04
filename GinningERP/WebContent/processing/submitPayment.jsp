@@ -344,9 +344,6 @@
 		} if(parent.containsKey("pdcRtgsJson")){
 			JSONObject pdcRtgsJson = (JSONObject)parent.get("pdcRtgsJson");
 			if(Integer.parseInt((String)pdcRtgsJson.get("paymentStatus")) == 0){
-				VoucherSeries vs = new VoucherSeries();
-				
-				int voucherNo = vs.getVoucherNo();
 				
 				String invoiceNo = (String)pdcRtgsJson.get("invoiceNo");
 				Rtgs rtgs = new Rtgs();
@@ -360,7 +357,7 @@
 				rtgs.setCustomerName(((String)pdcRtgsJson.get("customerName")).toUpperCase());
 				rtgs.setInvoiceNo(((String)pdcRtgsJson.get("invoiceNo")).toUpperCase());
 				rtgs.setInvoiceId(Integer.parseInt((String)pdcRtgsJson.get("invoiceId")));
-				rtgs.setVoucherNo(voucherNo);
+				rtgs.setVoucherNo(0);
 				
 				AddRtgs addRtgs = new AddRtgs();
 				

@@ -79,7 +79,7 @@
     });
 	
 	function getReport(){
-		var url="../processing/getRtgsReport.jsp";
+		var url="../processing/getAllRtgsReport.jsp";
 		if(window.XMLHttpRequest){  
 			fetchReport=new XMLHttpRequest();  
 		}  
@@ -131,7 +131,7 @@
 			cell3.innerHTML = data[i].rtgsAmount;
 			cell4.innerHTML = data[i].bankName;
 			cell5.innerHTML = data[i].accountNo;
-			cell6.innerHTML = data[i].ifsc;
+			cell6.innerHTML = data[i].ifscCode;
 			cell7.innerHTML = data[i].id;
 			cell8.innerHTML = data[i].invoiceId;
 			cell9.innerHTML = data[i].customerId;
