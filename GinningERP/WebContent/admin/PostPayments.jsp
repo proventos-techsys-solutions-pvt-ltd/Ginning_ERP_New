@@ -27,10 +27,14 @@
 		
 		 <div class="row  row-background border-bottom">
 			<div class="col-md-3 d-flex justify-content-between align-items-center">
-					<label>Date</label>
+					<label>RTGS Date</label>
 					<input type="date" class="form-control form-control-sm  ml-2" id="rtgsDate" name="rtgsDate" >
 				</div>
-				 
+
+				<div class="col-md-3 d-flex justify-content-between align-items-center">
+					<label>Transaction Date</label>
+					<input type="date" class="form-control form-control-sm  ml-2" id="transactionDate" name="transactionDate" >
+				</div>				 
 				<div class="col-md-5  d-flex justify-content-start align-items-center">
 					<button type="button" class="btn btn-success btn-sm" id="">Print Report</button>
 					<button type="button" class="btn btn-success btn-sm ml-2" id="submitPayments">Post Payments</button>
@@ -158,7 +162,7 @@
     				var json = {};
     				json.customerId = table.rows[i].cells[10].innerHTML;
     				json.rtgsAmount = table.rows[i].cells[3].innerHTML;
-    				json.rtgsDate = document.getElementById('rtgsDate').value;
+    				json.rtgsDate = document.getElementById('transactionDate').value;
     				json.invoiceNo = table.rows[i].cells[1].innerHTML;
     				json.companyId = table.rows[i].cells[8].innerHTML;
     				json.bankId = table.rows[i].cells[9].innerHTML;

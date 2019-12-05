@@ -40,7 +40,7 @@
 		rtgsTrDb.setContactId((String)obj.get("customerId"));
 		rtgsTrDb.setDebit(Long.parseLong((String)obj.get("rtgsAmount")));
 		rtgsTrDb.setCredit(0);
-		rtgsTrDb.setTransactionDate(dateStr);
+		rtgsTrDb.setTransactionDate((String)obj.get("rtgsDate"));
 		rtgsTrDb.setNarration("RAW COTTON PURCHASE - "+(String)obj.get("invoiceNo"));
 		rtgsTrDb.setVouchRef("RAW COTTON - "+(String)obj.get("invoiceNo"));
 		rtgsTrDb.setVouchNo(voucherNo);
@@ -50,7 +50,7 @@
 		rtgsTrCr.setContactId((String)obj.get("customerId"));
 		rtgsTrCr.setDebit(0);
 		rtgsTrCr.setCredit(Long.parseLong((String)obj.get("rtgsAmount")));
-		rtgsTrCr.setTransactionDate(dateStr);
+		rtgsTrCr.setTransactionDate((String)obj.get("rtgsDate"));
 		rtgsTrCr.setNarration("RAW COTTON PURCHASE - "+(String)obj.get("invoiceNo"));
 		rtgsTrCr.setVouchRef("RAW COTTON - "+(String)obj.get("invoiceNo"));
 		rtgsTrCr.setVouchNo(voucherNo);
