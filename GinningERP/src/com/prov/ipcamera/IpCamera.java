@@ -14,8 +14,8 @@ import com.googlecode.javacv.cpp.opencv_core.IplImage;
 import org.opencv.core.*;
 
 public class IpCamera {
-	public static void getVehiclePhoto() throws Exception, IOException {
-		OpenCVFrameGrabber frameGrabber = new OpenCVFrameGrabber("rtsp://admin:admin@192.168.1.113:554"); 
+	public static void getVehiclePhoto(String ip, String fileName) throws Exception, IOException {
+		OpenCVFrameGrabber frameGrabber = new OpenCVFrameGrabber("rtsp://admin:admin@"+ip+""); 
 		IplImage iPimg;
 		CanvasFrame canvasFrame = new CanvasFrame("Camera");
 		canvasFrame.setCanvasSize(600, 600);
@@ -24,7 +24,7 @@ public class IpCamera {
 			 	 iPimg = frameGrabber.grab();
 			 	 BufferedImage bufferedImage = new BufferedImage(iPimg.width(), iPimg.height(), BufferedImage.TYPE_INT_RGB);
 			 	 iPimg.copyTo(bufferedImage);
-			 	 File file = new File("e://ameya123.png");
+			 	 File file = new File("C://TEMP/fileName.png");
 			     ImageIO.write(bufferedImage, "png", file);
 		    	 canvasFrame.showImage(iPimg);
 		    	 frameGrabber.stop();

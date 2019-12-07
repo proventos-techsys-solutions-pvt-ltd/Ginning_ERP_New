@@ -48,18 +48,16 @@
 	 	double weighRate = Double.parseDouble(request.getParameter("weighRate"));
 	 	int dailySetupId = Integer.parseInt(request.getParameter("dailySetupId"));
 	 	String operator = request.getParameter("operator");
-	 	String frontImageData = request.getParameter("ImageData2");
-	 	String backImageData = request.getParameter("ImageData3");
+	 	String frontImageData = request.getParameter("frontImageName");
+	 	String rearImageData = request.getParameter("rearImageName");
 	 	
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy_HHmmss");  
 		Date todaysDate = new Date();  
 		String formattedDate = formatter.format(todaysDate);
 	 	
 		String dbPath = null;
-		String frontImageName = "";
-		String rearImageName = "";
 		
-		if(frontImageData != "" && backImageData != ""){
+		if(frontImageData != "" && rearImageData != ""){
 		
 		 	byte[] frontImagedata = DatatypeConverter.parseBase64Binary(frontImageData.substring(frontImageData.indexOf(",") + 1)); 
 	    	BufferedImage bufferedImage = null; 
@@ -67,7 +65,7 @@
 	    	dbPath = "\\\\192.168.1.205\\Vendor_Images\\";
 	    	String remotePath = "smb://192.168.1.205/VendorImages/";
 			
-			bufferedImage = ImageIO.read(new ByteArrayInputStream(frontImagedata)); 
+			/* bufferedImage = ImageIO.read(new ByteArrayInputStream(frontImagedata)); 
 	    	frontImageName = customer+"_"+formattedDate+"front_gross.png"; 
 	    	File file1= new File(localPath+frontImageName);	
 	    	ImageIO.write(bufferedImage, "png",file1); 
@@ -76,15 +74,16 @@
 	    	bufferedImage = ImageIO.read(new ByteArrayInputStream(rearImagedata)); 
 	    	rearImageName = customer+"_"+formattedDate+"rear_gross.png"; 
 	    	File file2= new File(localPath+rearImageName);	
-	    	ImageIO.write(bufferedImage, "png",file2); 
+	    	ImageIO.write(bufferedImage, "png",file2); */ 
 		 	
 	    	InputStream in = null;
 	    	OutputStream outStr = null;
 	    	
-	    	SmbFile remoteFileFront = new SmbFile(remotePath+frontImageName);
-	    	SmbFile remoteFileRear = new SmbFile(remotePath+rearImageName);
-	    		remoteFileFront.connect();
+	    	SmbFile remoteFileFront = new SmbFile(remotePath+frontImageData);
+	    	SmbFile remoteFileRear = new SmbFile(remotePath+rearImageData);
+	    	remoteFileFront.connect();
 	    	
+	    	File file1= new File(localPath+frontImageData);
 	    	in = new BufferedInputStream(new FileInputStream(file1));
 	    	outStr = new BufferedOutputStream(new SmbFileOutputStream(remoteFileFront));
 	    	
@@ -96,8 +95,9 @@
 	
 	    	outStr.close();
 	    	in.close();
-	    		remoteFileRear.connect();
+	    	remoteFileRear.connect();
 	    	
+	    	File file2= new File(localPath+rearImageData);	
 	    	in = new BufferedInputStream(new FileInputStream(file2));
 	    	outStr = new BufferedOutputStream(new SmbFileOutputStream(remoteFileRear));
 	    	
@@ -130,8 +130,8 @@
 		cv.setvTypeId(vehicleTypeId);
 		cv.setRst(rst);
 		cv.setWeighRate(weighRate);
-		cv.setFrontImage(dbPath+frontImageName);
-		cv.setRearImage(dbPath+rearImageName);
+		cv.setFrontImage(dbPath+frontImageData);
+		cv.setRearImage(dbPath+rearImageData);
 		
 		AddCustomerVehicle addVehicle = new AddCustomerVehicle();
 		

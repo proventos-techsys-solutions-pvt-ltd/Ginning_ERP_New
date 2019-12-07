@@ -170,8 +170,8 @@
   			</div>
   			</div>
         </div>
-        <input type="hidden" name="ImageData3" id="ImageData3" >
-        <input type="hidden" name="ImageData2" id="ImageData2" >
+        <input type="hidden" name="frontImageName" id="frontImageName" value="">
+        <input type="hidden" name="rearImageName" id="rearImageName" value="" >
         </form>
         </div>
         </div>
@@ -579,8 +579,12 @@ function setFirstWeighmentData(response){
 
 //fetch Gross weight from weigh machine
 function fetchGrossWt(){
+	var obj = {};
+	obj.weighType = 'gross';
+	obj.name = document.getElementById('').value;
+	var data = JSON.stringify(obj);
 	
-	var url="${pageContext.request.contextPath}/processing/fetchWeight.jsp";
+	var url="${pageContext.request.contextPath}/processing/fetchWeight.jsp?data="+data;
 	if(window.XMLHttpRequest){  
 		fetchData=new XMLHttpRequest();  
 	}  
@@ -602,15 +606,24 @@ function fetchGrossWt(){
 	 if(fetchData.readyState == 4){
 		 $.unblockWeigh();
 		 var response = this.response.trim();
-		 console.log('Weight --- '+response);
+		 
+		 var data = JSON.parse(response);
+		 console.log('Weight --- '+data.weight);
 		 var grossWtInput = document.getElementById('gross');
-		 grossWtInput.value = response;
+		 grossWtInput.value = data.weight;
+		 document.getElementyId('frontImageName').value = data.frontImageName;
+		 document.getElementyId('rearImageName').value = data.rearImageName;
 	 }
  }
  
  //fetch Tare weight from weigh machine
  function fetchTareWt(){
-		var url="${pageContext.request.contextPath}/processing/fetchWeight.jsp";
+		var obj = {};
+		obj.weighType = 'gross';
+		obj.name = document.getElementById('').value;
+		var data = JSON.stringify(obj);
+		
+		var url="${pageContext.request.contextPath}/processing/fetchWeight.jsp?data="+data;
 		if(window.XMLHttpRequest){  
 			fetchData=new XMLHttpRequest();  
 		}  
