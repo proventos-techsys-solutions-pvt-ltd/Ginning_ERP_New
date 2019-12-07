@@ -68,7 +68,7 @@
 		    
 		    int ledgerId = addGl.addGeneralLedger(gl);
 		    
-		    session.setAttribute("accountId",Integer.toString(accId));
+		    session.setAttribute("updateAccountId",Integer.toString(accId));
 	    	response.sendRedirect("../admin/Chart_Of_Accounts.jsp");
 		}else {
 			session.setAttribute("accountId",-1);

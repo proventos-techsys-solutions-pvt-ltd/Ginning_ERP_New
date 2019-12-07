@@ -942,8 +942,9 @@
 	         	submitButton.disabled = true;
 	         }else{
 	         	document.getElementById('invoiceStatus').value = "Payment Pending";
+	         	$("#submitButton").prop('disabled',false);
 	         } 
-	        	 $("#submitButton").prop('disabled',false);
+	        	 
          }
          
          

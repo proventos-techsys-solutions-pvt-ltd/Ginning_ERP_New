@@ -206,8 +206,7 @@
 						$("#openingBal").css("border","1px solid green");
 						if($.fn.validateData($("#openingBalDate").val(),/^[0-9]{4}[-][0-9]{2}[-][0-9]{2}$/)){
 							$("#openingBalDate").css("border","1px solid green");
-								$("#charOfAccounts").action = "../processing/updateGLAccount.jsp";
-								$("#charOfAccounts").submit();	
+								updateAccount();
 						}else{
 							$("#openingBalDate").css("border","1px solid red");
 							alert("Date cannot be left blank!");
@@ -247,6 +246,11 @@
 	})
 	
 	function submitAccount(){
+		document.getElementById("charOfAccounts").submit();
+	}
+	
+	function updateAccount(){
+		document.getElementById("charOfAccounts").action = '../processing/updateGLAccount.jsp';
 		document.getElementById("charOfAccounts").submit();
 	}
 	
@@ -341,6 +345,7 @@
 			document.getElementById("ledgerDesc").value = table.rows[rowIndex].cells[4].innerHTML;
 			document.getElementById("openingBal").value = table.rows[rowIndex].cells[8].innerHTML;
 			document.getElementById("openingBalDate").value = table.rows[rowIndex].cells[7].innerHTML;
+			$("#saveButton").prop("disabled","true");
 			$("#addAccount").modal();
 		}
 		else if(e.srcElement.tagName === "TD"){
@@ -367,6 +372,7 @@
 				document.getElementById("ledgerDesc").value = table.rows[rowIndex].cells[4].innerHTML;
 				document.getElementById("openingBal").value = table.rows[rowIndex].cells[8].innerHTML;
 				document.getElementById("openingBalDate").value = table.rows[rowIndex].cells[7].innerHTML;
+				$("#saveButton").prop("disabled","true");
 			$("#addAccount").modal();
 		}
 	})
@@ -421,6 +427,39 @@
 	/***********************
 	Side bar 
 	************************/
+	
+	
+	/**************************************
+	Response window code for updation
+	**************************************/
+	var sessionId = {
+			"getSessionId":<%=session.getAttribute("updateAccountId") %>,
+	}
+	$(document).ready(function(){
+		$.fn.checkStatus(sessionId.getSessionId,"Ledger has been updated successfully!")
+	})
+	
+	function myFunction(x) {
+  		x.classList.toggle("change");
+	}
+	
+	$(document).ready(function(){
+		$(".c-nav-collapse").click(function(){
+				$(".sidebar").toggle(); 
+				if($(".sidebar").css("display")==="none"){
+					$(".row").css("margin-left","10px"); 
+				}else{
+					$(".row").css("margin-left","225px"); 
+				}
+				
+		})
+	})
+	<% session.removeAttribute("updateAccountId");%>
+	/***********************
+	Side bar 
+	************************/
+	
+	
 	$(document).ready(function () {
 	    $('#sidebarCollapse').on('click', function () {
 	        $('#sidebar').toggleClass('active');
