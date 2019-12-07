@@ -38,13 +38,13 @@
 			<label style="margin-bottom:0px;">Date</label>
 		</div>
 		<div class="col-md-4">
-			<input type="date" class="form-control  ml-2" id="" name="">
+			<input type="date" class="form-control  ml-2" id="journal-entry-date" name="journal-entry-date-name">
 		</div>
 		<div class="col-md-2 text-right">
 			<label style="margin-bottom:0px;">Reference:</label>
 		</div>
 		<div class="col-md-4">
-			<input type="text" class="form-control  ml-2" id="" name="">
+			<input type="text" class="form-control  ml-2" id="journal-entry-reference" name="journal-entry-reference-name">
 		</div>
 	</div>
 	
@@ -60,37 +60,37 @@
 						</tr>
 					</thead>
 					<tbody id="tbody">
-						<tr>
+						<tr class="tdindex">
 							<td>
-								<select class="form-control " id="" name="">
+								<select class="form-control " id="journal-entry-accountid" name="journal-entry-accountid-name">
 									<option>Account Id</option>
 								</select>
 							</td>
 							<td>
-								<input type="text" class="form-control  " id="" name="">
+								<input type="text" class="form-control  " id="desciption" name="desciption-name">
 							</td>
 							<td>
-								<input type="text" class="form-control  " id="" name="">
+								<input type="text" class="form-control  " id="debit" name="debit-name">
 							</td>
 							<td>
-								<input type="text" class="form-control  " id="" name="">
+								<input type="text" class="form-control  " id="credit" name="credit-name">
 							</td>
 						</tr>
 						
-						<tr>
+						<tr class="tdindex">
 							<td>
-								<select class="form-control " id="" name="">
+								<select class="form-control " id="journal-entry-accountid" name="journal-entry-accountid-name">
 									<option>Account Id</option>
 								</select>
 							</td>
 							<td>
-								<input type="text" class="form-control " id="" name="">
+								<input type="text" class="form-control  " id="desciption" name="desciption-name">
 							</td>
 							<td>
-								<input type="text" class="form-control " id="" name="">
+								<input type="text" class="form-control  " id="debit" name="debit-name">
 							</td>
 							<td>
-								<input type="text" class="form-control " id="" name="">
+								<input type="text" class="form-control  " id="credit" name="credit-name">
 							</td>
 						</tr>
 					</tbody>
@@ -153,7 +153,7 @@
 		$(document).ready(function(){
 			$("#add-row").click(function(){
 				$("#tbody tr:last").after(
-						'<tr><td><select class="form-control " id="" name="">	<option>Account Id</option></select>'+
+						'<tr class="tdindex"><td><select class="form-control " id="" name="">	<option>Account Id</option></select>'+
 						'</td><td><input type="text" class="form-control " id="" name="">	</td>'+
 						'<td><input type="text" class="form-control " id="" name=""></td>'+
 						'<td><input type="text" class="form-control " id="" name=""></td></tr>'
@@ -166,10 +166,23 @@
 				if($("#tbody tr").length>2){
 					$("#tbody tr:last").remove()
 				}else{
-					$.fn.checkStatus(1,"Cannot delete rows.")
+					$.fn.checkStatus(1,"Cannot delete rows. chuitua lavade")
 				}
 			})
 		})
+		
+		/******************Make only one column to take data
+		*/
+		$.fn.getCellIndex = function(){
+		$('.tdindex td').click(function(){
+			var td = this.cellIndex;
+			$("input[name=debit-name]").eq(td).on("click",function(){
+				alert("working");
+			})
+			})
+		}
+		
+		
 		/***********************
 			Side bar 
 		************************/
