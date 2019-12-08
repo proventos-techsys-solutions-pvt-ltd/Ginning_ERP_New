@@ -1059,18 +1059,20 @@ public ArrayList<Invoice> getReport() {
 					"    INVOICE_MAST    IM,\r\n" + 
 					"    CUSTOMER_MAST   CM,\r\n" + 
 					"    (\r\n" + 
-					"        SELECT\r\n" + 
+					"       SELECT\r\n" + 
 					"            IT.RST,\r\n" + 
+					"            IT.INVOICE_ID,\r\n" + 
 					"            COUNT(*)\r\n" + 
 					"        FROM\r\n" + 
 					"            INVOICE_ITEMS IT\r\n" + 
 					"        GROUP BY\r\n" + 
-					"            IT.RST\r\n" + 
+					"            IT.RST,\r\n" + 
+					"            IT.INVOICE_ID\r\n" + 
 					"    ) II\r\n" + 
 					"WHERE\r\n" + 
 					"    AMT.INVOICE_ID = IM.ID\r\n" + 
 					"    AND CM.ID = IM.CUSTOMER_ID\r\n" + 
-					"    AND II.RST = AMT.INVOICE_ID\r\n" + 
+					"    AND II.INVOICE_ID = AMT.INVOICE_ID\r\n" + 
 					"GROUP BY\r\n" + 
 					"    IM.ID,\r\n" + 
 					"    IM.INVOICE_NO,\r\n" + 

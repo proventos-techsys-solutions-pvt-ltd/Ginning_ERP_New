@@ -581,7 +581,7 @@ function setFirstWeighmentData(response){
 function fetchGrossWt(){
 	var obj = {};
 	obj.weighType = 'gross';
-	obj.name = document.getElementById('').value;
+	obj.name = document.getElementById('customer').value;
 	var data = JSON.stringify(obj);
 	
 	var url="${pageContext.request.contextPath}/processing/fetchWeight.jsp?data="+data;

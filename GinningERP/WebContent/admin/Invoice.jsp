@@ -838,7 +838,9 @@ function setCurrentDate(){
 		
 		document.getElementById('unloadingCharges').value = (data.unloadingCharges).toFixed(0);
 		
-		document.getElementById('weighingCharges').value = data.weighRate;
+		if(Number(data.unloadingCharges) != 0){
+			document.getElementById('weighingCharges').value = data.weighRate;
+		}
 		document.getElementById('advance').value = data.advance;		
 		var blacklisted;
 		var membership;
@@ -1214,21 +1216,22 @@ function setCurrentDate(){
 							newcell.align = "center";
 						}
 					}
-				}
 				
-				var paymentModes =  document.getElementsByName("paymentMode");
-				var modesSelected = [];
-				for(k=0; k < paymentModes.length; k++){
-					if(k < paymentModes.length - 1){
-						modesSelected.push(paymentModes[k].options[paymentModes[k].selectedIndex].value);
-						paymentModes[k].disabled = true;
-					}else if(k === paymentModes.length - 1){
-						paymentModes[k].disabled = false;
-						for(r=0; r < paymentModes[k].options.length; r++){
-							if(modesSelected.includes(paymentModes[k].options[r].value)){
-								paymentModes[k].options[r].disabled = true;
-							}else{
-								paymentModes[k].options[r].selected = true;
+				
+					var paymentModes =  document.getElementsByName("paymentMode");
+					var modesSelected = [];
+					for(k=0; k < paymentModes.length; k++){
+						if(k < paymentModes.length - 1){
+							modesSelected.push(paymentModes[k].options[paymentModes[k].selectedIndex].value);
+							paymentModes[k].disabled = true;
+						}else if(k === paymentModes.length - 1){
+							paymentModes[k].disabled = false;
+							for(r=0; r < paymentModes[k].options.length; r++){
+								if(modesSelected.includes(paymentModes[k].options[r].value)){
+									paymentModes[k].options[r].disabled = true;
+								}else{
+									paymentModes[k].options[r].selected = true;
+								}
 							}
 						}
 					}
