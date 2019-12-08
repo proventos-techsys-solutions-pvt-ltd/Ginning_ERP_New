@@ -558,8 +558,6 @@ function setCurrentDate(){
 		document.getElementById("customerData").value = data[0].customerName + "\n" + data[0].customerAddress + "\n" + data[0].customerMobile;
 		document.getElementById("customerId").value = data[0].customerId;
 		
-		
-		
 		//document.getElementById('unloadingCharges').value = ((Number(document.getElementById("totalQty").value)/100) * 20).toFixed(2);
 		
 		//document.getElementById('weighingCharges').value = Number(document.getElementById('weighingCharges').value) + Number(data[0].weighRate);
@@ -642,6 +640,11 @@ function setCurrentDate(){
 		}
 		calculateTotal();
 		document.getElementById('submitButton').disabled = false;
+		
+		if(document.getElementById('tableBody').rows.length === 0){
+			alert('Invoice is already created for thie RST.')
+			location.reload();
+		}
 	}
 	
 	document.addEventListener('change',function(e){

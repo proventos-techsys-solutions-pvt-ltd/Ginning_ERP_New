@@ -893,7 +893,11 @@ function setCurrentDate(){
 			
 			cell1.innerHTML = '<input type="text" id="tableRst'+(rowNo+1)+'" class="form-control form-control-sm" name="tableRst" value="'+itemData[i].rst+'" readonly>';
 			cell2.innerHTML = '<input type="text" id="material'+(rowNo+1)+'" class="form-control form-control-sm" name="material" value="'+itemData[i].material+'" readonly>';
-			cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+itemData[i].quantity+'" readonly>';
+			if(Number(itemData[i].invoicedQty) === Number(itemData[i].quantity) || Number(itemData[i].invoicedQty) === 0){
+				cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+itemData[i].quantity+'" readonly>';
+			}else if(Number(itemData[i].invoicedQty) > 0){
+				cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+(Number(itemData[i].quantity) - Number(itemData[i].invoicedQty))+'" readonly>';
+			}
 			cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+itemData[i].grade+'" readonly>';
 			cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+itemData[i].moisture+'" readonly>';
 			cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+itemData[i].rate+'" readonly>';
