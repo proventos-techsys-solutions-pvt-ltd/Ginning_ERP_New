@@ -41,7 +41,7 @@
 		}
  	
 		//Need to fill the IP address here
-		String frontIp = "";
+		String frontIp = "192.168.1.113:554";
 		String rearIp = "";
 		
    		IpCamera.getVehiclePhoto(frontIp, frontImageName);//take vehicle photo

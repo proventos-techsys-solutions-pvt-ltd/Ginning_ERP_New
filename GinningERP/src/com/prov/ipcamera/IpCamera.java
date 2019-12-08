@@ -24,7 +24,7 @@ public class IpCamera {
 			 	 iPimg = frameGrabber.grab();
 			 	 BufferedImage bufferedImage = new BufferedImage(iPimg.width(), iPimg.height(), BufferedImage.TYPE_INT_RGB);
 			 	 iPimg.copyTo(bufferedImage);
-			 	 File file = new File("C://TEMP/fileName.png");
+			 	 File file = new File("C://TEMP/"+fileName+".png");
 			     ImageIO.write(bufferedImage, "png", file);
 		    	 canvasFrame.showImage(iPimg);
 		    	 frameGrabber.stop();
