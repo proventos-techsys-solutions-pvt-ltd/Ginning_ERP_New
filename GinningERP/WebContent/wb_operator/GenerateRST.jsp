@@ -611,16 +611,16 @@ function fetchGrossWt(){
 		 console.log('Weight --- '+data.weight);
 		 var grossWtInput = document.getElementById('gross');
 		 grossWtInput.value = data.weight;
-		 document.getElementyId('frontImageName').value = data.frontImageName;
-		 document.getElementyId('rearImageName').value = data.rearImageName;
+		 document.getElementById('frontImageName').value = data.frontImageName;
+		 document.getElementById('rearImageName').value = data.rearImageName;
 	 }
  }
  
  //fetch Tare weight from weigh machine
  function fetchTareWt(){
 		var obj = {};
-		obj.weighType = 'gross';
-		obj.name = document.getElementById('').value;
+		obj.weighType = 'tare';
+		obj.name = document.getElementById('customer').value;
 		var data = JSON.stringify(obj);
 		
 		var url="${pageContext.request.contextPath}/processing/fetchWeight.jsp?data="+data;
@@ -644,10 +644,14 @@ function fetchGrossWt(){
 		 if(fetchData.readyState == 4){
 			 $.unblockWeigh();
 			 var response = this.response.trim();
-			 console.log('Weight --- '+response);
+			 
+			 var data = JSON.parse(response);
+			 console.log('Weight --- '+data.weight);
 			 var tareWtInput = document.getElementById('tare');
-			tareWtInput.value = response;
+			tareWtInput.value = data.weight;
 			document.getElementById('net').value = Number(document.getElementById('gross').value) - Number(document.getElementById('tare').value);
+			document.getElementById('frontImageName').value = data.frontImageName;
+			document.getElementById('rearImageName').value = data.rearImageName;
 		 }
 	 }
 	var height = new SettingHeightofAdjacentPanels("getHeight","scroll",0);//getting & setting height of panels

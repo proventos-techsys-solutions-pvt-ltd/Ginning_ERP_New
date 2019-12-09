@@ -64,7 +64,7 @@ public class UpdateCustomerVehicle {
 			e.printStackTrace();
 		}
 
-		String updateCustomerVehicle = "UPDATE CUSTOMER_VEHILCE_MAST\r\n" + 
+		String updateCustomerVehicle = "UPDATE CUSTOMER_VEHICLE_MAST\r\n" + 
 										"SET\r\n" + 
 										"    FRONT_TARE_IMG = ?,\r\n" + 
 										"    REAR_TARE_IMG = ?\r\n" + 
@@ -82,9 +82,9 @@ public class UpdateCustomerVehicle {
 
 			stmt = con.prepareStatement(updateCustomerVehicle);
 			
-			stmt.setString(2, frontImage );
-			stmt.setString(3, rearImage );
-			stmt.setInt(4,weighmentId );
+			stmt.setString(1, frontImage );
+			stmt.setString(2, rearImage );
+			stmt.setInt(3,weighmentId );
 			
 			
 			rowCount = stmt.executeUpdate();

@@ -37,9 +37,9 @@ var uiController = (function(){
 						elementIds.date.title ="Date cannot be blank";
 						if(($("input[type=checkbox]").is(":checked"))){//checking if the vehicle is not a  cart
 							//validation on vehicle no
-							if(expressions.vehicleNo.test(elementIds.vehicleNo.value.trim())){//vehicle number validation starts here
+							/*if(expressions.vehicleNo.test(elementIds.vehicleNo.value.trim())){//vehicle number validation starts here
 								elementIds.vehicleNo.style.borderColor ="#ced4da";
-								elementIds.vehicleNo.title ="";
+								elementIds.vehicleNo.title ="";*/
 								//validation on Vehicle Type
 								if(elementIds.vehicleType.value.trim() !=="Select"){
 									elementIds.vehicleType.style.borderColor ="#ced4da";
@@ -92,13 +92,14 @@ var uiController = (function(){
 									elementIds.vehicleType.title ="Vehicle Type cannot be blank";
 									return false;
 								}
-							}else{
+								/*}
+							else{
 								elementIds.vehicleNo.style.border ="1px red solid";
 								elementIds.vehicleNo.title ="Vehicle number format 'AA 31 MA 4444'";
 								return false;
-							}//vehicle number validation ends here
+							}//vehicle number validation ends here*/
 						}else{
-							elementIds.vehicleNo.value = null;
+							//elementIds.vehicleNo.value = null;
 							//validation on Vehicle Type
 							if(elementIds.vehicleType.value.trim() !=="Select"){
 								elementIds.vehicleType.style.borderColor ="#ced4da";

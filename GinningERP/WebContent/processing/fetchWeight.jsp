@@ -32,12 +32,14 @@
 		String frontImageName = "";
 		String rearImageName = "";
 		
+		String customerName = ((String)obj.get("name")).replaceAll(" ", "_");
+		
 		if(((String)obj.get("weighType")).equals("gross")){
-			 frontImageName = (String)obj.get("name")+"_"+formattedDate+"front_gross.png"; 
-	    	 rearImageName = (String)obj.get("name")+"_"+formattedDate+"rear_gross.png"; 
+			 frontImageName = customerName+"_"+formattedDate+"_front_gross.png"; 
+	    	 rearImageName = customerName+"_"+formattedDate+"_rear_gross.png"; 
 		}else if(((String)obj.get("weighType")).equals("tare")){
-			 frontImageName = (String)obj.get("name")+"_"+formattedDate+"front_tare.png"; 
-	    	 rearImageName = (String)obj.get("name")+"_"+formattedDate+"rear_tare.png"; 
+			 frontImageName = customerName+"_"+formattedDate+"_front_tare.png"; 
+	    	 rearImageName = customerName+"_"+formattedDate+"_rear_tare.png"; 
 		}
  	
 		//Need to fill the IP address here
