@@ -936,7 +936,7 @@
 		         }
 	         }else if(Object.entries(data.pdcData).length === 0){
 	         }
-	         if(pdcPayStatus === 1 && rtgsPayStatus === 1 && chequePayStatus === 1 && cashPayStatus ===1){
+	         if(pdcPayStatus === 1 && rtgsPayStatus === 1 && chequePayStatus === 1){
 	         	document.getElementById('invoiceStatus').value = "Paid by Operator";
 	         	var submitButton = document.getElementById('submitButton');
 	         	submitButton.disabled = true;

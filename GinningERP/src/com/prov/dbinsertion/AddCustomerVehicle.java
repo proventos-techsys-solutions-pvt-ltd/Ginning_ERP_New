@@ -29,9 +29,9 @@ public int addCustomerVehicle(CustomerVehicle cv) {
 			
 			cs.setInt(2, cv.getCid() );
 			if(cv.getVehicleNo() != null) {
-				cs.setNull(3, Types.VARCHAR);
-			}else {
 				cs.setString(3, cv.getVehicleNo() );
+			}else {
+				cs.setNull(3, Types.VARCHAR);
 			}
 			cs.setInt(4, cv.getRst());
 			cs.setInt(5, cv.getvTypeId());

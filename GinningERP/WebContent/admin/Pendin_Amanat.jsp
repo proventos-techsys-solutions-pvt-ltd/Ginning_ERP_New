@@ -110,26 +110,29 @@
 				var table = document.getElementById("tableBody");
 				
 				for(i=0;i<data.length;i++){
-					var noOfRows = table.rows.length;
-					var row = table.insertRow(noOfRows);
 					
-					var cell1 = row.insertCell(0);
-					var cell2 = row.insertCell(1);
-					var cell3 = row.insertCell(2);
-					var cell4 = row.insertCell(3);
-					var cell5 = row.insertCell(4);
-					var cell6 = row.insertCell(5);
-					var cell7 = row.insertCell(6);
-					
-					cell7.className = "text-center";
-					
-					cell1.innerHTML = noOfRows+1;
-					cell2.innerHTML = data[i].amanatDate;
-					cell3.innerHTML = data[i].rst;
-					cell4.innerHTML = data[i].name;
-					cell5.innerHTML = data[i].differenceFromSuper;
-					cell6.innerHTML = data[i].quantity;
-					cell7.innerHTML = "<a href='../report/AmanatReceipt.html?rstNo="+data[i].rst+"' target='_blank' ><img src='../property/img/printer.png' alt='Print'></a>"
+					if(Number(data[i].quantity) != 0){
+						var noOfRows = table.rows.length;
+						var row = table.insertRow(noOfRows);
+						
+						var cell1 = row.insertCell(0);
+						var cell2 = row.insertCell(1);
+						var cell3 = row.insertCell(2);
+						var cell4 = row.insertCell(3);
+						var cell5 = row.insertCell(4);
+						var cell6 = row.insertCell(5);
+						var cell7 = row.insertCell(6);
+						
+						cell7.className = "text-center";
+						
+						cell1.innerHTML = noOfRows+1;
+						cell2.innerHTML = data[i].amanatDate;
+						cell3.innerHTML = data[i].rst;
+						cell4.innerHTML = data[i].name;
+						cell5.innerHTML = data[i].differenceFromSuper;
+						cell6.innerHTML = data[i].quantity;
+						cell7.innerHTML = "<a href='../report/AmanatReceipt.html?rstNo="+data[i].rst+"' target='_blank' ><img src='../property/img/printer.png' alt='Print'></a>"
+					}
 				}
 			}
 	/**************************************
