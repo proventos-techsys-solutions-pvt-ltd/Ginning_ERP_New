@@ -30,6 +30,7 @@
 							<th width="15%">Mobile No</th>
 							<th width="10%">BlackListed</th>
 							<th width="10%">Membership</th>
+							<th>Photo</th>
 							<th width="5%" class="text-center">Edit</th>
 							<th width="5%" class="text-center">Delete</th>
 						</tr>
@@ -61,6 +62,9 @@
 			       	<div class="col-md-6">
 			       		<label>Mobile</label>
 			       		<input type="tel" class="form-control" name="mobile" id="customerMobile">
+			       	</div>
+			       	<div class="col-md-6">
+			       		<img src="" id="photo" />
 			       	</div>
 			       	<div class="col-md-12">
 			       		<label>Address</label>
@@ -180,6 +184,7 @@
 								'<td>'+jsonResponse[i].mobile+'</td>'+
 								'<td>'+blacklisted+'</td>'+
 								'<td>'+membership+'</td>'+
+								'<td><img src="'+jsonResponse[i].photo+'" height=50 width=50></a></td>'+
 								'<td class="text-center" id="edit"><img src="../property/img/edit.png" alt="edit"></td>'+
 								'<td class="text-center"><img src="../property/img/delete.png" alt="delete" id="deleteRow"></td>'+
 							'</tr>')
@@ -223,6 +228,7 @@
 				document.getElementById('membership').value = '1';
 				document.getElementById('membership').checked = true;
 			}
+			document.getElementById('photo').src = row.cells[6].children[0].src;
 			
 			$("#newCustomerModal").modal();
 		}

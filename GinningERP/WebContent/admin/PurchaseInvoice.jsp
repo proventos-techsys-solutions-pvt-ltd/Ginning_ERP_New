@@ -166,7 +166,7 @@
 			
 		document.addEventListener('click',function(e){
 			if(e.srcElement.alt==='print'){
-				var rowNo = e.srcElement.parentElement.parentElement.rowIndex;
+				var rowNo = e.srcElement.parentElement.parentElement.rowIndex-1;
 				var invoiceId = document.getElementById('tableBody').rows[rowNo].cells[1].innerHTML;
 				
 				window.open('../report/InvoicePDFPrintOnly.jsp?invoiceId='+invoiceId);

@@ -107,6 +107,7 @@
 	
 	function setDataInTable(response){
 		var data = JSON.parse(response);
+		console.log(data);
 		var table = document.getElementById("tableBody");
 		table.innerHTML = "";
 		for(i=0; i<data.length; i++){
@@ -152,7 +153,9 @@
 			cell9.innerHTML = data[i].id;
 			cell10.innerHTML = data[i].invoiceId;
 			cell11.innerHTML = data[i].customerId;
-			cell12.innerHTML = '<img src="../property/img/delete.png" alt="deleteRow" >';
+			if(Number(data[i].status) != 1){
+				cell12.innerHTML = '<img src="../property/img/delete.png" alt="deleteRow" >';
+			}
 		}
 	}
 	

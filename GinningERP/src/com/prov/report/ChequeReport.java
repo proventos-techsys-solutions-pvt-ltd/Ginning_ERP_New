@@ -87,7 +87,12 @@ public class ChequeReport {
 				
 				c.setId(rs.getInt(1));
 				c.setCustomerId(Integer.parseInt(rs.getString(2)));
-				c.setInvoiceId(Integer.parseInt(rs.getString(3)));
+				if(rs.getString(3) == null) {
+					c.setInvoiceId(0);
+				}else {
+					
+					c.setInvoiceId(Integer.parseInt(rs.getString(3)));
+				}
 				c.setBankId(Integer.parseInt(rs.getString(4)));
 				c.setCustomerName(rs.getString(5));
 				c.setInvoiceNo(rs.getString(6));
