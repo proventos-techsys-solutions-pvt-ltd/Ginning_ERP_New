@@ -166,7 +166,7 @@
 				if($("#tbody tr").length>2){
 					$("#tbody tr:last").remove()
 				}else{
-					$.fn.checkStatus(1,"Cannot delete rows. chuitua lavade")
+					$.fn.checkStatus(1,"Cannot delete rows.")
 				}
 			})
 		})
