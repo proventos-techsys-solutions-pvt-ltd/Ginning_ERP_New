@@ -383,7 +383,9 @@ public ArrayList<Invoice> getReport() {
 		Connection con = null;
 		NumberToWords numToWords = new NumberToWords();
 		JSONObject jsonObj = new JSONObject();
-		
+        float invoicedQty = 0;
+        String qty;
+        float totalQty = 0;
 		try {
 			con = OracleConnection.getConnection();
 			
@@ -475,7 +477,8 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("customerId", rs.getInt(8));
 			jsonObj.put("authorizer", rs.getString(9));
 			jsonObj.put("note", rs.getString(10));
-			jsonObj.put("totalQuantity", rs.getString(11)+" Kgs");
+			qty = rs.getString(11);
+			jsonObj.put("totalQuantity", qty+" Kgs");
 			jsonObj.put("cashAmount", rs.getLong(12));
 			jsonObj.put("chequeAmount", rs.getLong(13));
 			jsonObj.put("rtgsAmount", rs.getLong(14));
@@ -516,7 +519,6 @@ public ArrayList<Invoice> getReport() {
 			rs.previous();
 			while (rs.next()) {
 				
-				
 				JSONObject invoiceItems = new JSONObject();
 				
 				invoiceItems.put("invoiceItemId", rs.getInt(28));
@@ -536,8 +538,11 @@ public ArrayList<Invoice> getReport() {
 				invoiceItems.put("amount", amount);
 				jsonArr.put(invoiceItems);
 				
+				invoicedQty = invoicedQty + rs.getLong(34);
+				
 			}
 			
+			jsonObj.put("amanatQty", (Float.parseFloat(qty) - invoicedQty));
 			jsonObj.put("invoiceItems", jsonArr);
 			
 			stmt.close();

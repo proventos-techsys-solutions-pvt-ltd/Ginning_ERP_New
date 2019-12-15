@@ -1,4 +1,5 @@
 <%-- <%@ page errorPage="../admin/Error.jsp" %>  --%>
+<%@page import="com.prov.report.AmanatReport"%>
 <%@page import="com.prov.report.GradeRateReport"%>
 <%@page import="com.prov.dbinsertion.AddTransactions"%>
 <%@page import="com.prov.bean.Transactions"%>
@@ -55,6 +56,7 @@
 		
 	ArrayList<InvoiceItems> invoiceItemList = new ArrayList<InvoiceItems>();	
 	ArrayList<Amanat> amanatItemList = new ArrayList<Amanat>();	
+	String amanatNo = AmanatReport.getAmanatSeries();
 		
 		for(int i=0; i<jsonArray.size(); i++){
 			
@@ -77,6 +79,7 @@
 				item.setRst(Integer.parseInt((String)obj.get("rst")));
 				item.setDifference(superRate - Long.parseLong((String)obj.get("rate")));
 				item.setInvoicedQty(0);
+				item.setAmanatNo(amanatNo);
 				
 				amanatItemList.add(item);
 			}

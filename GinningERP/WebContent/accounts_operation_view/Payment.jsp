@@ -136,7 +136,7 @@
                            <input type="text" class="form-control" id="" name="" value="Not Applicable" readonly>
                         </td>
                         <td>
-                           <input type="date" class="form-control" id="cashDate" name="cashDate" value="">
+                           <input type="date" class="form-control" id="cashDate" name="cashDate" value="" readonly="readonly">
                         </td>
                         <td>
                            <input type="text" class="form-control" id="" name="" value="Not Applicable" readonly>
@@ -166,7 +166,7 @@
                            <input type="text" class="form-control" id="" name="" value="Not Applicable" readonly>
                         </td>
                         <td>
-                           <input type="date" class="form-control" id="chequeDate" name="chequeDate" value="">
+                           <input type="date" class="form-control" id="chequeDate" name="chequeDate" value="" readonly="readonly">
                         </td>
                         <td>
                            <input type="text" class="form-control" id="nameOnCheque" name="nameOnCheque" placeholder="Name on Cheque">
@@ -194,7 +194,7 @@
                            <input type="text" class="form-control" id="rtgsIfsc" name="rtgsIfsc" placeholder="IFSC Code">
                         </td>
                         <td >
-                           <input type="date" class="form-control " id="rtgsAmountDate" name="rtgsAmountDate" >
+                           <input type="date" class="form-control " id="rtgsAmountDate" name="rtgsAmountDate" readonly="readonly">
                         </td>
                         <td>
                            <input type="text" class="form-control" id="" name="" value="Not Applicable" readonly>

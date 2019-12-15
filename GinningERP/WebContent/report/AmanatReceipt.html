@@ -48,6 +48,7 @@ h4,h5,h6{
 	<div class="row remove-row-margin row-background">
 		<div class="col-md-6">
 			<label>अनु क्रं</label>
+			<span id='amanatNo'></span>
 			<div>
 				<label>दिनांक</label>
 				<span id='amanatDate'>dd/mm/yyyy</span>
@@ -234,7 +235,7 @@ h4,h5,h6{
 			cell5.innerHTML = (jsonArr[i].quantity/100) * (jsonArr[i].superRate - jsonArr[i].differenceFromSuper);
 			
 			totalAmount = totalAmount + Number((jsonArr[i].quantity/100) * (jsonArr[i].superRate - jsonArr[i].differenceFromSuper))
-
+			document.getElementById('amanatNo').innerHTML = jsonArr[0].amanatNo;
 		}
 		document.getElementById('totalAmount').innerHTML = totalAmount;
 	}

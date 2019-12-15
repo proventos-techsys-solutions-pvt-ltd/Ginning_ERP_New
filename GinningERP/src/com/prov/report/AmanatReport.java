@@ -1,8 +1,10 @@
 package com.prov.report;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -281,7 +283,8 @@ public JSONArray getAmanatReport() {
 				"    GD.RST,\r\n" + 
 				"    CM.NAME,\r\n" + 
 				"    AM.DIFF_FROM_SUPER,\r\n" + 
-				"    AM.AMANAT_DATE\r\n" + 
+				"    AM.AMANAT_DATE,\r\n" + 
+				"    AM.AMANAT_NO\r\n" + 
 				"FROM\r\n" + 
 				"    GRADE_DETAILS           GD,\r\n" + 
 				"    CUSTOMER_MAST           CM,\r\n" + 
@@ -299,7 +302,8 @@ public JSONArray getAmanatReport() {
 				"    CM.NAME,\r\n" + 
 				"    AM.INVOICED_QTY,\r\n" + 
 				"    AM.DIFF_FROM_SUPER,\r\n" + 
-				"    AM.AMANAT_DATE\r\n" + 
+				"    AM.AMANAT_DATE,"
+				+ "AM.AMANAT_NO\r\n" + 
 				"ORDER BY\r\n" + 
 				"    RST";
 		
@@ -319,6 +323,7 @@ public JSONArray getAmanatReport() {
 			String properDate = format2.format(date1);
 			
 			obj.put("amanatDate", properDate);
+			obj.put("amanatNo", rs.getString(6));
 			
 			
 			jsonArray.put(obj);
@@ -351,7 +356,8 @@ public JSONArray getAmanatDataForSlip(int rstNo) {
 				"    CM.MOBILE,\r\n" + 
 				"    GRM.RATE,\r\n" + 
 				"    AM.AMANAT_DATE,\r\n" + 
-				"    AM.DIFF_FROM_SUPER\r\n" + 
+				"    AM.DIFF_FROM_SUPER,"
+				+ "AM.AMANAT_NO\r\n" + 
 				"FROM\r\n" + 
 				"    GRADE_DETAILS           GD,\r\n" + 
 				"    CUSTOMER_MAST           CM,\r\n" + 
@@ -394,6 +400,7 @@ public JSONArray getAmanatDataForSlip(int rstNo) {
 			String properDate = format2.format(date1);
 			
 			obj.put("amanatDate", properDate);
+			obj.put("amanatNo", rs.getString(9));
 			
 			
 			jsonArray.put(obj);
@@ -406,6 +413,32 @@ public JSONArray getAmanatDataForSlip(int rstNo) {
 	}
 	
 	return jsonArray;
+	}
+
+	public static String getAmanatSeries() {
+	
+		Connection con = null;
+		String amanatNo = "";
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String invSql = "{? = get_amanat_series}";
+			
+			CallableStatement cs = con.prepareCall(invSql);	
+			
+			cs.registerOutParameter(1, Types.VARCHAR);
+			cs.executeUpdate();
+		
+			amanatNo =cs.getString(1); 
+			
+			cs.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return amanatNo;
 	}
 
 }

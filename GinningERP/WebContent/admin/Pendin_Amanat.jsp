@@ -23,6 +23,7 @@
 				<thead>
 					<tr>
 						<th>Sr. No.</th>
+						<th>Amanat No.</th>
 						<th>Date</th>
 						<th>RST</th>
 						<th>Vendor Name</th>
@@ -122,16 +123,18 @@
 						var cell5 = row.insertCell(4);
 						var cell6 = row.insertCell(5);
 						var cell7 = row.insertCell(6);
+						var cell8 = row.insertCell(7);
 						
 						cell7.className = "text-center";
 						
 						cell1.innerHTML = noOfRows+1;
-						cell2.innerHTML = data[i].amanatDate;
-						cell3.innerHTML = data[i].rst;
-						cell4.innerHTML = data[i].name;
-						cell5.innerHTML = data[i].differenceFromSuper;
-						cell6.innerHTML = data[i].quantity;
-						cell7.innerHTML = "<a href='../report/AmanatReceipt.html?rstNo="+data[i].rst+"' target='_blank' ><img src='../property/img/printer.png' alt='Print'></a>"
+						cell2.innerHTML = data[i].amanatNo;
+						cell3.innerHTML = data[i].amanatDate;
+						cell4.innerHTML = data[i].rst;
+						cell5.innerHTML = data[i].name;
+						cell6.innerHTML = data[i].differenceFromSuper;
+						cell7.innerHTML = data[i].quantity;
+						cell8.innerHTML = "<a href='../report/AmanatReceipt.html?rstNo="+data[i].rst+"' target='_blank' ><img src='../property/img/printer.png' alt='Print'></a>"
 					}
 				}
 			}

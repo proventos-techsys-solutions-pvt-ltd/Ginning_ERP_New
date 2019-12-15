@@ -29,8 +29,16 @@ public class Amanat {
 		this.rst = rst;
 	}
 
-	private String amanatDate;
+	private String amanatDate, amanatNo;
 	
+	public String getAmanatNo() {
+		return amanatNo;
+	}
+
+	public void setAmanatNo(String amanatNo) {
+		this.amanatNo = amanatNo;
+	}
+
 	private double finalRate, difference;
 
 	public double getDifference() {
