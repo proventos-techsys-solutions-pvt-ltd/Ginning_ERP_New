@@ -17,6 +17,17 @@
         <a class="nav-link" href="./rtgs-neft.jsp">RTGS/NEFT Report<span class="sr-only">(current)</span></a>
       </li>
       
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Report
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="Pendin_Amanat.jsp">Amanat Report</a>
+          <a class="dropdown-item" href="PurchaseInvoice.jsp">Invoice Report</a>
+          <a class="dropdown-item" href="CashReport.jsp">Cash Report</a>
+        </div>
+      </li>
+      
       <li class="nav-item active" id="cashier-admin" hidden>
         <a class="nav-link" href="../admin/Dashboard.jsp">Admin View<span class="sr-only">(current)</span></a>
       </li>

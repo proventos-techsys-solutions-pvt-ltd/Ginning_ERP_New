@@ -179,6 +179,10 @@ body{
 .tile-background-ht{
 	height:75px;
 }
+.row-background{
+	padding:5px;
+	background:#fff;	
+}
 /******************************FOOTER CLASSES*********************************/
 .footer{
 	height:150px;

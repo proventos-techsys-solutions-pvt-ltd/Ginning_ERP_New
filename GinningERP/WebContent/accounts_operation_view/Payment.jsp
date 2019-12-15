@@ -43,7 +43,7 @@
             </div>
          </div>
          <div class="row mt-2 tile-background-row border-bottom">
-            <div class="col-md-8">
+            <div class="col-md-12">
                <input type="hidden" id="invoiceId" name="invoiceId" />
                <input type="hidden" id="customerId" name="customerId" />
                <input type="hidden" id="customerName" name="customerName" />
@@ -58,17 +58,17 @@
                <input type="hidden" id="pdcRtgsPaymentStatus" value="0" />
                <input type="hidden" id="pdcCashPaymentStatus" value="0" />
                <div class="form-row">
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                      <label class="lbl-rm-all">Customer Information</label>
                      <textarea id="customerInfo" name="customerInfo" class="form-control " rows="4" readonly></textarea>
                   </div>
-                  <div class="col-md-auto">
+                  <div class="col-md-4">
                      <label class="lbl-rm-all">Invoice No</label>
                      <input type="text" class="form-control " id="invoiceNo" name="invoiceNo" readonly>
                      <label class="lbl-rm-all">Date</label>
                      <input type="text" class="form-control " id="invoiceDate" name="invoiceDate" readonly>
                   </div>
-                  <div class="col-md-auto">
+                  <div class="col-md-4">
                      <label class="lbl-rm-all">Total Amount to Pay</label>
                      <input type="text" class="form-control " id="totalAmount" name="totalAmount" readonly>
                      <label class="lbl-rm-all">Status</label>
@@ -76,7 +76,10 @@
                   </div>
                </div>
             </div>
-            <div class="col-md-4 border-left">
+         </div>
+         
+         <div class="row mt-2 tile-background-row">
+         	<div class="col-md-12" style="height:200px;overflow:auto;">
                <div class="tile-background-row">
                   <table class="table table-bordered">
                      <thead class="table-back">
@@ -91,8 +94,9 @@
                      </tbody>
                   </table>
                </div>
-            </div>
+         	</div>
          </div>
+         
          <div class="row mt-2 tile-background-row border-bottom">
             <div class="col-md-12">
                <table class="table table-sm table-bordered">
