@@ -88,7 +88,7 @@ public class CompanyReport {
 				c.setMobile(rs.getString(11));
 				c.setEmail(rs.getString(12));
 				c.setLogoPath(rs.getString(13));
-			
+				c.setInvoiceSeries(rs.getString(14));
 			}
 			
 			rs.close();

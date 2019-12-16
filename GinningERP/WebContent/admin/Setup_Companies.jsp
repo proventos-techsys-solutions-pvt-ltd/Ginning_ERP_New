@@ -25,6 +25,7 @@
 			<div class="col-md-12">
 				<div class="tile-background-row">
 					<form name="companyForm" enctype="multipart/form-data" action="../processing/addCompany.jsp" method="post">
+						<input type="hidden" class="form-control" name="id" id="id">
 						<div class="form-row">
 							<div class="col-md-10">
 								<label class="lbl-rm-all">Company Name</label>
@@ -88,7 +89,9 @@
 								<div class="d-flex justify-content-end align-items-center">
 									<button type="button" class="btn btn-success btn-sm" id="add-company">Add</button>
 									&nbsp;&nbsp;
-									<button type="button" class="btn btn-success btn-sm">Reset</button>
+									<button type="button" class="btn btn-success btn-sm" id="update" disabled>Update</button>
+									&nbsp;&nbsp;
+									<button type="button" class="btn btn-success btn-sm" id="reset">Reset</button>
 								</div>
 							</div>
 						</div>
@@ -231,7 +234,8 @@
 					
 					for (i = 0; i < size; i++) {
 					
-						element.insertAdjacentHTML('beforeend','<ul class="list-unstyled companyList">'+
+						element.insertAdjacentHTML('beforeend',
+						  '<ul class="list-unstyled companyList">'+
 						  '<li class="media">'+
 						  '<img class="mr-3" src="../images/'+dataList[i].logoPath+'" alt="Company 1 Logo" width="100px" height="100px">'+
 						  '<div class="media-body">'+
@@ -240,6 +244,7 @@
 						  '  		<p>Telephone : '+dataList[i].telephone+'</p>'+
 						  '  		<p>Mobile : '+dataList[i].mobile+'</p>'+
 						  '</div>'+
+						  '<button id="edit'+(i+1)+'" data-companyId="'+dataList[i].id+'">Edit Company</button>'+
 						  '</li>'+
 						  '</ul>'+
 						  '<div class="border-top border-mr-btm"></div>');
@@ -267,7 +272,70 @@
 			        $('#sidebar').toggleClass('active');
 			    });
 			});
-		</script>
+
+	document.addEventListener('click',function(e){
+		if(e.srcElement.id.includes('edit')){
+			var id = e.srcElement.getAttribute('data-companyId');
+			fetchCompanyData(id);
+		}
+	});
+	
+	document.addEventListener('click',function(e){
+		if(e.srcElement.id === 'reset'){
+			location.reload();
+		}
+	});
+	
+	document.addEventListener('click',function(e){
+		if(e.srcElement.id === 'update'){
+			document.getElementsByName('companyForm')[0].action = "../processing/updateCompany.jsp";
+			document.getElementsByName('companyForm')[0].submit();
+		}
+	});
+	
+	function fetchCompanyData(id){
+		url = "../processing/getCompanyData.jsp?id="+id;
+		if(window.XMLHttpRequest){  
+			fetchData=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchData=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+	  
+		try{  
+			fetchData.onreadystatechange=getCompData;  
+			console.log("AJAX Req sent");
+			fetchData.open("GET",url,true);  
+			fetchData.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	function getCompData(){
+		if(fetchData.readyState == 4){
+			var response = this.response.trim();
+			var data = JSON.parse(response);
+			
+			document.getElementById('id').value = data.id;
+			document.getElementById('name').value = data.name;
+			document.getElementById('name').setAttribute('readonly','readonly');
+			document.getElementById('address').value = data.address;
+			document.getElementById('city').value = data.city;
+			document.getElementById('state').value = data.state;
+			document.getElementById('pan').value = data.pan;
+			document.getElementById('tan').value = data.tan;
+			document.getElementById('cin').value = data.cin;
+			document.getElementById('gst').value = data.gst;
+			document.getElementById('email').value = data.email;
+			//document.getElementById('logo').value = data.logoPath;
+			document.getElementById('mobile').value = data.mobile;
+			document.getElementById('telephone').value = data.telephone;
+			document.getElementById('invoiceSeries').value = data.invoiceSeries;
+			document.getElementById('update').disabled = false;
+			document.getElementById('add-company').disabled = true;
+		}
+	}
+			
+	</script>
 <%
 session.removeAttribute("companyId");
 %>

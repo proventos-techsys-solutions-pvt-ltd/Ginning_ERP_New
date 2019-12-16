@@ -39,7 +39,7 @@ public class UpdateCompany {
 		cs.setString(11, c.getTelephone());
 		cs.setString(12, c.getMobile());
 		cs.setString(13, c.getEmail());
-		cs.setString(14, c.getLogoPath());
+		cs.setString(14, c.getInvoiceSeries());
 		
 		cs.executeUpdate();
 		
