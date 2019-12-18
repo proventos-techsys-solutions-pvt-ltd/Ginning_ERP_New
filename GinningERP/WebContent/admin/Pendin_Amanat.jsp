@@ -30,6 +30,7 @@
 						<th>Difference from Super</th>
 						<th>Quantity</th>
 						<th>Print</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody id="tableBody">
@@ -124,8 +125,10 @@
 						var cell6 = row.insertCell(5);
 						var cell7 = row.insertCell(6);
 						var cell8 = row.insertCell(7);
+						var cell9 = row.insertCell(8);
 						
 						cell7.className = "text-center";
+						cell9.className = "text-center";
 						
 						cell1.innerHTML = noOfRows+1;
 						cell2.innerHTML = data[i].amanatNo;
@@ -135,6 +138,7 @@
 						cell6.innerHTML = data[i].differenceFromSuper;
 						cell7.innerHTML = data[i].quantity;
 						cell8.innerHTML = "<a href='../report/AmanatReceipt.html?rstNo="+data[i].rst+"' target='_blank' ><img src='../property/img/printer.png' alt='Print'></a>"
+						cell9.innerHTML ="<img src='../property/img/delete.png' alt='delete'>"
 					}
 				}
 			}

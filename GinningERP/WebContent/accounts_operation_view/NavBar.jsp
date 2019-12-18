@@ -25,6 +25,7 @@
           <a class="dropdown-item" href="Pendin_Amanat.jsp">Amanat Report</a>
           <a class="dropdown-item" href="PurchaseInvoice.jsp">Invoice Report</a>
           <a class="dropdown-item" href="CashReport.jsp">Cash Report</a>
+          <a class="dropdown-item" href="RTGSRegister.jsp">RTGS/NEFT Report</a>
         </div>
       </li>
       

@@ -4,11 +4,13 @@
 <!doctype html>
 <html lang="en">
    <head>
-     	<meta charset="utf-8">
-  		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<!-- Bootstrap CSS -->
-	  	<link rel="stylesheet" href="../styles/bootstrap.min.css">	
-	  
+    <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="../styles/bootstrap.min.css">
+      <link rel="stylesheet" href="../styles/WBStyle.css">
+      <script src="${pageContext.request.contextPath}/js/3.4.1-jq.js"></script>
+      <script src="${pageContext.request.contextPath}/js/3.2.1-jq.js"></script>
      <title>RTGS NEFT</title>
    </head>
 <body>
