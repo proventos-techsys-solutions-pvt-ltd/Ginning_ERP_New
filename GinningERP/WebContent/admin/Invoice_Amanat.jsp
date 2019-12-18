@@ -226,6 +226,7 @@
                                    </div>
                                    
                                    
+                                   
                                        <div class="row row-background">
                                    	<div class="col-md-6"  style="margin-top:-100px;">
 											<table class="table table-bordered">
@@ -234,6 +235,7 @@
 														<th width="5%" >Sr No</th>
 														<th width="20%">Mode Of Payment</th>
 														<th width="20%">Amount</th>
+														<th width="20%">Date</th>
 														<th width="5%"></th>
 														<th width="5%"></th>
 													</tr>
@@ -249,6 +251,7 @@
 					                               			</select>
 					                               		</td>
 														<td><input type="text" class="form-control form-control-sm" id="payAmount1" name="payAmount"></td>
+														<td><input type="date" class="form-control form-control-sm" id="payDate1" name="payDate" value=""></td>
 														<td class="text-center"><img src="../property/img/add.png" alt="add" class="ctm-hover" ></td>
 														<td class="text-center"><img src="../property/img/delete.png" alt="delete" class="ctm-hover" id="deleteRow1" ></td>
 													</tr>
@@ -329,6 +332,30 @@ var appController = (function(){
 
 //***********************VALIDATIONS ENDED****************************
 
+
+
+function getTodaysDate(){
+	var today = new Date();
+	 	var dd = today.getDate();
+	    var mm = today.getMonth()+1; //January is 0!
+	    var yyyy = today.getFullYear();
+
+	    if(dd<10){
+	        dd='0'+dd;
+	    } 
+	    if(mm<10){
+	        mm='0'+mm;
+	    } 
+
+	    todayDate = yyyy+'-'+mm+'-'+dd; 
+	    formattedDate = dd+'-'+mm+'-'+yyyy;
+	var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+	var dateTime = formattedDate+' '+time;
+	return todayDate;
+	
+}
+
+
 //Get current date and time
 function setCurrentDate(){
 	var today = new Date();
@@ -349,6 +376,7 @@ function setCurrentDate(){
 	var dateTime = formattedDate+' '+time;
 	
 	document.getElementById("invoiceDate").value = todayDate;
+	document.getElementById('payDate1').value = todayDate;
 }
 
 
@@ -789,10 +817,13 @@ function setCurrentDate(){
 				payment = {};
 				var paymentModes = document.getElementsByName('paymentMode');
 				var paymentAmounts = document.getElementsByName('payAmount');	
+				var paymentDates = document.getElementsByName('payDate');
 				for(j=0;j<paymentModes.length;j++){
 					
 					payment[paymentModes[j].value.trim()] = (Math.round(paymentAmounts[j].value)).toString();
+					payment[paymentModes[j].value.trim() + '-date'] = paymentDates[j].value;
 				}
+				
 				
 				jsonObj['paymentModes'] = payment;
 				
@@ -828,9 +859,12 @@ function setCurrentDate(){
 	document.addEventListener('click',function(e){
 		if(e.srcElement.alt === 'add'){
 			var netAmount = document.getElementById('net').value;
+			
 			var table = document.getElementById('paymentTableBody');
 			noOfRows = table.rows.length;
+			
 			if(noOfRows<3){
+				
 				var amount = 0;
 				for(k=0;k<paymentTableBody.rows.length;k++){
 					amount = Number(amount) + Number(paymentTableBody.rows[k].cells[2].children[0].value);			
@@ -859,7 +893,7 @@ function setCurrentDate(){
 							newcell.innerHTML = rowCount+1	
 							newcell.align = "center";
 						}
-						else if(i === 1 || i === 2){
+						else if(i === 1 || i === 2 || i === 3){
 							switch(newcell.childNodes[0].type) {
 								case "text":
 										newcell.childNodes[0].value = pendingAmount;
@@ -871,29 +905,36 @@ function setCurrentDate(){
 										newcell.childNodes[0].name = "paymentMode";
 										newcell.childNodes[0].id = "paymentMode"+(rowCount+1);
 										break;
+								case "date":
+									var date = getTodaysDate();
+									newcell.childNodes[0].value = date;
+									newcell.childNodes[0].name = "payDate";
+									newcell.childNodes[0].id = "payDate"+(rowCount+1);
+									break;
 							}
-						}else if(i === 3){
-							newcell.align = "center";
 						}else if(i === 4){
+							newcell.align = "center";
+						}else if(i === 5){
 							newcell.childNodes[0].id = "deleteRow"+(rowCount+1);
 							newcell.align = "center";
 						}
 					}
-				}
 				
-				var paymentModes =  document.getElementsByName("paymentMode");
-				var modesSelected = [];
-				for(k=0; k < paymentModes.length; k++){
-					if(k < paymentModes.length - 1){
-						modesSelected.push(paymentModes[k].options[paymentModes[k].selectedIndex].value);
-						paymentModes[k].disabled = true;
-					}else if(k === paymentModes.length - 1){
-						paymentModes[k].disabled = false;
-						for(r=0; r < paymentModes[k].options.length; r++){
-							if(modesSelected.includes(paymentModes[k].options[r].value)){
-								paymentModes[k].options[r].disabled = true;
-							}else{
-								paymentModes[k].options[r].selected = true;
+				
+					var paymentModes =  document.getElementsByName("paymentMode");
+					var modesSelected = [];
+					for(k=0; k < paymentModes.length; k++){
+						if(k < paymentModes.length - 1){
+							modesSelected.push(paymentModes[k].options[paymentModes[k].selectedIndex].value);
+							paymentModes[k].disabled = true;
+						}else if(k === paymentModes.length - 1){
+							paymentModes[k].disabled = false;
+							for(r=0; r < paymentModes[k].options.length; r++){
+								if(modesSelected.includes(paymentModes[k].options[r].value)){
+									paymentModes[k].options[r].disabled = true;
+								}else{
+									paymentModes[k].options[r].selected = true;
+								}
 							}
 						}
 					}

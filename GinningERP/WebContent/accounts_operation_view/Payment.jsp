@@ -927,6 +927,7 @@
 		         }else if(Number(pdcJson.modeOfPayment) === 1){
 			         document.getElementById('pdcId').value = pdcJson.pdcId ;
 			         document.getElementById('pdcCashAmount').value = pdcJson.pdcAmount;
+			         document.getElementById('pdcCashAmountDate').value = pdcJson.payDate  ;
 			         document.getElementById('pdcCashPaymentStatus').value = pdcJson.pdcPayStatus;
 			         if(Number(pdcJson.pdcPayStatus) === 1){
 				         document.getElementById('pdcCashAccountId').value = pdcJson.accountId  ;

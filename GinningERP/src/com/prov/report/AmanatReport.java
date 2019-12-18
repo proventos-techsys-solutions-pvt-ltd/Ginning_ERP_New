@@ -354,10 +354,10 @@ public JSONArray getAmanatDataForSlip(int rstNo) {
 				"    CM.NAME,\r\n" + 
 				"    CM.ADDRESS,\r\n" + 
 				"    CM.MOBILE,\r\n" + 
-				"    GRM.RATE,\r\n" + 
+				"    MAX(GRM.RATE),\r\n" + 
 				"    AM.AMANAT_DATE,\r\n" + 
-				"    AM.DIFF_FROM_SUPER,"
-				+ "AM.AMANAT_NO\r\n" + 
+				"    AM.DIFF_FROM_SUPER,\r\n" + 
+				"    AM.AMANAT_NO\r\n" + 
 				"FROM\r\n" + 
 				"    GRADE_DETAILS           GD,\r\n" + 
 				"    CUSTOMER_MAST           CM,\r\n" + 
@@ -373,8 +373,16 @@ public JSONArray getAmanatDataForSlip(int rstNo) {
 				"    AND CVM.CID = CM.ID\r\n" + 
 				"    AND WM.NET > 0\r\n" + 
 				"    AND TRUNC(CAST(GRM.RATE_DATE AS DATE)) = AM.AMANAT_DATE\r\n" + 
-				"    AND GRM.GRADE_ID = 1\r\n" + 
 				"    AND AM.RST = ?\r\n" + 
+				"GROUP BY\r\n" + 
+				"    GD.QUANTITY - AM.INVOICED_QTY,\r\n" + 
+				"    GD.RST,\r\n" + 
+				"    CM.NAME,\r\n" + 
+				"    CM.ADDRESS,\r\n" + 
+				"    CM.MOBILE,\r\n" + 
+				"    AM.AMANAT_DATE,\r\n" + 
+				"    AM.DIFF_FROM_SUPER,\r\n" + 
+				"    AM.AMANAT_NO\r\n" + 
 				"ORDER BY\r\n" + 
 				"    RST";
 		
@@ -423,12 +431,12 @@ public JSONArray getAmanatDataForSlip(int rstNo) {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String invSql = "{? = get_amanat_series}";
+			String invSql = "{ ? = call GET_AMANAT_SERIES() }";
 			
 			CallableStatement cs = con.prepareCall(invSql);	
 			
 			cs.registerOutParameter(1, Types.VARCHAR);
-			cs.executeUpdate();
+			cs.execute();
 		
 			amanatNo =cs.getString(1); 
 			

@@ -18,7 +18,7 @@ public class AddOpeningStock {
 			e.printStackTrace();
 		}
 
-		String openingStockCall = "{ ? = ADD_OPENING_STOCK  }";
+		String openingStockCall = "{ ? = CALL ADD_OPENING_STOCK()  }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(openingStockCall);

@@ -1207,7 +1207,7 @@ function setCurrentDate(){
 										newcell.childNodes[0].id = "paymentMode"+(rowCount+1);
 										break;
 								case "date":
-									var date = getTodaysDate()
+									var date = getTodaysDate();
 									newcell.childNodes[0].value = date;
 									newcell.childNodes[0].name = "payDate";
 									newcell.childNodes[0].id = "payDate"+(rowCount+1);
