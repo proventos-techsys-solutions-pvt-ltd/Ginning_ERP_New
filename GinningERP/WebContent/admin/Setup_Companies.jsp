@@ -244,7 +244,7 @@
 						  '  		<p>Telephone : '+dataList[i].telephone+'</p>'+
 						  '  		<p>Mobile : '+dataList[i].mobile+'</p>'+
 						  '</div>'+
-						  '<button id="edit'+(i+1)+'" data-companyId="'+dataList[i].id+'">Edit Company</button>'+
+						  '<button type="button" id="edit'+(i+1)+'" data-companyId="'+dataList[i].id+'" class="btn btn-success btn-sm">Edit Company</button>'+
 						  '</li>'+
 						  '</ul>'+
 						  '<div class="border-top border-mr-btm"></div>');

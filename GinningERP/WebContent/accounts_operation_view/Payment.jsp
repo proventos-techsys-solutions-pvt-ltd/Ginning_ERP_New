@@ -1235,7 +1235,7 @@
 	         console.log(parentJson);
 	         var jsonData = JSON.stringify(parentJson);
 	         
-	         document.getElementById("payPdpCash").disabled = true;
+	         document.getElementById('payPdcCash').disabled = true;
 	         
 	         submitDataAjax(jsonData);
          }
@@ -1252,7 +1252,7 @@
          /**************************************************************************/
          document.getElementById('payPdcCash').addEventListener('click', function(e){
         	 submitPdpCashPayment();
-        	 document.getElementById('payPdcCash').disabled = true;
+        	document.getElementById('payPdcCash').disabled = true;
          });
          
          
