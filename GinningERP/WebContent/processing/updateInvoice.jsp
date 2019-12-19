@@ -1,3 +1,5 @@
+<%@page import="com.prov.report.GradeRateReport"%>
+<%@page import="com.prov.report.AmanatReport"%>
 <%@page import="com.prov.dbinsertion.AddTransactions"%>
 <%@page import="com.prov.bean.Transactions"%>
 <%@page import="com.prov.bean.PDC"%>
@@ -38,6 +40,8 @@
     DeleteInvoiceEntry deleteInvoice = new DeleteInvoiceEntry();
     
    	String invoiceDeleteStatus = deleteInvoice.deleteInvoiceEntry(invoiceId);
+   	GradeRateReport gr = new GradeRateReport();
+   	double superRate = gr.getTodaysSuperRate().getRate();
     
     if(invoiceDeleteStatus.equalsIgnoreCase((String)json.get("invoiceNo"))){
     
@@ -45,6 +49,7 @@
 		
 		ArrayList<InvoiceItems> invoiceItemList = new ArrayList<InvoiceItems>();	
 		ArrayList<Amanat> amanatItemList = new ArrayList<Amanat>();	
+		String amanatNo = AmanatReport.getAmanatSeries();
 			
 			for(int i=0; i<jsonArray.size(); i++){
 				
@@ -64,8 +69,10 @@
 					item.setCustomerId(Integer.parseInt((String)json.get("customerId")));
 					item.setGradeId(Integer.parseInt((String)obj.get("gradeId")));
 					item.setAmanatDate((String)json.get("invoiceDate"));
-					item.setGradeId(Integer.parseInt((String)obj.get("gradeId")));
 					item.setRst(Integer.parseInt((String)obj.get("rst")));
+					item.setDifference(superRate - Long.parseLong((String)obj.get("rate")));
+					item.setInvoicedQty(0);
+					item.setAmanatNo(amanatNo);
 					amanatItemList.add(item);
 				}
 				
@@ -207,7 +214,7 @@
 		    response.sendRedirect("../admin/Invoice.jsp");
 		    
   	  }else {
-  		session.setAttribute("invoiceNo", invoiceDeleteStatus);
+  		session.setAttribute("invoiceId", invoiceDeleteStatus);
 	    response.sendRedirect("../admin/Invoice.jsp");
   	  }
     

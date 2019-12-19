@@ -203,9 +203,9 @@
 	                                   		<label for="" class="lbl-rm-all">Less: PDC Issued</label> 
 		                                    <input type="text" id="totalPdcAmount" name="totalPdcAmount" class="form-control form-control-sm" value="0" readonly="readonly">
 	                                   		<label for="" class="lbl-rm-all">Less: Unloading Charges</label> 
-		                                    <input type="text" id="unloadingCharges" name="unloadingCharges" class="form-control form-control-sm" value="0" readonly="readonly">
+		                                    <input type="text" id="unloadingCharges" name="unloadingCharges" class="form-control form-control-sm" value="0" >
 		                                    <label for="" class="lbl-rm-all">Less: Weighing Charges </label> 
-		                                    <input type="text" id="weighingCharges" name="weighingCharges" class="form-control form-control-sm" value="0" readonly="readonly">
+		                                    <input type="text" id="weighingCharges" name="weighingCharges" class="form-control form-control-sm" value="0" >
 											<label for="" class="lbl-rm-all" >Advance </label> 
 		                                    <input type="text" id="advance" name="advance" class="form-control form-control-sm" value="0">
 		                                    <label for="" class="lbl-rm-all">Net Payable </label> 
@@ -1398,6 +1398,14 @@ function getVocuherNo(){
 			document.getElementById('voucherNo').value = response;
 		}
 	}
+	
+	document.getElementById('weighingCharges').addEventListener('change',function(e){
+		calculateTotal();
+	});
+	
+	document.getElementById('unloadingCharges').addEventListener('change',function(e){
+		calculateTotal();
+	});
 	
 	/**************************************
 	Response window code

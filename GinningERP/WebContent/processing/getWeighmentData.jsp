@@ -56,12 +56,12 @@
 			JSONArray jsonArray = null;
 			CheckInvoiceExists checkInv = new CheckInvoiceExists();
 			if(checkInv.invoiceExistsCheck(rst) > 0){
-				jsonArray = report.getDataForInvoicing(rst);
+				jsonArray = report.getDataForInvoicingAndGrading(rst);
 				jsonArray.getJSONObject(0).put("flag", gradeExistsFlag);
 				jsonArray.getJSONObject(0).put("invoiceFlag", 1);
 			}
 			else if(checkInv.invoiceExistsCheck(rst) <= 0){
-				jsonArray = report.getDataForInvoicing(rst);
+				jsonArray = report.getDataForInvoicingAndGrading(rst);
 				jsonArray.getJSONObject(0).put("flag", gradeExistsFlag);
 				jsonArray.getJSONObject(0).put("invoiceFlag", 0);
 			}

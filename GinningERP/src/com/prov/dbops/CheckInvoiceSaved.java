@@ -19,12 +19,35 @@ public class CheckInvoiceSaved {
 			e.printStackTrace();
 		}
 
-		String invoiceCheck = "SELECT COUNT(INVOICE_ID) FROM INVOICE_ITEMS WHERE RST = ?";
+		String invoiceCheck = "SELECT\r\n" + 
+				"    COUNT(*)\r\n" + 
+				"FROM\r\n" + 
+				"    GRADE_DETAILS II\r\n" + 
+				"WHERE\r\n" + 
+				"    II.ID NOT IN (\r\n" + 
+				"        SELECT\r\n" + 
+				"            GRADE_ID\r\n" + 
+				"        FROM\r\n" + 
+				"            INVOICE_ITEMS\r\n" + 
+				"        WHERE\r\n" + 
+				"            RST = ?\r\n" + 
+				"    )\r\n" + 
+				"    AND II.ID NOT IN (\r\n" + 
+				"        SELECT\r\n" + 
+				"            GRADE_ID\r\n" + 
+				"        FROM\r\n" + 
+				"            AMANAT_MAST\r\n" + 
+				"        WHERE\r\n" + 
+				"            RST = ?\r\n" + 
+				"    )\r\n" + 
+				"    AND II.RST = ?";
 		
 		PreparedStatement stmt;
 		try {
 			stmt = con.prepareCall(invoiceCheck);
 			stmt.setInt(1, rst);
+			stmt.setInt(2, rst);
+			stmt.setInt(3, rst);
 			
 			rs = stmt.executeQuery();
 			

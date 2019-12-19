@@ -255,11 +255,10 @@ public class StockMasterReport {
 			con = OracleConnection.getConnection();
 			
 			
-			String sql = "SELECT AVERAGE_RATE FROM STOCK_MAST, daily_setup\r\n" + 
-					"WHERE \r\n" + 
-					"daily_setup.company_id = stock_mast.company_id AND \r\n" + 
-					"stock_mast.stock_date = TRUNC(SYSDATE) AND\r\n" + 
-					"TRUNC(daily_setup.setup_date) = TRUNC(SYSDATE)";
+			String sql = "SELECT\r\n" + 
+					"    SUM(NET_AMOUNT) / ( SUM(TOTAL_QUANTITY) / 100 )\r\n" + 
+					"FROM\r\n" + 
+					"    INVOICE_MAST";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			

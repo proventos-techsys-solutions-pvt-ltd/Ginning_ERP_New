@@ -79,54 +79,62 @@ public class RstReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT\r\n" + 
-					"    GD.ID,\r\n" + 
-					"    GD.WEIGHMENT_ID,\r\n" + 
-					"    GD.MATERIAL,\r\n" + 
-					"    GD.QUANTITY,\r\n" + 
-					"    GD.GRADE,\r\n" + 
-					"    GD.RATE,\r\n" + 
-					"    GD.AUTHORIZED_BY,\r\n" + 
-					"    GD.MOISTURE,\r\n" + 
-					"    GD.BONUS_PER_QTL,\r\n" + 
-					"    GD.PDC_AMOUNT,\r\n" + 
-					"    GD.PDC_DATE,\r\n" + 
-					"    GD.PDC_PAY_MODE,\r\n" + 
-					"    WM.VID,\r\n" + 
-					"    WM.RST,\r\n" + 
-					"    WM.NET,\r\n" + 
-					"    WM.WEIGHMENT_DATE,\r\n" + 
-					"    CVM.CID,\r\n" + 
-					"    CVM.WEIGH_RATE,\r\n" + 
-					"    CM.NAME,\r\n" + 
-					"    CM.ADDRESS,\r\n" + 
-					"    CM.MOBILE,\r\n" + 
-					"    CM.BLACKLISTED,\r\n" + 
-					"    CM.MEMBERSHIP,\r\n" + 
-					"    GM.DESCRIPTION GRADE_DESC\r\n" + 
-					"FROM\r\n" + 
-					"    GRADE_DETAILS           GD,\r\n" + 
-					"    WEIGH_MAST              WM,\r\n" + 
-					"    CUSTOMER_VEHICLE_MAST   CVM,\r\n" + 
-					"    CUSTOMER_MAST           CM,\r\n" + 
-					"    GRADE_MASTER            GM\r\n" + 
-					"WHERE\r\n" + 
-					"    GD.ID NOT IN (\r\n" + 
-					"        SELECT\r\n" + 
-					"            GRADE_ID\r\n" + 
-					"        FROM\r\n" + 
-					"            AMANAT_MAST\r\n" + 
-					"        WHERE\r\n" + 
-					"            RST = GD.RST\r\n" + 
+			String sql = "SELECT \r\n" + 
+					"    GD.ID, \r\n" + 
+					"    GD.WEIGHMENT_ID, \r\n" + 
+					"    GD.MATERIAL, \r\n" + 
+					"    GD.QUANTITY, \r\n" + 
+					"    GD.GRADE, \r\n" + 
+					"    GD.RATE, \r\n" + 
+					"    GD.AUTHORIZED_BY, \r\n" + 
+					"    GD.MOISTURE, \r\n" + 
+					"    GD.BONUS_PER_QTL, \r\n" + 
+					"    GD.PDC_AMOUNT, \r\n" + 
+					"    GD.PDC_DATE, \r\n" + 
+					"    GD.PDC_PAY_MODE, \r\n" + 
+					"    WM.VID, \r\n" + 
+					"    WM.RST, \r\n" + 
+					"    WM.NET, \r\n" + 
+					"    WM.WEIGHMENT_DATE, \r\n" + 
+					"    CVM.CID, \r\n" + 
+					"    CVM.WEIGH_RATE, \r\n" + 
+					"    CM.NAME, \r\n" + 
+					"    CM.ADDRESS, \r\n" + 
+					"    CM.MOBILE, \r\n" + 
+					"    CM.BLACKLISTED, \r\n" + 
+					"    CM.MEMBERSHIP, \r\n" + 
+					"    GM.DESCRIPTION GRADE_DESC \r\n" + 
+					"FROM \r\n" + 
+					"    GRADE_DETAILS           GD, \r\n" + 
+					"    WEIGH_MAST              WM, \r\n" + 
+					"    CUSTOMER_VEHICLE_MAST   CVM, \r\n" + 
+					"    CUSTOMER_MAST           CM, \r\n" + 
+					"    GRADE_MASTER            GM \r\n" + 
+					"WHERE \r\n" + 
+					"    GD.ID NOT IN ( \r\n" + 
+					"        SELECT \r\n" + 
+					"            GRADE_ID \r\n" + 
+					"        FROM \r\n" + 
+					"            AMANAT_MAST \r\n" + 
+					"        WHERE \r\n" + 
+					"            RST = GD.RST \r\n" + 
+					"    ) \r\n" + 
+					"    AND GD.ID NOT IN (\r\n" + 
+					"        SELECT \r\n" + 
+					"            GRADE_ID \r\n" + 
+					"        FROM \r\n" + 
+					"            INVOICE_ITEMS \r\n" + 
+					"        WHERE \r\n" + 
+					"            RST = GD.RST \r\n" + 
 					"    )\r\n" + 
-					"    AND GD.GRADE = GM.GRADE\r\n" + 
-					"    AND GD.WEIGHMENT_ID = WM.ID\r\n" + 
-					"    AND WM.VID = CVM.ID\r\n" + 
-					"    AND CVM.CID = CM.ID\r\n" + 
-					"    AND GD.RST = "+rst;
+					"    AND GD.GRADE = GM.GRADE \r\n" + 
+					"    AND GD.WEIGHMENT_ID = WM.ID \r\n" + 
+					"    AND WM.VID = CVM.ID \r\n" + 
+					"    AND CVM.CID = CM.ID \r\n" + 
+					"    AND GD.RST = ?";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
-			
+			stmt.setInt(1, rst);
 			rs = stmt.executeQuery();
 			SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-MM-dd");
 			SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -170,7 +178,120 @@ public class RstReport {
 				jsonArray.put(jsonObj);
 				
 			}
+			System.out.println(jsonArray);
+			rs.close();
+			stmt.close();
+			con.close();
 			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return jsonArray;
+		
+	}
+	
+public JSONArray getDataForInvoicingAndGrading(int rst){
+		
+		ResultSet rs = null;
+		Connection con = null;
+		JSONArray jsonArray = new JSONArray();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT \r\n" + 
+					"    GD.ID, \r\n" + 
+					"    GD.WEIGHMENT_ID, \r\n" + 
+					"    GD.MATERIAL, \r\n" + 
+					"    GD.QUANTITY, \r\n" + 
+					"    GD.GRADE, \r\n" + 
+					"    GD.RATE, \r\n" + 
+					"    GD.AUTHORIZED_BY, \r\n" + 
+					"    GD.MOISTURE, \r\n" + 
+					"    GD.BONUS_PER_QTL, \r\n" + 
+					"    GD.PDC_AMOUNT, \r\n" + 
+					"    GD.PDC_DATE, \r\n" + 
+					"    GD.PDC_PAY_MODE, \r\n" + 
+					"    WM.VID, \r\n" + 
+					"    WM.RST, \r\n" + 
+					"    WM.NET, \r\n" + 
+					"    WM.WEIGHMENT_DATE, \r\n" + 
+					"    CVM.CID, \r\n" + 
+					"    CVM.WEIGH_RATE, \r\n" + 
+					"    CM.NAME, \r\n" + 
+					"    CM.ADDRESS, \r\n" + 
+					"    CM.MOBILE, \r\n" + 
+					"    CM.BLACKLISTED, \r\n" + 
+					"    CM.MEMBERSHIP, \r\n" + 
+					"    GM.DESCRIPTION GRADE_DESC \r\n" + 
+					"FROM \r\n" + 
+					"    GRADE_DETAILS           GD, \r\n" + 
+					"    WEIGH_MAST              WM, \r\n" + 
+					"    CUSTOMER_VEHICLE_MAST   CVM, \r\n" + 
+					"    CUSTOMER_MAST           CM, \r\n" + 
+					"    GRADE_MASTER            GM \r\n" + 
+					"WHERE \r\n" + 
+					"    GD.ID NOT IN ( \r\n" + 
+					"        SELECT \r\n" + 
+					"            GRADE_ID \r\n" + 
+					"        FROM \r\n" + 
+					"            AMANAT_MAST \r\n" + 
+					"        WHERE \r\n" + 
+					"            RST = GD.RST \r\n" + 
+					"    ) \r\n" + 
+					"    AND GD.GRADE = GM.GRADE \r\n" + 
+					"    AND GD.WEIGHMENT_ID = WM.ID \r\n" + 
+					"    AND WM.VID = CVM.ID \r\n" + 
+					"    AND CVM.CID = CM.ID \r\n" + 
+					"    AND GD.RST = ?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setInt(1, rst);
+			rs = stmt.executeQuery();
+			SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
+			
+			while(rs.next()) {
+				
+				JSONObject jsonObj = new JSONObject();
+				
+				jsonObj.put("gradeId", rs.getString(1));
+				jsonObj.put("weighmentId", rs.getString(2));
+				jsonObj.put("material", rs.getString(3));
+				jsonObj.put("quantity", rs.getString(4));
+				jsonObj.put("grade", rs.getString(5));
+				jsonObj.put("rate", rs.getFloat(6));
+				jsonObj.put("authorizer", rs.getString(7));
+				jsonObj.put("moisture", rs.getString(8));
+				jsonObj.put("bonusPerQtl", rs.getString(9));
+				jsonObj.put("pdcAmount", rs.getString(10));
+				String date = rs.getString("PDC_DATE");
+				if(date != null) {
+					Date formatPdcDate = formatter1.parse(date);
+					String pdcDateStr = formatter2.format(formatPdcDate);
+					jsonObj.put("pdcDate", pdcDateStr);
+				}
+				jsonObj.put("pdcPaymentMode", rs.getString(12));
+				jsonObj.put("vehicleId", rs.getString(13));
+				jsonObj.put("rst", rs.getString(14));
+				jsonObj.put("netQuantity", rs.getString(15));
+				Date formatWeighDate = formatter1.parse( rs.getString(16));
+				String weighDateStr = formatter2.format(formatWeighDate);
+				jsonObj.put("weighmentDate", weighDateStr);
+				jsonObj.put("customerId", rs.getString(17));
+				jsonObj.put("weighRate", rs.getString(18));
+				jsonObj.put("customerName", rs.getString(19));
+				jsonObj.put("customerAddress", rs.getString(20));
+				jsonObj.put("customerMobile", rs.getString(21));
+				jsonObj.put("customerBlacklisted", rs.getInt(22));
+				jsonObj.put("customerMembership", rs.getInt(23));
+				jsonObj.put("gradeDesc", rs.getString(24));
+				
+				jsonArray.put(jsonObj);
+				
+			}
+			System.out.println(jsonArray);
 			rs.close();
 			stmt.close();
 			con.close();

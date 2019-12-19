@@ -22,6 +22,7 @@
 			<table id="tblPendingAmanat" class="table table-bordered">
 				<thead>
 					<tr>
+						<th hidden>Amanat Id</th>
 						<th>Sr. No.</th>
 						<th>Amanat No.</th>
 						<th>Date</th>
@@ -29,8 +30,8 @@
 						<th>Vendor Name</th>
 						<th>Difference from Super</th>
 						<th>Quantity</th>
-						<th>Print</th>
-						<th></th>
+						<th class="text-center">Print</th>
+						<th class="text-center">Delete</th>
 					</tr>
 				</thead>
 				<tbody id="tableBody">
@@ -126,19 +127,22 @@
 						var cell7 = row.insertCell(6);
 						var cell8 = row.insertCell(7);
 						var cell9 = row.insertCell(8);
+						var cell10 = row.insertCell(9);
 						
-						cell7.className = "text-center";
 						cell9.className = "text-center";
+						cell10.className = "text-center";
+						cell1.hidden = true;
 						
-						cell1.innerHTML = noOfRows+1;
-						cell2.innerHTML = data[i].amanatNo;
-						cell3.innerHTML = data[i].amanatDate;
-						cell4.innerHTML = data[i].rst;
-						cell5.innerHTML = data[i].name;
-						cell6.innerHTML = data[i].differenceFromSuper;
-						cell7.innerHTML = data[i].quantity;
-						cell8.innerHTML = "<a href='../report/AmanatReceipt.html?rstNo="+data[i].rst+"' target='_blank' ><img src='../property/img/printer.png' alt='Print'></a>"
-						cell9.innerHTML ="<img src='../property/img/delete.png' alt='delete'>"
+						cell1.innerHTML = data[i].amanatId;
+						cell2.innerHTML = noOfRows+1;
+						cell3.innerHTML = data[i].amanatNo;
+						cell4.innerHTML = data[i].amanatDate;
+						cell5.innerHTML = data[i].rst;
+						cell6.innerHTML = data[i].name;
+						cell7.innerHTML = data[i].differenceFromSuper;
+						cell8.innerHTML = data[i].quantity;
+						cell9.innerHTML = "<a href='../report/AmanatReceipt.html?rstNo="+data[i].rst+"' target='_blank' ><img src='../property/img/printer.png' alt='Print'></a>"
+						cell10.innerHTML ="<img src='../property/img/delete.png' alt='delete'>"
 					}
 				}
 			}
@@ -180,9 +184,9 @@
 					$(".row").css("margin-left","225px"); 
 				}
 		})
-	})
+	});
 	
-	/***********************
+/***********************
 Side bar 
 ************************/
 $(document).ready(function () {
@@ -190,6 +194,46 @@ $(document).ready(function () {
         $('#sidebar').toggleClass('active');
     });
 });
-		</script>
+	
+	document.addEventListener('click', function(e){
+		if(e.srcElement.alt === 'delete'){
+			var rowIndex = Number(e.srcElement.parentNode.parentNode.rowIndex)-1;
+			var tableBody = document.getElementById('tableBody');
+			var id = tableBody.rows[rowIndex].cells[0].innerHTML;
+			deleteAmanatRequest(id);
+		}
+	});
+	
+	
+	function deleteAmanatRequest(id){
+		url = "../processing/deleteAmanat.jsp?id="+id;
+		if(window.XMLHttpRequest){  
+			delReq=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			delReq=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+		try{  
+			delReq.onreadystatechange=getDelConfirm;  
+			console.log("AJAX Req sent");
+			delReq.open("GET",url,true);  
+			delReq.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	function getDelConfirm(){
+		if(delReq.readyState == 4){
+			var response = this.response;
+			if(Number(response) > 0){
+				$.fn.checkStatus(1,"Amanat has been deleted successfully!");
+				amanatRequest();
+			}else if(Number(response) === 0){
+				$.fn.checkStatus(1,"Cannot delete amanat!");
+			}else if(Number(response) === -1){
+				alert("Invoiced is created for some quantity for this amanat.");
+			}
+		}
+	}
+	</script>
 </body>
 </html>

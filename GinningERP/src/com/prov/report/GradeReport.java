@@ -93,4 +93,37 @@ public class GradeReport {
 		}
 		return arr;
 	}
+	
+	public int getGradeRowsCount(int rst) {
+		ResultSet rs = null;
+		Connection con = null;
+		int rowount = 0;
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT\r\n" + 
+					"    COUNT(*)\r\n" + 
+					"FROM\r\n" + 
+					"    GRADE_DETAILS II\r\n" + 
+					"WHERE\r\n" + 
+					"  II.RST = ?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, rst);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				rowount = rs.getInt(1);
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rowount;
+	}
 }

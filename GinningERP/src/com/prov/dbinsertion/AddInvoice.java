@@ -94,7 +94,7 @@ public int addInvoiceWithId(Invoice i) {
 		e.printStackTrace();
 	}
 
-	String addInvoice = "{ ? = call ADD_INVOICE_WITH_ID(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
+	String addInvoice = "{ ? = call ADD_INVOICE_WITH_ID(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
 	CallableStatement cs;
 	try {
 		
@@ -123,6 +123,7 @@ public int addInvoiceWithId(Invoice i) {
 		cs.setLong(19, i.getPdcAmount());
 		cs.setInt(20, i.getId());
 		cs.setInt(21, i.getVoucherNo());
+		cs.setDouble(22, i.getAdvance());
 		
 		cs.executeUpdate();
 		

@@ -1,3 +1,4 @@
+<%@page import="com.prov.report.GradeReport"%>
 <%@ page errorPage="../admin/Error.jsp" %>  
 <%@page import="com.prov.dbops.CheckInvoiceSaved"%>
 <%@page import="com.prov.dbops.CheckAlreadyGraded"%>
@@ -57,10 +58,11 @@
 	    		else if(gradeRows>0){
 	    			
 	    			CheckInvoiceSaved checkInvoice = new CheckInvoiceSaved();
-	    			
+	    			GradeReport gr = new GradeReport();
 	    			int invoiceSavedFlag = checkInvoice.invoiceExistsCheck(rst);
-	    			
-	    			if(invoiceSavedFlag==0){
+	    			int gradeRowCount = gr.getGradeRowsCount(rst);
+	    			System.out.println("invoiceSavedFlag---"+invoiceSavedFlag);
+	    			if(invoiceSavedFlag != 0){
 	        	
 				    	RstReport report = new RstReport();
 			        	
@@ -68,7 +70,7 @@
 			        	
 				    	out.print(jsonArray);
 				    	out.flush();
-	    			}else if(invoiceSavedFlag>0){
+	    			}else if(invoiceSavedFlag==0){
 	    				out.println(3);
 	    				out.flush();
 	    			}

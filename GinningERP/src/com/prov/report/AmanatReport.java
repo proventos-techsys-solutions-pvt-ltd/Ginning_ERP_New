@@ -284,7 +284,8 @@ public JSONArray getAmanatReport() {
 				"    CM.NAME,\r\n" + 
 				"    AM.DIFF_FROM_SUPER,\r\n" + 
 				"    AM.AMANAT_DATE,\r\n" + 
-				"    AM.AMANAT_NO\r\n" + 
+				"    AM.AMANAT_NO,\r\n" + 
+				"    AM.ID\r\n" + 
 				"FROM\r\n" + 
 				"    GRADE_DETAILS           GD,\r\n" + 
 				"    CUSTOMER_MAST           CM,\r\n" + 
@@ -303,7 +304,8 @@ public JSONArray getAmanatReport() {
 				"    AM.INVOICED_QTY,\r\n" + 
 				"    AM.DIFF_FROM_SUPER,\r\n" + 
 				"    AM.AMANAT_DATE,"
-				+ "AM.AMANAT_NO\r\n" + 
+				+ "AM.AMANAT_NO,"
+				+ "AM.ID\r\n" + 
 				"ORDER BY\r\n" + 
 				"    RST";
 		
@@ -324,6 +326,7 @@ public JSONArray getAmanatReport() {
 			
 			obj.put("amanatDate", properDate);
 			obj.put("amanatNo", rs.getString(6));
+			obj.put("amanatId", rs.getString(7));
 			
 			
 			jsonArray.put(obj);
@@ -447,6 +450,38 @@ public JSONArray getAmanatDataForSlip(int rstNo) {
 		}
 		
 		return amanatNo;
+	}
+	
+	
+public long getAmanatInvoicedQty(int amanatId) {
+		
+		ResultSet rs = null;
+		Connection con = null;
+		long invoicedQty = 0;
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String invSql = "SELECT invoiced_qty FROM AMANAT_MAST WHERE ID=?";
+			
+			PreparedStatement stmt = con.prepareStatement(invSql);
+			
+			stmt.setInt(1, amanatId);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				invoicedQty = rs.getLong(1); 
+			}
+			
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return invoicedQty;
+		
 	}
 
 }

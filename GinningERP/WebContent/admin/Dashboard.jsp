@@ -501,8 +501,8 @@
 				var response = this.response.trim();
 				console.log(response);
 				var data = JSON.parse(response);
-				document.getElementById('tRate').innerHTML = data['superRate'];
-				document.getElementById('aRate').innerHTML = data['averageRate'];
+				document.getElementById('tRate').innerHTML = "Rs. "+data['superRate'];
+				document.getElementById('aRate').innerHTML = "Rs. "+data['averageRate'].toFixed(2);
 				//getAverageRate();
 			 }
 		 }
