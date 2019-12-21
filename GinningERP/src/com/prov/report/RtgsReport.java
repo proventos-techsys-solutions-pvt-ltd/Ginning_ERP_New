@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -21,7 +22,7 @@ public class RtgsReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT * FROM RTGS_MASTER ORDER BY RTGS_DATE";
+			String sql = "SELECT * FROM RTGS_MASTER ORDER BY RTGS_DATE DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -38,7 +39,13 @@ public class RtgsReport {
 				rtgs.setBankName(rs.getString(5));
 				rtgs.setIfsc(rs.getString(6));
 				rtgs.setRtgsAmount(rs.getLong(7));
-				rtgs.setRtgsDate(rs.getString(8));
+				
+				String date = rs.getString(8);
+				java.util.Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
+				SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+				String properDate = format2.format(date1);
+				
+				rtgs.setRtgsDate(properDate);
 				rtgs.setCustomerName(rs.getString(9));
 				rtgs.setInvoiceNo(rs.getString(10));
 				
