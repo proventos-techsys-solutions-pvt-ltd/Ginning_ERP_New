@@ -81,6 +81,7 @@
 			int companyId = Integer.parseInt((String)json.get("companyId"));
 			
 			if(invoiceItemList.size()>0){
+				invoice.setId(Integer.parseInt((String)json.get("invoiceId")));
 				invoice.setCompanyId(companyId);
 				invoice.setInvoiceNo((String)json.get("invoiceNo").toString().toUpperCase());
 				invoice.setTotal(Long.parseLong((String)json.get("total")));
@@ -96,20 +97,27 @@
 				invoice.setUnloadingCharges(Float.parseFloat((String)json.get("unloadingCharges")));
 				invoice.setBonusAmount(Float.parseFloat((String)json.get("totalBonus")));
 				invoice.setPdcAmount(Long.parseLong((String)json.get("pdcAmount")));
+				invoice.setAdvance(Long.parseLong((String)json.get("advance")));
 				if(paymentModes.containsKey("Cash")){
 					invoice.setCashAmount(Long.parseLong((String)paymentModes.get("Cash")));
+					invoice.setCashDate((String)paymentModes.get("Cash-date"));
 				}else{
 					invoice.setCashAmount(0);
+					invoice.setCashDate(null);
 				}
 				if(paymentModes.containsKey("Cheque")){
 					invoice.setChequeAmount(Long.parseLong((String)paymentModes.get("Cheque")));
+					invoice.setChequeDate((String)paymentModes.get("Cheque-date"));
 				}else{
 					invoice.setChequeAmount(0);
+					invoice.setChequeDate(null);
 				}
 				if(paymentModes.containsKey("RTGS/NEFT")){
 					invoice.setRtgsAmount(Long.parseLong((String)paymentModes.get("RTGS/NEFT")));
+					invoice.setRtgsDate((String)paymentModes.get("RTGS/NEFT-date"));
 				}else{
 					invoice.setRtgsAmount(0);
+					invoice.setRtgsDate(null);
 				}
 				
 				AddInvoice addinvoice = new AddInvoice();

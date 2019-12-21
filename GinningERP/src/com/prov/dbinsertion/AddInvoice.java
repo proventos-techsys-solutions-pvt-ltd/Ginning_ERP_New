@@ -94,7 +94,7 @@ public int addInvoiceWithId(Invoice i) {
 		e.printStackTrace();
 	}
 
-	String addInvoice = "{ ? = call ADD_INVOICE_WITH_ID(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
+	String addInvoice = "{ ? = call ADD_INVOICE_WITH_ID(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
 	CallableStatement cs;
 	try {
 		
@@ -124,7 +124,24 @@ public int addInvoiceWithId(Invoice i) {
 		cs.setInt(20, i.getId());
 		cs.setInt(21, i.getVoucherNo());
 		cs.setDouble(22, i.getAdvance());
-		
+		if(i.getCashDate() != null) {
+			Date cashDate = Date.valueOf(i.getCashDate());
+			cs.setDate(23, cashDate);
+		}else {
+			cs.setNull(23, Types.DATE);
+		}
+		if(i.getChequeDate() != null) {
+			Date chequeDate = Date.valueOf(i.getChequeDate());
+			cs.setDate(24, chequeDate);
+		}else {
+			cs.setNull(24, Types.DATE);
+		}
+		if(i.getRtgsDate() != null) {
+			Date rtgsDate = Date.valueOf(i.getRtgsDate());
+			cs.setDate(25, rtgsDate);
+		}else {
+			cs.setNull(25, Types.DATE);
+		}
 		cs.executeUpdate();
 		
 		id = cs.getInt(1);

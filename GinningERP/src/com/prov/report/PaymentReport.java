@@ -42,14 +42,11 @@ public class PaymentReport {
 					obj.put("chequeId", rs.getString("CHEQUE_ID"));
 					obj.put("rtgsId", rs.getString("RTGS_ID"));
 					obj.put("voucherNo", rs.getString("CASH_VOUCH_NO"));
-					if(rs.getString("PAY_DATE") != null) {
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-						String date = rs.getString("PAY_DATE");
-						Date dateFormat = sdf.parse(date);
-						String dateStr = sdf.format(dateFormat);
-						obj.put("date",dateStr);
-					}
-					
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					String date = rs.getString("PAY_DATE");
+					Date dateFormat = sdf.parse(date);
+					String dateStr = sdf.format(dateFormat);
+					obj.put("date",dateStr);
 					
 					jsonArray.put(obj);
 				}

@@ -1144,6 +1144,7 @@ function setCurrentDate(){
 			document.getElementById('adminApprovalForm').action = "../processing/approvedInvoiceEntry.jsp";
 			submitForm();
 		}else if(e.srcElement.id === 'updateButton'){
+			console.log("");
 			document.getElementById('adminApprovalForm').action = "../processing/updateInvoice.jsp";
 			submitForm();
 		}

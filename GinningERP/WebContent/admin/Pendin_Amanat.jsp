@@ -226,6 +226,7 @@ $(document).ready(function () {
 			var response = this.response;
 			if(Number(response) > 0){
 				$.fn.checkStatus(1,"Amanat has been deleted successfully!");
+				document.getElementById('tableBody').innerHTML = "";
 				amanatRequest();
 			}else if(Number(response) === 0){
 				$.fn.checkStatus(1,"Cannot delete amanat!");
