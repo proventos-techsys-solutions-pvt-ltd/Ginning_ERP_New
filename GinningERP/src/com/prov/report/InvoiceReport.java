@@ -829,19 +829,40 @@ public ArrayList<Invoice> getReport() {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT DISTINCT GD.RST, CM.NAME,  WM.NET\r\n" + 
-						"FROM GRADE_DETAILS GD, CUSTOMER_MAST CM, CUSTOMER_VEHICLE_MAST CVM, WEIGH_MAST WM\r\n" + 
-						"WHERE \r\n" + 
-						"NOT EXISTS \r\n" + 
-						"(SELECT * \r\n" + 
-						"FROM INVOICE_ITEMS IM \r\n" + 
-						"WHERE GD.RST = IM.RST)\r\n" + 
-						"AND\r\n" + 
-						"WM.ID = GD.WEIGHMENT_ID AND\r\n" + 
-						"WM.VID = CVM.ID AND\r\n" + 
-						"CVM.CID = CM.ID AND\r\n" + 
-						"WM.NET>0\r\n" + 
-						"ORDER BY RST";
+			String sql = "SELECT\r\n" + 
+					"    GD.RST,\r\n" + 
+					"    CM.NAME,\r\n" + 
+					"    SUM(GD.QUANTITY)\r\n" + 
+					"FROM\r\n" + 
+					"    GRADE_DETAILS           GD,\r\n" + 
+					"    CUSTOMER_MAST           CM,\r\n" + 
+					"    CUSTOMER_VEHICLE_MAST   CVM,\r\n" + 
+					"    WEIGH_MAST              WM\r\n" + 
+					"WHERE\r\n" + 
+					"    NOT EXISTS (\r\n" + 
+					"        SELECT\r\n" + 
+					"            *\r\n" + 
+					"        FROM\r\n" + 
+					"            INVOICE_ITEMS IM\r\n" + 
+					"        WHERE\r\n" + 
+					"            GD.ID = IM.GRADE_ID\r\n" + 
+					"    )\r\n" + 
+					"        AND NOT EXISTS (\r\n" + 
+					"        SELECT\r\n" + 
+					"            *\r\n" + 
+					"        FROM\r\n" + 
+					"            AMANAT_MAST AM\r\n" + 
+					"        WHERE\r\n" + 
+					"            GD.ID = AM.GRADE_ID\r\n" + 
+					"    )\r\n" + 
+					"        AND WM.ID = GD.WEIGHMENT_ID\r\n" + 
+					"        AND WM.VID = CVM.ID\r\n" + 
+					"        AND CVM.CID = CM.ID\r\n" + 
+					"GROUP BY\r\n" + 
+					"    GD.RST,\r\n" + 
+					"    CM.NAME\r\n" + 
+					"ORDER BY\r\n" + 
+					"    RST";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			

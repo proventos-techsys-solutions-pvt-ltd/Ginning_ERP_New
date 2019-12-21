@@ -173,7 +173,7 @@
 											<label for="" class="lbl-rm-all">Total Invoice Amt</label> 
 	                                    	<input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm" value="0" readonly="readonly">
 											<label for="" class="lbl-rm-all">Total Bonus</label> 
-	                                    	<input type="text" id="totalBonus" name="totalBonus" class="form-control form-control-sm" value="0" readonly="readonly">
+	                                    	<input type="text" id="totalBonus" name="totalBonus" class="form-control form-control-sm" value="0" >
 										</div>
 										
 									</div>
@@ -1168,6 +1168,11 @@ document.getElementById('advance').addEventListener('keyup', function(e){
 		document.getElementById("advance").value = 0;
 		calculateTotal();
 	}
+});
+
+//Change fiels if advance payment is done
+document.getElementById('totalBonus').addEventListener('change', function(e){
+	calculateTotal();
 });
 
 	</script>
