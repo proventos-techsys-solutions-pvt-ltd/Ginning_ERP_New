@@ -509,7 +509,14 @@ public ArrayList<Invoice> getReport() {
 				jsonObj.put("pdcDate","NA");
 			}
 			if(rs.getString(43) != null) {
-				jsonObj.put("pdcMode", rs.getString(43));
+				int num = Integer.parseInt(rs.getString(43));
+				if(num == 1) {
+					jsonObj.put("pdcMode", "Cash");
+				}else if(num == 2) {
+					jsonObj.put("pdcMode", "Cheque");
+				}else if(num == 3) {
+					jsonObj.put("pdcMode", "RTGS");
+				}
 			}else {
 				jsonObj.put("pdcMode", "NA");
 			}
@@ -544,7 +551,7 @@ public ArrayList<Invoice> getReport() {
 			
 			jsonObj.put("amanatQty", (Float.parseFloat(qty) - invoicedQty));
 			jsonObj.put("invoiceItems", jsonArr);
-			
+			System.out.println(jsonObj);
 			stmt.close();
 			con.close();
 		} catch (Exception e) {

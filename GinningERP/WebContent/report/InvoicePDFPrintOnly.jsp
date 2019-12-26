@@ -17,7 +17,6 @@
 	
 	JSONArray invoiceItems = printObj.getJSONArray("invoiceItems");
 	
-	System.out.println(invoiceItems);
 
 	JasperReports printReport = new JasperReports();
 
