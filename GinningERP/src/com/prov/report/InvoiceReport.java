@@ -368,7 +368,6 @@ public ArrayList<Invoice> getReport() {
 					jsonObj.put("pdcPaymentMode", rs.getString(23));
 				}
 			}
-			
 			stmt.close();
 			con.close();
 		} catch (Exception e) {
@@ -385,7 +384,6 @@ public ArrayList<Invoice> getReport() {
 		JSONObject jsonObj = new JSONObject();
         float invoicedQty = 0;
         String qty;
-        float totalQty = 0;
 		try {
 			con = OracleConnection.getConnection();
 			
