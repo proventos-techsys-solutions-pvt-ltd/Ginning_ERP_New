@@ -109,11 +109,26 @@ public class StockMasterReport {
 			con = OracleConnection.getConnection();
 			
 			
-			String sql = "SELECT * FROM STOCK_MAST WHERE STOCK_DATE=TRUNC(SYSDATE-1) AND COMPANY_ID=?";
+			String sql = "SELECT\r\n" + 
+					"    *\r\n" + 
+					"FROM\r\n" + 
+					"    STOCK_MAST\r\n" + 
+					"WHERE\r\n" + 
+					"    STOCK_DATE = (\r\n" + 
+					"        SELECT\r\n" + 
+					"            MAX(STOCK_DATE)\r\n" + 
+					"        FROM\r\n" + 
+					"            STOCK_MAST\r\n" + 
+					"        WHERE\r\n" + 
+					"            STOCK_DATE < TRUNC(SYSDATE)\r\n" + 
+					"            AND COMPANY_ID = ?\r\n" + 
+					"    )\r\n" + 
+					"    AND COMPANY_ID = ?";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
 			stmt.setInt(1, companyId);
+			stmt.setInt(2, companyId);
 			
 			rs = stmt.executeQuery();
 			
@@ -146,6 +161,70 @@ public class StockMasterReport {
 		
 		return sm;
 	}
+	
+	public StockMast getStockForDate(int companyId, String date) {
+		ResultSet rs = null;
+		Connection con = null;
+		StockMast sm = new StockMast();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			
+			String sql = "SELECT\r\n" + 
+					"    *\r\n" + 
+					"FROM\r\n" + 
+					"    STOCK_MAST\r\n" + 
+					"WHERE\r\n" + 
+					"    STOCK_DATE = (\r\n" + 
+					"        SELECT\r\n" + 
+					"            MAX(STOCK_DATE)\r\n" + 
+					"        FROM\r\n" + 
+					"            STOCK_MAST\r\n" + 
+					"        WHERE\r\n" + 
+					"            STOCK_DATE <= ?\r\n" + 
+					"    )\r\n" + 
+					"    AND COMPANY_ID = ?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+			
+			stmt.setDate(1, sqlDate);
+			stmt.setInt(2, companyId);
+			
+			rs = stmt.executeQuery();
+			
+			
+			while (rs.next()) {
+				
+				sm.setId(rs.getInt(1));
+				
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(2));
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+				String properDate = format2.format(date1);
+				
+				sm.setStockDate(properDate);
+				sm.setCompanyId(rs.getInt(3));
+				sm.setRawCotton(rs.getDouble(4));
+				sm.setCottonBales(rs.getDouble(5));
+				sm.setCottonSeed(rs.getDouble(6));
+				sm.setCottonSeedOil(rs.getDouble(7));
+				sm.setCottonCakes(rs.getDouble(8));
+				sm.setAvgRate(rs.getDouble(9));
+				
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return sm;
+	}
+	
 	
 	public JSONObject getTodaysStockForAll() {
 		ResultSet rs = null;
@@ -218,6 +297,69 @@ public class StockMasterReport {
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
+			
+			rs = stmt.executeQuery();
+			
+			obj = new JSONObject();
+			
+			while (rs.next()) {
+ 				
+				obj.put("rawCotton", rs.getDouble(1));
+				obj.put("cottonBales", rs.getDouble(2));
+				obj.put("cottonSeed", rs.getDouble(3));
+				obj.put("cottonSeedOil", rs.getDouble(4));
+				obj.put("cottonCakes", rs.getDouble(5));
+				
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(6));
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+				String properDate = format2.format(date1);
+				obj.put("stockDate",properDate);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return obj;
+	}
+	
+	public JSONObject getStockForAllByDate(String date) {
+		ResultSet rs = null;
+		Connection con = null;
+		JSONObject obj = null;
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			
+			String sql = "SELECT\r\n" + 
+					"    SUM(RAW_COTTON) RAW_COTTON,\r\n" + 
+					"    SUM(COTTON_BALES) COTTON_BALES,\r\n" + 
+					"    SUM(COTTON_SEED) COTTON_SEED,\r\n" + 
+					"    SUM(COTTON_SEED_OIL) COTTON_SEED_OIL,\r\n" + 
+					"    SUM(COTTON_CAKES) COTTON_CAKES,\r\n" + 
+					"    STOCK_DATE\r\n" + 
+					"FROM\r\n" + 
+					"    STOCK_MAST\r\n" + 
+					"WHERE\r\n" + 
+					"    STOCK_DATE = (\r\n" + 
+					"        SELECT\r\n" + 
+					"            MAX(STOCK_DATE)\r\n" + 
+					"        FROM\r\n" + 
+					"            STOCK_MAST\r\n" + 
+					"        WHERE\r\n" + 
+					"            STOCK_DATE <= ?\r\n" + 
+					"    )\r\n" + 
+					"GROUP BY\r\n" + 
+					"    STOCK_DATE";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+			
+			stmt.setDate(1, sqlDate);
 			
 			rs = stmt.executeQuery();
 			

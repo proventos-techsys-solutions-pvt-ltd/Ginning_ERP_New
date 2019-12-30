@@ -76,7 +76,6 @@
 	  	</div>
 	  </div>
 	  
-	  
            <div class="row row-background border-top">
              	<div class="col-md-2">
              		<label class="lbl-rm-l">Company</label>
@@ -85,7 +84,23 @@
              			<c:Company />
              		</select>
              	</div>
-             </div>
+             	<div class="col-md-2">
+             		<label class="lbl-rm-l">From</label>
+             		<input class="form-control form-control-sm" type="date"  name="startDate" id="startDate"  />
+             	</div>
+             	<div class="col-md-2">
+             		<label class="lbl-rm-l">To</label>
+             		<input class="form-control form-control-sm" type="date"  name="endDate" id="endDate"  />
+             	</div>
+	             <div class="col-md-2">
+	            	 <label class="lbl-rm-l"> </label>
+		             <button class="form-control form-control-sm" id="filter">Filter</button>
+		         </div>     
+		         <div class="col-md-2">
+		       		 <label class="lbl-rm-l"> </label>
+		             <button class="form-control form-control-sm" id="reset">Reset</button>
+	             </div>
+            </div>
              <div class="row row-background">
              	<div class="col-md-8">
              		<canvas id="myChart"></canvas>
@@ -384,16 +399,16 @@
     </script>	
 	
 	<script>
-		getStockReport(0);
 		
-		document.addEventListener('change', function(e){
-			if(e.srcElement.id === 'companyId'){
-				getStockReport(e.srcElement.options[e.srcElement.selectedIndex].value);
-			}
-		})
+		document.getElementById("filter").addEventListener('click', function(e){
+			var startDate = document.getElementById("startDate").value;
+	        var endDate = document.getElementById("endDate").value;
+	        var companyId = document.getElementById("companyId").value;
+			getStockReport(companyId, startDate, endDate);
+		});
 		
-		function getStockReport(companyId){
-			var url="../processing/getTodaysStockReport.jsp?companyId="+companyId;
+		function getStockReport(companyId, startDate, endDate){
+			var url="../processing/getTodaysStockReport.jsp?companyId="+companyId+"&startDate="+startDate+"&endDate="+endDate;
 			if(window.XMLHttpRequest){  
 				fetchStock=new XMLHttpRequest();  
 			}  
@@ -416,9 +431,8 @@
 		 }
 
 		 
-		 function setData(data){
-			 
-			 var obj = JSON.parse(data);
+		 function setData(data1){
+			 var obj = JSON.parse(data1);
 			 console.log(obj);
 			 document.getElementById("totalRawCotton").innerHTML = obj.closingStock.rawCotton+" Kgs.";
 			 var canvas = document.getElementById("myChart");
@@ -428,7 +442,7 @@
 			  Chart.defaults.global.defaultFontColor = 'black';
 			  Chart.defaults.global.defaultFontSize = 16;
 
-			 var data = {
+			 var data2 = {
 			     labels: ["Cotton Bales", "Cotton Seeds", "Oil", "Cotton Cake"],
 			       datasets: [
 			         {
@@ -445,7 +459,7 @@
 			         }
 			     ]
 			 };
-
+		
 			 // Notice the rotation from the documentation.
 			 var options = {
 			         title: {
@@ -460,7 +474,7 @@
 			 // Chart declaration:
 			 var myBarChart = new Chart(ctx, {
 			     type: 'doughnut',
-			     data: data,
+			     data: data2,
 			     options: options
 			 });
 		 }
@@ -632,8 +646,8 @@
 			}
 		}
 		
-		var interval = setInterval(getTodaysPurchaseReport, 10000);
-		
+		//var interval = setInterval(getTodaysPurchaseReport, 10000);
+		getStockReport(0,"","");
 		getTodayCottonRate();
 		getPurchaseReport("0","all");
 		getUserStatus();
@@ -648,6 +662,10 @@
 	                
 	            });
 	        });
+		document.getElementById("reset").addEventListener('click',function(e){
+			location.reload();
+		})
+		
 		</script>
 </body>
 </html>

@@ -26,7 +26,7 @@
 					<h4 class="lbl-rm-all">Stock Register</h4>
 				</div>
 				<div class="d-flex justify-content-start align-content-center row-background">
-					<button type="button" class="btn btn-success btn-sm">Print Report</button>
+					<button type="button" class="btn btn-success btn-sm" hidden>Print Report</button>
 				</div>
 			</div>
 			</div>
