@@ -388,9 +388,9 @@ public ArrayList<Invoice> getReport() {
 			con = OracleConnection.getConnection();
 			
 			String invSql = "SELECT\r\n" + 
-					"    IM.ID INV_ID,\r\n" + 
+					"    IM.ID            INV_ID,\r\n" + 
 					"    IM.INVOICE_NO,\r\n" + 
-					"    IM.TOTAL TOTAL_AMOUNT,\r\n" + 
+					"    IM.TOTAL         TOTAL_AMOUNT,\r\n" + 
 					"    IM.AMOUNTPAID,\r\n" + 
 					"    IM.PENDING,\r\n" + 
 					"    IM.INV_DATE,\r\n" + 
@@ -407,19 +407,19 @@ public ArrayList<Invoice> getReport() {
 					"    IM.BONUS,\r\n" + 
 					"    IM.NET_AMOUNT,\r\n" + 
 					"    IM.PDC_AMOUNT,\r\n" + 
-					"    COMP.NAME COMP_NAME,\r\n" + 
-					"    COMP.ADDRESS COMP_ADDR,\r\n" + 
-					"    COMP.TELEPHONE COMP_TEL,\r\n" + 
+					"    COMP.NAME        COMP_NAME,\r\n" + 
+					"    COMP.ADDRESS     COMP_ADDR,\r\n" + 
+					"    COMP.TELEPHONE   COMP_TEL,\r\n" + 
 					"    COMP.GST,\r\n" + 
-					"    COMP.STATE COMP_STATE,\r\n" + 
-					"    CUST.NAME CUST_NAME,\r\n" + 
-					"    CUST.ADDRESS CUST_ADDR,\r\n" + 
-					"    CUST.MOBILE CUST_MOB,\r\n" + 
-					"    II.ID INV_ITEM_ID,\r\n" + 
+					"    COMP.STATE       COMP_STATE,\r\n" + 
+					"    CUST.NAME        CUST_NAME,\r\n" + 
+					"    CUST.ADDRESS     CUST_ADDR,\r\n" + 
+					"    CUST.MOBILE      CUST_MOB,\r\n" + 
+					"    II.ID            INV_ITEM_ID,\r\n" + 
 					"    II.WEIGHMENT_ID,\r\n" + 
 					"    II.GRADE_ID,\r\n" + 
 					"    II.RST,\r\n" + 
-					"    WM.VID VEH_ID,\r\n" + 
+					"    WM.VID           VEH_ID,\r\n" + 
 					"    GD.MATERIAL,\r\n" + 
 					"    GD.QUANTITY,\r\n" + 
 					"    GD.GRADE,\r\n" + 
@@ -428,37 +428,39 @@ public ArrayList<Invoice> getReport() {
 					"    GD.AUTHORIZED_BY,\r\n" + 
 					"    GM.DESCRIPTION,\r\n" + 
 					"    CV.WEIGH_RATE,\r\n" + 
-					"    COMP.EMAIL COMP_EMAIL,\r\n" + 
+					"    COMP.EMAIL       COMP_EMAIL,\r\n" + 
 					"    PDC.PAY_DATE,\r\n" + 
-					"    PDC.MODE_OF_PAYMENT\r\n," + 
-					"    IM.ADVANCE\r\n" + 
+					"    PDC.MODE_OF_PAYMENT,\r\n" + 
+					"    IM.ADVANCE,\r\n" + 
+					"    PDC.CHEQUE_ID    PDC_CHEQUE_ID,\r\n" + 
+					"    PD.CHEQUE_ID     CHEQUE_ID\r\n" + 
 					"FROM\r\n" + 
-					"    INVOICE_MAST IM\r\n" + 
-					"    left outer join \r\n" + 
-					"    pdc_mast pdc\r\n" + 
-					"    on pdc.invoice_id = IM.ID, \r\n" + 
-					"    COMPANY_MASTER COMP,\r\n" + 
-					"    CUSTOMER_MAST CUST,\r\n" + 
-					"    invoice_items II,\r\n" + 
-					"    weigh_mast WM,\r\n" + 
-					"    grade_details GD,\r\n" + 
-					"    customer_vehicle_mast CV,\r\n" + 
-					"    grade_master GM\r\n" + 
+					"    INVOICE_MAST            IM\r\n" + 
+					"    LEFT OUTER JOIN PDC_MAST                PDC ON PDC.INVOICE_ID = IM.ID\r\n" + 
+					"    LEFT OUTER JOIN PAYMENT_DETAILS         PD ON PD.INVOICE_ID = IM.ID\r\n" + 
+					"                                          AND PD.MODE_ID = 2,\r\n" + 
+					"    COMPANY_MASTER          COMP,\r\n" + 
+					"    CUSTOMER_MAST           CUST,\r\n" + 
+					"    INVOICE_ITEMS           II,\r\n" + 
+					"    WEIGH_MAST              WM,\r\n" + 
+					"    GRADE_DETAILS           GD,\r\n" + 
+					"    CUSTOMER_VEHICLE_MAST   CV,\r\n" + 
+					"    GRADE_MASTER            GM\r\n" + 
 					"WHERE\r\n" + 
-					"    im.id = ii.invoice_id AND\r\n" + 
-					"    im.company_id = comp.id AND\r\n" + 
-					"    im.customer_id = cust.id AND\r\n" + 
-					"    ii.grade_id = gd.id AND\r\n" + 
-					"    gd.weighment_id = wm.id AND\r\n" + 
-					"    GM.GRADE = gd.grade AND\r\n" + 
-					"    wm.vid = cv.id  AND\r\n" + 
-					"    IM.ID=?"; 
+					"    IM.ID = II.INVOICE_ID\r\n" + 
+					"    AND IM.COMPANY_ID = COMP.ID\r\n" + 
+					"    AND IM.CUSTOMER_ID = CUST.ID\r\n" + 
+					"    AND II.GRADE_ID = GD.ID\r\n" + 
+					"    AND GD.WEIGHMENT_ID = WM.ID\r\n" + 
+					"    AND GM.GRADE = GD.GRADE\r\n" + 
+					"    AND WM.VID = CV.ID\r\n" + 
+					"    AND IM.ID = ?"; 
 				
 			PreparedStatement stmt = con.prepareStatement(invSql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 				    ResultSet.CONCUR_READ_ONLY);
 			
 			stmt.setInt(1, invoiceId);
-			
+			SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yyyy");
 			rs = stmt.executeQuery();
 			
 			rs.first();
@@ -470,7 +472,11 @@ public ArrayList<Invoice> getReport() {
 			
 			jsonObj.put("amountPaid", rs.getLong(4));
 			jsonObj.put("amountPending", rs.getLong(5));
-			jsonObj.put("invoiceDate", rs.getString(6));
+			
+			Date date2=new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").parse(rs.getString(6));
+			String properDateInv = format2.format(date2);
+			
+			jsonObj.put("invoiceDate", properDateInv);
 			jsonObj.put("companyId", rs.getInt(7));
 			jsonObj.put("customerId", rs.getInt(8));
 			jsonObj.put("authorizer", rs.getString(9));
@@ -501,8 +507,12 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("weighRate", rs.getLong(40));
 			jsonObj.put("companyEmail", rs.getString(41));
 			jsonObj.put("advance", rs.getString(44));
+			jsonObj.put("pdcId", rs.getString("PDC_CHEQUE_ID"));
+			jsonObj.put("chequeId", rs.getString("CHEQUE_ID"));
 			if(rs.getString(42) != null) {
-				jsonObj.put("pdcDate", rs.getString(42));
+				Date date1=new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").parse(rs.getString(42));
+				String properDate = format2.format(date1);
+				jsonObj.put("pdcDate",properDate);
 			}else {
 				jsonObj.put("pdcDate","NA");
 			}
@@ -549,6 +559,7 @@ public ArrayList<Invoice> getReport() {
 			
 			jsonObj.put("amanatQty", (Float.parseFloat(qty) - invoicedQty));
 			jsonObj.put("invoiceItems", jsonArr);
+			
 			System.out.println(jsonObj);
 			stmt.close();
 			con.close();

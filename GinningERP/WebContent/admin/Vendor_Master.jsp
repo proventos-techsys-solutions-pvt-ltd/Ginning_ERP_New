@@ -205,7 +205,7 @@
 								'<td>'+membership+'</td>'+
 								'<td><img src="/file/'+jsonResponse[i].photo+'" height=50 width=50></td>'+
 								'<td class="text-center" id="edit"><img src="../property/img/edit.png" alt="edit"></td>'+
-								'<td class="text-center"><img src="../property/img/delete.png" alt="delete" id="deleteRow"></td>'+
+								'<td class="text-center"><img src="../property/img/delete.png" alt="delete"></td>'+
 							'</tr>')
 					}
 				}
@@ -272,7 +272,43 @@
 	
 	document.getElementById("exportToExcel").addEventListener("click",function(){
 		Export();
-		})
+	});
+	
+	document.addEventListener('click', function(e){
+		if(e.srcElement.alt === 'delete'){
+			var row = e.srcElement.parentNode.parentNode;
+			var id = row.cells[0].innerHTML;
+			sendDeleteReq(id);		
+		}
+	});
+	
+	
+	function sendDeleteReq(id){
+		url = "../processing/deleteVendor.jsp?vendorId="+id;
+		if(window.XMLHttpRequest){  
+			deleteReq=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			deleteReq=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+		try{  
+			deleteReq.onreadystatechange=getDeleteResp;  
+			console.log("AJAX Req sent");
+			deleteReq.open("GET",url,true);  
+			deleteReq.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+		
+	function getDeleteResp(){
+		if(deleteReq.readyState == 4){
+			var response = this.response.trim();
+			if(Number(response) === 0){
+				alert("Cannot delete this vendor as Weighment is registered for him.");
+			}else if(Number(response) > 0){
+				alert("Customer deleted successfully.");
+			}
+		}
+	}
 		
 	/***********************
 	Side bar 
