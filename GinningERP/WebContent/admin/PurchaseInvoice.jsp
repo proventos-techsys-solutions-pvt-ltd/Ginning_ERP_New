@@ -44,11 +44,46 @@
 		</div>
 		</div>
 		</div>
-		<script src="../js/jquery-3.3.1.slim.min.js" ></script>
+		
+		<!-- Delete confirmation  modal pop up -->
+			<div class="response-back-display1"></div>
+			<div class="response-body1">
+				<div class="response-header1">
+					<h5>Information</h5>
+				</div>
+				<div class="response-content1">
+					<div class="d-flex justify-content-center align-items-center">
+					<h5 id="response-text1" class="ml-4"></h5>
+					</div>
+				</div>
+				<div class="response-footer1">
+					<button type="button" class="btn btn-success btn-response" id="response-button1">Ok</button>
+					<button type="button" class="btn btn-success btn-response ml-2" id="cancel-button1">Cancel</button>
+				</div>
+	</div>
+		
+		<!-- Response modal pop up -->
+<div class="response-back-display"></div>
+<div class="response-body">
+	<div class="response-header">
+		<h5>Information</h5>
+	</div>
+	<div class="response-content">
+		<div class="d-flex justify-content-center align-items-center">
+		<h5 id="response-text" class="ml-4"></h5>
+		</div>
+	</div>
+	<div class="response-footer">
+		<button type="button" class="btn btn-success btn-response" id="response-button">Ok</button>
+	</div>
+</div>
+		
+		<script src="../js/3.4.1-jq.js"></script>
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 		<script src="../js/commonjs.js"></script>
-		<script src="../js/export/export2excel.js"></script>
+		<script src="../js/Validation.js"></script>
+			<script src="../js/export/export2excel.js"></script>
 		<script>
 		
 		 //*********************Search 
@@ -61,9 +96,6 @@
           });
         });
     	
-		
-		
-		
 			setTitle("Purchase Invoices");//Setting Title of Page
 			setSearchPlaceholder("Invoice No");//Setting Placeholder of Search Input
 			
@@ -178,7 +210,11 @@
 				var table = document.getElementById('tableBody');
 				var rowIndex = e.srcElement.parentNode.parentNode.rowIndex-1;
 				var invoiceId = table.rows[rowIndex].cells[1].innerHTML;
-				deleteInvoiceEntry(invoiceId);
+				var invoiceNo =  table.rows[rowIndex].cells[3].innerHTML;
+				$.fn.confirmDelete(1,"Do you want to delete "+invoiceNo+" ?");
+				$("#response-button1").click(function(){
+					deleteInvoiceEntry(invoiceId);
+				})
 			}
 		})
 		
@@ -206,8 +242,10 @@
 				if(response.includes('CASH')){
 					window.alert(response+" HAS BEEN ALREADY PAID. PLEASE DELETE THESE ENTRIES FIRST.");
 				}else{
-					window.alert('Invoice No. '+response+' is deleted successesfully.');
-					location.reload();
+					$.fn.checkStatus(1,'Invoice No. '+response+' is deleted successesfully.');
+					$("#response-button").click(function(){
+						location.reload();
+					})
 				}
 			} 
 		}

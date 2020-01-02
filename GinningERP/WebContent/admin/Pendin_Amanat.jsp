@@ -44,6 +44,27 @@
 	</div>
 	</div>
 	</div>
+	
+	<!-- Delete confirmation  modal pop up -->
+<div class="response-back-display1"></div>
+<div class="response-body1">
+	<div class="response-header1">
+		<h5>Information</h5>
+	</div>
+	<div class="response-content1">
+		<div class="d-flex justify-content-center align-items-center">
+		<h5 id="response-text1" class="ml-4"></h5>
+		</div>
+	</div>
+	<div class="response-footer1">
+		<button type="button" class="btn btn-success btn-response" id="response-button1">Ok</button>
+		<button type="button" class="btn btn-success btn-response ml-2" id="cancel-button1">Cancel</button>
+	</div>
+</div>
+	
+	
+	
+	
         <script src="../js/jquery-3.3.1.slim.min.js" ></script>
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
@@ -74,7 +95,6 @@
 			amanatRequest();
 			};
 			
-		
 		/*	var documentHeight = (function(){
 				var height = document.getElementsByTagName("html")[0].offsetHeight;
 				document.getElementsByClassName("setHeight")[0].style.height = ((height*2)/3) + "px";
@@ -200,7 +220,11 @@ $(document).ready(function () {
 			var rowIndex = Number(e.srcElement.parentNode.parentNode.rowIndex)-1;
 			var tableBody = document.getElementById('tableBody');
 			var id = tableBody.rows[rowIndex].cells[0].innerHTML;
-			deleteAmanatRequest(id);
+			var amanatNo = tableBody.rows[rowIndex].cells[2].innerHTML;
+			$.fn.confirmDelete(1,"Do you want to delete "+amanatNo+" ?");
+				$("#response-button1").click(function(){
+					deleteAmanatRequest(id);
+				})
 		}
 	});
 	

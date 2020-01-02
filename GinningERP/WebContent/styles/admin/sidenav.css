@@ -544,6 +544,65 @@ table tbody tr:hover{
 }
 
 
+/**********************************
+				delete confirmation box Classes
+************************************/
+.response-back-display1{
+	display:none;
+	position:fixed;
+	top:0;right:0;bottom:0;left:0;
+	background:black;
+	opacity:0.5;
+	z-index:1;
+}
+.response-body1{
+	display:none;
+	position:fixed;
+	top:50%;
+	left:50%;
+	width:400px;
+	height:175px;
+	margin-top:-125px;
+	margin-left:-175px;
+	background:#fff;
+	border-radius:5px;
+	z-index:2;
+}
+.response-header1{
+	display:flex;
+	justify-content:start;
+	align-items:center;
+	background:#efefef;
+	width:100%;
+	height:40px;
+	border-bottom:1px solid gray;
+	border-radius:5px 5px 0px 0px;
+	padding:10px;
+	color:black;
+}
+
+.response-content1{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	width:100%;
+	height:85px;
+	padding:5px;
+}
+
+.response-footer1{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	width:100%;
+	height:50px;
+}
+.btn-response1{
+	height:auto;
+	width:100px;
+	border-radius:4px;
+}
+
 
 /*******Custom classes for finishing*********/
 .online{
