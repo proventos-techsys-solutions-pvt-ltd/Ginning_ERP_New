@@ -77,7 +77,7 @@
 	  </div>
 	  
            <div class="row row-background border-top">
-             	<div class="col-md-2">
+             	<div class="col-md-4">
              		<label class="lbl-rm-l">Company</label>
              		<select class="form-control form-control-sm" id="companyId">
              			<option value="0" selected>All</option>
@@ -93,12 +93,8 @@
              		<input class="form-control form-control-sm" type="date"  name="endDate" id="endDate"  />
              	</div>
 	             <div class="col-md-2">
-	            	 <label class="lbl-rm-l"> </label>
-		             <button class="form-control form-control-sm" id="filter">Filter</button>
-		         </div>     
-		         <div class="col-md-2">
-		       		 <label class="lbl-rm-l"> </label>
-		             <button class="form-control form-control-sm" id="reset">Reset</button>
+		             <button type="button" class="btn btn-success btn-sm" id="filter" style="margin-top:32px;">Filter</button>
+		             <button type="button" class="btn btn-success btn-sm ml-1" id="reset" style="margin-top:32px;">Reset</button>
 	             </div>
             </div>
              <div class="row row-background">
