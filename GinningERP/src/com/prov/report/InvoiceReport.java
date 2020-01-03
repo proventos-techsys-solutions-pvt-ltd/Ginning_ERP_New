@@ -433,12 +433,15 @@ public ArrayList<Invoice> getReport() {
 					"    PDC.MODE_OF_PAYMENT,\r\n" + 
 					"    IM.ADVANCE,\r\n" + 
 					"    PDC.CHEQUE_ID    PDC_CHEQUE_ID,\r\n" + 
-					"    PD.CHEQUE_ID     CHEQUE_ID\r\n" + 
+					"    PD.CHEQUE_ID     CHEQUE_ID,\r\n" + 
+					"    PDR.PAY_DATE     RTGS_DATE\r\n" + 
 					"FROM\r\n" + 
 					"    INVOICE_MAST            IM\r\n" + 
 					"    LEFT OUTER JOIN PDC_MAST                PDC ON PDC.INVOICE_ID = IM.ID\r\n" + 
 					"    LEFT OUTER JOIN PAYMENT_DETAILS         PD ON PD.INVOICE_ID = IM.ID\r\n" + 
-					"                                          AND PD.MODE_ID = 2,\r\n" + 
+					"                                          AND PD.MODE_ID = 2\r\n" + 
+					"    LEFT OUTER JOIN PAYMENT_DETAILS         PDR ON PDR.INVOICE_ID = IM.ID\r\n" + 
+					"                                           AND PDR.MODE_ID = 3,\r\n" + 
 					"    COMPANY_MASTER          COMP,\r\n" + 
 					"    CUSTOMER_MAST           CUST,\r\n" + 
 					"    INVOICE_ITEMS           II,\r\n" + 
@@ -509,6 +512,11 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("advance", rs.getString(44));
 			jsonObj.put("pdcId", rs.getString("PDC_CHEQUE_ID"));
 			jsonObj.put("chequeId", rs.getString("CHEQUE_ID"));
+			if(rs.getString("RTGS_DATE") != null) {
+				Date date3=new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").parse(rs.getString("RTGS_DATE"));
+				String properDate1 = format2.format(date3);
+				jsonObj.put("rtgsDate", properDate1);
+			}
 			if(rs.getString(42) != null) {
 				Date date1=new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").parse(rs.getString(42));
 				String properDate = format2.format(date1);

@@ -182,6 +182,9 @@
 	<field name="advance" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[advance]]></fieldDescription>
 	</field>
+	<field name="rtgsDate" class="java.lang.String">
+		<fieldDescription><![CDATA[rtgsDate]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -1070,28 +1073,28 @@ Qtl.]]></text>
 				<textFieldExpression><![CDATA[$F{netAmount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="258" y="123" width="78" height="12" uuid="3b2d9c25-26e4-4830-bfc1-218058ecfac5"/>
+				<reportElement x="258" y="135" width="78" height="12" uuid="3b2d9c25-26e4-4830-bfc1-218058ecfac5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{chequeNo} == "") ? "":"Cheque No:"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="336" y="123" width="61" height="12" uuid="a61643af-6bad-4670-85a8-0ce1ce1b46d2"/>
+				<reportElement x="336" y="135" width="61" height="12" uuid="a61643af-6bad-4670-85a8-0ce1ce1b46d2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{chequeNo} == "") ? "":$F{chequeNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="258" y="135" width="78" height="12" uuid="9cdeba59-b2e9-42d0-844a-25aa033ed7fa"/>
+				<reportElement x="258" y="147" width="78" height="12" uuid="9cdeba59-b2e9-42d0-844a-25aa033ed7fa"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{chequeDate} == "") ? "":"Cheque Date:"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="336" y="135" width="61" height="12" uuid="7a08f105-6712-4435-93ab-8a2abb78b3a4"/>
+				<reportElement x="336" y="147" width="61" height="12" uuid="7a08f105-6712-4435-93ab-8a2abb78b3a4"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -1146,27 +1149,6 @@ Qtl.]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{note}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="741" y="87" width="61" height="12" uuid="6a841adc-5f35-4817-9882-eadf8b34d642"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{cashAmount}.intValue() == 0) ? "":$F{cashAmount}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="741" y="99" width="61" height="12" uuid="59f8d789-ebcf-4123-b758-2b22ad5db182"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{chequeAmount}.intValue() == 0) ? "":$F{chequeAmount}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="741" y="111" width="61" height="12" uuid="5100e1bf-0ee9-4bd0-93ef-10c14225f3f8"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{rtgsAmount}.intValue() == 0) ? "":$F{rtgsAmount}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="516" y="176" width="210" height="13" uuid="42b90aee-dac2-4b5b-a316-8012e33352fe">
 					<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
@@ -1184,27 +1166,6 @@ Qtl.]]></text>
 				</textElement>
 				<text><![CDATA[Farmer's Signature]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="663" y="87" width="78" height="12" uuid="07ff7f20-44b8-4c91-b7b9-a68a4220dee6"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{cashAmount}.intValue() == 0) ? "":"Cash Amount:"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="663" y="99" width="78" height="12" uuid="ee18a466-d0c3-4707-b6ab-514b5d2e2fba"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{chequeAmount}.intValue() == 0) ? "":"Cheque Amount:"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="663" y="111" width="78" height="12" uuid="5726230c-f30f-4459-9ef6-1909fd074756"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{rtgsAmount}.intValue() == 0) ? "":"RTGS Amount:"]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="647" y="31" width="84" height="15" uuid="2b22f660-c467-41be-91ce-d7faebd84178">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -1358,34 +1319,6 @@ Qtl.]]></text>
 				<textFieldExpression><![CDATA[$F{netAmount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="663" y="123" width="78" height="12" uuid="465196c4-36c1-4433-8959-eaa6a50e1c62"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{chequeNo} == "") ? "":"Cheque No:"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="741" y="123" width="61" height="12" uuid="e9459a39-7a91-4351-8129-e1b511b986ef"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{chequeNo} == "") ? "":$F{chequeNo}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="663" y="135" width="78" height="12" uuid="0c0d3504-f271-48c6-ae6f-6ce91a21d3a8"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{chequeDate} == "") ? "":"Cheque Date:"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="741" y="135" width="61" height="12" uuid="dcdc9848-052b-44e2-a261-1fff3677458b"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{chequeDate} == "") ? "":$F{chequeDate}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="648" y="61" width="83" height="12" uuid="f23ead98-9ae3-435c-8c76-02420de0b2e9"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
@@ -1426,6 +1359,104 @@ Qtl.]]></text>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{pdcNo} == "") ? "":$F{pdcNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="336" y="123" width="61" height="12" uuid="c6c88944-d882-4c52-bb09-0e5a8b1ebdbe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{rtgsAmount}.intValue() == 0) ? "":$F{rtgsDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="258" y="123" width="78" height="12" uuid="b3eb30e5-bd65-41c1-aee1-e1d80a69e3a5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{rtgsAmount}.intValue() == 0) ? "":"RTGS Date:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="740" y="87" width="61" height="12" uuid="1a6a81f1-01e2-4c25-8ead-358cbb7e626c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{cashAmount}.intValue() == 0) ? "":$F{cashAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="740" y="99" width="61" height="12" uuid="46a7299f-e32f-4ee1-8ecc-81fcb8965c47"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{chequeAmount}.intValue() == 0) ? "":$F{chequeAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="740" y="111" width="61" height="12" uuid="fccc8981-7937-4a6d-becc-8609efd8e718"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{rtgsAmount}.intValue() == 0) ? "":$F{rtgsAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="662" y="87" width="78" height="12" uuid="3c48bfaa-6a21-4ff7-a51f-d0d9c188264e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{cashAmount}.intValue() == 0) ? "":"Cash Amount:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="662" y="99" width="78" height="12" uuid="5786f5df-a245-4416-90a4-61cc1a73fbbd"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{chequeAmount}.intValue() == 0) ? "":"Cheque Amount:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="662" y="111" width="78" height="12" uuid="88ee706a-9a70-4e27-a921-c4b8946d39f5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{rtgsAmount}.intValue() == 0) ? "":"RTGS Amount:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="662" y="135" width="78" height="12" uuid="03c7d98b-2d9e-493c-9b44-71af6bc27f43"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{chequeNo} == "") ? "":"Cheque No:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="740" y="135" width="61" height="12" uuid="c26b0f31-18a2-4675-83df-d54628cd6fc7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{chequeNo} == "") ? "":$F{chequeNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="662" y="147" width="78" height="12" uuid="3712a568-0591-4804-a81e-d58829585c9d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{chequeDate} == "") ? "":"Cheque Date:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="740" y="147" width="61" height="12" uuid="a53466f1-7326-4cd0-96d6-2e3ae3442357"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{chequeDate} == "") ? "":$F{chequeDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="740" y="123" width="61" height="12" uuid="df0cb50d-e97f-4269-a1ee-f3a03ebc8827"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{rtgsAmount}.intValue() == 0) ? "":$F{rtgsDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="662" y="123" width="78" height="12" uuid="6b486f6d-51f3-425a-a3a7-090ba6ec4e8f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{rtgsAmount}.intValue() == 0) ? "":"RTGS Date:"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

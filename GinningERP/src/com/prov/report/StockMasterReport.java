@@ -162,7 +162,7 @@ public class StockMasterReport {
 		return sm;
 	}
 	
-	public StockMast getStockForDate(int companyId, String date) {
+	public StockMast getStockForEndDate(int companyId, String date) {
 		ResultSet rs = null;
 		Connection con = null;
 		StockMast sm = new StockMast();
@@ -183,6 +183,70 @@ public class StockMasterReport {
 					"            STOCK_MAST\r\n" + 
 					"        WHERE\r\n" + 
 					"            STOCK_DATE <= ?\r\n" + 
+					"    )\r\n" + 
+					"    AND COMPANY_ID = ?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+			
+			stmt.setDate(1, sqlDate);
+			stmt.setInt(2, companyId);
+			
+			rs = stmt.executeQuery();
+			
+			
+			while (rs.next()) {
+				
+				sm.setId(rs.getInt(1));
+				
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(2));
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+				String properDate = format2.format(date1);
+				
+				sm.setStockDate(properDate);
+				sm.setCompanyId(rs.getInt(3));
+				sm.setRawCotton(rs.getDouble(4));
+				sm.setCottonBales(rs.getDouble(5));
+				sm.setCottonSeed(rs.getDouble(6));
+				sm.setCottonSeedOil(rs.getDouble(7));
+				sm.setCottonCakes(rs.getDouble(8));
+				sm.setAvgRate(rs.getDouble(9));
+				
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return sm;
+	}
+	
+	
+	public StockMast getStockForStartDate(int companyId, String date) {
+		ResultSet rs = null;
+		Connection con = null;
+		StockMast sm = new StockMast();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			
+			String sql = "SELECT\r\n" + 
+					"    *\r\n" + 
+					"FROM\r\n" + 
+					"    STOCK_MAST\r\n" + 
+					"WHERE\r\n" + 
+					"    STOCK_DATE = (\r\n" + 
+					"        SELECT\r\n" + 
+					"            MIN(STOCK_DATE)\r\n" + 
+					"        FROM\r\n" + 
+					"            STOCK_MAST\r\n" + 
+					"        WHERE\r\n" + 
+					"            STOCK_DATE >= ?\r\n" + 
 					"    )\r\n" + 
 					"    AND COMPANY_ID = ?";
 			
@@ -325,7 +389,7 @@ public class StockMasterReport {
 		return obj;
 	}
 	
-	public JSONObject getStockForAllByDate(String date) {
+	public JSONObject getStockForAllByEndDate(String date) {
 		ResultSet rs = null;
 		Connection con = null;
 		JSONObject obj = null;
@@ -387,6 +451,72 @@ public class StockMasterReport {
 		
 		return obj;
 	}
+	
+	
+	
+	public JSONObject getStockForAllByStartDate(String date) {
+		ResultSet rs = null;
+		Connection con = null;
+		JSONObject obj = null;
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			
+			String sql = "SELECT\r\n" + 
+					"    NVL(SUM(RAW_COTTON), 0) RAW_COTTON,\r\n" + 
+					"    NVL(SUM(COTTON_BALES), 0) COTTON_BALES,\r\n" + 
+					"    NVL(SUM(COTTON_SEED), 0) COTTON_SEED,\r\n" + 
+					"    NVL(SUM(COTTON_SEED_OIL), 0) COTTON_SEED_OIL,\r\n" + 
+					"    NVL(SUM(COTTON_CAKES), 0) COTTON_CAKES,\r\n" + 
+					"    STOCK_DATE\r\n" + 
+					"FROM\r\n" + 
+					"    STOCK_MAST\r\n" + 
+					"WHERE\r\n" + 
+					"    STOCK_DATE = (\r\n" + 
+					"        SELECT\r\n" + 
+					"            MIN(STOCK_DATE)\r\n" + 
+					"        FROM\r\n" + 
+					"            STOCK_MAST\r\n" + 
+					"        WHERE\r\n" + 
+					"            STOCK_DATE >= ?\r\n" + 
+					"    )\r\n" + 
+					"GROUP BY\r\n" + 
+					"    STOCK_DATE";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+			
+			stmt.setDate(1, sqlDate);
+			
+			rs = stmt.executeQuery();
+			
+			obj = new JSONObject();
+			
+			while (rs.next()) {
+ 				
+				obj.put("rawCotton", rs.getDouble(1));
+				obj.put("cottonBales", rs.getDouble(2));
+				obj.put("cottonSeed", rs.getDouble(3));
+				obj.put("cottonSeedOil", rs.getDouble(4));
+				obj.put("cottonCakes", rs.getDouble(5));
+				
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(6));
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+				String properDate = format2.format(date1);
+				obj.put("stockDate",properDate);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return obj;
+	}
+	
 	
 	public double getTodaysAverageRate() {
 		ResultSet rs = null;

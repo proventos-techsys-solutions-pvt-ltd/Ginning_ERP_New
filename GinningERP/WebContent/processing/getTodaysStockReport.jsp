@@ -1,4 +1,5 @@
-<%@ page errorPage="../admin/Error.jsp" %>  
+
+<%@page import="com.prov.report.PurchaseReport"%>
 <%@ page import="org.json.JSONObject"%>
 <%@ page import="org.json.JSONArray"%>
 <%@ page import="com.prov.bean.StockMast"%>
@@ -53,23 +54,22 @@
 			JSONObject stockOpening = report.getTodaysOpeningStockForAll();
 			JSONObject stockCurrent = report.getTodaysStockForAll();
 			
-			System.out.println("todayOpening"+stockOpening.toString());
-			System.out.println(stockCurrent.toString());
-			
-			double rawCotton = stockCurrent.getDouble("rawCotton") - stockOpening.getDouble("rawCotton");
-			double cottonBales = stockCurrent.getDouble("cottonBales") - stockOpening.getDouble("cottonBales");
-			double cotonSeed = stockCurrent.getDouble("cottonSeed") - stockOpening.getDouble("cottonSeed");
-			double cottonSeedOil = stockCurrent.getDouble("cottonSeedOil") - stockOpening.getDouble("cottonSeedOil");
-			double cottonCake = stockCurrent.getDouble("cottonCakes") - stockOpening.getDouble("cottonCakes");
-			
 			JSONObject stockAddition = new JSONObject();
+			if(stockCurrent.length() > 0){
 			
-			stockAddition.put("rawCotton", rawCotton);
-			stockAddition.put("cottonBales", cottonBales);
-			stockAddition.put("cottonSeed", cotonSeed);
-			stockAddition.put("cottonSeedOil", cottonSeedOil);
-			stockAddition.put("cottonCakes", cottonCake);
-			stockAddition.put("stockDate", stockCurrent.get("stockDate"));
+				double rawCotton = stockCurrent.getDouble("rawCotton") - stockOpening.getDouble("rawCotton");
+				double cottonBales = stockCurrent.getDouble("cottonBales") - stockOpening.getDouble("cottonBales");
+				double cotonSeed = stockCurrent.getDouble("cottonSeed") - stockOpening.getDouble("cottonSeed");
+				double cottonSeedOil = stockCurrent.getDouble("cottonSeedOil") - stockOpening.getDouble("cottonSeedOil");
+				double cottonCake = stockCurrent.getDouble("cottonCakes") - stockOpening.getDouble("cottonCakes");
+				
+				stockAddition.put("rawCotton", rawCotton);
+				stockAddition.put("cottonBales", cottonBales);
+				stockAddition.put("cottonSeed", cotonSeed);
+				stockAddition.put("cottonSeedOil", cottonSeedOil);
+				stockAddition.put("cottonCakes", cottonCake);
+				stockAddition.put("stockDate", stockCurrent.get("stockDate"));
+			}
 			
 			JSONObject jsonObj = new JSONObject();
 			
@@ -87,9 +87,9 @@
 		
 		if(companyId >0){
 			
-			StockMast todayOpeningStock = report.getStockForDate(companyId, startDate);
+			StockMast todayOpeningStock = report.getStockForStartDate(companyId, startDate);
 			
-			StockMast todayClosingStock = report.getStockForDate(companyId, endDate);
+			StockMast todayClosingStock = report.getStockForEndDate(companyId, endDate);
 			
 			StockMast todayStockAddition = new StockMast();
 			
@@ -114,38 +114,60 @@
 			jsonObj.put("stockAddition", stockAddition);
 			jsonObj.put("closingStock", closingStock);
 			
+			PurchaseReport pr = new PurchaseReport();
+			JSONObject json = pr.getTotalPurchaseBetweenDate(startDate,endDate);
+			json.put("rtgsPdp", pr.getTotalPdpPurchaseBetweenDate("3",startDate,endDate ));
+			json.put("cashPdp", pr.getTotalPdpPurchaseBetweenDate("1",startDate,endDate));
+			json.put("chequePdp", pr.getTotalPdpPurchaseBetweenDate("2",startDate,endDate));
+			
+			long totalPurchase = json.getLong("chequeAmount") + json.getLong("cashAmount") + json.getLong("rtgsAmount");
+			
+			long totalPdpPurchase = json.getLong("chequePdp") + json.getLong("rtgsPdp") + json.getLong("cashPdp");
+			json.put("totalPurchase", totalPurchase);
+			json.put("totalPdpPurchase", totalPdpPurchase);
+			jsonObj.put("purchaseReport", json);
+			
 			out.print(jsonObj);
 			out.flush();
 		}else if(companyId == 0){
 	
-			JSONObject stockOpening = report.getStockForAllByDate(startDate);
-			JSONObject stockCurrent = report.getStockForAllByDate(endDate);
+			JSONObject stockOpening = report.getStockForAllByStartDate(startDate);
+			JSONObject stockCurrent = report.getStockForAllByEndDate(endDate);
 			
-			System.out.println("todayOpening"+stockOpening.toString());
-			System.out.println(stockCurrent.toString());
-			
-			double rawCotton = stockCurrent.getDouble("rawCotton") - stockOpening.getDouble("rawCotton");
-			double cottonBales = stockCurrent.getDouble("cottonBales") - stockOpening.getDouble("cottonBales");
-			double cotonSeed = stockCurrent.getDouble("cottonSeed") - stockOpening.getDouble("cottonSeed");
-			double cottonSeedOil = stockCurrent.getDouble("cottonSeedOil") - stockOpening.getDouble("cottonSeedOil");
-			double cottonCake = stockCurrent.getDouble("cottonCakes") - stockOpening.getDouble("cottonCakes");
 			
 			JSONObject stockAddition = new JSONObject();
-			
-			stockAddition.put("rawCotton", rawCotton);
-			stockAddition.put("cottonBales", cottonBales);
-			stockAddition.put("cottonSeed", cotonSeed);
-			stockAddition.put("cottonSeedOil", cottonSeedOil);
-			stockAddition.put("cottonCakes", cottonCake);
-			stockAddition.put("stockDate", stockCurrent.get("stockDate"));
-			
+			if(stockCurrent.length() > 0){
+				double rawCotton = stockCurrent.getDouble("rawCotton") - stockOpening.getDouble("rawCotton");
+				double cottonBales = stockCurrent.getDouble("cottonBales") - stockOpening.getDouble("cottonBales");
+				double cotonSeed = stockCurrent.getDouble("cottonSeed") - stockOpening.getDouble("cottonSeed");
+				double cottonSeedOil = stockCurrent.getDouble("cottonSeedOil") - stockOpening.getDouble("cottonSeedOil");
+				double cottonCake = stockCurrent.getDouble("cottonCakes") - stockOpening.getDouble("cottonCakes");
+				
+				stockAddition.put("rawCotton", rawCotton);
+				stockAddition.put("cottonBales", cottonBales);
+				stockAddition.put("cottonSeed", cotonSeed);
+				stockAddition.put("cottonSeedOil", cottonSeedOil);
+				stockAddition.put("cottonCakes", cottonCake);
+				stockAddition.put("stockDate", stockCurrent.get("stockDate"));
+			}
 			JSONObject jsonObj = new JSONObject();
 			
 			jsonObj.put("openingStock", stockOpening);
 			jsonObj.put("stockAddition", stockAddition);
 			jsonObj.put("closingStock", stockCurrent);
 			
-			System.out.println(jsonObj);
+			PurchaseReport pr = new PurchaseReport();
+			JSONObject json = pr.getTotalPurchaseBetweenDate(startDate,endDate);
+			json.put("rtgsPdp", pr.getTotalPdpPurchaseBetweenDate("3",startDate,endDate ));
+			json.put("cashPdp", pr.getTotalPdpPurchaseBetweenDate("1",startDate,endDate));
+			json.put("chequePdp", pr.getTotalPdpPurchaseBetweenDate("2",startDate,endDate));
+			
+			long totalPurchase = json.getLong("chequeAmount") + json.getLong("cashAmount") + json.getLong("rtgsAmount");
+			
+			long totalPdpPurchase = json.getLong("chequePdp") + json.getLong("rtgsPdp") + json.getLong("cashPdp");
+			json.put("totalPurchase", totalPurchase);
+			json.put("totalPdpPurchase", totalPdpPurchase);
+			jsonObj.put("purchaseReport", json);
 			
 			out.print(jsonObj);
 			out.flush();

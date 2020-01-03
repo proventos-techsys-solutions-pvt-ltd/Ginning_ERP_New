@@ -317,86 +317,10 @@
 <script type="text/javascript" charset="UTF-8" src="../js/Gcharts/UiModule.js"></script>
 <script type="text/javascript" charset="UTF-8" src="../js/Gcharts/OrgChartModule.js"></script>
 
-<script type="text/javascript" src="../Js/Gcharts/Loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', {
-            packages: ["orgchart"]
-        });
-        google.charts.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-            var data = new google.visualization.DataTable();
-            //Extra column can be added here
-            data.addColumn('string', 'Name');
-            data.addColumn('string', 'Manager');
-            data.addColumn('string', 'ToolTip');
-
-            // For each orgchart box, provide the name, manager, and tooltip to show.
-            data.addRows([
-                [{
-                        'v': 'Total Purchase Made',
-                        'f': 'Total Purchase Made<div style="color:red; font-style:italic"><span>Amount</span></div>'
-                    },
-                    '', 'Amount'
-                ],
-
-                [{
-                        'v': 'Cash Payments',
-                        'f': 'Cash Payments<div style="color:red; font-style:italic"><span>Amount</span></div>'
-                    },
-                    'Total Purchase Made', 'Amount'
-                ],
-                [{
-                        'v': 'Cheque Payments',
-                        'f': 'Cheque Payments<div style="color:red; font-style:italic"><span>Amount</span></div>'
-                    },
-                    'Total Purchase Made', 'Amount'
-                ],
-                [{
-                        'v': 'RTGS/NEFT Payments',
-                        'f': 'RTGS/NEFT Payments<div style="color:red; font-style:italic"><span>Amount</span></div>'
-                    },
-                    'Total Purchase Made', 'Amount'
-                ],
-                [{
-                        'v': 'Post Dated Payments',
-                        'f': 'Post Dated Payments<div style="color:red; font-style:italic"><span>Amount</span></div>'
-                    },
-                    'Total Purchase Made', 'Amount'
-                ],
-
-                [{
-                        'v': 'Post Cash Payments',
-                        'f': 'Cash Payments<div style="color:red; font-style:italic"><span>Amount</span></div>'
-                    },
-                    'Post Dated Payments', 'Amount'
-                ],
-                [{
-                        'v': 'Post Cheque Payments',
-                        'f': 'Cheque Payments<div style="color:red; font-style:italic"><span>Amount</span></div>'
-                    },
-                    'Post Dated Payments', 'Amount'
-                ],
-                [{
-                        'v': 'Post RTGS/NEFT Payments',
-                        'f': 'RTGS/NEFT Payments<div style="color:red; font-style:italic"><span>Amount</span></div>'
-                    },
-                    'Post Dated Payments', 'Amount'
-                ],
-            ]);
-
-            // Create the chart.
-            var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
-            // Draw the chart, setting the allowHtml option to true for the tooltips.
-            chart.draw(data, {
-                'allowHtml': true
-            });
-        }
-    </script>	
-	
-	<script>
-		
+<script>
+	 var myBarChart;
 		document.getElementById("filter").addEventListener('click', function(e){
+			myBarChart.destroy();
 			var startDate = document.getElementById("startDate").value;
 	        var endDate = document.getElementById("endDate").value;
 	        var companyId = document.getElementById("companyId").value;
@@ -422,12 +346,27 @@
 
 		 function fetchData(){
 			 if(fetchStock.readyState == 4){
-				 setData(this.response.trim());
+					var response = this.response.trim();
+					var data = JSON.parse(response);
+					console.log(data);
+					if(data.hasOwnProperty("purchaseReport")){
+						var data1 = data.purchaseReport;
+						$('#totalPurchase').val(data1.totalPurchase) ;
+						document.getElementById('cashPayment').innerHTML = data1.cashAmount ;
+						document.getElementById('chequePayment').innerHTML = data1.chequeAmount ;
+						document.getElementById('rtgsPayment').innerHTML = data1.rtgsAmount ;
+						document.getElementById('pdPayment').innerHTML = data1.totalPdpPurchase ;
+						document.getElementById('pdpCashPayment').innerHTML = data1.cashPdp ;
+						document.getElementById('pdpChequePayment').innerHTML = data1.chequePdp ;
+						document.getElementById('pdpRtgsPayment').innerHTML = data1.rtgsPdp ;
+					}
+				 setData(response);
 			 }
 		 }
 
 		 
 		 function setData(data1){
+			 console.log(data1);
 			 var obj = JSON.parse(data1);
 			 console.log(obj);
 			 document.getElementById("totalRawCotton").innerHTML = obj.closingStock.rawCotton+" Kgs.";
@@ -468,7 +407,7 @@
 
 
 			 // Chart declaration:
-			 var myBarChart = new Chart(ctx, {
+			myBarChart = new Chart(ctx, {
 			     type: 'doughnut',
 			     data: data2,
 			     options: options
@@ -663,5 +602,84 @@
 		})
 		
 		</script>
+
+<script type="text/javascript" src="../Js/Gcharts/Loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {
+            packages: ["orgchart"]
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            //Extra column can be added here
+            data.addColumn('string', 'Name');
+            data.addColumn('string', 'Manager');
+            data.addColumn('string', 'ToolTip');
+
+            // For each orgchart box, provide the name, manager, and tooltip to show.
+            data.addRows([
+                [{
+                        'v': 'Total Purchase Made',
+                        'f': 'Total Purchase Made<div style="color:red; font-style:italic"><span>Amount</span></div>'
+                    },
+                    '', 'Amount'
+                ],
+
+                [{
+                        'v': 'Cash Payments',
+                        'f': 'Cash Payments<div style="color:red; font-style:italic"><span>Amount</span></div>'
+                    },
+                    'Total Purchase Made', 'Amount'
+                ],
+                [{
+                        'v': 'Cheque Payments',
+                        'f': 'Cheque Payments<div style="color:red; font-style:italic"><span>Amount</span></div>'
+                    },
+                    'Total Purchase Made', 'Amount'
+                ],
+                [{
+                        'v': 'RTGS/NEFT Payments',
+                        'f': 'RTGS/NEFT Payments<div style="color:red; font-style:italic"><span>Amount</span></div>'
+                    },
+                    'Total Purchase Made', 'Amount'
+                ],
+                [{
+                        'v': 'Post Dated Payments',
+                        'f': 'Post Dated Payments<div style="color:red; font-style:italic"><span>Amount</span></div>'
+                    },
+                    'Total Purchase Made', 'Amount'
+                ],
+
+                [{
+                        'v': 'Post Cash Payments',
+                        'f': 'Cash Payments<div style="color:red; font-style:italic"><span>Amount</span></div>'
+                    },
+                    'Post Dated Payments', 'Amount'
+                ],
+                [{
+                        'v': 'Post Cheque Payments',
+                        'f': 'Cheque Payments<div style="color:red; font-style:italic"><span>Amount</span></div>'
+                    },
+                    'Post Dated Payments', 'Amount'
+                ],
+                [{
+                        'v': 'Post RTGS/NEFT Payments',
+                        'f': 'RTGS/NEFT Payments<div style="color:red; font-style:italic"><span>Amount</span></div>'
+                    },
+                    'Post Dated Payments', 'Amount'
+                ],
+            ]);
+
+            // Create the chart.
+            var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+            // Draw the chart, setting the allowHtml option to true for the tooltips.
+            chart.draw(data, {
+                'allowHtml': true
+            });
+        }
+    </script>	
+	
+	
 </body>
 </html>
