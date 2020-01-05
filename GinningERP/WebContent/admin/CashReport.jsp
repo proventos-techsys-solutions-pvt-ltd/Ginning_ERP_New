@@ -60,10 +60,29 @@
 	</div>
 	</div>
 	</div>
-	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
+	
+		<!-- Delete confirmation  modal pop up -->
+			<div class="response-back-display1"></div>
+			<div class="response-body1">
+				<div class="response-header1">
+					<h5>Information</h5>
+				</div>
+				<div class="response-content1">
+					<div class="d-flex justify-content-center align-items-center">
+					<h5 id="response-text1" class="ml-4"></h5>
+					</div>
+				</div>
+				<div class="response-footer1">
+					<button type="button" class="btn btn-success btn-response" id="response-button1">Ok</button>
+					<button type="button" class="btn btn-success btn-response ml-2" id="cancel-button1">Cancel</button>
+				</div>
+	</div>
+	
+		<script src="../js/3.4.1-jq.js"></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
+	<script src="../js/Validation.js"></script>
 	<script>
 	
 	 //*********************Search 
@@ -135,7 +154,11 @@
 			var table = document.getElementById('tableBody');
 			var rowIndex = e.srcElement.parentNode.parentNode.rowIndex-2;
 			var invoiceId = table.rows[rowIndex].cells[5].innerHTML;
-			deleteCash(invoiceId);
+			var customerName = table.rows[rowIndex].cells[0].innerHTML;
+			$.fn.confirmDelete(1,"Do you want to delete cash for "+ customerName+"  ?");
+			$("#response-button1").click(function(){
+				deleteCash(invoiceId);
+			})
 		}
 	});
 	
@@ -162,6 +185,10 @@
 			getReport();
 		}
 	}
+	
+	$("#cancel-button1").click(function(){
+		location.reload();
+	})
 	
 	getReport();
 	

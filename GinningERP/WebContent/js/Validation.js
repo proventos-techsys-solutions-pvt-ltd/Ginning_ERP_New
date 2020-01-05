@@ -23,7 +23,7 @@ $.fn.checkStatus = function(id,message){
 		$(".response-back-display").hide(200);
 })
    
-//function to call response pop up
+//function to call delete pop up
 $.fn.confirmDelete = function(id,message){ 
 		if(id>0){
 			$(".response-body1").slideDown(200);

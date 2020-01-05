@@ -249,7 +249,9 @@
 				}
 			} 
 		}
-		
+		$("#cancel-button1").click(function(){
+			location.reload();
+		})
 		/***********************
 		Side bar 
 		************************/

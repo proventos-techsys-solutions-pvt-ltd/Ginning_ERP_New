@@ -10,7 +10,7 @@
 <script type="text/javascript" src="../js/1.8.3-jq.js"></script>
 <script src="../js/3.2.1-jq.js"></script>
 <title>Vendor Master</title>
-<script src="../js/jquery-3.3.1.slim.min.js" ></script>
+<script src="../js/3.4.1-jq.js"></script>
 </head>
 
 <body>
@@ -113,14 +113,27 @@
 				</div>
 	</div>
 		
-		
+				<!-- Response modal pop up -->
+<div class="response-back-display"></div>
+<div class="response-body">
+	<div class="response-header">
+		<h5>Information</h5>
+	</div>
+	<div class="response-content">
+		<div class="d-flex justify-content-center align-items-center">
+		<h5 id="response-text" class="ml-4"></h5>
+		</div>
+	</div>
+	<div class="response-footer">
+		<button type="button" class="btn btn-success btn-response" id="response-button">Ok</button>
+	</div>
+</div>
 		
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 		<script src="../js/commonjs.js"></script>
-	
 		<script src="../js/export/export2excel.js"></script>
-		
+		<script src="../js/Validation.js"></script>
     	<script type="text/javascript">
     	
     	 //*********************Search 
@@ -278,7 +291,11 @@
 		if(e.srcElement.alt === 'delete'){
 			var row = e.srcElement.parentNode.parentNode;
 			var id = row.cells[0].innerHTML;
-			sendDeleteReq(id);		
+			var customerName = row.cells[1].innerHTML;
+			$.fn.confirmDelete(1,"Do you want to delete "+ customerName+"  ?");
+			$("#response-button1").click(function(){
+				sendDeleteReq(id);		
+			})
 		}
 	});
 	
@@ -305,7 +322,10 @@
 			if(Number(response) === 0){
 				alert("Cannot delete this vendor as Weighment is registered for him.");
 			}else if(Number(response) > 0){
-				alert("Customer deleted successfully.");
+				$.fn.checkStatus(1,"Customer deleted successfully.");
+				$("#response-button").click(function(){
+					location.reload();
+				})
 			}
 		}
 	}
