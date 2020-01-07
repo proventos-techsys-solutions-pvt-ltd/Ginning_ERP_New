@@ -83,7 +83,6 @@
 				
 				amanatItemList.add(item);
 			}
-			
 		}
 		
 		int companyId = Integer.parseInt((String)json.get("companyId"));

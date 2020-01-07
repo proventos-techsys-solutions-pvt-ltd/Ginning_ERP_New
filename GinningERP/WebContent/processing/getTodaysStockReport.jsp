@@ -115,10 +115,10 @@
 			jsonObj.put("closingStock", closingStock);
 			
 			PurchaseReport pr = new PurchaseReport();
-			JSONObject json = pr.getTotalPurchaseBetweenDate(startDate,endDate);
-			json.put("rtgsPdp", pr.getTotalPdpPurchaseBetweenDate("3",startDate,endDate ));
-			json.put("cashPdp", pr.getTotalPdpPurchaseBetweenDate("1",startDate,endDate));
-			json.put("chequePdp", pr.getTotalPdpPurchaseBetweenDate("2",startDate,endDate));
+			JSONObject json = pr.getTotalPurchaseBetweenDate(startDate,endDate, companyId);
+			json.put("rtgsPdp", pr.getTotalPdpPurchaseBetweenDate("3",startDate,endDate, companyId ));
+			json.put("cashPdp", pr.getTotalPdpPurchaseBetweenDate("1",startDate,endDate, companyId));
+			json.put("chequePdp", pr.getTotalPdpPurchaseBetweenDate("2",startDate,endDate, companyId));
 			
 			long totalPurchase = json.getLong("chequeAmount") + json.getLong("cashAmount") + json.getLong("rtgsAmount");
 			
@@ -126,6 +126,8 @@
 			json.put("totalPurchase", totalPurchase);
 			json.put("totalPdpPurchase", totalPdpPurchase);
 			jsonObj.put("purchaseReport", json);
+			StockMasterReport stockMastReport = new StockMasterReport();
+			jsonObj.put("averageRate", stockMastReport.getTodaysAverageRate(startDate, endDate, companyId));
 			
 			out.print(jsonObj);
 			out.flush();
@@ -168,6 +170,8 @@
 			json.put("totalPurchase", totalPurchase);
 			json.put("totalPdpPurchase", totalPdpPurchase);
 			jsonObj.put("purchaseReport", json);
+			StockMasterReport stockMastReport = new StockMasterReport();
+			jsonObj.put("averageRate", stockMastReport.getTodaysAverageRate(startDate, endDate));
 			
 			out.print(jsonObj);
 			out.flush();

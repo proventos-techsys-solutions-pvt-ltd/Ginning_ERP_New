@@ -548,5 +548,79 @@ public class StockMasterReport {
 		
 		return avgRate;
 	}
+	
+	public double getTodaysAverageRate(String startDate, String endDate, int companyId) {
+		ResultSet rs = null;
+		Connection con = null;
+		double avgRate = 0;
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			
+			String sql = "SELECT\r\n" + 
+					"    SUM(NET_AMOUNT) / ( SUM(TOTAL_QUANTITY) / 100 )\r\n" + 
+					"FROM\r\n" + 
+					"    INVOICE_MAST\r\n" + 
+					"WHERE\r\n" + 
+					"    INV_DATE BETWEEN ? AND ?\r\n" + 
+					"    AND COMPANY_ID = ?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			java.sql.Date startDateSql = java.sql.Date.valueOf(startDate);
+			java.sql.Date endDateSql = java.sql.Date.valueOf(endDate);
+			stmt.setDate(1, startDateSql);
+			stmt.setDate(2, endDateSql);
+			stmt.setInt(3, companyId);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				avgRate = rs.getDouble(1);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return avgRate;
+	}
+	
+	public double getTodaysAverageRate(String startDate, String endDate) {
+		ResultSet rs = null;
+		Connection con = null;
+		double avgRate = 0;
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			
+			String sql = "SELECT\r\n" + 
+					"    SUM(NET_AMOUNT) / ( SUM(TOTAL_QUANTITY) / 100 )\r\n" + 
+					"FROM\r\n" + 
+					"    INVOICE_MAST\r\n" + 
+					"WHERE\r\n" + 
+					"    INV_DATE BETWEEN ? AND ?\r\n";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			java.sql.Date startDateSql = java.sql.Date.valueOf(startDate);
+			java.sql.Date endDateSql = java.sql.Date.valueOf(endDate);
+			stmt.setDate(1, startDateSql);
+			stmt.setDate(2, endDateSql);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				avgRate = rs.getDouble(1);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return avgRate;
+	}
 
 }

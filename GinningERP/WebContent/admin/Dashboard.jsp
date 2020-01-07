@@ -31,7 +31,8 @@
 	  					Today's Rate
 	  				</div>
 	  				<div>
-	  					<i class="fa fa-inr" aria-hidden="true" id="tRate">&nbsp;&nbsp;10000</i>
+	  					<i class="fa fa-inr" aria-hidden="true"></i>
+	  					<span aria-hidden="true" id="tRate">0</span>
 	  				</div>
 	  			</div>
 	  	</div>
@@ -41,7 +42,8 @@
 	  					Average Rate
 	  				</div>
 	  				<div>
-	  					<i class="fa fa-inr" aria-hidden="true" id="aRate">&nbsp;&nbsp;</i>
+	  					<i class="fa fa-inr" aria-hidden="true" ></i>
+	  					<span aria-hidden="true" id="aRate">0</span>
 	  				</div>
 	  			</div>
 	  	</div>
@@ -59,7 +61,8 @@
 	  						<option value="all" selected>All</option>
 	  					</select>
 		  				<div>
-		  					<i class="fa fa-inr" aria-hidden="true" id="totalPurchase">&nbsp;&nbsp;10000</i>
+		  					<i class="fa fa-inr" aria-hidden="true" ></i>
+		  					<span aria-hidden="true" id="totalPurchase">0</span>
 		  				</div>
 		  				</div>
 	  			</div>
@@ -359,6 +362,11 @@
 						document.getElementById('pdpCashPayment').innerHTML = data1.cashPdp ;
 						document.getElementById('pdpChequePayment').innerHTML = data1.chequePdp ;
 						document.getElementById('pdpRtgsPayment').innerHTML = data1.rtgsPdp ;
+						
+						if(data.hasOwnProperty("averageRate")){
+							document.getElementById('aRate').innerHTML = data['averageRate'].toFixed(2);
+						}
+						
 					}
 				 setData(response);
 			 }
@@ -450,8 +458,8 @@
 				var response = this.response.trim();
 				console.log(response);
 				var data = JSON.parse(response);
-				document.getElementById('tRate').innerHTML = "Rs. "+data['superRate'];
-				document.getElementById('aRate').innerHTML = "Rs. "+data['averageRate'].toFixed(2);
+				document.getElementById('tRate').innerHTML = data['superRate'];
+				document.getElementById('aRate').innerHTML = data['averageRate'].toFixed(2);
 				//getAverageRate();
 			 }
 		 }

@@ -1088,10 +1088,14 @@
 	         cashJson['customerId'] = document.getElementById('customerId').value;
 	         cashJson['invoiceNo'] = document.getElementById('invoiceNo').value;
 	         cashJson['accountPayableId'] = document.getElementById('accountPayableId').value;
-	         cashJson['cashAccountId'] = document.getElementById('cashAccountId').value;
-	         cashJson['paymentStatus'] = document.getElementById('cashPaymentStatus').value;
-	         cashJson['cashDate'] = document.getElementById('cashDate').value;
-	         
+	         if(document.getElementById('cashAccountId').value === "" ){
+	        	 alert("Cash Account cannot be Empty!")
+	         }else{
+	         	cashJson['cashAccountId'] = document.getElementById('cashAccountId').value;
+	         	cashJson['paymentStatus'] = document.getElementById('cashPaymentStatus').value;
+	         	cashJson['cashDate'] = document.getElementById('cashDate').value;
+	         	
+	         }
 	         return cashJson;
          }
          
@@ -1155,10 +1159,14 @@
 	         pdcCashJson['customerId'] = document.getElementById('customerId').value;
 	         pdcCashJson['invoiceNo'] = document.getElementById('invoiceNo').value;
 	         pdcCashJson['accountPayableId'] = document.getElementById('accountPayableId').value;
-	         pdcCashJson['cashAccountId'] = document.getElementById('pdcCashAccountId').value;
-	         pdcCashJson['paymentStatus'] = document.getElementById('pdcCashPaymentStatus').value;
-	         pdcCashJson['pdcCashDate'] = document.getElementById('pdcCashAmountDate').value;
-	         
+	         if( document.getElementById('pdcCashAccountId').value ===""){
+	        	 alert("Cash account cannot be blank.")
+	         }else{
+		         pdcCashJson['cashAccountId'] = document.getElementById('pdcCashAccountId').value;
+		         pdcCashJson['paymentStatus'] = document.getElementById('pdcCashPaymentStatus').value;
+		         pdcCashJson['pdcCashDate'] = document.getElementById('pdcCashAmountDate').value;
+		         
+	         }
 	         return pdcCashJson;
          }
          
@@ -1211,15 +1219,17 @@
 	         
 	         if(cashStatus === true){
 		         var cashJson = submitCash();
-		         parentJson['cashJson'] = cashJson;
+		       	parentJson['cashJson'] = cashJson;
 	         }
 	         	 
 	         console.log(parentJson);
 	         var jsonData = JSON.stringify(parentJson);
 	         
-	         document.getElementById("payCash").disabled = true;
 	         
-	         submitDataAjax(jsonData);
+	         if(cashJson.hasOwnProperty("cashAccountId")){ 
+	         	submitDataAjax(jsonData);
+	         	document.getElementById("payCash").disabled = true;
+        	 }
          }
          
          
@@ -1236,9 +1246,11 @@
 	         console.log(parentJson);
 	         var jsonData = JSON.stringify(parentJson);
 	         
-	         document.getElementById('payPdcCash').disabled = true;
-	         
-	         submitDataAjax(jsonData);
+	        
+	         if(cashJson.hasOwnProperty("pdcCashAccountId")){ 
+	        	 submitDataAjax(jsonData);
+	        	 document.getElementById('payPdcCash').disabled = true;
+         	}
          }
          
          
