@@ -19,25 +19,27 @@ public class DeleteRst {
 			e.printStackTrace();
 		}
 
-		String deleteSql = "{? = CALL DELETE_RST(?)}";
+		String deleteSql = "{? = call DELETE_RST(?)}";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(deleteSql);
 			
 			cs.registerOutParameter(1, Types.NUMERIC);
 			
-			cs.setInt(1, rst);
+			cs.setInt(2, rst);
 			
-			output = cs.executeUpdate();
+			cs.executeUpdate();
+			
+			output = cs.getInt(1);
 			
 			cs.close();
 			con.close();
 			
 			System.out.println("Deletion Succesful--"+output);
 			} catch (SQLException e) {
-			e.printStackTrace();
-			return 0;
-		}
+				e.printStackTrace();
+				return 0;
+			}
 		return output;
 	}
 

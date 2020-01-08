@@ -139,6 +139,8 @@
 		}
 		
 		function getWeighBridgeReport(){
+			
+			document.getElementById("tableBody").innerHTML ="";
 			var url="${pageContext.request.contextPath}/processing/getWeighBridgeReport.jsp";
 			if(window.XMLHttpRequest){  
 				request=new XMLHttpRequest();  
@@ -222,7 +224,6 @@
 		function resetWtResponse(){
 			if(resetWtReq.readyState === 4){
 				var response = this.response.trim();
-				console.log("Response --"+response)
 				if(Number(response) === 4){
 					$.fn.checkStatus(1,"Tare and Net Weight is reset.");
 				}else if(Number(response) === 3){
@@ -235,6 +236,7 @@
 					$.fn.checkStatus(1,"RST does not exist in Weighment data.");
 				}
 				//location.reload();
+				getWeighBridgeReport();
 			}
 		}
 		
@@ -243,7 +245,11 @@
 				var table = document.getElementById('tableBody');
 				var rowIndex = e.srcElement.parentNode.parentNode.rowIndex - 1;
 				var rst = table.rows[rowIndex].cells[2].innerHTML;
-				resetWeight(rst);
+				$.fn.confirmDelete(1,"Do you want to delete RST no. "+rst+" ?");
+				$("#response-button1").click(function(){
+					resetWeight(rst);
+				})
+			
 			}
 		});
 		
@@ -266,21 +272,24 @@
 		function deleteWtResponse(){
 			if(deleteWtReq.readyState == 4){
 				var response = this.response.trim();
-				if(Number(response) === 1){
+				if(Number(response) > 1){
 					$.fn.checkStatus(1,"Weighment Entry deleted successfully.");
 				}else if(Number(response) === 0){
-					$.fn.checkStatus(1,"Grading is done for this RST, please delete the Grade Entry first.");
+					$.fn.checkStatus(1,"Grading is done for this RST or Tare Wt. is not zero.");
 				}
-				//location.reload();
+				getWeighBridgeReport();
 			}
 		}
 		
 		document.addEventListener('click',function(e){
 			if(e.srcElement.alt === 'delete'){
 				var table = document.getElementById('tableBody');
-				var rowIndex = e.srcElement.parentNode.parentNode.rowIndex - 1;
+				var rowIndex = e.srcElement.parentNode.parentNode.rowIndex-1;
 				var rst = table.rows[rowIndex].cells[2].innerHTML;
-				deleteRst(rst);
+				$.fn.confirmDelete(1,"Do you want to delete RST no. "+rst+" ?");
+				$("#response-button1").click(function(){
+					deleteRst(rst);
+				})
 			}
 		});
 		
@@ -362,6 +371,10 @@
 			        );
 			    }
 			}
+		
+		$("#cancel-button1").click(function(){
+			location.reload();
+		});
 		/**************************************
 		Search in table
 		**************************************/
