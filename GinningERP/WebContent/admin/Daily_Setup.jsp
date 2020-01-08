@@ -365,6 +365,24 @@
 	</div>
 </div>
 	
+		<!-- Delete confirmation  modal pop up -->
+<div class="response-back-display1"></div>
+<div class="response-body1">
+	<div class="response-header1">
+		<h5>Information</h5>
+	</div>
+	<div class="response-content1">
+		<div class="d-flex justify-content-center align-items-center">
+		<h5 id="response-text1" class="ml-4"></h5>
+		</div>
+	</div>
+	<div class="response-footer1">
+		<button type="button" class="btn btn-success btn-response" id="response-button1">Ok</button>
+		<button type="button" class="btn btn-success btn-response ml-2" id="cancel-button1">Cancel</button>
+	</div>
+</div>
+	
+	
 	
 <!--  	-->	
 <script src="../js/3.4.1-jq.js"></script>
@@ -730,7 +748,11 @@
 			var rowIndex = Number(e.srcElement.parentNode.parentNode.rowIndex)-2;
 			var tableBody = document.getElementById("tableBody");
 			var dailySetupId = tableBody.rows[rowIndex].cells[0].children[0].value;
-			deleteDailySetupEntry(dailySetupId);//calling to delete entry method
+			var companyNameIdSetup = tableBody.rows[rowIndex].cells[4].children[0].value;
+			$.fn.confirmDelete(1,"Do you want to delete "+companyNameIdSetup+" ?");
+			$("#response-button1").click(function(){
+				deleteDailySetupEntry(dailySetupId);//calling to delete entry method
+			})
 		}
 	})
 	
@@ -844,6 +866,10 @@
 	session.removeAttribute("id"); 
 	session.removeAttribute("deleteDailySetupId"); 
 	%>
+	$("#cancel-button1").click(function(){
+		location.reload();
+	})
+	
 	</script>
 	
 </body>

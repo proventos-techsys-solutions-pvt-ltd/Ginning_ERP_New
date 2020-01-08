@@ -306,6 +306,24 @@
 	</div>
 </div>
 
+		<!-- Delete confirmation  modal pop up -->
+			<div class="response-back-display1"></div>
+			<div class="response-body1">
+				<div class="response-header1">
+					<h5>Information</h5>
+				</div>
+				<div class="response-content1">
+					<div class="d-flex justify-content-center align-items-center">
+					<h5 id="response-text1" class="ml-4"></h5>
+					</div>
+				</div>
+				<div class="response-footer1">
+					<button type="button" class="btn btn-success btn-response" id="response-button1">Ok</button>
+					<button type="button" class="btn btn-success btn-response ml-2" id="cancel-button1">Cancel</button>
+				</div>
+	</div>
+
+
 <!-- <script src="../js/jquery-3.3.1.slim.min.js" ></script> -->
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
@@ -1289,7 +1307,10 @@ function setCurrentDate(){
 	//Call delete row from payment mode function
 	document.addEventListener('click',function(e){
 		if(e.srcElement.tagName.toString().includes("img") || e.srcElement.id.toString().includes("deleteRow")){
-			deletePaymentMode(e.srcElement.parentNode.parentNode.rowIndex);
+			$.fn.confirmDelete(1,"Do you want to delete current payment mode ?");
+			$("#response-button1").click(function(){
+				deletePaymentMode(e.srcElement.parentNode.parentNode.rowIndex);
+			})
 		}
 	});
 	
