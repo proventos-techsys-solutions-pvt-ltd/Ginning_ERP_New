@@ -89,9 +89,23 @@
 			<input type="text" class="form-control form-control-sm" id="" name="" readonly>
 		</div>
 	</div>
-	
 	</div>
 	</div>
 	</div>
+	 <script src="../js/3.4.1-jq.js"></script>
+	 <script src="../js/Validation.js"></script>
+	<script src="../js/popper.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script>
+	/***********************
+	Side bar 
+************************/
+   $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+
+	</script>
 </body>
 </html>
