@@ -149,6 +149,7 @@ body{
 				<li><b>Post dated Payment Date : </b><span name="pdcDate"></span></li>
 				<li><b>Post dated Cheque No.: </b><span name="pdcNo"></span></li></ul>
 				<li><b>Bonus: </b><span name="bonus"></span></li>
+				<li><b>advance: </b><span name="advance"></span></li>
 		</div>
 		<div class="col-md-6">
 			<label><b>Note :</b></label>
@@ -289,6 +290,7 @@ body{
 				<li><b>Post dated Payment Date : </b><span name="pdcDate"></span></li>
 				<li><b>Post dated Cheque No.: </b><span name="pdcNo"></span></li>
 				<li><b>Bonus: </b><span name="bonus"></span></li>
+				<li><b>advance: </b><span name="advance"></span></li>
 			</ul>
 		</div>
 		<div class="col-md-6">
@@ -469,6 +471,12 @@ body{
 				document.getElementsByName('pdcAmount')[k].parentNode.hidden=true;
 			}else{
 				document.getElementsByName('pdcAmount')[k].innerHTML = obj.pdcAmount;
+			}
+			
+			if(obj.advance === "" || obj.advance === "0" || obj.advance === 0){
+				document.getElementsByName('advance')[k].parentNode.hidden=true;
+			}else{
+				document.getElementsByName('advance')[k].innerHTML = obj.advance;
 			}
 			
 			
