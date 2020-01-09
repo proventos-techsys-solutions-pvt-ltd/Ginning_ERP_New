@@ -382,6 +382,18 @@ public class StockMasterReport {
 			rs.close();
 			stmt.close();
 			con.close();
+			
+			if(obj.length() == 0) {
+				obj.put("rawCotton", 0);
+				obj.put("cottonBales", 0);
+				obj.put("cottonSeed", 0);
+				obj.put("cottonSeedOil", 0);
+				obj.put("cottonCakes", 0);
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+				String properDate = format2.format(new Date());
+				obj.put("stockDate",properDate);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -530,7 +542,9 @@ public class StockMasterReport {
 			String sql = "SELECT\r\n" + 
 					"    SUM(NET_AMOUNT) / ( SUM(TOTAL_QUANTITY) / 100 )\r\n" + 
 					"FROM\r\n" + 
-					"    INVOICE_MAST";
+					"    INVOICE_MAST\r\n" + 
+					"WHERE\r\n" + 
+					"    INV_DATE = TRUNC(SYSDATE)";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			

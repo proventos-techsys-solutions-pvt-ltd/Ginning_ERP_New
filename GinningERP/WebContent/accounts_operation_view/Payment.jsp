@@ -960,7 +960,7 @@
 	      	   alert("Invalid Invoice No.");
 	         }
 	         else{
-	       	  var win = window.open("../report/InvoicePDFPrintOnly.jsp?invoiceId="+invoiceId, '_blank');
+	       	  var win = window.open("../report/InvoiceReport.jsp?invoiceId="+invoiceId, '_blank');
 	        	 win.focus();
 	         }
          }

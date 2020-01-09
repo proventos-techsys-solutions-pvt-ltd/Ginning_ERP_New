@@ -853,6 +853,7 @@ function setCurrentDate(){
 		document.getElementById("customerData").value = data.vendorName + "\n" + data.vendorAddress + "\n" + data.vendorMobile;
 		document.getElementById("customerId").value = data.customerId;
 		document.getElementById("totalQty").value = data.totalQuantity;
+		document.getElementById("authorizer").value = data.authorizer;
 		
 		document.getElementById('unloadingCharges').value = (data.unloadingCharges).toFixed(0);
 		
@@ -885,7 +886,7 @@ function setCurrentDate(){
 
 		itemData = data.invoiceItems;
 		var noOfRows = itemData.length;
-		
+		document.getElementById("lastAuthorizer").value = itemData[0].gradeAuthorizer;
 		for(i=0; i<noOfRows; i++ ){
 		
 			var rowNo = tableBody.children.length;
@@ -1307,10 +1308,10 @@ function setCurrentDate(){
 	//Call delete row from payment mode function
 	document.addEventListener('click',function(e){
 		if(e.srcElement.tagName.toString().includes("img") || e.srcElement.id.toString().includes("deleteRow")){
-			$.fn.confirmDelete(1,"Do you want to delete current payment mode ?");
-			$("#response-button1").click(function(){
+			//$.fn.confirmDelete(1,"Do you want to delete current payment mode ?");
+			//$("#response-button1").click(function(){
 				deletePaymentMode(e.srcElement.parentNode.parentNode.rowIndex);
-			})
+			//})
 		}
 	});
 	

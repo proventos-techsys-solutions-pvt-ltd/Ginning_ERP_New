@@ -557,7 +557,7 @@ public ArrayList<Invoice> getReport() {
 				invoiceItems.put("gradeAuthorizer", rs.getString(38));
 				invoiceItems.put("gradeDescription", rs.getString(39));
 				
-				double amount =  (rs.getLong(34)/100) * rs.getLong(36);
+				double amount =  (invoiceItems.getDouble("quantity")/100) * invoiceItems.getDouble("rate");
 				invoiceItems.put("amount", amount);
 				jsonArr.put(invoiceItems);
 				
