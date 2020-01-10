@@ -163,8 +163,7 @@
 			if(e.srcElement.alt==='print'){
 				var rowNo = e.srcElement.parentElement.parentElement.rowIndex-1;
 				var invoiceId = document.getElementById('tableBody').rows[rowNo].cells[1].innerHTML;
-				
-				window.open('../report/InvoicePDFPrintOnly.jsp?invoiceId='+invoiceId);
+				window.open('../report/InvoiceReport.jsp?invoiceId='+invoiceId);
 			}
 		})
 		

@@ -17,8 +17,7 @@ body{
 	font-size:.65rem;
 }
 	.report{
-		padding-right: 0px;
-		padding-left: 0px;
+	
 	}
 	.remove-row-margin{
 		margin-left: 0px;
@@ -27,7 +26,7 @@ body{
 	}
 
 	.form-border{
-		border:1px sol black;
+		border:1px solid black;
 	}
 
 </style>
@@ -141,15 +140,16 @@ body{
 		<div class="col-md-6">
 			<label><b>Payment Details </b></label>
 			<ul>
-					<li><b>Cash: </b><span name="cashPaid"></span></li>
+				<li><b>Cash: </b><span name="cashPaid"></span></li>
 				<li><b>Cheque: </b><span name="chequePaid"></span>&nbsp;<span name="chequeDate"></span></li>
 				<li><b>RTGS/NEFT : </b><span name="rtgsPaid"></span>&nbsp;<span name="rtgsDate"></span></li>
 				<li><b>Post dated Amount: </b><span name="pdcAmount"></span></li>
 				<li><b>Post dated Payment Mode : </b><span name="pdcMode"></span></li>
 				<li><b>Post dated Payment Date : </b><span name="pdcDate"></span></li>
-				<li><b>Post dated Cheque No.: </b><span name="pdcNo"></span></li></ul>
+				<li><b>Post dated Cheque No.: </b><span name="pdcNo"></span></li>
 				<li><b>Bonus: </b><span name="bonus"></span></li>
 				<li><b>advance: </b><span name="advance"></span></li>
+			</ul>
 		</div>
 		<div class="col-md-6">
 			<label><b>Note :</b></label>
