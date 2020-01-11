@@ -72,6 +72,7 @@
 	  					<div class="text-center">
 	  					<label>Raw Cotton </label>
 	  					</div>
+	  					<div class="d-flex justify-content-between align-items-center" style="font-size:.65rem;">
 	  				<div>
 	  					<span aria-hidden="true">Total: </span>
 	  					<span aria-hidden="true" id="totalRawCotton">&nbsp;&nbsp;</span>
@@ -83,6 +84,7 @@
 	  				<div>
 	  					<span aria-hidden="true">Normal Bought: </span>
 	  					<span aria-hidden="true" id="NormalRawCotton">&nbsp;&nbsp;</span>
+	  				</div>
 	  				</div>
 	  			</div>
 	  	</div>
