@@ -61,6 +61,7 @@
 					item.setWeighmentId(Integer.parseInt((String)obj.get("weighmentId")));
 					item.setGradeId(Integer.parseInt((String)obj.get("gradeId")));
 					item.setRst(Integer.parseInt((String)obj.get("rst")));
+					item.setQuantity(Integer.parseInt((String)obj.get("quantity")));
 					invoiceItemList.add(item);
 				}
 				else if(((String)obj.get("amanat")).equals("true")){
@@ -128,7 +129,7 @@
 				
 				for(int i=0; i<invoiceItemList.size(); i++){
 					invoiceItemList.get(i).setInvoiceId(invoiceId);
-					addItems.addInvoiceItems(invoiceItemList.get(i));
+					addItems.addInvoiceItemsForUpdation(invoiceItemList.get(i));
 				}
 			}
 			
@@ -218,7 +219,7 @@
 			addTr.addTransactions(trCredit);
 			addTr.addTransactions(trDebit);
 			
-			session.setAttribute("invoiceNo", invoice.getInvoiceNo());
+			session.setAttribute("invoiceId", invoice.getInvoiceNo());
 		    response.sendRedirect("../admin/Invoice.jsp");
 		    
   	  }else {

@@ -1108,6 +1108,7 @@ function setCurrentDate(){
 						item['rst'] = document.getElementById('tableRst'+(i+1)).value;
 						item['amanat'] = document.getElementById('amanatCheck'+(i+1)).value;
 						item['rate'] = document.getElementById('rate'+(i+1)).value;
+						item['quantity'] = document.getElementById('quantity'+(i+1)).value;
 						itemList.push(item);
 						totalQuantity = totalQuantity+ Number(document.getElementById('quantity'+(i+1)).value);
 				}
@@ -1310,10 +1311,10 @@ function setCurrentDate(){
 	//Call delete row from payment mode function
 	document.addEventListener('click',function(e){
 		if(e.srcElement.id.toString().includes("deleteRow")){
-			$.fn.confirmDelete(1,"Do you want to delete current payment mode ?");
-			$("#response-button1").click(function(){
+			//$.fn.confirmDelete(1,"Do you want to delete current payment mode ?");
+			//$("#response-button1").click(function(){
 				deletePaymentMode(e.target.parentNode.parentNode.rowIndex);
-			})
+			//})
 		}
 	});
 	
@@ -1436,12 +1437,23 @@ function getVocuherNo(){
 	Response window code
 	**************************************/
 	var sessionId = {
-			"getSessionId":<%=session.getAttribute("invoiceId") %>,
+			"getSessionId":"<%=session.getAttribute("invoiceId") %>",
 	}
-	console.log("objet session id"+sessionId.getSessionId);
-	$(document).ready(function(){
-	$.fn.checkStatus(sessionId.getSessionId,"Invoice has been successfully saved!")
-	})
+	console.log("object session id"+sessionId.getSessionId);
+	if(sessionId.getSessionId.includes("CHEQUES")){
+		$(document).ready(function(){
+			$.fn.checkStatus(1,"Cannot update, Delete following payments - "+sessionId.getSessionId)
+			})
+	}else if(sessionId.getSessionId.includes("/")){
+		$(document).ready(function(){
+			$.fn.checkStatus(1,"Invoice no." +sessionId.getSessionId+ "has been successfully updated!")
+			})
+		}
+	else{
+		$(document).ready(function(){
+		$.fn.checkStatus(Number(sessionId.getSessionId),"Invoice has been successfully saved!")
+		})
+	}
 	
 
 	$(document).ready(function(){
