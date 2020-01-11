@@ -540,11 +540,25 @@ public class StockMasterReport {
 			
 			
 			String sql = "SELECT\r\n" + 
-					"    SUM(NET_AMOUNT) / ( SUM(TOTAL_QUANTITY) / 100 )\r\n" + 
+					"    SUM(GD.RATE *(GD.QUANTITY / 100)) / ( SUM(GD.QUANTITY / 100) )\r\n" + 
 					"FROM\r\n" + 
-					"    INVOICE_MAST\r\n" + 
+					"    GRADE_DETAILS GD,\r\n" + 
+					"    (\r\n" + 
+					"        SELECT\r\n" + 
+					"            GRADE_ID\r\n" + 
+					"        FROM\r\n" + 
+					"            INVOICE_ITEMS\r\n" + 
+					"        UNION\r\n" + 
+					"        SELECT\r\n" + 
+					"            GRADE_ID\r\n" + 
+					"        FROM\r\n" + 
+					"            AMANAT_MAST\r\n" + 
+					"    ) II,\r\n" + 
+					"    WEIGH_MAST WM\r\n" + 
 					"WHERE\r\n" + 
-					"    INV_DATE = TRUNC(SYSDATE)";
+					"    GD.ID = II.GRADE_ID\r\n" + 
+					"    AND WM.ID = GD.WEIGHMENT_ID\r\n" + 
+					"    AND WM.WEIGHMENT_DATE = TRUNC(SYSDATE)";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -573,12 +587,28 @@ public class StockMasterReport {
 			
 			
 			String sql = "SELECT\r\n" + 
-					"    SUM(NET_AMOUNT) / ( SUM(TOTAL_QUANTITY) / 100 )\r\n" + 
+					"    SUM(GD.RATE *(GD.QUANTITY / 100)) / ( SUM(GD.QUANTITY / 100) )\r\n" + 
 					"FROM\r\n" + 
-					"    INVOICE_MAST\r\n" + 
+					"    GRADE_DETAILS GD,\r\n" + 
+					"    (\r\n" + 
+					"        SELECT\r\n" + 
+					"            GRADE_ID\r\n" + 
+					"        FROM\r\n" + 
+					"            INVOICE_ITEMS\r\n" + 
+					"        UNION\r\n" + 
+					"        SELECT\r\n" + 
+					"            GRADE_ID\r\n" + 
+					"        FROM\r\n" + 
+					"            AMANAT_MAST\r\n" + 
+					"    ) II,\r\n" + 
+					"    WEIGH_MAST WM,\r\n" + 
+					"    DAILY_SETUP DS\r\n" + 
 					"WHERE\r\n" + 
-					"    INV_DATE BETWEEN ? AND ?\r\n" + 
-					"    AND COMPANY_ID = ?";
+					"    GD.ID = II.GRADE_ID\r\n" + 
+					"    AND WM.ID = GD.WEIGHMENT_ID\r\n" + 
+					"    AND WM.WEIGHMENT_DATE BETWEEN ? AND ?\r\n" + 
+					"    AND DS.ID = WM.DS_ID\r\n" + 
+					"    AND DS.COMPANY_ID = ?";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			java.sql.Date startDateSql = java.sql.Date.valueOf(startDate);
@@ -611,11 +641,25 @@ public class StockMasterReport {
 			
 			
 			String sql = "SELECT\r\n" + 
-					"    SUM(NET_AMOUNT) / ( SUM(TOTAL_QUANTITY) / 100 )\r\n" + 
+					"    SUM(GD.RATE *(GD.QUANTITY / 100)) / ( SUM(GD.QUANTITY / 100) )\r\n" + 
 					"FROM\r\n" + 
-					"    INVOICE_MAST\r\n" + 
+					"    GRADE_DETAILS GD,\r\n" + 
+					"    (\r\n" + 
+					"        SELECT\r\n" + 
+					"            GRADE_ID\r\n" + 
+					"        FROM\r\n" + 
+					"            INVOICE_ITEMS\r\n" + 
+					"        UNION\r\n" + 
+					"        SELECT\r\n" + 
+					"            GRADE_ID\r\n" + 
+					"        FROM\r\n" + 
+					"            AMANAT_MAST\r\n" + 
+					"    ) II,\r\n" + 
+					"    WEIGH_MAST WM\r\n" + 
 					"WHERE\r\n" + 
-					"    INV_DATE BETWEEN ? AND ?\r\n";
+					"    GD.ID = II.GRADE_ID\r\n" + 
+					"    AND WM.ID = GD.WEIGHMENT_ID\r\n" + 
+					"    AND WM.WEIGHMENT_DATE BETWEEN ? AND ?";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			java.sql.Date startDateSql = java.sql.Date.valueOf(startDate);

@@ -1,4 +1,5 @@
 
+<%@page import="com.prov.report.AmanatReport"%>
 <%@page import="com.prov.report.PurchaseReport"%>
 <%@ page import="org.json.JSONObject"%>
 <%@ page import="org.json.JSONArray"%>
@@ -18,6 +19,10 @@
 		StockMasterReport report = new StockMasterReport();
 		
 		if(companyId >0){
+			
+			AmanatReport amanatReport = new AmanatReport();
+			
+			double amanatQty = amanatReport.totalAmanatQty(companyId);
 			
 			StockMast todayOpeningStock = report.getTodaysOpeningStock(companyId);
 			
@@ -45,6 +50,7 @@
 			jsonObj.put("openingStock", openingStock);
 			jsonObj.put("stockAddition", stockAddition);
 			jsonObj.put("closingStock", closingStock);
+			jsonObj.put("amanatQty", amanatQty);
 			
 			out.print(jsonObj);
 			out.flush();
@@ -53,6 +59,9 @@
 	
 			JSONObject stockOpening = report.getTodaysOpeningStockForAll();
 			JSONObject stockCurrent = report.getTodaysStockForAll();
+				
+			AmanatReport amanatReport = new AmanatReport();
+			double amanatQty = amanatReport.totalAmanatQty();
 			
 			JSONObject stockAddition = new JSONObject();
 			if(stockCurrent.length() > 0){
@@ -76,6 +85,7 @@
 			jsonObj.put("openingStock", stockOpening);
 			jsonObj.put("stockAddition", stockAddition);
 			jsonObj.put("closingStock", stockCurrent);
+			jsonObj.put("amanatQty", amanatQty);
 			
 			out.print(jsonObj);
 			out.flush();
@@ -86,6 +96,9 @@
 		StockMasterReport report = new StockMasterReport();
 		
 		if(companyId >0){
+			
+			AmanatReport amanatReport = new AmanatReport();
+			double amanatQty = amanatReport.totalAmanatQty(companyId,startDate,endDate);
 			
 			StockMast todayOpeningStock = report.getStockForStartDate(companyId, startDate);
 			
@@ -113,6 +126,7 @@
 			jsonObj.put("openingStock", openingStock);
 			jsonObj.put("stockAddition", stockAddition);
 			jsonObj.put("closingStock", closingStock);
+			jsonObj.put("amanatQty", amanatQty);
 			
 			PurchaseReport pr = new PurchaseReport();
 			JSONObject json = pr.getTotalPurchaseBetweenDate(startDate,endDate, companyId);
@@ -136,7 +150,8 @@
 			JSONObject stockOpening = report.getStockForAllByStartDate(startDate);
 			JSONObject stockCurrent = report.getStockForAllByEndDate(endDate);
 			
-			
+			AmanatReport amanatReport = new AmanatReport();
+			double amanatQty = amanatReport.totalAmanatQty(startDate,endDate);
 			JSONObject stockAddition = new JSONObject();
 			if(stockCurrent.length() > 0){
 				double rawCotton = stockCurrent.getDouble("rawCotton") - stockOpening.getDouble("rawCotton");
@@ -157,6 +172,7 @@
 			jsonObj.put("openingStock", stockOpening);
 			jsonObj.put("stockAddition", stockAddition);
 			jsonObj.put("closingStock", stockCurrent);
+			jsonObj.put("amanatQty", amanatQty);
 			
 			PurchaseReport pr = new PurchaseReport();
 			JSONObject json = pr.getTotalPurchaseBetweenDate(startDate,endDate);

@@ -142,6 +142,7 @@ body{
 			<ul>
 				<li><b>Cash: </b><span name="cashPaid"></span></li>
 				<li><b>Cheque: </b><span name="chequePaid"></span>&nbsp;<span name="chequeDate"></span></li>
+				<li><b>Cheque No.: </b><span name="chequeNo"></span></li>
 				<li><b>RTGS/NEFT : </b><span name="rtgsPaid"></span>&nbsp;<span name="rtgsDate"></span></li>
 				<li><b>Post dated Amount: </b><span name="pdcAmount"></span></li>
 				<li><b>Post dated Payment Mode : </b><span name="pdcMode"></span></li>
@@ -284,6 +285,7 @@ body{
 			<ul>
 				<li><b>Cash: </b><span name="cashPaid">.</span></li>
 				<li><b>Cheque: </b><span name="chequePaid"></span>&nbsp;<span name="chequeDate"></span></li>
+				<li><b>Cheque No.: </b><span name="chequeNo"></span></li>
 				<li><b>RTGS/NEFT : </b><span name="rtgsPaid"></span>&nbsp;<span name="rtgsDate"></span></li>
 				<li><b>Post dated Amount: </b><span name="pdcAmount"></li>
 				<li><b>Post dated Payment Mode : </b><span name="pdcMode"></span></li>
@@ -388,9 +390,13 @@ body{
 			document.getElementsByName('stateName')[k].innerHTML = obj.companyState;
 			document.getElementsByName('emailId')[k].innerHTML = obj.companyEmail;
 			document.getElementsByName('totalAmount')[k].innerHTML = obj.totalAmount;
-			document.getElementsByName('weighingCharges')[k].innerHTML = obj.weighRate;
-			document.getElementsByName('unloadingCharges')[k].innerHTML = obj.unloadingCharges;
-			document.getElementsByName('netWeight')[k].innerHTML = obj.totalQuantity;
+			if(Number(obj.unloadingCharges) === 0){
+				document.getElementsByName('weighingCharges')[k].innerHTML = "Rs. "+0;
+			}else{
+				document.getElementsByName('weighingCharges')[k].innerHTML = "Rs. "+obj.weighRate;
+			}
+			document.getElementsByName('unloadingCharges')[k].innerHTML = "Rs. "+obj.unloadingCharges;
+			document.getElementsByName('netWeight')[k].innerHTML = obj.totalQuantity+" Kgs.";
 			document.getElementsByName('netAmount')[k].innerHTML = obj.netAmount;
 			document.getElementsByName('netAmountInWords')[k].innerHTML = obj.totalInWords;
 			document.getElementsByName('noteId')[k].innerHTML = obj.note;
@@ -405,14 +411,16 @@ body{
 			if(obj.cashAmount === "" || obj.cashAmount === "0" || obj.cashAmount === 0){
 				document.getElementsByName('cashPaid')[k].parentNode.hidden=true;
 			}else{
-				document.getElementsByName('cashPaid')[k].innerHTML = obj.cashAmount;
+				document.getElementsByName('cashPaid')[k].innerHTML = "Rs. "+obj.cashAmount;
 			}
 			
 			
 			if(obj.chequeAmount === "" || obj.chequeAmount === "0" || obj.chequeAmount === 0){
 				document.getElementsByName('chequePaid')[k].parentNode.hidden=true;
+				document.getElementsByName('chequeNo')[k].parentNode.hidden=true;
 			}else{
-				document.getElementsByName('chequePaid')[k].innerHTML = obj.chequeAmount;
+				document.getElementsByName('chequePaid')[k].innerHTML = "Rs. "+obj.chequeAmount;
+				document.getElementsByName('chequeNo')[k].innerHTML= obj.chequeNo;
 			}
 			
 			
@@ -427,7 +435,7 @@ body{
 			if(obj.rtgsAmount === "" || obj.rtgsAmount === "0" || obj.rtgsAmount === 0){
 				document.getElementsByName('rtgsPaid')[k].parentNode.hidden=true;
 			}else{
-				document.getElementsByName('rtgsPaid')[k].innerHTML = obj.rtgsAmount;
+				document.getElementsByName('rtgsPaid')[k].innerHTML = "Rs. "+obj.rtgsAmount;
 			}
 			
 			
@@ -438,7 +446,7 @@ body{
 			}
 			
 			
-			if(obj.pdcMode === "" || obj.pdcMode === "0" || obj.pdcMode === 0){
+			if(obj.pdcMode === "NA" || obj.pdcMode === "NA" || obj.pdcMode === "0" || obj.pdcMode === 0){
 				document.getElementsByName('pdcMode')[k].parentNode.hidden=true;
 			}else{
 				document.getElementsByName('pdcMode')[k].innerHTML = obj.pdcMode;
@@ -446,7 +454,7 @@ body{
 			
 			
 			
-			if(obj.pdcDate === "" || obj.pdcDate === "0" || obj.pdcDate === 0){
+			if(obj.pdcDate === "NA" || obj.pdcDate === "" || obj.pdcDate === "0" || obj.pdcDate === 0){
 				document.getElementsByName('pdcDate')[k].parentNode.hidden=true;
 			}else{
 				document.getElementsByName('pdcDate')[k].innerHTML = obj.pdcDate;
@@ -463,20 +471,20 @@ body{
 			if(obj.bonusAmount === "" || obj.bonusAmount === "0" || obj.bonusAmount === 0){
 				document.getElementsByName('bonus')[k].parentNode.hidden=true;
 			}else{
-				document.getElementsByName('bonus')[k].innerHTML = obj.bonusAmount;
+				document.getElementsByName('bonus')[k].innerHTML = "Rs. "+obj.bonusAmount;
 			}
 			
 			
 			if(obj.pdcAmount === "" || obj.pdcAmount === "0" || obj.pdcAmount === 0){
 				document.getElementsByName('pdcAmount')[k].parentNode.hidden=true;
 			}else{
-				document.getElementsByName('pdcAmount')[k].innerHTML = obj.pdcAmount;
+				document.getElementsByName('pdcAmount')[k].innerHTML = "Rs. "+obj.pdcAmount;
 			}
 			
 			if(obj.advance === "" || obj.advance === "0" || obj.advance === 0){
 				document.getElementsByName('advance')[k].parentNode.hidden=true;
 			}else{
-				document.getElementsByName('advance')[k].innerHTML = obj.advance;
+				document.getElementsByName('advance')[k].innerHTML = "Rs. "+obj.advance;
 			}
 			
 			

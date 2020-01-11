@@ -26,7 +26,7 @@
 					<h4 class="lbl-rm-all">RTGS Report</h4>
 				</div>
 				<div class="d-flex justify-content-start align-content-center row-background">
-					<button type="button" class="btn btn-success btn-sm">Print Report</button>
+					<button type="button" class="btn btn-success btn-sm" id="exportToExcel">Print Report</button>
 				</div>
 			</div>
 			</div>
@@ -39,7 +39,7 @@
 		</div>
 		<div class="row row-background">
 			<div class="col-md-12">
-				<table class="table table-bordered">
+				<table class="table table-bordered" id="table">
 					<thead>
 						<tr>
 							<th>Vendor Name</th>
@@ -103,7 +103,28 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script src="../js/Validation.js"></script>
+	<script src="../js/export/export2excel.js"></script>
 	<script>
+	
+	function getCurrentDate(){
+		var today = new Date();
+		var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+		var time = today.getHours()+ "_" + today.getMinutes()+ "_" + today.getSeconds();
+		var dateTime = date+'_'+time;
+		return dateTime;
+	}
+
+function Export() {
+     $("#table").export2excel({
+     	filename: "RTGS_Report_"+getCurrentDate()+".xls"
+     });
+ }
+ 
+ 
+ 
+ document.getElementById("exportToExcel").addEventListener("click",function(){
+		Export();
+		});
 	
 	 //*********************Search 
     $(document).ready(function(){

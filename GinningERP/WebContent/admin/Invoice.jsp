@@ -880,6 +880,8 @@ function setCurrentDate(){
 		if(data.bonusAmount != 0){
 			document.getElementById('bonusPerQtl').value = ((Number(data.bonusAmount) / Number(data.totalQuantity)) * 100).toFixed(0);
 			document.getElementById('bonusCheck').checked = true;
+			document.getElementById('totalBonus').value = data.bonusAmount;
+			
 		}else{
 			document.getElementById('bonusCheck').checked = false;
 		}
@@ -1307,11 +1309,11 @@ function setCurrentDate(){
 	
 	//Call delete row from payment mode function
 	document.addEventListener('click',function(e){
-		if(e.srcElement.tagName.toString().includes("img") || e.srcElement.id.toString().includes("deleteRow")){
-			//$.fn.confirmDelete(1,"Do you want to delete current payment mode ?");
-			//$("#response-button1").click(function(){
-				deletePaymentMode(e.srcElement.parentNode.parentNode.rowIndex);
-			//})
+		if(e.srcElement.id.toString().includes("deleteRow")){
+			$.fn.confirmDelete(1,"Do you want to delete current payment mode ?");
+			$("#response-button1").click(function(){
+				deletePaymentMode(e.target.parentNode.parentNode.rowIndex);
+			})
 		}
 	});
 	

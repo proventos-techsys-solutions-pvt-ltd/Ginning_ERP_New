@@ -484,4 +484,160 @@ public long getAmanatInvoicedQty(int amanatId) {
 		
 	}
 
+	public double totalAmanatQty() {
+		ResultSet rs = null;
+		Connection con = null;
+		double amanatQty = 0;
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String invSql = "SELECT\r\n" + 
+					"    NVL(SUM(GD.QUANTITY),0)\r\n" + 
+					"FROM\r\n" + 
+					"    GRADE_DETAILS   GD,\r\n" + 
+					"    AMANAT_MAST     AM\r\n" + 
+					"WHERE\r\n" + 
+					"    AM.GRADE_ID = GD.ID";
+			
+			PreparedStatement stmt = con.prepareStatement(invSql);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				amanatQty = rs.getDouble(1); 
+			}
+			
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return amanatQty;
+	}
+	
+	public double totalAmanatQty(int companyId) {
+		ResultSet rs = null;
+		Connection con = null;
+		double amanatQty = 0;
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String invSql = "SELECT\r\n" + 
+					"    NVL(SUM(GD.QUANTITY),0)\r\n" + 
+					"FROM\r\n" + 
+					"    GRADE_DETAILS   GD,\r\n" + 
+					"    AMANAT_MAST     AM,\r\n" + 
+					"    WEIGH_MAST      WM,\r\n" + 
+					"    DAILY_SETUP     DS\r\n" + 
+					"WHERE\r\n" + 
+					"    AM.GRADE_ID = GD.ID\r\n" + 
+					"    AND GD.WEIGHMENT_ID = WM.ID\r\n" + 
+					"    AND DS.ID = WM.DS_ID\r\n" + 
+					"    AND DS.COMPANY_ID = ?";
+			
+			PreparedStatement stmt = con.prepareStatement(invSql);
+			
+			rs = stmt.executeQuery();
+			
+			stmt.setInt(1, companyId);
+			
+			while (rs.next()) {
+				amanatQty = rs.getDouble(1); 
+			}
+			
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return amanatQty;
+	}
+	
+	
+	public double totalAmanatQty(int companyId, String startDate,String endDate) {
+		ResultSet rs = null;
+		Connection con = null;
+		double amanatQty = 0;
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String invSql = "SELECT\r\n" + 
+					"    NVL(SUM(GD.QUANTITY),0)\r\n" + 
+					"FROM\r\n" + 
+					"    GRADE_DETAILS   GD,\r\n" + 
+					"    AMANAT_MAST     AM,\r\n" + 
+					"    WEIGH_MAST      WM,\r\n" + 
+					"    DAILY_SETUP     DS\r\n" + 
+					"WHERE\r\n" + 
+					"    AM.GRADE_ID = GD.ID\r\n" + 
+					"    AND GD.WEIGHMENT_ID = WM.ID\r\n" + 
+					"    AND wm.weighment_date BETWEEN ? AND ?\r\n" + 
+					"    AND DS.ID = WM.DS_ID\r\n" + 
+					"    AND DS.COMPANY_ID = ?";
+			
+			PreparedStatement stmt = con.prepareStatement(invSql);
+			java.sql.Date startDateSql = java.sql.Date.valueOf(startDate);
+			java.sql.Date endDateSql = java.sql.Date.valueOf(endDate);
+			stmt.setDate(1, startDateSql);
+			stmt.setDate(2, endDateSql);
+			stmt.setInt(3, companyId);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				amanatQty = rs.getDouble(1); 
+			}
+			
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return amanatQty;
+	}
+	
+	public double totalAmanatQty(String startDate,String endDate) {
+		ResultSet rs = null;
+		Connection con = null;
+		double amanatQty = 0;
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String invSql = "SELECT\r\n" + 
+					"   NVL(SUM(GD.QUANTITY),0)\r\n" + 
+					"FROM\r\n" + 
+					"    GRADE_DETAILS   GD,\r\n" + 
+					"    AMANAT_MAST     AM,\r\n" + 
+					"    WEIGH_MAST      WM\r\n" + 
+					"WHERE\r\n" + 
+					"    AM.GRADE_ID = GD.ID\r\n" + 
+					"    AND GD.WEIGHMENT_ID = WM.ID\r\n" + 
+					"    AND wm.weighment_date BETWEEN ? AND ?";
+			
+			PreparedStatement stmt = con.prepareStatement(invSql);
+			java.sql.Date startDateSql = java.sql.Date.valueOf(startDate);
+			java.sql.Date endDateSql = java.sql.Date.valueOf(endDate);
+			stmt.setDate(1, startDateSql);
+			stmt.setDate(2, endDateSql);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				amanatQty = rs.getDouble(1); 
+			}
+			
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return amanatQty;
+	}
+
 }

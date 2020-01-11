@@ -413,12 +413,11 @@ public JSONObject getTotalPurchaseBetweenDate(String startDate, String endDate, 
 				"    AND COMPANY_ID = ?";
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
-		
 		Date startDateSql = Date.valueOf(startDate);
 		Date endDateSql = Date.valueOf(endDate);
 		stmt.setDate(1, startDateSql);
 		stmt.setDate(2, endDateSql);
-		stmt.setInt(1, companyId);
+		stmt.setInt(3, companyId);
 		
 		rs = stmt.executeQuery();
 		

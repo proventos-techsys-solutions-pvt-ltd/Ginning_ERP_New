@@ -68,12 +68,21 @@
 	  			</div>
 	  	</div>
 	  	<div class="col-md-3">
-	  			<div class="d-flex justify-content-between align-items-center inner3 border">
+	  		<div class="inner3 border">
+	  					<div class="text-center">
+	  					<label>Raw Cotton </label>
+	  					</div>
 	  				<div>
-	  					Raw Cotton	
+	  					<span aria-hidden="true">Total: </span>
+	  					<span aria-hidden="true" id="totalRawCotton">&nbsp;&nbsp;</span>
 	  				</div>
 	  				<div>
-	  					<span aria-hidden="true" id="totalRawCotton">&nbsp;&nbsp;</span>
+	  					<span aria-hidden="true">Amanat: </span>
+	  					<span aria-hidden="true" id="amanatRawCotton">&nbsp;&nbsp;</span>
+	  				</div>
+	  				<div>
+	  					<span aria-hidden="true">Normal Bought: </span>
+	  					<span aria-hidden="true" id="NormalRawCotton">&nbsp;&nbsp;</span>
 	  				</div>
 	  			</div>
 	  	</div>
@@ -378,6 +387,8 @@
 			 var obj = JSON.parse(data1);
 			 console.log(obj);
 			 document.getElementById("totalRawCotton").innerHTML = obj.closingStock.rawCotton+" Kgs.";
+			 document.getElementById("amanatRawCotton").innerHTML = obj.amanatQty+" Kgs.";
+			 document.getElementById("NormalRawCotton").innerHTML = (Number(obj.closingStock.rawCotton) - Number(obj.amanatQty))+" Kgs.";
 			 var canvas = document.getElementById("myChart");
 			 var ctx = canvas.getContext('2d');
 

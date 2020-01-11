@@ -50,7 +50,6 @@
 			
 			<div class="col-md-auto">
 				<img src="../property/img/setting.png" alt="option" class="img-set" id="options">
-				<img src="../property/img/exportpdf.png" alt="option" class="img-set" id="exportToPdf">
 				<img src="../property/img/exportexcel.png" alt="option" class="img-set" id="exportToExcel">
 			</div>
 			</div>
@@ -74,6 +73,7 @@
 		 					<th>WB Operator</th>
 		 					<th>Delete</th>
 		 					<th>Reset Weight</th>
+		 					<th>View Receipt</th>
 	 					</tr>
 	 				</thead>
 	 				<tbody id="tableBody">
@@ -183,6 +183,7 @@
 				var cell11 = row.insertCell(10);
 				var cell12 = row.insertCell(11);
 				var cell13 = row.insertCell(12);
+				var cell14 = row.insertCell(13);
 				
 				cell1.innerHTML = data[i].wmId;
 				cell2.innerHTML = (i+1);
@@ -197,10 +198,12 @@
 				cell11.innerHTML = data[i].wbOperator;
 				cell12.innerHTML = '<img src="../property/img/delete.png" alt="delete">';
 				cell13.innerHTML = '<img src="../property/img/delete.png" alt="resetWeight">';
+				cell14.innerHTML = '<img src="../property/img/printer.png" alt="print">';
 				
 				cell1.hidden = true;
 				cell12.className="text-center";
 				cell13.className="text-center";
+				cell14.className="text-center";
 				
 			}
 		}
@@ -250,6 +253,15 @@
 					resetWeight(rst);
 				})
 			
+			}
+		});
+		
+		document.addEventListener('click', function(e){
+			if(e.srcElement.alt === 'print'){
+				var table = document.getElementById('tableBody');
+				var rowIndex = e.srcElement.parentNode.parentNode.rowIndex - 1;
+				var weighmentId = table.rows[rowIndex].cells[0].innerHTML;
+				window.open('../report/RSTPrintOnly.jsp?weighmentId='+weighmentId, '_blank');
 			}
 		});
 		

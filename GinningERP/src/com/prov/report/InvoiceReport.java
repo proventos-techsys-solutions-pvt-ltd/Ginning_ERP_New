@@ -485,7 +485,7 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("authorizer", rs.getString(9));
 			jsonObj.put("note", rs.getString(10));
 			qty = rs.getString(11);
-			jsonObj.put("totalQuantity", qty+" Kgs");
+			jsonObj.put("totalQuantity", qty);
 			jsonObj.put("cashAmount", rs.getLong(12));
 			jsonObj.put("chequeAmount", rs.getLong(13));
 			jsonObj.put("rtgsAmount", rs.getLong(14));
