@@ -250,7 +250,12 @@ public class RtgsReport {
 				obj.put("bankName",rs.getString(6));
 				obj.put("ifscCode",rs.getString(7));
 				obj.put("rtgsAmount",rs.getLong(8));
-				obj.put("rtgsDate",rs.getString(9));
+				
+				String date = rs.getString(9);
+				java.util.Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
+				SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+				String properDate = format2.format(date1);
+				obj.put("rtgsDate",properDate);
 				obj.put("customerName",rs.getString(10));
 				obj.put("invoiceNo",rs.getString(11));
 				obj.put("rtgsVoucherNo",rs.getString(12));

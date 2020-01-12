@@ -19,7 +19,15 @@ public class PurchaseReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT SUM(CASH_AMOUNT) FROM INVOICE_MAST WHERE COMPANY_ID = ?";
+			String sql = "SELECT\r\n" + 
+					"    NVL(SUM(PD.AMOUNT),0)\r\n" + 
+					"FROM\r\n" + 
+					"    PAYMENT_DETAILS   PD,\r\n" + 
+					"    INVOICE_MAST      IM\r\n" + 
+					"WHERE\r\n" + 
+					"    PD.INVOICE_ID = IM.ID\r\n" + 
+					"    AND MODE_ID = 1\r\n" + 
+					"    AND IM.COMPANY_ID = ?";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setInt(1, companyId);
@@ -50,7 +58,15 @@ public class PurchaseReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT SUM(CHEQUE_AMOUNT) FROM INVOICE_MAST WHERE COMPANY_ID = ?";
+			String sql = "SELECT\r\n" + 
+					"    NVL(SUM(PD.AMOUNT),0)\r\n" + 
+					"FROM\r\n" + 
+					"    PAYMENT_DETAILS   PD,\r\n" + 
+					"    INVOICE_MAST      IM\r\n" + 
+					"WHERE\r\n" + 
+					"    PD.INVOICE_ID = IM.ID\r\n" + 
+					"    AND MODE_ID = 2\r\n" + 
+					"    AND IM.COMPANY_ID = ?";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setInt(1, companyId);
@@ -81,7 +97,15 @@ public class PurchaseReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT SUM(RTGS_AMOUNT) FROM INVOICE_MAST WHERE COMPANY_ID = ?";
+			String sql = "SELECT\r\n" + 
+					"    NVL(SUM(PD.AMOUNT),0)\r\n" + 
+					"FROM\r\n" + 
+					"    PAYMENT_DETAILS   PD,\r\n" + 
+					"    INVOICE_MAST      IM\r\n" + 
+					"WHERE\r\n" + 
+					"    PD.INVOICE_ID = IM.ID\r\n" + 
+					"    AND MODE_ID = 3\r\n" + 
+					"    AND IM.COMPANY_ID = ?";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setInt(1, companyId);
@@ -113,7 +137,14 @@ public class PurchaseReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT SUM(PDC_AMOUNT) FROM INVOICE_MAST WHERE COMPANY_ID = ?";
+			String sql = "SELECT\r\n" + 
+					"    NVL(SUM(PDC.AMOUNT),0)\r\n" + 
+					"FROM\r\n" + 
+					"    PDC_MAST   PDC,\r\n" + 
+					"    INVOICE_MAST      IM\r\n" + 
+					"WHERE\r\n" + 
+					"    PDC.INVOICE_ID = IM.ID\r\n" + 
+					"    AND IM.COMPANY_ID = ?";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setInt(1, companyId);
@@ -142,7 +173,14 @@ public class PurchaseReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT (SUM(CASH_AMOUNT)+SUM(CHEQUE_AMOUNT)+SUM(RTGS_AMOUNT)+SUM(PDC_AMOUNT)) FROM INVOICE_MAST WHERE COMPANY_ID = ?";
+			String sql = "SELECT\r\n" + 
+					"    NVL(SUM(PD.AMOUNT),0)\r\n" + 
+					"FROM\r\n" + 
+					"    PAYMENT_DETAILS   PD,\r\n" + 
+					"    INVOICE_MAST      IM\r\n" + 
+					"WHERE\r\n" + 
+					"    PD.INVOICE_ID = IM.ID\r\n" + 
+					"    AND IM.COMPANY_ID = ?";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setInt(1, companyId);
@@ -176,7 +214,14 @@ public class PurchaseReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT SUM(CASH_AMOUNT) FROM INVOICE_MAST";
+			String sql = "SELECT\r\n" + 
+					"    NVL(SUM(PD.AMOUNT),0)\r\n" + 
+					"FROM\r\n" + 
+					"    PAYMENT_DETAILS   PD,\r\n" + 
+					"    INVOICE_MAST      IM\r\n" + 
+					"WHERE\r\n" + 
+					"    PD.INVOICE_ID = IM.ID\r\n" + 
+					"    AND MODE_ID = 1";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -206,7 +251,14 @@ public class PurchaseReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT SUM(CHEQUE_AMOUNT) FROM INVOICE_MAST";
+			String sql = "SELECT\r\n" + 
+					"    NVL(SUM(PD.AMOUNT),0)\r\n" + 
+					"FROM\r\n" + 
+					"    PAYMENT_DETAILS   PD,\r\n" + 
+					"    INVOICE_MAST      IM\r\n" + 
+					"WHERE\r\n" + 
+					"    PD.INVOICE_ID = IM.ID\r\n" + 
+					"    AND MODE_ID = 2";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -236,7 +288,14 @@ public class PurchaseReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT SUM(RTGS_AMOUNT) FROM INVOICE_MAST";
+			String sql = "SELECT\r\n" + 
+					"    NVL(SUM(PD.AMOUNT),0)\r\n" + 
+					"FROM\r\n" + 
+					"    PAYMENT_DETAILS   PD,\r\n" + 
+					"    INVOICE_MAST      IM\r\n" + 
+					"WHERE\r\n" + 
+					"    PD.INVOICE_ID = IM.ID\r\n" + 
+					"    AND MODE_ID = 3";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -267,7 +326,13 @@ public class PurchaseReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT SUM(PDC_AMOUNT) FROM INVOICE_MAST";
+			String sql = "SELECT\r\n" + 
+					"    NVL(SUM(PD.AMOUNT),0)\r\n" + 
+					"FROM\r\n" + 
+					"    PDC_MAST   PD,\r\n" + 
+					"    INVOICE_MAST      IM\r\n" + 
+					"WHERE\r\n" + 
+					"    PD.INVOICE_ID = IM.ID";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -295,7 +360,13 @@ public class PurchaseReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT (SUM(CASH_AMOUNT)+SUM(CHEQUE_AMOUNT)+SUM(RTGS_AMOUNT)+SUM(PDC_AMOUNT)) FROM INVOICE_MAST";
+			String sql = "SELECT\r\n" + 
+					"    NVL(SUM(PD.AMOUNT),0)\r\n" + 
+					"FROM\r\n" + 
+					"    PAYMENT_DETAILS   PD,\r\n" + 
+					"    INVOICE_MAST      IM\r\n" + 
+					"WHERE\r\n" + 
+					"    PD.INVOICE_ID = IM.ID";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -326,21 +397,44 @@ public class PurchaseReport {
 			con = OracleConnection.getConnection();
 			
 			String sql = "SELECT\r\n" + 
-						"    NVL(SUM(RTGS_AMOUNT), 0),\r\n" + 
-						"    NVL(SUM(CHEQUE_AMOUNT), 0),\r\n" + 
-						"    NVL(SUM(CASH_AMOUNT), 0)\r\n" + 
-						"FROM\r\n" + 
-						"    INVOICE_MAST\r\n" + 
-						"WHERE\r\n" + 
-						"    INV_DATE = TRUNC(SYSDATE)";
+					"    SUM(\r\n" + 
+					"        CASE\r\n" + 
+					"            WHEN PD.MODE_ID = 1 THEN\r\n" + 
+					"                PD.AMOUNT\r\n" + 
+					"            ELSE\r\n" + 
+					"                0\r\n" + 
+					"        END\r\n" + 
+					"    ) AS CASH_AMOUNT,\r\n" + 
+					"    SUM(\r\n" + 
+					"        CASE\r\n" + 
+					"            WHEN PD.MODE_ID = 2 THEN\r\n" + 
+					"                PD.AMOUNT\r\n" + 
+					"            ELSE\r\n" + 
+					"                0\r\n" + 
+					"        END\r\n" + 
+					"    ) AS CHEQUE_AMOUNT,\r\n" + 
+					"    SUM(\r\n" + 
+					"        CASE\r\n" + 
+					"            WHEN PD.MODE_ID = 3 THEN\r\n" + 
+					"                PD.AMOUNT\r\n" + 
+					"            ELSE\r\n" + 
+					"                0\r\n" + 
+					"        END\r\n" + 
+					"    ) AS RTGS_AMOUNT\r\n" + 
+					"FROM\r\n" + 
+					"    PAYMENT_DETAILS   PD,\r\n" + 
+					"    INVOICE_MAST      IM\r\n" + 
+					"WHERE\r\n" + 
+					"    PD.INVOICE_ID = IM.ID\r\n" + 
+					"    AND IM.INV_DATE = TRUNC(SYSDATE)";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
-				json.put("rtgsAmount", rs.getDouble(1));
+				json.put("rtgsAmount", rs.getDouble(3));
 				json.put("chequeAmount", rs.getDouble(2));
-				json.put("cashAmount", rs.getDouble(3));
+				json.put("cashAmount", rs.getDouble(1));
 			}
 			rs.close();
 			stmt.close();
@@ -361,13 +455,36 @@ public JSONObject getTotalPurchaseBetweenDate(String startDate, String endDate) 
 			con = OracleConnection.getConnection();
 			
 			String sql = "SELECT\r\n" + 
-					"    NVL(SUM(RTGS_AMOUNT), 0),\r\n" + 
-					"    NVL(SUM(CHEQUE_AMOUNT), 0),\r\n" + 
-					"    NVL(SUM(CASH_AMOUNT), 0)\r\n" + 
+					"    SUM(\r\n" + 
+					"        CASE\r\n" + 
+					"            WHEN PD.MODE_ID = 1 THEN\r\n" + 
+					"                PD.AMOUNT\r\n" + 
+					"            ELSE\r\n" + 
+					"                0\r\n" + 
+					"        END\r\n" + 
+					"    ) AS CASH_AMOUNT,\r\n" + 
+					"    SUM(\r\n" + 
+					"        CASE\r\n" + 
+					"            WHEN PD.MODE_ID = 2 THEN\r\n" + 
+					"                PD.AMOUNT\r\n" + 
+					"            ELSE\r\n" + 
+					"                0\r\n" + 
+					"        END\r\n" + 
+					"    ) AS CHEQUE_AMOUNT,\r\n" + 
+					"    SUM(\r\n" + 
+					"        CASE\r\n" + 
+					"            WHEN PD.MODE_ID = 3 THEN\r\n" + 
+					"                PD.AMOUNT\r\n" + 
+					"            ELSE\r\n" + 
+					"                0\r\n" + 
+					"        END\r\n" + 
+					"    ) AS RTGS_AMOUNT\r\n" + 
 					"FROM\r\n" + 
-					"    INVOICE_MAST\r\n" + 
+					"    PAYMENT_DETAILS   PD,\r\n" + 
+					"    INVOICE_MAST      IM\r\n" + 
 					"WHERE\r\n" + 
-					"    INV_DATE BETWEEN ? AND ?";
+					"    PD.INVOICE_ID = IM.ID\r\n" + 
+					"    AND IM.INV_DATE BETWEEN ? AND ?";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -379,9 +496,9 @@ public JSONObject getTotalPurchaseBetweenDate(String startDate, String endDate) 
 			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
-				json.put("rtgsAmount", rs.getDouble(1));
+				json.put("rtgsAmount", rs.getDouble(3));
 				json.put("chequeAmount", rs.getDouble(2));
-				json.put("cashAmount", rs.getDouble(3));
+				json.put("cashAmount", rs.getDouble(1));
 			}
 			rs.close();
 			stmt.close();
@@ -403,13 +520,36 @@ public JSONObject getTotalPurchaseBetweenDate(String startDate, String endDate, 
 		con = OracleConnection.getConnection();
 		
 		String sql = "SELECT\r\n" + 
-				"    NVL(SUM(RTGS_AMOUNT), 0),\r\n" + 
-				"    NVL(SUM(CHEQUE_AMOUNT), 0),\r\n" + 
-				"    NVL(SUM(CASH_AMOUNT), 0)\r\n" + 
+				"    SUM(\r\n" + 
+				"        CASE\r\n" + 
+				"            WHEN PD.MODE_ID = 1 THEN\r\n" + 
+				"                PD.AMOUNT\r\n" + 
+				"            ELSE\r\n" + 
+				"                0\r\n" + 
+				"        END\r\n" + 
+				"    ) AS CASH_AMOUNT,\r\n" + 
+				"    SUM(\r\n" + 
+				"        CASE\r\n" + 
+				"            WHEN PD.MODE_ID = 2 THEN\r\n" + 
+				"                PD.AMOUNT\r\n" + 
+				"            ELSE\r\n" + 
+				"                0\r\n" + 
+				"        END\r\n" + 
+				"    ) AS CHEQUE_AMOUNT,\r\n" + 
+				"    SUM(\r\n" + 
+				"        CASE\r\n" + 
+				"            WHEN PD.MODE_ID = 3 THEN\r\n" + 
+				"                PD.AMOUNT\r\n" + 
+				"            ELSE\r\n" + 
+				"                0\r\n" + 
+				"        END\r\n" + 
+				"    ) AS RTGS_AMOUNT\r\n" + 
 				"FROM\r\n" + 
-				"    INVOICE_MAST\r\n" + 
+				"    PAYMENT_DETAILS   PD,\r\n" + 
+				"    INVOICE_MAST      IM\r\n" + 
 				"WHERE\r\n" + 
-				"    INV_DATE BETWEEN ? AND ?\r\n" + 
+				"    PD.INVOICE_ID = IM.ID\r\n" + 
+				"    AND IM.INV_DATE BETWEEN ? AND ?\r\n" + 
 				"    AND COMPANY_ID = ?";
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
@@ -422,9 +562,9 @@ public JSONObject getTotalPurchaseBetweenDate(String startDate, String endDate, 
 		rs = stmt.executeQuery();
 		
 		while (rs.next()) {
-			json.put("rtgsAmount", rs.getDouble(1));
+			json.put("rtgsAmount", rs.getDouble(3));
 			json.put("chequeAmount", rs.getDouble(2));
-			json.put("cashAmount", rs.getDouble(3));
+			json.put("cashAmount", rs.getDouble(1));
 		}
 		rs.close();
 		stmt.close();

@@ -8,7 +8,7 @@
 			<div class="col-md-3">
 					<label class="lbl-rm-l">Company</label>
 					<select class="form-control form-control-sm" name="" id="companyId">
-						<option selected>Select</option>
+						<option selected disabled>Select</option>
 						<option value='0'>All</option>
 						<c:Company />
 					</select>
@@ -20,11 +20,6 @@
 				<div class="d-flex justify-content-start align-items-center">
 				<input type="text" class="form-control form-control-sm inpt-rm-t" name="" id="searchInput" placeholder="">
 				<button type="button" class="btn btn-success btn-sm lbl-rm-l">Search</button>
-				<label class="ml-2">From</label>
-				<input type="text" class="form-control form-control-sm inpt-rm-t ml-2" name="" id="from-date" placeholder="">
-				<label class="ml-2">To</label>
-				<input type="text" class="form-control form-control-sm inpt-rm-t ml-2" name="" id="to-date" placeholder="">
-				<button type="button" class="btn btn-sm btn-success" id="">Filter</button>
 				</div>
 			</div>
 		

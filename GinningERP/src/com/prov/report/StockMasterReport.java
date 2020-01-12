@@ -426,7 +426,7 @@ public class StockMasterReport {
 					"        FROM\r\n" + 
 					"            STOCK_MAST\r\n" + 
 					"        WHERE\r\n" + 
-					"            STOCK_DATE <= ?\r\n" + 
+					"            STOCK_DATE = ?\r\n" + 
 					"    )\r\n" + 
 					"GROUP BY\r\n" + 
 					"    STOCK_DATE";
@@ -454,6 +454,20 @@ public class StockMasterReport {
 				String properDate = format2.format(date1);
 				obj.put("stockDate",properDate);
 			}
+			
+			if(obj.length() == 0) {
+				obj.put("rawCotton", 0);
+				obj.put("cottonBales", 0);
+				obj.put("cottonSeed", 0);
+				obj.put("cottonSeedOil", 0);
+				obj.put("cottonCakes", 0);
+				SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+				Date dateObj = format1.parse(date);
+				String properDate = format2.format(dateObj);
+				obj.put("stockDate",properDate);
+			}
+			
 			rs.close();
 			stmt.close();
 			con.close();
@@ -519,6 +533,20 @@ public class StockMasterReport {
 				String properDate = format2.format(date1);
 				obj.put("stockDate",properDate);
 			}
+			
+			if(obj.length() == 0) {
+				obj.put("rawCotton", 0);
+				obj.put("cottonBales", 0);
+				obj.put("cottonSeed", 0);
+				obj.put("cottonSeedOil", 0);
+				obj.put("cottonCakes", 0);
+				SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+				Date dateObj = format1.parse(date);
+				String properDate = format2.format(dateObj);
+				obj.put("stockDate",properDate);
+			}
+			
 			rs.close();
 			stmt.close();
 			con.close();

@@ -140,7 +140,7 @@ public JSONArray getCashPayments() {
 			obj.put("invoiceNo", rs.getString(2));
 			
 			Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(3));
-			SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
 			String properDate = format2.format(date1);
 			
 			obj.put("invoiceDate", properDate);

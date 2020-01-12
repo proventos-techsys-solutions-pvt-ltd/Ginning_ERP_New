@@ -191,7 +191,6 @@
 					console.log(element);
 					
 					var jsonResponse = JSON.parse(response);
-					console.log(jsonResponse);
 					
 					var membership;
 					var blacklisted;
@@ -208,6 +207,7 @@
 						}else{
 							membership = 'NO';
 						}
+						console.log("url--- "+jsonResponse[i].photo);
 						
 						element.insertAdjacentHTML('beforeend','<tr>'+
 								'<td hidden>'+jsonResponse[i].id+'</td>'+
@@ -216,7 +216,7 @@
 								'<td>'+jsonResponse[i].mobile+'</td>'+
 								'<td>'+blacklisted+'</td>'+
 								'<td>'+membership+'</td>'+
-								'<td><img src="/file/'+jsonResponse[i].photo+'" height=50 width=50></td>'+
+								'<td><img src="'+jsonResponse[i].photo+'" height=50 width=50></td>'+
 								'<td class="text-center" id="edit"><img src="../property/img/edit.png" alt="edit"></td>'+
 								'<td class="text-center"><img src="../property/img/delete.png" alt="delete"></td>'+
 							'</tr>')
@@ -233,7 +233,6 @@
 				console.log(row);
 			}else if(e.srcElement.alt==='edit'){
 				row = e.srcElement.parentNode.parentNode;
-				console.log(row);
 			}
 			
 			document.getElementById('customerId').value = row.cells[0].innerHTML;

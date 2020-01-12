@@ -193,7 +193,7 @@
 			                <tr class="google-visualization-orgchart-noderow-medium">
 			                    <td colspan="16" class="google-visualization-orgchart-linenode">&nbsp;</td>
 			                    <td colspan="6" class="google-visualization-orgchart-node google-visualization-orgchart-node-medium" title="Amount">Total Purchase Made
-			                        <div style="color:red; font-style:italic"><span id="totalPurchase">Amount</span></div>
+			                        <div style="color:red; font-style:italic"><span id="totalPurchaseTable">Amount</span></div>
 			                    </td>
 			                    <td colspan="24" class="google-visualization-orgchart-linenode">&nbsp;</td>
 			                </tr>
@@ -365,7 +365,7 @@
 					console.log(data);
 					if(data.hasOwnProperty("purchaseReport")){
 						var data1 = data.purchaseReport;
-						$('#totalPurchase').val(data1.totalPurchase) ;
+						document.getElementById('totalPurchaseTable').innerHTML = data1.totalPurchase ;
 						document.getElementById('cashPayment').innerHTML = data1.cashAmount ;
 						document.getElementById('chequePayment').innerHTML = data1.chequeAmount ;
 						document.getElementById('rtgsPayment').innerHTML = data1.rtgsAmount ;
@@ -390,7 +390,12 @@
 			 console.log(obj);
 			 document.getElementById("totalRawCotton").innerHTML = obj.closingStock.rawCotton+" Kgs.";
 			 document.getElementById("amanatRawCotton").innerHTML = obj.amanatQty+" Kgs.";
-			 document.getElementById("NormalRawCotton").innerHTML = (Number(obj.closingStock.rawCotton) - Number(obj.amanatQty))+" Kgs.";
+			 if((Number(obj.closingStock.rawCotton) - Number(obj.amanatQty)) < 0){
+				 document.getElementById("NormalRawCotton").innerHTML = 0+" Kgs.";
+			 }else{
+				 document.getElementById("NormalRawCotton").innerHTML = (Number(obj.closingStock.rawCotton) - Number(obj.amanatQty))+" Kgs.";
+			 }
+			
 			 var canvas = document.getElementById("myChart");
 			 var ctx = canvas.getContext('2d');
 
@@ -591,7 +596,7 @@
 				var data = JSON.parse(response);
 				console.log(response);
 				
-				$('#totalPurchase').val(data.totalPurchase) ;
+				document.getElementById('totalPurchaseTable').innerHTML = data.totalPurchase ;
 				document.getElementById('cashPayment').innerHTML = data.cashAmount ;
 				document.getElementById('chequePayment').innerHTML = data.chequeAmount ;
 				document.getElementById('rtgsPayment').innerHTML = data.rtgsAmount ;
