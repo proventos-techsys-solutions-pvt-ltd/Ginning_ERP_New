@@ -32,9 +32,14 @@
 			</div>
 			</div>
 		<div class="row row-background border-bottom">
-			<div class="col-md-4">
+			<div class="col-md-4 d-flex justify-content-start align-items-center">
 				<label>Search</label>
-				<input type="text" class="form-control" name="" id="searchInput">
+				<input type="text" class="form-control form-control-sm ml-2" name="" id="searchInput">
+				<label class="ml-2">From</label>
+				<input type="text" class="form-control form-control-sm inpt-rm-t ml-2" name="" id="from-date" placeholder="">
+				<label class="ml-2">To</label>
+				<input type="text" class="form-control form-control-sm inpt-rm-t ml-2" name="" id="to-date" placeholder="">
+ 				<button type="button" class="btn btn-sm btn-success" id="">Filter</button>
  			</div>
 		</div>
 		<div class="row row-background">

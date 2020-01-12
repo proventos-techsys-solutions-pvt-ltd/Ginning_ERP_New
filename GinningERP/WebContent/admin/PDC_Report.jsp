@@ -59,8 +59,6 @@
 			</div>
 			
 			<div class="col-md-auto">
-				<img src="../property/img/setting.png" alt="option" class="img-set" id="options">
-				<img src="../property/img/exportpdf.png" alt="option" class="img-set" id="exportToPdf">
 				<img src="../property/img/exportexcel.png" alt="option" class="img-set" id="exportToExcel">
 			</div>
 			</div>
