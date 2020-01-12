@@ -216,7 +216,7 @@
 								'<td>'+jsonResponse[i].mobile+'</td>'+
 								'<td>'+blacklisted+'</td>'+
 								'<td>'+membership+'</td>'+
-								'<td><img src="'+jsonResponse[i].photo+'" height=50 width=50></td>'+
+								'<td><img src="${pageContext.request.contextPath}/ImageServlet?imageName='+jsonResponse[i].photo+'" height=50 width=50></td>'+
 								'<td class="text-center" id="edit"><img src="../property/img/edit.png" alt="edit"></td>'+
 								'<td class="text-center"><img src="../property/img/delete.png" alt="delete"></td>'+
 							'</tr>')
