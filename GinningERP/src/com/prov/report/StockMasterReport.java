@@ -182,7 +182,7 @@ public class StockMasterReport {
 					"        FROM\r\n" + 
 					"            STOCK_MAST\r\n" + 
 					"        WHERE\r\n" + 
-					"            STOCK_DATE <= ?\r\n" + 
+					"            STOCK_DATE = ?\r\n" + 
 					"    )\r\n" + 
 					"    AND COMPANY_ID = ?";
 			
