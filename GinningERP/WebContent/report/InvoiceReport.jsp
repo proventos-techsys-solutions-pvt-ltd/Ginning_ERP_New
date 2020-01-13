@@ -511,7 +511,7 @@ body{
 				cell4.innerHTML = invItems[i].gradeDescription;
 				cell5.innerHTML = invItems[i].quantity;
 				cell6.innerHTML = invItems[i].rate;
-				cell7.innerHTML = invItems[i].amount;
+				cell7.innerHTML = invItems[i].amount.toFixed(2);
 				cell8.innerHTML = invItems[i].moisture;
 				
 			}

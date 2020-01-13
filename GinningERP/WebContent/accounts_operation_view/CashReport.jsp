@@ -46,7 +46,6 @@
 							<th>Amount</th>
 							<th>Voucher No.</th>
 							<th hidden>Invoice ID</th>
-							<th class="text-center" width="5%">Delete</th>
 						<tr>
 					</thead>
 					<tbody id="tableBody">
@@ -109,11 +108,9 @@
 			var cell4 = row.insertCell(3);
 			var cell5 = row.insertCell(4);
 			var cell6 = row.insertCell(5);
-			var cell7 = row.insertCell(6);
 			
 			//cell6.hidden = true;
 			cell6.hidden = true;
-			cell7.align = "center";
 			
 			cell1.innerHTML = data[i].vendorName;
 			cell2.innerHTML = data[i].invoiceNo;
@@ -121,7 +118,6 @@
 			cell4.innerHTML = data[i].amount;
 			cell5.innerHTML = data[i].cashVoucherNo;
 			cell6.innerHTML = data[i].invoiceId;
-			cell7.innerHTML = '<img src="../property/img/delete.png" alt="deleteRow" >';
 		}
 	}
 	

@@ -30,7 +30,6 @@
 							<th>Mobile No</th>
 							<th>Status</th>
 							<th class="text-center">Print</th>
-							<th class="text-center">Delete</th>
 						</tr>
 					</thead>
 					<tbody id="tableBody">
@@ -136,7 +135,6 @@
 								'<td>'+jsonResponse[i].customerMobile+'</td>'+
 								'<td>'+status+'</td>'+
 								'<td id="print" class="text-center"><img src="../property/img/printer.png" alt="print" ></td>'+
-								'<td class="text-center"><img src="../property/img/delete.png" alt="deleteRow" ></td>'+
 							'</tr>');
 					}
 				}
