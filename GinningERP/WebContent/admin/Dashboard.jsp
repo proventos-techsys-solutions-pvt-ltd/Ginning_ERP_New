@@ -385,59 +385,112 @@
 
 		 
 		 function setData(data1){
-			 console.log(data1);
+			 
 			 var obj = JSON.parse(data1);
 			 console.log(obj);
-			 document.getElementById("totalRawCotton").innerHTML = obj.closingStock.rawCotton+" Kgs.";
-			 document.getElementById("amanatRawCotton").innerHTML = obj.amanatQty+" Kgs.";
-			 if((Number(obj.closingStock.rawCotton) - Number(obj.amanatQty)) < 0){
-				 document.getElementById("NormalRawCotton").innerHTML = 0+" Kgs.";
-			 }else{
-				 document.getElementById("NormalRawCotton").innerHTML = (Number(obj.closingStock.rawCotton) - Number(obj.amanatQty))+" Kgs.";
-			 }
+			 if(obj.filtered==="yes"){
+				 document.getElementById("totalRawCotton").innerHTML = obj.stockAddition.rawCotton+" Kgs.";
+				 document.getElementById("amanatRawCotton").innerHTML = obj.amanatQty+" Kgs.";
+				 if((Number(obj.stockAddition.rawCotton) - Number(obj.amanatQty)) < 0){
+					 document.getElementById("NormalRawCotton").innerHTML = 0+" Kgs.";
+				 }else{
+					 document.getElementById("NormalRawCotton").innerHTML = (Number(obj.stockAddition.rawCotton) - Number(obj.amanatQty))+" Kgs.";
+				 }
+				
+				 var canvas = document.getElementById("myChart");
+				 var ctx = canvas.getContext('2d');
+	
+				 // Global Options:
+				  Chart.defaults.global.defaultFontColor = 'black';
+				  Chart.defaults.global.defaultFontSize = 16;
+	
+				 var data2 = {
+				     labels: ["Cotton Bales", "Cotton Seeds", "Oil", "Cotton Cake"],
+				       datasets: [
+				         {
+				             fill: true,
+				             backgroundColor: [
+				                 'black',
+				                 'white',
+				                 'green',
+				                 'orange'],
+				             data: [obj.stockAddition.cottonBales,obj.stockAddition.cottonSeed,obj.stockAddition.cottonSeedOil,obj.stockAddition.cottonCakes],
+				 // Notice the borderColor 
+				             borderColor: ['black', 'black','black','black'],
+				             borderWidth: [2,2,2,2]
+				         }
+				     ]
+				 };
 			
-			 var canvas = document.getElementById("myChart");
-			 var ctx = canvas.getContext('2d');
-
-			 // Global Options:
-			  Chart.defaults.global.defaultFontColor = 'black';
-			  Chart.defaults.global.defaultFontSize = 16;
-
-			 var data2 = {
-			     labels: ["Cotton Bales", "Cotton Seeds", "Oil", "Cotton Cake"],
-			       datasets: [
-			         {
-			             fill: true,
-			             backgroundColor: [
-			                 'black',
-			                 'white',
-			                 'green',
-			                 'orange'],
-			             data: [obj.closingStock.cottonBales,obj.closingStock.cottonSeed,obj.closingStock.cottonSeedOil,obj.closingStock.cottonCakes],
-			 // Notice the borderColor 
-			             borderColor: ['black', 'black','black','black'],
-			             borderWidth: [2,2,2,2]
-			         }
-			     ]
-			 };
-		
-			 // Notice the rotation from the documentation.
-			 var options = {
-			         title: {
-			                   display: true,
-			                   text: 'Stock Details',
-			                   position: 'bottom'
-			               },
-			         rotation: -0.7 * Math.PI
-			 };
-
-
-			 // Chart declaration:
-			myBarChart = new Chart(ctx, {
-			     type: 'doughnut',
-			     data: data2,
-			     options: options
-			 });
+				 // Notice the rotation from the documentation.
+				 var options = {
+				         title: {
+				                   display: true,
+				                   text: 'Stock Details',
+				                   position: 'bottom'
+				               },
+				         rotation: -0.7 * Math.PI
+				 };
+	
+	
+				 // Chart declaration:
+				myBarChart = new Chart(ctx, {
+				     type: 'doughnut',
+				     data: data2,
+				     options: options
+				 });
+			 }else if(obj.filtered==="no"){
+				 document.getElementById("totalRawCotton").innerHTML = obj.closingStock.rawCotton+" Kgs.";
+				 document.getElementById("amanatRawCotton").innerHTML = obj.amanatQty+" Kgs.";
+				 if((Number(obj.closingStock.rawCotton) - Number(obj.amanatQty)) < 0){
+					 document.getElementById("NormalRawCotton").innerHTML = 0+" Kgs.";
+				 }else{
+					 document.getElementById("NormalRawCotton").innerHTML = (Number(obj.closingStock.rawCotton) - Number(obj.amanatQty))+" Kgs.";
+				 }
+				
+				 var canvas = document.getElementById("myChart");
+				 var ctx = canvas.getContext('2d');
+	
+				 // Global Options:
+				  Chart.defaults.global.defaultFontColor = 'black';
+				  Chart.defaults.global.defaultFontSize = 16;
+	
+				 var data2 = {
+				     labels: ["Cotton Bales", "Cotton Seeds", "Oil", "Cotton Cake"],
+				       datasets: [
+				         {
+				             fill: true,
+				             backgroundColor: [
+				                 'black',
+				                 'white',
+				                 'green',
+				                 'orange'],
+				             data: [obj.closingStock.cottonBales,obj.closingStock.cottonSeed,obj.closingStock.cottonSeedOil,obj.closingStock.cottonCakes],
+				 // Notice the borderColor 
+				             borderColor: ['black', 'black','black','black'],
+				             borderWidth: [2,2,2,2]
+				         }
+				     ]
+				 };
+			
+				 // Notice the rotation from the documentation.
+				 var options = {
+				         title: {
+				                   display: true,
+				                   text: 'Stock Details',
+				                   position: 'bottom'
+				               },
+				         rotation: -0.7 * Math.PI
+				 };
+	
+	
+				 // Chart declaration:
+				myBarChart = new Chart(ctx, {
+				     type: 'doughnut',
+				     data: data2,
+				     options: options
+				 });
+			 }
 		 }
 		
 		

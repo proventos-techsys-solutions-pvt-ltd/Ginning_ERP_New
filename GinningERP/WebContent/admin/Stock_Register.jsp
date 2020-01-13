@@ -174,7 +174,7 @@
 		})
 		
 		function getStockReport(companyId){
-			var url="../processing/getTodaysStockReport.jsp?companyId="+companyId;
+			var url="../processing/getStockReportForLedger.jsp?companyId="+companyId;
 			if(window.XMLHttpRequest){  
 				fetchStock=new XMLHttpRequest();  
 			}  
@@ -192,6 +192,7 @@
 
 		 function fetchData(){
 			 if(fetchStock.readyState == 4){
+				 console.log(this.response.trim());
 				 setData(this.response.trim());
 				 //console.log(this.response.trim());
 			 }

@@ -51,6 +51,7 @@
 			jsonObj.put("stockAddition", stockAddition);
 			jsonObj.put("closingStock", closingStock);
 			jsonObj.put("amanatQty", amanatQty);
+			jsonObj.put("filtered", "no");
 			
 			out.print(jsonObj);
 			out.flush();
@@ -86,6 +87,7 @@
 			jsonObj.put("stockAddition", stockAddition);
 			jsonObj.put("closingStock", stockCurrent);
 			jsonObj.put("amanatQty", amanatQty);
+			jsonObj.put("filtered", "no");
 			
 			out.print(jsonObj);
 			out.flush();
@@ -142,6 +144,7 @@
 			jsonObj.put("purchaseReport", json);
 			StockMasterReport stockMastReport = new StockMasterReport();
 			jsonObj.put("averageRate", stockMastReport.getTodaysAverageRate(startDate, endDate, companyId));
+			jsonObj.put("filtered", "yes");
 			
 			out.print(jsonObj);
 			out.flush();
@@ -173,6 +176,7 @@
 			jsonObj.put("stockAddition", stockAddition);
 			jsonObj.put("closingStock", stockCurrent);
 			jsonObj.put("amanatQty", amanatQty);
+			jsonObj.put("filtered", "yes");
 			
 			PurchaseReport pr = new PurchaseReport();
 			JSONObject json = pr.getTotalPurchaseBetweenDate(startDate,endDate);
