@@ -110,11 +110,20 @@
 			
 			todayStockAddition.setAvgRate(todayClosingStock.getAvgRate());
 			todayStockAddition.setCompanyId(todayClosingStock.getCompanyId());
-			todayStockAddition.setRawCotton(Math.ceil(todayClosingStock.getRawCotton() - todayOpeningStock.getRawCotton()));
-			todayStockAddition.setCottonBales(Math.ceil(todayClosingStock.getCottonBales() - todayOpeningStock.getCottonBales()));
-			todayStockAddition.setCottonSeed(Math.ceil(todayClosingStock.getCottonSeed() - todayOpeningStock.getCottonSeed()));
-			todayStockAddition.setCottonSeedOil(Math.ceil(todayClosingStock.getCottonSeedOil() - todayOpeningStock.getCottonSeedOil()));
-			todayStockAddition.setCottonCakes(Math.ceil(todayClosingStock.getCottonCakes() - todayOpeningStock.getCottonCakes()));
+			if(Math.ceil(todayClosingStock.getRawCotton() - todayOpeningStock.getRawCotton()) < 0){
+				todayStockAddition.setRawCotton(0);
+				todayStockAddition.setCottonBales(0);
+				todayStockAddition.setCottonSeed(0);
+				todayStockAddition.setCottonSeedOil(0);
+				todayStockAddition.setCottonCakes(0);
+			}else{
+				todayStockAddition.setRawCotton(Math.ceil(todayClosingStock.getRawCotton() - todayOpeningStock.getRawCotton()));
+				todayStockAddition.setCottonBales(Math.ceil(todayClosingStock.getCottonBales() - todayOpeningStock.getCottonBales()));
+				todayStockAddition.setCottonSeed(Math.ceil(todayClosingStock.getCottonSeed() - todayOpeningStock.getCottonSeed()));
+				todayStockAddition.setCottonSeedOil(Math.ceil(todayClosingStock.getCottonSeedOil() - todayOpeningStock.getCottonSeedOil()));
+				todayStockAddition.setCottonCakes(Math.ceil(todayClosingStock.getCottonCakes() - todayOpeningStock.getCottonCakes()));
+			}
+			
 			todayStockAddition.setStockDate(todayClosingStock.getStockDate());
 			
 			JSONObject stockAddition = new JSONObject(todayStockAddition);
@@ -156,20 +165,28 @@
 			AmanatReport amanatReport = new AmanatReport();
 			double amanatQty = amanatReport.totalAmanatQty(startDate,endDate);
 			JSONObject stockAddition = new JSONObject();
-			if(stockCurrent.length() > 0){
-				double rawCotton = stockCurrent.getDouble("rawCotton") - stockOpening.getDouble("rawCotton");
-				double cottonBales = stockCurrent.getDouble("cottonBales") - stockOpening.getDouble("cottonBales");
-				double cotonSeed = stockCurrent.getDouble("cottonSeed") - stockOpening.getDouble("cottonSeed");
-				double cottonSeedOil = stockCurrent.getDouble("cottonSeedOil") - stockOpening.getDouble("cottonSeedOil");
-				double cottonCake = stockCurrent.getDouble("cottonCakes") - stockOpening.getDouble("cottonCakes");
-				
+			
+			double rawCotton = stockCurrent.getDouble("rawCotton") - stockOpening.getDouble("rawCotton");
+			double cottonBales = stockCurrent.getDouble("cottonBales") - stockOpening.getDouble("cottonBales");
+			double cotonSeed = stockCurrent.getDouble("cottonSeed") - stockOpening.getDouble("cottonSeed");
+			double cottonSeedOil = stockCurrent.getDouble("cottonSeedOil") - stockOpening.getDouble("cottonSeedOil");
+			double cottonCake = stockCurrent.getDouble("cottonCakes") - stockOpening.getDouble("cottonCakes");
+			
+			if(rawCotton< 0){
+				stockAddition.put("rawCotton", 0);
+				stockAddition.put("cottonBales", 0);
+				stockAddition.put("cottonSeed", 0);
+				stockAddition.put("cottonSeedOil", 0);
+				stockAddition.put("cottonCakes", 0);
+			}else{
 				stockAddition.put("rawCotton", rawCotton);
 				stockAddition.put("cottonBales", cottonBales);
 				stockAddition.put("cottonSeed", cotonSeed);
 				stockAddition.put("cottonSeedOil", cottonSeedOil);
 				stockAddition.put("cottonCakes", cottonCake);
-				stockAddition.put("stockDate", stockCurrent.get("stockDate"));
 			}
+			
+			stockAddition.put("stockDate", stockCurrent.get("stockDate"));
 			JSONObject jsonObj = new JSONObject();
 			
 			jsonObj.put("openingStock", stockOpening);

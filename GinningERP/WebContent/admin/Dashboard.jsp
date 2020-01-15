@@ -334,28 +334,40 @@
 <script>
 	 var myBarChart;
 		document.getElementById("filter").addEventListener('click', function(e){
-			myBarChart.destroy();
 			var startDate = document.getElementById("startDate").value;
 	        var endDate = document.getElementById("endDate").value;
 	        var companyId = document.getElementById("companyId").value;
-			getStockReport(companyId, startDate, endDate);
+	        var CurrentDate = new Date();
+			startDateProp = new Date(startDate);
+			endDateProp = new Date(endDate);
+			if(startDateProp > CurrentDate){
+			    alert('Start date is greater than the current date.');
+			}else if(endDateProp > CurrentDate){
+			    alert('End date is greater than the current date.');
+			}else if(endDateProp < startDateProp){
+			    alert('Start date is greater than End date.');
+			}else{
+		        myBarChart.destroy();
+				getStockReport(companyId, startDate, endDate);
+			}
 		});
 		
 		function getStockReport(companyId, startDate, endDate){
 			var url="../processing/getTodaysStockReport.jsp?companyId="+companyId+"&startDate="+startDate+"&endDate="+endDate;
-			if(window.XMLHttpRequest){  
-				fetchStock=new XMLHttpRequest();  
-			}  
-			else if(window.ActiveXObject){  
-				fetchStock=new ActiveXObject("Microsoft.XMLHTTP");  
-			}  
-		  
-			try{  
-				fetchStock.onreadystatechange=fetchData;  
-				console.log("AJAX Req sent");
-				fetchStock.open("GET",url,true);  
-				fetchStock.send();  
-			}catch(e){alert("Unable to connect to server");}
+				if(window.XMLHttpRequest){  
+					fetchStock=new XMLHttpRequest();  
+				}  
+				else if(window.ActiveXObject){  
+					fetchStock=new ActiveXObject("Microsoft.XMLHTTP");  
+				}  
+			  
+				try{  
+					fetchStock.onreadystatechange=fetchData;  
+					console.log("AJAX Req sent");
+					fetchStock.open("GET",url,true);  
+					fetchStock.send();  
+				}catch(e){alert("Unable to connect to server");}
+			
 		}
 
 		 function fetchData(){

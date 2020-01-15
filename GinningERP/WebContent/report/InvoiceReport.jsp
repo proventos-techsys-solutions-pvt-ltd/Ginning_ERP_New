@@ -46,6 +46,14 @@ body{
 			<label><b>Vendor: </b></label>
 			<span name='vendorName'></span>
 			<div>
+			<label><b>Vendor Mobile: </b></label>
+			<span name='vendorMobile'></span>
+			</div>
+			<div>
+			<label><b>Vendor Address: </b></label>
+			<span name='vendorAddress'></span>
+			</div>
+			<div>
 				<label><b>Company: </b></label>
 				<span name='companyName'></span>
 			</div>
@@ -188,6 +196,14 @@ body{
 		<div class="col-md-6">
 			<label><b>Vendor: </b></label>
 			<span name='vendorName'></span>
+			<div>
+			<label><b>Vendor Mobile: </b></label>
+			<span name='vendorMobile'></span>
+			</div>
+			<div>
+			<label><b>Vendor Address: </b></label>
+			<span name='vendorAddress'></span>
+			</div>
 			<div>
 				<label><b>Company: </b></label>
 				<span name='companyName'></span>
@@ -390,6 +406,8 @@ body{
 			document.getElementsByName('stateName')[k].innerHTML = obj.companyState;
 			document.getElementsByName('emailId')[k].innerHTML = obj.companyEmail;
 			document.getElementsByName('totalAmount')[k].innerHTML = obj.totalAmount;
+			document.getElementsByName('vendorMobile')[k].innerHTML = obj.vendorMobile;
+			document.getElementsByName('vendorAddress')[k].innerHTML = obj.vendorAddress;
 			if(Number(obj.unloadingCharges) === 0){
 				document.getElementsByName('weighingCharges')[k].innerHTML = "Rs. "+0;
 			}else{
