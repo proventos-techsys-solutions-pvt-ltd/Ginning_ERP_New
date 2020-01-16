@@ -1,3 +1,81 @@
+/*$.fn.validateRstForm = function(){
+	var status = false;
+	if($("input[type=checkbox]").is(":checked")){
+		if($.fn.validateData($("#rst").val().trim(),/^[0-9]+$/)){
+			if($.fn.validateData($("#date").val().trim(),/^[0-9]{4}[-][0-9]{2}[-][0-9]{2}$/)){
+				if($.fn.validateData($("#vehicleNo").val().trim(), /^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/)){
+					if($("#vehicleType").val().trim()==="Select"){
+						if($.fn.validateData($("#customer").val().trim(),/^[A-Z_ ]*$/,)){
+							if($.fn.validateData($("#mobile").val().trim(),/^[0-9]{10}$/)){
+								if($("#address").val().trim()===""){
+									if($.fn.validateData($("#material").val().trim()==="")){
+										if($("#gross").val().trim()<=0){
+											status = true;
+										}else{
+											$.fn.checkStatus(1,"Gross weight should be greater than zero");
+										}
+									}else{
+										$.fn.checkStatus(1,"Material cannot be blank");
+									}
+								}else{
+									$.fn.checkStatus(1,"Address cannot be blank");
+								}
+							}else{
+								$.fn.checkStatus(1,"Invalid mobile number");
+							}
+						}else{
+							$.fn.checkStatus(1,"Invalid Customer name");
+						}
+					}else{
+						$.fn.checkStatus(1,"Select correct vehicle type");
+					}
+				}else{
+					$.fn.checkStatus(1,"Invalid Vehicle Number");
+				}
+			}else{
+				$.fn.checkStatus(1,"Invalid Date");
+			}
+		}else{
+			$.fn.checkStatus(1,"Invalid RST No");
+		}
+	}else{
+		if($.fn.validateData($("#rst").val().trim(),/^[0-9]+$/)){
+			if($.fn.validateData($("#date").val().trim(),/^[0-9]{4}[-][0-9]{2}[-][0-9]{2}$/)){
+					if($("#vehicleType").val().trim()==="Select"){
+						if($.fn.validateData($("#customer").val().trim(),/^[A-Z_ ]*$/,)){
+							if($.fn.validateData($("#mobile").val().trim(),/^[0-9]{10}$/)){
+								if($("#address").val().trim()===""){
+									if($.fn.validateData($("#material").val().trim()==="")){
+										if($("#gross").val().trim()<=0){
+											status = true;
+										}else{
+											$.fn.checkStatus(1,"Gross weight should be greater than zero");
+										}
+									}else{
+										$.fn.checkStatus(1,"Material cannot be blank");
+									}
+								}else{
+									$.fn.checkStatus(1,"Address cannot be blank");
+								}
+							}else{
+								$.fn.checkStatus(1,"Invalid mobile number");
+							}
+						}else{
+							$.fn.checkStatus(1,"Invalid Customer name");
+						}
+					}else{
+						$.fn.checkStatus(1,"Select correct vehicle type");
+					}
+				$.fn.checkStatus(1,"Invalid Date");
+			}
+		}else{
+			$.fn.checkStatus(1,"Invalid RST No");
+		}
+	}
+	return status;
+}
+
+*/
 
 var uiController = (function(){
 		var elementIds={
@@ -35,11 +113,11 @@ var uiController = (function(){
 					if(elementIds.date.value!==""){
 						elementIds.date.style.borderColor ="#ced4da";
 						elementIds.date.title ="Date cannot be blank";
-						if(($("input[type=checkbox]").is(":checked"))){//checking if the vehicle is not a  cart
+						if(( document.getElementById("cartCheck").checked === true)){//checking if the vehicle is not a  cart
 							//validation on vehicle no
-							/*if(expressions.vehicleNo.test(elementIds.vehicleNo.value.trim())){//vehicle number validation starts here
+							if(expressions.vehicleNo.test(elementIds.vehicleNo.value.trim())){//vehicle number validation starts here
 								elementIds.vehicleNo.style.borderColor ="#ced4da";
-								elementIds.vehicleNo.title ="";*/
+								elementIds.vehicleNo.title ="";
 								//validation on Vehicle Type
 								if(elementIds.vehicleType.value.trim() !=="Select"){
 									elementIds.vehicleType.style.borderColor ="#ced4da";
@@ -92,12 +170,12 @@ var uiController = (function(){
 									elementIds.vehicleType.title ="Vehicle Type cannot be blank";
 									return false;
 								}
-								/*}
-							else{
+								}else{
 								elementIds.vehicleNo.style.border ="1px red solid";
 								elementIds.vehicleNo.title ="Vehicle number format 'AA 31 MA 4444'";
 								return false;
 							}//vehicle number validation ends here*/
+							
 						}else{
 							//elementIds.vehicleNo.value = null;
 							//validation on Vehicle Type

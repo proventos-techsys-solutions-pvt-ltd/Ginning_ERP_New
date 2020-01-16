@@ -177,7 +177,7 @@ body{
 	
 	<div class="row remove-row-margin row-background">
 		<div class="col-md-12 text-center">
-			<h5>Under Katol Jurisdiction</h5>
+			Under Katol Jurisdiction
 		</div>
 	</div>
 	</div>
@@ -329,7 +329,7 @@ body{
 	
 	<div class="row remove-row-margin row-background">
 		<div class="col-md-12 text-center">
-			<h5>Under Katol Jurisdiction</h5>
+			Under Katol Jurisdiction
 		</div>
 	</div>
 	</div>

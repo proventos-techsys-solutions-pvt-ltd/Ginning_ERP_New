@@ -45,7 +45,7 @@
    	<div class="row mt-2 ">
     <div class="col-md-8">
     <div class="tile-background-row" id="getHeight">
-      	<form id="newRST" action="${pageContext.request.contextPath}/processing/addWeighmentEntry.jsp" method="post">
+      	<form id="newRST" method="post">
       	<div class="form-row form-row-ctm">
 	      	<input type="hidden" id="id" name="id" value="0" />
 	      	<input type="hidden" id="dailySetupId" name="dailySetupId" value="0" />

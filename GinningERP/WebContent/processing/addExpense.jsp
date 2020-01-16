@@ -39,5 +39,5 @@
 		addTrans.addTransactions(debitTransaction);
 		addTrans.addTransactions(creditTransaction);
 		
-		response.sendRedirect("../admin/Record_Expenses.jsp");
+		response.sendRedirect("../accounts_operation_view/Record_Expenses.jsp");
     %>
