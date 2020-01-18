@@ -434,7 +434,8 @@ public ArrayList<Invoice> getReport() {
 					"    IM.ADVANCE,\r\n" + 
 					"    PDC.CHEQUE_ID    PDC_CHEQUE_ID,\r\n" + 
 					"    PD.CHEQUE_ID     CHEQUE_ID,\r\n" + 
-					"    PDR.PAY_DATE     RTGS_DATE\r\n" + 
+					"    PDR.PAY_DATE     RTGS_DATE,\r\n" + 
+					"    CV.VEHICLE_NO\r\n" + 
 					"FROM\r\n" + 
 					"    INVOICE_MAST            IM\r\n" + 
 					"    LEFT OUTER JOIN PDC_MAST                PDC ON PDC.INVOICE_ID = IM.ID\r\n" + 
@@ -510,6 +511,7 @@ public ArrayList<Invoice> getReport() {
 			jsonObj.put("weighRate", rs.getLong(40));
 			jsonObj.put("companyEmail", rs.getString(41));
 			jsonObj.put("advance", rs.getString(44));
+			jsonObj.put("vehicleNo", rs.getString("VEHICLE_NO"));
 			jsonObj.put("pdcId", rs.getString("PDC_CHEQUE_ID"));
 			jsonObj.put("chequeId", rs.getString("CHEQUE_ID"));
 			if(rs.getString("RTGS_DATE") != null) {
@@ -1179,5 +1181,111 @@ public ArrayList<Invoice> getReport() {
 		
 		return report;
 	}
+	
+	public JSONArray invoiceReportToExcel(String startDate, String endDate) {
+		ResultSet rs = null;
+		Connection con = null;
+		
+		JSONArray report = new JSONArray();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String invSql = "SELECT\r\n" + 
+					"    IM.ID,\r\n" + 
+					"    IM.INVOICE_NO,\r\n" + 
+					"    IM.TOTAL       TOTAL_AMOUNT,\r\n" + 
+					"    IM.INV_DATE,\r\n" + 
+					"    IM.NOTE,\r\n" + 
+					"    IM.TOTAL_QUANTITY,\r\n" + 
+					"    IM.UNLOADING_CHARGES,\r\n" + 
+					"    IM.BONUS,\r\n" + 
+					"    IM.ADVANCE,\r\n" + 
+					"	 IM.PDC_AMOUNT,\r\n" + 
+					"    COMP.NAME      COMP_NAME,\r\n" + 
+					"    CUST.NAME      CUST_NAME,\r\n" + 
+					"    CUST.ADDRESS   CUST_ADDR,\r\n" + 
+					"    CUST.MOBILE    CUST_MOB,\r\n" + 
+					"    II.RST,\r\n" + 
+					"    GD.QUANTITY,\r\n" + 
+					"    GD.GRADE,\r\n" + 
+					"    GD.RATE,\r\n" + 
+					"    CV.WEIGH_RATE,\r\n" + 
+					"    CV.VEHICLE_NO,\r\n" + 
+					"    WRM.VEHICLE_NAME\r\n" + 
+					"FROM\r\n" + 
+					"    INVOICE_MAST            IM,\r\n" + 
+					"    COMPANY_MASTER          COMP,\r\n" + 
+					"    CUSTOMER_MAST           CUST,\r\n" + 
+					"    INVOICE_ITEMS           II,\r\n" + 
+					"    WEIGH_MAST              WM,\r\n" + 
+					"    GRADE_DETAILS           GD,\r\n" + 
+					"    CUSTOMER_VEHICLE_MAST   CV,\r\n" + 
+					"    GRADE_MASTER            GM,\r\n" + 
+					"    WEIGH_RATE_MAST         WRM\r\n" + 
+					"WHERE\r\n" + 
+					"    IM.ID = II.INVOICE_ID\r\n" + 
+					"    AND IM.COMPANY_ID = COMP.ID\r\n" + 
+					"    AND IM.CUSTOMER_ID = CUST.ID\r\n" + 
+					"    AND II.GRADE_ID = GD.ID\r\n" + 
+					"    AND GD.WEIGHMENT_ID = WM.ID\r\n" + 
+					"    AND GM.GRADE = GD.GRADE\r\n" + 
+					"    AND WM.VID = CV.ID\r\n" + 
+					"    AND CV.V_TYPE_ID = WRM.ID\r\n" + 
+					"    AND IM.INV_DATE BETWEEN ? AND ?";
+			
+			java.sql.Date startDateSql = java.sql.Date.valueOf(startDate);
+			java.sql.Date endDateSql = java.sql.Date.valueOf(endDate);
+			
+			PreparedStatement stmt = con.prepareStatement(invSql);
+			
+			stmt.setDate(1, startDateSql);
+			stmt.setDate(2, endDateSql);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				JSONObject jsonObj = new JSONObject();
+				
+				jsonObj.put("invoiceId", rs.getString(1));
+				jsonObj.put("invoiceNo", rs.getString(2));
+				jsonObj.put("totalAmount", rs.getString(3));
+				
+				String date = rs.getString(4);
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy");
+				String properDate = format2.format(date1);
+				jsonObj.put("invoiceDate", properDate);
+				
+				jsonObj.put("note", rs.getString(5));
+				jsonObj.put("totalQty", rs.getString(6));
+				jsonObj.put("unloadingCharges", rs.getString(7));
+				jsonObj.put("bonus", rs.getString(8));
+				jsonObj.put("advance", rs.getString(9));
+				jsonObj.put("pdcAmount", rs.getString(10));
+				jsonObj.put("companyName", rs.getString(11));
+				jsonObj.put("customerName", rs.getString(12));
+				jsonObj.put("customerAddress", rs.getString(13));
+				jsonObj.put("customerMobile", rs.getString(14));
+				jsonObj.put("rst", rs.getString(15));
+				jsonObj.put("quantity", rs.getString(16));
+				jsonObj.put("grade", rs.getString(17));
+				jsonObj.put("rate", rs.getString(18));
+				jsonObj.put("weighRate", rs.getString(19));
+				jsonObj.put("vehicleNo", rs.getString(20));
+				jsonObj.put("vehicleName", rs.getString(21));
+				
+				report.put(jsonObj);
+				
+			}
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return report;
+	}
+	
 	
 }

@@ -315,6 +315,22 @@
              	</div>
              </div>
              
+         <div class="row row-background border-top">
+             	<div class="col-md-2">
+             		<label class="lbl-rm-l">From</label>
+             		<input class="form-control form-control-sm" type="date"  name="startDate" id="startDate1"  />
+             	</div>
+             	<div class="col-md-2">
+             		<label class="lbl-rm-l">To</label>
+             		<input class="form-control form-control-sm" type="date"  name="endDate" id="endDate1"  />
+             	</div>
+	             <div class="col-md-2">
+		             <button type="button" class="btn btn-success btn-sm" id="excelReport" style="margin-top:32px;" onclick="openInNewTab()">Get Excel Report</button>
+	             </div>
+            </div>    
+             
+             
+             
  </div>        
 </div>
 </div>
@@ -332,6 +348,13 @@
 <script type="text/javascript" charset="UTF-8" src="../js/Gcharts/OrgChartModule.js"></script>
 
 <script>
+function openInNewTab() {
+		var startDate = document.getElementById("startDate1").value;
+    	var endDate = document.getElementById("endDate1").value;
+  	  var win = window.open("../admin/InvoiceReportExcel.jsp?startDate="+startDate+"&endDate="+endDate, '_blank');
+   	 win.focus();
+}
+
 	 var myBarChart;
 		document.getElementById("filter").addEventListener('click', function(e){
 			var startDate = document.getElementById("startDate").value;

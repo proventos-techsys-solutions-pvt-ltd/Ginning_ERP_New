@@ -54,6 +54,10 @@ body{
 			<span name='vendorAddress'></span>
 			</div>
 			<div>
+			<label><b>Vehicle No: </b></label>
+			<span name='vehicleNo'></span>
+			</div>
+			<div>
 				<label><b>Company: </b></label>
 				<span name='companyName'></span>
 			</div>
@@ -203,6 +207,10 @@ body{
 			<div>
 			<label><b>Vendor Address: </b></label>
 			<span name='vendorAddress'></span>
+			</div>
+			<div>
+			<label><b>Vehicle No: </b></label>
+			<span name='vehicleNo'></span>
 			</div>
 			<div>
 				<label><b>Company: </b></label>
@@ -408,6 +416,7 @@ body{
 			document.getElementsByName('totalAmount')[k].innerHTML = obj.totalAmount;
 			document.getElementsByName('vendorMobile')[k].innerHTML = obj.vendorMobile;
 			document.getElementsByName('vendorAddress')[k].innerHTML = obj.vendorAddress;
+			document.getElementsByName('vehicleNo')[k].innerHTML = obj.vehicleNo;
 			if(Number(obj.unloadingCharges) === 0){
 				document.getElementsByName('weighingCharges')[k].innerHTML = "Rs. "+0;
 			}else{
