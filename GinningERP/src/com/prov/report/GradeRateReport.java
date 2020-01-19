@@ -113,12 +113,23 @@ public class GradeRateReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "select gm.id, gm.grade, gr.rate \r\n" + 
-						"from grade_master gm left join grade_rate_master gr \r\n" + 
-						"on gm.id = gr.grade_id \r\n" + 
-						"where gr.grade_id is null or \r\n" + 
-						"gr.RATE_DATE = (SELECT MAX(RATE_DATE) FROM GRADE_RATE_MASTER) \r\n" + 
-						"ORDER BY GRADE";
+			String sql = "SELECT\r\n" + 
+					"    GM.ID,\r\n" + 
+					"    GM.GRADE,\r\n" + 
+					"    GR.RATE\r\n" + 
+					"FROM\r\n" + 
+					"    GRADE_MASTER        GM\r\n" + 
+					"    LEFT JOIN GRADE_RATE_MASTER   GR ON GM.ID = GR.GRADE_ID\r\n" + 
+					"WHERE\r\n" + 
+					"    GR.GRADE_ID IS NULL\r\n" + 
+					"    OR GR.RATE_DATE = (\r\n" + 
+					"        SELECT\r\n" + 
+					"            MAX(RATE_DATE)\r\n" + 
+					"        FROM\r\n" + 
+					"            GRADE_RATE_MASTER\r\n" + 
+					"    )\r\n" + 
+					"ORDER BY\r\n" + 
+					"    GRADE";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			

@@ -428,10 +428,10 @@ body{
 			document.getElementsByName('netAmountInWords')[k].innerHTML = obj.totalInWords;
 			document.getElementsByName('noteId')[k].innerHTML = obj.note;
 			
-			if(obj.amanatQty === "" || obj.amanatQty === "0" || obj.amanatQty === 0){
+			if(obj.amanatQty === "" || obj.amanatQty === "0" || obj.amanatQty === 0 || Number(obj.amanatQty) < 0){
 				document.getElementsByName('amanatQty')[k].parentNode.hidden=true;
 			}else{
-				document.getElementsByName('amanatQty')[k].innerHTML = obj.amanatQty;
+				document.getElementsByName('amanatQty')[k].innerHTML = obj.amanatQty+" Kgs.";
 			}
 			
 			
@@ -536,8 +536,14 @@ body{
 				cell2.innerHTML = invItems[i].material;
 				cell3.innerHTML = invItems[i].grade;
 				cell4.innerHTML = invItems[i].gradeDescription;
-				cell5.innerHTML = invItems[i].quantity;
-				cell6.innerHTML = invItems[i].rate;
+				if(invItems[i].amanat === "yes"){
+					cell5.innerHTML = invItems[i].invoicedQty ;
+					cell6.innerHTML = invItems[i].finalRate;
+				}else{
+					cell5.innerHTML = invItems[i].quantity;
+					cell6.innerHTML = invItems[i].rate;
+				}
+				
 				cell7.innerHTML = invItems[i].amount.toFixed(2);
 				cell8.innerHTML = invItems[i].moisture;
 				

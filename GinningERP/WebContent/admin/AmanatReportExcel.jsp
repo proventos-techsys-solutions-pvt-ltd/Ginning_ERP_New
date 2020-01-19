@@ -15,8 +15,9 @@
 		<thead >
 			<tr>
 				<th>Sr. no.</th>
-				<th>Date</th>
+				<th>Amanat Date</th>
 				<th>Company</th>
+				<th>Amanat No.</th>
 				<th>Invoice No.</th>
 				<th>RST</th>
 				<th>Name</th>
@@ -26,10 +27,20 @@
 				<th>Vehicle Type</th>
 				<th>Cotton Wt. (Qtl.)</th>
 				<th>Rate/Qtl.</th>
+				<th>Amanat Wt. (Qtl.)</th>
+				<th>Invoiced Wt (Qtl.)</th>
+				<th>Balance Wt. (Qtl.)</th>
 				<th>Gross Amount</th>
-				<th>Unloading charges</th>
-				<th>Weighing charges</th>
 				<th>Net Amount</th>
+				<th>Invoice Date</th>
+				<th>Rate Difference</th>
+				<th>Invoice date Super rate</th>
+				<th>Amanat Settled rate</th>
+				<th>Gross(Invoice Date rate)</th>
+				<th>Gross(Settled rate)</th>
+				<th>Settled Net Amount</th>
+				<th>Actual Interest Amount</th>
+				<th>Actual Interest Percent</th>
 				<th>Cash Amount</th>
 				<th>Cheque Amount</th>
 				<th>RTGS Amount</th>
@@ -79,7 +90,7 @@ function parseURLParams(url) {
 
 	function sendReqToGetData(startDate, endDate){
 		
-		var url="${pageContext.request.contextPath}/processing/getInvoiceReportExcel.jsp?startDate="+startDate+"&endDate="+endDate;
+		var url="${pageContext.request.contextPath}/processing/getAmanatReportExcel.jsp?startDate="+startDate+"&endDate="+endDate;
 		if(window.XMLHttpRequest){  
 			request=new XMLHttpRequest();  
 		}  
@@ -140,99 +151,130 @@ function parseURLParams(url) {
 			var cell25 = row.insertCell(24);
 			var cell26 = row.insertCell(25);
 			var cell27 = row.insertCell(26);
+			var cell28 = row.insertCell(27);
+			var cell29 = row.insertCell(28);
+			var cell30 = row.insertCell(29);
+			var cell31 = row.insertCell(30);
+			var cell32 = row.insertCell(31);
+			var cell33 = row.insertCell(32);
+			var cell34 = row.insertCell(33);
+			var cell35 = row.insertCell(34);
+			var cell36 = row.insertCell(35);
+			var cell37 = row.insertCell(36);
+			var cell38 = row.insertCell(37);
+			var cell39 = row.insertCell(38);
+			var cell40 = row.insertCell(39);
 			
 			cell1.innerHTML = (i+1);
-			cell2.innerHTML = data[i].invoiceDate;
+			cell2.innerHTML = data[i].amanatDate;
 			cell3.innerHTML = data[i].companyName;
-			cell4.innerHTML = data[i].invoiceNo;
-			cell5.innerHTML = data[i].rst;
-			cell6.innerHTML = data[i].customerName;
-			cell7.innerHTML = data[i].customerAddress;
-			cell8.innerHTML = data[i].customerMobile;
-			cell9.innerHTML = data[i].vehicleNo;
-			cell10.innerHTML = data[i].vehicleName;
-			cell11.innerHTML = data[i].totalQty/100;
-			cell12.innerHTML = data[i].rate;
-			cell13.innerHTML = data[i].totalAmount;
-			cell14.innerHTML = data[i].unloadingCharges;
-			if(Number(data[i].unloadingCharges) === 0){
-				cell15.innerHTML = 0;
-			}else{
-				cell15.innerHTML = data[i].weighRate;
-			}
+			cell4.innerHTML = data[i].amanatNo;
+			cell5.innerHTML = data[i].invoiceNo;
+			cell6.innerHTML = data[i].rst;
+			cell7.innerHTML = data[i].customerName;
+			cell8.innerHTML = data[i].customerAddress;
+			cell9.innerHTML = data[i].customerMobile;
+			cell10.innerHTML = data[i].vehicleNo;
+			cell11.innerHTML = data[i].vehicleName;
+			cell12.innerHTML = data[i].totalQty/100;
+			cell13.innerHTML = data[i].rate;
+			cell14.innerHTML = data[i].quantity;
+			cell15.innerHTML = data[i].invoicedQty;
+			cell16.innerHTML = data[i].quantity - data[i].invoicedQty;
+			cell17.innerHTML = (data[i].invoicedQty/100) * data[i].rate;
+			cell18.innerHTML = (data[i].invoicedQty/100) * data[i].rate;
+			cell19.innerHTML = data[i].invoiceDate;
+			cell20.innerHTML = data[i].differenceFromSuper;
 			
-			cell16.innerHTML = data[i].totalAmount - (Number(data[i].unloadingCharges) + Number(data[i].weighRate));
+			var invoiceDateSuperRate = data[i].finalRate + data[i].differenceFromSuper;
+			
+			cell21.innerHTML = data[i].finalRate + data[i].differenceFromSuper;
+			cell22.innerHTML = data[i].finalRate;
+			
+			var finalNetAmount = (data[i].invoicedQty/100) * (data[i].finalRate);
+			
+			cell23.innerHTML = (data[i].invoicedQty/100) * (invoiceDateSuperRate);
+			
+			cell24.innerHTML = finalNetAmount;
+			cell25.innerHTML = finalNetAmount;
+			
+			var interest = ((finalNetAmount) -  ((data[i].invoicedQty/100) * data[i].rate));
+				
+			cell26.innerHTML = interest;
+			
+			cell27.innerHTML = (((interest)*100)/(finalNetAmount)).toFixed(2);
+			
 			if(data[i].hasOwnProperty('cashAmount')){
-				cell17.innerHTML = data[i].cashAmount;
+				cell28.innerHTML = data[i].cashAmount;
 			}else{
-				cell17.innerHTML = 0;
+				cell28.innerHTML = 0;
 			}
 			
 			if(data[i].hasOwnProperty('chequeAmount')){
-				cell18.innerHTML = data[i].chequeAmount;
+				cell29.innerHTML = data[i].chequeAmount;
 			}else{
-				cell18.innerHTML = 0;
+				cell29.innerHTML = 0;
 			}
 			
 			if(data[i].hasOwnProperty('rtgsAmount')){
-				cell19.innerHTML = data[i].rtgsAmount;
+				cell30.innerHTML = data[i].rtgsAmount;
 			}else{
-				cell19.innerHTML = 0;
+				cell30.innerHTML = 0;
 			}
 			
 			
 			if(data[i].hasOwnProperty('chequeNo')){
-				cell20.innerHTML = data[i].chequeNo;
+				cell31.innerHTML = data[i].chequeNo;
 			}else{
-				cell20.innerHTML = "NA";
+				cell31.innerHTML = "NA";
 			}
 			
 			if(data[i].hasOwnProperty('chequeBank')){
-				cell21.innerHTML = data[i].chequeBank;
+				cell32.innerHTML = data[i].chequeBank;
 			}else{
-				cell21.innerHTML = "NA";
+				cell32.innerHTML = "NA";
 			}
 			
 			if(data[i].hasOwnProperty('chequeDate')){
-				cell22.innerHTML = data[i].chequeDate;
+				cell33.innerHTML = data[i].chequeDate;
 			}else{
-				cell22.innerHTML = "NA";
+				cell33.innerHTML = "NA";
 			}
 			
 			if(data[i].hasOwnProperty('pdcAmount')){
-				cell23.innerHTML = data[i].pdcAmount;
+				cell34.innerHTML = data[i].pdcAmount;
 			}else{
-				cell23.innerHTML = 0;
+				cell34.innerHTML = 0;
 			}
 			
 			if(data[i].hasOwnProperty('pdcDate')){
-				cell24.innerHTML = data[i].pdcDate;
+				cell35.innerHTML = data[i].pdcDate;
 			}else{
-				cell24.innerHTML = "NA";
+				cell35.innerHTML = "NA";
 			}
 			
 			if(data[i].hasOwnProperty('PDPayMode')){
 				if(Number(data[i].PDPayMode) == 1){
-					cell25.innerHTML = 'Cash';
+					cell36.innerHTML = 'Cash';
 				}else if(Number(data[i].PDPayMode) == 2){
-					cell25.innerHTML = 'Cheque';
+					cell36.innerHTML = 'Cheque';
 				}else if(Number(data[i].PDPayMode) == 3){
-					cell25.innerHTML = 'RTGS';
+					cell36.innerHTML = 'RTGS';
 				}
 			}else{
-				cell25.innerHTML = "NA";
+				cell36.innerHTML = "NA";
 			}
 			
 			if(data[i].hasOwnProperty('pdcNo')){
-				cell26.innerHTML = data[i].pdcNo;
+				cell37.innerHTML = data[i].pdcNo;
 			}else{
-				cell26.innerHTML = "NA";
+				cell37.innerHTML = "NA";
 			}
 			
 			if(data[i].hasOwnProperty('pdcchequeBank')){
-				cell27.innerHTML = data[i].pdcchequeBank;
+				cell38.innerHTML = data[i].pdcchequeBank;
 			}else{
-				cell27.innerHTML = "NA";
+				cell38.innerHTML = "NA";
 			}
 		}
 		Export();
@@ -252,6 +294,6 @@ function parseURLParams(url) {
          	filename: "Simple_Invoice_Report_"+getCurrentDate()+".xls"
          });
      }
-
-</script>
-</html>
+     
+     
+     </script>

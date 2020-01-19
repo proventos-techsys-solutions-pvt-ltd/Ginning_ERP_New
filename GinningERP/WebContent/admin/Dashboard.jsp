@@ -314,7 +314,8 @@
              		
              	</div>
              </div>
-             
+         
+         <!-- Invoice report code -->
          <div class="row row-background border-top">
              	<div class="col-md-2">
              		<label class="lbl-rm-l">From</label>
@@ -325,11 +326,24 @@
              		<input class="form-control form-control-sm" type="date"  name="endDate" id="endDate1"  />
              	</div>
 	             <div class="col-md-2">
-		             <button type="button" class="btn btn-success btn-sm" id="excelReport" style="margin-top:32px;" onclick="openInNewTab()">Get Excel Report</button>
+		             <button type="button" class="btn btn-success btn-sm" id="InvoiceExcelReport" style="margin-top:32px;" onclick="openInvoiceInNewTab()">Get Invoice Excel Report</button>
 	             </div>
             </div>    
-             
-             
+         
+         <!-- Amanat report code -->
+         <div class="row row-background border-top">
+             	<div class="col-md-2">
+             		<label class="lbl-rm-l">From</label>
+             		<input class="form-control form-control-sm" type="date"  name="startDate" id="startDate2"  />
+             	</div>
+             	<div class="col-md-2">
+             		<label class="lbl-rm-l">To</label>
+             		<input class="form-control form-control-sm" type="date"  name="endDate" id="endDate2"  />
+             	</div>
+	             <div class="col-md-2">
+		             <button type="button" class="btn btn-success btn-sm" id="AmanatExcelReport" style="margin-top:32px;" onclick="openAmanatInNewTab()">Get Amanat Excel Report</button>
+	             </div>
+            </div>        
              
  </div>        
 </div>
@@ -348,11 +362,18 @@
 <script type="text/javascript" charset="UTF-8" src="../js/Gcharts/OrgChartModule.js"></script>
 
 <script>
-function openInNewTab() {
+function openInvoiceInNewTab() {
 		var startDate = document.getElementById("startDate1").value;
     	var endDate = document.getElementById("endDate1").value;
   	  var win = window.open("../admin/InvoiceReportExcel.jsp?startDate="+startDate+"&endDate="+endDate, '_blank');
    	 win.focus();
+}
+
+function openAmanatInNewTab() {
+	var startDate = document.getElementById("startDate2").value;
+	var endDate = document.getElementById("endDate2").value;
+	  var win = window.open("../admin/AmanatReportExcel.jsp?startDate="+startDate+"&endDate="+endDate, '_blank');
+	 win.focus();
 }
 
 	 var myBarChart;

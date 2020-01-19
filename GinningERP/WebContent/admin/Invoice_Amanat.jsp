@@ -28,7 +28,7 @@
                			</div>
                		</div>
                 </div>
-                        <form action="../processing/approvedInvoiceEntry.jsp" id="adminApprovalForm">
+                        <form action="../processing/amanatInvoiceEntry.jsp" id="adminApprovalForm">
                         	<input type="hidden" name="output" id="output" value="" />
                         </form>
                         	<input type="hidden" name="invoiceId" value="" id="invoiceId"/>
@@ -662,7 +662,7 @@ function setCurrentDate(){
 				cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+data[i].grade+'" readonly>';
 				cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+data[i].moisture+'" readonly>';
 				cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+ (Number(superRate)-Number(data[i].differenceFromSuper))+'"  readonly>';
-				var amount = (data[i].rate * (Number(Number(data[i].quantity) - Number(data[i].invoicedQty))/100));
+				var amount = ((Number(superRate)-Number(data[i].differenceFromSuper)) * (Number(Number(data[i].quantity) - Number(data[i].invoicedQty))/100));
 				cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+amount+'" readonly>';
 				cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" disabled>';
 				if(data[i].pdcAmount>0){
@@ -858,7 +858,8 @@ function setCurrentDate(){
 	
 	document.addEventListener('click',function(e){
 		if(e.srcElement.id === 'submitButton'){
-			document.getElementById('adminApprovalForm').action = "../processing/amanatInvoiceEntry.jsp";
+			document.getElementById('submitButton').disabled = true;
+			//document.getElementById('adminApprovalForm').action = "../processing/amanatInvoiceEntry.jsp";
 			submitForm();
 		}
 		/*else if(e.srcElement.id === 'updateButton'){
