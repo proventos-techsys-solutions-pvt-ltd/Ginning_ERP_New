@@ -209,7 +209,8 @@ function Export() {
 		if(e.srcElement.alt === 'deleteRow'){
 			var table = document.getElementById('tableBody');
 			var rowIndex = e.srcElement.parentNode.parentNode.rowIndex-2;
-			var rtgsId = table.rows[rowIndex].cells[6].innerHTML;
+			var rtgsId = table.rows[rowIndex].cells[7].innerHTML;
+			console.log(rtgsId);
 			var customerName = table.rows[rowIndex].cells[0].innerHTML;
 			$.fn.confirmDelete(1,"Do you want to delete RTGS for "+ customerName+"  ?");
 			$("#response-button1").click(function(){

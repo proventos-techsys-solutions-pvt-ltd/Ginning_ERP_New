@@ -317,6 +317,9 @@
          
          <!-- Invoice report code -->
          <div class="row row-background border-top">
+         <div class="col-md-12 mb-2">
+         		<h4>Excel Report of Amanat and Invoice</h4>
+         		</div>
              	<div class="col-md-2">
              		<label class="lbl-rm-l">From</label>
              		<input class="form-control form-control-sm" type="date"  name="startDate" id="startDate1"  />
@@ -325,13 +328,14 @@
              		<label class="lbl-rm-l">To</label>
              		<input class="form-control form-control-sm" type="date"  name="endDate" id="endDate1"  />
              	</div>
-	             <div class="col-md-2">
+	             <div class="col-md-4">
 		             <button type="button" class="btn btn-success btn-sm" id="InvoiceExcelReport" style="margin-top:32px;" onclick="openInvoiceInNewTab()">Get Invoice Excel Report</button>
 	             </div>
             </div>    
          
          <!-- Amanat report code -->
          <div class="row row-background border-top">
+         
              	<div class="col-md-2">
              		<label class="lbl-rm-l">From</label>
              		<input class="form-control form-control-sm" type="date"  name="startDate" id="startDate2"  />
@@ -340,7 +344,7 @@
              		<label class="lbl-rm-l">To</label>
              		<input class="form-control form-control-sm" type="date"  name="endDate" id="endDate2"  />
              	</div>
-	             <div class="col-md-2">
+	             <div class="col-md-4">
 		             <button type="button" class="btn btn-success btn-sm" id="AmanatExcelReport" style="margin-top:32px;" onclick="openAmanatInNewTab()">Get Amanat Excel Report</button>
 	             </div>
             </div>        
