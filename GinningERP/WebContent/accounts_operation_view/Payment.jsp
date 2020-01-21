@@ -197,7 +197,7 @@
                            <input type="date" class="form-control " id="rtgsAmountDate" name="rtgsAmountDate" readonly="readonly">
                         </td>
                         <td>
-                           <input type="text" class="form-control" id="" name="" value="Not Applicable" readonly>
+                           <input type="text" class="form-control" id="rtgsCustomerName" name="rtgsCustomerName" value="" readonly>
                         </td>
                         <td>
                            <input type="text" class="form-control" id="" name="" value="Not Applicable" readonly>
@@ -285,7 +285,7 @@
                            <input type="date" class="form-control" id="pdcRtgsDate" name="pdcRtgsDate" readonly>
                         </td>
                         <td>
-                           <input type="text" class="form-control" id="" name="" value="Not Applicable" readonly>
+                           <input type="text" class="form-control" id="pdcRtgsCustomerName" name="pdcRtgsCustomerName" value="" readonly>
                         </td>
                         <td>
                            <input type="text" class="form-control" id="" name="" value="Not Applicable" readonly>
@@ -868,6 +868,7 @@
 		         document.getElementById('rtgsAmount').value = rtgsJson.amount ;
 		         document.getElementById('rtgsPaymentStatus').value = rtgsJson.paymentStatus ;
 		         document.getElementById('rtgsAmountDate').value = rtgsJson.date ;
+		         document.getElementById('rtgsCustomerName').value = invoiceBasicJson.customerName;
 		         if(Number(rtgsJson.paymentStatus) === 1){
 			         document.getElementById('rtgsBank').value = rtgsJson.bankName ;
 			         document.getElementById('rtgsAccountNo').value = rtgsJson.accountNo ;
@@ -909,6 +910,7 @@
 			         document.getElementById('pdcId').value = pdcJson.pdcId ;
 			         document.getElementById('pdcRtgsAmount').value = pdcJson.pdcAmount;
 			         document.getElementById('pdcRtgsPaymentStatus').value = pdcJson.pdcPayStatus;
+			         document.getElementById('pdcRtgsCustomerName').value = invoiceBasicJson.customerName;
 			         if(Number(pdcJson.pdcPayStatus) === 1){
 				         document.getElementById('pdcRtgsBank').value = pdcJson.bankName ;
 				         document.getElementById('pdcRtgsAccountNo').value = pdcJson.accountNo ;
