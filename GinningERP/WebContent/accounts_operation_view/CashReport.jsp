@@ -17,24 +17,7 @@
 
 <%@include file="NavBar.jsp" %>
 <div class="container-fluid ">
-	 	<div class="row row-background border-bottom">
-			<div class="col-md-12">
-			<div class="d-flex justify-content-between align-content-center row-background">
-				<div class="d-flex justify-content-start align-content-center row-background">
-					<h4 class="lbl-rm-all">Cash Report</h4>
-				</div>
-				<div class="d-flex justify-content-start align-content-center row-background">
-					<button type="button" class="btn btn-success btn-sm">Print Report</button>
-				</div>
-			</div>
-			</div>
-			</div>
-			<div class="row row-background border-bottom">
-			<div class="col-md-4">
-				<label>Search</label>
-				<input type="text" class="form-control" name="" id="searchInput">
- 			</div>
-		</div>
+ <%@include file="../admin/CommonSearchHeaderForReports.jsp" %>
 		<div class="row  row-background">
 			<div class="col-md-12">
 				<table class="table table-bordered">
@@ -59,7 +42,8 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script>
-	
+	setTitle("Cash Report");//Setting Title of Page
+	setSearchPlaceholder("Search");//Setting Placeholder of Search Input
 	 //*********************Search 
     $(document).ready(function(){
       $("#searchInput").on("keyup", function() {

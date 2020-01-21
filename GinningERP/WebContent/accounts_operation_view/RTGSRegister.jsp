@@ -16,30 +16,7 @@
    <body>
 <%@include file="../accounts_operation_view/NavBar.jsp" %>   
 	<div class="container-fluid ">
-	 <div class="row mt-1 row-background border-bottom">
-			<div class="col-md-12">
-				<div class="d-flex justify-content-between align-items-center">
-					<h4>RTSG/NEFT Report</h4>
-				</div>
-			</div>
-		</div>
-		
-		 <div class="row  row-background border-bottom">
-			<div class="col-md-3 d-flex justify-content-between align-items-center">
-					<label>From</label>
-					<input type="date" class="form-control form-control-sm  ml-2" id="startDate" name="startDate" >
-				</div>
-
-				<div class="col-md-3 d-flex justify-content-between align-items-center">
-					<label>To</label>
-					<input type="date" class="form-control form-control-sm  ml-2" id="endDate" name="endDate" >
-				</div>				 
-				<div class="col-md-5  d-flex justify-content-start align-items-center">
-					<button type="button" class="btn btn-success btn-sm" id="filterDate">Generate Report</button>
-					<button type="button" class="btn btn-success btn-sm ml-2" id="print">Print Report</button>
-				</div>
-		</div>
-		
+		 <%@include file="../admin/CommonSearchHeaderForReports.jsp" %>
 		<div class="row  row-background">
 			<div class="col-md-12">
 				<table class="table table-bordered" id="rtgsReportTable">
@@ -72,6 +49,8 @@
 		<script type="text/javascript" src="../js/1.8.3-jq.js"></script>
 		<script src="../js/export/export2excel.js"></script>
     	<script>
+    	setTitle("RTGS NEFT Register");//Setting Title of Page
+		setSearchPlaceholder("Search");//Setting Placeholder of Search Input
     	function getReport(){
     		var url="../processing/getRtgsReportsForCashier.jsp";
     		if(window.XMLHttpRequest){  

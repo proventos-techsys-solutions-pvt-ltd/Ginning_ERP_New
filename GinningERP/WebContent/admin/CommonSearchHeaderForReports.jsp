@@ -16,14 +16,26 @@
 		</div>
 		<div class="row row-background">
 			
-			<div class="col-md-auto">
-				<div class="d-flex justify-content-start align-items-center">
-				<input type="text" class="form-control form-control-sm inpt-rm-t" name="" id="searchInput" placeholder="">
-				<button type="button" class="btn btn-success btn-sm lbl-rm-l">Search</button>
-				</div>
+			<div class="col-md-2">
+				<label class="lbl-rm-all">Search</label>
+				<input type="text" class="form-control form-control-sm " name="" id="searchInput" placeholder="">
 			</div>
-		
-			<div class="col-md-auto">
-				<img src="../property/img/exportexcel.png" alt="option" class="img-set" id="exportToExcel">
-			</div>
+			<div class="col-md-2">
+				<button type="button" class="btn btn-success btn-sm lbl-rm-l" style="margin-top:31px;">Search</button>
+ 			</div>
+			<div class="col-md-2" style="margin-left:-150px;">
+				<label class="lbl-rm-all">From</label>
+				<input type="date" class="form-control form-control-sm " name="" id="">
+ 			</div>
+ 			<div class="col-md-2">
+				<label class="lbl-rm-all">To</label>
+				<input type="date" class="form-control form-control-sm" name="" id="">
+ 			</div>
+ 			<div class="col-md-2">
+				<button type="button" class="btn btn-sm btn-success" id="" style="margin-top:31px;">Filter</button>
+ 			</div>
+ 			<div class="col-md-2">
+				<img src="../property/img/exportexcel.png" alt="option" class="img-set" style="margin-top:31px;margin-left:-150px;" id="exportToExcel">
+ 			</div>
+ 			
 			</div>

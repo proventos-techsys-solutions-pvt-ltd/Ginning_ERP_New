@@ -12,7 +12,7 @@
 </head>
 
 <body>
- <%@include file="../accounts_operation_view/NavBar.jsp" %>
+ <%@include file="NavBar.jsp" %>
 	<div class="container-fluid ">
 	 	<div class="row  row-background mt-2">
 				<div class="col-md-12">

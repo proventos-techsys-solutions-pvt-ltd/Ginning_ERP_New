@@ -10,21 +10,13 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
     <a class="navbar-brand" href="#"><img src="../property/img/logo.png" alt="logo" width="130px" height="30px;"> </a>
     <ul class="navbar-nav mr-auto mt-2 ">
-      <li class="nav-item active">
-        <a class="nav-link" href="./Payment.jsp">Vendor Payment <span class="sr-only">(current)</span></a>
-      </li>
-      
-      <li class="nav-item active">
-        <a class="nav-link" href="./rtgs-neft.jsp">RTGS/NEFT<span class="sr-only">(current)</span></a>
-      </li>
-      
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          Ledgers
+          Accounts
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="cash-ledger.jsp">Cash Ledger</a>
-      		<a class="dropdown-item" href="Bank_Register.jsp">Bank Ledger</a>
+          <a class="dropdown-item" href="Record_Expenses.jsp">Expense Bill</a>
+     	 <a class="dropdown-item" href="JournalEntry.jsp"> Journal Entry</a>
         </div>
       </li>
       
@@ -33,10 +25,7 @@
           Report
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="Pendin_Amanat.jsp">Amanat Report</a>
-          <a class="dropdown-item" href="PurchaseInvoice.jsp">Invoice Report</a>
-          <a class="dropdown-item" href="CashReport.jsp">Cash Report</a>
-          <a class="dropdown-item" href="RTGSRegister.jsp">RTGS/NEFT Report</a>
+          <a class="dropdown-item" href="general-ledgers.jsp"> Vouchers</a>
         </div>
       </li>
       
