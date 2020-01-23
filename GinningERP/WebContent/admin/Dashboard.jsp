@@ -11,6 +11,7 @@
 <link id="load-css-0" rel="stylesheet" type="text/css" href="../js/Gcharts/ToolTip.css">
 <link id="load-css-1" rel="stylesheet" type="text/css" href="../js/Gcharts/Util.css">
 <link id="load-css-2" rel="stylesheet" type="text/css" href="../js/Gcharts/OrgChart.css">
+<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUILoading.js" ></script>
 <title>Dashboard</title>
 </head>
 <body>
@@ -401,6 +402,7 @@ function openAmanatInNewTab() {
 		});
 		
 		function getStockReport(companyId, startDate, endDate){
+			$.blockUILoad();
 			var url="../processing/getTodaysStockReport.jsp?companyId="+companyId+"&startDate="+startDate+"&endDate="+endDate;
 				if(window.XMLHttpRequest){  
 					fetchStock=new XMLHttpRequest();  
@@ -440,6 +442,7 @@ function openAmanatInNewTab() {
 						
 					}
 				 setData(response);
+				 $.unblockUILoad();
 			 }
 		 }
 
@@ -568,6 +571,7 @@ function openAmanatInNewTab() {
 		} */
 		
 		function getTodayCottonRate(){
+			$.blockUILoad();
 			var url="../processing/getTodaysSuperRate.jsp";
 			if(window.XMLHttpRequest){  
 				fetchCottonRate=new XMLHttpRequest();  
@@ -591,11 +595,13 @@ function openAmanatInNewTab() {
 				var data = JSON.parse(response);
 				document.getElementById('tRate').innerHTML = data['superRate'];
 				document.getElementById('aRate').innerHTML = data['averageRate'].toFixed(2);
+				$.unblockUILoad();
 				//getAverageRate();
 			 }
 		 }
 		
 		function getPurchaseReport(companyId, paymentType){
+			$.blockUILoad();
 			var url="../processing/purchaseReport.jsp?companyId="+companyId+"&paymentType="+paymentType;
 			if(window.XMLHttpRequest){  
 				fetchPurchase=new XMLHttpRequest();  
@@ -614,7 +620,8 @@ function openAmanatInNewTab() {
 		
 		function fetchPurchaseAmount(){
 			if(fetchPurchase.readyState == 4){
-				document.getElementById('totalPurchase').innerHTML = this.response.trim();				
+				document.getElementById('totalPurchase').innerHTML = this.response.trim();
+				$.unblockUILoad();
 			}
 		}
 		
@@ -631,6 +638,7 @@ function openAmanatInNewTab() {
 		
 		
 		function getUserStatus(){
+			$.blockUILoad();
 				var url="../processing/userStatusData.jsp";
 				if(window.XMLHttpRequest){  
 					fetchStatus=new XMLHttpRequest();  
@@ -652,6 +660,7 @@ function openAmanatInNewTab() {
 				var response = this.response.trim();
 				var data = JSON.parse(response);
 				setUserData(data);
+				$.unblockUILoad();
 			}
 		}
 		
@@ -687,6 +696,7 @@ function openAmanatInNewTab() {
 		
 		
 		function getTodaysPurchaseReport(){
+			$.blockUILoad();
 			var url="../processing/purchasePaymentReport.jsp";
 			if(window.XMLHttpRequest){  
 				paymentFetch=new XMLHttpRequest();  
@@ -717,6 +727,7 @@ function openAmanatInNewTab() {
 				document.getElementById('pdpCashPayment').innerHTML = data.cashPdp ;
 				document.getElementById('pdpChequePayment').innerHTML = data.chequePdp ;
 				document.getElementById('pdpRtgsPayment').innerHTML = data.rtgsPdp ;
+				$.unblockUILoad();
 			}
 		}
 		

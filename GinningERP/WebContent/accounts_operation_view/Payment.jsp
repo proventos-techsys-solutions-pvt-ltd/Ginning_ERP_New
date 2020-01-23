@@ -10,6 +10,7 @@
       <link rel="stylesheet" href="../styles/WBStyle.css">
       <script src="${pageContext.request.contextPath}/js/3.4.1-jq.js"></script>
       <script src="${pageContext.request.contextPath}/js/3.2.1-jq.js"></script>
+      <script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUILoading.js" ></script>
       <script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
       <title>Vendor Payment</title>
    </head>
@@ -615,6 +616,7 @@
          /********************************************************************/
          //Get Pending Invoice Report
          function getPendingInvReport(){
+         $.blockUILoad();
          var url="${pageContext.request.contextPath}/processing/pendingInvoiceReport.jsp";
          if(window.XMLHttpRequest){  
          invReport=new XMLHttpRequest();  
@@ -637,6 +639,7 @@
          var response = this.response.trim();
          var data = JSON.parse(response);
          setPendingTable(data);
+         $.unblockUILoad();
          } 
          }
          
@@ -664,6 +667,7 @@
          /********************************************************************/
          //Send AJAX request to get Daily Setup data
          function getDailySetupData(){
+         $.blockUILoad();
          url = "../processing/setDailyInvSetup.jsp";
          if(window.XMLHttpRequest){  
          fetchDailySetupRequest=new XMLHttpRequest();  
@@ -686,6 +690,7 @@
          		var data = JSON.parse(response);
         	 	console.log(data);
          		setDailySetupData(data);
+         		$.unblockUILoad();
         	 }
          }
          
@@ -743,6 +748,7 @@
          /****************************************************************************/
          //Send AJAX request to get RTGS transaction count for today 
          function getRtgsCount(companyId){
+        	 $.blockUILoad();
 	         console.log(companyId);
 	         url = "../processing/getTodaysRtgsCount.jsp?companyId="+companyId;
 	         if(window.XMLHttpRequest){  
@@ -764,6 +770,7 @@
        		if(fetchRtgsCount.readyState == 4){
          		var response = this.response.trim();
         		document.getElementById('rtgsCount').innerHTML = response;	
+        		$.unblockUILoad();
         	 }
          }
          
@@ -771,6 +778,7 @@
          /****************************************************************************/
          //Send AJAX Request to fetch invoice data
          function fetchInvoiceData(invoiceNo){
+        	 $.blockUILoad();
 	         url = "../processing/getDataForOperator.jsp?invoiceNo="+invoiceNo;
 	         if(window.XMLHttpRequest){  
 	         	fetchInvoiceReq=new XMLHttpRequest();  
@@ -797,6 +805,7 @@
 			         var data = JSON.parse(response);
 			         console.log(data);
 			         setData(data);
+			         $.unblockUILoad();
 		         }
 	         }
          }

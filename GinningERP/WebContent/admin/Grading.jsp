@@ -12,6 +12,7 @@
 <title>Goods Grading Note</title>
 <script src="../js/3.4.1-jq.js"></script>
 <script src="../js/3.2.1-jq.js"></script>
+<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUILoading.js" ></script>
 <script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
 </head>
 
@@ -290,6 +291,7 @@ function getDailySetupRecords(){
 }
 
 function fetchBonusRate(){
+	$.blockUILoad();
 	var url="${pageContext.request.contextPath}/processing/getLatestBonusRate.jsp";
 	if(window.XMLHttpRequest){  
 		fetchBonus=new XMLHttpRequest();  
@@ -309,6 +311,7 @@ function getBonusAmount(){
 	if(fetchBonus.readyState == 4){
 		console.log("bonus ---" +this.response.trim());
 		document.getElementById("bonusAmount").value = this.response.trim();
+		$.unblockUILoad();
 	}
 }
 
@@ -470,7 +473,7 @@ document.addEventListener("change",function(e){
 
 //Fetch data for grading using RST
 function fetchData(rst){
-	
+	$.blockUILoad();
 	url = "../processing/getWeighmentData.jsp?rst="+rst;
 	
 	if(window.XMLHttpRequest){  
@@ -511,6 +514,7 @@ function getData(){
 			else if(Number(data[0].flag) > 0){
 				setGradeUpdationData(data);
 			}
+			$.unblockUILoad();
 		}
 	}
 }
@@ -939,6 +943,7 @@ function setPdcBonusRate(){
 }
 
 function pendingGradeReports(){
+	$.blockUILoad();
 	var url="${pageContext.request.contextPath}/processing/pendingGradeReport.jsp";
 	if(window.XMLHttpRequest){  
 		fetchPendingGrade=new XMLHttpRequest();  
@@ -959,6 +964,7 @@ function getPendingGradeData(){
 		var response = this.response.trim();
 		var data = JSON.parse(response);
 		setPedingGradData(data);
+		$.unblockUILoad();
 	}
 }
 
@@ -983,6 +989,7 @@ function setPedingGradData(data){
 
 
 function deleteGrades(rst, weighmentData){
+	$.blockUILoad();
 	var url="${pageContext.request.contextPath}/processing/deleteGrading.jsp?rst="+rst+"&weighmentId="+weighmentData;
 	if(window.XMLHttpRequest){  
 		delGradeReq=new XMLHttpRequest();  
@@ -1000,6 +1007,7 @@ function deleteGrades(rst, weighmentData){
 
 function getDeletResp(){
 	if(delGradeReq.readyState == 4){
+		$.unblockUILoad();
 		var response = this.response.trim();
 		if(response > 0){
 			$.fn.checkStatus(1,"Grading information has been deleted successfully!");

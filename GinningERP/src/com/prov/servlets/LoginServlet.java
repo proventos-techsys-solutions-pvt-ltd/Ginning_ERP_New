@@ -35,6 +35,8 @@ public class LoginServlet extends HttpServlet {
 					response.sendRedirect("wb_operator/GenerateRST.jsp"); //logged-in page  
 				}else if(user.getRole() == 3) {
 					response.sendRedirect("accounts_operation_view/Payment.jsp"); //logged-in page  
+				}else if(user.getRole() == 4) {
+					response.sendRedirect("accounts/general-ledgers.jsp"); //logged-in page 
 				}
 				    		
 			}else { 

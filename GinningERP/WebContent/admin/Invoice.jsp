@@ -11,6 +11,7 @@
 <script src="../js/3.4.1-jq.js"></script>
 <script src="../js/3.2.1-jq.js"></script>
 <script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
+<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUILoading.js" ></script>
 <title>Invoice</title>
 </head>
 
@@ -429,7 +430,7 @@ function setCurrentDate(){
 	}
 	
 	function getDailySetupData(){
-		
+		$.blockUILoad();
 		url = "../processing/setDailyInvSetup.jsp";
 		if(window.XMLHttpRequest){  
 			fetchDailySetupRequest=new XMLHttpRequest();  
@@ -481,6 +482,7 @@ function setCurrentDate(){
 		document.getElementById('bonusPerQtl').value = data.bonusAmount;
 		document.getElementById('invoiceNo').value = data.invoiceSeries;
 		document.getElementById('accPayableId').value = data.accPayableId;
+		$.unblockUILoad();
 		
 	}
 	
@@ -495,6 +497,7 @@ function setCurrentDate(){
 	
 	//Send the AJAX Request to fetch data
 	function fetchData(rst){
+		$.blockUILoad();
 		if(!checkRstInTable(rst)){
 			url = "../processing/adminApproval.jsp?rst="+rst;
 			if(window.XMLHttpRequest){  
@@ -531,6 +534,7 @@ function setCurrentDate(){
 			}else{
 				var data = JSON.parse(response);
 				setData(data);
+				$.unblockUILoad();
 			}
 		}
 	}
@@ -538,6 +542,7 @@ function setCurrentDate(){
 	
 	//Send the AJAX Request to fetch data
 	function fetchAmanatData(rst){
+		$.blockUILoad();
 		if(!checkRstInTable(rst)){
 			url = "../processing/amanatInvoice.jsp?rst="+rst;
 			if(window.XMLHttpRequest){  
@@ -574,6 +579,7 @@ function setCurrentDate(){
 			}else{
 				var data = JSON.parse(response);
 				setAmanatData(data);
+				$.unblockUILoad();
 			}
 			
 		}
@@ -804,6 +810,7 @@ function setCurrentDate(){
 	
 	//Send the AJAX Request to fetch data
 	function fetchInvoiceUpdateData(invoiceNo){
+		$.blockUILoad();
 		if(!checkRstInTable(rst)){
 			url = "../processing/getInvoiceUpdationData.jsp?invoiceNo="+invoiceNo;
 			if(window.XMLHttpRequest){  
@@ -830,6 +837,7 @@ function setCurrentDate(){
 			}else{
 				var data = JSON.parse(response);
 				setDataForInvoiceUpdation(data);
+				$.unblockUILoad();
 			}
 		}
 	}
@@ -1360,6 +1368,7 @@ function setCurrentDate(){
 	});
 	
 	function pendingInvoicingReports(){
+		$.blockUILoad();
 		var url="${pageContext.request.contextPath}/processing/pendingInvoicingReport.jsp";
 		if(window.XMLHttpRequest){  
 			fetchPendingInvoicing=new XMLHttpRequest();  
@@ -1380,6 +1389,7 @@ function getPendingInvoicingData(){
 		var response = this.response.trim();
 		var data = JSON.parse(response);
 		setPendingInvoicingData(data);
+		$.unblockUILoad();
 	}
 }
 
@@ -1403,6 +1413,7 @@ function setPendingInvoicingData(data){
 }
 
 function getVocuherNo(){
+	$.blockUILoad();
 		var url="${pageContext.request.contextPath}/processing/getVoucherNoSeries.jsp";
 		if(window.XMLHttpRequest){  
 			fetchVouch=new XMLHttpRequest();  
@@ -1422,6 +1433,7 @@ function getVocuherNo(){
 		if(fetchVouch.readyState == 4){
 			var response = this.response.trim();
 			document.getElementById('voucherNo').value = response;
+			$.unblockUILoad();
 		}
 	}
 	

@@ -49,6 +49,7 @@
 									<option value="1">Admin</option>
 									<option value="2">Weigh Bridge Operator</option>
 									<option value="3">Cashier</option>
+									<option value="4">Accountant</option>
 								</select>
 							</div>
 						</div>
@@ -160,6 +161,8 @@ function setUsersData(data){
 			cell4.innerHTML = 'WEIGH BRIDGE OPERATOR';
 		}else if(Number(data[i].role) == 3){
 			cell4.innerHTML = 'CASHIER';
+		}else if(Number(data[i].role) == 4){
+			cell4.innerHTML = 'ACCOUNTANT';
 		}
 		
 		if(Number(data[i].status) == 1){

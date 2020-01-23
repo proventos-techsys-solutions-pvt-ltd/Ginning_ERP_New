@@ -126,7 +126,7 @@
 			var startDate = document.getElementById("startDate").value;
 			var endDate = document.getElementById("endDate").value;
 			
-			url = "/getBankTrReport.jsp?companyId="+companyId+"&bankId="+bankId+"&startDate="+startDate+"&endDate="+endDate;
+			url = "../processing/getBankTrReport.jsp?companyId="+companyId+"&bankId="+bankId+"&startDate="+startDate+"&endDate="+endDate;
 			console.log(url);
 			if(window.XMLHttpRequest){  
 				fetchRequest=new XMLHttpRequest();  
