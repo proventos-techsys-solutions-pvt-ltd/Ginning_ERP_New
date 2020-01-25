@@ -253,7 +253,6 @@
 		
 		
 		function dateFilter(){
-
 	        var startDate = (dates.convert(document.getElementById('startDate').value)).toDateString();
 	        var endDate = (dates.convert(document.getElementById('endDate').value)).toDateString();
 	        var companyId = document.getElementById('companyId').value;

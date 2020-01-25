@@ -273,7 +273,6 @@ public JSONArray getAmanatReport() {
 	ResultSet rs = null;
 	Connection con = null;
 	JSONArray jsonArray = new JSONArray();
-	SimpleDateFormat format2 = new SimpleDateFormat("MM-dd-yyyy");
 	
 	try {
 		con = OracleConnection.getConnection();
@@ -322,7 +321,7 @@ public JSONArray getAmanatReport() {
 			obj.put("differenceFromSuper", rs.getString(4));
 			
 			Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse((rs.getString(5)));
-			String properDate = format2.format(date1);
+			String properDate=new SimpleDateFormat("MM/dd/yyyy").format(date1);
 			
 			obj.put("amanatDate", properDate);
 			obj.put("amanatNo", rs.getString(6));

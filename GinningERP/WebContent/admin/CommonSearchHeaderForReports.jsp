@@ -25,14 +25,14 @@
  			</div>
 			<div class="col-md-2" style="margin-left:-150px;">
 				<label class="lbl-rm-all">From</label>
-				<input type="date" class="form-control form-control-sm " name="" id="">
+				<input type="date" class="form-control form-control-sm " name="" id="startDate">
  			</div>
  			<div class="col-md-2">
 				<label class="lbl-rm-all">To</label>
-				<input type="date" class="form-control form-control-sm" name="" id="">
+				<input type="date" class="form-control form-control-sm" name="" id="endDate">
  			</div>
  			<div class="col-md-2">
-				<button type="button" class="btn btn-sm btn-success" id="" style="margin-top:31px;">Filter</button>
+				<button type="button" class="btn btn-sm btn-success" id="filter" style="margin-top:31px;" onclick="dateFilter()">Filter</button>
  			</div>
  			<div class="col-md-2">
 				<img src="../property/img/exportexcel.png" alt="option" class="img-set" style="margin-top:31px;margin-left:-150px;" id="exportToExcel">

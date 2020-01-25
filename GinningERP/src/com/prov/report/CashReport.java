@@ -118,7 +118,8 @@ public JSONArray getCashPayments() {
 				"    IM.INV_DATE,\r\n" + 
 				"    PD.AMOUNT,\r\n" + 
 				"    PD.CASH_VOUCH_NO,\r\n" + 
-				"    CM.NAME\r\n" + 
+				"    CM.NAME,\r\n" + 
+				"    IM.COMPANY_ID\r\n" + 
 				"FROM\r\n" + 
 				"    INVOICE_MAST      IM,\r\n" + 
 				"    PAYMENT_DETAILS   PD,\r\n" + 
@@ -147,6 +148,7 @@ public JSONArray getCashPayments() {
 			obj.put("amount", rs.getString(4));
 			obj.put("cashVoucherNo", rs.getString(5));
 			obj.put("vendorName", rs.getString(6));
+			obj.put("companyId", rs.getString(7));
 			
 			jsonArr.put(obj);
 		}
