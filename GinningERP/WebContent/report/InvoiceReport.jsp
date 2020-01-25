@@ -128,6 +128,11 @@ body{
 						<td name="unloadingCharges"></td>
 					</tr>
 					<tr>
+						<td colspan="4"></td>
+						<td colspan="2"><b>Advance: </b></td>
+						<td name="advance"></td>
+					</tr>
+					<tr>
 						<td colspan="3"></td>
 						<td><b>Total Qty: </b></td>
 						<td name="netWeight"></td>
@@ -161,7 +166,6 @@ body{
 				<li><b>Post dated Payment Date : </b><span name="pdcDate"></span></li>
 				<li><b>Post dated Cheque No.: </b><span name="pdcNo"></span></li>
 				<li><b>Bonus: </b><span name="bonus"></span></li>
-				<li><b>advance: </b><span name="advance"></span></li>
 			</ul>
 		</div>
 		<div class="col-md-6">
@@ -283,6 +287,11 @@ body{
 						<td name="unloadingCharges"></td>
 					</tr>
 					<tr>
+						<td colspan="4"></td>
+						<td colspan="2"><b>Advance: </b></td>
+						<td name="advance"></td>
+					</tr>
+					<tr>
 						<td colspan="3"></td>
 						<td><b>Total Qty: </b></td>
 						<td name="netWeight"></td>
@@ -316,7 +325,6 @@ body{
 				<li><b>Post dated Payment Date : </b><span name="pdcDate"></span></li>
 				<li><b>Post dated Cheque No.: </b><span name="pdcNo"></span></li>
 				<li><b>Bonus: </b><span name="bonus"></span></li>
-				<li><b>advance: </b><span name="advance"></span></li>
 			</ul>
 		</div>
 		<div class="col-md-6">
