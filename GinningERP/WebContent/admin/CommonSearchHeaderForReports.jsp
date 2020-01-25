@@ -20,22 +20,19 @@
 				<label class="lbl-rm-all">Search</label>
 				<input type="text" class="form-control form-control-sm " name="" id="searchInput" placeholder="">
 			</div>
-			<div class="col-md-2">
-				<button type="button" class="btn btn-success btn-sm lbl-rm-l" style="margin-top:31px;">Search</button>
- 			</div>
-			<div class="col-md-2" style="margin-left:-150px;">
+			<div class="col-md-2" >
 				<label class="lbl-rm-all">From</label>
-				<input type="date" class="form-control form-control-sm " name="" id="">
+				<input type="date" class="form-control form-control-sm " name="startDate" id="startDate">
  			</div>
  			<div class="col-md-2">
 				<label class="lbl-rm-all">To</label>
-				<input type="date" class="form-control form-control-sm" name="" id="">
+				<input type="date" class="form-control form-control-sm" name="endDate" id="endDate">
  			</div>
  			<div class="col-md-2">
-				<button type="button" class="btn btn-sm btn-success" id="" style="margin-top:31px;">Filter</button>
+				<button type="button" class="btn btn-sm btn-success" id="dateFilterButton" onclick="dateFilter()" style="margin-top:31px;">Filter</button>
  			</div>
  			<div class="col-md-2">
-				<img src="../property/img/exportexcel.png" alt="option" class="img-set" style="margin-top:31px;margin-left:-150px;" id="exportToExcel">
+				<img src="../property/img/exportexcel.png" alt="option" class="img-set" style="margin-top:31px;margin-left:-120px;" id="exportToExcel">
  			</div>
  			
 			</div>

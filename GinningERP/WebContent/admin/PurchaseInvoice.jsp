@@ -18,21 +18,6 @@
   <div id="content">
 		<div class="container-fluid ">
 		<%@include file="../admin/CommonSearchHeaderForReports.jsp" %>
-		<div class="row row-background">
-			<div class="col-md-auto">
-		<div class="d-flex justify-content-start align-items-center">
-					<label>From</label>
-					&nbsp;&nbsp;
-						<input type="date" class="form-control form-control-sm" id="startDate" name="startDate">
-					&nbsp;&nbsp; 
-					<label>To</label>
-					&nbsp;&nbsp;
-						<input type="date" class="form-control form-control-sm" id="endDate" name="endDate">
-					&nbsp;&nbsp;
-					<button type="button" class="btn btn-success btn-sm" id="dateFilterButton" onclick="dateFilter()">Filter</button>
-				</div>
-			</div>
-			</div>
 			
 		<div class="row row-background">
 			<div class="col-md-12">

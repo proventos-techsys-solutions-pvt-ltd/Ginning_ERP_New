@@ -259,6 +259,9 @@ $(document).ready(function () {
 			}
 		}
 	}
+	$("#cancel-button1").click(function(){
+		location.reload();
+	})
 	</script>
 </body>
 </html>

@@ -39,32 +39,26 @@
 			</div>
 		</div>
 		<div class="row row-background">
-			<div class="col-md-auto">
-				<div class="d-flex justify-content-start align-items-center">
+			<div class="col-md-2">
+				<label>Search</label>
+				<input type="text" class="form-control form-control-sm inpt-rm-t" name="" id="searchInput" placeholder="">
+			</div>
+			<div class="col-md-2">
 					<label>From</label>
-					&nbsp;&nbsp;
-						<input type="date" class="form-control form-control-sm" id="startDate" name="startDate">
-					&nbsp;&nbsp; 
+					<input type="date" class="form-control form-control-sm" id="startDate" name="startDate">
+			</div>
+			<div class="col-md-2">
 					<label>To</label>
-					&nbsp;&nbsp;
-						<input type="date" class="form-control form-control-sm" id="endDate" name="endDate">
-					&nbsp;&nbsp;
-					<button type="button" class="btn btn-success btn-sm" id="dateFilterButton">Filter</button>
-				</div>
+					<input type="date" class="form-control form-control-sm" id="endDate" name="endDate">
+			</div>
+			<div class="col-md-2">
+					<button type="button" class="btn btn-success btn-sm" id="dateFilterButton" style="margin-top:32px;">Filter</button>
+			</div>
+			<div class="col-md-2">
+					<img src="../property/img/exportexcel.png" alt="option" class="img-set" id="exportToExcel" style="margin-top:32px; margin-left:-120px;">
 			</div>
 			</div>
 			</form> 
-			<div class="row row-background">
-			<div class="col-md-auto">
-				<div class="d-flex justify-content-start align-items-center">
-				<input type="text" class="form-control form-control-sm inpt-rm-t" name="" id="searchInput" placeholder="">
-				<button type="button" class="btn btn-success btn-sm lbl-rm-l">Search</button>
-				</div>
-			</div>
-			<div class="col-md-auto">
-				<img src="../property/img/exportexcel.png" alt="option" class="img-set" id="exportToExcel">
-			</div>
-			</div>
 	 	<div class="row row-background">
 	 		<div class="col-md-12">
 	 		<input type="hidden" name="jsonOutput" id="jsonOutput" value='<%= session.getAttribute("jsonArray") %>' />

@@ -39,32 +39,26 @@
 			</div>
 		</div>
 		<div class="row row-background">
-			<div class="col-md-auto">
-				<div class="d-flex justify-content-start align-items-center">
+			<div class="col-md-2">
+					<label>Search</label>
+					<input type="text" class="form-control form-control-sm " name="" id="searchInput" placeholder="">
+					</div>
+				<div class="col-md-2">	
 					<label>From</label>
-					&nbsp;&nbsp;
 						<input type="date" class="form-control form-control-sm" id="startDate" name="startDate">
-					&nbsp;&nbsp; 
+						</div>
+						<div class="col-md-2">
 					<label>To</label>
-					&nbsp;&nbsp;
 						<input type="date" class="form-control form-control-sm" id="endDate" name="endDate">
-					&nbsp;&nbsp;
-					<button type="button" class="btn btn-success btn-sm" id="dateFilterButton">Filter</button>
-				</div>
-			</div>
+						</div>
+						<div class="col-md-2">
+					<button type="button" class="btn btn-success btn-sm" id="dateFilterButton" style="margin-top:45px;">Filter</button>
+					</div>
+						<div class="col-md-2">
+							<img src="../property/img/exportexcel.png" alt="option" class="img-set" id="exportToExcel" style="margin-top:45px;margin-left:-150px;" >
+						</div>
 			</div>
 			</form> 
-			<div class="row row-background">
-			<div class="col-md-auto">
-				<div class="d-flex justify-content-start align-items-center">
-				<input type="text" class="form-control form-control-sm inpt-rm-t" name="" id="searchInput" placeholder="">
-				<button type="button" class="btn btn-success btn-sm ">Search</button>
-				</div>
-			</div>
-			<div class="col-md-auto">
-				<img src="../property/img/exportexcel.png" alt="option" class="img-set" id="exportToExcel">
-			</div>
-			</div>
 	 	<div class="row row-background">
 	 		<div class="col-md-12">
 	 			<table id="tblBankRegister" class="table table-bordered">
@@ -114,6 +108,13 @@
             	filename: "Bank_Register_"+getCurrentDate()+".xls"
             });
         }
+        
+        $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#tableBody tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
 		</script>
 		<script>
 		setTitle("Bank Register");//Setting Title of Page

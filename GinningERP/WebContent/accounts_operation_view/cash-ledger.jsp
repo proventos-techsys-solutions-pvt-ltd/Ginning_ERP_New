@@ -40,10 +40,7 @@
 					<label>Search</label>
 					<input type="text" class="form-control form-control-sm " name="" id="searchInput" placeholder="">
 					</div>
-					<div class="col-md-2">
-					<button type="button" class="btn btn-success btn-sm " style="margin-top:45px">Search</button>
-					</div>
-			<div class="col-md-2" style="margin-left:-150px;">
+			<div class="col-md-2">
 					<label>From</label>
 						<input type="date" class="form-control form-control-sm" id="startDate" name="startDate">
 				</div>
@@ -90,13 +87,16 @@
 	 		</div>
 	 	</div>
 	 </div>
-	 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
+	 	<script src="../js/3.4.1-jq.js"></script>
 		<script src="../js/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 		<script src="../js/commonjs.js"></script>
 		<script type="text/javascript" src="../js/1.8.3-jq.js"></script>
 		<script src="../js/export/export2excel.js"></script>
-    	<script type="text/javascript">
+    	<script type="text/javascript" >
+   	 //*********************Search 
+    
+    	
     	function getCurrentDate(){
 			var today = new Date();
 			var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
@@ -110,10 +110,19 @@
             	filename: "Cash_Ledger"+getCurrentDate()+".xls"
             });
         }
-		</script>
-		<script>
+        
+   
+      	</script>
+      	<script>
 		setTitle("Cash Ledgers");//Setting Title of Page
 		setSearchPlaceholder("Search");//Setting Placeholder of Search Input
+		
+	            $("#searchInput").on("keyup", function() {
+	              var value = $(this).val().toLowerCase();
+	              $("#tableBody tr").filter(function() {
+	                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	              });
+	            });
 		
 		function fetchReport(){
 			var companyId = document.getElementById("companyId").value;
@@ -200,7 +209,8 @@
 					
 			}
 		}	
-		
+	
+        
 		document.getElementById("exportToExcel").addEventListener("click",function(){
 			Export();
 			})

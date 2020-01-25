@@ -12,6 +12,7 @@
 <body>
 <%@include file="NavBar.jsp" %>
 	<div class="container-fluid ">
+		<div class="mt-2"></div>
 	 <%@include file="../admin/CommonSearchHeaderForReports.jsp" %>
 		<div class="row row-background">
 			<div class="col-md-12">
