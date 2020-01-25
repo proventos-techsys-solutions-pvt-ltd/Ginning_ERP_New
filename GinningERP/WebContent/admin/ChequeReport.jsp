@@ -20,39 +20,12 @@
   <%@include file="../admin/Side_bar.html" %>
   <div id="content">
 <div class="container-fluid ">
-	 	<div class="row row-background border-bottom">
+	 	<div class="row row-background ">
 			<div class="col-md-12">
-			<div class="d-flex justify-content-between align-content-center row-background">
-				<div class="d-flex justify-content-start align-content-center row-background">
 					<h4 class="lbl-rm-all">Cheque Report</h4>
-				</div>
-				<div class="d-flex justify-content-start align-content-center row-background">
-					<button type="button" class="btn btn-success btn-sm" id="exportToExcel">Print Report</button>
-				</div>
 			</div>
 			</div>
-			</div>
-			<div class="row row-background">
-			<div class="col-md-auto">
-		<div class="d-flex justify-content-start align-items-center">
-					<label>From</label>
-					&nbsp;&nbsp;
-						<input type="date" class="form-control form-control-sm" id="startDate" name="startDate">
-					&nbsp;&nbsp; 
-					<label>To</label>
-					&nbsp;&nbsp;
-						<input type="date" class="form-control form-control-sm" id="endDate" name="endDate">
-					&nbsp;&nbsp;
-					<button type="button" class="btn btn-success btn-sm" id="dateFilterButton" onclick="dateFilter()">Filter</button>
-				</div>
-			</div>
-			</div>
-			<div class="row row-background border-bottom">
-			<div class="col-md-4">
-				<label>Search</label>
-				<input type="text" class="form-control" name="" id="searchInput">
- 			</div>
-		</div>
+					<%@include file="../admin/CommonSearchHeaderForReports.jsp" %>
 		<div class="row  row-background">
 			<div class="col-md-12">
 				<table class="table table-bordered"id="table">
@@ -102,6 +75,7 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
 	<script src="../js/Validation.js"></script>
+	<script type="text/javascript" src="../js/1.8.3-jq.js"></script>
 	<script src="../js/export/export2excel.js"></script>
 	<script>
 	
