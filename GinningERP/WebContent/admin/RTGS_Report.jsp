@@ -24,32 +24,8 @@
 					<h4 class="lbl-rm-all">RTGS Report</h4>
 			</div>
 			</div>
-			<%--include file="../admin/CommonSearchHeaderForReports.jsp" --%>
-			<div class="row row-background">
+			<%@include file="../admin/CommonSearchHeaderForReports.jsp" %>
 			
-			<div class="col-md-2">
-				<label class="lbl-rm-all">Search</label>
-				<input type="text" class="form-control form-control-sm " name="" id="searchInput" placeholder="">
-			</div>
-			<div class="col-md-2">
-				<button type="button" class="btn btn-success btn-sm lbl-rm-l" style="margin-top:31px;">Search</button>
- 			</div>
-			<div class="col-md-2" style="margin-left:-150px;">
-				<label class="lbl-rm-all">From</label>
-				<input type="date" class="form-control form-control-sm " name="" id="startDate">
- 			</div>
- 			<div class="col-md-2">
-				<label class="lbl-rm-all">To</label>
-				<input type="date" class="form-control form-control-sm" name="" id="endDate">
- 			</div>
- 			<div class="col-md-2">
-				<button type="button" class="btn btn-sm btn-success" id="filter" style="margin-top:31px;" onclick="dateFilter()">Filter</button>
- 			</div>
- 			<div class="col-md-2">
-				<img src="../property/img/exportexcel.png" alt="option" class="img-set" style="margin-top:31px;margin-left:-150px;" id="exportToExcel">
- 			</div>
- 			
-			</div>
 		<div class="row row-background">
 			<div class="col-md-12">
 				<table class="table table-bordered" id="table">
@@ -66,6 +42,7 @@
 							<th hidden>Invoice ID</th>
 							<th hidden>Customer ID</th>
 							<th class="text-center" width="5%">Delete</th>
+							<th hidden>Company ID</th>
 						<tr>
 					</thead>
 					<tbody id="tableBody">
@@ -192,10 +169,12 @@ function Export() {
 			var cell9 = row.insertCell(8);
 			var cell10 = row.insertCell(9);
 			var cell11 = row.insertCell(10);
+			var cell12 = row.insertCell(11);
 			
 			cell8.hidden = true;
 			cell9.hidden = true;
 			cell10.hidden = true;
+			cell12.hidden = true;
 			cell11.align = "center";
 			
 			cell1.innerHTML = data[i].customerName;
@@ -209,6 +188,7 @@ function Export() {
 			cell9.innerHTML = data[i].invoiceId;
 			cell10.innerHTML = data[i].customerId;
 			cell11.innerHTML = '<img src="../property/img/delete.png" alt="deleteRow" >';
+			cell12.innerHTML =  data[i].companyId;
 		}
 	}
 	
@@ -257,21 +237,36 @@ function Export() {
 	
 	
 	function dateFilter(){
-
         var startDate = (dates.convert(document.getElementById('startDate').value)).toDateString();
         var endDate = (dates.convert(document.getElementById('endDate').value)).toDateString();
-        
-		var tableBody = document.getElementById("tableBody");
-        for(i=0;i<tableBody.rows.length;i++){
-        	var date = tableBody.rows[i].cells[6].innerHTML;
-        	var d = (dates.convert(date)).toDateString();
-		        if(dates.inRange (d,startDate,endDate) ){
-		        	tableBody.rows.item(i).hidden = false;
-		        }else if(!dates.inRange (d,startDate,endDate)){
-		        	tableBody.rows.item(i).hidden = true;
-		        }else{
-		        	alert('Choose proper dates from the filters.')
-		        }
+        var companyId = document.getElementById('companyId').value;
+        if(companyId === "Select"){
+        	alert("Please Select Company.");
+        }else{
+			var tableBody = document.getElementById("tableBody");
+	        for(i=0;i<tableBody.rows.length;i++){
+	        	var date = tableBody.rows[i].cells[6].innerHTML;
+	        	var id = tableBody.rows.item(i).cells[11].innerHTML;
+	        	var d = (dates.convert(date)).toDateString();
+	        	
+	        	if(companyId != 0){
+			        if(dates.inRange (d,startDate,endDate) && companyId === id ){
+			        	tableBody.rows.item(i).hidden = false;
+			        }else if(!dates.inRange (d,startDate,endDate) || companyId != id){
+			        	tableBody.rows.item(i).hidden = true;
+			        }else{
+			        	alert('Choose proper dates from the filters.')
+			        }
+	        	}else if(Number(companyId) === 0){
+			        if(dates.inRange (d,startDate,endDate)){
+			        	tableBody.rows.item(i).hidden = false;
+			        }else if(!dates.inRange (d,startDate,endDate)){
+			        	tableBody.rows.item(i).hidden = true;
+			        }else{
+			        	alert('Choose proper dates from the filters.')
+			        }
+	        	}
+	        }
         }
 	} 
 	

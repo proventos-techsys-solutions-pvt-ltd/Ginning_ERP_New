@@ -11,7 +11,6 @@
 <link id="load-css-0" rel="stylesheet" type="text/css" href="../js/Gcharts/ToolTip.css">
 <link id="load-css-1" rel="stylesheet" type="text/css" href="../js/Gcharts/Util.css">
 <link id="load-css-2" rel="stylesheet" type="text/css" href="../js/Gcharts/OrgChart.css">
-<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUILoading.js" ></script>
 <title>Dashboard</title>
 </head>
 <body>
@@ -361,6 +360,7 @@
 <script src="../js/Validation.js"></script>
 <script src="../chart/package/dist/Chart.js" ></script>
 <script src="../chart/package/dist/Chart.bundle.js" ></script>
+<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUILoading.js" ></script>
 <script type="text/javascript" charset="UTF-8" src="../js/Gcharts/FormatModule.js"></script>
 <script type="text/javascript" charset="UTF-8" src="../js/Gcharts/DefaultModule.js"></script>
 <script type="text/javascript" charset="UTF-8" src="../js/Gcharts/UiModule.js"></script>

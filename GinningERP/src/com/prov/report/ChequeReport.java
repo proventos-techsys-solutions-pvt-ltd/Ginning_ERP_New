@@ -76,7 +76,24 @@ public class ChequeReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT * FROM CHEQUE_MAST";
+			String sql = "SELECT\r\n" + 
+					"    CM.ID,\r\n" + 
+					"    CM.CUSTOMER_ID,\r\n" + 
+					"    CM.INVOICE_ID,\r\n" + 
+					"    CM.BANK_ID,\r\n" + 
+					"    CM.CUSTOMER_NAME,\r\n" + 
+					"    CM.INVOICE_NO,\r\n" + 
+					"    CM.BANK_NAME,\r\n" + 
+					"    CM.CHEQUE_NO,\r\n" + 
+					"    CM.AMOUNT,\r\n" + 
+					"    CM.CHEQUE_DATE,\r\n" + 
+					"    CM.STATUS,\r\n" + 
+					"    CM.PAYMENT_STATUS,\r\n" + 
+					"    CM.VOUCHER_NO,\r\n" + 
+					"    IM.COMPANY_ID\r\n" + 
+					"FROM\r\n" + 
+					"    CHEQUE_MAST    CM\r\n" + 
+					"    LEFT JOIN INVOICE_MAST   IM ON CM.INVOICE_ID = IM.ID";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -108,6 +125,7 @@ public class ChequeReport {
 				c.setStatus(rs.getInt(11));
 				c.setChequePaymentStatus(rs.getInt(12));
 				c.setVoucherNo(rs.getInt(13));
+				c.setCompanyId(rs.getInt(14));
 				
 				chequeList.add(c);
 			

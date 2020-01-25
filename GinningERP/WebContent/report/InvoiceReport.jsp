@@ -457,8 +457,7 @@ body{
 				document.getElementsByName('chequePaid')[k].innerHTML = "Rs. "+obj.chequeAmount;
 				document.getElementsByName('chequeNo')[k].innerHTML= obj.chequeNo;
 			}
-			
-			
+
 			
 			if(obj.chequeDate === "" || obj.chequeDate === "0" || obj.chequeDate === 0){
 				document.getElementsByName('chequeDate')[k].parentNode.hidden=true;
@@ -559,9 +558,6 @@ body{
 		}
 		
 	}
-	
-	
-	
 	</script>
 </body>
 </html>

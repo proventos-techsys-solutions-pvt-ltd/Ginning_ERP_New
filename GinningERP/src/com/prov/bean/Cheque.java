@@ -2,7 +2,13 @@ package com.prov.bean;
 
 public class Cheque {
 	
-	private int id, customerId, bankId, invoiceId, status, chequePaymentStatus, voucherNo;
+	private int id, customerId, bankId, invoiceId, status, chequePaymentStatus, voucherNo,companyId;
+	public int getCompanyId() {
+		return companyId;
+	}
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
+	}
 	public int getVoucherNo() {
 		return voucherNo;
 	}

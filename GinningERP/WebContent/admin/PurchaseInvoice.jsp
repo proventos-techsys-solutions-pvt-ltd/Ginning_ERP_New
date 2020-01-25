@@ -241,30 +241,33 @@
 	        var startDate = (dates.convert(document.getElementById('startDate').value)).toDateString();
 	        var endDate = (dates.convert(document.getElementById('endDate').value)).toDateString();
 	        var companyId = document.getElementById('companyId').value;
-	        
-			var tableBody = document.getElementById("tableBody");
-	        for(i=0;i<tableBody.rows.length;i++){
-	        	var date = tableBody.rows[i].cells[2].innerHTML;
-	        	var id = tableBody.rows.item(i).cells[0].innerHTML;
-	        	var d = (dates.convert(date)).toDateString();
-	        	
-	        	if(companyId != 0){
-			        if(dates.inRange (d,startDate,endDate) && companyId === id ){
-			        	tableBody.rows.item(i).hidden = false;
-			        }else if(!dates.inRange (d,startDate,endDate) || companyId != id){
-			        	tableBody.rows.item(i).hidden = true;
-			        }else{
-			        	alert('Choose proper dates from the filters.')
-			        }
-	        	}else if(Number(companyId) === 0){
-			        if(dates.inRange (d,startDate,endDate)){
-			        	tableBody.rows.item(i).hidden = false;
-			        }else if(!dates.inRange (d,startDate,endDate)){
-			        	tableBody.rows.item(i).hidden = true;
-			        }else{
-			        	alert('Choose proper dates from the filters.')
-			        }
-	        	}
+	        if(companyId === "Select"){
+	        	alert("Please Select Company.");
+	        }else{
+				var tableBody = document.getElementById("tableBody");
+		        for(i=0;i<tableBody.rows.length;i++){
+		        	var date = tableBody.rows[i].cells[2].innerHTML;
+		        	var id = tableBody.rows.item(i).cells[0].innerHTML;
+		        	var d = (dates.convert(date)).toDateString();
+		        	
+		        	if(companyId != 0){
+				        if(dates.inRange (d,startDate,endDate) && companyId === id ){
+				        	tableBody.rows.item(i).hidden = false;
+				        }else if(!dates.inRange (d,startDate,endDate) || companyId != id){
+				        	tableBody.rows.item(i).hidden = true;
+				        }else{
+				        	alert('Choose proper dates from the filters.')
+				        }
+		        	}else if(Number(companyId) === 0){
+				        if(dates.inRange (d,startDate,endDate)){
+				        	tableBody.rows.item(i).hidden = false;
+				        }else if(!dates.inRange (d,startDate,endDate)){
+				        	tableBody.rows.item(i).hidden = true;
+				        }else{
+				        	alert('Choose proper dates from the filters.')
+				        }
+		        	}
+		        }
 	        }
 		} 
 		
