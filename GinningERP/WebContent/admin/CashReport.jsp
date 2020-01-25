@@ -37,6 +37,7 @@
 							<th>Amount</th>
 							<th>Voucher No.</th>
 							<th hidden>Invoice ID</th>
+							<th hidden>Company ID</th>
 							<th class="text-center" width="5%">Delete</th>
 						<tr>
 					</thead>
@@ -143,9 +144,11 @@
 			var cell5 = row.insertCell(4);
 			var cell6 = row.insertCell(5);
 			var cell7 = row.insertCell(6);
+			var cell8 = row.insertCell(7);
 			
 			//cell6.hidden = true;
 			cell6.hidden = true;
+			cell8.hidden = true;
 			cell7.align = "center";
 			
 			cell1.innerHTML = data[i].vendorName;
@@ -155,6 +158,7 @@
 			cell5.innerHTML = data[i].cashVoucherNo;
 			cell6.innerHTML = data[i].invoiceId;
 			cell7.innerHTML = '<img src="../property/img/delete.png" alt="deleteRow" >';
+			cell8.innerHTML = data[i].companyId;
 		}
 	}
 	
@@ -202,24 +206,39 @@
 	getReport();
 	
 	function dateFilter(){
-
         var startDate = (dates.convert(document.getElementById('startDate').value)).toDateString();
         var endDate = (dates.convert(document.getElementById('endDate').value)).toDateString();
-        
-		var tableBody = document.getElementById("tableBody");
-        for(i=0;i<tableBody.rows.length;i++){
-        	var date = tableBody.rows[i].cells[2].innerHTML;
-        	var id = tableBody.rows.item(i).cells[0].innerHTML;
-        	var d = (dates.convert(date)).toDateString();
-		        if(dates.inRange (d,startDate,endDate) ){
-		        	tableBody.rows.item(i).hidden = false;
-		        }else if(!dates.inRange (d,startDate,endDate)){
-		        	tableBody.rows.item(i).hidden = true;
-		        }else{
-		        	alert('Choose proper dates from the filters.')
-		        }
+        var companyId = document.getElementById('companyId').value;
+		
+        if(companyId === "Select"){
+        	alert("Please Select Company.");
+        }else{
+			var tableBody = document.getElementById("tableBody");
+	        for(i=0;i<tableBody.rows.length;i++){
+	        	var date = tableBody.rows[i].cells[2].innerHTML;
+	        	var id = tableBody.rows.item(i).cells[7].innerHTML;
+	        	var d = (dates.convert(date)).toDateString();
+	        	
+	        	if(companyId != 0){
+			        if(dates.inRange (d,startDate,endDate) && companyId === id ){
+			        	tableBody.rows.item(i).hidden = false;
+			        }else if(!dates.inRange (d,startDate,endDate) || companyId != id){
+			        	tableBody.rows.item(i).hidden = true;
+			        }else{
+			        	alert('Choose proper dates from the filters.')
+			        }
+	        	}else if(Number(companyId) === 0){
+			        if(dates.inRange (d,startDate,endDate)){
+			        	tableBody.rows.item(i).hidden = false;
+			        }else if(!dates.inRange (d,startDate,endDate)){
+			        	tableBody.rows.item(i).hidden = true;
+			        }else{
+			        	alert('Choose proper dates from the filters.')
+			        }
+	        	}
+	        }
         }
-	} 
+	}
 	
 	
 	var dates = {
