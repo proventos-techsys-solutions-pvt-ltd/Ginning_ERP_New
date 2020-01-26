@@ -6,17 +6,14 @@
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../styles/bootstrap.min.css">
-<link rel="stylesheet" href="../styles/admin/sidenav.css">
+ <link rel="stylesheet" href="../styles/WBStyle.css">
 <link rel="stylesheet" href="../styles/css/all.css">
 <title>Journal Entry</title>
 </head>
 <body>
-<%@include file="../admin/Top_Nav.jsp" %>
-<div class="wrapper">
-  <%@include file="../admin/Side_bar.html" %>
-  <div id="content">
+ <%@include file="NavBar.jsp" %>
 <div class="container-fluid ">
-	<div class="row row-background">
+	<div class="row row-background mt-2">
 		<div class="col-md-2">
 			<h4>Journal Entry</h4>
 		</div>
@@ -118,7 +115,6 @@
 		</div>
 	
 </div>
-</div>
 
 
 <!-- Response modal pop up -->
@@ -135,7 +131,6 @@
 	<div class="response-footer">
 		<button type="button" class="btn btn-success btn-response" id="response-button">Ok</button>
 	</div>
-</div>
 </div>
 
 
@@ -270,14 +265,6 @@
 		}
 	})
 		
-		/***********************
-			Side bar 
-		************************/
-	       $(document).ready(function () {
-	            $('#sidebarCollapse').on('click', function () {
-	                $('#sidebar').toggleClass('active');
-	            });
-	        });
 		
 		
 		

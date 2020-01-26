@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Chart Of Accounts</title>
 </head>
-
 <body>
  <%@include file="NavBar.jsp" %>
 	<div class="container-fluid ">
@@ -25,47 +24,55 @@
 			<div class="row row-background">
 				<div class="col-md-3">
 						<label class="lbl-rm-l ">Select Company</label> 
-				<select class="form-control form-control-sm" name="companyId" id="companyId" onchange="setPaymentModes(this.value)">
+				<select class="form-control " name="companyId" id="companyId" onchange="setPaymentModes(this.value)">
 					<option selected="selected" disabled>Select</option>
 					<c:Company />
 				</select>
 			</div>
+			<div class="col-md-3">
+						<label class="lbl-rm-l">Payee</label>
+						<input type="text" class="form-control " name="payee" id="payee">
+				</div>
 			</div>
 			
 			<div class="row row-background">
 				<div class="col-md-2">
 						<label class="lbl-rm-l">Date</label>
-						<input type="date" class="form-control form-control-sm" name="date" id="date">
+						<input type="date" class="form-control " name="date" id="date">
 				</div>
 				<div class="col-md-2">
-						<label class="lbl-rm-it">Voucher No</label>
-						<input type="text" class="form-control form-control-sm" name="voucherNo" id="voucherNo" value="" readonly="readonly">
+						<label class="lbl-rm-l">Voucher No</label>
+						<input type="text" class="form-control " name="voucherNo" id="voucherNo" value="" readonly="readonly">
 				</div>
 				<div class="col-md-2">
-						<label class="lbl-rm-it">Reference</label>
-						<input type="text" class="form-control form-control-sm" name="voucherReference" id="voucherReference">
+						<label class="lbl-rm-l">Reference</label>
+						<input type="text" class="form-control " name="voucherReference" id="voucherReference">
+				</div>
+				<div class="col-md-2">
+						<label class="lbl-rm-l">Cheque No</label>
+						<input type="text" class="form-control " name="chequeNo" id="chequeNo">
 				</div>
 			</div>
 			
 			<div class="row mt-2 row-background">
 				<div class="col-md-2">
 						<label class="lbl-rm-l">Expense Account</label>
-						<select class="form-control form-control-sm" name="accountId" id="accountId">
+						<select class="form-control " name="accountId" id="accountId">
 							<option selected="selected" disabled>Select</option>
 							<c:ExpenseAccountTag/>
 						</select>
 				</div>
 				<div class="col-md-5">
 						<label class="lbl-rm-l">Description</label>
-						<input type="text" class="form-control form-control-sm" name="description" id="description">
+						<input type="text" class="form-control " name="description" id="description">
 				</div>
 				<div class="col-md-2">
 						<label class="lbl-rm-l">Amount</label>
-						<input type="text" class="form-control form-control-sm" name="amount" id="amount" />
+						<input type="text" class="form-control " name="amount" id="amount" />
 				</div>
 				<div class="col-md-3">
 						<label class="lbl-rm-l">Payment Mode</label>
-						<select class="form-control form-control-sm" name="paymentMode" id="paymentMode">
+						<select class="form-control " name="paymentMode" id="paymentMode">
 							<option selected disabled>Select</option>
 							<c:BankLedgerTag/>
 							<c:CashLedgerTag/>

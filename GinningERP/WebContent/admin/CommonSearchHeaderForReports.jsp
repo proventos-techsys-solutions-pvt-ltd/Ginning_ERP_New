@@ -20,10 +20,7 @@
 				<label class="lbl-rm-all">Search</label>
 				<input type="text" class="form-control form-control-sm " name="" id="searchInput" placeholder="">
 			</div>
-			<div class="col-md-2">
-				<button type="button" class="btn btn-success btn-sm lbl-rm-l" style="margin-top:31px;">Search</button>
- 			</div>
-			<div class="col-md-2" style="margin-left:-150px;">
+			<div class="col-md-2" style="">
 				<label class="lbl-rm-all">From</label>
 				<input type="date" class="form-control form-control-sm " name="" id="startDate">
  			</div>
@@ -35,7 +32,7 @@
 				<button type="button" class="btn btn-sm btn-success" id="filter" style="margin-top:31px;" onclick="dateFilter()">Filter</button>
  			</div>
  			<div class="col-md-2">
-				<img src="../property/img/exportexcel.png" alt="option" class="img-set" style="margin-top:31px;margin-left:-150px;" id="exportToExcel">
+				<img src="../property/img/exportexcel.png" alt="option" class="img-set" style="margin-top:31px;margin-left:-120px;" id="exportToExcel">
  			</div>
  			
 			</div>

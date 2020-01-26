@@ -23,14 +23,14 @@
 			<div class="row row-background">
 			<div class="col-md-3">
 					<label class="lbl-rm-l">Company</label>
-					<select class="form-control form-control-sm" name="companyId" id="companyId">
+					<select class="form-control " name="companyId" id="companyId">
 						<option selected>Select</option>
 						<c:Company />
 					</select>
 			</div>
 			<div class="col-md-3">
 					<label class="lbl-rm-l">Expense Ledger</label>
-					<select class="form-control form-control-sm" name="accId" id="accId">
+					<select class="form-control " name="accId" id="accId">
 						<option selected>Select</option>
 						<c:AccountLedger />
 					</select>
@@ -39,21 +39,21 @@
 		<div class="row row-background">
 		<div class="col-md-2">
 				<label>Search</label>
-				<input type="text" class="form-control form-control-sm " name="" id="searchInput" placeholder="">
+				<input type="text" class="form-control  " name="" id="searchInput" placeholder="">
 		</div>
 		<div class="col-md-2" >		
-				<button type="button" class="btn btn-success btn-sm lbl-rm-l" style="margin-top:45px;">Search</button>
+				<button type="button" class="btn btn-success lbl-rm-l" style="margin-top:45px;">Search</button>
 			</div>
-			<div class="col-md-2" style="margin-left:-150px;">
+			<div class="col-md-2" style="margin-left:-145px;">
 					<label>From</label>
-						<input type="date" class="form-control form-control-sm" id="startDate" name="startDate">
+						<input type="date" class="form-control " id="startDate" name="startDate">
 						</div>
 			<div class="col-md-2">	
 					<label>To</label>
-						<input type="date" class="form-control form-control-sm" id="endDate" name="endDate">
+						<input type="date" class="form-control " id="endDate" name="endDate">
 						</div>
 			<div class="col-md-2">
-					<button type="button" class="btn btn-success btn-sm" id="dateFilterButton"  style="margin-top:45px;">Filter</button>
+					<button type="button" class="btn btn-success " id="dateFilterButton"  style="margin-top:45px;">Filter</button>
 			</div>
 			<div class="col-md-2">
 				<img src="../property/img/exportexcel.png" alt="option" class="img-set"  style="margin-top:45px;margin-left:-150px;" id="exportToExcel">
