@@ -54,13 +54,17 @@ public class UserReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT NAME,\r\n" + 
-						"USERNAME,\r\n" + 
-						"ID,\r\n" + 
-						"ROLE,\r\n" + 
-						"STATUS,"+ 
-						"PASSWORD"+ 
-						" FROM USERS ORDER BY NAME";
+			String sql = "SELECT\r\n" + 
+					"    NAME,\r\n" + 
+					"    USERNAME,\r\n" + 
+					"    ID,\r\n" + 
+					"    ROLE,\r\n" + 
+					"    STATUS,\r\n" + 
+					"    PASSWORD\r\n" + 
+					"FROM\r\n" + 
+					"    USERS\r\n" + 
+					"ORDER BY\r\n" + 
+					"    NAME";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			

@@ -14,7 +14,15 @@ public class AccountNameReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String invSql = "SELECT account_id FROM account_name WHERE bank_id = ? and company_Id=?";
+			String invSql = "SELECT\r\n" + 
+					"    ACCOUNT_ID\r\n" + 
+					"FROM\r\n" + 
+					"    ACCOUNT_NAME\r\n" + 
+					"WHERE\r\n" + 
+					"    BANK_ID = ?\r\n" + 
+					"    AND COMPANY_ID = ?\r\n" + 
+					"ORDER BY\r\n" + 
+					"    ACCOUNT_ID DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(invSql);
 			
@@ -43,7 +51,15 @@ public class AccountNameReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String invSql = "SELECT account_id FROM account_name WHERE ACC_CATEGORY_ID = 6 and company_Id=?";
+			String invSql = "SELECT\r\n" + 
+					"    ACCOUNT_ID\r\n" + 
+					"FROM\r\n" + 
+					"    ACCOUNT_NAME\r\n" + 
+					"WHERE\r\n" + 
+					"    ACC_CATEGORY_ID = 6\r\n" + 
+					"    AND COMPANY_ID = ?\r\n" + 
+					"ORDER BY\r\n" + 
+					"    ACCOUNT_ID";
 			
 			PreparedStatement stmt = con.prepareStatement(invSql);
 			

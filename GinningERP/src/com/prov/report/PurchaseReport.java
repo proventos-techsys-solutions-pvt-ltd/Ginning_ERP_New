@@ -19,14 +19,14 @@ public class PurchaseReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT\r\n" + 
-					"    NVL(SUM(PD.AMOUNT),0)\r\n" + 
-					"FROM\r\n" + 
-					"    PAYMENT_DETAILS   PD,\r\n" + 
-					"    INVOICE_MAST      IM\r\n" + 
-					"WHERE\r\n" + 
-					"    PD.INVOICE_ID = IM.ID\r\n" + 
-					"    AND MODE_ID = 1\r\n" + 
+			String sql = "SELECT \r\n" + 
+					"    NVL(SUM(PD.AMOUNT),0) \r\n" + 
+					"FROM \r\n" + 
+					"    PAYMENT_DETAILS   PD, \r\n" + 
+					"    INVOICE_MAST      IM \r\n" + 
+					"WHERE \r\n" + 
+					"    PD.INVOICE_ID = IM.ID \r\n" + 
+					"    AND MODE_ID = 1 \r\n" + 
 					"    AND IM.COMPANY_ID = ?";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);

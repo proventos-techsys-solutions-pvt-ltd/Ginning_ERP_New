@@ -28,7 +28,7 @@ public Invoice getInvoiceData(int id) {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String invSql = "SELECT * FROM INVOICE_MAST WHERE id=?";
+			String invSql = "SELECT * FROM INVOICE_MAST WHERE ID=?";
 			
 			PreparedStatement stmt = con.prepareStatement(invSql);
 			
@@ -143,15 +143,30 @@ public ArrayList<Invoice> getReport() {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String invSql = "SELECT DISTINCT  \r\n" + 
-					"IM.ID, IM.INV_DATE, IM.INVOICE_NO, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.PENDING, IM.TOTAL, IM.NET_AMOUNT, IM.AMOUNTPAID, \r\n" + 
-					"CM.NAME, CM.ADDRESS, CM.MOBILE,\r\n" + 
-					"II.RST\r\n" + 
-					"FROM INVOICE_MAST IM, CUSTOMER_MAST CM, INVOICE_ITEMS II\r\n" + 
-					"WHERE IM.CUSTOMER_ID = CM.ID AND\r\n" + 
-					"II.INVOICE_ID = IM.ID AND\r\n" + 
-					"IM.PENDING <> 0\r\n" + 
-					"ORDER BY RST";
+			String invSql = "SELECT DISTINCT\r\n" + 
+					"    IM.ID,\r\n" + 
+					"    IM.INV_DATE,\r\n" + 
+					"    IM.INVOICE_NO,\r\n" + 
+					"    IM.COMPANY_ID,\r\n" + 
+					"    IM.CUSTOMER_ID,\r\n" + 
+					"    IM.PENDING,\r\n" + 
+					"    IM.TOTAL,\r\n" + 
+					"    IM.NET_AMOUNT,\r\n" + 
+					"    IM.AMOUNTPAID,\r\n" + 
+					"    CM.NAME,\r\n" + 
+					"    CM.ADDRESS,\r\n" + 
+					"    CM.MOBILE,\r\n" + 
+					"    II.RST\r\n" + 
+					"FROM\r\n" + 
+					"    INVOICE_MAST    IM,\r\n" + 
+					"    CUSTOMER_MAST   CM,\r\n" + 
+					"    INVOICE_ITEMS   II\r\n" + 
+					"WHERE\r\n" + 
+					"    IM.CUSTOMER_ID = CM.ID\r\n" + 
+					"    AND II.INVOICE_ID = IM.ID\r\n" + 
+					"    AND IM.PENDING <> 0\r\n" + 
+					"ORDER BY\r\n" + 
+					"    IM.INVOICE_NO DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(invSql);
 			
@@ -216,14 +231,29 @@ public ArrayList<Invoice> getReport() {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String invSql = "SELECT DISTINCT  \r\n" + 
-					"IM.ID, IM.INV_DATE, IM.INVOICE_NO, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.PENDING, IM.TOTAL, IM.NET_AMOUNT, IM.AMOUNTPAID, \r\n" + 
-					"CM.NAME, CM.ADDRESS, CM.MOBILE,\r\n" + 
-					"II.RST\r\n" + 
-					"FROM INVOICE_MAST IM, CUSTOMER_MAST CM, INVOICE_ITEMS II\r\n" + 
-					"WHERE IM.CUSTOMER_ID = CM.ID AND\r\n" + 
-					"II.INVOICE_ID = IM.ID\r\n" + 
-					"ORDER BY RST";
+			String invSql = "SELECT DISTINCT\r\n" + 
+					"    IM.ID,\r\n" + 
+					"    IM.INV_DATE,\r\n" + 
+					"    IM.INVOICE_NO,\r\n" + 
+					"    IM.COMPANY_ID,\r\n" + 
+					"    IM.CUSTOMER_ID,\r\n" + 
+					"    IM.PENDING,\r\n" + 
+					"    IM.TOTAL,\r\n" + 
+					"    IM.NET_AMOUNT,\r\n" + 
+					"    IM.AMOUNTPAID,\r\n" + 
+					"    CM.NAME,\r\n" + 
+					"    CM.ADDRESS,\r\n" + 
+					"    CM.MOBILE,\r\n" + 
+					"    II.RST\r\n" + 
+					"FROM\r\n" + 
+					"    INVOICE_MAST    IM,\r\n" + 
+					"    CUSTOMER_MAST   CM,\r\n" + 
+					"    INVOICE_ITEMS   II\r\n" + 
+					"WHERE\r\n" + 
+					"    IM.CUSTOMER_ID = CM.ID\r\n" + 
+					"    AND II.INVOICE_ID = IM.ID\r\n" + 
+					"ORDER BY\r\n" + 
+					"    IM.INVOICE_NO DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(invSql);
 			
@@ -589,12 +619,27 @@ public ArrayList<Invoice> getReport() {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String invSql = "SELECT IM.ID, IM.INV_DATE, IM.INVOICE_NO, IM.COMPANY_ID, IM.CUSTOMER_ID, IM.PENDING, IM.TOTAL, IM.NET_AMOUNT, IM.AMOUNTPAID, CM.NAME, CM.ADDRESS, CM.MOBILE\r\n" + 
-							"FROM INVOICE_MAST IM, CUSTOMER_MAST CM\r\n" + 
-							"WHERE \r\n" + 
-							"im.customer_id = cm.id and\r\n" + 
-							"im.inv_date = trunc(sysdate) and \r\n" + 
-							"im.pending >0";
+			String invSql = "SELECT\r\n" + 
+					"    IM.ID,\r\n" + 
+					"    IM.INV_DATE,\r\n" + 
+					"    IM.INVOICE_NO,\r\n" + 
+					"    IM.COMPANY_ID,\r\n" + 
+					"    IM.CUSTOMER_ID,\r\n" + 
+					"    IM.PENDING,\r\n" + 
+					"    IM.TOTAL,\r\n" + 
+					"    IM.NET_AMOUNT,\r\n" + 
+					"    IM.AMOUNTPAID,\r\n" + 
+					"    CM.NAME,\r\n" + 
+					"    CM.ADDRESS,\r\n" + 
+					"    CM.MOBILE\r\n" + 
+					"FROM\r\n" + 
+					"    INVOICE_MAST    IM,\r\n" + 
+					"    CUSTOMER_MAST   CM\r\n" + 
+					"WHERE\r\n" + 
+					"    IM.CUSTOMER_ID = CM.ID\r\n" + 
+					"    AND IM.INV_DATE = TRUNC(SYSDATE)\r\n" + 
+					"    AND IM.PENDING > 0\r\n" + 
+					"ORDER BY IM.INVOICE_NO DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(invSql);
 			
@@ -855,40 +900,40 @@ public ArrayList<Invoice> getReport() {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT\r\n" + 
-					"    GD.RST,\r\n" + 
-					"    CM.NAME,\r\n" + 
-					"    SUM(GD.QUANTITY)\r\n" + 
-					"FROM\r\n" + 
-					"    GRADE_DETAILS           GD,\r\n" + 
-					"    CUSTOMER_MAST           CM,\r\n" + 
-					"    CUSTOMER_VEHICLE_MAST   CVM,\r\n" + 
-					"    WEIGH_MAST              WM\r\n" + 
-					"WHERE\r\n" + 
-					"    NOT EXISTS (\r\n" + 
-					"        SELECT\r\n" + 
-					"            *\r\n" + 
-					"        FROM\r\n" + 
-					"            INVOICE_ITEMS IM\r\n" + 
-					"        WHERE\r\n" + 
-					"            GD.ID = IM.GRADE_ID\r\n" + 
-					"    )\r\n" + 
-					"        AND NOT EXISTS (\r\n" + 
-					"        SELECT\r\n" + 
-					"            *\r\n" + 
-					"        FROM\r\n" + 
-					"            AMANAT_MAST AM\r\n" + 
-					"        WHERE\r\n" + 
-					"            GD.ID = AM.GRADE_ID\r\n" + 
-					"    )\r\n" + 
-					"        AND WM.ID = GD.WEIGHMENT_ID\r\n" + 
-					"        AND WM.VID = CVM.ID\r\n" + 
-					"        AND CVM.CID = CM.ID\r\n" + 
-					"GROUP BY\r\n" + 
-					"    GD.RST,\r\n" + 
-					"    CM.NAME\r\n" + 
-					"ORDER BY\r\n" + 
-					"    RST";
+			String sql = "SELECT \r\n" + 
+					"    GD.RST, \r\n" + 
+					"    CM.NAME, \r\n" + 
+					"    SUM(GD.QUANTITY) \r\n" + 
+					"FROM \r\n" + 
+					"    GRADE_DETAILS           GD, \r\n" + 
+					"    CUSTOMER_MAST           CM, \r\n" + 
+					"    CUSTOMER_VEHICLE_MAST   CVM, \r\n" + 
+					"    WEIGH_MAST              WM \r\n" + 
+					"WHERE \r\n" + 
+					"    NOT EXISTS ( \r\n" + 
+					"        SELECT \r\n" + 
+					"            * \r\n" + 
+					"        FROM \r\n" + 
+					"            INVOICE_ITEMS IM \r\n" + 
+					"        WHERE \r\n" + 
+					"            GD.ID = IM.GRADE_ID \r\n" + 
+					"    ) \r\n" + 
+					"        AND NOT EXISTS ( \r\n" + 
+					"        SELECT \r\n" + 
+					"            * \r\n" + 
+					"        FROM \r\n" + 
+					"            AMANAT_MAST AM \r\n" + 
+					"        WHERE \r\n" + 
+					"            GD.ID = AM.GRADE_ID \r\n" + 
+					"    ) \r\n" + 
+					"        AND WM.ID = GD.WEIGHMENT_ID \r\n" + 
+					"        AND WM.VID = CVM.ID \r\n" + 
+					"        AND CVM.CID = CM.ID \r\n" + 
+					"GROUP BY \r\n" + 
+					"    GD.RST, \r\n" + 
+					"    CM.NAME \r\n" + 
+					"ORDER BY \r\n" + 
+					"    RST DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -976,14 +1021,15 @@ public ArrayList<Invoice> getReport() {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT \r\n" + 
-						"CASH_AMOUNT,\r\n" + 
-						"CHEQUE_AMOUNT,\r\n" + 
-						"RTGS_AMOUNT,\r\n" + 
-						"PDC_AMOUNT\r\n" + 
-						"FROM \r\n" + 
-						"INVOICE_MAST WHERE\r\n" + 
-						"INVOICE_NO = ?";
+			String sql = "SELECT\r\n" + 
+					"    CASH_AMOUNT,\r\n" + 
+					"    CHEQUE_AMOUNT,\r\n" + 
+					"    RTGS_AMOUNT,\r\n" + 
+					"    PDC_AMOUNT\r\n" + 
+					"FROM\r\n" + 
+					"    INVOICE_MAST\r\n" + 
+					"WHERE\r\n" + 
+					"    INVOICE_NO = ?";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -1191,48 +1237,50 @@ public ArrayList<Invoice> getReport() {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String invSql = "SELECT\r\n" + 
-					"    IM.ID,\r\n" + 
-					"    IM.INVOICE_NO,\r\n" + 
-					"    IM.TOTAL       TOTAL_AMOUNT,\r\n" + 
-					"    IM.INV_DATE,\r\n" + 
-					"    IM.NOTE,\r\n" + 
-					"    IM.TOTAL_QUANTITY,\r\n" + 
-					"    IM.UNLOADING_CHARGES,\r\n" + 
-					"    IM.BONUS,\r\n" + 
-					"    IM.ADVANCE,\r\n" + 
-					"	 IM.PDC_AMOUNT,\r\n" + 
-					"    COMP.NAME      COMP_NAME,\r\n" + 
-					"    CUST.NAME      CUST_NAME,\r\n" + 
-					"    CUST.ADDRESS   CUST_ADDR,\r\n" + 
-					"    CUST.MOBILE    CUST_MOB,\r\n" + 
-					"    II.RST,\r\n" + 
-					"    GD.QUANTITY,\r\n" + 
-					"    GD.GRADE,\r\n" + 
-					"    GD.RATE,\r\n" + 
-					"    CV.WEIGH_RATE,\r\n" + 
-					"    CV.VEHICLE_NO,\r\n" + 
-					"    WRM.VEHICLE_NAME\r\n" + 
-					"FROM\r\n" + 
-					"    INVOICE_MAST            IM,\r\n" + 
-					"    COMPANY_MASTER          COMP,\r\n" + 
-					"    CUSTOMER_MAST           CUST,\r\n" + 
-					"    INVOICE_ITEMS           II,\r\n" + 
-					"    WEIGH_MAST              WM,\r\n" + 
-					"    GRADE_DETAILS           GD,\r\n" + 
-					"    CUSTOMER_VEHICLE_MAST   CV,\r\n" + 
-					"    GRADE_MASTER            GM,\r\n" + 
-					"    WEIGH_RATE_MAST         WRM\r\n" + 
-					"WHERE\r\n" + 
-					"    IM.ID = II.INVOICE_ID\r\n" + 
-					"    AND IM.COMPANY_ID = COMP.ID\r\n" + 
-					"    AND IM.CUSTOMER_ID = CUST.ID\r\n" + 
-					"    AND II.GRADE_ID = GD.ID\r\n" + 
-					"    AND GD.WEIGHMENT_ID = WM.ID\r\n" + 
-					"    AND GM.GRADE = GD.GRADE\r\n" + 
-					"    AND WM.VID = CV.ID\r\n" + 
-					"    AND CV.V_TYPE_ID = WRM.ID\r\n" + 
-					"    AND IM.INV_DATE BETWEEN ? AND ?";
+			String invSql = "SELECT \r\n" + 
+					"    IM.ID, \r\n" + 
+					"    IM.INVOICE_NO, \r\n" + 
+					"    IM.TOTAL       TOTAL_AMOUNT, \r\n" + 
+					"    IM.INV_DATE, \r\n" + 
+					"    IM.NOTE, \r\n" + 
+					"    IM.TOTAL_QUANTITY, \r\n" + 
+					"    IM.UNLOADING_CHARGES, \r\n" + 
+					"    IM.BONUS, \r\n" + 
+					"    IM.ADVANCE, \r\n" + 
+					"     IM.PDC_AMOUNT, \r\n" + 
+					"    COMP.NAME      COMP_NAME, \r\n" + 
+					"    CUST.NAME      CUST_NAME, \r\n" + 
+					"    CUST.ADDRESS   CUST_ADDR, \r\n" + 
+					"    CUST.MOBILE    CUST_MOB, \r\n" + 
+					"    II.RST, \r\n" + 
+					"    GD.QUANTITY, \r\n" + 
+					"    GD.GRADE, \r\n" + 
+					"    GD.RATE, \r\n" + 
+					"    CV.WEIGH_RATE, \r\n" + 
+					"    CV.VEHICLE_NO, \r\n" + 
+					"    WRM.VEHICLE_NAME \r\n" + 
+					"FROM \r\n" + 
+					"    INVOICE_MAST            IM, \r\n" + 
+					"    COMPANY_MASTER          COMP, \r\n" + 
+					"    CUSTOMER_MAST           CUST, \r\n" + 
+					"    INVOICE_ITEMS           II, \r\n" + 
+					"    WEIGH_MAST              WM, \r\n" + 
+					"    GRADE_DETAILS           GD, \r\n" + 
+					"    CUSTOMER_VEHICLE_MAST   CV, \r\n" + 
+					"    GRADE_MASTER            GM, \r\n" + 
+					"    WEIGH_RATE_MAST         WRM \r\n" + 
+					"WHERE \r\n" + 
+					"    IM.ID = II.INVOICE_ID \r\n" + 
+					"    AND IM.COMPANY_ID = COMP.ID \r\n" + 
+					"    AND IM.CUSTOMER_ID = CUST.ID \r\n" + 
+					"    AND II.GRADE_ID = GD.ID \r\n" + 
+					"    AND GD.WEIGHMENT_ID = WM.ID \r\n" + 
+					"    AND GM.GRADE = GD.GRADE \r\n" + 
+					"    AND WM.VID = CV.ID \r\n" + 
+					"    AND CV.V_TYPE_ID = WRM.ID \r\n" + 
+					"    AND IM.INV_DATE BETWEEN ? AND ?\r\n" + 
+					"ORDER BY\r\n" + 
+					"    IM.INV_DATE DESC";
 			
 			java.sql.Date startDateSql = java.sql.Date.valueOf(startDate);
 			java.sql.Date endDateSql = java.sql.Date.valueOf(endDate);

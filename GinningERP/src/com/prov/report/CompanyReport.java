@@ -18,7 +18,7 @@ public class CompanyReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT * FROM COMPANY_MASTER";
+			String sql = "SELECT * FROM COMPANY_MASTER ORDER BY ID DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			

@@ -106,7 +106,15 @@ public class RtgsReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "select count(im.id) from rtgs_master rm, invoice_mast im where trunc(RTGS_DATE) = trunc(sysdate) and rm.invoice_id = im.id and im.company_id = ?";
+			String sql = "SELECT\r\n" + 
+					"    COUNT(IM.ID)\r\n" + 
+					"FROM\r\n" + 
+					"    RTGS_MASTER    RM,\r\n" + 
+					"    INVOICE_MAST   IM\r\n" + 
+					"WHERE\r\n" + 
+					"    TRUNC(RTGS_DATE) = TRUNC(SYSDATE)\r\n" + 
+					"    AND RM.INVOICE_ID = IM.ID\r\n" + 
+					"    AND IM.COMPANY_ID = ?";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			

@@ -59,18 +59,28 @@ public class GradeReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT WM.RST, CM.NAME,  WM.NET\r\n" + 
-								"FROM WEIGH_MAST WM, CUSTOMER_MAST CM, CUSTOMER_VEHICLE_MAST CVM\r\n" + 
-								"WHERE \r\n" + 
-								"NOT EXISTS \r\n" + 
-								"(SELECT * \r\n" + 
-								"FROM GRADE_DETAILS GD \r\n" + 
-								"WHERE WM.RST = GD.RST)\r\n" + 
-								"AND\r\n" + 
-								"WM.VID = CVM.ID AND\r\n" + 
-								"CVM.CID = CM.ID AND\r\n" + 
-								"WM.NET>0\r\n" + 
-								"ORDER BY RST";
+			String sql = "SELECT\r\n" + 
+					"    WM.RST,\r\n" + 
+					"    CM.NAME,\r\n" + 
+					"    WM.NET\r\n" + 
+					"FROM\r\n" + 
+					"    WEIGH_MAST              WM,\r\n" + 
+					"    CUSTOMER_MAST           CM,\r\n" + 
+					"    CUSTOMER_VEHICLE_MAST   CVM\r\n" + 
+					"WHERE\r\n" + 
+					"    NOT EXISTS (\r\n" + 
+					"        SELECT\r\n" + 
+					"            *\r\n" + 
+					"        FROM\r\n" + 
+					"            GRADE_DETAILS GD\r\n" + 
+					"        WHERE\r\n" + 
+					"            WM.RST = GD.RST\r\n" + 
+					"    )\r\n" + 
+					"        AND WM.VID = CVM.ID\r\n" + 
+					"        AND CVM.CID = CM.ID\r\n" + 
+					"        AND WM.NET > 0\r\n" + 
+					"ORDER BY\r\n" + 
+					"    RST";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -106,7 +116,7 @@ public class GradeReport {
 					"FROM\r\n" + 
 					"    GRADE_DETAILS II\r\n" + 
 					"WHERE\r\n" + 
-					"  II.RST = ?";
+					"    II.RST = ?";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			

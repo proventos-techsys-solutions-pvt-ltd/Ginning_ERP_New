@@ -41,22 +41,34 @@ public JSONArray getTransactions(String startDate, String endDate, int accId, in
 			con = OracleConnection.getConnection();
 			
 			String sql = "SELECT UNIQUE\r\n" + 
-					"TR.ID TR_ID, TR.TRANSACTION_DATE, TR.VOUCH_NO, TR.VOUCH_REF, TR.ACCOUNT_ID, TR.DEBIT, TR.CREDIT, TR.NARRATION, \r\n" + 
-					"AC.ID ACC_CAT_ID, AC.CATEGORY_NAME,\r\n" + 
-					"AG.ID ACC_GRP_ID, AG.GROUP_NAME\r\n" + 
+					"    TR.ID   TR_ID,\r\n" + 
+					"    TR.TRANSACTION_DATE,\r\n" + 
+					"    TR.VOUCH_NO,\r\n" + 
+					"    TR.VOUCH_REF,\r\n" + 
+					"    TR.ACCOUNT_ID,\r\n" + 
+					"    TR.DEBIT,\r\n" + 
+					"    TR.CREDIT,\r\n" + 
+					"    TR.NARRATION,\r\n" + 
+					"    AC.ID   ACC_CAT_ID,\r\n" + 
+					"    AC.CATEGORY_NAME,\r\n" + 
+					"    AG.ID   ACC_GRP_ID,\r\n" + 
+					"    AG.GROUP_NAME\r\n" + 
 					"FROM\r\n" + 
-					"TRANSACTIONS TR,\r\n" + 
-					"ACCOUNT_NAME AN,\r\n" + 
-					"ACCOUNT_CATEGORY AC,\r\n" + 
-					"ACCOUNT_GROUP AG\r\n" + 
-					"WHERE TR.ACCOUNT_ID = AN.ACCOUNT_ID AND\r\n" + 
-					"AN.ACC_CATEGORY_ID = AC.ID AND\r\n" + 
-					"AC.ACC_GROUP_ID = AG.ID AND\r\n"
-					+ "AC.ID=2 AND" + 
-					"AN.COMPANY_ID = ? AND\r\n" + 
-					"AN.ACCOUNT_ID = ? AND\r\n" + 
-					"TR.TRANSACTION_DATE BETWEEN ? AND ?\r\n" + 
-					"ORDER BY TR.VOUCH_NO, TR.TRANSACTION_DATE";
+					"    TRANSACTIONS       TR,\r\n" + 
+					"    ACCOUNT_NAME       AN,\r\n" + 
+					"    ACCOUNT_CATEGORY   AC,\r\n" + 
+					"    ACCOUNT_GROUP      AG\r\n" + 
+					"WHERE\r\n" + 
+					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID\r\n" + 
+					"    AND AN.ACC_CATEGORY_ID = AC.ID\r\n" + 
+					"    AND AC.ACC_GROUP_ID = AG.ID\r\n" + 
+					"    AND AC.ID = 2\r\n" + 
+					"    AND AN.COMPANY_ID = ?\r\n" + 
+					"    AND AN.ACCOUNT_ID = ?\r\n" + 
+					"    AND TR.TRANSACTION_DATE BETWEEN ? AND ?\r\n" + 
+					"ORDER BY\r\n" + 
+					"    TR.VOUCH_NO,\r\n" + 
+					"    TR.TRANSACTION_DATE DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -127,7 +139,9 @@ public JSONArray getCashPayments() {
 				"WHERE\r\n" + 
 				"    IM.ID = PD.INVOICE_ID\r\n" + 
 				"    AND IM.CUSTOMER_ID = CM.ID\r\n" + 
-				"    AND PD.CASH_VOUCH_NO IS NOT NULL";
+				"    AND PD.CASH_VOUCH_NO IS NOT NULL\r\n" + 
+				"ORDER BY\r\n" + 
+				"    IM.INV_DATE DESC";
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
 		

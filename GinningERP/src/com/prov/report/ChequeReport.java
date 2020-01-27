@@ -93,7 +93,9 @@ public class ChequeReport {
 					"    IM.COMPANY_ID\r\n" + 
 					"FROM\r\n" + 
 					"    CHEQUE_MAST    CM\r\n" + 
-					"    LEFT JOIN INVOICE_MAST   IM ON CM.INVOICE_ID = IM.ID";
+					"    LEFT JOIN INVOICE_MAST   IM ON CM.INVOICE_ID = IM.ID\r\n" + 
+					"ORDER BY \r\n" + 
+					"CM.CHEQUE_DATE DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -153,12 +155,14 @@ public class ChequeReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT \r\n" + 
-						"CUSTOMER_NAME,\r\n" + 
-						"AMOUNT,\r\n" + 
-						"CHEQUE_DATE\r\n" + 
-						"FROM CHEQUE_MAST\r\n" + 
-						"WHERE ID=?";
+			String sql = "SELECT\r\n" + 
+					"    CUSTOMER_NAME,\r\n" + 
+					"    AMOUNT,\r\n" + 
+					"    CHEQUE_DATE\r\n" + 
+					"FROM\r\n" + 
+					"    CHEQUE_MAST\r\n" + 
+					"WHERE\r\n" + 
+					"    ID = ?";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -208,7 +212,27 @@ public class ChequeReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT * FROM CHEQUE_MAST WHERE ID = (SELECT MAX(ID) FROM CHEQUE_MAST WHERE INVOICE_ID = ? AND NOT EXISTS (SELECT * FROM PDC_MAST WHERE CHEQUE_MAST.ID = pdc_mast.cheque_iD))";
+			String sql = "SELECT\r\n" + 
+					"    *\r\n" + 
+					"FROM\r\n" + 
+					"    CHEQUE_MAST\r\n" + 
+					"WHERE\r\n" + 
+					"    ID = (\r\n" + 
+					"        SELECT\r\n" + 
+					"            MAX(ID)\r\n" + 
+					"        FROM\r\n" + 
+					"            CHEQUE_MAST\r\n" + 
+					"        WHERE\r\n" + 
+					"            INVOICE_ID = ?\r\n" + 
+					"            AND NOT EXISTS (\r\n" + 
+					"                SELECT\r\n" + 
+					"                    *\r\n" + 
+					"                FROM\r\n" + 
+					"                    PDC_MAST\r\n" + 
+					"                WHERE\r\n" + 
+					"                    CHEQUE_MAST.ID = PDC_MAST.CHEQUE_ID\r\n" + 
+					"            )\r\n" + 
+					"    )";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -254,7 +278,19 @@ public class ChequeReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT * FROM CHEQUE_MAST WHERE ID = (SELECT MAX(CHEQUE_ID) FROM PDC_MAST WHERE iNVOICE_ID = ?)";
+			String sql = "SELECT\r\n" + 
+					"    *\r\n" + 
+					"FROM\r\n" + 
+					"    CHEQUE_MAST\r\n" + 
+					"WHERE\r\n" + 
+					"    ID = (\r\n" + 
+					"        SELECT\r\n" + 
+					"            MAX(CHEQUE_ID)\r\n" + 
+					"        FROM\r\n" + 
+					"            PDC_MAST\r\n" + 
+					"        WHERE\r\n" + 
+					"            INVOICE_ID = ?\r\n" + 
+					"    )";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			

@@ -23,25 +23,28 @@ public class PDCReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT \r\n" + 
-						"PDC.ID PDC_ID,\r\n" + 
-						"PDC.CUSTOMER_ID,\r\n" + 
-						"PDC.INVOICE_ID,\r\n" + 
-						"PDC.AMOUNT,\r\n" + 
-						"PDC.PAY_DATE,\r\n" + 
-						"PDC.MODE_OF_PAYMENT,\r\n" + 
-						"IM.INVOICE_NO,\r\n" + 
-						"COMP.ID COMPANY_ID,\r\n" + 
-						"COMP.NAME COMPANY_NAME,\r\n" + 
-						"CM.NAME CUSTOMER_NAME\r\n" + 
-						"FROM PDC_MAST PDC,\r\n" + 
-						"INVOICE_MAST IM,\r\n" + 
-						"company_master COMP,\r\n" + 
-						"CUSTOMER_MAST CM\r\n" + 
-						"WHERE\r\n" + 
-						"pdc.invoice_id = IM.ID AND\r\n" + 
-						"im.company_id = COMP.ID AND\r\n" + 
-						"CM.ID = pdc.customer_id";
+			String sql = "SELECT\r\n" + 
+					"    PDC.ID      PDC_ID,\r\n" + 
+					"    PDC.CUSTOMER_ID,\r\n" + 
+					"    PDC.INVOICE_ID,\r\n" + 
+					"    PDC.AMOUNT,\r\n" + 
+					"    PDC.PAY_DATE,\r\n" + 
+					"    PDC.MODE_OF_PAYMENT,\r\n" + 
+					"    IM.INVOICE_NO,\r\n" + 
+					"    COMP.ID     COMPANY_ID,\r\n" + 
+					"    COMP.NAME   COMPANY_NAME,\r\n" + 
+					"    CM.NAME     CUSTOMER_NAME\r\n" + 
+					"FROM\r\n" + 
+					"    PDC_MAST         PDC,\r\n" + 
+					"    INVOICE_MAST     IM,\r\n" + 
+					"    COMPANY_MASTER   COMP,\r\n" + 
+					"    CUSTOMER_MAST    CM\r\n" + 
+					"WHERE\r\n" + 
+					"    PDC.INVOICE_ID = IM.ID\r\n" + 
+					"    AND IM.COMPANY_ID = COMP.ID\r\n" + 
+					"    AND CM.ID = PDC.CUSTOMER_ID\r\n" + 
+					"ORDER BY\r\n" + 
+					"    PDC.PAY_DATE DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -94,9 +97,9 @@ public class PDCReport {
 			con = OracleConnection.getConnection();
 			
 			String sql = "SELECT *\r\n" + 
-					"FROM PDC_MAST\r\n" + 
-					"WHERE \r\n" + 
-					"PDC_MAST.invoice_id =? \r\n";
+						"FROM PDC_MAST\r\n" + 
+						"WHERE \r\n" + 
+						"PDC_MAST.invoice_id =? \r\n";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -138,9 +141,9 @@ public class PDCReport {
 			con = OracleConnection.getConnection();
 			
 			String sql = "SELECT *\r\n" + 
-							"FROM PDC_MAST\r\n" + 
-							"WHERE \r\n" + 
-							"PDC_MAST.invoice_id =? \r\n";
+						"FROM PDC_MAST\r\n" + 
+						"WHERE \r\n" + 
+						"PDC_MAST.invoice_id =? \r\n";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			

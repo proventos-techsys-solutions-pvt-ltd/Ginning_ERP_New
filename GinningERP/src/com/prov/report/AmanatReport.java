@@ -63,11 +63,29 @@ public JSONArray getPendingAmanatData() {
 	try {
 		con = OracleConnection.getConnection();
 		
-		String invSql = "SELECT AM.ID, AM.AMANAT_DATE, AM.FINAL_RATE, AM.CUSTOMER_ID, AM.GRADE_ID, GD.QUANTITY, GD.GRADE, GD.RATE, GD.RST, CM.NAME, CM.ADDRESS, CM.MOBILE \r\n" + 
-						"FROM AMANAT_MAST AM, GRADE_DETAILS GD, CUSTOMER_MAST CM\r\n" + 
-						"WHERE AM.CUSTOMER_ID = CM.ID\r\n" + 
-						"AND AM.GRADE_ID = GD.ID\r\n" + 
-						"AND AM.FINAL_RATE=0";
+		String invSql = "SELECT\r\n" + 
+				"    AM.ID,\r\n" + 
+				"    AM.AMANAT_DATE,\r\n" + 
+				"    AM.FINAL_RATE,\r\n" + 
+				"    AM.CUSTOMER_ID,\r\n" + 
+				"    AM.GRADE_ID,\r\n" + 
+				"    GD.QUANTITY,\r\n" + 
+				"    GD.GRADE,\r\n" + 
+				"    GD.RATE,\r\n" + 
+				"    GD.RST,\r\n" + 
+				"    CM.NAME,\r\n" + 
+				"    CM.ADDRESS,\r\n" + 
+				"    CM.MOBILE\r\n" + 
+				"FROM\r\n" + 
+				"    AMANAT_MAST     AM,\r\n" + 
+				"    GRADE_DETAILS   GD,\r\n" + 
+				"    CUSTOMER_MAST   CM\r\n" + 
+				"WHERE\r\n" + 
+				"    AM.CUSTOMER_ID = CM.ID\r\n" + 
+				"    AND AM.GRADE_ID = GD.ID\r\n" + 
+				"    AND AM.FINAL_RATE = 0\r\n" + 
+				"ORDER BY\r\n" + 
+				"    AMANAT_DATE DESC";
 		
 		PreparedStatement stmt = con.prepareStatement(invSql);
 		
@@ -241,7 +259,7 @@ public JSONArray getAmanatPendingForInvoicing() {
 					"    CM.NAME,\r\n" + 
 					"    AM.INVOICED_QTY\r\n" + 
 					"ORDER BY\r\n" + 
-					"    RST";
+					"    RST DESC";
 		
 		PreparedStatement stmt = con.prepareStatement(invSql);
 		
@@ -306,7 +324,7 @@ public JSONArray getAmanatReport() {
 				+ "AM.AMANAT_NO,"
 				+ "AM.ID\r\n" + 
 				"ORDER BY\r\n" + 
-				"    RST";
+				"    RST DESC";
 		
 		PreparedStatement stmt = con.prepareStatement(invSql);
 		
@@ -366,7 +384,8 @@ public JSONArray getAmanatDataForSlip(int rstNo) {
 				"    CUSTOMER_VEHICLE_MAST   CVM,\r\n" + 
 				"    WEIGH_MAST              WM,\r\n" + 
 				"    AMANAT_MAST             AM,\r\n" + 
-				"    GRADE_RATE_MASTER       GRM\r\n" + 
+				"    GRADE_RATE_MASTER       GRM,\r\n" + 
+				"    DAILY_SETUP             DS\r\n" + 
 				"WHERE\r\n" + 
 				"    AM.GRADE_ID = GD.ID\r\n" + 
 				"    AND AM.INVOICED_QTY <> GD.QUANTITY\r\n" + 
@@ -374,7 +393,8 @@ public JSONArray getAmanatDataForSlip(int rstNo) {
 				"    AND WM.VID = CVM.ID\r\n" + 
 				"    AND CVM.CID = CM.ID\r\n" + 
 				"    AND WM.NET > 0\r\n" + 
-				"    AND TRUNC(CAST(GRM.RATE_DATE AS DATE)) = AM.AMANAT_DATE\r\n" + 
+				"    AND WM.DS_ID = DS.ID\r\n" + 
+				"    AND GRM.RATE_DATE = DS.SETUP_DATE\r\n" + 
 				"    AND AM.RST = ?\r\n" + 
 				"GROUP BY\r\n" + 
 				"    GD.QUANTITY - AM.INVOICED_QTY,\r\n" + 
@@ -386,7 +406,7 @@ public JSONArray getAmanatDataForSlip(int rstNo) {
 				"    AM.DIFF_FROM_SUPER,\r\n" + 
 				"    AM.AMANAT_NO\r\n" + 
 				"ORDER BY\r\n" + 
-				"    RST";
+				"    RST DESC";
 		
 		PreparedStatement stmt = con.prepareStatement(invSql);
 		
@@ -741,7 +761,9 @@ public long getAmanatInvoicedQty(int amanatId) {
 					"    AND WM.VID = CVM.ID\r\n" + 
 					"    AND CVM.V_TYPE_ID = WRM.ID\r\n" + 
 					"    AND II.GRADE_ID = GD.ID\r\n" + 
-					"    AND IM.INV_DATE BETWEEN ? AND ?";
+					"    AND IM.INV_DATE BETWEEN ? AND ?\r\n" + 
+					"ORDER BY\r\n" + 
+					"    IM.INV_DATE DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(invSql);
 			java.sql.Date startDateSql = java.sql.Date.valueOf(startDate);

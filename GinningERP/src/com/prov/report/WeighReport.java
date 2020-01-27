@@ -134,11 +134,20 @@ public class WeighReport {
 			
 			con=OracleConnection.getConnection();
 				
-			String weighSql = "SELECT WM.RST , WM.GROSS, CM.NAME \r\n" + 
-							"FROM WEIGH_MAST WM, CUSTOMER_VEHICLE_MAST CVM, CUSTOMER_MAST CM\r\n" + 
-							"WHERE WM.VID = CVM.ID AND\r\n" + 
-							"CVM.CID = CM.ID AND\r\n" + 
-							"WM.NET=0 ORDER BY RST";
+			String weighSql = "SELECT\r\n" + 
+					"    WM.RST,\r\n" + 
+					"    WM.GROSS,\r\n" + 
+					"    CM.NAME\r\n" + 
+					"FROM\r\n" + 
+					"    WEIGH_MAST              WM,\r\n" + 
+					"    CUSTOMER_VEHICLE_MAST   CVM,\r\n" + 
+					"    CUSTOMER_MAST           CM\r\n" + 
+					"WHERE\r\n" + 
+					"    WM.VID = CVM.ID\r\n" + 
+					"    AND CVM.CID = CM.ID\r\n" + 
+					"    AND WM.NET = 0\r\n" + 
+					"ORDER BY\r\n" + 
+					"    RST DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(weighSql);
 			
@@ -175,12 +184,21 @@ public class WeighReport {
 			
 			con=OracleConnection.getConnection();
 				
-			String weighSql = "SELECT WM.RST , WM.NET, CM.NAME \r\n" + 
-								"FROM WEIGH_MAST WM, CUSTOMER_VEHICLE_MAST CVM, CUSTOMER_MAST CM\r\n" + 
-								"WHERE WM.VID = CVM.ID AND\r\n" + 
-								"CVM.CID = CM.ID AND \r\n" + 
-								"WM.NET>0 AND \r\n" + 
-								"TRUNC(WEIGHMENT_DATE) = TRUNC(SYSDATE) ORDER BY RST";
+			String weighSql = "SELECT\r\n" + 
+					"    WM.RST,\r\n" + 
+					"    WM.NET,\r\n" + 
+					"    CM.NAME\r\n" + 
+					"FROM\r\n" + 
+					"    WEIGH_MAST              WM,\r\n" + 
+					"    CUSTOMER_VEHICLE_MAST   CVM,\r\n" + 
+					"    CUSTOMER_MAST           CM\r\n" + 
+					"WHERE\r\n" + 
+					"    WM.VID = CVM.ID\r\n" + 
+					"    AND CVM.CID = CM.ID\r\n" + 
+					"    AND WM.NET > 0\r\n" + 
+					"    AND TRUNC(WEIGHMENT_DATE) = TRUNC(SYSDATE)\r\n" + 
+					"ORDER BY\r\n" + 
+					"    RST DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(weighSql);
 			
@@ -218,30 +236,34 @@ public class WeighReport {
 			
 			con=OracleConnection.getConnection();
 				
-			String weighSql = "SELECT \r\n" + 
-								"WM.ID,\r\n" + 
-								"WM.RST,\r\n" + 
-								"WM.VID,\r\n" + 
-								"WM.MATERIAL,\r\n" + 
-								"WM.GROSS,\r\n" + 
-								"WM.TARE,\r\n" + 
-								"WM.NET,\r\n" + 
-								"WM.GROSSWT_TIME,\r\n" + 
-								"WM.TAREWT_TIME,\r\n" + 
-								"WM.WEIGHMENT_DATE,\r\n" + 
-								"WM.DS_ID,\r\n" + 
-								"WM.WB_OPERATOR,\r\n" + 
-								"CM.NAME,\r\n" + 
-								"CM.MOBILE,\r\n" + 
-								"CVM.VEHICLE_NO,\r\n" + 
-								"WRM.VEHICLE_NAME\r\n" + 
-								"FROM WEIGH_MAST WM, CUSTOMER_MAST CM, CUSTOMER_VEHICLE_MAST CVM, WEIGH_RATE_MAST WRM\r\n" + 
-								"WHERE \r\n" + 
-								"WM.VID = CVM.ID AND\r\n" + 
-								"CVM.CID = CM.ID AND\r\n" + 
-								"CVM.V_TYPE_ID = WRM.ID\r\n" + 
-								"ORDER BY\r\n" + 
-								"RST DESC";
+			String weighSql = "SELECT\r\n" + 
+					"    WM.ID,\r\n" + 
+					"    WM.RST,\r\n" + 
+					"    WM.VID,\r\n" + 
+					"    WM.MATERIAL,\r\n" + 
+					"    WM.GROSS,\r\n" + 
+					"    WM.TARE,\r\n" + 
+					"    WM.NET,\r\n" + 
+					"    WM.GROSSWT_TIME,\r\n" + 
+					"    WM.TAREWT_TIME,\r\n" + 
+					"    WM.WEIGHMENT_DATE,\r\n" + 
+					"    WM.DS_ID,\r\n" + 
+					"    WM.WB_OPERATOR,\r\n" + 
+					"    CM.NAME,\r\n" + 
+					"    CM.MOBILE,\r\n" + 
+					"    CVM.VEHICLE_NO,\r\n" + 
+					"    WRM.VEHICLE_NAME\r\n" + 
+					"FROM\r\n" + 
+					"    WEIGH_MAST              WM,\r\n" + 
+					"    CUSTOMER_MAST           CM,\r\n" + 
+					"    CUSTOMER_VEHICLE_MAST   CVM,\r\n" + 
+					"    WEIGH_RATE_MAST         WRM\r\n" + 
+					"WHERE\r\n" + 
+					"    WM.VID = CVM.ID\r\n" + 
+					"    AND CVM.CID = CM.ID\r\n" + 
+					"    AND CVM.V_TYPE_ID = WRM.ID\r\n" + 
+					"ORDER BY\r\n" + 
+					"    RST DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(weighSql);
 			

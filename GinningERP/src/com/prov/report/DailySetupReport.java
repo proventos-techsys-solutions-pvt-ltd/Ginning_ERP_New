@@ -25,22 +25,30 @@ public class DailySetupReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT \r\n" + 
-					"DS.ID,\r\n" + 
-					"DS.SETUP_DATE,\r\n" + 
-					"DS.COTTON_HEAP,\r\n" + 
-					"DS.COMPANY_ID,\r\n" + 
-					"DS.BANK_ID,\r\n" + 
-					"DS.FIRST_CHEQUE_NO,\r\n" + 
-					"DS.LAST_CHEQUE_NO,\r\n" + 
-					"DS.TOTAL_CHEQUES,\r\n" + 
-					"DS.BONUS_AMOUNT,\r\n" + 
-					"DS.DISCARD_DATE,\r\n" + 
-					"an.account_id\r\n" + 
-					"FROM DAILY_SETUP DS, ACCOUNT_NAME AN\r\n" + 
-					"WHERE SETUP_DATE = (SELECT MAX(SETUP_DATE) FROM DAILY_SETUP) AND\r\n" + 
-					"AN.COMPANY_ID = DS.COMPANY_ID AND\r\n" + 
-					"AN.ACC_CATEGORY_ID = 6";
+			String sql = "SELECT\r\n" + 
+					"    DS.ID,\r\n" + 
+					"    DS.SETUP_DATE,\r\n" + 
+					"    DS.COTTON_HEAP,\r\n" + 
+					"    DS.COMPANY_ID,\r\n" + 
+					"    DS.BANK_ID,\r\n" + 
+					"    DS.FIRST_CHEQUE_NO,\r\n" + 
+					"    DS.LAST_CHEQUE_NO,\r\n" + 
+					"    DS.TOTAL_CHEQUES,\r\n" + 
+					"    DS.BONUS_AMOUNT,\r\n" + 
+					"    DS.DISCARD_DATE,\r\n" + 
+					"    AN.ACCOUNT_ID\r\n" + 
+					"FROM\r\n" + 
+					"    DAILY_SETUP    DS,\r\n" + 
+					"    ACCOUNT_NAME   AN\r\n" + 
+					"WHERE\r\n" + 
+					"    SETUP_DATE = (\r\n" + 
+					"        SELECT\r\n" + 
+					"            MAX(SETUP_DATE)\r\n" + 
+					"        FROM\r\n" + 
+					"            DAILY_SETUP\r\n" + 
+					"    )\r\n" + 
+					"    AND AN.COMPANY_ID = DS.COMPANY_ID\r\n" + 
+					"    AND AN.ACC_CATEGORY_ID = 6";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			rs = stmt.executeQuery();
@@ -77,27 +85,29 @@ public class DailySetupReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT \r\n" + 
-					"DS.ID,\r\n" + 
-					"DS.SETUP_DATE,\r\n" + 
-					"DS.COTTON_HEAP,\r\n" + 
-					"DS.COMPANY_ID,\r\n" + 
-					"DS.BANK_ID,\r\n" + 
-					"DS.FIRST_CHEQUE_NO,\r\n" + 
-					"DS.LAST_CHEQUE_NO,\r\n" + 
-					"DS.TOTAL_CHEQUES,\r\n" + 
-					"DS.BONUS_AMOUNT,\r\n" + 
-					"DS.DISCARD_DATE,\r\n" + 
-					"COMP.NAME,\r\n" + 
-					"BM.BANK_NAME\r\n" + 
-					"FROM \r\n" + 
-					"DAILY_SETUP DS,\r\n" + 
-					"COMPANY_MASTER COMP,\r\n" + 
-					"BANK_MAST BM\r\n" + 
-					"WHERE \r\n" + 
-					"ds.company_id = comp.id AND\r\n" + 
-					"bm.id = ds.bank_id AND\r\n" + 
-					"TRUNC(SETUP_DATE) = trunc(current_timestamp) order by setup_date";
+			String sql = "SELECT\r\n" + 
+					"    DS.ID,\r\n" + 
+					"    DS.SETUP_DATE,\r\n" + 
+					"    DS.COTTON_HEAP,\r\n" + 
+					"    DS.COMPANY_ID,\r\n" + 
+					"    DS.BANK_ID,\r\n" + 
+					"    DS.FIRST_CHEQUE_NO,\r\n" + 
+					"    DS.LAST_CHEQUE_NO,\r\n" + 
+					"    DS.TOTAL_CHEQUES,\r\n" + 
+					"    DS.BONUS_AMOUNT,\r\n" + 
+					"    DS.DISCARD_DATE,\r\n" + 
+					"    COMP.NAME,\r\n" + 
+					"    BM.BANK_NAME\r\n" + 
+					"FROM\r\n" + 
+					"    DAILY_SETUP      DS,\r\n" + 
+					"    COMPANY_MASTER   COMP,\r\n" + 
+					"    BANK_MAST        BM\r\n" + 
+					"WHERE\r\n" + 
+					"    DS.COMPANY_ID = COMP.ID\r\n" + 
+					"    AND BM.ID = DS.BANK_ID\r\n" + 
+					"    AND TRUNC(SETUP_DATE) = TRUNC(CURRENT_TIMESTAMP)\r\n" + 
+					"ORDER BY\r\n" + 
+					"    SETUP_DATE";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			rs = stmt.executeQuery();
@@ -149,7 +159,14 @@ public class DailySetupReport {
 			
 			for (int i=0;i<jsonArray.length();i++) {
 				
-				 String sql2 = "select count(wm.id) from weigh_mast wm, daily_setup ds where wm.ds_id = ds.id and ds.id = ?";
+				 String sql2 = "SELECT\r\n" + 
+				 		"    COUNT(WM.ID)\r\n" + 
+				 		"FROM\r\n" + 
+				 		"    WEIGH_MAST    WM,\r\n" + 
+				 		"    DAILY_SETUP   DS\r\n" + 
+				 		"WHERE\r\n" + 
+				 		"    WM.DS_ID = DS.ID\r\n" + 
+				 		"    AND DS.ID = ?";
 				 stmt = con.prepareStatement(sql2);
 				 stmt.setInt(1, ((JSONObject)jsonArray.getJSONObject(i)).getInt("id"));
 				 rs = stmt.executeQuery();
@@ -177,30 +194,30 @@ public class DailySetupReport {
 			con = OracleConnection.getConnection();
 			
 			String sql = "SELECT\r\n" + 
-						"DS.ID,\r\n" + 
-						"DS.SETUP_DATE,\r\n" + 
-						"DS.COTTON_HEAP,\r\n" + 
-						"DS.COMPANY_ID,\r\n" + 
-						"DS.BANK_ID,\r\n" + 
-						"DS.FIRST_CHEQUE_NO,\r\n" + 
-						"DS.LAST_CHEQUE_NO,\r\n" + 
-						"DS.TOTAL_CHEQUES,\r\n" + 
-						"DS.BONUS_AMOUNT,\r\n" + 
-						"CM.NAME,\r\n" + 
-						"BM.BANK_NAME,\r\n" + 
-						"GRM.RATE\r\n" + 
-						"FROM \r\n" + 
-						"DAILY_SETUP DS,\r\n" + 
-						"COMPANY_MASTER CM,\r\n" + 
-						"BANK_MAST BM,\r\n" + 
-						"GRADE_RATE_MASTER GRM\r\n" + 
-						"WHERE\r\n" + 
-						"DS.COMPANY_ID = CM.ID AND\r\n" + 
-						"DS.BANK_ID = BM.ID AND\r\n" + 
-						"DS.SETUP_DATE = GRM.RATE_DATE AND \r\n" + 
-						"GRM.GRADE_ID = 1\r\n" + 
-						"ORDER BY\r\n" + 
-						"SETUP_DATE DESC";
+					"    DS.ID,\r\n" + 
+					"    DS.SETUP_DATE,\r\n" + 
+					"    DS.COTTON_HEAP,\r\n" + 
+					"    DS.COMPANY_ID,\r\n" + 
+					"    DS.BANK_ID,\r\n" + 
+					"    DS.FIRST_CHEQUE_NO,\r\n" + 
+					"    DS.LAST_CHEQUE_NO,\r\n" + 
+					"    DS.TOTAL_CHEQUES,\r\n" + 
+					"    DS.BONUS_AMOUNT,\r\n" + 
+					"    CM.NAME,\r\n" + 
+					"    BM.BANK_NAME,\r\n" + 
+					"    GRM.RATE\r\n" + 
+					"FROM\r\n" + 
+					"    DAILY_SETUP         DS,\r\n" + 
+					"    COMPANY_MASTER      CM,\r\n" + 
+					"    BANK_MAST           BM,\r\n" + 
+					"    GRADE_RATE_MASTER   GRM\r\n" + 
+					"WHERE\r\n" + 
+					"    DS.COMPANY_ID = CM.ID\r\n" + 
+					"    AND DS.BANK_ID = BM.ID\r\n" + 
+					"    AND DS.SETUP_DATE = GRM.RATE_DATE\r\n" + 
+					"    AND GRM.GRADE_ID = 1\r\n" + 
+					"ORDER BY\r\n" + 
+					"    SETUP_DATE DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			rs = stmt.executeQuery();

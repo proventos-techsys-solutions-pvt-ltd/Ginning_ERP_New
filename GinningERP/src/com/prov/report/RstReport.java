@@ -22,23 +22,23 @@ public class RstReport {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT \r\n" + 
-					"					    CM.NAME, \r\n" + 
-					"					    CM.ADDRESS,\r\n" + 
-					"					    CM.MOBILE, \r\n" + 
-					"					    CM.BLACKLISTED, \r\n" + 
-					"					    CM.MEMBERSHIP, \r\n" + 
-					"					    WM.ID, \r\n" + 
-					"					    WM.MATERIAL, \r\n" + 
-					"					    WM.NET\r\n" + 
-					"					FROM \r\n" + 
-					"					    customer_mast CM, \r\n" + 
-					"					    customer_vehicle_mast CVM, \r\n" + 
-					"					    WEIGH_MAST WM\r\n" + 
-					"					WHERE \r\n" + 
-					"					WM.VID = CVM.ID AND\r\n" + 
-					"					CVM.CID = CM.ID AND \r\n" + 
-					"					WM.RST="+rst;
+			String sql = "SELECT  \r\n" + 
+					"    CM.NAME,  \r\n" + 
+					"    CM.ADDRESS, \r\n" + 
+					"    CM.MOBILE,  \r\n" + 
+					"    CM.BLACKLISTED,  \r\n" + 
+					"    CM.MEMBERSHIP,  \r\n" + 
+					"    WM.ID,  \r\n" + 
+					"    WM.MATERIAL,  \r\n" + 
+					"    WM.NET \r\n" + 
+					"FROM  \r\n" + 
+					"    customer_mast CM,  \r\n" + 
+					"    customer_vehicle_mast CVM,  \r\n" + 
+					"    WEIGH_MAST WM \r\n" + 
+					"WHERE  \r\n" + 
+					"WM.VID = CVM.ID AND \r\n" + 
+					"CVM.CID = CM.ID AND  \r\n" + 
+					"WM.RST="+rst;
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -313,34 +313,34 @@ public JSONArray getDataForInvoicingAndGrading(int rst){
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT \r\n" + 
-						"CM.NAME, \r\n" + 
-						"CM.ADDRESS,\r\n" + 
-						"CM.MOBILE, \r\n" + 
-						"CM.BLACKLISTED, \r\n" + 
-						"CM.MEMBERSHIP, \r\n" + 
-						"CVM.VEHICLE_NO, \r\n" + 
-						"CVM.WEIGH_RATE, \r\n" + 
-						"WRM.VEHICLE_NAME, \r\n" + 
-						"WM.ID, \r\n" + 
-						"WM.MATERIAL, \r\n" + 
-						"WM.gross,\r\n" + 
-						"wm.grosswt_time,\r\n" + 
-						"wm.tare,\r\n" + 
-						"wm.tarewt_time,\r\n" + 
-						"wm.net,\r\n" + 
-						"wm.weighment_date,\r\n" + 
-						"wm.WB_OPERATOR\r\n" +
-						"FROM \r\n" + 
-						"customer_mast CM, \r\n" + 
-						"customer_vehicle_mast CVM, \r\n" + 
-						"WEIGH_MAST WM,\r\n" + 
-						"WEIGH_RATE_MAST WRM\r\n" + 
-						"WHERE \r\n" + 
-						"WM.VID = CVM.ID AND\r\n" + 
-						"CM.ID = CVM.CID AND\r\n" + 
-						"CVM.V_TYPE_ID = WRM.ID AND \r\n" + 
-						"WM.RST="+rst;
+			String sql = "SELECT\r\n" + 
+					"    CM.NAME,\r\n" + 
+					"    CM.ADDRESS,\r\n" + 
+					"    CM.MOBILE,\r\n" + 
+					"    CM.BLACKLISTED,\r\n" + 
+					"    CM.MEMBERSHIP,\r\n" + 
+					"    CVM.VEHICLE_NO,\r\n" + 
+					"    CVM.WEIGH_RATE,\r\n" + 
+					"    WRM.VEHICLE_NAME,\r\n" + 
+					"    WM.ID,\r\n" + 
+					"    WM.MATERIAL,\r\n" + 
+					"    WM.GROSS,\r\n" + 
+					"    WM.GROSSWT_TIME,\r\n" + 
+					"    WM.TARE,\r\n" + 
+					"    WM.TAREWT_TIME,\r\n" + 
+					"    WM.NET,\r\n" + 
+					"    WM.WEIGHMENT_DATE,\r\n" + 
+					"    WM.WB_OPERATOR\r\n" + 
+					"FROM\r\n" + 
+					"    CUSTOMER_MAST           CM,\r\n" + 
+					"    CUSTOMER_VEHICLE_MAST   CVM,\r\n" + 
+					"    WEIGH_MAST              WM,\r\n" + 
+					"    WEIGH_RATE_MAST         WRM\r\n" + 
+					"WHERE\r\n" + 
+					"    WM.VID = CVM.ID\r\n" + 
+					"    AND CM.ID = CVM.CID\r\n" + 
+					"    AND CVM.V_TYPE_ID = WRM.ID\r\n" + 
+					"        AND WM.RST ="+rst;
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
