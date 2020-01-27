@@ -173,7 +173,7 @@
                            <input type="text" class="form-control" id="nameOnCheque" name="nameOnCheque" placeholder="Name on Cheque">
                         </td>
                         <td>
-                           <button type="button" class="btn btn-success btn-no-radius" style="width:100%;" onclick="PrintChequeData(document.getElementById('chequeId').value)" id="payCheque">Print</button>
+                           <button type="button" class="btn btn-success btn-no-radius" style="width:100%;" onclick="PrintChequeData(document.getElementById('chequeId').value)" id="payPdcCheque">Print</button>
                         </td>
                      </tr>
                      <tr>
@@ -865,6 +865,9 @@
 			         document.getElementById('chequeDate').value = chequeJson.date ;
 			         chequePayStatus = 1;
 			         chequeStatus = false;
+			         if(Number(pdcPayStatus) === 1){
+			        	 document.getElementById('payCheque').disabled = true;
+			         }
 		         }else{
 			         document.getElementById('chequeNo').value = "" ;
 			         document.getElementById('nameOnCheque').value = invoiceBasicJson.customerName;
@@ -907,6 +910,9 @@
 				         document.getElementById('pdcChequeNo').value = pdcJson.chequeNo ;
 				         pdcPayStatus = 1;
 				         pdpChequeStatus  = false;
+				         if(Number(pdcPayStatus) === 1){
+				        	 document.getElementById('payPdcCheque').disabled = true;
+				         }
 			         }else{
 				         document.getElementById('pdcChequeId').value = "";
 				         document.getElementById('pdcChequeDate').value = pdcJson.payDate ;
