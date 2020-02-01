@@ -718,72 +718,73 @@ public ArrayList<Invoice> getReport() {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String invSql = "SELECT\r\n" + 
-					"    IM.ID            INV_ID,\r\n" + 
-					"    IM.INVOICE_NO,\r\n" + 
-					"    IM.TOTAL         TOTAL_AMOUNT,\r\n" + 
-					"    IM.AMOUNTPAID,\r\n" + 
-					"    IM.PENDING,\r\n" + 
-					"    IM.INV_DATE,\r\n" + 
-					"    IM.COMPANY_ID,\r\n" + 
-					"    IM.CUSTOMER_ID,\r\n" + 
-					"    IM.AUTHORIZER,\r\n" + 
-					"    IM.NOTE,\r\n" + 
-					"    IM.TOTAL_QUANTITY,\r\n" + 
-					"    IM.CASH_AMOUNT,\r\n" + 
-					"    IM.CHEQUE_AMOUNT,\r\n" + 
-					"    IM.RTGS_AMOUNT,\r\n" + 
-					"    IM.PAID_BY_OP,\r\n" + 
-					"    IM.UNLOADING_CHARGES,\r\n" + 
-					"    IM.BONUS,\r\n" + 
-					"    IM.NET_AMOUNT,\r\n" + 
-					"    IM.PDC_AMOUNT,\r\n" + 
-					"    COMP.NAME        COMP_NAME,\r\n" + 
-					"    COMP.ADDRESS     COMP_ADDR,\r\n" + 
-					"    COMP.TELEPHONE   COMP_TEL,\r\n" + 
-					"    COMP.GST,\r\n" + 
-					"    COMP.STATE       COMP_STATE,\r\n" + 
-					"    CUST.NAME        CUST_NAME,\r\n" + 
-					"    CUST.ADDRESS     CUST_ADDR,\r\n" + 
-					"    CUST.MOBILE      CUST_MOB,\r\n" + 
-					"    II.ID            INV_ITEM_ID,\r\n" + 
-					"    II.WEIGHMENT_ID,\r\n" + 
-					"    II.GRADE_ID,\r\n" + 
-					"    II.RST,\r\n" + 
-					"    WM.VID           VEH_ID,\r\n" + 
-					"    GD.MATERIAL,\r\n" + 
-					"    GD.QUANTITY,\r\n" + 
-					"    GD.GRADE,\r\n" + 
-					"    GD.RATE,\r\n" + 
-					"    GD.MOISTURE,\r\n" + 
-					"    GD.PDC_AMOUNT    PDC_PER_GRADE,\r\n" + 
-					"    GD.PDC_DATE,\r\n" + 
-					"    GD.PDC_PAY_MODE,\r\n" + 
-					"    GD.AUTHORIZED_BY,\r\n" + 
-					"    GM.DESCRIPTION,\r\n" + 
-					"    CV.WEIGH_RATE,\r\n" + 
-					"    COMP.EMAIL       COMP_EMAIL,\r\n" + 
-					"    CUST.BLACKLISTED,\r\n" + 
-					"    CUST.MEMBERSHIP,\r\n" + 
-					"    IM.ADVANCE,\r\n" + 
-					"    NVL(AM.INVOICED_QTY, 0) INVOICED_QTY\r\n" + 
-					"FROM\r\n" + 
-					"    INVOICE_MAST            IM,\r\n" + 
-					"    COMPANY_MASTER          COMP,\r\n" + 
-					"    CUSTOMER_MAST           CUST,\r\n" + 
-					"    INVOICE_ITEMS           II,\r\n" + 
-					"    WEIGH_MAST              WM, GRADE_DETAILS           GD\r\n" + 
-					"    LEFT OUTER JOIN AMANAT_MAST             AM ON GD.ID = AM.GRADE_ID,\r\n" + 
-					"    CUSTOMER_VEHICLE_MAST   CV,\r\n" + 
-					"    GRADE_MASTER            GM\r\n" + 
-					"WHERE\r\n" + 
-					"    IM.ID = II.INVOICE_ID\r\n" + 
-					"    AND IM.COMPANY_ID = COMP.ID\r\n" + 
-					"    AND IM.CUSTOMER_ID = CUST.ID\r\n" + 
-					"    AND II.GRADE_ID = GD.ID\r\n" + 
-					"    AND GD.WEIGHMENT_ID = WM.ID\r\n" + 
-					"    AND GM.GRADE = GD.GRADE\r\n" + 
-					"    AND WM.VID = CV.ID\r\n" + 
+			String invSql = "SELECT \r\n" + 
+					"    IM.ID            INV_ID, \r\n" + 
+					"    IM.INVOICE_NO, \r\n" + 
+					"    IM.TOTAL         TOTAL_AMOUNT, \r\n" + 
+					"    IM.AMOUNTPAID, \r\n" + 
+					"    IM.PENDING, \r\n" + 
+					"    IM.INV_DATE, \r\n" + 
+					"    IM.COMPANY_ID, \r\n" + 
+					"    IM.CUSTOMER_ID, \r\n" + 
+					"    IM.AUTHORIZER, \r\n" + 
+					"    IM.NOTE, \r\n" + 
+					"    IM.TOTAL_QUANTITY, \r\n" + 
+					"    IM.CASH_AMOUNT, \r\n" + 
+					"    IM.CHEQUE_AMOUNT, \r\n" + 
+					"    IM.RTGS_AMOUNT, \r\n" + 
+					"    IM.PAID_BY_OP, \r\n" + 
+					"    IM.UNLOADING_CHARGES, \r\n" + 
+					"    IM.BONUS, \r\n" + 
+					"    IM.NET_AMOUNT, \r\n" + 
+					"    IM.PDC_AMOUNT, \r\n" + 
+					"    COMP.NAME        COMP_NAME, \r\n" + 
+					"    COMP.ADDRESS     COMP_ADDR, \r\n" + 
+					"    COMP.TELEPHONE   COMP_TEL, \r\n" + 
+					"    COMP.GST, \r\n" + 
+					"    COMP.STATE       COMP_STATE, \r\n" + 
+					"    CUST.NAME        CUST_NAME, \r\n" + 
+					"    CUST.ADDRESS     CUST_ADDR, \r\n" + 
+					"    CUST.MOBILE      CUST_MOB, \r\n" + 
+					"    II.ID            INV_ITEM_ID, \r\n" + 
+					"    II.WEIGHMENT_ID, \r\n" + 
+					"    II.GRADE_ID, \r\n" + 
+					"    II.RST, \r\n" + 
+					"    WM.VID           VEH_ID, \r\n" + 
+					"    GD.MATERIAL, \r\n" + 
+					"    GD.QUANTITY, \r\n" + 
+					"    GD.GRADE, \r\n" + 
+					"    GD.RATE, \r\n" + 
+					"    GD.MOISTURE, \r\n" + 
+					"    GD.PDC_AMOUNT    PDC_PER_GRADE, \r\n" + 
+					"    GD.PDC_DATE, \r\n" + 
+					"    GD.PDC_PAY_MODE, \r\n" + 
+					"    GD.AUTHORIZED_BY, \r\n" + 
+					"    GM.DESCRIPTION, \r\n" + 
+					"    CV.WEIGH_RATE, \r\n" + 
+					"    COMP.EMAIL       COMP_EMAIL, \r\n" + 
+					"    CUST.BLACKLISTED, \r\n" + 
+					"    CUST.MEMBERSHIP, \r\n" + 
+					"    IM.ADVANCE, \r\n" + 
+					"    NVL(AM.INVOICED_QTY, 0) INVOICED_QTY,\r\n" + 
+					"    NVL(AM.FINAL_RATE, 0) FINAL_RATE\r\n" + 
+					"FROM \r\n" + 
+					"    INVOICE_MAST            IM, \r\n" + 
+					"    COMPANY_MASTER          COMP, \r\n" + 
+					"    CUSTOMER_MAST           CUST, \r\n" + 
+					"    INVOICE_ITEMS           II, \r\n" + 
+					"    WEIGH_MAST              WM, GRADE_DETAILS           GD \r\n" + 
+					"    LEFT OUTER JOIN AMANAT_MAST             AM ON GD.ID = AM.GRADE_ID, \r\n" + 
+					"    CUSTOMER_VEHICLE_MAST   CV, \r\n" + 
+					"    GRADE_MASTER            GM \r\n" + 
+					"WHERE \r\n" + 
+					"    IM.ID = II.INVOICE_ID \r\n" + 
+					"    AND IM.COMPANY_ID = COMP.ID \r\n" + 
+					"    AND IM.CUSTOMER_ID = CUST.ID \r\n" + 
+					"    AND II.GRADE_ID = GD.ID \r\n" + 
+					"    AND GD.WEIGHMENT_ID = WM.ID \r\n" + 
+					"    AND GM.GRADE = GD.GRADE \r\n" + 
+					"    AND WM.VID = CV.ID \r\n" + 
 					"    AND IM.INVOICE_NO = ?"; 
 				
 			PreparedStatement stmt = con.prepareStatement(invSql, ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -853,6 +854,7 @@ public ArrayList<Invoice> getReport() {
 				invoiceItems.put("moisture", rs.getFloat(37));
 				invoiceItems.put("pdcAmountPerGrade", rs.getFloat(38));
 				invoiceItems.put("invoicedQty", rs.getString(48));
+				invoiceItems.put("finalRate", rs.getString(49));
 				if(rs.getFloat(38) == 0) {
 					invoiceItems.put("pdcDate", "null");
 				}else {
