@@ -2,6 +2,13 @@ package com.prov.bean;
 
 public class Transactions {
 	
+	@Override
+	public String toString() {
+		return "Transactions [id=" + id + ", vouchNo=" + vouchNo + ", accountId=" + accountId + ", transactionDate="
+				+ transactionDate + ", contactId=" + contactId + ", narration=" + narration + ", vouchRef=" + vouchRef
+				+ ", debit=" + debit + ", credit=" + credit + "]";
+	}
+
 	private int id, vouchNo, accountId;
 	
 	private String transactionDate, contactId, narration, vouchRef;

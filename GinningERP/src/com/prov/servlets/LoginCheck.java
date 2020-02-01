@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet Filter implementation class LoginCheck
  */
-@WebFilter(urlPatterns = { "/admin/*","/accounts_operation_view/*", "/wb_operator/*"})
+@WebFilter(urlPatterns = { "/admin/*","/accounts_operation_view/*", "/wb_operator/*", "/accounts/*"})
 public class LoginCheck implements Filter {
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {

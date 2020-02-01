@@ -123,6 +123,9 @@
 		</div>
 	
 </div>
+<form id="form" action="../processing/addTransactionFromJournalEntry.jsp" method="post">
+	<input type="hidden" id="output" name="data">
+</form>
 
 
 <!-- Response modal pop up -->
@@ -150,7 +153,7 @@
 		//Jquery code starting here no other separate file to be maintained
 		
 		/********************validations***************************/
-		$.fn.validateDataDetails = function(){
+	/*	$.fn.validateDataDetails = function(){
 			var status = false;
 			var totalRow = $("#tbody tr").length;
 			for(i=0;i<totalRow;i++){
@@ -178,7 +181,7 @@
 			}
 			return status;
 		}
-		
+		*/
 		/***************Add remove row
 		*/
 		$(document).ready(function(){
@@ -256,7 +259,10 @@
 		var tableData = [];
 		for(i=0; i<totalRow;i++){
 			var detailTableData = {
-					"accountId":$("input[name='journal-entry-accountid-name']").eq(i).val(),
+					"transactionDate":$("#journal-entry-date").val(),
+					"voucherNo":$("#voucherNo").val(),
+					"voucherReference":$("#journal-entry-reference").val(),
+					"accountId":$("select[name='journal-entry-accountid-name'] option:selected").eq(i).val(),
 					"description":$("input[name='desciption-name']").eq(i).val(),
 					"debit":$("input[name='debit-name']").eq(i).val(),
 					"credit":$("input[name='credit-name']").eq(i).val(),
@@ -268,19 +274,23 @@
 	}
 	
 	$("#save-data").click(function(){
-		if($.fn.validateDataDetails() === true){
-			$.fn.getTableData();//Ameya this method return the data
-		}else{
-			$.fn.checkStatus(1,"Something is wrong with data, please check.")
-		}
+		//if($.fn.validateDataDetails() === true){
+		var jsonData = $.fn.getTableData();//Ameya this method return the data
+		//}else{
+			//$.fn.checkStatus(1,"Something is wrong with data, please check.")
+		//}
+		
+		var data = JSON.stringify(jsonData);
+		
+		document.getElementById("output").value=data;
+		document.getElementById("form").submit();
 	})
 		
 	//Make debit or credit field read only
-	document.addEventListener("keyup",function(e){
+	document.addEventListener("change",function(e){
 		var table = document.getElementById('tbody');
 		if(e.srcElement.name==="debit-name"){
 			var rowIndex = e.srcElement.parentNode.parentNode.rowIndex-1;
-			console.log(rowIndex);
 			if(Number(e.srcElement.value) > 0){
 				table.rows[rowIndex].cells[3].children[0].value=0;
 				table.rows[rowIndex].cells[3].children[0].setAttribute('readonly', true);
@@ -290,7 +300,6 @@
 			}
 		}else if(e.srcElement.name==="credit-name"){
 			var rowIndex = e.srcElement.parentNode.parentNode.rowIndex-1;
-			console.log(rowIndex);
 			if(Number(e.srcElement.value) > 0){
 				table.rows[rowIndex].cells[2].children[0].value=0;
 				table.rows[rowIndex].cells[2].children[0].setAttribute('readonly', true);
@@ -328,9 +337,18 @@
 	}
 	
 	fetchVoucherNoSeries();
-	
-		
-		
+	/**************************************
+	Response window code
+	**************************************/
+	var sessionId = {
+			"getSessionId":<%=session.getAttribute("transactionId") %>,
+	}
+	$(document).ready(function(){
+		$.fn.checkStatus(sessionId.getSessionId,"Transaction has been recorded successfully!")
+	})
+<%
+session.removeAttribute("transactionId");
+%>		
 		</script>
 </body>
 </html>

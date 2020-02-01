@@ -31,34 +31,37 @@
     
     int bankId = ab.addBank(b);
     
-    String bankAccountName = b.getBankName()+" - "+(b.getAccountNo().substring(b.getAccountNo().length() - 4));
+    if(bankId > 0){
+    	String bankAccountName = b.getBankName()+" - "+(b.getAccountNo().substring(b.getAccountNo().length() - 4));
+        
+       	AccountName an = new AccountName();
+        
+        GeneralLedger gl = new GeneralLedger();
+        
+        an.setAccountLedger(bankAccountName);
+        an.setCompanyId(b.getCompanyId());
+        an.setAccCategoryId(1);
+        an.setLedgerDesc(b.getBankName());
+        an.setLedgerDate(date);
+    	an.setBankId(bankId);
+    	an.setOpeningBal(openingBalance);
+    	
+    	AddAccountName addAccount = new AddAccountName();
+    	
+    	int accId = addAccount.addAccountName(an);
+    	
+    	gl.setAccNameId(accId);
+        gl.setGlDate(date);
+    	gl.setOpeningBal(openingBalance);
+        gl.setCredit(0);
+        gl.setDebit(0);
+    	gl.setClosingBal(openingBalance);
+        
+        AddGeneralLedger addGl = new AddGeneralLedger();
+        
+        addGl.addGeneralLedger(gl);
+    }
     
-   	AccountName an = new AccountName();
-    
-    GeneralLedger gl = new GeneralLedger();
-    
-    an.setAccountLedger(bankAccountName);
-    an.setCompanyId(b.getCompanyId());
-    an.setAccCategoryId(1);
-    an.setLedgerDesc(b.getBankName());
-    an.setLedgerDate(date);
-	an.setBankId(bankId);
-	an.setOpeningBal(openingBalance);
-	
-	AddAccountName addAccount = new AddAccountName();
-	
-	int accId = addAccount.addAccountName(an);
-	
-	gl.setAccNameId(accId);
-    gl.setGlDate(date);
-	gl.setOpeningBal(openingBalance);
-    gl.setCredit(0);
-    gl.setDebit(0);
-	gl.setClosingBal(openingBalance);
-    
-    AddGeneralLedger addGl = new AddGeneralLedger();
-    
-    addGl.addGeneralLedger(gl);
 	
     session.setAttribute("bankId", Integer.toString(bankId));
     response.sendRedirect("../admin/Setup_Bank.jsp");

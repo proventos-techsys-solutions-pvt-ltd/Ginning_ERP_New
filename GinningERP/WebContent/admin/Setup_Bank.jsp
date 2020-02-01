@@ -223,7 +223,15 @@ $(document).ready(function(){
 			}
 
 			$(document).ready(function(){
-				$.fn.checkStatus(sessionId.getSessionId,"Bank has been saved successfully!")
+				if(sessionId.getSessionId != null){
+					if(Number(sessionId.getSessionId) === 0){
+						$.fn.checkStatus(1,"Unable to add Bank, Please check the input given.");
+					}else if(Number(sessionId.getSessionId) === -1){
+						$.fn.checkStatus(1,"Unable to add Bank, Duplicate account no. has been added.");
+					}else if(Number(sessionId.getSessionId) > 0){
+						$.fn.checkStatus(sessionId.getSessionId,"Bank has been saved successfully!");
+					}
+				}
 			})
 
 		

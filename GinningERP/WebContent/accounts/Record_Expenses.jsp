@@ -201,12 +201,15 @@
 	Response window code
 	**************************************/
 	var sessionId = {
-			"getSessionId":<%=session.getAttribute("accountId") %>,
+			"getSessionId":<%=session.getAttribute("expenseId") %>,
 	}
 	$(document).ready(function(){
-		$.fn.checkStatus(sessionId.getSessionId,"Ledger has been created successfully!")
+		console.log(sessionId.getSessionId);
+		$.fn.checkStatus(sessionId.getSessionId,"Expense has been added successfully!")
 	})
-	
+<%
+session.removeAttribute("expenseId");
+%>	
 	
 	</script>
 </body>

@@ -30,11 +30,26 @@ public class AddCheque {
 			
 			Date date = Date.valueOf(c.getChequeDate());
 			
-			cs.setInt(2, c.getCustomerId());
-			cs.setInt(3, c.getInvoiceId());
+			if(c.getCustomerId() == 0) {
+				cs.setNull(2, Types.NUMERIC);
+			}else {
+				cs.setInt(2, c.getCustomerId());
+			}
+			
+			
+			if(c.getInvoiceId() == 0) {
+				cs.setNull(3, Types.NUMERIC);
+			}else {
+				cs.setInt(3, c.getInvoiceId());
+			}
 			cs.setInt(4,c.getBankId());
 			cs.setString(5, c.getCustomerName());
-			cs.setString(6, c.getInvoiceNo());
+			if(c.getInvoiceNo() == "" || c.getInvoiceNo() == null) {
+				cs.setNull(6, Types.VARCHAR);
+			}else {
+				cs.setString(6, c.getInvoiceNo());
+			}
+			
 			cs.setString(7, c.getBankName());
 			cs.setString(8, c.getChequeNo());
 			cs.setLong(9, c.getChequeAmount());
