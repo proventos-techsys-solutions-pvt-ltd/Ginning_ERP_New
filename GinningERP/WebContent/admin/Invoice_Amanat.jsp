@@ -10,7 +10,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="../js/3.4.1-jq.js"></script>
 <script src="../js/3.2.1-jq.js"></script>
-<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>
+<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUI.js" ></script>\
+<script src="${pageContext.request.contextPath}/js/plugins/jquery.blockUILoading.js" ></script>
 <title>Amanat Invoice</title>
 </head>
 
@@ -434,7 +435,7 @@ function setCurrentDate(){
 	}
 	
 	function getDailySetupData(){
-		
+		$.blockUILoad();
 		url = "../processing/setDailyInvSetup.jsp";
 		if(window.XMLHttpRequest){  
 			fetchDailySetupRequest=new XMLHttpRequest();  
@@ -456,6 +457,7 @@ function setCurrentDate(){
 			var response = this.response.trim();
 			var data = JSON.parse(response);
 			setDailySetupData(data);
+			$.unblockUILoad();
 		}
 	}
 	
@@ -501,6 +503,7 @@ function setCurrentDate(){
 	//Send the AJAX Request to fetch data
 	function fetchData(rst){
 		if(!checkRstInTable(rst)){
+			$.blockUILoad();
 			url = "../processing/adminApproval.jsp?rst="+rst;
 			if(window.XMLHttpRequest){  
 				fetchRequest=new XMLHttpRequest();  
@@ -537,6 +540,7 @@ function setCurrentDate(){
 				var data = JSON.parse(response);
 				setData(data);
 			}
+			$.unblockUILoad();
 		}
 	}
 	
@@ -544,6 +548,7 @@ function setCurrentDate(){
 	//Send the AJAX Request to fetch data
 	function fetchAmanatData(rst){
 		if(!checkRstInTable(rst)){
+			$.blockUILoad();
 			url = "../processing/amanatInvoice.jsp?rst="+rst;
 			if(window.XMLHttpRequest){  
 				fetchAmanatRequest=new XMLHttpRequest();  
@@ -580,7 +585,7 @@ function setCurrentDate(){
 				var data = JSON.parse(response);
 				setAmanatData(data);
 			}
-			
+			$.unblockUILoad();
 		}
 	}
 	
@@ -1055,6 +1060,7 @@ function setCurrentDate(){
 	});
 	
 	function pendingInvoicingReports(){
+		$.blockUILoad();
 		var url="${pageContext.request.contextPath}/processing/pendingAmanatForInvoicing.jsp";
 		if(window.XMLHttpRequest){  
 			fetchPendingInvoicing=new XMLHttpRequest();  
@@ -1075,6 +1081,7 @@ function setCurrentDate(){
 			var response = this.response.trim();
 			var data = JSON.parse(response);
 			setPendingInvoicingData(data);
+			$.unblockUILoad();
 		}
 	}
 
@@ -1099,8 +1106,6 @@ function setPendingInvoicingData(data){
 
 document.addEventListener('change',function(e){
 	if(e.srcElement.name === 'quantity'){
-		
-		
 		var quantities = document.getElementsByName('quantity');
 		var actQty = 0;
 		for(i=0; i<quantities.length; i++){
@@ -1122,6 +1127,7 @@ document.addEventListener('change',function(e){
 });
 
 function getVocuherNo(){
+		$.blockUILoad();
 		var url="${pageContext.request.contextPath}/processing/getVoucherNoSeries.jsp";
 		if(window.XMLHttpRequest){  
 			fetchVouch=new XMLHttpRequest();  
@@ -1141,6 +1147,7 @@ function getVocuherNo(){
 		if(fetchVouch.readyState == 4){
 			var response = this.response.trim();
 			document.getElementById('voucherNo').value = response;
+			$.unblockUILoad();
 		}
 	}
 	

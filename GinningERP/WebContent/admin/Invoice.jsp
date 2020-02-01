@@ -452,6 +452,7 @@ function setCurrentDate(){
 			var response = this.response.trim();
 			var data = JSON.parse(response);
 			setDailySetupData(data);
+			$.unblockUILoad();
 		}
 	}
 	
@@ -482,8 +483,6 @@ function setCurrentDate(){
 		document.getElementById('bonusPerQtl').value = data.bonusAmount;
 		document.getElementById('invoiceNo').value = data.invoiceSeries;
 		document.getElementById('accPayableId').value = data.accPayableId;
-		$.unblockUILoad();
-		
 	}
 	
 	function checkRstInTable(rst){
@@ -524,13 +523,17 @@ function setCurrentDate(){
 			console.log(response);
 			if(Number(response) === 0 ){
 				window.alert("RST entered is either blank or 0.")
+				$.unblockUILoad();
 			}
 			else if(Number(response) === 1){
-				window.alert("Invalid RST.")
+				window.alert("Invalid RST.");
+				$.unblockUILoad();
 			}else if(Number(response) === 2){
-				window.alert("Grading fo this RST is not yet done.")
+				window.alert("Grading fo this RST is not yet done.");
+				$.unblockUILoad();
 			}else if(Number(response) === 3){
-				window.alert("Invoice is already created for this RST.")
+				window.alert("Invoice is already created for this RST.");
+				$.unblockUILoad();
 			}else{
 				var data = JSON.parse(response);
 				setData(data);
@@ -568,14 +571,18 @@ function setCurrentDate(){
 			var response = this.response.trim();
 			console.log(response);
 			if(Number(response) === 0 ){
-				window.alert("RST entered is either blank or 0.")
+				window.alert("RST entered is either blank or 0.");
+				$.unblockUILoad();
 			}
 			else if(Number(response) === 1){
-				window.alert("Invalid RST.")
+				window.alert("Invalid RST.");
+				$.unblockUILoad();
 			}else if(Number(response) === 2){
-				window.alert("Grading fo this RST is not yet done.")
+				window.alert("Grading fo this RST is not yet done.");
+				$.unblockUILoad();
 			}else if(Number(response) === 3){
-				window.alert("RST does not exist in Amanat list.")
+				window.alert("RST does not exist in Amanat list.");
+				$.unblockUILoad();
 			}else{
 				var data = JSON.parse(response);
 				setAmanatData(data);
@@ -833,7 +840,8 @@ function setCurrentDate(){
 			var response = this.response.trim();
 			console.log('response--'+response);
 			if(Number(response) === 0){
-				alert('Invalid Invoie No.')
+				alert('Invalid Invoie No.');
+				$.unblockUILoad();
 			}else{
 				var data = JSON.parse(response);
 				setDataForInvoiceUpdation(data);

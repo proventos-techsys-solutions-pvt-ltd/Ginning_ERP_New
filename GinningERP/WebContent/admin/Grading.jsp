@@ -40,7 +40,6 @@
         <select id="gradeRate" hidden>
         	<c:GradeRate/>
         </select>
-        
         <div class="row row-background">
 			<div class="col-md-12">
 				<form id="gradeForm" action=''>
@@ -499,12 +498,14 @@ function getData(){
 		var response = this.response.trim();
 		//console.log(response);
 		if(Number(response) === 0 ){
-			window.alert("RST entered is either blank or 0.")
-		}
-		else if(Number(response) === 1){
-			window.alert("Invalid RST.")
+			window.alert("RST entered is either blank or 0.");
+			$.unblockUILoad();
+		}else if(Number(response) === 1){
+			window.alert("Invalid RST.");
+			$.unblockUILoad();
 		}else if(Number(response) === 2){
-			window.alert("Second Weighment is pending.")
+			window.alert("Second Weighment is pending.");
+			$.unblockUILoad();
 		}else{
 			var data = JSON.parse(response);
 			console.log(data);

@@ -153,7 +153,7 @@
 		
 		document.getElementById("dateFilterButton").addEventListener('click',function(e){
 			fetchReport();
-		})
+		});
 		
 		document.getElementById("companyId").addEventListener("change",function(e){
 			var accOptions = document.getElementById("accId").options;
@@ -165,7 +165,7 @@
 					accOptions[i].disabled = true;
 				}
 			}
-		})
+		});
 		
 		function setReportInTable(json, openingBalance){
 			var table = document.getElementById("tableBody");
@@ -205,7 +205,7 @@
 		
 		document.getElementById("exportToExcel").addEventListener("click",function(){
 			Export();
-			})
+		});
 			/***********************
 			Side bar 
 		************************/
