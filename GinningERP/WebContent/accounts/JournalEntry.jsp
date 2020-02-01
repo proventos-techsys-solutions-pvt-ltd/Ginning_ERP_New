@@ -25,8 +25,15 @@
 		</div>
 		<div class="col-md-4">
 			<select class="form-control  ml-2" >
-			<option>Test</option>
+			<option selected disabled>Select</option>
+			<c:Company/>
 			</select>
+		</div>
+		<div class="col-md-2 text-right">
+			<label style="margin-bottom:0px;">Voucher No</label>
+		</div>
+		<div class="col-md-4">
+			<input type="text" class="form-control  ml-2" id="voucherNo" name="voucherNo" readonly>
 		</div>
 	</div>
 	
@@ -59,35 +66,36 @@
 					<tbody id="tbody">
 						<tr class="tdindex">
 							<td>
-								<select class="form-control " id="journal-entry-accountid" name="journal-entry-accountid-name">
-									<option value="0">Account Id</option>
+								<select class="form-control "  name="journal-entry-accountid-name">
+									<option selected disabled>Select</option>
+									<c:AccountLedgerWithoutPurchaseTag/>
 								</select>
 							</td>
 							<td>
-								<input type="text" class="form-control  " id="desciption" name="desciption-name">
+								<input type="text" class="form-control  "  name="desciption-name">
 							</td>
 							<td>
-								<input type="text" class="form-control  " id="debit" name="debit-name">
+								<input type="text" class="form-control  "  name="debit-name">
 							</td>
 							<td>
-								<input type="text" class="form-control  " id="credit" name="credit-name">
+								<input type="text" class="form-control  "  name="credit-name">
 							</td>
 						</tr>
-						
 						<tr class="tdindex">
 							<td>
-								<select class="form-control " id="journal-entry-accountid" name="journal-entry-accountid-name">
-									<option value="0">Account Id</option>
+								<select class="form-control "  name="journal-entry-accountid-name">
+									<option selected disabled>Select</option>
+									<c:AccountLedgerWithoutPurchaseTag/>
 								</select>
 							</td>
 							<td>
-								<input type="text" class="form-control  " id="desciption" name="desciption-name">
+								<input type="text" class="form-control  "  name="desciption-name">
 							</td>
 							<td>
-								<input type="text" class="form-control  " id="debit" name="debit-name">
+								<input type="text" class="form-control  "  name="debit-name">
 							</td>
 							<td>
-								<input type="text" class="form-control  " id="credit" name="credit-name">
+								<input type="text" class="form-control  "  name="credit-name">
 							</td>
 						</tr>
 					</tbody>
@@ -176,10 +184,12 @@
 		$(document).ready(function(){
 			$("#add-row").click(function(){
 				$("#tbody tr:last").after(
-						'<tr class="tdindex"><td><select class="form-control " id="journal-entry-accountid" name="journal-entry-accountid-name">	<option value="0">Account Id</option></select>'+
-						'</td><td><input type="text" class="form-control " id="desciption" name="desciption-name">	</td>'+
-						'<td><input type="text" class="form-control " id="debit" name="debit-name"></td>'+
-						'<td><input type="text" class="form-control " id="credit" name="credit-name"></td></tr>'
+						"<tr class='tdindex'><td><select class='form-control '  name='journal-entry-accountid-name'><option selected disabled>Select</option>"+
+						"<c:AccountLedgerWithoutPurchaseTag/>"+
+						"</select>"+
+						"</td><td><input type='text' class='form-control '  name='desciption-name'>	</td>"+
+						"<td><input type='text' class='form-control '  name='debit-name'></td>"+
+						"<td><input type='text' class='form-control '  name='credit-name'></td></tr>"
 						)
 						$.fn.getGrossTotalOfDebit();
 						$.fn.getGrossTotalOfCredit();
@@ -265,7 +275,60 @@
 		}
 	})
 		
-		
+	//Make debit or credit field read only
+	document.addEventListener("keyup",function(e){
+		var table = document.getElementById('tbody');
+		if(e.srcElement.name==="debit-name"){
+			var rowIndex = e.srcElement.parentNode.parentNode.rowIndex-1;
+			console.log(rowIndex);
+			if(Number(e.srcElement.value) > 0){
+				table.rows[rowIndex].cells[3].children[0].value=0;
+				table.rows[rowIndex].cells[3].children[0].setAttribute('readonly', true);
+			}else if(Number(e.srcElement.value) <= 0){
+				table.rows[rowIndex].cells[3].children[0].value="";
+				table.rows[rowIndex].cells[3].children[0].removeAttribute('readonly');
+			}
+		}else if(e.srcElement.name==="credit-name"){
+			var rowIndex = e.srcElement.parentNode.parentNode.rowIndex-1;
+			console.log(rowIndex);
+			if(Number(e.srcElement.value) > 0){
+				table.rows[rowIndex].cells[2].children[0].value=0;
+				table.rows[rowIndex].cells[2].children[0].setAttribute('readonly', true);
+			}else if(Number(e.srcElement.value) <= 0){
+				table.rows[rowIndex].cells[2].children[0].value="";
+				table.rows[rowIndex].cells[2].children[0].removeAttribute('readonly');
+			}
+		}
+	});
+	
+	
+	function fetchVoucherNoSeries(){
+		var url="../processing/getVoucherNoSeries.jsp";
+		if(window.XMLHttpRequest){  
+			fetchVoucherNo=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchVoucherNo=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+	  
+		try{  
+			fetchVoucherNo.onreadystatechange=getVoucherNo;  
+			console.log("AJAX Req sent");
+			fetchVoucherNo.open("GET",url,true);  
+			fetchVoucherNo.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	function getVoucherNo(){
+		if(fetchVoucherNo.readyState == 4){
+			var voucherNo = this.response.trim();
+			console.log("voucher---"+voucherNo);
+			document.getElementById("voucherNo").value = voucherNo;
+		}
+	}
+	
+	fetchVoucherNoSeries();
+	
 		
 		
 		</script>

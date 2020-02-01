@@ -23,7 +23,10 @@ public class PaymentModes extends SimpleTagSupport{
 		TreeMap<String,Integer> paymenModes = new TreeMap<String,Integer>();
 		try {
 			 con = OracleConnection.getConnection();
-			 String accountQuery = "Select * from payment_modes";
+			 String accountQuery = "SELECT\r\n" + 
+							 		"    *\r\n" + 
+							 		"FROM\r\n" + 
+							 		"    PAYMENT_MODES";
 			 Statement stmt = con.createStatement();
 			 paymentSet = stmt.executeQuery(accountQuery);
 			 while(paymentSet.next()) {

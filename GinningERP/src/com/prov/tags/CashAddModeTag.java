@@ -22,7 +22,17 @@ public class CashAddModeTag extends SimpleTagSupport{
 		JSONArray jsonArray = new JSONArray();
 		try {
 			 con = OracleConnection.getConnection();
-			 String accountQuery = "Select unique acc_ledger, account_id, company_id from ACCOUNT_NAME where ACC_CATEGORY_ID=1 or acc_category_id = 3 order by acc_ledger";
+			 String accountQuery = "SELECT\r\n" + 
+						 		"    UNIQUE ACC_LEDGER,\r\n" + 
+						 		"    ACCOUNT_ID,\r\n" + 
+						 		"    COMPANY_ID\r\n" + 
+						 		"FROM\r\n" + 
+						 		"    ACCOUNT_NAME\r\n" + 
+						 		"WHERE\r\n" + 
+						 		"    ACC_CATEGORY_ID = 1\r\n" + 
+						 		"    OR ACC_CATEGORY_ID = 3\r\n" + 
+						 		"ORDER BY\r\n" + 
+						 		"    ACC_LEDGER";
 			 Statement stmt = con.createStatement();
 			 accountCatResultSet = stmt.executeQuery(accountQuery);
 			 while(accountCatResultSet.next()) {

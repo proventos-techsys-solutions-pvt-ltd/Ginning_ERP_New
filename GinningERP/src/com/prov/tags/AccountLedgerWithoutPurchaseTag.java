@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 import com.prov.db.OracleConnection;
 
-public class CashLedgerTag extends SimpleTagSupport{
+public class AccountLedgerWithoutPurchaseTag extends SimpleTagSupport{
 	
 	public static JSONArray getAccountCats() {			
 		Connection con=null;
@@ -29,7 +29,7 @@ public class CashLedgerTag extends SimpleTagSupport{
 							 		"FROM\r\n" + 
 							 		"    ACCOUNT_NAME\r\n" + 
 							 		"WHERE\r\n" + 
-							 		"    ACC_CATEGORY_ID = 2\r\n" + 
+							 		"    ACC_CATEGORY_ID <> 5\r\n" + 
 							 		"ORDER BY\r\n" + 
 							 		"    ACC_LEDGER";
 			 Statement stmt = con.createStatement();
@@ -53,12 +53,11 @@ public class CashLedgerTag extends SimpleTagSupport{
 		JSONArray jsonArray = getAccountCats();
 		for(int i=0;i<jsonArray.length();i++) {
 			try {
-				out.println("<option data-company-id='"+jsonArray.getJSONObject(i).get("companyId")+"' value='"+jsonArray.getJSONObject(i).get("accId")+"'>"+jsonArray.getJSONObject(i).get("accLedger")+"</option>");
+				out.print("<option data-company-id='"+jsonArray.getJSONObject(i).get("companyId")+"' value='"+jsonArray.getJSONObject(i).get("accId")+"'>"+jsonArray.getJSONObject(i).get("accLedger")+"</option>");
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-
 }

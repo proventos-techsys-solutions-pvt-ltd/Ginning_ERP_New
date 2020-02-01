@@ -23,7 +23,12 @@ public class CustomerTag extends SimpleTagSupport {
 		TreeMap<Integer,String> customerName = new TreeMap<Integer,String>();
 		try {
 			 con = OracleConnection.getConnection();
-			 String companyQuery = "Select * from customer_mast order by name";
+			 String companyQuery = "SELECT\r\n" + 
+							 		"    *\r\n" + 
+							 		"FROM\r\n" + 
+							 		"    CUSTOMER_MAST\r\n" + 
+							 		"ORDER BY\r\n" + 
+							 		"    NAME";
 			 Statement stmt = con.createStatement();
 			 customerResultSet = stmt.executeQuery(companyQuery);
 			 while(customerResultSet.next()) {

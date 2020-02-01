@@ -23,7 +23,12 @@ public class VehicleCategoryTag extends SimpleTagSupport  {
 		TreeMap<Integer,String> vehicleCategory = new TreeMap<Integer,String>();
 		try {
 			 con = OracleConnection.getConnection();
-			 String vehicleCategoryQuery = "SELECT * FROM WEIGH_RATE_MAST ORDER BY VEHICLE_NAME";
+			 String vehicleCategoryQuery = "SELECT\r\n" + 
+									 		"    *\r\n" + 
+									 		"FROM\r\n" + 
+									 		"    WEIGH_RATE_MAST\r\n" + 
+									 		"ORDER BY\r\n" + 
+									 		"    VEHICLE_NAME";
 			 Statement stmt = con.createStatement();
 			 vehicleResultSet = stmt.executeQuery(vehicleCategoryQuery);
 			 while(vehicleResultSet.next()) {

@@ -37,25 +37,17 @@
     </ul>
       </div>
     <div  class="d-flex justify-content-end align-items-center">
-			<div style="color:#fff;">
-			 <% User currentUser = (User)session.getAttribute("currentSessionUser"); %>
+		<div style="color:#fff;">
+		 	<% User currentUser = (User)session.getAttribute("currentSessionUser"); %>
 				<i class="fa fa-user" aria-hidden="true">&nbsp;</i><a href=""><%= currentUser.getName()%></a>
 				&nbsp;&nbsp;&nbsp;
 				<i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i><a href="../LogoutServlet">Sign-Out</a>
-			</div>
 		</div>
+	</div>
 </nav>
 <script>
-var role = <%=currentUser.getRole() %>
-if(role===1){
-	document.getElementById("cashier-admin").hidden = false;
-}
-
-
-
-
-
-
-
-
+	var role = <%=currentUser.getRole() %>
+	if(role===1){
+		document.getElementById("cashier-admin").hidden = false;
+	}
 </script>

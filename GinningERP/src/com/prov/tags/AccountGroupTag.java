@@ -23,7 +23,12 @@ public class AccountGroupTag extends SimpleTagSupport {
 		TreeMap<Integer,String> accountCategory = new TreeMap<Integer,String>();
 		try {
 			 con = OracleConnection.getConnection();
-			 String accountQuery = "Select * from account_group order by group_name";
+			 String accountQuery = "SELECT\r\n" + 
+							 		"    *\r\n" + 
+							 		"FROM\r\n" + 
+							 		"    ACCOUNT_GROUP\r\n" + 
+							 		"ORDER BY\r\n" + 
+							 		"    GROUP_NAME";
 			 Statement stmt = con.createStatement();
 			 accountCatResultSet = stmt.executeQuery(accountQuery);
 			 while(accountCatResultSet.next()) {

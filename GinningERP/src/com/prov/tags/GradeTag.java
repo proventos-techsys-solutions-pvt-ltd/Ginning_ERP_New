@@ -23,7 +23,12 @@ public class GradeTag extends SimpleTagSupport {
 		TreeMap<String,String> gradeName = new TreeMap<String,String>();
 		try {
 			 con = OracleConnection.getConnection();
-			 String accountQuery = "Select * from grade_master order by GRADE";
+			 String accountQuery = "SELECT\r\n" + 
+							 		"    *\r\n" + 
+							 		"FROM\r\n" + 
+							 		"    GRADE_MASTER\r\n" + 
+							 		"ORDER BY\r\n" + 
+							 		"    GRADE";
 			 Statement stmt = con.createStatement();
 			 gradeResultSet = stmt.executeQuery(accountQuery);
 			 while(gradeResultSet.next()) {

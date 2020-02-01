@@ -24,7 +24,17 @@ public class GradeRateTag extends SimpleTagSupport{
 		try {
 			 con = OracleConnection.getConnection();
 			 
-			 String rateQuery = "SELECT * FROM GRADE_RATE_MASTER WHERE RATE_DATE = (SELECT MAX(RATE_DATE) FROM GRADE_RATE_MASTER)";
+			 String rateQuery = "SELECT\r\n" + 
+						 		"    *\r\n" + 
+						 		"FROM\r\n" + 
+						 		"    GRADE_RATE_MASTER\r\n" + 
+						 		"WHERE\r\n" + 
+						 		"    RATE_DATE = (\r\n" + 
+						 		"        SELECT\r\n" + 
+						 		"            MAX(RATE_DATE)\r\n" + 
+						 		"        FROM\r\n" + 
+						 		"            GRADE_RATE_MASTER\r\n" + 
+						 		"    )";
 			 Statement stmt = con.createStatement();
 			 gradeResultSet = stmt.executeQuery(rateQuery);
 			 while(gradeResultSet.next()) {

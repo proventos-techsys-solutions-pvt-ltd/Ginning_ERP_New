@@ -21,13 +21,19 @@ public class BankTag extends SimpleTagSupport {
 			JSONArray jsonArray = new JSONArray();
 			try {
 				 con = OracleConnection.getConnection();
-				 String bankQuery = "Select \r\n" + 
-							 		"bm.ID,\r\n" + 
-							 		"bm.COMPANY_ID,\r\n" + 
-							 		"bm.BANK_NAME,\r\n" + 
-							 		"bm.ACCOUNT_NO,\r\n" + 
-							 		"an.ACCOUNT_ID\r\n" + 
-							 		"from Bank_mast bm, account_name an where an.bank_id = bm.id order by bank_name";
+				 String bankQuery = "SELECT\r\n" + 
+						 		"    BM.ID,\r\n" + 
+						 		"    BM.COMPANY_ID,\r\n" + 
+						 		"    BM.BANK_NAME,\r\n" + 
+						 		"    BM.ACCOUNT_NO,\r\n" + 
+						 		"    AN.ACCOUNT_ID\r\n" + 
+						 		"FROM\r\n" + 
+						 		"    BANK_MAST      BM,\r\n" + 
+						 		"    ACCOUNT_NAME   AN\r\n" + 
+						 		"WHERE\r\n" + 
+						 		"    AN.BANK_ID = BM.ID\r\n" + 
+						 		"ORDER BY\r\n" + 
+						 		"    BANK_NAME";
 				 Statement stmt = con.createStatement();
 				 bankResultSet = stmt.executeQuery(bankQuery);
 				 while(bankResultSet.next()) {
