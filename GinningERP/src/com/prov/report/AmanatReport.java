@@ -706,63 +706,65 @@ public long getAmanatInvoicedQty(int amanatId) {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String invSql = "SELECT\r\n" + 
-					"    AM.ID   AMANAT_MAST_ID,\r\n" + 
-					"    AM.GRADE_ID,\r\n" + 
-					"    AM.CUSTOMER_ID,\r\n" + 
-					"    AM.AMANAT_DATE,\r\n" + 
-					"    AM.FINAL_RATE,\r\n" + 
-					"    AM.RST,\r\n" + 
-					"    AM.DIFF_FROM_SUPER,\r\n" + 
-					"    AM.INVOICED_QTY,\r\n" + 
-					"    AM.AMANAT_NO,\r\n" + 
-					"    II.ID   INVOICE_ITEM_ID,\r\n" + 
-					"    II.INVOICE_ID,\r\n" + 
-					"    II.WEIGHMENT_ID,\r\n" + 
-					"    GD.QUANTITY,\r\n" + 
-					"    GD.GRADE,\r\n" + 
-					"    GD.RATE,\r\n" + 
-					"    IM.INVOICE_NO,\r\n" + 
-					"    IM.TOTAL,\r\n" + 
-					"    IM.INV_DATE,\r\n" + 
-					"    IM.COMPANY_ID,\r\n" + 
-					"    IM.CUSTOMER_ID,\r\n" + 
-					"    IM.AUTHORIZER,\r\n" + 
-					"    IM.TOTAL_QUANTITY,\r\n" + 
-					"    IM.UNLOADING_CHARGES,\r\n" + 
-					"    IM.BONUS,\r\n" + 
-					"    IM.NET_AMOUNT,\r\n" + 
-					"    IM.PDC_AMOUNT,\r\n" + 
-					"    IM.ADVANCE,\r\n" + 
-					"    COMP.NAME,\r\n" + 
-					"    CM.NAME,\r\n" + 
-					"    CM.ADDRESS,\r\n" + 
-					"    CM.MOBILE,\r\n" + 
-					"    CVM.VEHICLE_NO,\r\n" + 
-					"    WRM.VEHICLE_NAME,\r\n" + 
-					"    WM.NET,\r\n" + 
-					"    WM.WEIGHMENT_DATE\r\n" + 
-					"FROM\r\n" + 
-					"    AMANAT_MAST             AM,\r\n" + 
-					"    INVOICE_ITEMS           II,\r\n" + 
-					"    GRADE_DETAILS           GD,\r\n" + 
-					"    INVOICE_MAST            IM,\r\n" + 
-					"    COMPANY_MASTER          COMP,\r\n" + 
-					"    CUSTOMER_MAST           CM,\r\n" + 
-					"    CUSTOMER_VEHICLE_MAST   CVM,\r\n" + 
-					"    WEIGH_MAST              WM,\r\n" + 
-					"    WEIGH_RATE_MAST         WRM\r\n" + 
-					"WHERE\r\n" + 
-					"    AM.GRADE_ID = II.GRADE_ID\r\n" + 
-					"    AND IM.ID = II.INVOICE_ID\r\n" + 
-					"    AND COMP.ID = IM.COMPANY_ID\r\n" + 
-					"    AND CM.ID = IM.CUSTOMER_ID\r\n" + 
-					"    AND GD.WEIGHMENT_ID = WM.ID\r\n" + 
-					"    AND WM.VID = CVM.ID\r\n" + 
-					"    AND CVM.V_TYPE_ID = WRM.ID\r\n" + 
-					"    AND II.GRADE_ID = GD.ID\r\n" + 
+			String invSql = "SELECT \r\n" + 
+					"    AM.ID   AMANAT_MAST_ID, \r\n" + 
+					"    AM.GRADE_ID, \r\n" + 
+					"    AM.CUSTOMER_ID, \r\n" + 
+					"    AM.AMANAT_DATE, \r\n" + 
+					"    AM.FINAL_RATE, \r\n" + 
+					"    AM.RST, \r\n" + 
+					"    AM.DIFF_FROM_SUPER, \r\n" + 
+					"    AM.INVOICED_QTY, \r\n" + 
+					"    AM.AMANAT_NO, \r\n" + 
+					"    II.ID   INVOICE_ITEM_ID, \r\n" + 
+					"    II.INVOICE_ID, \r\n" + 
+					"    II.WEIGHMENT_ID, \r\n" + 
+					"    GD.QUANTITY, \r\n" + 
+					"    GD.GRADE, \r\n" + 
+					"    GD.RATE, \r\n" + 
+					"    IM.INVOICE_NO, \r\n" + 
+					"    IM.TOTAL, \r\n" + 
+					"    IM.INV_DATE, \r\n" + 
+					"    IM.COMPANY_ID, \r\n" + 
+					"    IM.CUSTOMER_ID, \r\n" + 
+					"    IM.AUTHORIZER, \r\n" + 
+					"    IM.TOTAL_QUANTITY, \r\n" + 
+					"    IM.UNLOADING_CHARGES, \r\n" + 
+					"    IM.BONUS, \r\n" + 
+					"    IM.NET_AMOUNT, \r\n" + 
+					"    IM.PDC_AMOUNT, \r\n" + 
+					"    IM.ADVANCE, \r\n" + 
+					"    COMP.NAME, \r\n" + 
+					"    CM.NAME, \r\n" + 
+					"    CM.ADDRESS, \r\n" + 
+					"    CM.MOBILE, \r\n" + 
+					"    CVM.VEHICLE_NO, \r\n" + 
+					"    WRM.VEHICLE_NAME, \r\n" + 
+					"    WM.NET, \r\n" + 
+					"    WM.WEIGHMENT_DATE,\r\n" + 
+					"    ii.quantity quantity_invoiced,\r\n" + 
+					"    ii.rate invoice_rate\r\n" + 
+					"FROM \r\n" + 
+					"    AMANAT_MAST             AM, \r\n" + 
+					"    INVOICE_ITEMS           II, \r\n" + 
+					"    GRADE_DETAILS           GD, \r\n" + 
+					"    INVOICE_MAST            IM, \r\n" + 
+					"    COMPANY_MASTER          COMP, \r\n" + 
+					"    CUSTOMER_MAST           CM, \r\n" + 
+					"    CUSTOMER_VEHICLE_MAST   CVM, \r\n" + 
+					"    WEIGH_MAST              WM, \r\n" + 
+					"    WEIGH_RATE_MAST         WRM \r\n" + 
+					"WHERE \r\n" + 
+					"    AM.GRADE_ID = II.GRADE_ID \r\n" + 
+					"    AND IM.ID = II.INVOICE_ID \r\n" + 
+					"    AND COMP.ID = IM.COMPANY_ID \r\n" + 
+					"    AND CM.ID = IM.CUSTOMER_ID \r\n" + 
+					"    AND GD.WEIGHMENT_ID = WM.ID \r\n" + 
+					"    AND WM.VID = CVM.ID \r\n" + 
+					"    AND CVM.V_TYPE_ID = WRM.ID \r\n" + 
+					"    AND II.GRADE_ID = GD.ID \r\n" + 
 					"    AND IM.INV_DATE BETWEEN ? AND ?\r\n" + 
-					"ORDER BY\r\n" + 
+					"ORDER BY \r\n" + 
 					"    IM.INV_DATE DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(invSql);
@@ -820,6 +822,8 @@ public long getAmanatInvoicedQty(int amanatId) {
 				obj.put("vehicleName", rs.getString(33));
 				obj.put("totalQty", rs.getString(34));
 				obj.put("weighmentDate", rs.getString(35));
+				obj.put("quantityInvoiced", rs.getString(36));
+				obj.put("invoiceRate", rs.getString(37));
 				
 				arr.put(obj);
 			}

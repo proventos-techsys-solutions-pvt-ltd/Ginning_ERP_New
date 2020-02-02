@@ -21,7 +21,7 @@ public class UpdateInvoiceItems {
 			e.printStackTrace();
 		}
 
-		String updateInvoiceItems = "{ ? = call UPDATE_INVOICEITEMS(?,?,?,?,?) }";
+		String updateInvoiceItems = "{ ? = call UPDATE_INVOICEITEMS(?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(updateInvoiceItems);
@@ -33,6 +33,8 @@ public class UpdateInvoiceItems {
 			cs.setInt(4, ii.getWeighmentId());
 			cs.setInt(5, ii.getGradeId());
 			cs.setInt(6, ii.getRst());
+			cs.setDouble(7, ii.getQuantity());
+			cs.setDouble(8, ii.getRate());
 			
 			cs.executeUpdate();
 			

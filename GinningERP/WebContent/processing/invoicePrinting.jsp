@@ -16,21 +16,22 @@ InvoiceReport invReport = new InvoiceReport();
 org.json.JSONObject printObj = invReport.getInvoiceForPrinting(invoiceId);
 
 JSONArray invItems = printObj.getJSONArray("invoiceItems");
-
+/*
 for(int i=0; i<invItems.length(); i++){
 	int gradeId = invItems.getJSONObject(i).getInt("gradeId");
 	AmanatReport amanatReport = new AmanatReport();
 	JSONObject obj = amanatReport.getAmanatDataForInvoiceReceipt(gradeId);
 	if(obj.length() > 0){
-		invItems.getJSONObject(i).put("invoicedQty", obj.getDouble("invoicedQty"));
+		invItems.getJSONObject(i).put("invoicedQtyAm", obj.getDouble("invoicedQty"));
 		invItems.getJSONObject(i).put("finalRate", obj.getDouble("finalRate"));
-		double amount = (obj.getDouble("invoicedQty")/100) * (obj.getDouble("finalRate"));
+		double amount = (obj.getDouble("invoicedQtyAm")/100) * (obj.getDouble("finalRate"));
 		invItems.getJSONObject(i).put("amount", amount);
 		invItems.getJSONObject(i).put("amanat", "yes");
 	}else{
 		invItems.getJSONObject(i).put("amanat", "no");
 	}
 }
+*/
 if(printObj.has("chequeId")){
 	ChequeReport chqRep = new ChequeReport();
 	Cheque chqJson =chqRep.getChequeReport(Integer.parseInt(printObj.getString("chequeId")));

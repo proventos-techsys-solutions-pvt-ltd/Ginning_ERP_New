@@ -543,13 +543,8 @@ body{
 				cell2.innerHTML = invItems[i].material;
 				cell3.innerHTML = invItems[i].grade;
 				cell4.innerHTML = invItems[i].gradeDescription;
-				if(invItems[i].amanat === "yes"){
-					cell5.innerHTML = invItems[i].invoicedQty ;
-					cell6.innerHTML = invItems[i].finalRate;
-				}else{
-					cell5.innerHTML = invItems[i].quantity;
-					cell6.innerHTML = invItems[i].rate;
-				}
+				cell5.innerHTML = invItems[i].invoicedQty ;
+				cell6.innerHTML = invItems[i].invoiceRate;
 				
 				cell7.innerHTML = invItems[i].amount.toFixed(2);
 				cell8.innerHTML = invItems[i].moisture;

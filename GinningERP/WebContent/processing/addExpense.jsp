@@ -51,7 +51,7 @@
 		int creditId=addTrans.addTransactions(creditTransaction);
 		
 		if(debitId!=0 && creditId!=0){
-			if(chequeNo != "" || chequeNo != null){
+			if(chequeNo != "" && chequeNo != null){
 				
 				BankReport br = new BankReport();
 				

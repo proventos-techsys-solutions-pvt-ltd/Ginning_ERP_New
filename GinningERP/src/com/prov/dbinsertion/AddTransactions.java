@@ -35,7 +35,7 @@ public int addTransactions(Transactions t) {
 			cs.setString(4, t.getVouchRef());
 			cs.setInt(5, t.getAccountId());
 			if(t.getContactId()==null) {
-				cs.setNull(6, Types.NVARCHAR);
+				cs.setNull(6, Types.VARCHAR);
 			}else {
 				cs.setString(6, t.getContactId());
 			}

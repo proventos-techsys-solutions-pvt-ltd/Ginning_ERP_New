@@ -68,6 +68,8 @@
 				item.setWeighmentId(Integer.parseInt((String)obj.get("weighmentId")));
 				item.setGradeId(Integer.parseInt((String)obj.get("gradeId")));
 				item.setRst(Integer.parseInt((String)obj.get("rst")));
+				item.setRate(Double.parseDouble((String)obj.get("rate")));
+				item.setQuantity(Double.parseDouble((String)obj.get("quantity")));
 				invoiceItemList.add(item);
 			}
 			else if(((String)obj.get("amanat")).equals("true")){

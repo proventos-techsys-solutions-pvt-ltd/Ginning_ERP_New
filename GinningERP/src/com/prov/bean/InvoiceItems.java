@@ -3,8 +3,16 @@ package com.prov.bean;
 public class InvoiceItems {
 	
 	int id, invoiceId, weighmentId, gradeId, rst;
-	double quantity;
+	double quantity, rate;
 
+
+	public double getRate() {
+		return rate;
+	}
+
+	public void setRate(double rate) {
+		this.rate = rate;
+	}
 
 	public double getQuantity() {
 		return quantity;
