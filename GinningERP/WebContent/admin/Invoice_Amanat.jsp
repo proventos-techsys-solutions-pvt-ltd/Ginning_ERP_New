@@ -1206,7 +1206,7 @@ document.getElementById('advance').addEventListener('keyup', function(e){
 	}
 });
 
-//Change fiels if advance payment is done
+//Change fiels if bonus is edited
 document.getElementById('totalBonus').addEventListener('change', function(e){
 	calculateTotal();
 });

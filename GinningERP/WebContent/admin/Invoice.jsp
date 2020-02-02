@@ -172,7 +172,7 @@
 											<label for="" class="lbl-rm-all">Total Invoice Amt</label> 
 	                                    	<input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm" value="0" readonly="readonly">
 											<label for="" class="lbl-rm-all">Total Bonus</label> 
-	                                    	<input type="text" id="totalBonus" name="totalBonus" class="form-control form-control-sm" value="0" readonly="readonly">
+	                                    	<input type="text" id="totalBonus" name="totalBonus" class="form-control form-control-sm" value="0">
 										</div>
 										
 									</div>
@@ -1489,6 +1489,11 @@ function getVocuherNo(){
 					$(".row").css("margin-left","225px"); 
 				}
 		})
+	});
+	
+	
+	document.getElementById('totalBonus').addEventListener('change', function(e){
+		calculateTotal();
 	});
 /***********************
 Side bar 
