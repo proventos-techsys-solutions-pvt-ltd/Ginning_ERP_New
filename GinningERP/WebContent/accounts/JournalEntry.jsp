@@ -24,7 +24,7 @@
 			<label style="margin-bottom:0px;">Company Selected</label>
 		</div>
 		<div class="col-md-4">
-			<select class="form-control  ml-2" >
+			<select class="form-control  ml-2"  id="select-company">
 			<option selected disabled>Select</option>
 			<c:Company/>
 			</select>
@@ -89,7 +89,7 @@
 								</select>
 							</td>
 							<td>
-								<input type="text" class="form-control  "  name="desciption-name">
+								<input type="text" class="form-control  "  name="desciption-name" >
 							</td>
 							<td>
 								<input type="text" class="form-control  "  name="debit-name">
@@ -146,22 +146,68 @@
 
 
 	 <script src="../js/3.4.1-jq.js"></script>
-	 <script src="../js/Validation.js"></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
+	 <script src="../js/Validation.js"></script>
 	<script>
 		//Jquery code starting here no other separate file to be maintained
 		
 		/********************validations***************************/
-	/*	$.fn.validateDataDetails = function(){
+		
+		/******************Grand total of table data
+		*/
+		$.fn.getGrossTotalOfDebit = function(){
+			var $tblrows = $("#tbody tr");
+			$tblrows.each(function (index) {
+			    var $tblrow = $(this);
+			    $tblrow.find("input[name='debit-name']").on('keyup', function () {
+			    var subTotal = $("input[name='debit-name']").val();
+			    if (!isNaN(subTotal)) {
+			    	$tblrow.find('#debit-total').val(subTotal);
+			    	var grandTotal = 0;
+			    	  $("input[name='debit-name']").each(function () {
+			    	        var stval = parseFloat($(this).val());
+			    	        grandTotal += isNaN(stval) ? 0 : stval;
+			    	    });
+			    	    $('#debit-total').text(grandTotal);
+			    }
+			    	});
+			});
+		}
+		
+		$.fn.getGrossTotalOfCredit = function(){
+			var $tblrows = $("#tbody tr");
+			$tblrows.each(function (index) {
+			    var $tblrow = $(this);
+			    $tblrow.find("input[name='credit-name']").on('keyup', function () {
+			    var subTotal = $("input[name='credit-name']").val();
+			    if (!isNaN(subTotal)) {
+			    	$tblrow.find('#credit-total').val(subTotal);
+			    	var grandTotal = 0;
+			    	  $("input[name='credit-name']").each(function () {
+			    	        var stval = parseFloat($(this).val());
+			    	        grandTotal += isNaN(stval) ? 0 : stval;
+			    	    });
+			    	    $('#credit-total').text(grandTotal);
+			    }
+			    	});
+			});
+		}
+
+		
+	$.fn.validateDataDetails = function(){
 			var status = false;
 			var totalRow = $("#tbody tr").length;
 			for(i=0;i<totalRow;i++){
-				if($.fn.validateData($("select[name='journal-entry-accountid-name']").eq(i).val().trim(),/^[0-9]+$/)){
-					if($.fn.validateData($("input[name='desciption-name']").eq(i).val().trim(),/^[a-zA-Z0-9]+$/)){
-						if($.fn.validateData($("input[name='debit-name']").eq(i).val().trim(),/^[0-9]+$/)){
-							if($.fn.validateData($("input[name='credit-name']").eq(i).val().trim(),/^[0-9]+$/)){
-								status = true;
+				if($.fn.validateData($("select[name='journal-entry-accountid-name']").eq(i).val(),/^[0-9]+$/)){
+					$("select[name='journal-entry-accountid-name']").eq(i).css("border","1px solid green");
+					if($.fn.validateData($("input[name='desciption-name']").eq(i).val(),/^[a-zA-Z0-9 ]+$/)){
+						$("input[name='desciption-name']").eq(i).css("border","1px solid green");
+						if($.fn.validateData($("input[name='debit-name']").eq(i).val(),/^[0-9]+$/)){
+							$("input[name='debit-name']").eq(i).css("border","1px solid green");
+							if($.fn.validateData($("input[name='credit-name']").eq(i).val(),/^[0-9]+$/)){
+								$("input[name='credit-name']").eq(i).css("border","1px solid green");
+									status = true;
 							}else{
 								$.fn.checkStatus(1,"Only numbers are allowed.")
 								$("input[name='credit-name']").eq(i).css("border","1px solid red");
@@ -181,7 +227,9 @@
 			}
 			return status;
 		}
-		*/
+		
+	
+	
 		/***************Add remove row
 		*/
 		$(document).ready(function(){
@@ -209,45 +257,6 @@
 			})
 		})
 		
-		/******************Grand total of table data
-		*/
-		$.fn.getGrossTotalOfDebit = function(){
-			var $tblrows = $("#tbody tr");
-			$tblrows.each(function (index) {
-			    var $tblrow = $(this);
-			    $tblrow.find("input[name='debit-name']").on('change', function () {
-			    var subTotal = $("input[name='debit-name']").val();
-			    if (!isNaN(subTotal)) {
-			    	$tblrow.find('#debit-total').val(subTotal);
-			    	var grandTotal = 0;
-			    	  $("input[name='debit-name']").each(function () {
-			    	        var stval = parseFloat($(this).val());
-			    	        grandTotal += isNaN(stval) ? 0 : stval;
-			    	    });
-			    	    $('#debit-total').text(grandTotal);
-			    }
-			    	});
-			});
-		}
-		
-		$.fn.getGrossTotalOfCredit = function(){
-			var $tblrows = $("#tbody tr");
-			$tblrows.each(function (index) {
-			    var $tblrow = $(this);
-			    $tblrow.find("input[name='credit-name']").on('change', function () {
-			    var subTotal = $("input[name='credit-name']").val();
-			    if (!isNaN(subTotal)) {
-			    	$tblrow.find('#credit-total').val(subTotal);
-			    	var grandTotal = 0;
-			    	  $("input[name='credit-name']").each(function () {
-			    	        var stval = parseFloat($(this).val());
-			    	        grandTotal += isNaN(stval) ? 0 : stval;
-			    	    });
-			    	    $('#credit-total').text(grandTotal);
-			    }
-			    	});
-			});
-		}
 		
 		$.fn.getGrossTotalOfDebit();
 		$.fn.getGrossTotalOfCredit();
@@ -274,16 +283,40 @@
 	}
 	
 	$("#save-data").click(function(){
-		//if($.fn.validateDataDetails() === true){
-		var jsonData = $.fn.getTableData();//Ameya this method return the data
-		//}else{
-			//$.fn.checkStatus(1,"Something is wrong with data, please check.")
-		//}
+		if($.fn.validateDataDetails() === true){
+			if($("#select-company").val()!=null){
+				if($("#voucherNo").val()!=""){
+					if($("#journal-entry-date").val()!=""){
+						if($("#journal-entry-reference").val()!=""){
+							if($("#debit-total").text()!="0.00" && $("#credit-total").text()!="0.00"  ){
+								if($("#debit-total").text()===$("#credit-total").text()){
+								var jsonData = $.fn.getTableData();
+								var data = JSON.stringify(jsonData);
+								document.getElementById("output").value=data;
+								document.getElementById("form").submit();
+								}else{
+									$.fn.checkStatus(1,"Debit and Credit should match.")
+								}
+							}else{
+								$.fn.checkStatus(1,"You have made unwanted refresh, re-enter values in debit and credit side.")
+							}
+						}else{
+							$.fn.checkStatus(1,"Please enter reference.")
+						}
+					}else{
+						$.fn.checkStatus(1,"Date not entered.")
+					}
+				}else{
+					$.fn.checkStatus(1,"Incorrect voucher no.")
+				}
+			}else{
+				$.fn.checkStatus(1,"Please select the company.")
+			}
+		}else{
+			$.fn.checkStatus(1,"Incorrect data entered, please check.")
+		}
 		
-		var data = JSON.stringify(jsonData);
-		
-		document.getElementById("output").value=data;
-		document.getElementById("form").submit();
+	
 	})
 		
 	//Make debit or credit field read only

@@ -93,9 +93,10 @@
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/commonjs.js"></script>
-	<script src="../js/Validation.js"></script>
+	
 	<script type="text/javascript" src="../js/1.8.3-jq.js"></script>
 	<script src="../js/export/export2excel.js"></script>
+	<script src="../js/Validation.js"></script>
 	<script>
 	
 	function getCurrentDate(){

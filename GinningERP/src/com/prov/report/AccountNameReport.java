@@ -22,7 +22,7 @@ public class AccountNameReport {
 					"    BANK_ID = ?\r\n" + 
 					"    AND COMPANY_ID = ?\r\n" + 
 					"ORDER BY\r\n" + 
-					"    ACCOUNT_ID DESC";
+					"    ACCOUNT_ID";
 			
 			PreparedStatement stmt = con.prepareStatement(invSql);
 			
