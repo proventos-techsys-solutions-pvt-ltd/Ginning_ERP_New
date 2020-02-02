@@ -20,7 +20,7 @@
 						</div>
 				</div>
 			</div>
-		<form action="../processing/addExpense.jsp" >
+		<form action="../processing/addExpense.jsp" method="post">
 			<div class="row row-background">
 				<div class="col-md-3">
 						<label class="lbl-rm-l ">Select Company</label> 

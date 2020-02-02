@@ -31,7 +31,7 @@
 		tr.setContactId(null);
 		tr.setCredit(Double.parseDouble((String)obj.get("credit")));
 		tr.setDebit(Double.parseDouble((String)obj.get("debit")));
-		
+		tr.setTransactionType("JOURNAL");
 		ids[i] = addTransactions.addTransactions(tr);
 		if(ids[i]==0){
 			count=0;

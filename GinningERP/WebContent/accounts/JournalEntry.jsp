@@ -118,15 +118,14 @@
 			
 			<div class="col-md-6 d-flex justify-content-end align-items-center">
 					<button type="button" class="btn  btn-success btn_width" id="save-data">Save</button>
-					<button type="button" class="btn  btn-success ml-2 btn_width" id="reset-data">Reset</button>
+					<button type="button" class="btn  btn-success ml-2 btn_width" id="update-data" disabled>Update</button>
+					<button type="button" class="btn  btn-success ml-2 btn_width" id="reset-data" onclick="window.location='../accounts/JournalEntry.jsp'">Reset</button>
 			</div>
 		</div>
-	
 </div>
 <form id="form" action="../processing/addTransactionFromJournalEntry.jsp" method="post">
 	<input type="hidden" id="output" name="data">
 </form>
-
 
 <!-- Response modal pop up -->
 <div class="response-back-display"></div>
@@ -258,8 +257,8 @@
 		})
 		
 		
-		$.fn.getGrossTotalOfDebit();
-		$.fn.getGrossTotalOfCredit();
+		//$.fn.getGrossTotalOfDebit();
+		//$.fn.getGrossTotalOfCredit();
 		
 	/*************Get data from table to save in database*/
 
@@ -290,10 +289,7 @@
 						if($("#journal-entry-reference").val()!=""){
 							if($("#debit-total").text()!="0.00" && $("#credit-total").text()!="0.00"  ){
 								if($("#debit-total").text()===$("#credit-total").text()){
-								var jsonData = $.fn.getTableData();
-								var data = JSON.stringify(jsonData);
-								document.getElementById("output").value=data;
-								document.getElementById("form").submit();
+									submitData();
 								}else{
 									$.fn.checkStatus(1,"Debit and Credit should match.")
 								}
@@ -315,8 +311,38 @@
 		}else{
 			$.fn.checkStatus(1,"Incorrect data entered, please check.")
 		}
-		
+	})
 	
+	$("#update-data").click(function(){
+		if($.fn.validateDataDetails() === true){
+			if($("#select-company").val()!=null){
+				if($("#voucherNo").val()!=""){
+					if($("#journal-entry-date").val()!=""){
+						if($("#journal-entry-reference").val()!=""){
+							if($("#debit-total").text()!="0.00" && $("#credit-total").text()!="0.00"  ){
+								if($("#debit-total").text()===$("#credit-total").text()){
+									updateData();
+								}else{
+									$.fn.checkStatus(1,"Debit and Credit should match.")
+								}
+							}else{
+								$.fn.checkStatus(1,"You have made unwanted refresh, re-enter values in debit and credit side.")
+							}
+						}else{
+							$.fn.checkStatus(1,"Please enter reference.")
+						}
+					}else{
+						$.fn.checkStatus(1,"Date not entered.")
+					}
+				}else{
+					$.fn.checkStatus(1,"Incorrect voucher no.")
+				}
+			}else{
+				$.fn.checkStatus(1,"Please select the company.")
+			}
+		}else{
+			$.fn.checkStatus(1,"Incorrect data entered, please check.")
+		}
 	})
 		
 	//Make debit or credit field read only
@@ -370,6 +396,143 @@
 	}
 	
 	fetchVoucherNoSeries();
+	
+	
+	/**********************************************/
+	//Fetch data for Updation
+	window.onload = function(){
+		var params = parseURLParams(window.location.href);
+		if(typeof params != "undefined"){
+			document.getElementById('save-data').disabled=true;
+			document.getElementById('update-data').disabled=false;
+			sendReqToGetData(params.voucherNo[0]);
+		}
+	}
+	
+	function parseURLParams(url) {
+	    var queryStart = url.indexOf("?") + 1,
+	        queryEnd   = url.indexOf("#") + 1 || url.length + 1,
+	        query = url.slice(queryStart, queryEnd - 1),
+	        pairs = query.replace(/\+/g, " ").split("&"),
+	        parms = {}, i, n, v, nv;
+	
+	    if (query === url || query === "") return;
+	
+	    for (i = 0; i < pairs.length; i++) {
+	        nv = pairs[i].split("=", 2);
+	        n = decodeURIComponent(nv[0]);
+	        v = decodeURIComponent(nv[1]);
+	
+	        if (!parms.hasOwnProperty(n)) parms[n] = [];
+	        parms[n].push(nv.length === 2 ? v : null);
+	    }
+	    return parms;
+	}
+	
+	function sendReqToGetData(voucherNo){
+		var url="../processing/getJournalEntryTrData.jsp?voucherNo="+voucherNo;
+		if(window.XMLHttpRequest){  
+			fetchTrData=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchTrData=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+	  
+		try{  
+			fetchTrData.onreadystatechange=getVoucherData;  
+			console.log("AJAX Req sent");
+			fetchTrData.open("GET",url,true);  
+			fetchTrData.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	function getVoucherData(){
+		if(fetchTrData.readyState == 4){
+			var response = this.response;
+			var data = JSON.parse(response);
+			setDataForUpdation(data);
+			calculateTotal("debit");
+			calculateTotal("credit");
+		}
+	}
+	
+	function setDataForUpdation(data){
+		console.log(data);
+		document.getElementById("select-company").value = data[0].companyId;
+		document.getElementById("voucherNo").value = data[0].voucherNo;
+		document.getElementById("journal-entry-date").value = data[0].transactionDate;
+		document.getElementById("journal-entry-reference").value = data[0].voucherReference;
+		var table = document.getElementById("tbody");
+		table.innerHTML = "";
+		for(i=0; i<data.length; i++){
+			var noOfRows = table.rows.length;
+			var row = table.insertRow(noOfRows);
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			
+			cell1.innerHTML = "<td><select class='form-control '  name='journal-entry-accountid-name'><option selected disabled>Select</option>"+
+							  "<c:AccountLedgerWithoutPurchaseTag/>"+
+							  "</select>"+
+							  "</td>"
+			document.getElementsByName("journal-entry-accountid-name")[i].value=data[i].accountId;
+			cell2.innerHTML = "</td><td><input type='text' class='form-control '  name='desciption-name' value="+data[i].narration+"></td>";
+			if(Number(data[i].debit)>0){
+				cell3.innerHTML = "<td><input type='text' class='form-control '  name='debit-name' value="+data[i].debit+"></td>";
+				cell4.innerHTML = "<td><input type='text' class='form-control '  name='credit-name' value='0' readonly></td>";
+			
+			}else if(Number(data[i].credit)>0){
+				cell3.innerHTML = "<td><input type='text' class='form-control '  name='debit-name' value='0' readonly></td>";
+				cell4.innerHTML = "<td><input type='text' class='form-control '  name='credit-name' value="+data[i].credit+"></td>";
+			}
+		}
+	}
+	
+	function calculateTotal(trType){
+		if(trType==="credit"){
+			var creditCells = document.getElementsByName("credit-name");
+			var total=0;
+			for(i=0; i<creditCells.length; i++){
+				total = Number(total) + Number(creditCells[i].value);
+				$('#credit-total').text(total);
+			}
+		}else if(trType==="debit"){
+			var debitCells = document.getElementsByName("debit-name");
+			var total=0;
+			for(i=0; i<debitCells.length; i++){
+				total = Number(total) + Number(debitCells[i].value);
+				$('#debit-total').text(total);
+			}
+		}
+	}
+	
+	
+	document.addEventListener('keyup',function(e){
+		if(e.srcElement.name==="credit-name"){
+			calculateTotal("credit");
+		}else if(e.srcElement.name==="debit-name"){
+			calculateTotal("debit");
+		}
+	});
+	
+	function updateData(){
+		document.getElementById('form').action="../processing/updateJournalEntry.jsp";
+		var jsonData = $.fn.getTableData();
+		var data = JSON.stringify(jsonData);
+		document.getElementById("output").value=data;
+		document.getElementById("form").submit();
+	}
+	
+	
+	function submitData(){
+		document.getElementById('form').action="../processing/addTransactionFromJournalEntry.jsp";
+		var jsonData = $.fn.getTableData();
+		var data = JSON.stringify(jsonData);
+		document.getElementById("output").value=data;
+		document.getElementById("form").submit();
+	}
+	
 	/**************************************
 	Response window code
 	**************************************/
@@ -377,8 +540,13 @@
 			"getSessionId":<%=session.getAttribute("transactionId") %>,
 	}
 	$(document).ready(function(){
-		$.fn.checkStatus(sessionId.getSessionId,"Transaction has been recorded successfully!")
-	})
+		if(Number(sessionId.getSessionId) === 0){
+			$.fn.checkStatus(1,"Unable to save transaction!")
+		}else if(Number(sessionId.getSessionId) > 0){
+			$.fn.checkStatus(sessionId.getSessionId,"Transaction has been recorded successfully!")
+		}
+		
+	});
 <%
 session.removeAttribute("transactionId");
 %>		

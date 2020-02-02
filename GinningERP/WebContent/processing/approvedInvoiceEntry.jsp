@@ -134,10 +134,11 @@
 			invoiceId = addinvoice.addInvoice(invoice); 
 			
 			AddInvoiceItems addItems = new AddInvoiceItems();
-			
-			for(int i=0; i<invoiceItemList.size(); i++){
-				invoiceItemList.get(i).setInvoiceId(invoiceId);
-				addItems.addInvoiceItems(invoiceItemList.get(i));
+			if(invoiceId>0){
+				for(int i=0; i<invoiceItemList.size(); i++){
+					invoiceItemList.get(i).setInvoiceId(invoiceId);
+					addItems.addInvoiceItems(invoiceItemList.get(i));
+				}
 			}
 		}
 		
@@ -199,36 +200,34 @@
 			UpdateStockMast us = new UpdateStockMast();
 			
 			us.updateStockOnEntry(sm);
+		
+			Transactions trCredit = new Transactions();
+			
+			trCredit.setContactId(Integer.toString(invoice.getCustomerId()));
+			trCredit.setAccountId(Integer.parseInt((String)json.get("accountPayableId")));
+			trCredit.setCredit(Long.parseLong((String)json.get("pending")));
+			trCredit.setDebit(0);
+			trCredit.setTransactionDate(invoice.getInvDate());
+			trCredit.setVouchNo(Integer.parseInt((String)json.get("voucherNo")));
+			trCredit.setNarration("RAW COTTON PURCHASE - "+(String)json.get("invoiceNo").toString().toUpperCase());
+			trCredit.setVouchRef("RAW COTTON - "+(String)json.get("invoiceNo").toString().toUpperCase());
+			
+			Transactions trDebit = new Transactions();
+			
+			trDebit.setContactId(Integer.toString(invoice.getCustomerId()));
+			trDebit.setAccountId(Integer.parseInt((String)json.get("accountPurchaseId")));
+			trDebit.setCredit(0);
+			trDebit.setDebit(Long.parseLong((String)json.get("pending")));
+			trDebit.setTransactionDate(invoice.getInvDate());
+			trDebit.setVouchNo(Integer.parseInt((String)json.get("voucherNo")));
+			trDebit.setNarration("RAW COTTON PURCHASE - "+(String)json.get("invoiceNo").toString().toUpperCase());
+			trDebit.setVouchRef("RAW COTTON - "+ (String)json.get("invoiceNo").toString().toUpperCase());
+			
+			AddTransactions addTr = new AddTransactions();
+			
+			addTr.addTransactions(trCredit);
+			addTr.addTransactions(trDebit);
 		}
-		
-		
-		Transactions trCredit = new Transactions();
-		
-		trCredit.setContactId(Integer.toString(invoice.getCustomerId()));
-		trCredit.setAccountId(Integer.parseInt((String)json.get("accountPayableId")));
-		trCredit.setCredit(Long.parseLong((String)json.get("pending")));
-		trCredit.setDebit(0);
-		trCredit.setTransactionDate(invoice.getInvDate());
-		trCredit.setVouchNo(Integer.parseInt((String)json.get("voucherNo")));
-		trCredit.setNarration("RAW COTTON PURCHASE - "+(String)json.get("invoiceNo").toString().toUpperCase());
-		trCredit.setVouchRef("RAW COTTON - "+(String)json.get("invoiceNo").toString().toUpperCase());
-		
-		Transactions trDebit = new Transactions();
-		
-		trDebit.setContactId(Integer.toString(invoice.getCustomerId()));
-		trDebit.setAccountId(Integer.parseInt((String)json.get("accountPurchaseId")));
-		trDebit.setCredit(0);
-		trDebit.setDebit(Long.parseLong((String)json.get("pending")));
-		trDebit.setTransactionDate(invoice.getInvDate());
-		trDebit.setVouchNo(Integer.parseInt((String)json.get("voucherNo")));
-		trDebit.setNarration("RAW COTTON PURCHASE - "+(String)json.get("invoiceNo").toString().toUpperCase());
-		trDebit.setVouchRef("RAW COTTON - "+ (String)json.get("invoiceNo").toString().toUpperCase());
-		
-		AddTransactions addTr = new AddTransactions();
-		
-		addTr.addTransactions(trCredit);
-		addTr.addTransactions(trDebit);
-		
 		
 		session.setAttribute("invoiceId", Integer.toString(invoiceId));
 	    response.sendRedirect("../admin/Invoice.jsp");

@@ -25,6 +25,7 @@
     	debitTransaction.setDebit(amount);
     	debitTransaction.setCredit(0);
     	debitTransaction.setContactId(null);
+    	debitTransaction.setTransactionType("JOURNAL");
     	
 		Transactions creditTransaction = new Transactions();
     	
@@ -36,6 +37,7 @@
 		creditTransaction.setDebit(0);
 		creditTransaction.setCredit(amount);
 		creditTransaction.setContactId(null);
+		creditTransaction.setTransactionType("JOURNAL");
     	
 		AddTransactions addTrans = new AddTransactions();
 		

@@ -73,8 +73,9 @@
 	 					<th>Description</th>
 	 					<th>Debit</th>
 	 					<th>Credit</th>
+	 					<th>Balance</th>
 	 					<th>Print</th>
-	 					
+	 					<th>Edit</th>
 	 					</tr>
 	 				</thead>
 	 				<tbody id="tableBody">
@@ -85,7 +86,9 @@
 	 						<td></td>
 	 						<td></td>
 	 						<td></td>
-	 						<th></th>
+	 						<td></td>
+	 						<td></td>
+	 						<td></td>
 	 					</tr>
 	 				</tbody>
 	 			</table>
@@ -109,7 +112,7 @@
     	
         function Export() {
             $("#tblAccRegister").export2excel({
-            	filename: "Expense_Register"+getCurrentDate()+".xls"
+            	filename: "General_Ledger"+getCurrentDate()+".xls"
             });
         }
 		</script>
@@ -170,7 +173,7 @@
 		function setReportInTable(json, openingBalance){
 			var table = document.getElementById("tableBody");
 			table.innerHTML = '<tr>'+
-					'<td></td>'+
+						'<td></td>'+
 						'<td></td>'+
 						'<td></td>'+
 						'<td>Opening Balance</td>'+
@@ -179,8 +182,9 @@
 						'<th>0</th>'+
 					'</tr>';
 					
-					table.rows[0].cells[6].innerHTML = openingBalance;
+				table.rows[0].cells[6].innerHTML = openingBalance;
 				for(i=0;i<json.length;i++){
+					
 					var noOfRows = table.rows.length;
 					
 					var rows = table.insertRow(noOfRows);
@@ -191,6 +195,8 @@
 					var cell5 = rows.insertCell(4);
 					var cell6 = rows.insertCell(5);
 					var cell7 = rows.insertCell(6);
+					var cell8 = rows.insertCell(7);
+					var cell9 = rows.insertCell(8);
 					
 					cell1.innerHTML = json[i].transactionDate;
 					cell2.innerHTML = json[i].voucherNo;
@@ -199,9 +205,12 @@
 					cell5.innerHTML = json[i].debit;
 					cell6.innerHTML = json[i].credit;
 					cell7.innerHTML = Number(table.rows[noOfRows-1].cells[6].innerHTML) + Number(json[i].debit) - Number(json[i].credit);
-					
-			}
-		}	
+					if(json[i].transactionType === "JOURNAL" || json[i].transactionType === "EXPENSE"){
+						cell8.innerHTML='<img src="../property/img/printer.png" alt="print">';
+						cell9.innerHTML='<img src="../property/img/edit.png" alt="edit">';
+					}
+				}
+			}	
 		
 		document.getElementById("exportToExcel").addEventListener("click",function(){
 			Export();

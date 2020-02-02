@@ -616,7 +616,6 @@
          /********************************************************************/
          //Get Pending Invoice Report
          function getPendingInvReport(){
-         $.blockUILoad();
          var url="${pageContext.request.contextPath}/processing/pendingInvoiceReport.jsp";
          if(window.XMLHttpRequest){  
          invReport=new XMLHttpRequest();  
@@ -639,7 +638,6 @@
          var response = this.response.trim();
          var data = JSON.parse(response);
          setPendingTable(data);
-         $.unblockUILoad();
          } 
          }
          
@@ -779,6 +777,7 @@
          //Send AJAX Request to fetch invoice data
          function fetchInvoiceData(invoiceNo){
         	 $.blockUILoad();
+        	 reset();
 	         url = "../processing/getDataForOperator.jsp?invoiceNo="+invoiceNo;
 	         if(window.XMLHttpRequest){  
 	         	fetchInvoiceReq=new XMLHttpRequest();  
@@ -801,6 +800,7 @@
 		         var response = this.response.trim();
 		         if(Number(response) === 0){
 		        	 window.alert('Invalid Invoice Number entered. Please check the Invoice No. and search again.');
+		        	 $.unblockUILoad();
 		         }else{
 			         var data = JSON.parse(response);
 			         console.log(data);
@@ -988,28 +988,15 @@
          //Click on table to fetch data
          document.addEventListener('click',function(e){
          	if(e.srcElement.tagName === 'TR' && e.srcElement.parentNode.id === 'tableBody'){
-         		resetInputFields();
          		var invoiceNo = e.srcElement.children[0].innerHTML.trim();
          		fetchInvoiceData(invoiceNo);
          	}
          	if(e.srcElement.tagName === 'TD' && e.srcElement.parentNode.parentNode.id === 'tableBody'){
-        		resetInputFields();
          		var row = e.srcElement.parentNode;
          		var invoiceNo = row.children[0].innerHTML.trim();
          		fetchInvoiceData(invoiceNo);
          	}
          })		
-         
-         
-         /**************************************************************************/
-         //Reset input fields
-         function resetInputFields(){
-	        var inputs = document.getElementsByTagName("input");
-	        for(i=0; i< inputs.length; i++){
-	        	 inputs[i].value= "";
-	         }
-         }
-         
          
          
          /***************************************************************************/
@@ -1286,12 +1273,30 @@
          });
          
          
+         /****************************************************************************/
+         function reset(){
+        	 var inputElements=document.getElementsByTagName("input");
+        	 for(i=0; i<inputElements.length; i++){
+        		 if(inputElements[i].value != "Not Applicable"){
+        			 inputElements[i].value="";
+        		 }
+        	 }
+        	 document.getElementsByTagName("textarea")[0].value="";
+         }
+         
+         
+         
+         
+    
          /***************************************************************************/
          //Function calls on page load
          
          getDailySetupData();
          getPendingInvReport();
          setCurrentDate();
+         setInterval(function() {
+        	 getPendingInvReport();
+        	}, 5000); //5 seconds
          
          
       </script>

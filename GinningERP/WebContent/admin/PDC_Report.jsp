@@ -144,7 +144,14 @@
 				cell5.innerHTML = data[i].customerName;
 				cell6.innerHTML = data[i].amount;
 				cell7.innerHTML = data[i].payDate;
-				cell8.innerHTML = data[i].modeOfPayment;
+				if(Number(data[i].modeOfPayment) === 1){
+					cell8.innerHTML = "Cash";
+				}else if(Number(data[i].modeOfPayment) === 2){
+					cell8.innerHTML = "Cheque";
+				}else if(Number(data[i].modeOfPayment) === 3){
+					cell8.innerHTML = "RTGS/NEFT";
+				}
+				
 				
 				cell1.hidden = true;
 				cell2.hidden = true;

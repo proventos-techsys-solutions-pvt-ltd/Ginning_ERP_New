@@ -666,9 +666,16 @@ function setCurrentDate(){
 				cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+(Number(data[i].quantity) - Number(data[i].invoicedQty))+'">';
 				cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+data[i].grade+'" readonly>';
 				cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+data[i].moisture+'" readonly>';
-				cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+ (Number(superRate)-Number(data[i].differenceFromSuper))+'"  readonly>';
-				var amount = ((Number(superRate)-Number(data[i].differenceFromSuper)) * (Number(Number(data[i].quantity) - Number(data[i].invoicedQty))/100));
-				cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+amount+'" readonly>';
+				
+				if((Number(superRate)-Number(data[i].differenceFromSuper)) < (Number(data[i].rate)-Number(data[i].differenceFromSuper))){
+					cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+ (Number(data[i].rate)-Number(data[i].differenceFromSuper))+'"  readonly>';
+					var amount = ((Number(data[i].rate)-Number(data[i].differenceFromSuper)) * (Number(Number(data[i].quantity) - Number(data[i].invoicedQty))/100));
+					cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+amount+'" readonly>';
+				}else if((Number(superRate)-Number(data[i].differenceFromSuper)) >= (Number(data[i].rate)-Number(data[i].differenceFromSuper))){
+					cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+ (Number(superRate)-Number(data[i].differenceFromSuper))+'"  readonly>';
+					var amount = ((Number(superRate)-Number(data[i].differenceFromSuper)) * (Number(Number(data[i].quantity) - Number(data[i].invoicedQty))/100));
+					cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+amount+'" readonly>';
+				}
 				cell8.innerHTML = '<input type="checkbox" id="amanatCheck'+(rowNo+1)+'" class="lbl-rm-all" name="amanatCheck" value="false" disabled>';
 				if(data[i].pdcAmount>0){
 					var pdcBonusAmount = Number(data[i].pdcAmount) * (Number(data[i].quantity)/100);

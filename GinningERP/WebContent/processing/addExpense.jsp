@@ -30,6 +30,7 @@
 		debitTransaction.setDebit(Math.round(amount));
 		debitTransaction.setCredit(0);
 		debitTransaction.setContactId(contactId);
+		debitTransaction.setTransactionType("EXPENSE");
 		
 		Transactions creditTransaction = new Transactions();
 		
@@ -41,6 +42,7 @@
 		creditTransaction.setDebit(0);
 		creditTransaction.setCredit(Math.round(amount));
 		creditTransaction.setContactId(contactId);
+		creditTransaction.setTransactionType("EXPENSE");
 		
 		System.out.println(debitTransaction.toString());
 		System.out.println(creditTransaction.toString());

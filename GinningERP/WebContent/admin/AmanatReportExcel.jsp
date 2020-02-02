@@ -177,28 +177,28 @@ function parseURLParams(url) {
 			cell10.innerHTML = data[i].vehicleNo;
 			cell11.innerHTML = data[i].vehicleName;
 			cell12.innerHTML = data[i].totalQty/100;
-			cell13.innerHTML = data[i].rate;
-			cell14.innerHTML = data[i].quantity;
-			cell15.innerHTML = data[i].invoicedQty;
-			cell16.innerHTML = data[i].quantity - data[i].invoicedQty;
-			cell17.innerHTML = (data[i].invoicedQty/100) * data[i].rate;
-			cell18.innerHTML = (data[i].invoicedQty/100) * data[i].rate;
+			cell13.innerHTML = data[i].invoiceRate;
+			cell14.innerHTML = data[i].quantity/100;
+			cell15.innerHTML = data[i].quantityInvoiced/100;
+			cell16.innerHTML = (data[i].quantity - data[i].quantityInvoiced)/100;
+			cell17.innerHTML = (data[i].quantityInvoiced/100) * data[i].invoiceRate;
+			cell18.innerHTML = (data[i].quantityInvoiced/100) * data[i].invoiceRate;
 			cell19.innerHTML = data[i].invoiceDate;
 			cell20.innerHTML = data[i].differenceFromSuper;
 			
-			var invoiceDateSuperRate = data[i].finalRate + data[i].differenceFromSuper;
+			var invoiceDateSuperRate = Number(data[i].invoiceRate) + Number(data[i].differenceFromSuper);
 			
-			cell21.innerHTML = data[i].finalRate + data[i].differenceFromSuper;
-			cell22.innerHTML = data[i].finalRate;
+			cell21.innerHTML = Number(data[i].invoiceRate) + Number(data[i].differenceFromSuper);
+			cell22.innerHTML = data[i].invoiceRate;
 			
-			var finalNetAmount = (data[i].invoicedQty/100) * (data[i].finalRate);
+			var finalNetAmount = (data[i].quantityInvoiced/100) * (data[i].invoiceRate);
 			
-			cell23.innerHTML = (data[i].invoicedQty/100) * (invoiceDateSuperRate);
+			cell23.innerHTML = (data[i].quantityInvoiced/100) * (invoiceDateSuperRate);
 			
 			cell24.innerHTML = finalNetAmount;
 			cell25.innerHTML = finalNetAmount;
 			
-			var interest = ((finalNetAmount) -  ((data[i].invoicedQty/100) * data[i].rate));
+			var interest = ((finalNetAmount) -  ((data[i].quantityInvoiced/100) * data[i].rate));
 				
 			cell26.innerHTML = interest;
 			
@@ -291,7 +291,7 @@ function parseURLParams(url) {
 	
 	 function Export() {
          $("#table").export2excel({
-         	filename: "Simple_Invoice_Report_"+getCurrentDate()+".xls"
+         	filename: "Simple_Amanat_Report_"+getCurrentDate()+".xls"
          });
      }
      

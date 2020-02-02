@@ -151,8 +151,8 @@ function parseURLParams(url) {
 			cell8.innerHTML = data[i].customerMobile;
 			cell9.innerHTML = data[i].vehicleNo;
 			cell10.innerHTML = data[i].vehicleName;
-			cell11.innerHTML = data[i].totalQty/100;
-			cell12.innerHTML = data[i].rate;
+			cell11.innerHTML = data[i].invoicedQty/100;
+			cell12.innerHTML = data[i].invoiceRate;
 			cell13.innerHTML = data[i].totalAmount;
 			cell14.innerHTML = data[i].unloadingCharges;
 			if(Number(data[i].unloadingCharges) === 0){

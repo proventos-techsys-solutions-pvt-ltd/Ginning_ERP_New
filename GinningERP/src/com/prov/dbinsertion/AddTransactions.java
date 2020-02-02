@@ -21,7 +21,7 @@ public int addTransactions(Transactions t) {
 			e.printStackTrace();
 		}
 
-		String addTransactions = "{ ? = call ADD_TRANSACTIONS(?,?,?,?,?,?,?,?) }";
+		String addTransactions = "{ ? = call ADD_TRANSACTIONS(?,?,?,?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			cs = con.prepareCall(addTransactions);
@@ -42,6 +42,11 @@ public int addTransactions(Transactions t) {
 			cs.setDouble(7, t.getDebit());
 			cs.setDouble(8, t.getCredit());
 			cs.setString(9, t.getNarration());
+			if(t.getTransactionType()==null) {
+				cs.setNull(10, Types.VARCHAR);
+			}else {
+				cs.setString(10, t.getTransactionType());
+			}
 			
 			cs.executeUpdate();
 			

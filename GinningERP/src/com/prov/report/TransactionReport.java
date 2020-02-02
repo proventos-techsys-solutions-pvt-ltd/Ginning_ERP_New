@@ -81,33 +81,34 @@ public JSONArray getTransactions(String startDate, String endDate, int accId, in
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT UNIQUE\r\n" + 
-					"    TR.ID   TR_ID,\r\n" + 
-					"    TR.TRANSACTION_DATE,\r\n" + 
-					"    TR.VOUCH_NO,\r\n" + 
-					"    TR.VOUCH_REF,\r\n" + 
-					"    TR.ACCOUNT_ID,\r\n" + 
-					"    TR.DEBIT,\r\n" + 
-					"    TR.CREDIT,\r\n" + 
-					"    TR.NARRATION,\r\n" + 
-					"    AC.ID   ACC_CAT_ID,\r\n" + 
-					"    AC.CATEGORY_NAME,\r\n" + 
-					"    AG.ID   ACC_GRP_ID,\r\n" + 
-					"    AG.GROUP_NAME\r\n" + 
-					"FROM\r\n" + 
-					"    TRANSACTIONS       TR,\r\n" + 
-					"    ACCOUNT_NAME       AN,\r\n" + 
-					"    ACCOUNT_CATEGORY   AC,\r\n" + 
-					"    ACCOUNT_GROUP      AG\r\n" + 
-					"WHERE\r\n" + 
-					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID\r\n" + 
-					"    AND AN.ACC_CATEGORY_ID = AC.ID\r\n" + 
-					"    AND AC.ACC_GROUP_ID = AG.ID\r\n" + 
-					"    AND AN.COMPANY_ID = ?\r\n" + 
-					"    AND AN.ACCOUNT_ID = ?\r\n" + 
-					"    AND TR.TRANSACTION_DATE BETWEEN ? AND ?\r\n" + 
-					"ORDER BY\r\n" + 
-					"    TR.VOUCH_NO,\r\n" + 
+			String sql = "SELECT UNIQUE \r\n" + 
+					"    TR.ID   TR_ID, \r\n" + 
+					"    TR.TRANSACTION_DATE, \r\n" + 
+					"    TR.VOUCH_NO, \r\n" + 
+					"    TR.VOUCH_REF, \r\n" + 
+					"    TR.ACCOUNT_ID, \r\n" + 
+					"    TR.DEBIT, \r\n" + 
+					"    TR.CREDIT, \r\n" + 
+					"    TR.NARRATION, \r\n" + 
+					"    AC.ID   ACC_CAT_ID, \r\n" + 
+					"    AC.CATEGORY_NAME, \r\n" + 
+					"    AG.ID   ACC_GRP_ID, \r\n" + 
+					"    AG.GROUP_NAME,\r\n" + 
+					"    TR.TR_TYPE\r\n" + 
+					"FROM \r\n" + 
+					"    TRANSACTIONS       TR, \r\n" + 
+					"    ACCOUNT_NAME       AN, \r\n" + 
+					"    ACCOUNT_CATEGORY   AC, \r\n" + 
+					"    ACCOUNT_GROUP      AG \r\n" + 
+					"WHERE \r\n" + 
+					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID \r\n" + 
+					"    AND AN.ACC_CATEGORY_ID = AC.ID \r\n" + 
+					"    AND AC.ACC_GROUP_ID = AG.ID \r\n" + 
+					"    AND AN.COMPANY_ID = ? \r\n" + 
+					"    AND AN.ACCOUNT_ID = ? \r\n" + 
+					"    AND TR.TRANSACTION_DATE BETWEEN ? AND ? \r\n" + 
+					"ORDER BY \r\n" + 
+					"    TR.VOUCH_NO, \r\n" + 
 					"    TR.TRANSACTION_DATE DESC";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
@@ -141,6 +142,7 @@ public JSONArray getTransactions(String startDate, String endDate, int accId, in
 				obj.put("accountCategoryName", rs.getString(10));
 				obj.put("accountGroupId", rs.getString(11));
 				obj.put("accountGroupName", rs.getString(12));
+				obj.put("transactionType", rs.getString(13));
 				
 				jsonArr.put(obj);
 			}
@@ -187,5 +189,74 @@ public JSONArray getTransactions(String startDate, String endDate, int accId, in
 		return accountId;
 	}
 
+public JSONArray getJournalEntriesForUpdation(int voucherNo) {
+		
+		ResultSet rs = null;
+		Connection con = null;
+		JSONArray jsonArr = new JSONArray();
+
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT\r\n" + 
+					"    TR.ID,\r\n" + 
+					"    TR.TRANSACTION_DATE,\r\n" + 
+					"    TR.VOUCH_NO,\r\n" + 
+					"    TR.VOUCH_REF,\r\n" + 
+					"    TR.ACCOUNT_ID,\r\n" + 
+					"    TR.CONTACT_ID,\r\n" + 
+					"    TR.DEBIT,\r\n" + 
+					"    TR.CREDIT,\r\n" + 
+					"    TR.NARRATION,\r\n" + 
+					"    TR.MONTH_ID,\r\n" + 
+					"    TR.TR_TYPE,\r\n" + 
+					"    AN.COMPANY_ID\r\n" + 
+					"FROM\r\n" + 
+					"    TRANSACTIONS   TR,\r\n" + 
+					"    ACCOUNT_NAME   AN\r\n" + 
+					"WHERE\r\n" + 
+					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID\r\n" + 
+					"    AND TR.VOUCH_NO = ?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, voucherNo);
+			
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				JSONObject obj = new JSONObject();
+
+				obj.put("transactionId", rs.getString(1));
+				
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(2));
+				SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+				String properDate = format2.format(date1);
+				
+				obj.put("transactionDate", properDate);
+				obj.put("voucherNo", rs.getString(3));
+				obj.put("voucherReference", rs.getString(4));
+				obj.put("accountId", rs.getString(5));
+				obj.put("contactId", rs.getString(6));
+				obj.put("debit", rs.getString(7));
+				obj.put("credit", rs.getString(8));
+				obj.put("narration", rs.getString(9));
+				obj.put("monthId", rs.getString(10));
+				obj.put("transactionType", rs.getString(11));
+				obj.put("companyId", rs.getString(12));
+				
+				jsonArr.put(obj);
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jsonArr;
+	}
 	
 }

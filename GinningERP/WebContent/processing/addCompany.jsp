@@ -100,81 +100,82 @@
     	
     	companyId = ac.addCompany(c);
     	
-    	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    	Date date = new Date();
-    	String todaysDate = dateFormat.format(date); 
-    	
-    	StockMast sm = new StockMast();
-    	
-		sm.setCompanyId(companyId);
-		sm.setStockDate(todaysDate);
-		sm.setRawCotton(0);
-		sm.setCottonBales(0);
-		sm.setCottonCakes(0);
-		sm.setCottonSeed(0);
-		sm.setCottonSeedOil(0);
-		sm.setAvgRate(0);
-    	
-    	AddStockMast addStockMast = new AddStockMast();
-    	
-    	addStockMast.addStockMast(sm);
-    	
-    	String companyAccountLedgerName = c.getName() + " - PURCHASE ACCOUNT";
-    	String companyAccountLedgerDesc = c.getName() + " RAW COTTON PURCHASE ACCOUNT";
-    	
-    	GeneralLedger glPurchaseAccount = new GeneralLedger();
-       	AccountName anPurchase = new AccountName();
+    	if(companyId>0){
+    		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        	Date date = new Date();
+        	String todaysDate = dateFormat.format(date); 
+        	
+        	StockMast sm = new StockMast();
+        	
+    		sm.setCompanyId(companyId);
+    		sm.setStockDate(todaysDate);
+    		sm.setRawCotton(0);
+    		sm.setCottonBales(0);
+    		sm.setCottonCakes(0);
+    		sm.setCottonSeed(0);
+    		sm.setCottonSeedOil(0);
+    		sm.setAvgRate(0);
+        	
+        	AddStockMast addStockMast = new AddStockMast();
+        	
+        	addStockMast.addStockMast(sm);
+        	
+        	String companyAccountLedgerName = c.getName() + " - PURCHASE ACCOUNT";
+        	String companyAccountLedgerDesc = c.getName() + " RAW COTTON PURCHASE ACCOUNT";
+        	
+        	GeneralLedger glPurchaseAccount = new GeneralLedger();
+           	AccountName anPurchase = new AccountName();
 
-    	
-       	anPurchase.setAccountLedger(companyAccountLedgerName);
-       	anPurchase.setCompanyId(companyId);
-       	anPurchase.setAccCategoryId(5);
-       	anPurchase.setLedgerDesc(companyAccountLedgerDesc);
-       	anPurchase.setLedgerDate(todaysDate);
-       	anPurchase.setBankId(0);
-       	anPurchase.setOpeningBal(0);
-    	
+        	
+           	anPurchase.setAccountLedger(companyAccountLedgerName);
+           	anPurchase.setCompanyId(companyId);
+           	anPurchase.setAccCategoryId(5);
+           	anPurchase.setLedgerDesc(companyAccountLedgerDesc);
+           	anPurchase.setLedgerDate(todaysDate);
+           	anPurchase.setBankId(0);
+           	anPurchase.setOpeningBal(0);
+        	
 
-   		AddAccountName addAccount = new AddAccountName();
-   		
-   		int accPurchaseId = addAccount.addAccountName(anPurchase);
-    	
-   		glPurchaseAccount.setAccNameId(accPurchaseId);
-    	glPurchaseAccount.setGlDate(todaysDate);
-    	glPurchaseAccount.setOpeningBal(0);
-   	 	glPurchaseAccount.setCredit(0);
-   		glPurchaseAccount.setDebit(0);
-   		glPurchaseAccount.setClosingBal(0);
-   		
-	   	AddGeneralLedger addGl = new AddGeneralLedger();
-	     
-	    addGl.addGeneralLedger(glPurchaseAccount);
-	    
-	    String companyAccountPayableName = c.getName() + " - ACCOUNTS PAYABLE";
-    	String companyAccountPayableDesc = c.getName() + " - PAYABLE ACCOUNTS";
-    	
-    	GeneralLedger glAccountPayable = new GeneralLedger();
-    	AccountName anPayable = new AccountName();
- 	    
- 	    anPayable.setAccountLedger(companyAccountPayableName);
- 	    anPayable.setCompanyId(companyId);
- 	    anPayable.setAccCategoryId(6);
- 	    anPayable.setLedgerDesc(companyAccountPayableDesc);
- 	    anPayable.setLedgerDate(todaysDate);
- 	    anPayable.setBankId(0);
- 	    anPayable.setOpeningBal(0);
-	    
-   		int accPayableId = addAccount.addAccountName(anPayable);
+       		AddAccountName addAccount = new AddAccountName();
+       		
+       		int accPurchaseId = addAccount.addAccountName(anPurchase);
+        	
+       		glPurchaseAccount.setAccNameId(accPurchaseId);
+        	glPurchaseAccount.setGlDate(todaysDate);
+        	glPurchaseAccount.setOpeningBal(0);
+       	 	glPurchaseAccount.setCredit(0);
+       		glPurchaseAccount.setDebit(0);
+       		glPurchaseAccount.setClosingBal(0);
+       		
+    	   	AddGeneralLedger addGl = new AddGeneralLedger();
+    	     
+    	    addGl.addGeneralLedger(glPurchaseAccount);
+    	    
+    	    String companyAccountPayableName = c.getName() + " - ACCOUNTS PAYABLE";
+        	String companyAccountPayableDesc = c.getName() + " - PAYABLE ACCOUNTS";
+        	
+        	GeneralLedger glAccountPayable = new GeneralLedger();
+        	AccountName anPayable = new AccountName();
+     	    
+     	    anPayable.setAccountLedger(companyAccountPayableName);
+     	    anPayable.setCompanyId(companyId);
+     	    anPayable.setAccCategoryId(6);
+     	    anPayable.setLedgerDesc(companyAccountPayableDesc);
+     	    anPayable.setLedgerDate(todaysDate);
+     	    anPayable.setBankId(0);
+     	    anPayable.setOpeningBal(0);
+    	    
+       		int accPayableId = addAccount.addAccountName(anPayable);
 
-   		glAccountPayable.setAccNameId(accPayableId);
-		glAccountPayable.setGlDate(todaysDate);
-		glAccountPayable.setOpeningBal(0);
-		glAccountPayable.setCredit(0);
-		glAccountPayable.setDebit(0);
-		glAccountPayable.setClosingBal(0);
-	    
-	    addGl.addGeneralLedger(glAccountPayable);
-    	
+       		glAccountPayable.setAccNameId(accPayableId);
+    		glAccountPayable.setGlDate(todaysDate);
+    		glAccountPayable.setOpeningBal(0);
+    		glAccountPayable.setCredit(0);
+    		glAccountPayable.setDebit(0);
+    		glAccountPayable.setClosingBal(0);
+    	    
+    	    addGl.addGeneralLedger(glAccountPayable);
+    	}
     	session.setAttribute("companyId", Integer.toString(companyId));
 	    response.sendRedirect("../admin/Setup_Companies.jsp");
       } catch(Exception ex) {
