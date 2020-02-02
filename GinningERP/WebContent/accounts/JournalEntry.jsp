@@ -540,12 +540,13 @@
 			"getSessionId":<%=session.getAttribute("transactionId") %>,
 	}
 	$(document).ready(function(){
-		if(Number(sessionId.getSessionId) === 0){
-			$.fn.checkStatus(1,"Unable to save transaction!")
-		}else if(Number(sessionId.getSessionId) > 0){
-			$.fn.checkStatus(sessionId.getSessionId,"Transaction has been recorded successfully!")
+		if(sessionId.getSessionId != null){		
+			if(Number(sessionId.getSessionId) === 0){
+				$.fn.checkStatus(1,"Unable to save transaction!");
+			}else if(Number(sessionId.getSessionId) > 0){
+				$.fn.checkStatus(sessionId.getSessionId,"Transaction has been recorded successfully!");
+			}
 		}
-		
 	});
 <%
 session.removeAttribute("transactionId");

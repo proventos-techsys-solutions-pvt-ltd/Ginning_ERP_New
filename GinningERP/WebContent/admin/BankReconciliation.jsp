@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,22 +25,27 @@
 	<div class="row row-background">
 		<div class="col-md-3">
 				<label>Company: </label>&nbsp;
-				<select class="form-control form-control-sm">
-					<option>Company Name</option>
+				<select class="form-control form-control-sm" id="companyId" name="companyId">
+					<option selected disabled>Select</option>
+					<c:Company/>
 				</select>
 		</div>
 			<div class="col-md-3">
 				<label>Bank: </label>&nbsp;
-				<select class="form-control form-control-sm">
-					<option>Bank Name</option>
+				<select class="form-control form-control-sm" id="bankId" name="bankId">
+					<option selected disabled>Select</option>
+					<c:Bank/>
 				</select>
 		</div>
 		<div class="col-md-2">
 				<label>Date: </label>&nbsp;
-				<input type="date" class="form-control form-control-sm" id="" name=""> 
+				<input type="date" class="form-control form-control-sm" id="date" name="date"> 
 		</div>
 			<div class="col-md-2">
-				<button type="button" class="btn btn-sm btn-success" style="margin-top:32px;">Save</button>
+				<button type="button" class="btn btn-sm btn-success" style="margin-top:32px;" id="fetchRecords">Get Transactions</button>
+		</div>
+		<div class="col-md-2">
+				<button type="button" class="btn btn-sm btn-success" style="margin-top:32px;" id="save">Save</button>
 		</div>
 	</div>
 	
@@ -54,13 +60,7 @@
 							<th>Amount</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td class="text-center"><input type="checkbox" id="" name=""></td>
-							<td>21/01/2019</td>
-							<td>Salary Expenses</td>
-							<td>10000</td>
-						</tr>
+					<tbody id="tableBody">
 					</tbody>
 					<tfoot></tfoot>
 			</table>
@@ -97,6 +97,89 @@
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script>
+	
+	function fetchReport(){
+		var companyId = document.getElementById("companyId").value;
+		var bankId = document.getElementById("bankId").value;
+		var date = document.getElementById("date").value;
+		
+		url = "../processing/getBankRecordsForReco.jsp?companyId="+companyId+"&bankId="+bankId+"&date="+date;
+		console.log(url);
+		if(window.XMLHttpRequest){  
+			fetchRequest=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchRequest=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+		try{  
+			fetchRequest.onreadystatechange=getLedgerData;  
+			console.log("AJAX Req sent");
+			fetchRequest.open("GET",url,true);  
+			fetchRequest.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	function getLedgerData(){
+		if(fetchRequest.readyState == 4){
+			var response = this.response.trim();
+			console.log(response);
+			var data = JSON.parse(response);
+			setReportInTable(data);
+		}
+	}
+	
+	
+	document.getElementById("fetchRecords").addEventListener('click',function(e){
+		fetchReport();
+	});
+	
+	document.getElementById("companyId").addEventListener("change",function(e){
+		var bankOptions = document.getElementById("bankId").options;
+		for(i=0; i<bankOptions.length; i++){
+			bankOptions[i].disabled = false;
+			}
+		for(i=0; i<bankOptions.length; i++){
+			if(e.srcElement.value != bankOptions[i].getAttribute("data-company-id")){
+				bankOptions[i].disabled = true;
+			}
+		}
+	});
+	
+	function setReportInTable(json, openingBalance){
+		var table = document.getElementById("tableBody");
+		table.innerHTML = "";
+				
+			for(i=0;i<json.length;i++){
+				
+				var noOfRows = table.rows.length;
+				
+				var rows = table.insertRow(noOfRows);
+				var cell1 = rows.insertCell(0);
+				var cell2 = rows.insertCell(1);
+				var cell3 = rows.insertCell(2);
+				var cell4 = rows.insertCell(3);
+				var cell5 = rows.insertCell(4);
+				var cell6 = rows.insertCell(5);
+				
+				cell1.align='center';
+				cell2.hidden = true;
+				cell3.hidden = true;
+				
+				cell1.innerHTML = "<input type='checkbox' name='check'>";
+				cell2.innerHTML = json[i].voucherNo;
+				cell3.innerHTML = json[i].transactionId;
+				cell4.innerHTML = json[i].transactionDate;
+				cell5.innerHTML = json[i].narration;
+				if(Number(json[i].credit) >0){
+					cell6.innerHTML = json[i].credit;
+				}else if(Number(json[i].debit) >0){
+					cell6.innerHTML = json[i].debit;
+				}
+				
+			}
+		}
+	
+	
 	/***********************
 	Side bar 
 ************************/
@@ -105,6 +188,8 @@
             $('#sidebar').toggleClass('active');
         });
     });
+	
+	
 
 	</script>
 </body>

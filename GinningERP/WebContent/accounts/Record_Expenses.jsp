@@ -204,8 +204,14 @@
 			"getSessionId":<%=session.getAttribute("expenseId") %>,
 	}
 	$(document).ready(function(){
-		console.log(sessionId.getSessionId);
-		$.fn.checkStatus(sessionId.getSessionId,"Expense has been added successfully!")
+		
+		if(sessionId.getSessionId != null){		
+			if(Number(sessionId.getSessionId) === 0){
+				$.fn.checkStatus(1,"Unable to save Expense!");
+			}else if(Number(sessionId.getSessionId) > 0){
+				$.fn.checkStatus(sessionId.getSessionId,"Expense has been added successfully!");
+			}
+		}
 	})
 <%
 session.removeAttribute("expenseId");

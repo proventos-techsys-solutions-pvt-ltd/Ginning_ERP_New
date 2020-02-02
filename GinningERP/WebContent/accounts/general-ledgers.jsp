@@ -212,6 +212,15 @@
 				}
 			}	
 		
+		document.addEventListener('click',function(e){
+			if(e.srcElement.alt==='edit'){
+				var rowIndex = e.srcElement.parentNode.parentNode.rowIndex-1;
+				var table = document.getElementById('tableBody');
+				var voucherNo = table.rows[rowIndex].cells[1].innerHTML;
+				window.location = "../accounts/JournalEntry.jsp?voucherNo="+voucherNo;
+			}
+		});
+		
 		document.getElementById("exportToExcel").addEventListener("click",function(){
 			Export();
 		});
