@@ -173,7 +173,7 @@
                            <input type="text" class="form-control" id="nameOnCheque" name="nameOnCheque" placeholder="Name on Cheque">
                         </td>
                         <td>
-                           <button type="button" class="btn btn-success btn-no-radius" style="width:100%;" onclick="PrintChequeData(document.getElementById('chequeId').value)" id="payPdcCheque">Print</button>
+                           <button type="button" class="btn btn-success btn-no-radius" style="width:100%;"  id="payCheque">Print</button>
                         </td>
                      </tr>
                      <tr>
@@ -206,7 +206,7 @@
                      </tr>
                      <tr>
                         <td>4</td>
-                        <td>PDP Cash <input type="hidden" id="pdcChequeId" name="pdcChequeId" value="0" /></td>
+                        <td>PDP Cash</td>
                         <td>
                            <select class="form-control" id="pdcCashAccountId" name="pdcCashAccountId">
                               <c:CashLedgerTag/>
@@ -236,7 +236,7 @@
                      </tr>
                      <tr>
                         <td>5</td>
-                        <td>PDP Cheque</td>
+                        <td>PDP Cheque <input type="hidden" id="pdcChequeId" name="pdcChequeId" value="0" /></td>
                         <td>
                            <input type="text" class="form-control" id="" name="" value="Not Applicable" readonly>
                         </td>
@@ -261,7 +261,7 @@
                            <input type="text" class="form-control" id="pdcNameOnCheque" name="pdcNameOnCheque" placeholder="Name on Cheque">
                         </td>
                         <td>
-                           <button type="button" class="btn btn-success btn-no-radius" style="width:100%;" onclick="PrintChequeData(document.getElementById('pdcChequeId').value)" id="payCheque">Print</button>
+                           <button type="button" class="btn btn-success btn-no-radius" style="width:100%;"  id="payPdcCheque">Print</button>
                         </td>
                      </tr>
                      <tr>
@@ -865,9 +865,7 @@
 			         document.getElementById('chequeDate').value = chequeJson.date ;
 			         chequePayStatus = 1;
 			         chequeStatus = false;
-			         if(Number(pdcPayStatus) === 1){
-			        	 document.getElementById('payCheque').disabled = true;
-			         }
+			         document.getElementById('payCheque').disabled = true;
 		         }else{
 			         document.getElementById('chequeNo').value = "" ;
 			         document.getElementById('nameOnCheque').value = invoiceBasicJson.customerName;
@@ -910,9 +908,7 @@
 				         document.getElementById('pdcChequeNo').value = pdcJson.chequeNo ;
 				         pdcPayStatus = 1;
 				         pdpChequeStatus  = false;
-				         if(Number(pdcPayStatus) === 1){
-				        	 document.getElementById('payPdcCheque').disabled = true;
-				         }
+				         document.getElementById('payPdcCheque').disabled = true;
 			         }else{
 				         document.getElementById('pdcChequeId').value = "";
 				         document.getElementById('pdcChequeDate').value = pdcJson.payDate ;
@@ -1208,6 +1204,8 @@
          //Print cheque details
          function PrintChequeData(chequeId){
 	         if(Number(chequeId) === 0){
+	        	 document.getElementById('payPdcCheque').disabled=false;
+	        	 document.getElementById('payCheque').disabled=false;
 	         	alert('Enter correct cheque details and submit the payment first.');
 	         }else{
 	       	 	var win = window.open("../report/Cheque.jsp?chequeId="+chequeId, '_blank');
@@ -1285,7 +1283,15 @@
          }
          
          
+         document.getElementById('payPdcCheque').addEventListener('click',function(e){
+        	 document.getElementById('payPdcCheque').disabled=true;
+        	 PrintChequeData(document.getElementById('pdcChequeId').value);
+         });
          
+         document.getElementById('payCheque').addEventListener('click',function(e){
+        	 document.getElementById('payCheque').disabled=true;
+        	 PrintChequeData(document.getElementById('chequeId').value);
+         });
          
     
          /***************************************************************************/

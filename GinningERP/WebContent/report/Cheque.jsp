@@ -1,5 +1,6 @@
 <%-- page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"--%>
+<%@page import="java.io.ByteArrayInputStream"%>
 <%@page import="net.sf.jasperreports.engine.export.JRPdfExporter"%>
 <%@page import="com.prov.bean.Cheque"%>
 <%@page import="com.prov.report.ChequeReport"%>
@@ -19,27 +20,39 @@
 	int chequeId = Integer.parseInt((String)request.getParameter("chequeId"));
  	session.removeAttribute("chequeId");
 	
-	ChequeReport cr = new ChequeReport();
+ 	ChequeReport cr = new ChequeReport();
+	JSONObject obj = cr.getChequeStatus(chequeId);
 	
-	JSONObject printObj = cr.getChequeForPrinting(chequeId);
+	int chequeStatus = Integer.parseInt(obj.getString("chequeStatus"));
+	int paymentStatus = Integer.parseInt(obj.getString("paymentStatus"));
 	
-	JasperReports printReport = new JasperReports();
-	
-	//Loading Jasper file report from local file system.
-	String jrxmlFile = session.getServletContext().getRealPath("/report/Cheque.jrxml");
+	if(chequeStatus == 0){
+		JSONObject printObj = cr.getChequeForPrinting(chequeId);
 		
-	JasperPrint jasperPrint = printReport.compileAndPrint(jrxmlFile, printObj);
-	
-	//JasperPrintManager.printReport(jasperPrint,false);
-	
-	//Exporting Report as PDF
-	JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
-	
-	//new JRPdfExporter().setParameter(JRPdfExporterParameter.PDF_JAVASCRIPT, "this.print({bUI: true, bSilent: true, bShrinkToFit: true});");
+		JasperReports printReport = new JasperReports();
+		
+		//Loading Jasper file report from local file system.
+		String jrxmlFile = session.getServletContext().getRealPath("/report/Cheque.jrxml");
+			
+		JasperPrint jasperPrint = printReport.compileAndPrint(jrxmlFile, printObj);
+		
+		//JasperPrintManager.printReport(jasperPrint,false);
+		
+		//Exporting Report as PDF
+		JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
+		
+		//new JRPdfExporter().setParameter(JRPdfExporterParameter.PDF_JAVASCRIPT, "this.print({bUI: true, bSilent: true, bShrinkToFit: true});");
 
-	response.getOutputStream().close();
-	response.getOutputStream().flush();
-	
-	return;
+		response.getOutputStream().close();
+		response.getOutputStream().flush();
+		
+		return;
+	}else{
+		
+		response.getOutputStream().close();
+		response.getOutputStream().flush();
+		
+		return;
+	}
 	
 %>

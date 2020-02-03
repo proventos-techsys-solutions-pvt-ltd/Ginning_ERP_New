@@ -105,7 +105,11 @@ public class ChequeReport {
 				Cheque c = new Cheque();
 				
 				c.setId(rs.getInt(1));
-				c.setCustomerId(Integer.parseInt(rs.getString(2)));
+				if(rs.getString(2) != null) {
+					c.setCustomerId(Integer.parseInt(rs.getString(2)));
+				}else {
+					c.setCustomerId(0);
+				}
 				if(rs.getString(3) == null) {
 					c.setInvoiceId(0);
 				}else {
@@ -311,6 +315,46 @@ public class ChequeReport {
 				json.put("pdchqAmt", rs.getString(9));
 				json.put("pdchqDate", rs.getString(10));
 				json.put("pdchqStatus", rs.getString(11));
+			
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return json;
+	}
+	
+	
+	public JSONObject getChequeStatus(int chequeId) {
+		ResultSet rs = null;
+		Connection con = null;
+		JSONObject json = new JSONObject();
+		
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT\r\n" + 
+					"    STATUS,\r\n" + 
+					"    PAYMENT_STATUS\r\n" + 
+					"FROM\r\n" + 
+					"    CHEQUE_MAST\r\n" + 
+					"WHERE\r\n" + 
+					"    ID = ?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, chequeId);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				json.put("chequeStatus", rs.getString(1));
+				json.put("paymentStatus", rs.getString(2));
 			
 			}
 			
