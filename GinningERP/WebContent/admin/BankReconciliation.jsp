@@ -57,7 +57,8 @@
 							<th width="5%">Select</th>
 							<th width="10%">Date</th>
 							<th>Description</th>
-							<th>Amount</th>
+							<th>Debit</th>
+							<th>Credit</th>
 						</tr>
 					</thead>
 					<tbody id="tableBody">
@@ -70,23 +71,23 @@
 	<div class="row row-background">
 		<div class="col-md-2">
 			<label>Statement Ending Balance</label>
-			<input type="text" class="form-control form-control-sm" id="" name="">
+			<input type="text" class="form-control form-control-sm" id="sebal" name="" value=0>
 		</div>
 			<div class="col-md-2">
 			<label> - Outstanding Cheques</label>
-			<input type="text" class="form-control form-control-sm" id="" name="" readonly>
+			<input type="text" class="form-control form-control-sm" id="ostChk" name="" value=0 readonly>
 		</div>
 		<div class="col-md-2">
 			<label> + Deposit In Transit</label>
-			<input type="text" class="form-control form-control-sm" id="" name="" readonly>
+			<input type="text" class="form-control form-control-sm" id="dit" name=""  value=0 readonly>
 		</div>
 			<div class="col-md-2">
 			<label> - GL Balance</label>
-			<input type="text" class="form-control form-control-sm" id="" name="" readonly>
+			<input type="text" class="form-control form-control-sm" id="glbal" name="" value=0 readonly>
 		</div>
 		<div class="col-md-2">
 			<label> = Unreconciled Difference</label>
-			<input type="text" class="form-control form-control-sm" id="" name="" readonly>
+			<input type="text" class="form-control form-control-sm" id="urdiff" name="" value=0 readonly>
 		</div>
 	</div>
 	</div>
@@ -97,6 +98,8 @@
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script>
+	
+	 
 	
 	function fetchReport(){
 		var companyId = document.getElementById("companyId").value;
@@ -148,11 +151,12 @@
 	function setReportInTable(json, openingBalance){
 		var table = document.getElementById("tableBody");
 		table.innerHTML = "";
-				
+	  	var totalDebit = 0;
+    	var totalCredit = 0;		
+    	
 			for(i=0;i<json.length;i++){
 				
 				var noOfRows = table.rows.length;
-				
 				var rows = table.insertRow(noOfRows);
 				var cell1 = rows.insertCell(0);
 				var cell2 = rows.insertCell(1);
@@ -160,6 +164,7 @@
 				var cell4 = rows.insertCell(3);
 				var cell5 = rows.insertCell(4);
 				var cell6 = rows.insertCell(5);
+				var cell7 = rows.insertCell(6);
 				
 				cell1.align='center';
 				cell2.hidden = true;
@@ -171,15 +176,52 @@
 				cell4.innerHTML = json[i].transactionDate;
 				cell5.innerHTML = json[i].narration;
 				if(Number(json[i].credit) >0){
-					cell6.innerHTML = json[i].credit;
+					cell7.innerHTML = json[i].credit;
 				}else if(Number(json[i].debit) >0){
 					cell6.innerHTML = json[i].debit;
 				}
-				
 			}
+			
+			//Outstanding Check = Total of Debit  -  Total of Credit
+			function calculateDebitCreditTotal() {
+         	var rowCount = $("#tableBody tr").length;
+         	var totalDebit = 0;
+         	var totalCredit = 0;
+         	for(i=0;i<rowCount;i++){
+         		var totdr = 0;
+         		if ($("#tableBody tr").eq(i).find("td:eq(5)").text()===""){
+         			totdr = 0;
+         		}else{
+         			totdr = parseInt($("#tableBody tr").eq(i).find("td:eq(5)").text());
+         		}
+         		totalDebit = totalDebit+ totdr;
+         		var totcr = 0;
+         		if ($("#tableBody tr").eq(i).find("td:eq(6)").text()===""){
+         			totcr = 0;
+         		}else{
+         			totcr = parseInt($("#tableBody tr").eq(i).find("td:eq(6)").text());
+         		}
+         		totalCredit = totalCredit+ totcr;
+         	}
+         	return (totalDebit-totalCredit);
 		}
+			$("#ostChk").val(calculateDebitCreditTotal());
+	}
+	
+	//********unreconciled difference
+	$("#sebal,#ostChk,#dit,#glbal").change(function(){
+		$("#urdiff").val(parseInt($("#sebal").val())+parseInt($("#ostChk").val())+parseInt($("#dit").val())-parseInt($("#glbal").val()));
+	})
 	
 	
+	$("table").click(function(){
+		var indexOfRow = 0 ;//$("#tableBody td").parent().index();
+		var chkbox = $('#tableBody tr').eq(0).find(':checkbox').prop("checked"); //returns true or false
+		if(chkbox === true){
+			$("#ostChk").val(parseInt($("#ostChk").val())+parseInt($("#tableBody tr").eq(0).find("td:eq(6)").text()))
+		}
+	})
+
 	/***********************
 	Side bar 
 ************************/
