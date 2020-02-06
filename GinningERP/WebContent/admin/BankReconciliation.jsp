@@ -177,12 +177,14 @@
 				cell5.innerHTML = json[i].narration;
 				if(Number(json[i].credit) >0){
 					cell7.innerHTML = json[i].credit;
+					cell6.innerHTML = 0;
 				}else if(Number(json[i].debit) >0){
 					cell6.innerHTML = json[i].debit;
+					cell7.innerHTML = 0;
 				}
 			}
 			
-			//Outstanding Check = Total of Debit  -  Total of Credit
+			//Outstanding Check = Total of Debit  +  Total of Credit
 			function calculateDebitCreditTotal() {
          	var rowCount = $("#tableBody tr").length;
          	var totalDebit = 0;
@@ -203,7 +205,7 @@
          		}
          		totalCredit = totalCredit+ totcr;
          	}
-         	return (totalDebit-totalCredit);
+         	return (totalDebit+totalCredit);
 		}
 			$("#ostChk").val(calculateDebitCreditTotal());
 	}
@@ -213,14 +215,42 @@
 		$("#urdiff").val(parseInt($("#sebal").val())+parseInt($("#ostChk").val())+parseInt($("#dit").val())-parseInt($("#glbal").val()));
 	})
 	
-	
+	/*
 	$("table").click(function(){
 		var indexOfRow = 0 ;//$("#tableBody td").parent().index();
 		var chkbox = $('#tableBody tr').eq(0).find(':checkbox').prop("checked"); //returns true or false
 		if(chkbox === true){
 			$("#ostChk").val(parseInt($("#ostChk").val())+parseInt($("#tableBody tr").eq(0).find("td:eq(6)").text()))
 		}
-	})
+	})*/
+	
+	//change outstanding cheque value on changing the checkboxes
+	document.addEventListener("change",function(e){
+		if(e.srcElement.name==="check"){
+			var table = document.getElementById('tableBody');
+			var outstandingCheques = document.getElementById('ostChk');
+			var checkbox = e.srcElement;
+			if(checkbox.checked === true){
+				var rowIndex = checkbox.parentNode.parentNode.rowIndex-1;
+				var debit = table.rows[rowIndex].cells[5].innerHTML;
+				var credit = table.rows[rowIndex].cells[6].innerHTML;
+				if(Number(debit)>0){
+					outstandingCheques.value = Number(outstandingCheques.value)-Number(debit);
+				}else if(Number(credit)>0){
+					outstandingCheques.value = Number(outstandingCheques.value)-Number(credit);
+				}
+			}else if(checkbox.checked === false){
+				var rowIndex = checkbox.parentNode.parentNode.rowIndex-1;
+				var debit = table.rows[rowIndex].cells[5].innerHTML;
+				var credit = table.rows[rowIndex].cells[6].innerHTML;
+				if(Number(debit)>0){
+					outstandingCheques.value = Number(outstandingCheques.value)+Number(debit);
+				}else if(Number(credit)>0){
+					outstandingCheques.value = Number(outstandingCheques.value)+Number(credit);
+				}
+			}
+		}
+	});
 
 	/***********************
 	Side bar 
