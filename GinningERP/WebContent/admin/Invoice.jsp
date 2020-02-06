@@ -841,12 +841,11 @@ function setCurrentDate(){
 			console.log('response--'+response);
 			if(Number(response) === 0){
 				alert('Invalid Invoie No.');
-				$.unblockUILoad();
 			}else{
 				var data = JSON.parse(response);
 				setDataForInvoiceUpdation(data);
-				$.unblockUILoad();
 			}
+			$.unblockUILoad();
 		}
 	}
 	
@@ -933,12 +932,12 @@ function setCurrentDate(){
 			if(Number(itemData[i].invoicedQty) === Number(itemData[i].quantity) || Number(itemData[i].invoicedQty) === 0){
 				cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+itemData[i].invoicedQty+'" readonly>';
 				cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+itemData[i].finalRate+'" readonly>';
-				var amount = (itemData[i].finalRate * (itemData[i].invoicedQty/100));
+				var amount = (itemData[i].finalRate * (itemData[i].invoicedQty/100)).toFixed(2);
 				cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+amount+'" readonly>';
 			}else if(Number(itemData[i].invoicedQty) > 0){
 				cell3.innerHTML = '<input type="text" id="quantity'+(rowNo+1)+'" class="form-control form-control-sm" name="quantity" value="'+Number(itemData[i].invoicedQty)+'" readonly>';
 				cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+itemData[i].finalRate+'" readonly>';
-				var amount = (itemData[i].finalRate * (itemData[i].invoicedQty/100));
+				var amount = (itemData[i].finalRate * (itemData[i].invoicedQty/100)).toFixed(2);
 				cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+amount+'" readonly>';
 			}
 			cell4.innerHTML = '<input type="text" id="grade'+(rowNo+1)+'" class="form-control form-control-sm" name="grade" value="'+itemData[i].grade+'" readonly>';

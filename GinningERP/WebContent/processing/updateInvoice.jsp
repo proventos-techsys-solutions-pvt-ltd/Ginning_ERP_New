@@ -62,6 +62,7 @@
 					item.setGradeId(Integer.parseInt((String)obj.get("gradeId")));
 					item.setRst(Integer.parseInt((String)obj.get("rst")));
 					item.setQuantity(Integer.parseInt((String)obj.get("quantity")));
+					item.setRate(Double.parseDouble((String)obj.get("rate")));
 					invoiceItemList.add(item);
 				}
 				else if(((String)obj.get("amanat")).equals("true")){
