@@ -197,6 +197,85 @@
 		}
 		
 	fetchVoucherNoSeries();
+	
+	
+	/**********************************************/
+	//Fetch data for Updation
+	window.onload = function(){
+		var params = parseURLParams(window.location.href);
+		if(typeof params != "undefined"){
+			document.getElementById('save-data').disabled=true;
+			document.getElementById('update-data').disabled=false;
+			sendReqToGetData(params.voucherNo[0]);
+		}
+	}
+	
+	function parseURLParams(url) {
+	    var queryStart = url.indexOf("?") + 1,
+	        queryEnd   = url.indexOf("#") + 1 || url.length + 1,
+	        query = url.slice(queryStart, queryEnd - 1),
+	        pairs = query.replace(/\+/g, " ").split("&"),
+	        parms = {}, i, n, v, nv;
+	
+	    if (query === url || query === "") return;
+	
+	    for (i = 0; i < pairs.length; i++) {
+	        nv = pairs[i].split("=", 2);
+	        n = decodeURIComponent(nv[0]);
+	        v = decodeURIComponent(nv[1]);
+	
+	        if (!parms.hasOwnProperty(n)) parms[n] = [];
+	        parms[n].push(nv.length === 2 ? v : null);
+	    }
+	    return parms;
+	}
+	
+	function sendReqToGetData(voucherNo){
+		var url="../processing/getJournalEntryTrData.jsp?voucherNo="+voucherNo;
+		if(window.XMLHttpRequest){  
+			fetchTrData=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchTrData=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+	  
+		try{  
+			fetchTrData.onreadystatechange=getVoucherData;  
+			console.log("AJAX Req sent");
+			fetchTrData.open("GET",url,true);  
+			fetchTrData.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	function getVoucherData(){
+		if(fetchTrData.readyState == 4){
+			var response = this.response;
+			var data = JSON.parse(response);
+			setDataForUpdation(data);
+			calculateTotal("debit");
+			calculateTotal("credit");
+		}
+	}
+	
+	function setDataForUpdation(data){
+		console.log(data);
+		document.getElementById("companyId").value = data[0].companyId;
+		document.getElementById("voucherNo").value = data[0].voucherNo;
+		document.getElementById("date").value = data[0].transactionDate;
+		document.getElementById("voucherReference").value = data[0].voucherReference;
+		document.getElementById("payee").value = data[0].voucherReference;
+		document.getElementById("description").value = data[0].voucherReference;
+		document.getElementById("amount").value = data[0].voucherReference;
+		for(i=0; i<data.length; i++){
+			if(Number(data[i].debit)>0){
+				document.getElementById("accountId").value = data[0].voucherReference;
+			}else if(Number(data[i].credit)>0){
+
+			}
+		}
+	}
+	
+	
 	/**************************************
 	Response window code
 	**************************************/

@@ -26,7 +26,7 @@
 	</div>
 	<div class="row ">
 		<div class="col-md-12 text-center">
-			<h4>Company Name</h4>
+			<h4 id="companyName">Company Name</h4>
 		</div>
 	</div>
 	<div class="row border-bottom">
@@ -69,8 +69,91 @@
 </div>
 
 
- 	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
+ 	<script src="../js/3.4.1-jq.js"></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/plugins/jquery.blockUI.js" ></script>
+	<script type="text/javascript">
+	window.onload = function(){
+		var params = parseURLParams(window.location.href);
+		sendReqToGetData(params.transactionId[0]);
+	}
+	
+	function parseURLParams(url) {
+	    var queryStart = url.indexOf("?") + 1,
+	        queryEnd   = url.indexOf("#") + 1 || url.length + 1,
+	        query = url.slice(queryStart, queryEnd - 1),
+	        pairs = query.replace(/\+/g, " ").split("&"),
+	        parms = {}, i, n, v, nv;
+	
+	    if (query === url || query === "") return;
+	
+	    for (i = 0; i < pairs.length; i++) {
+	        nv = pairs[i].split("=", 2);
+	        n = decodeURIComponent(nv[0]);
+	        v = decodeURIComponent(nv[1]);
+	
+	        if (!parms.hasOwnProperty(n)) parms[n] = [];
+	        parms[n].push(nv.length === 2 ? v : null);
+	    }
+	    return parms;
+	}
+	
+
+	function sendReqToGetData(transactionId){
+		$.blockUI();
+		var url = "../processing/trVoucherPrinting.jsp?transactionId="+transactionId;
+		if(window.XMLHttpRequest){  
+			fetchReq=new XMLHttpRequest();  
+		}  
+		else if(window.ActiveXObject){  
+			fetchReq=new ActiveXObject("Microsoft.XMLHTTP");  
+		}  
+		try{  
+			fetchReq.onreadystatechange=getAmanatData;  
+			console.log("AJAX Req sent");
+			fetchReq.open("GET",url,true);  
+			fetchReq.send();  
+		}catch(e){alert("Unable to connect to server");}
+	}
+	
+	function getAmanatData(){
+		if(fetchReq.readyState == 4){
+			$.unblockUI();
+			var response = this.response.trim();
+			setData(response);
+		}
+	}
+	
+	
+	function setData(response){
+		var obj = JSON.parse(response);
+		console.log(obj);
+		document.getElementById("date").innerHTML = obj.transactionDate;
+		
+		document.getElementById("description").innerHTML = obj.narration;
+		if(typeof obj.chequeNo != "undefined"){
+			document.getElementById("chequeNo").innerHTML = obj.chequeNo;
+		}else{
+			document.getElementById("chequeNo").innerHTML = "NA";
+		}
+		
+		if(typeof obj.contactId != "undefined" && isNaN(obj.contactId)){
+			document.getElementById("payee").innerHTML = obj.contactId;
+		}else{
+			document.getElementById("payee").innerHTML = "NA";
+		}
+		
+		document.getElementById("amtinwords").innerHTML = obj.amountInWords;
+		if(Number(obj.credit)>0){
+			document.getElementById("amtinfgrs").innerHTML = "Rs. "+obj.credit;
+		}else if(Number(obj.debit)>0){
+			document.getElementById("amtinfgrs").innerHTML = "Rs. "+	obj.debit;
+		}
+		document.getElementById("vchno").innerHTML = obj.voucherNo;
+		document.getElementById("companyName").innerHTML = obj.companyName;
+	}
+	
+	</script>
 </body>
 </html>

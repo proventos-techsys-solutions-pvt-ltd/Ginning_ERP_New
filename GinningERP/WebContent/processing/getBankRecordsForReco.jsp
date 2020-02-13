@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="com.prov.report.TransactionReport"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -13,7 +14,15 @@
     	TransactionReport trReportObj = new TransactionReport();
     	JSONArray arr = trReportObj.getBankTransactionForReco(companyId, bankId, date);
     	
-    	out.print(arr);
+    	double closingBal = trReportObj.getClosingBalForLedger(bankId, companyId, date);
+    	
+    	JSONObject obj = new JSONObject();
+    	
+    	obj.put("closingBalance", closingBal);
+    	
+    	obj.put("array", arr);
+    	
+    	out.print(obj);
     	out.flush();
     	
     %>

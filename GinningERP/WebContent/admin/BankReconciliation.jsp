@@ -148,47 +148,53 @@
 		}
 	});
 	
-	function setReportInTable(json, openingBalance){
+	function setReportInTable(jsonObj, openingBalance){
+		
+		var json = jsonObj.array;
+		console.log(json);
+		var closingBal = jsonObj.closingBalance;
+		
+		document.getElementById('glbal').value = closingBal;
+		
 		var table = document.getElementById("tableBody");
 		table.innerHTML = "";
 	  	var totalDebit = 0;
     	var totalCredit = 0;		
-    	
-			for(i=0;i<json.length;i++){
-				
-				var noOfRows = table.rows.length;
-				var rows = table.insertRow(noOfRows);
-				var cell1 = rows.insertCell(0);
-				var cell2 = rows.insertCell(1);
-				var cell3 = rows.insertCell(2);
-				var cell4 = rows.insertCell(3);
-				var cell5 = rows.insertCell(4);
-				var cell6 = rows.insertCell(5);
-				var cell7 = rows.insertCell(6);
-				
-				cell1.align='center';
-				cell2.hidden = true;
-				cell3.hidden = true;
-				
-				cell1.innerHTML = "<input type='checkbox' name='check'>";
-				cell2.innerHTML = json[i].voucherNo;
-				cell3.innerHTML = json[i].transactionId;
-				cell4.innerHTML = json[i].transactionDate;
-				cell5.innerHTML = json[i].narration;
-				if(Number(json[i].credit) >0){
-					cell7.innerHTML = json[i].credit;
-					cell6.innerHTML = 0;
-				}else if(Number(json[i].debit) >0){
-					cell6.innerHTML = json[i].debit;
-					cell7.innerHTML = 0;
-				}
-			}
+   	
+		for(i=0;i<json.length;i++){
 			
-			//Outstanding Check = Total of Debit  +  Total of Credit
-			function calculateDebitCreditTotal() {
+			var noOfRows = table.rows.length;
+			var rows = table.insertRow(noOfRows);
+			var cell1 = rows.insertCell(0);
+			var cell2 = rows.insertCell(1);
+			var cell3 = rows.insertCell(2);
+			var cell4 = rows.insertCell(3);
+			var cell5 = rows.insertCell(4);
+			var cell6 = rows.insertCell(5);
+			var cell7 = rows.insertCell(6);
+			
+			cell1.align='center';
+			cell2.hidden = true;
+			cell3.hidden = true;
+			
+			cell1.innerHTML = "<input type='checkbox' name='check'>";
+			cell2.innerHTML = json[i].voucherNo;
+			cell3.innerHTML = json[i].transactionId;
+			cell4.innerHTML = json[i].transactionDate;
+			cell5.innerHTML = json[i].narration;
+			if(Number(json[i].credit) >0){
+				cell7.innerHTML = json[i].credit;
+				cell6.innerHTML = 0;
+			}else if(Number(json[i].debit) >0){
+				cell6.innerHTML = json[i].debit;
+				cell7.innerHTML = 0;
+			}
+		}
+			
+		//Outstanding Check = Total of Debit  +  Total of Credit
+		function calculateDebitTotal() {
          	var rowCount = $("#tableBody tr").length;
          	var totalDebit = 0;
-         	var totalCredit = 0;
          	for(i=0;i<rowCount;i++){
          		var totdr = 0;
          		if ($("#tableBody tr").eq(i).find("td:eq(5)").text()===""){
@@ -197,23 +203,36 @@
          			totdr = parseInt($("#tableBody tr").eq(i).find("td:eq(5)").text());
          		}
          		totalDebit = totalDebit+ totdr;
-         		var totcr = 0;
-         		if ($("#tableBody tr").eq(i).find("td:eq(6)").text()===""){
+         	}
+         	return (totalDebit);
+		}
+		
+		function calculateCreditTotal(){
+			var rowCount = $("#tableBody tr").length;
+         	var totalCredit = 0;
+        	for(i=0;i<rowCount;i++){
+        		var totcr = 0;
+				if ($("#tableBody tr").eq(i).find("td:eq(6)").text()===""){
          			totcr = 0;
          		}else{
          			totcr = parseInt($("#tableBody tr").eq(i).find("td:eq(6)").text());
          		}
          		totalCredit = totalCredit+ totcr;
-         	}
-         	return (totalDebit+totalCredit);
+        	}
+        	return (totalCredit);
 		}
-			$("#ostChk").val(calculateDebitCreditTotal());
+			$("#ostChk").val(calculateCreditTotal());
+			$("#dit").val(calculateDebitTotal());
 	}
 	
-	//********unreconciled difference
+	//********unreconciled difference*********//
 	$("#sebal,#ostChk,#dit,#glbal").change(function(){
-		$("#urdiff").val(parseInt($("#sebal").val())+parseInt($("#ostChk").val())+parseInt($("#dit").val())-parseInt($("#glbal").val()));
+		calculateUnreconciled();
 	})
+	
+	function calculateUnreconciled(){
+		$("#urdiff").val(parseInt($("#sebal").val())+parseInt($("#ostChk").val())+parseInt($("#dit").val())-parseInt($("#glbal").val()));
+	}
 	
 	/*
 	$("table").click(function(){
@@ -229,13 +248,14 @@
 		if(e.srcElement.name==="check"){
 			var table = document.getElementById('tableBody');
 			var outstandingCheques = document.getElementById('ostChk');
+			var depositInTransit = document.getElementById('dit');
 			var checkbox = e.srcElement;
 			if(checkbox.checked === true){
 				var rowIndex = checkbox.parentNode.parentNode.rowIndex-1;
 				var debit = table.rows[rowIndex].cells[5].innerHTML;
 				var credit = table.rows[rowIndex].cells[6].innerHTML;
 				if(Number(debit)>0){
-					outstandingCheques.value = Number(outstandingCheques.value)-Number(debit);
+					depositInTransit.value = Number(depositInTransit.value)-Number(debit);
 				}else if(Number(credit)>0){
 					outstandingCheques.value = Number(outstandingCheques.value)-Number(credit);
 				}
@@ -244,11 +264,12 @@
 				var debit = table.rows[rowIndex].cells[5].innerHTML;
 				var credit = table.rows[rowIndex].cells[6].innerHTML;
 				if(Number(debit)>0){
-					outstandingCheques.value = Number(outstandingCheques.value)+Number(debit);
+					depositInTransit.value = Number(depositInTransit.value)+Number(debit);
 				}else if(Number(credit)>0){
 					outstandingCheques.value = Number(outstandingCheques.value)+Number(credit);
 				}
 			}
+			calculateUnreconciled();
 		}
 	});
 

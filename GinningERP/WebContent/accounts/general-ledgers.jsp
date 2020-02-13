@@ -67,6 +67,7 @@
 	 			<table id="tblAccRegister" class="table table-bordered">
 	 				<thead>
 	 					<tr>
+	 					<th hidden>Transaction ID</th>
 	 					<th>Date</th>
 	 					<th>Voucher No</th>
 	 					<th>Voucher Ref</th>
@@ -79,17 +80,6 @@
 	 					</tr>
 	 				</thead>
 	 				<tbody id="tableBody">
-	 				<tr>
-	 						<td></td>
-	 						<td></td>
-	 						<td></td>
-	 						<td></td>
-	 						<td></td>
-	 						<td></td>
-	 						<td></td>
-	 						<td></td>
-	 						<td></td>
-	 					</tr>
 	 				</tbody>
 	 			</table>
 	 		</div>
@@ -173,16 +163,17 @@
 		function setReportInTable(json, openingBalance){
 			var table = document.getElementById("tableBody");
 			table.innerHTML = '<tr>'+
-						'<td></td>'+
-						'<td></td>'+
-						'<td></td>'+
-						'<td>Opening Balance</td>'+
-						'<td></td>'+
-						'<td></td>'+
-						'<th>0</th>'+
-					'</tr>';
+								'<td hidden></td>'+
+								'<td></td>'+
+								'<td></td>'+
+								'<td></td>'+
+								'<td>Opening Balance</td>'+
+								'<td></td>'+
+								'<td></td>'+
+								'<td></td>'+
+							'</tr>';
 					
-				table.rows[0].cells[6].innerHTML = openingBalance;
+				table.rows[0].cells[7].innerHTML = openingBalance;
 				for(i=0;i<json.length;i++){
 					
 					var noOfRows = table.rows.length;
@@ -197,27 +188,46 @@
 					var cell7 = rows.insertCell(6);
 					var cell8 = rows.insertCell(7);
 					var cell9 = rows.insertCell(8);
+					var cell10 = rows.insertCell(9);
 					
-					cell1.innerHTML = json[i].transactionDate;
-					cell2.innerHTML = json[i].voucherNo;
-					cell3.innerHTML = json[i].voucherReference;
-					cell4.innerHTML = json[i].narration;
-					cell5.innerHTML = json[i].debit;
-					cell6.innerHTML = json[i].credit;
-					cell7.innerHTML = Number(table.rows[noOfRows-1].cells[6].innerHTML) + Number(json[i].debit) - Number(json[i].credit);
-					if(json[i].transactionType === "JOURNAL" || json[i].transactionType === "EXPENSE"){
-						cell8.innerHTML='<img src="../property/img/printer.png" alt="print">';
-						cell9.innerHTML='<img src="../property/img/edit.png" alt="edit">';
+					cell1.hidden = true;
+					cell1.innerHTML = json[i].transactionId;
+					cell2.innerHTML = json[i].transactionDate;
+					cell3.innerHTML = json[i].voucherNo;
+					cell4.innerHTML = json[i].voucherReference;
+					cell5.innerHTML = json[i].narration;
+					cell6.innerHTML = json[i].debit;
+					cell7.innerHTML = json[i].credit;
+					cell8.innerHTML = Number(table.rows[noOfRows-1].cells[7].innerHTML) + Number(json[i].debit) - Number(json[i].credit);
+					if(json[i].transactionType === "EXPENSE"){
+						cell9.innerHTML='<img src="../property/img/printer.png" alt="print">';
+						cell10.innerHTML='<img src="../property/img/edit.png" alt="editExpense">';
+					}else if(json[i].transactionType === "JOURNAL"){
+						cell10.innerHTML='<img src="../property/img/edit.png" alt="editJournal">';
 					}
 				}
 			}	
 		
 		document.addEventListener('click',function(e){
-			if(e.srcElement.alt==='edit'){
+			if(e.srcElement.alt==='editJournal'){
 				var rowIndex = e.srcElement.parentNode.parentNode.rowIndex-1;
 				var table = document.getElementById('tableBody');
-				var voucherNo = table.rows[rowIndex].cells[1].innerHTML;
+				var voucherNo = table.rows[rowIndex].cells[2].innerHTML;
 				window.location = "../accounts/JournalEntry.jsp?voucherNo="+voucherNo;
+			}else if(e.srcElement.alt==='editExpense'){
+				var rowIndex = e.srcElement.parentNode.parentNode.rowIndex-1;
+				var table = document.getElementById('tableBody');
+				var voucherNo = table.rows[rowIndex].cells[2].innerHTML;
+				window.location = "../accounts/Record_Expenses.jsp?voucherNo="+voucherNo;
+			}
+		});
+		
+		document.addEventListener('click',function(e){
+			if(e.srcElement.alt==='print'){
+				var rowIndex = e.srcElement.parentNode.parentNode.rowIndex-1;
+				var table = document.getElementById('tableBody');
+				var transactionId = table.rows[rowIndex].cells[0].innerHTML;
+				window.open("../report/PaymentVoucherReport.jsp?transactionId="+transactionId);
 			}
 		});
 		

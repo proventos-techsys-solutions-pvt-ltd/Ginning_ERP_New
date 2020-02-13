@@ -259,77 +259,265 @@ public JSONArray getJournalEntriesForUpdation(int voucherNo) {
 		return jsonArr;
 	}
 
-public JSONArray getBankTransactionForReco(int companyId, int bankId, String date) {
+	public JSONArray getBankTransactionForReco(int companyId, int bankId, String date) {
+		
+		ResultSet rs = null;
+		Connection con = null;
+		JSONArray jsonArr = new JSONArray();
 	
-	ResultSet rs = null;
-	Connection con = null;
-	JSONArray jsonArr = new JSONArray();
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT\r\n" + 
+					"    TR.ID,\r\n" + 
+					"    TR.TRANSACTION_DATE,\r\n" + 
+					"    TR.VOUCH_NO,\r\n" + 
+					"    TR.ACCOUNT_ID,\r\n" + 
+					"    TR.CONTACT_ID,\r\n" + 
+					"    TR.DEBIT,\r\n" + 
+					"    TR.CREDIT,\r\n" + 
+					"    TR.NARRATION,\r\n" + 
+					"    AN.BANK_ID,\r\n" + 
+					"    AN.COMPANY_ID\r\n" + 
+					"FROM\r\n" + 
+					"    TRANSACTIONS   TR,\r\n" + 
+					"    ACCOUNT_NAME   AN\r\n" + 
+					"WHERE\r\n" + 
+					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID\r\n" + 
+					"    AND AN.COMPANY_ID = ?\r\n" + 
+					"    AND AN.BANK_ID = ?\r\n" + 
+					"    AND TR.TRANSACTION_DATE <= ?\r\n" + 
+					"ORDER BY\r\n" + 
+					"    VOUCH_NO";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			java.sql.Date dateSql = java.sql.Date.valueOf(date);
+			
+			stmt.setInt(1, companyId);
+			stmt.setInt(2, bankId);
+			stmt.setDate(3, dateSql);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				JSONObject obj = new JSONObject();
+	
+				obj.put("transactionId", rs.getString(1));
+				
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(2));
+				SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+				String properDate = format2.format(date1);
+				
+				obj.put("transactionDate", properDate);
+				obj.put("voucherNo", rs.getString(3));
+				obj.put("accountId", rs.getString(4));
+				obj.put("contactId", rs.getString(5));
+				obj.put("debit", rs.getString(6));
+				obj.put("credit", rs.getString(7));
+				obj.put("narration", rs.getString(8));
+				obj.put("bankId", rs.getString(9));
+				obj.put("companyId", rs.getString(10));
+				
+				jsonArr.put(obj);
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jsonArr;
+	}
 
-	try {
-		con = OracleConnection.getConnection();
-		
-		String sql = "SELECT\r\n" + 
-				"    TR.ID,\r\n" + 
-				"    TR.TRANSACTION_DATE,\r\n" + 
-				"    TR.VOUCH_NO,\r\n" + 
-				"    TR.ACCOUNT_ID,\r\n" + 
-				"    TR.CONTACT_ID,\r\n" + 
-				"    TR.DEBIT,\r\n" + 
-				"    TR.CREDIT,\r\n" + 
-				"    TR.NARRATION,\r\n" + 
-				"    AN.BANK_ID,\r\n" + 
-				"    AN.COMPANY_ID\r\n" + 
-				"FROM\r\n" + 
-				"    TRANSACTIONS   TR,\r\n" + 
-				"    ACCOUNT_NAME   AN\r\n" + 
-				"WHERE\r\n" + 
-				"    TR.ACCOUNT_ID = AN.ACCOUNT_ID\r\n" + 
-				"    AND AN.COMPANY_ID = ?\r\n" + 
-				"    AND AN.BANK_ID = ?\r\n" + 
-				"    AND TR.TRANSACTION_DATE <= ?\r\n" + 
-				"ORDER BY\r\n" + 
-				"    VOUCH_NO";
-		
-		PreparedStatement stmt = con.prepareStatement(sql);
-		
-		java.sql.Date dateSql = java.sql.Date.valueOf(date);
-		
-		stmt.setInt(1, companyId);
-		stmt.setInt(2, bankId);
-		stmt.setDate(3, dateSql);
-		
-		rs = stmt.executeQuery();
-		
-		while (rs.next()) {
+	public double getClosingBalForLedger(int bankId, int companyId, String startDate) {
+		Connection con = null;
+		double closingBal = 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	
+		String getOpeningBal = "{ ? = call GET_CLOSING_BAL_BANK(?,?,?) }";
+		CallableStatement cs;
+		try {
+			cs = con.prepareCall(getOpeningBal);
 			
-			JSONObject obj = new JSONObject();
-
-			obj.put("transactionId", rs.getString(1));
+			java.sql.Date date = java.sql.Date.valueOf(startDate);
 			
-			Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(2));
-			SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
-			String properDate = format2.format(date1);
+			cs.registerOutParameter(1, Types.NUMERIC);
+		
+			cs.setInt(2, companyId);
+			cs.setInt(3, bankId);
+			cs.setDate(4, date);
 			
-			obj.put("transactionDate", properDate);
-			obj.put("voucherNo", rs.getString(3));
-			obj.put("accountId", rs.getString(4));
-			obj.put("contactId", rs.getString(5));
-			obj.put("debit", rs.getString(6));
-			obj.put("credit", rs.getString(7));
-			obj.put("narration", rs.getString(8));
-			obj.put("bankId", rs.getString(9));
-			obj.put("companyId", rs.getString(10));
+			cs.executeUpdate();
 			
-			jsonArr.put(obj);
+			closingBal = cs.getDouble(1);
+			
+			cs.close();
+			con.close();
+			
+			System.out.println("closing_bal="+closingBal);
+			} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		
-		rs.close();
-		stmt.close();
-		con.close();
-	} catch (Exception e) {
-		e.printStackTrace();
+		return closingBal;
 	}
-	return jsonArr;
-}
+	
+public JSONObject getBankTransactionForPrint(int transactionId) {
+		
+		ResultSet rs = null;
+		Connection con = null;
+		JSONObject obj = new JSONObject();
+	
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT DISTINCT\r\n" + 
+					"    TR.ID,\r\n" + 
+					"    TR.TRANSACTION_DATE,\r\n" + 
+					"    TR.VOUCH_NO,\r\n" + 
+					"    TR.VOUCH_REF,\r\n" + 
+					"    TR.ACCOUNT_ID,\r\n" + 
+					"    TR.CONTACT_ID,\r\n" + 
+					"    TR.DEBIT,\r\n" + 
+					"    TR.CREDIT,\r\n" + 
+					"    TR.NARRATION,\r\n" + 
+					"    TR.TR_TYPE,\r\n" + 
+					"    GL.ACCOUNT_NAME_ID,\r\n" + 
+					"    AN.COMPANY_ID,\r\n" + 
+					"    COM.NAME,\r\n" + 
+					"    CM.CHEQUE_NO\r\n" + 
+					"FROM\r\n" + 
+					"    TRANSACTIONS     TR\r\n" + 
+					"    LEFT JOIN CHEQUE_MAST      CM ON CM.VOUCHER_NO = TR.VOUCH_NO\r\n" + 
+					"                                AND CM.STATUS = 0,\r\n" + 
+					"    GENERAL_LEDGER   GL,\r\n" + 
+					"    ACCOUNT_NAME     AN,\r\n" + 
+					"    COMPANY_MASTER   COM\r\n" + 
+					"WHERE\r\n" + 
+					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID\r\n" + 
+					"    AND AN.ID = GL.ACCOUNT_NAME_ID\r\n" + 
+					"    AND AN.COMPANY_ID = COM.ID\r\n" + 
+					"    AND TR.ID = ?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			
+			stmt.setInt(1, transactionId);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				obj.put("transactionId", rs.getString(1));
+				
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(2));
+				SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+				String properDate = format2.format(date1);
+				
+				obj.put("transactionDate", properDate);
+				obj.put("voucherNo", rs.getString(3));
+				obj.put("voucherRef", rs.getString(4));
+				obj.put("accountId", rs.getString(5));
+				obj.put("contactId", rs.getString(6));
+				obj.put("debit", rs.getString(7));
+				obj.put("credit", rs.getString(8));
+				obj.put("narration", rs.getString(9));
+				obj.put("transactionType", rs.getString(10));
+				obj.put("accountNameId", rs.getString(11));
+				obj.put("companyId", rs.getString(12));
+				obj.put("companyName", rs.getString(13));
+				obj.put("chequeNo", rs.getString(14));
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return obj;
+	}
+
+
+	public JSONArray getExpenseTransaction(int voucherNo) {
+		
+		ResultSet rs = null;
+		Connection con = null;
+		JSONArray jsonArr = new JSONArray();
+	
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT\r\n" + 
+					"    TR.ID,\r\n" + 
+					"    TR.TRANSACTION_DATE,\r\n" + 
+					"    TR.VOUCH_NO,\r\n" + 
+					"    TR.VOUCH_REF,\r\n" + 
+					"    TR.ACCOUNT_ID,\r\n" + 
+					"    TR.CONTACT_ID,\r\n" + 
+					"    TR.DEBIT,\r\n" + 
+					"    TR.CREDIT,\r\n" + 
+					"    TR.NARRATION,\r\n" + 
+					"    TR.TR_TYPE,\r\n" + 
+					"    AN.COMPANY_ID,\r\n" + 
+					"    CM.CHEQUE_NO,\r\n" + 
+					"    CM.ID CHEQUE_ID\r\n" + 
+					"FROM\r\n" + 
+					"    TRANSACTIONS     TR\r\n" + 
+					"    LEFT JOIN CHEQUE_MAST      CM ON CM.VOUCHER_NO = TR.VOUCH_NO\r\n" + 
+					"                                AND CM.STATUS = 0,\r\n" + 
+					"    ACCOUNT_NAME     AN,\r\n" + 
+					"    COMPANY_MASTER   COM\r\n" + 
+					"WHERE\r\n" + 
+					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID\r\n" + 
+					"    AND AN.COMPANY_ID = COM.ID\r\n" + 
+					"    AND TR.VOUCH_NO = ?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, voucherNo);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				JSONObject obj = new JSONObject();
+	
+				obj.put("transactionId", rs.getString(1));
+				
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(2));
+				SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+				String properDate = format2.format(date1);
+				
+				obj.put("transactionDate", properDate);
+				obj.put("voucherNo", rs.getString(3));
+				obj.put("voucherRef", rs.getString(4));
+				obj.put("accountId", rs.getString(5));
+				obj.put("contactId", rs.getString(6));
+				obj.put("debit", rs.getString(7));
+				obj.put("credit", rs.getString(8));
+				obj.put("narration", rs.getString(9));
+				obj.put("transactionType", rs.getString(10));
+				obj.put("companyId", rs.getString(11));
+				obj.put("chequeNo", rs.getString(12));
+				obj.put("chequeId", rs.getString(13));
+				
+				jsonArr.put(obj);
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jsonArr;
+	}
 	
 }
