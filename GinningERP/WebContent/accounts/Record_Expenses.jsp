@@ -52,6 +52,7 @@
 						<label class="lbl-rm-l">Cheque No</label>
 						<input type="text" class="form-control " name="chequeNo" id="chequeNo">
 				</div>
+						<input type="hidden" class="form-control " name="chequeId" id="chequeId">
 			</div>
 			
 			<div class="row mt-2 row-background">
@@ -83,6 +84,9 @@
 			<div class="row row-background">
 				<div class="col-md-2 offset-md-10 text-right">
 					<button type="button" class="btn btn-success" id="save-expense-entry">Save</button>
+					<button type="button" class="btn  btn-success " id="update-data" disabled>Update</button>
+					<button type="button" class="btn  btn-success " id="reset-data" onclick="window.location='../accounts/Record_Expenses.jsp'">Reset</button>
+			
 				</div>
 			</div>
 		</div>
@@ -204,7 +208,7 @@
 	window.onload = function(){
 		var params = parseURLParams(window.location.href);
 		if(typeof params != "undefined"){
-			document.getElementById('save-data').disabled=true;
+			document.getElementById('save-expense-entry').disabled=true;
 			document.getElementById('update-data').disabled=false;
 			sendReqToGetData(params.voucherNo[0]);
 		}
@@ -231,7 +235,7 @@
 	}
 	
 	function sendReqToGetData(voucherNo){
-		var url="../processing/getJournalEntryTrData.jsp?voucherNo="+voucherNo;
+		var url="../processing/getExpenseEntryTrData.jsp?voucherNo="+voucherNo;
 		if(window.XMLHttpRequest){  
 			fetchTrData=new XMLHttpRequest();  
 		}  
@@ -252,8 +256,6 @@
 			var response = this.response;
 			var data = JSON.parse(response);
 			setDataForUpdation(data);
-			calculateTotal("debit");
-			calculateTotal("credit");
 		}
 	}
 	
@@ -262,15 +264,27 @@
 		document.getElementById("companyId").value = data[0].companyId;
 		document.getElementById("voucherNo").value = data[0].voucherNo;
 		document.getElementById("date").value = data[0].transactionDate;
-		document.getElementById("voucherReference").value = data[0].voucherReference;
-		document.getElementById("payee").value = data[0].voucherReference;
-		document.getElementById("description").value = data[0].voucherReference;
-		document.getElementById("amount").value = data[0].voucherReference;
+		document.getElementById("voucherReference").value = data[0].voucherRef;
+		document.getElementById("payee").value = data[0].contactId;
+		document.getElementById("description").value = data[0].narration;
+		if(Number(data[0].debit)>0){
+			document.getElementById("amount").value = data[0].debit;
+		}else if(Number(data[0].debit)<=0){
+			document.getElementById("amount").value = data[0].credit;
+		}
+		if(typeof data[0].chequeNo != "undefined"){
+			document.getElementById("chequeNo").value= data[0].chequeNo;
+			document.getElementById("chequeId").value= data[0].chequeNo;
+		}else{
+			document.getElementById("chequeNo").value= "NA";
+			document.getElementById("chequeId").value= "";
+		}
+		
 		for(i=0; i<data.length; i++){
 			if(Number(data[i].debit)>0){
-				document.getElementById("accountId").value = data[0].voucherReference;
+				document.getElementById("accountId").value = data[i].accountId;
 			}else if(Number(data[i].credit)>0){
-
+				document.getElementById("paymentMode").value = data[i].accountId;
 			}
 		}
 	}

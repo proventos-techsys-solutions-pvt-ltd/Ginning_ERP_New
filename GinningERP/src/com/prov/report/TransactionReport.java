@@ -492,7 +492,7 @@ public JSONObject getBankTransactionForPrint(int transactionId) {
 				obj.put("transactionId", rs.getString(1));
 				
 				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(2));
-				SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+				SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
 				String properDate = format2.format(date1);
 				
 				obj.put("transactionDate", properDate);

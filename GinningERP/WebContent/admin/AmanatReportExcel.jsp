@@ -229,14 +229,15 @@ function parseURLParams(url) {
 				cell31.innerHTML = "NA";
 			}
 			
-			if(data[i].hasOwnProperty('chequeBank')){
-				cell32.innerHTML = data[i].chequeBank;
+			
+			if(data[i].hasOwnProperty('chequeDate')){
+				cell32.innerHTML = data[i].chequeDate;
 			}else{
 				cell32.innerHTML = "NA";
 			}
 			
-			if(data[i].hasOwnProperty('chequeDate')){
-				cell33.innerHTML = data[i].chequeDate;
+			if(data[i].hasOwnProperty('chequeBank')){
+				cell33.innerHTML = data[i].chequeBank;
 			}else{
 				cell33.innerHTML = "NA";
 			}

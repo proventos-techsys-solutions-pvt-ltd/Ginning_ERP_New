@@ -202,6 +202,7 @@
 					if(json[i].transactionType === "EXPENSE"){
 						cell9.innerHTML='<img src="../property/img/printer.png" alt="print">';
 						cell10.innerHTML='<img src="../property/img/edit.png" alt="editExpense">';
+						//cell10.innerHTML='';
 					}else if(json[i].transactionType === "JOURNAL"){
 						cell10.innerHTML='<img src="../property/img/edit.png" alt="editJournal">';
 					}

@@ -187,14 +187,15 @@ function parseURLParams(url) {
 				cell20.innerHTML = "NA";
 			}
 			
-			if(data[i].hasOwnProperty('chequeBank')){
-				cell21.innerHTML = data[i].chequeBank;
+			
+			if(data[i].hasOwnProperty('chequeDate')){
+				cell21.innerHTML = data[i].chequeDate;
 			}else{
 				cell21.innerHTML = "NA";
 			}
 			
-			if(data[i].hasOwnProperty('chequeDate')){
-				cell22.innerHTML = data[i].chequeDate;
+			if(data[i].hasOwnProperty('chequeBank')){
+				cell22.innerHTML = data[i].chequeBank;
 			}else{
 				cell22.innerHTML = "NA";
 			}
