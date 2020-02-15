@@ -278,9 +278,29 @@ public JSONArray getJournalEntriesForUpdation(int voucherNo) {
 					"    TR.CREDIT,\r\n" + 
 					"    TR.NARRATION,\r\n" + 
 					"    AN.BANK_ID,\r\n" + 
-					"    AN.COMPANY_ID\r\n" + 
+					"    AN.COMPANY_ID,\r\n" + 
+					"    CM.CHEQUE_NO,\r\n" + 
+					"    CASE\r\n" + 
+					"        WHEN TR.ID NOT IN (\r\n" + 
+					"            SELECT\r\n" + 
+					"                TRANSACTION_ID\r\n" + 
+					"            FROM\r\n" + 
+					"                RECO_DETAILS\r\n" + 
+					"        ) THEN\r\n" + 
+					"            0\r\n" + 
+					"        WHEN TR.ID IN (\r\n" + 
+					"            SELECT\r\n" + 
+					"                TRANSACTION_ID\r\n" + 
+					"            FROM\r\n" + 
+					"                RECO_DETAILS\r\n" + 
+					"        ) THEN\r\n" + 
+					"            1\r\n" + 
+					"        ELSE\r\n" + 
+					"            0\r\n" + 
+					"    END RECO\r\n" + 
 					"FROM\r\n" + 
-					"    TRANSACTIONS   TR,\r\n" + 
+					"    TRANSACTIONS   TR\r\n" + 
+					"    LEFT JOIN CHEQUE_MAST    CM ON CM.VOUCHER_NO = TR.VOUCH_NO,\r\n" + 
 					"    ACCOUNT_NAME   AN\r\n" + 
 					"WHERE\r\n" + 
 					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID\r\n" + 
@@ -319,6 +339,8 @@ public JSONArray getJournalEntriesForUpdation(int voucherNo) {
 				obj.put("narration", rs.getString(8));
 				obj.put("bankId", rs.getString(9));
 				obj.put("companyId", rs.getString(10));
+				obj.put("chequeNo", rs.getString(11));
+				obj.put("recoStatus", rs.getString(12));
 				
 				jsonArr.put(obj);
 			}

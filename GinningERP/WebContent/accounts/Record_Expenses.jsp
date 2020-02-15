@@ -53,6 +53,10 @@
 						<input type="text" class="form-control " name="chequeNo" id="chequeNo">
 				</div>
 						<input type="hidden" class="form-control " name="chequeId" id="chequeId">
+				<div class="col-md-2" hidden="true" id="updateCheuqeSection">
+						<label class="lbl-rm-l">Update/Delete Cheque</label>
+						<input type="checkbox" class="form-control " name="updateCheque" id="updateCheque" hidden="true">
+				</div>
 			</div>
 			
 			<div class="row mt-2 row-background">
@@ -155,6 +159,50 @@
 		}
 		
 	})
+	
+	
+	
+	//Updation validation
+	document.getElementById("update-data").addEventListener("click",function(){
+		if(document.getElementById("date").value.trim()!=""){
+			if(document.getElementById("voucherNo").value.trim()!=""){
+				if(document.getElementById("voucherReference").value.trim()!=""){
+					if(document.getElementById("description").value.trim()!=""){
+						if(document.getElementById("amount").value.trim()!=""){
+							updateData();
+						}else{
+							alert("Form cannot be left blank!!")
+						}
+					}else{
+						alert("Form cannot be left blank!!")
+					}
+				}else{
+					alert("Form cannot be left blank!!")
+				}
+			}else{
+				alert("Form cannot be left blank!!")
+			}
+		}else{
+			alert("Form cannot be left blank!!")
+		}
+		
+		
+		if(document.getElementById("companyId").value.trim()!="Select"){
+			if(document.getElementById("accountId").value.trim()!="Select"){
+				if(document.getElementById("paymentMode").value.trim()!="Select"){
+					
+				}else{
+					alert("Dropdown must have some values!!")
+				}
+			}else{
+				alert("Dropdown must have some values!!")
+			}
+		}else{
+			alert("Dropdown must have some values!!")
+		}
+		
+	})
+	
 
 	//---------------------------------------validations end here
 		function expenseEntry(){
@@ -210,6 +258,8 @@
 		if(typeof params != "undefined"){
 			document.getElementById('save-expense-entry').disabled=true;
 			document.getElementById('update-data').disabled=false;
+			document.getElementById('updateCheque').hidden=false;
+			document.getElementById('updateCheuqeSection').hidden=false;
 			sendReqToGetData(params.voucherNo[0]);
 		}
 	}
@@ -274,7 +324,7 @@
 		}
 		if(typeof data[0].chequeNo != "undefined"){
 			document.getElementById("chequeNo").value= data[0].chequeNo;
-			document.getElementById("chequeId").value= data[0].chequeNo;
+			document.getElementById("chequeId").value= data[0].chequeId;
 		}else{
 			document.getElementById("chequeNo").value= "NA";
 			document.getElementById("chequeId").value= "";
@@ -287,6 +337,12 @@
 				document.getElementById("paymentMode").value = data[i].accountId;
 			}
 		}
+	}
+	
+	
+	function updateData(){
+		document.getElementsByTagName('form')[0].action="../processing/updateExpenseEntry.jsp";
+		document.getElementsByTagName('form')[0].submit();
 	}
 	
 	

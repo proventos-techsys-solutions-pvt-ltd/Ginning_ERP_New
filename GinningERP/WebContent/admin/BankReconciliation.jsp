@@ -55,10 +55,13 @@
 					<thead>
 						<tr>
 							<th width="5%">Select</th>
+							<th hidden="">Voucher No</th>
+							<th hidden="">Transaction Id</th>
 							<th width="10%">Date</th>
 							<th>Description</th>
 							<th>Debit</th>
 							<th>Credit</th>
+							<th hidden="">chequeNo</th>
 						</tr>
 					</thead>
 					<tbody id="tableBody">
@@ -67,6 +70,10 @@
 			</table>
 		</div>
 	</div>
+	
+	<form action="../processing/submitBankReco.jsp" id="recoForm">
+		<input type="hidden" id="output" name="output" />
+	</form>
 	
 	<div class="row row-background">
 		<div class="col-md-2">
@@ -172,12 +179,19 @@
 			var cell5 = rows.insertCell(4);
 			var cell6 = rows.insertCell(5);
 			var cell7 = rows.insertCell(6);
+			var cell8 = rows.insertCell(7);
 			
 			cell1.align='center';
 			cell2.hidden = true;
 			cell3.hidden = true;
+			cell8.hidden = true;
 			
-			cell1.innerHTML = "<input type='checkbox' name='check'>";
+			if(Number(json[i].recoStatus) === 1){
+				cell1.innerHTML = "<input type='checkbox' name='check' checked>";
+			}else if(Number(json[i].recoStatus) === 0){
+				cell1.innerHTML = "<input type='checkbox' name='check'>";
+			}
+			
 			cell2.innerHTML = json[i].voucherNo;
 			cell3.innerHTML = json[i].transactionId;
 			cell4.innerHTML = json[i].transactionDate;
@@ -189,6 +203,7 @@
 				cell6.innerHTML = json[i].debit;
 				cell7.innerHTML = 0;
 			}
+			cell8.innerHTML = json[i].chequeNo;
 		}
 			
 		//Outstanding Check = Total of Debit  +  Total of Credit
@@ -272,6 +287,48 @@
 			calculateUnreconciled();
 		}
 	});
+	
+
+	function submitReco(){
+		var parentObj = {};
+		var closingGlBal = document.getElementById('glbal').value;
+		var closingBankBal = document.getElementById('sebal').value;
+		var companyId = document.getElementById('companyId').value;
+		var bankId = document.getElementById('bankId').value;
+		var recoDate = document.getElementById('date').value;
+		var bankDropDown = document.getElementById('bankId');
+		var bankGlId = bankDropDown.options[bankDropDown.options.selectedIndex].getAttribute("data-account-id");
+		
+		var table = document.getElementById("tableBody");
+		
+		parentObj.closingGlBal = closingGlBal;
+		parentObj.closingBankBal = closingBankBal;
+		parentObj.companyId = companyId;
+		parentObj.companyId = companyId;
+		parentObj.bankId = bankId;
+		parentObj.recoDate = recoDate;
+		parentObj.bankGlId = bankGlId;
+		
+		var jsonArr = [];
+		
+		for(i=0; i<table.childElementCount; i++){
+			if(table.rows[i].cells[0].children[0].checked === true){
+				var jsonObj = {};
+				jsonObj.transactionId = table.rows[i].cells[2].innerHTML;
+				jsonObj.voucherNo = table.rows[i].cells[1].innerHTML;
+				jsonArr.push(jsonObj);
+			}
+		}
+		parentObj.recoDetails = jsonArr;
+		console.log(parentObj);
+		document.getElementById('output').value = JSON.stringify(parentObj);
+		document.getElementById('recoForm').submit();
+	}
+	
+	document.getElementById("save").addEventListener('click',function(e){
+		submitReco();
+	});
+	
 
 	/***********************
 	Side bar 
@@ -282,7 +339,24 @@
         });
     });
 	
-	
+   /**************************************
+	Response window code
+	**************************************/
+	var sessionId = {
+			"getSessionId":<%=session.getAttribute("recoId") %>,
+	}
+	$(document).ready(function(){
+		if(sessionId.getSessionId != null){		
+			if(Number(sessionId.getSessionId) === 0){
+				$.fn.checkStatus(1,"Unable to save Bank Reco data!");
+			}else if(Number(sessionId.getSessionId) > 0){
+				$.fn.checkStatus(sessionId.getSessionId,"Bank Reconciliation has been recorded successfully!");
+			}
+		}
+	});
+<%
+session.removeAttribute("recoId");
+%>		
 
 	</script>
 </body>

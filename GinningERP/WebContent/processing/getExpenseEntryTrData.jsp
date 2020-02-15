@@ -6,7 +6,7 @@
 <%
 	
 	int voucherNo = Integer.parseInt(request.getParameter("voucherNo"));
-
+    
 	TransactionReport trReportObj = new TransactionReport();
 	
 	JSONArray arr = trReportObj.getExpenseTransaction(voucherNo);

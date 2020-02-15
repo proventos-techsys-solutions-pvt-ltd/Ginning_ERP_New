@@ -1,24 +1,41 @@
+<%@page import="com.prov.delete.VoidCheque"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
+<%@page import="com.prov.delete.DeleteTransaction"%>
 <%@page import="com.prov.dbinsertion.AddCheque"%>
+<%@page import="com.prov.bean.Cheque"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="com.prov.report.BankReport"%>
-<%@page import="com.prov.bean.Cheque"%>
-<%@page import="com.prov.dbinsertion.AddTransactions"%>
 <%@page import="com.prov.bean.Transactions"%>
+<%@page import="com.prov.dbinsertion.AddTransactions"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 
-    <%
-	    String date = request.getParameter("date").toUpperCase();
-		String reference = request.getParameter("voucherReference").toUpperCase();
-		int voucherNo = Integer.parseInt(request.getParameter("voucherNo"));
-		int debitAccountId = Integer.parseInt(request.getParameter("accountId"));
-		String description = request.getParameter("description").toUpperCase();
-		double amount = Double.parseDouble(request.getParameter("amount"));
-		int creditAccountId = Integer.parseInt(request.getParameter("paymentMode"));
-		String contactId = request.getParameter("payee").toUpperCase();
-		String chequeNo = request.getParameter("chequeNo");
+<%
+	String date = request.getParameter("date").toUpperCase();
+	String reference = request.getParameter("voucherReference").toUpperCase();
+	int voucherNo = Integer.parseInt(request.getParameter("voucherNo"));
+	int debitAccountId = Integer.parseInt(request.getParameter("accountId"));
+	String description = request.getParameter("description").toUpperCase();
+	double amount = Double.parseDouble(request.getParameter("amount"));
+	int creditAccountId = Integer.parseInt(request.getParameter("paymentMode"));
+	String contactId = request.getParameter("payee").toUpperCase();
+	String chequeNo = request.getParameter("chequeNo");
+	String chequeId = request.getParameter("chequeId");
+	String updateCheque = request.getParameter("updateCheque");
+	
+	DeleteTransaction deleteTrObj = new DeleteTransaction();
+	
+	int deletedVoucherNo = deleteTrObj.deleteTransaction(voucherNo);
+	
+	int expenseId=0;
+	
+	if(deletedVoucherNo == voucherNo){
 		
+		if(chequeId != "" && updateCheque != null && updateCheque == "on" && StringUtils.isNumeric(chequeId)){
+			int chequeIdInt = Integer.parseInt(chequeId);
+			VoidCheque voidChequeObj = new VoidCheque();
+			int voidChequeId = voidChequeObj.voidCheque(chequeIdInt);
+		}
 		
 		Transactions debitTransaction = new Transactions();
 		
@@ -52,7 +69,9 @@
 		int debitId=addTrans.addTransactions(debitTransaction);
 		int creditId=addTrans.addTransactions(creditTransaction);
 		
-		if(debitId!=0 && creditId!=0){
+		
+		
+		if(debitId!=0 && creditId!=0 ){
 			if(chequeNo != "" && chequeNo != null && StringUtils.isNumeric(chequeNo)){
 				
 				BankReport br = new BankReport();
@@ -76,13 +95,15 @@
 				addChequeObj.addCheque(cheque);
 			}
 		}
-		int expenseId=0;
+		
 		if(debitId==0 || creditId==0){
 			expenseId=0;
 		}else{
 			expenseId=1;
 		}
-		
-		session.setAttribute("expenseId", Integer.toString(expenseId));
-		response.sendRedirect("../accounts/Record_Expenses.jsp");
-    %>
+	}
+	
+	session.setAttribute("expenseId", Integer.toString(expenseId));
+	response.sendRedirect("../accounts/Record_Expenses.jsp");
+	
+%>

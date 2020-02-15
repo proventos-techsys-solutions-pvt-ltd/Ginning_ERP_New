@@ -668,8 +668,8 @@ function setCurrentDate(){
 				cell5.innerHTML = '<input type="text" id="moisture'+(rowNo+1)+'" class="form-control form-control-sm" name="moisture" value="'+data[i].moisture+'" readonly>';
 				
 				if((Number(superRate)) < (Number(data[i].rate)+Number(data[i].differenceFromSuper))){
-					cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+ (Number(data[i].rate)-Number(data[i].differenceFromSuper))+'"  readonly>';
-					var amount = ((Number(data[i].rate)-Number(data[i].differenceFromSuper)) * (Number(Number(data[i].quantity) - Number(data[i].invoicedQty))/100));
+					cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+ (Number(data[i].rate))+'"  readonly>';
+					var amount = ((Number(data[i].rate)) * (Number(Number(data[i].quantity) - Number(data[i].invoicedQty))/100));
 					cell7.innerHTML = '<input type="text" id="amount'+(rowNo+1)+'" class="form-control form-control-sm " name="amount" value="'+amount+'" readonly>';
 				}else if((Number(superRate)) >= (Number(data[i].rate)+Number(data[i].differenceFromSuper))){
 					cell6.innerHTML = '<input type="text" id="rate'+(rowNo+1)+'" class="form-control form-control-sm"  name="rate" value="'+ (Number(superRate)-Number(data[i].differenceFromSuper))+'"  readonly>';
