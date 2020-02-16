@@ -393,14 +393,14 @@ body{
 			fetchReq=new ActiveXObject("Microsoft.XMLHTTP");  
 		}  
 		try{  
-			fetchReq.onreadystatechange=getAmanatData;  
+			fetchReq.onreadystatechange=getInvoiceData;  
 			console.log("AJAX Req sent");
 			fetchReq.open("GET",url,true);  
 			fetchReq.send();  
 		}catch(e){alert("Unable to connect to server");}
 	}
 	
-	function getAmanatData(){
+	function getInvoiceData(){
 		if(fetchReq.readyState == 4){
 			$.unblockUI();
 			var response = this.response.trim();
