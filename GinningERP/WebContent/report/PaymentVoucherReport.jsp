@@ -14,6 +14,11 @@
 		margin-right:0px;
 		margin-left:0px;
 	}
+	span {
+    vertical-align: middle;
+    font-size: 1.1rem;
+    margin: .5rem;
+	}
 </style>
 </head>
 <body>
