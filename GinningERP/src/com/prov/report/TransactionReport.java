@@ -268,47 +268,78 @@ public JSONArray getJournalEntriesForUpdation(int voucherNo) {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT\r\n" + 
-					"    TR.ID,\r\n" + 
-					"    TR.TRANSACTION_DATE,\r\n" + 
-					"    TR.VOUCH_NO,\r\n" + 
-					"    TR.ACCOUNT_ID,\r\n" + 
-					"    TR.CONTACT_ID,\r\n" + 
-					"    TR.DEBIT,\r\n" + 
-					"    TR.CREDIT,\r\n" + 
-					"    TR.NARRATION,\r\n" + 
-					"    AN.BANK_ID,\r\n" + 
-					"    AN.COMPANY_ID,\r\n" + 
-					"    CM.CHEQUE_NO,\r\n" + 
-					"    CASE\r\n" + 
-					"        WHEN TR.ID NOT IN (\r\n" + 
-					"            SELECT\r\n" + 
-					"                TRANSACTION_ID\r\n" + 
-					"            FROM\r\n" + 
-					"                RECO_DETAILS\r\n" + 
-					"        ) THEN\r\n" + 
-					"            0\r\n" + 
-					"        WHEN TR.ID IN (\r\n" + 
-					"            SELECT\r\n" + 
-					"                TRANSACTION_ID\r\n" + 
-					"            FROM\r\n" + 
-					"                RECO_DETAILS\r\n" + 
-					"        ) THEN\r\n" + 
-					"            1\r\n" + 
-					"        ELSE\r\n" + 
-					"            0\r\n" + 
-					"    END RECO\r\n" + 
-					"FROM\r\n" + 
-					"    TRANSACTIONS   TR\r\n" + 
-					"    LEFT JOIN CHEQUE_MAST    CM ON CM.VOUCHER_NO = TR.VOUCH_NO,\r\n" + 
-					"    ACCOUNT_NAME   AN\r\n" + 
-					"WHERE\r\n" + 
-					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID\r\n" + 
+			String sql = "SELECT  \r\n" + 
+					"    TR.ID,  \r\n" + 
+					"    TR.TRANSACTION_DATE,  \r\n" + 
+					"    TR.VOUCH_NO,  \r\n" + 
+					"    TR.ACCOUNT_ID,  \r\n" + 
+					"    TR.CONTACT_ID,  \r\n" + 
+					"    TR.DEBIT,  \r\n" + 
+					"    TR.CREDIT,  \r\n" + 
+					"    TR.NARRATION,  \r\n" + 
+					"    AN.BANK_ID,  \r\n" + 
+					"    AN.COMPANY_ID,  \r\n" + 
+					"    CM.CHEQUE_NO,  \r\n" + 
+					"    CASE  \r\n" + 
+					"        WHEN TR.ID NOT IN (  \r\n" + 
+					"            SELECT  \r\n" + 
+					"                TRANSACTION_ID  \r\n" + 
+					"            FROM  \r\n" + 
+					"                RECO_DETAILS  \r\n" + 
+					"        ) THEN  \r\n" + 
+					"            0  \r\n" + 
+					"        WHEN TR.ID IN (  \r\n" + 
+					"            SELECT  \r\n" + 
+					"                TRANSACTION_ID  \r\n" + 
+					"            FROM  \r\n" + 
+					"                RECO_DETAILS  \r\n" + 
+					"        ) THEN  \r\n" + 
+					"            1  \r\n" + 
+					"        ELSE  \r\n" + 
+					"            0  \r\n" + 
+					"    END RECO  \r\n" + 
+					"FROM  \r\n" + 
+					"    TRANSACTIONS   TR  \r\n" + 
+					"    LEFT JOIN CHEQUE_MAST    CM ON CM.VOUCHER_NO = TR.VOUCH_NO,  \r\n" + 
+					"    ACCOUNT_NAME   AN  \r\n" + 
+					"WHERE  \r\n" + 
+					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID  \r\n" + 
 					"    AND AN.COMPANY_ID = ?\r\n" + 
 					"    AND AN.BANK_ID = ?\r\n" + 
-					"    AND TR.TRANSACTION_DATE <= ?\r\n" + 
-					"ORDER BY\r\n" + 
-					"    VOUCH_NO";
+					"    AND TR.TRANSACTION_DATE  BETWEEN  \r\n" + 
+					" (SELECT NVL(MAX(RECO_DATE),'15-FEB-2019') FROM BANK_RECO_MASTER WHERE BANK_ID = ? AND COMPANY_ID = ? AND RECO_DATE  <= ?) AND ? \r\n" + 
+					"    union all\r\n" + 
+					"SELECT  \r\n" + 
+					"    TR.ID,  \r\n" + 
+					"    TR.TRANSACTION_DATE,  \r\n" + 
+					"    TR.VOUCH_NO,  \r\n" + 
+					"    TR.ACCOUNT_ID,  \r\n" + 
+					"    TR.CONTACT_ID,  \r\n" + 
+					"    TR.DEBIT,  \r\n" + 
+					"    TR.CREDIT,  \r\n" + 
+					"    TR.NARRATION,  \r\n" + 
+					"    AN.BANK_ID,  \r\n" + 
+					"    AN.COMPANY_ID,  \r\n" + 
+					"    CM.CHEQUE_NO,  \r\n" + 
+					"    0  RECO\r\n" + 
+					"FROM  \r\n" + 
+					"    TRANSACTIONS   TR  \r\n" + 
+					"    LEFT JOIN CHEQUE_MAST    CM ON CM.VOUCHER_NO = TR.VOUCH_NO,  \r\n" + 
+					"    ACCOUNT_NAME   AN  \r\n" + 
+					"WHERE  \r\n" + 
+					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID  \r\n" + 
+					"    AND AN.COMPANY_ID = ? \r\n" + 
+					"    AND AN.BANK_ID = ? \r\n" + 
+					"    AND TR.TRANSACTION_DATE  <  \r\n" + 
+					" (SELECT NVL(MAX(RECO_DATE),'15-FEB-2019') FROM BANK_RECO_MASTER WHERE BANK_ID = ? AND COMPANY_ID = ? AND RECO_DATE  <= ?) \r\n" + 
+					" and TR.ID NOT IN (  \r\n" + 
+					"            SELECT  \r\n" + 
+					"                TRANSACTION_ID  \r\n" + 
+					"            FROM  \r\n" + 
+					"                RECO_DETAILS  \r\n" + 
+					"        )\r\n" + 
+					"ORDER BY  \r\n" + 
+					"    3    ";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -316,7 +347,15 @@ public JSONArray getJournalEntriesForUpdation(int voucherNo) {
 			
 			stmt.setInt(1, companyId);
 			stmt.setInt(2, bankId);
-			stmt.setDate(3, dateSql);
+			stmt.setInt(3, bankId);
+			stmt.setInt(4, companyId);
+			stmt.setDate(5, dateSql);
+			stmt.setDate(6, dateSql);
+			stmt.setInt(7, companyId);
+			stmt.setInt(8, bankId);
+			stmt.setInt(9, bankId);
+			stmt.setInt(10, companyId);
+			stmt.setDate(11, dateSql);
 			
 			rs = stmt.executeQuery();
 			
@@ -540,6 +579,149 @@ public JSONObject getBankTransactionForPrint(int transactionId) {
 			e.printStackTrace();
 		}
 		return jsonArr;
+	}
+	
+	
+public JSONArray getBankTransactionForRecoPrint(int companyId, int bankId, String date) {
+		
+		ResultSet rs = null;
+		Connection con = null;
+		JSONArray jsonArr = new JSONArray();
+	
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT\r\n" + 
+					"    TR.ID,\r\n" + 
+					"    TR.TRANSACTION_DATE,\r\n" + 
+					"    TR.VOUCH_NO,\r\n" + 
+					"    TR.ACCOUNT_ID,\r\n" + 
+					"    TR.CONTACT_ID,\r\n" + 
+					"    TR.DEBIT,\r\n" + 
+					"    TR.CREDIT,\r\n" + 
+					"    TR.NARRATION,\r\n" + 
+					"    AN.BANK_ID,\r\n" + 
+					"    AN.COMPANY_ID,\r\n" + 
+					"    CM.CHEQUE_NO,\r\n" + 
+					"    COMP.NAME,\r\n" + 
+					"    BM.BANK_NAME\r\n" + 
+					"FROM\r\n" + 
+					"    TRANSACTIONS     TR\r\n" + 
+					"    LEFT JOIN CHEQUE_MAST      CM ON CM.VOUCHER_NO = TR.VOUCH_NO,\r\n" + 
+					"    ACCOUNT_NAME     AN,\r\n" + 
+					"    COMPANY_MASTER   COMP,\r\n" + 
+					"    BANK_MAST        BM\r\n" + 
+					"WHERE\r\n" + 
+					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID\r\n" + 
+					"    AND AN.COMPANY_ID = ?\r\n" + 
+					"    AND AN.BANK_ID = ?\r\n" + 
+					"    AND TR.TRANSACTION_DATE <= ?\r\n" + 
+					"    AND TR.ID NOT IN (\r\n" + 
+					"        SELECT\r\n" + 
+					"            TRANSACTION_ID\r\n" + 
+					"        FROM\r\n" + 
+					"            RECO_DETAILS\r\n" + 
+					"    )\r\n" + 
+					"    AND COMP.ID = AN.COMPANY_ID\r\n" + 
+					"    AND BM.ID = AN.BANK_ID\r\n" + 
+					"ORDER BY\r\n" + 
+					"    TR.VOUCH_NO";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			java.sql.Date dateSql = java.sql.Date.valueOf(date);
+			
+			stmt.setInt(1, companyId);
+			stmt.setInt(2, bankId);
+			stmt.setDate(3, dateSql);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				JSONObject obj = new JSONObject();
+	
+				obj.put("transactionId", rs.getString(1));
+				
+				Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(2));
+				SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+				String properDate = format2.format(date1);
+				
+				obj.put("transactionDate", properDate);
+				obj.put("voucherNo", rs.getString(3));
+				obj.put("accountId", rs.getString(4));
+				obj.put("contactId", rs.getString(5));
+				obj.put("debit", rs.getString(6));
+				obj.put("credit", rs.getString(7));
+				obj.put("narration", rs.getString(8));
+				obj.put("bankId", rs.getString(9));
+				obj.put("companyId", rs.getString(10));
+				obj.put("chequeNo", rs.getString(11));
+				obj.put("companyName", rs.getString(12));
+				obj.put("bankName", rs.getString(13));
+				
+				jsonArr.put(obj);
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jsonArr;
+	}
+
+	public double getClosingBalForBankReco(int bankId, int companyId, String startDate) {
+		Connection con = null;
+		ResultSet rs = null;
+		double closingBal = 0;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	
+		String getOpeningBal = "SELECT\r\n" + 
+				"    NVL(MAX(OPENING_BAL_BANK),0)\r\n" + 
+				"FROM\r\n" + 
+				"    BANK_RECO_MASTER\r\n" + 
+				"WHERE\r\n" + 
+				"    RECO_DATE = (\r\n" + 
+				"        SELECT\r\n" + 
+				"            MAX(RECO_DATE)\r\n" + 
+				"        FROM\r\n" + 
+				"            BANK_RECO_MASTER\r\n" + 
+				"        WHERE\r\n" + 
+				"            RECO_DATE <= ?\r\n" + 
+				"    )\r\n" + 
+				"    AND BANK_ID = ?\r\n" + 
+				"    AND COMPANY_ID = ?";
+		PreparedStatement stmt;
+		try {
+			stmt = con.prepareStatement(getOpeningBal);
+			
+			java.sql.Date date = java.sql.Date.valueOf(startDate);
+			
+			stmt.setInt(3, companyId);
+			stmt.setInt(2, bankId);
+			stmt.setDate(1, date);
+			
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				closingBal = rs.getDouble(1);
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+			
+			System.out.println("closing_bal bank ="+closingBal);
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return closingBal;
 	}
 	
 }

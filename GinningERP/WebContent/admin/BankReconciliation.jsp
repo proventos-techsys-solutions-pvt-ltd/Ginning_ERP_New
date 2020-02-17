@@ -47,6 +47,9 @@
 		<div class="col-md-2">
 				<button type="button" class="btn btn-sm btn-success" style="margin-top:32px;" id="save">Save</button>
 		</div>
+		<div class="col-md-2">
+				<button type="button" class="btn btn-sm btn-success" style="margin-top:32px;" id="print">Print</button>
+		</div>
 	</div>
 	
 	<div class="row row-background">
@@ -327,6 +330,14 @@
 	
 	document.getElementById("save").addEventListener('click',function(e){
 		submitReco();
+	});
+	
+	
+	document.getElementById("print").addEventListener('click',function(e){
+		var companyId = document.getElementById('companyId').value;
+		var bankId = document.getElementById('bankId').value;
+		var recoDate = document.getElementById('date').value;
+		window.open("../report/BankReconciliationReport.jsp?companyId="+companyId+"&bankId="+bankId+"&date="+recoDate);
 	});
 	
 
