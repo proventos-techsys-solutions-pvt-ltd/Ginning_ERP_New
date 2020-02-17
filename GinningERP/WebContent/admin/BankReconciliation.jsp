@@ -196,6 +196,9 @@
 		
 		document.getElementById('glbal').value = closingBal;
 		
+		document.getElementById('sebal').value = jsonObj.closingBankBalance;
+		
+		
 		var table = document.getElementById("tableBody");
 		table.innerHTML = "";
 	  	var totalDebit = 0;
@@ -245,10 +248,12 @@
          	var totalDebit = 0;
          	for(i=0;i<rowCount;i++){
          		var totdr = 0;
-         		if ($("#tableBody tr").eq(i).find("td:eq(5)").text()===""){
-         			totdr = 0;
-         		}else{
-         			totdr = parseInt($("#tableBody tr").eq(i).find("td:eq(5)").text());
+         		if(table.rows[i].cells[0].children[0].checked != true){
+	         		if ($("#tableBody tr").eq(i).find("td:eq(5)").text()===""){
+	         			totdr = 0;
+	         		}else{
+	         			totdr = parseInt($("#tableBody tr").eq(i).find("td:eq(5)").text());
+	         		}
          		}
          		totalDebit = totalDebit+ totdr;
          	}
@@ -260,17 +265,20 @@
          	var totalCredit = 0;
         	for(i=0;i<rowCount;i++){
         		var totcr = 0;
-				if ($("#tableBody tr").eq(i).find("td:eq(6)").text()===""){
-         			totcr = 0;
-         		}else{
-         			totcr = parseInt($("#tableBody tr").eq(i).find("td:eq(6)").text());
-         		}
+        		if(table.rows[i].cells[0].children[0].checked === true){
+					if ($("#tableBody tr").eq(i).find("td:eq(6)").text()===""){
+	         			totcr = 0;
+	         		}else{
+	         			totcr = parseInt($("#tableBody tr").eq(i).find("td:eq(6)").text());
+	         		}
+        		}
          		totalCredit = totalCredit+ totcr;
         	}
         	return (totalCredit);
 		}
 			$("#ostChk").val(calculateCreditTotal());
 			$("#dit").val(calculateDebitTotal());
+			calculateUnreconciled();
 	}
 	
 	//********unreconciled difference*********//
@@ -375,8 +383,10 @@
 		window.open("../report/BankReconciliationReport.jsp?companyId="+companyId+"&bankId="+bankId+"&date="+recoDate);
 	});
 	
+	calculateUnreconciled();
 
-	/***********************
+	
+/***********************
 	Side bar 
 ************************/
    $(document).ready(function () {

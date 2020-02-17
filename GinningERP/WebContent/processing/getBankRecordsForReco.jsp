@@ -16,9 +16,12 @@
     	
     	double closingBal = trReportObj.getClosingBalForLedger(bankId, companyId, date);
     	
+    	double closingBalBank = trReportObj.getClosingBalForBankReco(bankId, companyId, date);
+    	
     	JSONObject obj = new JSONObject();
     	
     	obj.put("closingBalance", closingBal);
+    	obj.put("closingBankBalance", closingBalBank);
     	
     	obj.put("array", arr);
     	
