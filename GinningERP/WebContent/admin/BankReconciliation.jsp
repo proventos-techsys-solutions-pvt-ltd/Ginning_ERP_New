@@ -18,8 +18,16 @@
   <div id="content">
 <div class="container-fluid ">
 	<div class="row row-background">
-		<div class="col-md-2">
+		<div class="col-md-12">
+		<div class="d-flex justify-content-between align-center">
+			<div>
 			<h4>Bank Reconciliation</h4>
+			</div>
+			<div>
+			<button type="button" class="btn btn-sm btn-success"  id="save">Save</button>
+			<button type="button" class="btn btn-sm btn-success ml-1" id="print">Print</button>
+			</div>
+		</div>
 		</div>
 	</div>
 	<div class="row row-background">
@@ -43,12 +51,6 @@
 		</div>
 			<div class="col-md-2">
 				<button type="button" class="btn btn-sm btn-success" style="margin-top:32px;" id="fetchRecords">Get Transactions</button>
-		</div>
-		<div class="col-md-2">
-				<button type="button" class="btn btn-sm btn-success" style="margin-top:32px;" id="save">Save</button>
-		</div>
-		<div class="col-md-2">
-				<button type="button" class="btn btn-sm btn-success" style="margin-top:32px;" id="print">Print</button>
 		</div>
 	</div>
 	
@@ -104,9 +106,9 @@
 	</div>
 	</div>
 	 <script src="../js/3.4.1-jq.js"></script>
-	 <script src="../js/Validation.js"></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/Validation.js"></script>
 	<script>
 	
 	 
@@ -143,7 +145,19 @@
 	
 	
 	document.getElementById("fetchRecords").addEventListener('click',function(e){
-		fetchReport();
+		if($("#companyId").val()!= null){
+			if($("#bankId").val()!= null){
+				if($("#date").val()!= ""){
+					fetchReport();
+				}else{
+					alert("Select date.");
+				}
+			}else{
+				alert("Select bank name.");
+			}
+		}else{
+			alert("Select company name.");
+		}
 	});
 	
 	document.getElementById("companyId").addEventListener("change",function(e){
@@ -329,7 +343,12 @@
 	}
 	
 	document.getElementById("save").addEventListener('click',function(e){
-		submitReco();
+		if($("#urdiff").val() === "0" ){
+			submitReco();
+		}else{
+			alert("Unreconciled statement cannot be saved.")
+		}
+		
 	});
 	
 	
