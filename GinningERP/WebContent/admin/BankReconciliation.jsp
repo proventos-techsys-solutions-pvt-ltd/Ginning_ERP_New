@@ -22,6 +22,7 @@
 		<div class="d-flex justify-content-between align-center">
 			<div>
 			<h4>Bank Reconciliation</h4>
+			<h3 id='heading'></h3>
 			</div>
 			<div>
 			<button type="button" class="btn btn-sm btn-success"  id="save">Save</button>
@@ -154,8 +155,12 @@
 		if(fetchRequest.readyState == 4){
 			var response = this.response.trim();
 			console.log(response);
-			var data = JSON.parse(response);
-			setReportInTable(data);
+			if(Number(response) === 0 ){
+				alert('Please select a date after the first reconciliation date.');
+			}else{
+				var data = JSON.parse(response);
+				setReportInTable(data);
+			}
 		}
 	}
 	
@@ -198,6 +203,7 @@
 		
 		document.getElementById('sebal').value = jsonObj.closingBankBalance;
 		
+		document.getElementById('heading').innerHTML = 'Last Reconciliation Date - '+jsonObj.lastRecoDate;
 		
 		var table = document.getElementById("tableBody");
 		table.innerHTML = "";

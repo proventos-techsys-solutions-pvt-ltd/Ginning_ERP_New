@@ -308,7 +308,7 @@ public JSONArray getJournalEntriesForUpdation(int voucherNo) {
 					"    AND AN.BANK_ID = ?\r\n" + 
 					"    AND TR.TRANSACTION_DATE  BETWEEN  \r\n" + 
 					" (SELECT NVL(MAX(RECO_DATE),'15-FEB-2019') FROM BANK_RECO_MASTER WHERE BANK_ID = ? AND COMPANY_ID = ? AND RECO_DATE  < ?) AND ? \r\n" + 
-					"    union all\r\n" + 
+					"    UNION \r\n" + 
 					"SELECT  \r\n" + 
 					"    TR.ID,  \r\n" + 
 					"    TR.TRANSACTION_DATE,  \r\n" + 
@@ -722,6 +722,101 @@ public JSONArray getBankTransactionForRecoPrint(int companyId, int bankId, Strin
 		}
 		
 		return closingBal;
+	}
+	
+	
+	public String getLastRecoDate(int bankId, int companyId) {
+		Connection con = null;
+		ResultSet rs = null;
+		String lastRecoDate = null;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	
+		String getLastRecoDate = "SELECT\r\n" + 
+				"    MAX(RECO_DATE)\r\n" + 
+				"FROM\r\n" + 
+				"    BANK_RECO_MASTER\r\n" + 
+				"WHERE\r\n" + 
+				"    BANK_ID = ?\r\n" + 
+				"    AND COMPANY_ID = ?";
+		PreparedStatement stmt;
+		try {
+			stmt = con.prepareStatement(getLastRecoDate);
+			
+			stmt.setInt(2, companyId);
+			stmt.setInt(1, bankId);
+			
+			rs = stmt.executeQuery();
+			
+			if (!rs.isBeforeFirst() ) {    
+				lastRecoDate = "NA"; 
+			} else {
+				while (rs.next()) {
+					Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(1));
+					SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+					String properDate = format2.format(date1);	
+					
+					lastRecoDate = properDate;
+				}
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+			
+			System.out.println("Last Reco Date ="+lastRecoDate);
+			} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return lastRecoDate;
+	}
+	
+	public String getFirstRecoDate(int bankId, int companyId) {
+		Connection con = null;
+		ResultSet rs = null;
+		String lastRecoDate = null;
+		try {
+			con = OracleConnection.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	
+		String getLastRecoDate = "SELECT\r\n" + 
+				"    NVL(MIN(RECO_DATE),'01-JAN-2020')\r\n" + 
+				"FROM\r\n" + 
+				"    BANK_RECO_MASTER\r\n" + 
+				"WHERE\r\n" + 
+				"    BANK_ID = ?\r\n" + 
+				"    AND COMPANY_ID = ?";
+		PreparedStatement stmt;
+		try {
+			stmt = con.prepareStatement(getLastRecoDate);
+			
+			stmt.setInt(2, companyId);
+			stmt.setInt(1, bankId);
+			
+			rs = stmt.executeQuery();
+		
+				while (rs.next()) {
+					Date date1=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(rs.getString(1));
+					SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+					String properDate = format2.format(date1);	
+					
+					lastRecoDate = properDate;
+				}
+			rs.close();
+			stmt.close();
+			con.close();
+			
+			System.out.println("First Reco Date ="+lastRecoDate);
+			} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return lastRecoDate;
 	}
 	
 }
