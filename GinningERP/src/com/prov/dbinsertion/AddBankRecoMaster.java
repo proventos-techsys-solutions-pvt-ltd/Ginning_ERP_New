@@ -20,7 +20,7 @@ public class AddBankRecoMaster {
 			e.printStackTrace();
 		}
 	
-		String addBankRecoMaster = "{ ? = call ADD BANK_RECO_MASTER(?,?,?) }";
+		String addBankRecoMaster = "{ ? = call ADD_BANK_RECO_MASTER(?,?,?,?,?,?) }";
 		CallableStatement cs;
 		try {
 			
@@ -34,7 +34,9 @@ public class AddBankRecoMaster {
 			cs.setDate(2, sqlDate);
 			cs.setDouble(3, br.getClosingBalLedger() );
 			cs.setDouble(4, br.getClosingBalBank());
-			
+			cs.setLong(5, br.getCompanyId());
+			cs.setLong(6, br.getBankId());
+			cs.setLong(7, br.getBankGlId());
 			
 			cs.executeUpdate();
 			

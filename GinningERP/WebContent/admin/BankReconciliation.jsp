@@ -105,6 +105,22 @@
 	</div>
 	</div>
 	</div>
+		<!-- Response modal pop up -->
+<div class="response-back-display"></div>
+<div class="response-body">
+	<div class="response-header">
+		<h5>Information</h5>
+	</div>
+	<div class="response-content">
+		<div class="d-flex justify-content-center align-items-center">
+		<h5 id="response-text" ></h5>
+		</div>
+	</div>
+	<div class="response-footer">
+		<button type="button" class="btn btn-success btn-response" id="response-button">Ok</button>
+	</div>
+</div>
+
 	 <script src="../js/3.4.1-jq.js"></script>
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
@@ -375,6 +391,7 @@
 	var sessionId = {
 			"getSessionId":<%=session.getAttribute("recoId") %>,
 	}
+   console.log("sessionId.getSessionId--"+sessionId.getSessionId);
 	$(document).ready(function(){
 		if(sessionId.getSessionId != null){		
 			if(Number(sessionId.getSessionId) === 0){

@@ -307,7 +307,7 @@ public JSONArray getJournalEntriesForUpdation(int voucherNo) {
 					"    AND AN.COMPANY_ID = ?\r\n" + 
 					"    AND AN.BANK_ID = ?\r\n" + 
 					"    AND TR.TRANSACTION_DATE  BETWEEN  \r\n" + 
-					" (SELECT NVL(MAX(RECO_DATE),'15-FEB-2019') FROM BANK_RECO_MASTER WHERE BANK_ID = ? AND COMPANY_ID = ? AND RECO_DATE  <= ?) AND ? \r\n" + 
+					" (SELECT NVL(MAX(RECO_DATE),'15-FEB-2019') FROM BANK_RECO_MASTER WHERE BANK_ID = ? AND COMPANY_ID = ? AND RECO_DATE  < ?) AND ? \r\n" + 
 					"    union all\r\n" + 
 					"SELECT  \r\n" + 
 					"    TR.ID,  \r\n" + 

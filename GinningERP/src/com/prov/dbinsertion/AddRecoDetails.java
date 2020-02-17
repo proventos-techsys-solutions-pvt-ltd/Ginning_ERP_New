@@ -19,7 +19,7 @@ public class AddRecoDetails {
 				e.printStackTrace();
 			}
 		
-			String addBankRecoMaster = "{ ? = call ADD ADD_RECO_DETAILS(?,?,?) }";
+			String addBankRecoMaster = "{ ? = call ADD_RECO_DETAILS(?,?,?) }";
 			CallableStatement cs;
 			try {
 				
