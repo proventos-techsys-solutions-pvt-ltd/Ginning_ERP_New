@@ -26,6 +26,7 @@
 			</div>
 			<div>
 			<button type="button" class="btn btn-sm btn-success"  id="save">Save</button>
+			<button type="button" class="btn btn-sm btn-success"  id="undoReco">Undo Reconciliation</button>
 			<button type="button" class="btn btn-sm btn-success ml-1" id="print">Print</button>
 			</div>
 		</div>
@@ -80,6 +81,11 @@
 	<form action="../processing/submitBankReco.jsp" id="recoForm">
 		<input type="hidden" id="output" name="output" />
 	</form>
+	
+	<form action="../processing/undoBankReco.jsp" id="undoRecoForm">
+		<input type="hidden" id="outputUndo" name="outputUndo" />
+	</form>
+	
 	
 	<div class="row row-background">
 		<div class="col-md-2">
@@ -351,7 +357,6 @@
 		parentObj.closingGlBal = closingGlBal;
 		parentObj.closingBankBal = closingBankBal;
 		parentObj.companyId = companyId;
-		parentObj.companyId = companyId;
 		parentObj.bankId = bankId;
 		parentObj.recoDate = recoDate;
 		parentObj.bankGlId = bankGlId;
@@ -381,6 +386,20 @@
 		
 	});
 	
+	document.getElementById('undoReco').addEventListener('click',function(e){
+		var companyId = document.getElementById('companyId').value;
+		var bankId = document.getElementById('bankId').value;
+		var date = document.getElementById('date').value;
+		
+		var parentObj = {};
+		parentObj.companyId = companyId;
+		parentObj.bankId = bankId;
+		parentObj.recoDate = date;
+		
+		document.getElementById('outputUndo').value = JSON.stringify(parentObj);
+		document.getElementById('undoRecoForm').submit();
+	});
+	
 	
 	document.getElementById("print").addEventListener('click',function(e){
 		var companyId = document.getElementById('companyId').value;
@@ -390,7 +409,6 @@
 	});
 	
 	calculateUnreconciled();
-
 	
 /***********************
 	Side bar 
@@ -414,6 +432,12 @@
 				$.fn.checkStatus(1,"Unable to save Bank Reco data!");
 			}else if(Number(sessionId.getSessionId) > 0){
 				$.fn.checkStatus(sessionId.getSessionId,"Bank Reconciliation has been recorded successfully!");
+			}else if(Number(sessionId.getSessionId) === -1){
+				$.fn.checkStatus(sessionId.getSessionId,"Selected date is before the Latest Reconciliation date.");
+			}else if(Number(sessionId.getSessionId) === -2){
+				$.fn.checkStatus(sessionId.getSessionId,"Selected date is after the Latest Reconciliation date.");
+			}else if(Number(sessionId.getSessionId) === -3){
+				$.fn.checkStatus(sessionId.getSessionId,"Selected date is before the Latest Reconciliation date.");
 			}
 		}
 	});
