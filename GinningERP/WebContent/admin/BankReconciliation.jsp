@@ -220,6 +220,7 @@
 			console.log(response);
 			if(Number(response) === 0 ){
 				alert('Please select a date after the first reconciliation date.');
+				location.reload();
 			}else{
 				var data = JSON.parse(response);
 				setReportInTable(data);
@@ -334,7 +335,7 @@
          	var totalCredit = 0;
         	for(i=0;i<rowCount;i++){
         		var totcr = 0;
-        		if(table.rows[i].cells[0].children[0].checked === true){
+        		if(table.rows[i].cells[0].children[0].checked != true){
 					if ($("#tableBody tr").eq(i).find("td:eq(6)").text()===""){
 	         			totcr = 0;
 	         		}else{

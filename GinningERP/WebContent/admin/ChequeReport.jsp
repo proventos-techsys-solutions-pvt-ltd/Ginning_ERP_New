@@ -33,7 +33,7 @@
 					<thead>
 						<tr>
 							<th>Vendor Name</th>
-							<th>Invoice No</th>
+							<th>Invoice No/ Voucher No</th>
 							<th>Amount</th>
 							<th>Bank Name</th>
 							<th>Cheque No</th>
@@ -166,7 +166,13 @@
 			cell12.align = "center";
 			
 			cell1.innerHTML = data[i].customerName;
-			cell2.innerHTML = data[i].invoiceNo;
+			
+			if(typeof data[i].invoiceNo != 'undefined'){
+				cell2.innerHTML = data[i].invoiceNo;
+			}else{
+				cell2.innerHTML = data[i].voucherNo;
+			}
+			
 			cell3.innerHTML = data[i].chequeAmount;
 			cell4.innerHTML = data[i].bankName;
 			cell5.innerHTML = data[i].chequeNo;
