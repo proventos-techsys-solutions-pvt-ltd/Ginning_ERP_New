@@ -25,8 +25,8 @@
 			<h3 id='heading'></h3>
 			</div>
 			<div>
-			<button type="button" class="btn btn-sm btn-success"  id="save">Save</button>
-			<button type="button" class="btn btn-sm btn-success"  id="undoReco">Undo Reconciliation</button>
+			<button type="button" class="btn btn-sm btn-success"  id="save" disabled>Save</button>
+			<button type="button" class="btn btn-sm btn-success"  id="undoReco" disabled>Undo Reconciliation</button>
 			<button type="button" class="btn btn-sm btn-success ml-1" id="print">Print</button>
 			</div>
 		</div>
@@ -133,6 +133,63 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/Validation.js"></script>
 	<script>
+	
+/************************************************************************
+ *Date compare code
+ */
+	var dates = {
+	    convert:function(d) {
+	        // Converts the date in d to a date-object. The input can be:
+	        //   a date object: returned without modification
+	        //  an array      : Interpreted as [year,month,day]. NOTE: month is 0-11.
+	        //   a number     : Interpreted as number of milliseconds
+	        //                  since 1 Jan 1970 (a timestamp) 
+	        //   a string     : Any format supported by the javascript engine, like
+	        //                  "YYYY/MM/DD", "MM/DD/YYYY", "Jan 31 2009" etc.
+	        //  an object     : Interpreted as an object with year, month and date
+	        //                  attributes.  **NOTE** month is 0-11.
+	        return (
+	            d.constructor === Date ? d :
+	            d.constructor === Array ? new Date(d[0],d[1],d[2]) :
+	            d.constructor === Number ? new Date(d) :
+	            d.constructor === String ? new Date(d) :
+	            typeof d === "object" ? new Date(d.year,d.month,d.date) :
+	            NaN
+	        );
+	    },
+	    compare:function(a,b) {
+	        // Compare two dates (could be of any type supported by the convert
+	        // function above) and returns:
+	        //  -1 : if a < b
+	        //   0 : if a = b
+	        //   1 : if a > b
+	        // NaN : if a or b is an illegal date
+	        // NOTE: The code inside isFinite does an assignment (=).
+	        return (
+	            isFinite(a=this.convert(a).valueOf()) &&
+	            isFinite(b=this.convert(b).valueOf()) ?
+	            (a>b)-(a<b) :
+	            NaN
+	        );
+	    },
+	    inRange:function(d,start,end) {
+	        // Checks if date in d is between dates in start and end.
+	        // Returns a boolean or NaN:
+	        //    true  : if d is between start and end (inclusive)
+	        //    false : if d is before start or after end
+	        //    NaN   : if one or more of the dates is illegal.
+	        // NOTE: The code inside isFinite does an assignment (=).
+	       return (
+	            isFinite(d=this.convert(d).valueOf()) &&
+	            isFinite(start=this.convert(start).valueOf()) &&
+	            isFinite(end=this.convert(end).valueOf()) ?
+	            start <= d && d <= end :
+	            NaN
+	        );
+	    }
+	}
+	
+/*******************************************************************************/	
 	
 	 
 	
@@ -291,6 +348,29 @@
 			$("#ostChk").val(calculateCreditTotal());
 			$("#dit").val(calculateDebitTotal());
 			calculateUnreconciled();
+			if(jsonObj.lastRecoDate != "NA"){
+				var latestRecoDateFormatted = new Date(jsonObj.lastRecoDate).toLocaleDateString('fr-CA');
+				var selectedDate = document.getElementById("date").value;
+				
+				var latestRecoDt = dates.convert(latestRecoDateFormatted);
+				var selectedDt = dates.convert(selectedDate);
+				
+				if(dates.compare(latestRecoDt,selectedDt) === -1){
+					document.getElementById("save").disabled = false;
+					document.getElementById("undoReco").disabled = true;
+				}else if(dates.compare(latestRecoDt,selectedDt) === 0){
+					document.getElementById("save").disabled = false;
+					document.getElementById("undoReco").disabled = false;
+				}else if(dates.compare(latestRecoDt,selectedDt) === 1){
+					document.getElementById("save").disabled = true;
+					document.getElementById("undoReco").disabled = true;
+				}
+			}else{
+				document.getElementById("save").disabled = false;
+				document.getElementById("undoReco").disabled = false;
+			}
+			
+			
 	}
 	
 	//********unreconciled difference*********//
@@ -440,7 +520,10 @@
 				$.fn.checkStatus(sessionId.getSessionId,"Selected date is before the Latest Reconciliation date.");
 			}
 		}
+		sessionId.getSessionId = null;
 	});
+	
+
 <%
 session.removeAttribute("recoId");
 %>		

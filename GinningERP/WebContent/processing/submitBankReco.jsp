@@ -37,45 +37,20 @@
 
 	String latestRecoDate = trReportObj.getLastRecoDate(bankId, companyId);
 	
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    Date latestRecoDateObj = sdf.parse(latestRecoDate);
-    Date selectedDateobj = sdf.parse(recoDate);
-	
-	int recoCount = bankRecoReport.getRecoCount(bankId, companyId, recoDate);
-	
-	if(latestRecoDateObj.compareTo(selectedDateobj) < 0){
-		AddBankRecoMaster addBankRecoObj = new AddBankRecoMaster();
+	if(latestRecoDate != "NA"){
+		SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/yyyy");
 		
-		BankRecoMaster br = new BankRecoMaster();
+		Date latestDateFormat = sdf1.parse(latestRecoDate);
 		
-		br.setCompanyId(Long.parseLong((String)parentObj.get("companyId")));
-		br.setBankId(Long.parseLong((String)parentObj.get("bankId")));
-		br.setBankGlId(Long.parseLong((String)parentObj.get("bankGlId")));
-		br.setClosingBalBank(Double.parseDouble((String)parentObj.get("closingBankBal")));
-		br.setClosingBalLedger(Double.parseDouble((String)parentObj.get("closingGlBal")));
-		br.setDate((String)parentObj.get("recoDate"));
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
-		bankRecoId = addBankRecoObj.addBankRecoMaster(br);
+		String latestDateStr = sdf.format(latestDateFormat);
+	    Date latestRecoDateObj = sdf.parse(latestDateStr);
+	    Date selectedDateobj = sdf.parse(recoDate);
 		
-		if(bankRecoId>0){
-			for(int i=0; i<recoDetails.size(); i++){
-				
-				JSONObject rdJson = (JSONObject)recoDetails.get(i);
-				RecoDetails rd = new RecoDetails();
-				
-				rd.setRecoId(bankRecoId);
-				rd.setTransactionId(Long.parseLong((String)rdJson.get("transactionId")));
-				rd.setVoucherNo(Long.parseLong((String)rdJson.get("voucherNo")));
-				
-				AddRecoDetails addRecoDetails = new AddRecoDetails();
-				
-				addRecoDetails.addRecoDetails(rd);
-			}
-		}
-	}else if(latestRecoDateObj.compareTo(selectedDateobj) == 0){
-		int delBankRecoId = delBankRecoObj.deleteBankRecoEntry(bankId, companyId, recoDate);
+		int recoCount = bankRecoReport.getRecoCount(bankId, companyId, recoDate);
 		
-		if(delBankRecoId>0){
+		if(latestRecoDateObj.compareTo(selectedDateobj) < 0){
 			AddBankRecoMaster addBankRecoObj = new AddBankRecoMaster();
 			
 			BankRecoMaster br = new BankRecoMaster();
@@ -104,11 +79,72 @@
 					addRecoDetails.addRecoDetails(rd);
 				}
 			}
+		}else if(latestRecoDateObj.compareTo(selectedDateobj) == 0){
+			int delBankRecoId = delBankRecoObj.deleteBankRecoEntry(bankId, companyId, recoDate);
+			
+			if(delBankRecoId>0){
+				AddBankRecoMaster addBankRecoObj = new AddBankRecoMaster();
+				
+				BankRecoMaster br = new BankRecoMaster();
+				
+				br.setCompanyId(Long.parseLong((String)parentObj.get("companyId")));
+				br.setBankId(Long.parseLong((String)parentObj.get("bankId")));
+				br.setBankGlId(Long.parseLong((String)parentObj.get("bankGlId")));
+				br.setClosingBalBank(Double.parseDouble((String)parentObj.get("closingBankBal")));
+				br.setClosingBalLedger(Double.parseDouble((String)parentObj.get("closingGlBal")));
+				br.setDate((String)parentObj.get("recoDate"));
+				
+				bankRecoId = addBankRecoObj.addBankRecoMaster(br);
+				
+				if(bankRecoId>0){
+					for(int i=0; i<recoDetails.size(); i++){
+						
+						JSONObject rdJson = (JSONObject)recoDetails.get(i);
+						RecoDetails rd = new RecoDetails();
+						
+						rd.setRecoId(bankRecoId);
+						rd.setTransactionId(Long.parseLong((String)rdJson.get("transactionId")));
+						rd.setVoucherNo(Long.parseLong((String)rdJson.get("voucherNo")));
+						
+						AddRecoDetails addRecoDetails = new AddRecoDetails();
+						
+						addRecoDetails.addRecoDetails(rd);
+					}
+				}
+			}
+		}else if(latestRecoDateObj.compareTo(selectedDateobj) > 0){
+			bankRecoId = -1;
 		}
-	}else if(latestRecoDateObj.compareTo(selectedDateobj) > 0){
-		bankRecoId = -1;
+	}else{
+		AddBankRecoMaster addBankRecoObj = new AddBankRecoMaster();
+		
+		BankRecoMaster br = new BankRecoMaster();
+		
+		br.setCompanyId(Long.parseLong((String)parentObj.get("companyId")));
+		br.setBankId(Long.parseLong((String)parentObj.get("bankId")));
+		br.setBankGlId(Long.parseLong((String)parentObj.get("bankGlId")));
+		br.setClosingBalBank(Double.parseDouble((String)parentObj.get("closingBankBal")));
+		br.setClosingBalLedger(Double.parseDouble((String)parentObj.get("closingGlBal")));
+		br.setDate((String)parentObj.get("recoDate"));
+		
+		bankRecoId = addBankRecoObj.addBankRecoMaster(br);
+		
+		if(bankRecoId>0){
+			for(int i=0; i<recoDetails.size(); i++){
+				
+				JSONObject rdJson = (JSONObject)recoDetails.get(i);
+				RecoDetails rd = new RecoDetails();
+				
+				rd.setRecoId(bankRecoId);
+				rd.setTransactionId(Long.parseLong((String)rdJson.get("transactionId")));
+				rd.setVoucherNo(Long.parseLong((String)rdJson.get("voucherNo")));
+				
+				AddRecoDetails addRecoDetails = new AddRecoDetails();
+				
+				addRecoDetails.addRecoDetails(rd);
+			}
+		}
 	}
-	
 	session.setAttribute("recoId", Integer.toString(bankRecoId));
 	response.sendRedirect("../admin/BankReconciliation.jsp");
 

@@ -15,16 +15,32 @@
     	
     	TransactionReport trReportObj = new TransactionReport();
     	
-    	String firstRecoDate=trReportObj.getFirstRecoDate(bankId, companyId);
-    	
+    	String firstRecoDate = trReportObj.getFirstRecoDate(bankId, companyId);
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date firstRecoDateObj = sdf.parse(firstRecoDate);
         Date selectedDateobj = sdf.parse(date);
+        
+        JSONArray arr = new JSONArray();
          
          if(selectedDateobj.compareTo(firstRecoDateObj) > 0 || selectedDateobj.compareTo(firstRecoDateObj) == 0){
-        	 JSONArray arr = trReportObj.getBankTransactionForReco(companyId, bankId, date);
-         	
-         	double closingBal = trReportObj.getClosingBalForLedger(bankId, companyId, date);
+        	 String latestRecoDate = trReportObj.getLastRecoDate(bankId, companyId);
+        	 
+        	 if(latestRecoDate != "NA"){
+        		 SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/yyyy");
+                 Date latestDateFormat = sdf1.parse(latestRecoDate);
+                 String latestDateStr = sdf.format(latestDateFormat);
+            	 Date latestRecoDateObj = sdf.parse(latestDateStr);
+            	 
+            	 if(latestRecoDateObj.compareTo(selectedDateobj) < 0){
+            		  arr = trReportObj.getOnlyUnrecoBankTransaction(companyId, bankId, date);
+            	 }else if(latestRecoDateObj.compareTo(selectedDateobj) >= 0){
+            		  arr = trReportObj.getBankTransactionForReco(companyId, bankId, date);
+            	 } 
+        	 }else{
+        		  arr = trReportObj.getBankTransactionForReco(companyId, bankId, date);
+        	 }
+
+        	 double closingBal = trReportObj.getClosingBalForLedger(bankId, companyId, date);
          	
          	double closingBalBank = trReportObj.getClosingBalForBankReco(bankId, companyId, date);
          	

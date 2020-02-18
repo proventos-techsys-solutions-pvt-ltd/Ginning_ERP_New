@@ -15,7 +15,7 @@
 
 <%
 
-	String jsonData = request.getParameter("output");
+	String jsonData = request.getParameter("outputUndo");
 	
 	System.out.println(jsonData);
 	
@@ -35,8 +35,13 @@
 
 	String latestRecoDate = trReportObj.getLastRecoDate(bankId, companyId);
 	
+	SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/yyyy");
+	
+	Date latestDateFormat = sdf1.parse(latestRecoDate);
+	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    Date latestRecoDateObj = sdf.parse(latestRecoDate);
+	String latestDateStr = sdf.format(latestDateFormat);
+    Date latestRecoDateObj = sdf.parse(latestDateStr);
     Date selectedDateobj = sdf.parse(recoDate);
 	
 	int recoCount = bankRecoReport.getRecoCount(bankId, companyId, recoDate);
