@@ -2,6 +2,7 @@ package com.prov.dbinsertion;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.Types;
 
 import com.prov.bean.RecoDetails;
@@ -19,17 +20,20 @@ public class AddRecoDetails {
 				e.printStackTrace();
 			}
 		
-			String addBankRecoMaster = "{ ? = call ADD_RECO_DETAILS(?,?,?) }";
+			String addBankRecoMaster = "{ ? = call ADD_RECO_DETAILS(?,?,?,?) }";
 			CallableStatement cs;
 			try {
 				
 				cs = con.prepareCall(addBankRecoMaster);
+				
+				Date recoDateSql = Date.valueOf(rd.getRecoDate());
 				
 				cs.registerOutParameter(1, Types.NUMERIC);
 				
 				cs.setLong(2, rd.getRecoId());
 				cs.setLong(3, rd.getVoucherNo());
 				cs.setLong(4, rd.getTransactionId());
+				cs.setDate(5, recoDateSql);
 				
 				
 				cs.executeUpdate();

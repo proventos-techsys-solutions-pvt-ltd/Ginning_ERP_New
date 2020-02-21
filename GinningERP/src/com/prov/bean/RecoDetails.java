@@ -3,6 +3,8 @@ package com.prov.bean;
 public class RecoDetails {
 
 	long id, recoId, voucherNo, transactionId;
+	
+	String recoDate;
 
 	public long getTransactionId() {
 		return transactionId;
@@ -34,6 +36,14 @@ public class RecoDetails {
 
 	public void setVoucherNo(long voucherNo) {
 		this.voucherNo = voucherNo;
+	}
+
+	public String getRecoDate() {
+		return recoDate;
+	}
+
+	public void setRecoDate(String recoDate) {
+		this.recoDate = recoDate;
 	}
 
 }

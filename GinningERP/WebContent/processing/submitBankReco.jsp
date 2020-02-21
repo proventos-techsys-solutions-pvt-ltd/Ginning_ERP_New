@@ -73,6 +73,7 @@
 					rd.setRecoId(bankRecoId);
 					rd.setTransactionId(Long.parseLong((String)rdJson.get("transactionId")));
 					rd.setVoucherNo(Long.parseLong((String)rdJson.get("voucherNo")));
+					rd.setRecoDate((String)parentObj.get("recoDate"));
 					
 					AddRecoDetails addRecoDetails = new AddRecoDetails();
 					
@@ -105,6 +106,7 @@
 						rd.setRecoId(bankRecoId);
 						rd.setTransactionId(Long.parseLong((String)rdJson.get("transactionId")));
 						rd.setVoucherNo(Long.parseLong((String)rdJson.get("voucherNo")));
+						rd.setRecoDate((String)parentObj.get("recoDate"));
 						
 						AddRecoDetails addRecoDetails = new AddRecoDetails();
 						
@@ -138,6 +140,7 @@
 				rd.setRecoId(bankRecoId);
 				rd.setTransactionId(Long.parseLong((String)rdJson.get("transactionId")));
 				rd.setVoucherNo(Long.parseLong((String)rdJson.get("voucherNo")));
+				rd.setRecoDate((String)parentObj.get("recoDate"));
 				
 				AddRecoDetails addRecoDetails = new AddRecoDetails();
 				

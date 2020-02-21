@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ taglib uri="/WEB-INF/CustomTags.tld" prefix="c"%>
 <!DOCTYPE html>
@@ -380,7 +380,7 @@
 	})
 	
 	function calculateUnreconciled(){
-		$("#urdiff").val(parseInt($("#sebal").val())+parseInt($("#ostChk").val())+parseInt($("#dit").val())-parseInt($("#glbal").val()));
+		$("#urdiff").val(parseInt($("#sebal").val())-parseInt($("#ostChk").val())+parseInt($("#dit").val())-parseInt($("#glbal").val()));
 	}
 	
 	/*
