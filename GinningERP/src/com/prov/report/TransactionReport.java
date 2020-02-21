@@ -108,8 +108,7 @@ public JSONArray getTransactions(String startDate, String endDate, int accId, in
 					"    AND AN.ACCOUNT_ID = ? \r\n" + 
 					"    AND TR.TRANSACTION_DATE BETWEEN ? AND ? \r\n" + 
 					"ORDER BY \r\n" + 
-					"    TR.VOUCH_NO, \r\n" + 
-					"    TR.TRANSACTION_DATE DESC";
+					"    TR.TRANSACTION_DATE";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -268,78 +267,96 @@ public JSONArray getJournalEntriesForUpdation(int voucherNo) {
 		try {
 			con = OracleConnection.getConnection();
 			
-			String sql = "SELECT  \r\n" + 
-					"    TR.ID,  \r\n" + 
-					"    TR.TRANSACTION_DATE,  \r\n" + 
-					"    TR.VOUCH_NO,  \r\n" + 
-					"    TR.ACCOUNT_ID,  \r\n" + 
-					"    TR.CONTACT_ID,  \r\n" + 
-					"    TR.DEBIT,  \r\n" + 
-					"    TR.CREDIT,  \r\n" + 
-					"    TR.NARRATION,  \r\n" + 
-					"    AN.BANK_ID,  \r\n" + 
-					"    AN.COMPANY_ID,  \r\n" + 
-					"    CM.CHEQUE_NO,  \r\n" + 
-					"    CASE  \r\n" + 
-					"        WHEN TR.ID NOT IN (  \r\n" + 
-					"            SELECT  \r\n" + 
-					"                TRANSACTION_ID  \r\n" + 
-					"            FROM  \r\n" + 
-					"                RECO_DETAILS  \r\n" + 
-					"        ) THEN  \r\n" + 
-					"            0  \r\n" + 
-					"        WHEN TR.ID IN (  \r\n" + 
-					"            SELECT  \r\n" + 
-					"                TRANSACTION_ID  \r\n" + 
-					"            FROM  \r\n" + 
-					"                RECO_DETAILS  \r\n" + 
-					"        ) THEN  \r\n" + 
-					"            1  \r\n" + 
-					"        ELSE  \r\n" + 
-					"            0  \r\n" + 
-					"    END RECO  \r\n" + 
-					"FROM  \r\n" + 
-					"    TRANSACTIONS   TR  \r\n" + 
-					"    LEFT JOIN CHEQUE_MAST    CM ON CM.VOUCHER_NO = TR.VOUCH_NO,  \r\n" + 
-					"    ACCOUNT_NAME   AN  \r\n" + 
-					"WHERE  \r\n" + 
-					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID  \r\n" + 
+			String sql = "SELECT\r\n" + 
+					"    TR.ID,\r\n" + 
+					"    TR.TRANSACTION_DATE,\r\n" + 
+					"    TR.VOUCH_NO,\r\n" + 
+					"    TR.ACCOUNT_ID,\r\n" + 
+					"    TR.CONTACT_ID,\r\n" + 
+					"    TR.DEBIT,\r\n" + 
+					"    TR.CREDIT,\r\n" + 
+					"    TR.NARRATION,\r\n" + 
+					"    AN.BANK_ID,\r\n" + 
+					"    AN.COMPANY_ID,\r\n" + 
+					"    CM.CHEQUE_NO,\r\n" + 
+					"    CASE\r\n" + 
+					"        WHEN TR.ID NOT IN (\r\n" + 
+					"            SELECT\r\n" + 
+					"                TRANSACTION_ID\r\n" + 
+					"            FROM\r\n" + 
+					"                RECO_DETAILS\r\n" + 
+					"        ) THEN\r\n" + 
+					"            0\r\n" + 
+					"        WHEN TR.ID IN (\r\n" + 
+					"            SELECT\r\n" + 
+					"                TRANSACTION_ID\r\n" + 
+					"            FROM\r\n" + 
+					"                RECO_DETAILS\r\n" + 
+					"        ) THEN\r\n" + 
+					"            1\r\n" + 
+					"        ELSE\r\n" + 
+					"            0\r\n" + 
+					"    END RECO\r\n" + 
+					"FROM\r\n" + 
+					"    TRANSACTIONS   TR\r\n" + 
+					"    LEFT JOIN CHEQUE_MAST    CM ON CM.VOUCHER_NO = TR.VOUCH_NO\r\n" + 
+					"                                AND CM.STATUS = 0,\r\n" + 
+					"    ACCOUNT_NAME   AN\r\n" + 
+					"WHERE\r\n" + 
+					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID\r\n" + 
 					"    AND AN.COMPANY_ID = ?\r\n" + 
 					"    AND AN.BANK_ID = ?\r\n" + 
-					"    AND TR.TRANSACTION_DATE  BETWEEN  \r\n" + 
-					" (SELECT NVL(MAX(RECO_DATE),'15-FEB-2019') FROM BANK_RECO_MASTER WHERE BANK_ID = ? AND COMPANY_ID = ? AND RECO_DATE  < ?) AND ? \r\n" + 
-					"    UNION \r\n" + 
-					"SELECT  \r\n" + 
-					"    TR.ID,  \r\n" + 
-					"    TR.TRANSACTION_DATE,  \r\n" + 
-					"    TR.VOUCH_NO,  \r\n" + 
-					"    TR.ACCOUNT_ID,  \r\n" + 
-					"    TR.CONTACT_ID,  \r\n" + 
-					"    TR.DEBIT,  \r\n" + 
-					"    TR.CREDIT,  \r\n" + 
-					"    TR.NARRATION,  \r\n" + 
-					"    AN.BANK_ID,  \r\n" + 
-					"    AN.COMPANY_ID,  \r\n" + 
-					"    CM.CHEQUE_NO,  \r\n" + 
-					"    0  RECO\r\n" + 
-					"FROM  \r\n" + 
-					"    TRANSACTIONS   TR  \r\n" + 
-					"    LEFT JOIN CHEQUE_MAST    CM ON CM.VOUCHER_NO = TR.VOUCH_NO,  \r\n" + 
-					"    ACCOUNT_NAME   AN  \r\n" + 
-					"WHERE  \r\n" + 
-					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID  \r\n" + 
-					"    AND AN.COMPANY_ID = ? \r\n" + 
-					"    AND AN.BANK_ID = ? \r\n" + 
-					"    AND TR.TRANSACTION_DATE  <  \r\n" + 
-					" (SELECT NVL(MAX(RECO_DATE),'15-FEB-2019') FROM BANK_RECO_MASTER WHERE BANK_ID = ? AND COMPANY_ID = ? AND RECO_DATE  <= ?) \r\n" + 
-					" and TR.ID NOT IN (  \r\n" + 
-					"            SELECT  \r\n" + 
-					"                TRANSACTION_ID  \r\n" + 
-					"            FROM  \r\n" + 
-					"                RECO_DETAILS  \r\n" + 
-					"        )\r\n" + 
-					"ORDER BY  \r\n" + 
-					"    3    ";
+					"    AND TR.TRANSACTION_DATE BETWEEN (\r\n" + 
+					"        SELECT\r\n" + 
+					"            NVL(MAX(RECO_DATE), '15-FEB-2019')\r\n" + 
+					"        FROM\r\n" + 
+					"            BANK_RECO_MASTER\r\n" + 
+					"        WHERE\r\n" + 
+					"            BANK_ID = ?\r\n" + 
+					"            AND COMPANY_ID = ?\r\n" + 
+					"            AND RECO_DATE < ?\r\n" + 
+					"    ) AND ?\r\n" + 
+					"UNION\r\n" + 
+					"SELECT\r\n" + 
+					"    TR.ID,\r\n" + 
+					"    TR.TRANSACTION_DATE,\r\n" + 
+					"    TR.VOUCH_NO,\r\n" + 
+					"    TR.ACCOUNT_ID,\r\n" + 
+					"    TR.CONTACT_ID,\r\n" + 
+					"    TR.DEBIT,\r\n" + 
+					"    TR.CREDIT,\r\n" + 
+					"    TR.NARRATION,\r\n" + 
+					"    AN.BANK_ID,\r\n" + 
+					"    AN.COMPANY_ID,\r\n" + 
+					"    CM.CHEQUE_NO,\r\n" + 
+					"    0 RECO\r\n" + 
+					"FROM\r\n" + 
+					"    TRANSACTIONS   TR\r\n" + 
+					"    LEFT JOIN CHEQUE_MAST    CM ON CM.VOUCHER_NO = TR.VOUCH_NO\r\n" + 
+					"                                AND CM.STATUS = 0,\r\n" + 
+					"    ACCOUNT_NAME   AN\r\n" + 
+					"WHERE\r\n" + 
+					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID\r\n" + 
+					"    AND AN.COMPANY_ID = ?\r\n" + 
+					"    AND AN.BANK_ID = ?\r\n" + 
+					"    AND TR.TRANSACTION_DATE < (\r\n" + 
+					"        SELECT\r\n" + 
+					"            NVL(MAX(RECO_DATE), ?)\r\n" + 
+					"        FROM\r\n" + 
+					"            BANK_RECO_MASTER\r\n" + 
+					"        WHERE\r\n" + 
+					"            BANK_ID = ?\r\n" + 
+					"            AND COMPANY_ID = ?\r\n" + 
+					"            AND RECO_DATE <= ?\r\n" + 
+					"    )\r\n" + 
+					"    AND TR.ID NOT IN (\r\n" + 
+					"        SELECT\r\n" + 
+					"            TRANSACTION_ID\r\n" + 
+					"        FROM\r\n" + 
+					"            RECO_DETAILS\r\n" + 
+					"    )\r\n" + 
+					"ORDER BY\r\n" + 
+					"    3";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -419,7 +436,7 @@ public JSONArray getOnlyUnrecoBankTransaction(int companyId, int bankId, String 
 					"    0 RECO\r\n" + 
 					"FROM\r\n" + 
 					"    TRANSACTIONS   TR\r\n" + 
-					"    LEFT JOIN CHEQUE_MAST    CM ON CM.VOUCHER_NO = TR.VOUCH_NO,\r\n" + 
+					"    LEFT JOIN CHEQUE_MAST    CM ON CM.VOUCHER_NO = TR.VOUCH_NO AND CM.STATUS = 0,\r\n" + 
 					"    ACCOUNT_NAME   AN\r\n" + 
 					"WHERE\r\n" + 
 					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID\r\n" + 
