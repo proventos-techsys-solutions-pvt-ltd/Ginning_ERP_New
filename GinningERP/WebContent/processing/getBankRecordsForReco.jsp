@@ -34,12 +34,9 @@
             	 
             	 if(latestRecoDateObj.compareTo(selectedDateobj) < 0){
             		  arr = trReportObj.getOnlyUnrecoBankTransaction(companyId, bankId, date);
-            	 }else if(latestRecoDateObj.compareTo(selectedDateobj) == 0){
+            	 }else if(latestRecoDateObj.compareTo(selectedDateobj) >= 0){
             		  arr = trReportObj.getBankTransactionForReco(companyId, bankId, date);
-            	 } else if(latestRecoDateObj.compareTo(selectedDateobj) > 0){
-            		 out.print(-1);
-                   	out.flush();
-           	 	}
+            	 } 
         	 }else{
         		  arr = trReportObj.getOnlyUnrecoBankTransaction(companyId, bankId, date);
         	 }
