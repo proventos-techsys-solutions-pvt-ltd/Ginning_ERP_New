@@ -425,7 +425,7 @@ public JSONArray getOnlyUnrecoBankTransaction(int companyId, int bankId, String 
 					"    AND RD.RECO_STATUS = 0 \r\n" + 
 					"    AND COMP.ID = AN.COMPANY_ID \r\n" + 
 					"    AND BM.ID = AN.BANK_ID \r\n" + 
-					"    AND RD.RECO_DATE = (SELECT MAX(RECO_DATE)FROM RECO_DETAILS WHERE BANK_ID=? AND COMPANY_ID=?)\r\n" + 
+					"    AND RD.RECO_DATE = (SELECT MAX(RECO_DATE)FROM BANK_RECO_MASTER WHERE BANK_ID=? AND COMPANY_ID=?)\r\n" + 
 					"ORDER BY \r\n" + 
 					"    2";
 			
