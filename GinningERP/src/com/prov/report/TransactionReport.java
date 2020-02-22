@@ -450,7 +450,7 @@ public JSONArray getOnlyUnrecoBankTransaction(int companyId, int bankId, String 
 					"    0 RECO\r\n" + 
 					"FROM\r\n" + 
 					"    TRANSACTIONS     TR\r\n" + 
-					"    LEFT JOIN CHEQUE_MAST      CM ON CM.VOUCHER_NO = TR.VOUCH_NO,\r\n" + 
+					"    LEFT JOIN CHEQUE_MAST      CM ON CM.VOUCHER_NO = TR.VOUCH_NO\r\n" + 
 					"                                AND CM.STATUS = 0,\r\n" + 
 					"    ACCOUNT_NAME     AN,\r\n" + 
 					"    COMPANY_MASTER   COMP,\r\n" + 
@@ -484,7 +484,7 @@ public JSONArray getOnlyUnrecoBankTransaction(int companyId, int bankId, String 
 					"    0 RECO\r\n" + 
 					"FROM\r\n" + 
 					"    TRANSACTIONS     TR\r\n" + 
-					"    LEFT JOIN CHEQUE_MAST      CM ON CM.VOUCHER_NO = TR.VOUCH_NO,\r\n" +
+					"    LEFT JOIN CHEQUE_MAST      CM ON CM.VOUCHER_NO = TR.VOUCH_NO\r\n" +
 					"                                AND CM.STATUS = 0,\r\n" + 
 					"    ACCOUNT_NAME     AN,\r\n" + 
 					"    COMPANY_MASTER   COMP,\r\n" + 
