@@ -301,70 +301,7 @@ public JSONArray getJournalEntriesForUpdation(int voucherNo) {
 					"            AND BANK_ID = ?\r\n" + 
 					"            AND RECO_DATE < ?\r\n" + 
 					"    ) AND ?\r\n" + 
-					"UNION\r\n" + 
-					"SELECT\r\n" + 
-					"    TR.ID,\r\n" + 
-					"    TR.TRANSACTION_DATE,\r\n" + 
-					"    TR.VOUCH_NO,\r\n" + 
-					"    TR.ACCOUNT_ID,\r\n" + 
-					"    TR.CONTACT_ID,\r\n" + 
-					"    TR.DEBIT,\r\n" + 
-					"    TR.CREDIT,\r\n" + 
-					"    TR.NARRATION,\r\n" + 
-					"    AN.BANK_ID,\r\n" + 
-					"    AN.COMPANY_ID,\r\n" + 
-					"    CM.CHEQUE_NO,\r\n" + 
-					"    RECO_STATUS RECO\r\n" + 
-					"FROM\r\n" + 
-					"    TRANSACTIONS   TR\r\n" + 
-					"    LEFT JOIN CHEQUE_MAST    CM ON CM.VOUCHER_NO = TR.VOUCH_NO\r\n" + 
-					"                                AND CM.STATUS = 0,\r\n" + 
-					"    ACCOUNT_NAME   AN,\r\n" + 
-					"    RECO_DETAILS   RD\r\n" + 
-					"WHERE\r\n" + 
-					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID\r\n" + 
-					"    AND AN.COMPANY_ID = ?\r\n" + 
-					"    AND AN.BANK_ID = ?\r\n" + 
-					"    AND TR.ID = RD.TRANSACTION_ID\r\n" + 
-					"    AND TR.TRANSACTION_DATE BETWEEN (\r\n" + 
-					"        SELECT\r\n" + 
-					"            NVL(MAX(RECO_DATE), ?) + 1\r\n" + 
-					"        FROM\r\n" + 
-					"            BANK_RECO_MASTER\r\n" + 
-					"        WHERE\r\n" + 
-					"            COMPANY_ID = ?\r\n" + 
-					"            AND BANK_ID = ?\r\n" + 
-					"            AND RECO_DATE < ?\r\n" + 
-					"    ) AND ?\r\n" + 
-					"UNION\r\n" + 
-					"SELECT\r\n" + 
-					"    TR.ID,\r\n" + 
-					"    TR.TRANSACTION_DATE,\r\n" + 
-					"    TR.VOUCH_NO,\r\n" + 
-					"    TR.ACCOUNT_ID,\r\n" + 
-					"    TR.CONTACT_ID,\r\n" + 
-					"    TR.DEBIT,\r\n" + 
-					"    TR.CREDIT,\r\n" + 
-					"    TR.NARRATION,\r\n" + 
-					"    AN.BANK_ID,\r\n" + 
-					"    AN.COMPANY_ID,\r\n" + 
-					"    CM.CHEQUE_NO,\r\n" + 
-					"    RECO_STATUS RECO\r\n" + 
-					"FROM\r\n" + 
-					"    TRANSACTIONS   TR\r\n" + 
-					"    LEFT JOIN CHEQUE_MAST    CM ON CM.VOUCHER_NO = TR.VOUCH_NO\r\n" + 
-					"                                AND CM.STATUS = 0,\r\n" + 
-					"    ACCOUNT_NAME   AN,\r\n" + 
-					"    RECO_DETAILS   RD\r\n" + 
-					"WHERE\r\n" + 
-					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID\r\n" + 
-					"    AND AN.COMPANY_ID = ?\r\n" + 
-					"    AND AN.BANK_ID = ?\r\n" + 
-					"    AND TR.ID = RD.TRANSACTION_ID\r\n" + 
-					"    AND TR.TRANSACTION_DATE < ?\r\n" + 
-					"    AND RD.RECO_DATE < ?\r\n" + 
-					"ORDER BY\r\n" + 
-					"    2";
+					"    ORDER BY tr.transaction_date";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -377,17 +314,7 @@ public JSONArray getJournalEntriesForUpdation(int voucherNo) {
 			stmt.setInt(5, bankId);
 			stmt.setDate(6, dateSql);
 			stmt.setDate(7, dateSql);
-			stmt.setInt(8, companyId);
-			stmt.setInt(9, bankId);
-			stmt.setDate(10, dateSql);
-			stmt.setInt(11, companyId);
-			stmt.setInt(12, bankId);
-			stmt.setDate(13, dateSql);
-			stmt.setDate(14, dateSql);
-			stmt.setInt(15, companyId);
-			stmt.setInt(16, bankId);
-			stmt.setDate(17, dateSql);
-			stmt.setDate(18, dateSql);
+			
 			
 			rs = stmt.executeQuery();
 			
