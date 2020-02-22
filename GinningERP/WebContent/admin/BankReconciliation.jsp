@@ -445,12 +445,17 @@
 		var jsonArr = [];
 		
 		for(i=0; i<table.childElementCount; i++){
+			var jsonObj = {};
 			if(table.rows[i].cells[0].children[0].checked === true){
-				var jsonObj = {};
 				jsonObj.transactionId = table.rows[i].cells[2].innerHTML;
 				jsonObj.voucherNo = table.rows[i].cells[1].innerHTML;
-				jsonArr.push(jsonObj);
+				jsonObj.recoStatus = '1';
+			}else{
+				jsonObj.transactionId = table.rows[i].cells[2].innerHTML;
+				jsonObj.voucherNo = table.rows[i].cells[1].innerHTML;
+				jsonObj.recoStatus = '0';
 			}
+			jsonArr.push(jsonObj);
 		}
 		parentObj.recoDetails = jsonArr;
 		console.log(parentObj);

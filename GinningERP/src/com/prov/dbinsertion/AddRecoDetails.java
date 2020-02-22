@@ -20,7 +20,7 @@ public class AddRecoDetails {
 				e.printStackTrace();
 			}
 		
-			String addBankRecoMaster = "{ ? = call ADD_RECO_DETAILS(?,?,?,?) }";
+			String addBankRecoMaster = "{ ? = call ADD_RECO_DETAILS(?,?,?,?,?) }";
 			CallableStatement cs;
 			try {
 				
@@ -34,6 +34,7 @@ public class AddRecoDetails {
 				cs.setLong(3, rd.getVoucherNo());
 				cs.setLong(4, rd.getTransactionId());
 				cs.setDate(5, recoDateSql);
+				cs.setInt(6, rd.getRecoStatus());
 				
 				
 				cs.executeUpdate();

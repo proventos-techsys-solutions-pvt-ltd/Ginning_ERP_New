@@ -1,3 +1,4 @@
+<%@page import="com.prov.misc.MergeJSON"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="org.json.JSONObject"%>
@@ -37,7 +38,7 @@
             		  arr = trReportObj.getBankTransactionForReco(companyId, bankId, date);
             	 } 
         	 }else{
-        		  arr = trReportObj.getBankTransactionForReco(companyId, bankId, date);
+        		  arr = trReportObj.getOnlyUnrecoBankTransaction(companyId, bankId, date);
         	 }
 
         	 double closingBal = trReportObj.getClosingBalForLedger(bankId, companyId, date);

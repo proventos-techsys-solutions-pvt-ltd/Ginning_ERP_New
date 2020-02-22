@@ -4,6 +4,16 @@ public class RecoDetails {
 
 	long id, recoId, voucherNo, transactionId;
 	
+	int recoStatus;
+	
+	public int getRecoStatus() {
+		return recoStatus;
+	}
+
+	public void setRecoStatus(int recoStatus) {
+		this.recoStatus = recoStatus;
+	}
+
 	String recoDate;
 
 	public long getTransactionId() {
