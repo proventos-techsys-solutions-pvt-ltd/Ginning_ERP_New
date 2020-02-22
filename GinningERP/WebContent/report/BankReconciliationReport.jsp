@@ -24,15 +24,13 @@
 				<thead>
 					<tr>
 						<th>Particulars</th>
-						<th>Debit</th>
-						<th>Credit</th>
+						<th>Amount</th>
 					</tr>
 				<thead>
 				<tbody>
 					<tr>
 						<td><b>Balance as per ledger</b></td>
 						<td id="ledgerClosingBal"></td>
-						<td><b>0</b></td>
 					</tr>
 					<tr>
 						<td><b>Pending Transaction at Bankers End</b></td>
