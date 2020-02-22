@@ -309,11 +309,10 @@ public JSONArray getJournalEntriesForUpdation(int voucherNo) {
 			
 			stmt.setInt(1, companyId);
 			stmt.setInt(2, bankId);
-			stmt.setDate(3, dateSql);
-			stmt.setInt(4, companyId);
-			stmt.setInt(5, bankId);
+			stmt.setInt(3, companyId);
+			stmt.setInt(4, bankId);
+			stmt.setDate(5, dateSql);
 			stmt.setDate(6, dateSql);
-			stmt.setDate(7, dateSql);
 			
 			
 			rs = stmt.executeQuery();
