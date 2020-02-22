@@ -689,46 +689,10 @@ public JSONArray getBankTransactionForRecoPrint(int companyId, int bankId, Strin
 					"    AN.COMPANY_ID, \r\n" + 
 					"    CM.CHEQUE_NO, \r\n" + 
 					"    COMP.NAME, \r\n" + 
-					"    BM.BANK_NAME" + 
+					"    BM.BANK_NAME \r\n" + 
 					"FROM \r\n" + 
 					"    TRANSACTIONS     TR \r\n" + 
-					"    LEFT JOIN CHEQUE_MAST      CM ON CM.VOUCHER_NO = TR.VOUCH_NO \r\n" + 
-					"                                AND CM.STATUS = 0, \r\n" + 
-					"    ACCOUNT_NAME     AN, \r\n" + 
-					"    COMPANY_MASTER   COMP, \r\n" + 
-					"    BANK_MAST        BM \r\n" + 
-					"WHERE \r\n" + 
-					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID \r\n" + 
-					"    AND AN.COMPANY_ID = ? \r\n" + 
-					"    AND AN.BANK_ID = ? \r\n" + 
-					"    AND TR.TRANSACTION_DATE <= ? \r\n" + 
-					"    AND TR.ID NOT IN ( \r\n" + 
-					"        SELECT \r\n" + 
-					"            TRANSACTION_ID \r\n" + 
-					"        FROM \r\n" + 
-					"            RECO_DETAILS \r\n" + 
-					"    ) \r\n" + 
-					"    AND COMP.ID = AN.COMPANY_ID \r\n" + 
-					"    AND BM.ID = AN.BANK_ID \r\n" + 
-					"UNION \r\n" + 
-					"SELECT \r\n" + 
-					"    TR.ID, \r\n" + 
-					"    TR.TRANSACTION_DATE, \r\n" + 
-					"    TR.VOUCH_NO, \r\n" + 
-					"    TR.ACCOUNT_ID, \r\n" + 
-					"    TR.CONTACT_ID, \r\n" + 
-					"    TR.DEBIT, \r\n" + 
-					"    TR.CREDIT, \r\n" + 
-					"    TR.NARRATION, \r\n" + 
-					"    AN.BANK_ID, \r\n" + 
-					"    AN.COMPANY_ID, \r\n" + 
-					"    CM.CHEQUE_NO, \r\n" + 
-					"    COMP.NAME, \r\n" + 
-					"    BM.BANK_NAME" + 
-					"FROM \r\n" + 
-					"    TRANSACTIONS     TR \r\n" + 
-					"    LEFT JOIN CHEQUE_MAST      CM ON CM.VOUCHER_NO = TR.VOUCH_NO\r\n" + 
-					"                                AND CM.STATUS = 0, \r\n" + 
+					"    LEFT JOIN CHEQUE_MAST      CM ON CM.VOUCHER_NO = TR.VOUCH_NO, \r\n" + 
 					"    ACCOUNT_NAME     AN, \r\n" + 
 					"    COMPANY_MASTER   COMP, \r\n" + 
 					"    BANK_MAST        BM, \r\n" + 
@@ -737,13 +701,13 @@ public JSONArray getBankTransactionForRecoPrint(int companyId, int bankId, Strin
 					"    TR.ACCOUNT_ID = AN.ACCOUNT_ID \r\n" + 
 					"    AND AN.COMPANY_ID = ? \r\n" + 
 					"    AND AN.BANK_ID = ? \r\n" + 
+					"    AND RD.RECO_DATE = ? \r\n" + 
 					"    AND TR.ID = RD.TRANSACTION_ID \r\n" + 
 					"    AND RD.RECO_STATUS = 0 \r\n" + 
 					"    AND COMP.ID = AN.COMPANY_ID \r\n" + 
 					"    AND BM.ID = AN.BANK_ID \r\n" + 
-					"    AND RD.RECO_DATE = (SELECT MAX(RECO_DATE)FROM BANK_RECO_MASTER WHERE BANK_ID=? AND COMPANY_ID=?)\r\n" + 
 					"ORDER BY \r\n" + 
-					"    2";
+					"    TR.TRANSACTION_DATE";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
@@ -752,10 +716,6 @@ public JSONArray getBankTransactionForRecoPrint(int companyId, int bankId, Strin
 			stmt.setInt(1, companyId);
 			stmt.setInt(2, bankId);
 			stmt.setDate(3, dateSql);
-			stmt.setInt(4, companyId);
-			stmt.setInt(5, bankId);
-			stmt.setInt(6, bankId);
-			stmt.setInt(7, companyId);
 			
 			rs = stmt.executeQuery();
 			
