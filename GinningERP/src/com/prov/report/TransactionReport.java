@@ -293,7 +293,7 @@ public JSONArray getJournalEntriesForUpdation(int voucherNo) {
 					"    AND TR.ID = RD.TRANSACTION_ID\r\n" + 
 					"    AND RD.RECO_DATE BETWEEN (\r\n" + 
 					"        SELECT\r\n" + 
-					"            NVL(MAX(RECO_DATE), ?) + 1\r\n" + 
+					"            NVL(MAX(RECO_DATE), '01-DEC-2019') + 1\r\n" + 
 					"        FROM\r\n" + 
 					"            BANK_RECO_MASTER\r\n" + 
 					"        WHERE\r\n" + 
