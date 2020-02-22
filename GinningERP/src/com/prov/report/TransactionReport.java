@@ -387,6 +387,7 @@ public JSONArray getJournalEntriesForUpdation(int voucherNo) {
 			stmt.setInt(15, companyId);
 			stmt.setInt(16, bankId);
 			stmt.setDate(17, dateSql);
+			stmt.setDate(18, dateSql);
 			
 			rs = stmt.executeQuery();
 			
