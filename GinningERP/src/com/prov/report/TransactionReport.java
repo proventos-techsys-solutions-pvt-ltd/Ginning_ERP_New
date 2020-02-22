@@ -362,7 +362,6 @@ public JSONArray getJournalEntriesForUpdation(int voucherNo) {
 					"    AND AN.BANK_ID = ?\r\n" + 
 					"    AND TR.ID = RD.TRANSACTION_ID\r\n" + 
 					"    AND TR.TRANSACTION_DATE < ?\r\n" + 
-					"    AND RD.RECO_STATUS = 1\r\n" + 
 					"ORDER BY\r\n" + 
 					"    2";
 			
