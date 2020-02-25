@@ -374,18 +374,16 @@ public JSONArray getAmanatDataForSlip(int rstNo) {
 				"    CM.NAME,\r\n" + 
 				"    CM.ADDRESS,\r\n" + 
 				"    CM.MOBILE,\r\n" + 
-				"    MAX(GRM.RATE),\r\n" + 
+				"    GD.RATE + AM.DIFF_FROM_SUPER,\r\n" + 
 				"    AM.AMANAT_DATE,\r\n" + 
 				"    AM.DIFF_FROM_SUPER,\r\n" + 
 				"    AM.AMANAT_NO\r\n" + 
 				"FROM\r\n" + 
 				"    GRADE_DETAILS           GD,\r\n" + 
 				"    CUSTOMER_MAST           CM,\r\n" + 
-				"    CUSTOMER_VEHICLE_MAST   CVM,\r\n" + 
 				"    WEIGH_MAST              WM,\r\n" + 
 				"    AMANAT_MAST             AM,\r\n" + 
-				"    GRADE_RATE_MASTER       GRM,\r\n" + 
-				"    DAILY_SETUP             DS\r\n" + 
+				"    CUSTOMER_VEHICLE_MAST   CVM\r\n" + 
 				"WHERE\r\n" + 
 				"    AM.GRADE_ID = GD.ID\r\n" + 
 				"    AND AM.INVOICED_QTY <> GD.QUANTITY\r\n" + 
@@ -393,18 +391,7 @@ public JSONArray getAmanatDataForSlip(int rstNo) {
 				"    AND WM.VID = CVM.ID\r\n" + 
 				"    AND CVM.CID = CM.ID\r\n" + 
 				"    AND WM.NET > 0\r\n" + 
-				"    AND WM.DS_ID = DS.ID\r\n" + 
-				"    AND GRM.RATE_DATE = DS.SETUP_DATE\r\n" + 
 				"    AND AM.RST = ?\r\n" + 
-				"GROUP BY\r\n" + 
-				"    GD.QUANTITY - AM.INVOICED_QTY,\r\n" + 
-				"    GD.RST,\r\n" + 
-				"    CM.NAME,\r\n" + 
-				"    CM.ADDRESS,\r\n" + 
-				"    CM.MOBILE,\r\n" + 
-				"    AM.AMANAT_DATE,\r\n" + 
-				"    AM.DIFF_FROM_SUPER,\r\n" + 
-				"    AM.AMANAT_NO\r\n" + 
 				"ORDER BY\r\n" + 
 				"    RST DESC";
 		

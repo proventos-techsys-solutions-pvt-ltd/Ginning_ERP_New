@@ -171,5 +171,42 @@ public class GradeRateReport {
 		
 		return array;
 	}
-
+	
+	public double getGradeSuperRate() {
+		ResultSet rs = null;
+		Connection con = null;
+		double superRate = 0;
+		try {
+			con = OracleConnection.getConnection();
+			
+			String sql = "SELECT\r\n" + 
+						"    NVL(MAX(GRM.RATE), 0)\r\n" + 
+						"FROM\r\n" + 
+						"    GRADE_RATE_MASTER   GRM,\r\n" + 
+						"    DAILY_SETUP         DS,\r\n" + 
+						"    WEIGH_MAST          WM\r\n" + 
+						"WHERE\r\n" + 
+						"    GRM.RATE_DATE = DS.SETUP_DATE\r\n" + 
+						"    AND DS.ID = WM.DS_ID\r\n" + 
+						"    AND RST = ?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				superRate = rs.getDouble(1);
+				
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return superRate;
+	}
 }
